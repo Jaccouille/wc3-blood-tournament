@@ -1,0 +1,12 @@
+package gameConstants
+
+constant isProdBuild = compiletime(isProductionBuild())
+public constant allowCheats = not isProdBuild
+
+
+public constant ENEMY_PLAYER = players[8]
+
+public constant REFUND_VALUE = 0.8
+
+public function player.isHuman() returns boolean
+    return this.getId() < 8

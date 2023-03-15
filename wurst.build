@@ -1,0 +1,6 @@
+---
+projectName: .
+dependencies:
+- https://github.com/wurstscript/wurstStdlib2
+- https://github.com/theQuazz/wurst-lodash
+buildMapData: {}

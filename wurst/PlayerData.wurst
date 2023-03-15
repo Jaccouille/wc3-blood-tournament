@@ -1,0 +1,40 @@
+package PlayerData
+
+import LinkedList
+import HashMap
+
+import ArmyParser
+
+public constant pData = new IterableMap<player, PlayerData>
+
+
+public class PlayerData
+    let army = new LinkedList<LinkedList<int>>
+    rect buildingRect = null
+    player p
+
+    construct(player p, rect buildingRect)
+        this.p = p
+        this.buildingRect = buildingRect
+        pData.put(p, this)
+
+    function addUnits(LinkedList<int> unitList)
+        army.add(unitList)
+
+    function removeUnits(LinkedList<int> unitList)
+        army.remove(unitList)
+
+    function parseArmy()
+        army.clear()
+        army.addAll(getArmyFromRect(buildingRect))
+
+
+public function initPlayerDatas()
+    new PlayerData(players[0], gg_rct_Red)
+    new PlayerData(players[1], gg_rct_Blue)
+    new PlayerData(players[2], gg_rct_Teal)
+    new PlayerData(players[3], gg_rct_Purple)
+    new PlayerData(players[4], gg_rct_Yellow)
+    new PlayerData(players[5], gg_rct_Orange)
+    new PlayerData(players[6], gg_rct_Green)
+    new PlayerData(players[7], gg_rct_Pink)

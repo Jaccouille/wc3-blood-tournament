@@ -1,0 +1,102 @@
+package ArmySpawner
+
+import ClosureForGroups
+import LinkedList
+import HashMap
+import ClosureTimers
+import Lodash
+import ClosureEvents
+import ClosureKeyPresses
+import Texttag
+import ObjectIds
+
+let armyMap = new HashMap<int, LinkedList<int>>
+    ..put('hgtw', generateUnitList('hfoo', 20))
+
+function generateUnitList(int unitId, int count) returns LinkedList<int>
+    let unitList = new LinkedList<int>
+    for i = 0 to count - 1
+        unitList.add(unitId)
+    return unitList
+
+// Distance between units positioned in formation mode
+@configurable constant FORMATION_WIDTH = 120.
+@configurable constant FORMATION_HEIGHT = 80.
+
+// Max number of unit per line
+@configurable constant UNIT_PER_LINE = 4
+
+class SpawnZone
+    rect spawnRect
+    angle angle
+    vec2 initialPos
+    real width
+    real height
+
+    construct(rect spawnRect, vec2 initialPos, angle angle)
+        this.spawnRect = spawnRect
+        this.angle = angle
+        this.initialPos = initialPos
+        this.width = spawnRect.width()
+        this.height = spawnRect.height()
+
+public let spawnZones = new LinkedList<SpawnZone>()
+    ..add(new SpawnZone(gg_rct_Frontrank_SW, gg_rct_Frontrank_SW.getRightBot(), 0..asAngleDegrees()))
+    ..add(new SpawnZone(gg_rct_Frontrank_SE, gg_rct_Frontrank_SE.getLeftBot(), 180..asAngleDegrees()))
+    ..add(new SpawnZone(gg_rct_Frontrank_NW, gg_rct_Frontrank_NW.getRightBot(), 0..asAngleDegrees()))
+    ..add(new SpawnZone(gg_rct_Frontrank_NE, gg_rct_Frontrank_NE.getLeftBot(), 180..asAngleDegrees()))
+
+    ..add(new SpawnZone(gg_rct_Frontrank_ES, gg_rct_Frontrank_ES.getLeftTop(), 90..asAngleDegrees()))
+    ..add(new SpawnZone(gg_rct_Frontrank_EN, gg_rct_Frontrank_EN.getLeftBot(), 270..asAngleDegrees()))
+    ..add(new SpawnZone(gg_rct_Frontrank_WS, gg_rct_Frontrank_WS.getLeftTop(), 90..asAngleDegrees()))
+    ..add(new SpawnZone(gg_rct_Frontrank_WN, gg_rct_Frontrank_WN.getLeftBot(), 270..asAngleDegrees()))
+
+
+public function spawnArmy(SpawnZone spawnZone, LinkedList<LinkedList<int>> army, player p)
+    let spawnDirection = (spawnZone.angle.cos() == 0 ? 0 : 90).asAngleDegrees()
+
+    var unitPerLine = 0
+    if spawnDirection.degrees() == 0.
+        unitPerLine = (spawnZone.width / FORMATION_WIDTH).round()
+    else
+        unitPerLine = (spawnZone.height / FORMATION_WIDTH).round()
+
+    var pos = spawnZone.initialPos
+    let unitPerColumn = (80 / unitPerLine).floor()
+    // TODO: adjust width computing for vertical rect
+
+
+    var idx = 0
+    for subArmy in army
+        for unitId in subArmy
+            createUnit(p, unitId, pos, spawnZone.angle)
+            // createTTEx(pos.toVec3() + vec3(0, 0, 90), idx.toString(), 6)
+            pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+            // Move to next line
+            if (idx + 1) % unitPerLine == 0
+                pos = spawnZone.initialPos.polarOffset(spawnZone.angle.op_minus(180..asAngleDegrees()), FORMATION_HEIGHT * idx / unitPerLine)
+            idx++
+            if (idx + 1) / unitPerLine > unitPerColumn
+                break
+    // return army.drop(idx)
+    // return army
+
+
+init
+    // let armyZone = gg_rct_Red
+    // let unitList = new LinkedList<int>
+
+    // forUnitsInRect(armyZone) (unit u) ->
+    //     unitList.addAll(armyMap.get(u.getTypeId()))
+
+    onKeyPress(OSKEY_END) ->
+        forUnitsAll() (unit u) ->
+            u.setAnimation("Stand - Victory")
+
+    onKeyPress(OSKEY_0) ->
+        forUnitsOfType('hfoo'.toRawCode()) (unit u) ->
+            u.kill()
+
+        spawnZones.forEach() (SpawnZone t) ->
+            // spawnArmy(t, unitList, players[0])
+        // formLines(gg_rct_Region_001.getRightBot(), gg_rct_Region_001.getCenter(), unitList,  270..asAngleDegrees())

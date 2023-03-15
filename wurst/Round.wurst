@@ -1,0 +1,59 @@
+package Round
+
+import public LinkedList
+import public Lodash
+import public ClosureKeyPresses
+
+import PlayerData
+import ArmySpawner
+
+interface OnRoundStart
+    function onStart(Round round)
+
+OnRoundStart onStartListener
+
+public function onRoundStart(OnRoundStart onStart)
+    onStartListener = onStart
+
+interface OnRoundFinish
+    function onFinish(Round round)
+
+OnRoundFinish onFinishListener
+
+public function onRoundFinish(OnRoundFinish onFinish)
+    onFinishListener = onFinish
+
+
+public class Round
+    constant matchUp = new LinkedList<Pair<int, int>>
+    int test = 0
+    var isDone = false
+
+    function addMatchup(Pair<int, int> matchUp)
+        this.matchUp.add(matchUp)
+
+    function start()
+        onStartListener.onStart(this)
+        spawnArmies()
+
+    function spawnArmies()
+        var zoneIdx = 0
+        for contestantPair in matchUp
+            let p1 = players[contestantPair.a]
+            let p2 = players[contestantPair.b]
+            pData.get(p1).parseArmy()
+            pData.get(p2).parseArmy()
+            // Log.info(pData.get(p1).army.flatten().toString())
+            spawnArmy(spawnZones.get(zoneIdx), pData.get(p1).army, p1)
+            spawnArmy(spawnZones.get(zoneIdx + 1), pData.get(p2).army, p2)
+            // pData.get(p2).parseArmy()
+            // spawnArmy(spawnZones.get(zoneIdx), pData.get(p2).army.flatten(), p2)
+            zoneIdx += 2
+
+    function finish()
+        onFinishListener.onFinish(this)
+        Log.info(test.toString())
+
+init
+    initPlayerDatas()
+    createFogModifier(players[0], FOG_OF_WAR_VISIBLE, bj_mapInitialPlayableArea, false, false).start()

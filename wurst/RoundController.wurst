@@ -1,0 +1,65 @@
+package RoundController
+
+import public Round
+import TimerUtils
+import ClosureTimers
+
+public constant roundController = new RoundController()
+
+constant SPAWN_TIME = 25.
+
+class RoundController
+    constant rounds = new LinkedList<Round>
+
+//   Function onAllroundsFinished
+
+    Round currentround = null
+
+    function addrounds(LinkedList<Round> rounds)
+        this.rounds.addAll(rounds.copy())
+
+    function startRoundSpawn()
+        roundSpawn()
+
+    function roundSpawn()
+        if rounds.isEmpty()
+            return
+        //   onAllroundsFinished.execute()
+
+        let tim = getTimer()
+        let tdialog = tim.createTimerDialog()
+        ..setTitle("Time until next round:")
+        ..display(true)
+        tim.doAfter(SPAWN_TIME) ->
+            tdialog.destr()
+
+            currentround = rounds.dequeue()
+            // currentround.start()
+
+    function checkIfCurrentroundDone()
+        if currentround != null and currentround.isDone
+            currentround.finish()
+            currentround = null
+            roundSpawn()
+
+init
+    onRoundStart() (Round round) ->
+        Log.info("Round start")
+
+    onRoundFinish() (Round round) ->
+        Log.info("Round finish")
+
+    let r = new Round()
+        ..addMatchup(new Pair(0, 1))
+        ..addMatchup(new Pair(2, 3))
+        ..addMatchup(new Pair(4, 5))
+        ..addMatchup(new Pair(6, 7))
+
+    doAfter(2) ->
+        r.start()
+
+    onKeyPress(OSKEY_END) ->
+        r.start()
+
+    onKeyPress(OSKEY_SPACE) ->
+        r.finish()

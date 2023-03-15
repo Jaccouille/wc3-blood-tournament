@@ -1,0 +1,31 @@
+package ArmyParser
+
+import ClosureForGroups
+import LinkedList
+import HashMap
+import ClosureTimers
+import Lodash
+import ClosureEvents
+import ClosureKeyPresses
+import Texttag
+import ObjectIds
+import UnitIds
+
+
+let armyMap = new HashMap<int, LinkedList<int>>
+    ..put(UnitIds.footman, generateUnitList(UnitIds.footman, 10))
+    ..put(UnitIds.rifleman, generateUnitList(UnitIds.rifleman, 10))
+    ..put(UnitIds.knight, generateUnitList(UnitIds.knight, 5))
+    ..put(UnitIds.priest, generateUnitList(UnitIds.priest, 3))
+
+function generateUnitList(int unitId, int count) returns LinkedList<int>
+    let unitList = new LinkedList<int>
+    for i = 0 to count - 1
+        unitList.add(unitId)
+    return unitList
+
+public function getArmyFromRect(rect armyRect) returns LinkedList<LinkedList<int>>
+    let unitList = new LinkedList<LinkedList<int>>
+    forUnitsInRect(armyRect) (unit u) ->
+        unitList.addtoStart(armyMap.get(u.getTypeId()))
+    return unitList
