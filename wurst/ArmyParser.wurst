@@ -13,10 +13,11 @@ import UnitIds
 
 
 let armyMap = new HashMap<int, LinkedList<int>>
-    ..put(UnitIds.footman, generateUnitList(UnitIds.footman, 10))
-    ..put(UnitIds.rifleman, generateUnitList(UnitIds.rifleman, 10))
-    ..put(UnitIds.knight, generateUnitList(UnitIds.knight, 5))
-    ..put(UnitIds.priest, generateUnitList(UnitIds.priest, 3))
+    ..put(UnitIds.footman, generateUnitList(UnitIds.footman, 1))
+    ..put(UnitIds.rifleman, generateUnitList(UnitIds.rifleman, 1))
+    ..put(UnitIds.knight, generateUnitList(UnitIds.knight, 1))
+    ..put(UnitIds.priest, generateUnitList(UnitIds.priest, 1))
+    ..put(UnitIds.peasant, generateUnitList(UnitIds.peasant, 1))
 
 function generateUnitList(int unitId, int count) returns LinkedList<int>
     let unitList = new LinkedList<int>
@@ -27,5 +28,6 @@ function generateUnitList(int unitId, int count) returns LinkedList<int>
 public function getArmyFromRect(rect armyRect) returns LinkedList<LinkedList<int>>
     let unitList = new LinkedList<LinkedList<int>>
     forUnitsInRect(armyRect) (unit u) ->
-        unitList.addtoStart(armyMap.get(u.getTypeId()))
+        if armyMap.get(u.getTypeId()) != null
+            unitList.addtoStart(armyMap.get(u.getTypeId()))
     return unitList
