@@ -1,0 +1,76 @@
+package UnitTooltipGenerator
+
+// import public ChannelAbilityPreset
+import UnitObjEditingExt
+import HashMap
+import UnitObjEditing
+
+public constant GOLD_COLOR = color(255, 215,   0)
+
+@configurable constant TITLE_TTYPE = "Format :".color(GOLD_COLOR)+
+    " starting value / +bonus per level / max level"
+@configurable constant MAX_TITLES = 10
+@configurable constant DESCRIPTION_PATTERN = "$description$|r"
+
+class Attribute
+    string value = ""
+    string bonusValue = ""
+    string lvls = "1"
+
+    construct(string value, string bonusValue, int lvls)
+        this.value = value
+        this.bonusValue = bonusValue
+        this.lvls = lvls.toString()
+
+    construct(string value)
+        this.value = value
+
+public class UnitTooltipGenerator implements TooltipGenerator
+    private constant propMap = new IterableMap<string, Attribute>
+    private var description = ""
+    private var name = ""
+
+    construct(string description)
+        this.description = description
+
+    construct()
+
+    function setDescription(string description)
+        this.description = description
+
+    override function addProperty(string title, string value, string bonusValue, int lvls)
+        propMap.put(title, new Attribute(value, bonusValue, lvls))
+
+    override function applyToDef(UnitOrHeroDefinition def)
+        name = propMap.has("Name") ? propMap.getAndRemove("Name").value : "unnamed"
+        def.setTooltipExtended(generateTooltipExtended())
+
+    private function generateTooltipExtended() returns string
+        var s = ""
+        s += TITLE_TTYPE + "|r\n\n"
+
+        for key in propMap
+            var tmp = ""
+            let val = fixValue(propMap.get(key).value)
+            let bonusValue = fixValue(propMap.get(key).bonusValue)
+            let lvls = fixValue(propMap.get(key).lvls)
+
+            tmp +=  val
+            if bonusValue != ""
+                tmp += " / +" + bonusValue + " / " + lvls
+
+            s += (key + ": ").color(GOLD_COLOR) + tmp + "|r\n"
+        s += DESCRIPTION_PATTERN.replace("$description$", description)
+        this.description = s
+        return s
+
+    override function getLastTooltip() returns string
+        return this.description
+
+    private static function fixValue(string value) returns string
+        var s = value
+        if s.endsWith(".")
+            s = s.substring(0, s.length()-1)
+        else if s.length() > 1 and s.endsWith(".0")
+            s = s.substring(0, s.length()-2)
+        return s

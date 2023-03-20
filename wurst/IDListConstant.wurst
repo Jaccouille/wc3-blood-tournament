@@ -1,0 +1,14 @@
+package IDListConstant
+
+import LinkedList
+
+import LocalObjectIDs
+
+
+public let HUMAN_UNITS = asList(
+    UNIT_RIFLEMAN,
+    UNIT_PRIEST,
+    UNIT_KNIGHT,
+    UNIT_FOOTMAN,
+    UNIT_PRIEST
+)

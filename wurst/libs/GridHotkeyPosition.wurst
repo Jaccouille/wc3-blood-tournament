@@ -1,0 +1,25 @@
+package GridHotkeyPosition
+
+import HashMap
+
+class GridPos
+    int x
+    int y
+
+    construct(int x, int y)
+        this.x = x
+        this.y = y
+
+public let hotKeyMapping = new HashMap<string, GridPos>()
+    ..put("Q", new GridPos(0, 0))
+    ..put("W", new GridPos(1, 0))
+    ..put("E", new GridPos(2, 0))
+    ..put("R", new GridPos(3, 0))
+    ..put("A", new GridPos(0, 1))
+    ..put("S", new GridPos(1, 1))
+    ..put("D", new GridPos(2, 1))
+    ..put("F", new GridPos(3, 1))
+    ..put("Z", new GridPos(0, 2))
+    ..put("X", new GridPos(1, 2))
+    ..put("C", new GridPos(2, 2))
+    ..put("V", new GridPos(3, 2))

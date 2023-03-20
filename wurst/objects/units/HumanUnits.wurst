@@ -1,0 +1,86 @@
+package HumanUnits
+
+import ChannelAbilityPreset
+import Assets
+
+import LocalObjectIDs
+import UnitObjEditingUtils
+import UnitObjEditingExt
+
+@compiletime function createPeasant()
+    createSpawnedUnit(UNIT_PEASANT, UnitIds.peasant)
+
+@compiletime function createFootman()
+    createSpawnedUnit(UNIT_FOOTMAN, UnitIds.footman)
+        ..setIconExt(Icons.bTNFootman)
+        ..setAttack1DamageBase(15)
+        ..setCollisionSize(15)
+        ..setGoldData(900)
+        ..setHitPointsMaximumBase(100)
+        ..setPriority(2)
+
+@compiletime function createRifleman()
+    createSpawnedUnit(UNIT_RIFLEMAN, UnitIds.rifleman)
+        ..tooltipStartListen()
+        ..setAttack1DamageBaseExt(15, 1, 10)
+        ..setAttack1AttackTypeExt(AttackType.Pierce)
+        ..setAttack1RangeExt(550, 150, 1)
+        ..setDefenseBaseExt(0, 2, 5)
+        ..setArmorTypeExt(ArmorType.Medium)
+        ..setAttack1CooldownTimeExt(1.350)
+        ..setSpeedBaseExt(270)
+        ..setHitPointsMaximumBaseExt(100, 100, 5)
+        ..tooltipStopListen()
+
+        ..setCollisionSize(15)
+        ..setGoldBountyAwardedSidesperDie(2)
+        ..setGoldData(0)
+        ..setLevel(2)
+        ..setPriority(3)
+
+        ..setIconExt(Icons.bTNRifleman)
+        ..setNameExt("Q", "Rifleman")
+
+@compiletime function createPriest()
+    createSpawnedUnit(UNIT_PRIEST, UnitIds.priest)
+        ..tooltipStartListen()
+        ..setAttack1DamageBaseExt(11)
+        ..setAttack1AttackTypeExt(AttackType.Magic)
+        ..setAttack1RangeExt(600)
+        ..setDefenseBaseExt(0)
+        ..setArmorTypeExt(ArmorType.Unarmored)
+        ..setAttack1CooldownTimeExt(1.75)
+        ..setSpeedBaseExt(270)
+        ..setHitPointsMaximumBaseExt(100, 300, 3)
+        ..setManaExt(200, 200, 3)
+        ..tooltipStopListen()
+
+        ..setCollisionSize(15)
+        ..setGoldBountyAwardedBase(30)
+        ..setGoldBountyAwardedSidesperDie(2)
+        ..setGoldData(0)
+        ..setPriority(9)
+
+        ..setIconExt(Icons.bTNPriest)
+        ..setNameExt("Z", "Priest")
+
+@compiletime function createKnight()
+    createSpawnedUnit(UNIT_KNIGHT, UnitIds.knight)
+        ..tooltipStartListen()
+        ..setAttack1DamageBaseExt(50, 5, 10)
+        ..setAttack1AttackTypeExt(AttackType.Normal)
+        ..setDefenseBaseExt(4, 3, 5)
+        ..setArmorTypeExt(ArmorType.Large)
+        ..setAttack1CooldownTimeExt(1.4)
+        ..setSpeedBaseExt(350)
+        ..setHitPointsMaximumBaseExt(100, 200, 3)
+        ..tooltipStopListen()
+
+        ..setAttack1Range(120)
+        ..setCollisionSize(15)
+        ..setGoldData(0)
+        ..setLevel(6)
+        ..setPriority(5)
+
+        ..setIconExt(Icons.bTNKnight)
+        ..setNameExt("A", "Knight")
