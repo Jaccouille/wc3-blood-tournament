@@ -13,7 +13,7 @@ import Wurstunit
 import Printing
 
 import Players
-import gameConstants
+import GameConstants
 
 
 function generate(int n, int r) returns LinkedList<LinkedList<int>>

@@ -1,0 +1,44 @@
+package MiddleAltar
+
+import LocalObjectIDs
+import UnitIds
+import Units
+import ObjectIds
+import AbilityObjEditing
+
+@compiletime function createAltar()
+    new AbilityDefinitionLightningAttack(ABIL_ALTAR_LIGHTNING)
+        ..setLightningEffects(LIGHTNING_MANA_FLARE)
+        ..setGraphicDelay(1, 0.01)
+        ..setArtSpecial("")
+        ..setArtTarget("")
+
+
+    new UnitDefinition(UNIT_ALTAR, UnitIds.huntress)
+        ..setNormalAbilities(commaList(ABIL_ALTAR_LIGHTNING, AbilityIds.invulnerable, AbilityIds.magicSentry, AbilityIds.locust))
+        ..setModelFile(Units.forgottenOne1)
+        ..setSpeedBase(0)
+        ..setScalingValue(1.6)
+        ..setSelectionScale(2.0)
+        ..setAcquisitionRange(2000)
+        ..setAttack1AnimationBackswingPoint(0)
+        ..setAttack1AnimationDamagePoint(0)
+        ..setAttack1AreaofEffectFullDamage(1)
+        ..setAttack1AttackType(AttackType.Chaos)
+        ..setAttack1CooldownTime(0.1)
+        ..setAttack1DamageBase(5000)
+        ..setAttack1DamageSidesperDie(1)
+        ..setAttack1MaximumNumberofTargets(1)
+        ..setAttack1ProjectileArt("")
+        ..setAttack1ProjectileSpeed(5000)
+        ..setAttack1Range(2000)
+        ..setAttack1TargetsAllowed(commaList(
+            TargetsAllowed.air,
+            TargetsAllowed.ground,
+            TargetsAllowed.debris,
+            TargetsAllowed.item_t,
+            TargetsAllowed.ward
+            )
+        )
+        ..setAttack1WeaponSound(WeaponSound.Nothing)
+        ..setAttack1WeaponType(WeaponType.Instant)

@@ -59,7 +59,6 @@ public function spawnArmy(SpawnZone spawnZone, LinkedList<LinkedList<int>> army,
 
     var idx = 0
     for subArmy in army
-        print(subArmy.toString())
         for unitId in subArmy
             createUnit(p, unitId, pos, spawnZone.angle)
             // createTTEx(pos.toVec3() + vec3(0, 0, 90), idx.toString(), 6)

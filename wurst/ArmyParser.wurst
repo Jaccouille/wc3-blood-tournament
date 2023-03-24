@@ -11,13 +11,14 @@ import Texttag
 import ObjectIds
 import UnitIds
 
+import LocalObjectIDs
 
 let armyMap = new HashMap<int, LinkedList<int>>
-    ..put(UnitIds.footman, generateUnitList(UnitIds.footman, 1))
-    ..put(UnitIds.rifleman, generateUnitList(UnitIds.rifleman, 1))
-    ..put(UnitIds.knight, generateUnitList(UnitIds.knight, 1))
-    ..put(UnitIds.priest, generateUnitList(UnitIds.priest, 1))
-    ..put(UnitIds.peasant, generateUnitList(UnitIds.peasant, 1))
+    ..put(UnitIds.footman, generateUnitList(UNIT_FOOTMAN, 1))
+    ..put(UnitIds.rifleman, generateUnitList(UNIT_RIFLEMAN, 1))
+    ..put(UnitIds.knight, generateUnitList(UNIT_KNIGHT, 1))
+    ..put(UnitIds.priest, generateUnitList(UNIT_PRIEST, 0))
+    ..put(UnitIds.peasant, generateUnitList(UNIT_FOOTMAN, 1))
 
 function generateUnitList(int unitId, int count) returns LinkedList<int>
     let unitList = new LinkedList<int>

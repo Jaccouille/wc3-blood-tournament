@@ -3,9 +3,12 @@ package Round
 import public LinkedList
 import public Lodash
 import public ClosureKeyPresses
+import ClosureForGroups
 
 import PlayerData
 import ArmySpawner
+import IDListConstant
+import public GameConstants
 
 interface OnRoundStart
     function onStart(Round round)
@@ -23,11 +26,8 @@ OnRoundFinish onFinishListener
 public function onRoundFinish(OnRoundFinish onFinish)
     onFinishListener = onFinish
 
-
 public class Round
     constant matchUp = new LinkedList<Pair<int, int>>
-    int test = 0
-    var isDone = false
 
     function addMatchup(Pair<int, int> matchUp)
         this.matchUp.add(matchUp)
@@ -43,17 +43,21 @@ public class Round
             let p2 = players[contestantPair.b]
             pData.get(p1).parseArmy()
             pData.get(p2).parseArmy()
-            // Log.info(pData.get(p1).army.flatten().toString())
             spawnArmy(spawnZones.get(zoneIdx), pData.get(p1).army, p1)
             spawnArmy(spawnZones.get(zoneIdx + 1), pData.get(p2).army, p2)
-            // pData.get(p2).parseArmy()
-            // spawnArmy(spawnZones.get(zoneIdx), pData.get(p2).army.flatten(), p2)
+            forUnitsAll() (unit u) ->
+                if HUMAN_UNITS.has(u.getTypeId())
+                    u.issuePointOrder("attack", CENTER)
             zoneIdx += 2
+
 
     function finish()
         onFinishListener.onFinish(this)
-        Log.info(test.toString())
 
 init
     initPlayerDatas()
     createFogModifier(players[0], FOG_OF_WAR_VISIBLE, bj_mapInitialPlayableArea, false, false).start()
+
+    onRoundFinish() (Round round) ->
+        // TODO: compute reward
+        Log.info("Round finish")
