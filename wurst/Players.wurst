@@ -1,8 +1,9 @@
 package Players
 
-import public LinkedList
+// Standard libs imports:
 import ClosureEvents
 import ClosureTimers
+import public LinkedList
 
 /** A list of all players that are still in the game */
 public constant ALL_PLAYERS = new LinkedList<player>()

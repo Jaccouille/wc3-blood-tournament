@@ -1,13 +1,17 @@
 package Round
 
-import public LinkedList
-import public Lodash
-import public ClosureKeyPresses
+// Standard libs imports:
 import ClosureForGroups
+import public ClosureKeyPresses
+import public LinkedList
 
-import PlayerData
+// Third party imports:
+import public Lodash
+
+// Local imports:
 import ArmySpawner
 import IDListConstant
+import PlayerData
 import public GameConstants
 
 interface OnRoundStart

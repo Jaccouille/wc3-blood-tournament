@@ -1,10 +1,13 @@
 package RoundController
 
-import public Round
-import TimerUtils
+// Standard libs imports:
 import ClosureTimers
-import SoldierEntity
+import TimerUtils
+
+// Local imports:
 import LocalObjectIDs
+import SoldierEntity
+import public Round
 
 public constant roundController = new RoundController()
 

@@ -1,12 +1,12 @@
 package UnitEntity
 
-// Standard library imports:v
+// Standard libs imports:
 import ClosureTimers
 import HashMap
 import UnitIndexer
 import public ClosureEvents
 
-// Third-party imports:
+// Third party imports:
 import Lodash
 
 // The entity corresponding to each unit.

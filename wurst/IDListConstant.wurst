@@ -1,9 +1,10 @@
 package IDListConstant
 
+// Standard libs imports:
 import LinkedList
 
+// Local imports:
 import LocalObjectIDs
-
 
 public let HUMAN_UNITS = asList(
     UNIT_RIFLEMAN,

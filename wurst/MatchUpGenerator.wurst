@@ -1,20 +1,23 @@
 package MatchUpGenerator
 
-import ClosureForGroups
-import LinkedList
-import HashMap
-import ClosureTimers
-import Lodash
+// Standard libs imports:
 import ClosureEvents
+import ClosureForGroups
 import ClosureKeyPresses
-import Texttag
+import ClosureTimers
+import HashMap
+import LinkedList
 import ObjectIds
-import Wurstunit
 import Printing
+import Texttag
+import Wurstunit
 
-import Players
+// Third party imports:
+import Lodash
+
+// Local imports:
 import GameConstants
-
+import Players
 
 function generate(int n, int r) returns LinkedList<LinkedList<int>>
     let combinations = new LinkedList<LinkedList<int>>

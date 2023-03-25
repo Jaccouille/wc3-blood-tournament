@@ -1,14 +1,17 @@
 package ArmySpawner
 
-import ClosureForGroups
-import LinkedList
-import HashMap
-import ClosureTimers
-import Lodash
+// Standard libs imports:
 import ClosureEvents
+import ClosureForGroups
 import ClosureKeyPresses
-import Texttag
+import ClosureTimers
+import HashMap
+import LinkedList
 import ObjectIds
+import Texttag
+
+// Third party imports:
+import Lodash
 
 // Distance between units positioned in formation mode
 @configurable constant FORMATION_WIDTH = 120.

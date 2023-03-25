@@ -1,8 +1,10 @@
 package PlayerData
 
-import LinkedList
+// Standard libs imports:
 import HashMap
+import LinkedList
 
+// Local imports:
 import ArmyParser
 
 public constant pData = new IterableMap<player, PlayerData>

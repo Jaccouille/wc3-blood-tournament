@@ -1,10 +1,12 @@
 package SoldierEntity
 
-import UnitEntity
-import LinkedList
+// Standard libs imports:
 import HashMap
+import LinkedList
 
+// Local imports:
 import IDListConstant
+import UnitEntity
 
 let typeIDs = new LinkedList<int>
     ..addAll(HUMAN_UNITS)
