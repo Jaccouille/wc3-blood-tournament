@@ -1,18 +1,10 @@
 package ArmyParser
 
 // Standard libs imports:
-import ClosureEvents
 import ClosureForGroups
-import ClosureKeyPresses
-import ClosureTimers
 import HashMap
 import LinkedList
-import ObjectIds
-import Texttag
 import UnitIds
-
-// Third party imports:
-import Lodash
 
 // Local imports:
 import LocalObjectIDs
