@@ -14,6 +14,7 @@ public class PlayerData
     let army = new LinkedList<LinkedList<int>>
     rect buildingRect = null
     player p
+    int roundBountySum = 0
 
     construct(player p, rect buildingRect)
         this.p = p
@@ -28,8 +29,15 @@ public class PlayerData
 
     function parseArmy()
         army.clear()
-        army.addAll(getArmyFromRect(buildingRect))
+        army.addAll(getArmyFromRect(buildingRect, p))
 
+    function addBounty(int value)
+        roundBountySum += value
+
+    function giveReward()
+        printTimedToPlayer("You acquired " + roundBountySum.toString() + " points", 15, p)
+        p.addLumber(roundBountySum)
+        roundBountySum = 0
 
 public function initPlayerDatas()
     new PlayerData(players[0], gg_rct_Red)

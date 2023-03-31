@@ -7,20 +7,45 @@ import LocalObjectIDs
 import UnitObjEditingUtils
 import UnitObjEditingExt
 
-@compiletime function createPeasant()
-    createSpawnedUnit(UNIT_PEASANT, UnitIds.peasant)
 
 @compiletime function createFootman()
+    createBuildingUnit(BUILDING_FOOTMAN)
+        ..setModelFile(Units.footman1)
+        ..setIconGameInterface(Icons.bTNFootman)
+        ..setUnitSoundSet(Soundsets.footman)
+
     createSpawnedUnit(UNIT_FOOTMAN, UnitIds.footman)
-        ..setIconExt(Icons.bTNFootman)
+        ..setPointValue(20)
+        ..setIconGameInterface(Icons.bTNFootman)
         ..setAttack1DamageBase(15)
         ..setCollisionSize(15)
-        ..setGoldData(900)
         ..setHitPointsMaximumBase(100)
         ..setPriority(2)
 
+@compiletime function createPaladin()
+    createBuildingUnit(BUILDING_PALADIN)
+        ..setModelFile(Units.heroPaladin)
+        ..setIconGameInterface(Icons.bTNHeroPaladin)
+        ..setUnitSoundSet(Soundsets.heroPaladin)
+
+    createSpawnedUnit(UNIT_PALADIN, UnitIds.paladin)
+        ..setPointValue(200)
+        ..setIconGameInterface(Icons.bTNHeroPaladin)
+        ..setAttack1DamageBase(120)
+        ..setCollisionSize(15)
+        ..setHitPointsMaximumBase(400)
+        ..setModelFile(Units.heroPaladin)
+        ..setUnitSoundSet(Soundsets.heroPaladin)
+        ..setPriority(2)
+
 @compiletime function createRifleman()
+    createBuildingUnit(BUILDING_RIFLEMAN)
+        ..setModelFile(Units.rifleman1)
+        ..setIconGameInterface(Icons.bTNRifleman)
+        ..setUnitSoundSet(Soundsets.rifleman)
+
     createSpawnedUnit(UNIT_RIFLEMAN, UnitIds.rifleman)
+        ..setPointValue(30)
         ..tooltipStartListen()
         ..setAttack1DamageBaseExt(15, 1, 10)
         ..setAttack1AttackTypeExt(AttackType.Pierce)
@@ -33,16 +58,20 @@ import UnitObjEditingExt
         ..tooltipStopListen()
 
         ..setCollisionSize(15)
-        ..setGoldBountyAwardedSidesperDie(2)
-        ..setGoldData(0)
         ..setLevel(2)
         ..setPriority(3)
 
-        ..setIconExt(Icons.bTNRifleman)
+        ..setIconGameInterface(Icons.bTNRifleman)
         ..setNameExt("Q", "Rifleman")
 
 @compiletime function createPriest()
+    createBuildingUnit(BUILDING_PRIEST)
+        ..setModelFile(Units.priest1)
+        ..setIconGameInterface(Icons.bTNPriest)
+        ..setUnitSoundSet(Soundsets.priest)
+
     createSpawnedUnit(UNIT_PRIEST, UnitIds.priest)
+        ..setPointValue(40)
         ..tooltipStartListen()
         ..setAttack1DamageBaseExt(11)
         ..setAttack1AttackTypeExt(AttackType.Magic)
@@ -56,16 +85,19 @@ import UnitObjEditingExt
         ..tooltipStopListen()
 
         ..setCollisionSize(15)
-        ..setGoldBountyAwardedBase(30)
-        ..setGoldBountyAwardedSidesperDie(2)
-        ..setGoldData(0)
         ..setPriority(9)
 
-        ..setIconExt(Icons.bTNPriest)
+        ..setIconGameInterface(Icons.bTNPriest)
         ..setNameExt("Z", "Priest")
 
 @compiletime function createKnight()
+    createBuildingUnit(BUILDING_KNIGHT)
+        ..setModelFile(Units.knight1)
+        ..setIconGameInterface(Icons.bTNKnight)
+        ..setUnitSoundSet(Soundsets.knight)
+
     createSpawnedUnit(UNIT_KNIGHT, UnitIds.knight)
+        ..setPointValue(30)
         ..tooltipStartListen()
         ..setAttack1DamageBaseExt(50, 5, 10)
         ..setAttack1AttackTypeExt(AttackType.Normal)
@@ -78,9 +110,77 @@ import UnitObjEditingExt
 
         ..setAttack1Range(120)
         ..setCollisionSize(15)
-        ..setGoldData(0)
         ..setLevel(6)
         ..setPriority(5)
 
-        ..setIconExt(Icons.bTNKnight)
+        ..setIconGameInterface(Icons.bTNKnight)
         ..setNameExt("A", "Knight")
+
+@compiletime function createSorceress()
+    createBuildingUnit(BUILDING_SORCERESS)
+        ..setModelFile(Units.sorceress1)
+        ..setIconGameInterface(Icons.bTNSorceress)
+        ..setUnitSoundSet(Soundsets.sorceress)
+
+    createSpawnedUnit(UNIT_SORCERESS, UnitIds.sorceress)
+        ..setPointValue(50)
+        ..tooltipStartListen()
+        ..setAttack1DamageBaseExt(35)
+        ..setAttack1AttackTypeExt(AttackType.Magic)
+        ..setAttack1RangeExt(550)
+        ..setDefenseBaseExt(0)
+        ..setArmorTypeExt(ArmorType.Unarmored)
+        ..setAttack1CooldownTimeExt(1.75)
+        ..setSpeedBaseExt(270)
+        ..setHitPointsMaximumBaseExt(25, 300, 3)
+        ..setManaExt(200, 200, 3)
+        ..tooltipStopListen()
+
+        ..setCollisionSize(15)
+        ..setPriority(10)
+
+        ..setIconGameInterface(Icons.bTNSorceress)
+        ..setNameExt("X", "Sorceress")
+
+@compiletime function createArchmage()
+    createBuildingUnit(BUILDING_ARCHMAGE)
+        ..setModelFile(Units.heroArchMage)
+        ..setIconGameInterface(Icons.bTNHeroArchMage)
+        ..setUnitSoundSet(Soundsets.heroArchMage)
+
+    createSpawnedUnit(UNIT_ARCHMAGE, UnitIds.sorceress)
+        ..setPointValue(200)
+        ..setNormalAbilities("")
+        ..tooltipStartListen()
+        ..setAttack1DamageBaseExt(100)
+        ..setAttack1AttackTypeExt(AttackType.Magic)
+        ..setAttack1RangeExt(600)
+        ..setDefenseBaseExt(0)
+        ..setArmorTypeExt(ArmorType.Unarmored)
+        ..setAttack1CooldownTimeExt(1.75)
+        ..setSpeedBaseExt(350)
+        ..setHitPointsMaximumBaseExt(150, 300, 3)
+        ..setManaExt(400, 200, 3)
+        ..tooltipStopListen()
+
+        ..setCollisionSize(15)
+        ..setPriority(10)
+
+        ..setIconGameInterface(Icons.bTNHeroArchMage)
+        ..setModelFile(Units.heroArchMage)
+        ..setUnitSoundSet(Soundsets.heroArchMage)
+        ..setNameExt("X", "Archmage")
+        ..setAttack1ProjectileArt(Abilities.fireBallMissile)
+
+@compiletime function createBuilder()
+    createBuilder(UNIT_HUMAN_BUILDER, UnitIds.peasant)
+        ..setNameEnhance("Q", "Human Builder")
+        ..setStructuresBuilt(commaList(
+            BUILDING_FOOTMAN,
+            BUILDING_PALADIN,
+            BUILDING_RIFLEMAN,
+            BUILDING_PRIEST,
+            BUILDING_KNIGHT,
+            BUILDING_SORCERESS,
+            BUILDING_ARCHMAGE
+        ))

@@ -1,0 +1,174 @@
+package NightElfUnits
+
+import ChannelAbilityPreset
+import Assets
+
+import LocalObjectIDs
+import UnitObjEditingUtils
+import UnitObjEditingExt
+
+@compiletime function createTreant()
+    createBuildingUnit(BUILDING_TREANT)
+        ..setModelFile(Units.ent)
+        ..setIconGameInterface(Icons.bTNEnt)
+        ..setUnitSoundSet(Soundsets.ent)
+
+    createSpawnedUnit(UNIT_TREANT, UnitIds.forceofnature)
+        ..setPointValue(20)
+        ..setAttack1CooldownTime(2)
+        ..setAttack1DamageBase(20)
+        ..setDefenseBase(4)
+        ..setArmorType(ArmorType.Normal)
+        ..setCollisionSize(16.0)
+        ..setHitPointsMaximumBase(120)
+        ..setIconGameInterface(Icons.bTNForceOfNature)
+        ..setNameEnhance("Q", "Treant")
+
+@compiletime function createArcher()
+    createBuildingUnit(BUILDING_ARCHER)
+        ..setModelFile(Units.archer)
+        ..setIconGameInterface(Icons.bTNArcher)
+        ..setUnitSoundSet(Soundsets.archer)
+
+    createSpawnedUnit(UNIT_ARCHER, UnitIds.archer)
+        ..setPointValue(30)
+        ..tooltipStartListen()
+        ..setAttack1DamageBaseExt(16, 4, 10)
+        ..setAttack1RangeExt(650, 150, 1)
+        ..setDefenseBaseExt(0, 2, 5)
+        ..setArmorTypeExt(ArmorType.Medium)
+        ..setAttack1CooldownTimeExt(2)
+        ..setSpeedBaseExt(270)
+        ..setHitPointsMaximumBaseExt(70)
+        ..tooltipStopListen()
+
+        ..setCollisionSize(16.0)
+        ..setGoldData(0)
+        ..setHitPointRegeBasic()
+
+@compiletime function createHuntress()
+    createBuildingUnit(BUILDING_HUNTRESS)
+        ..setModelFile(Units.huntress)
+        ..setIconGameInterface(Icons.bTNHuntress)
+        ..setUnitSoundSet(Soundsets.huntress)
+
+    createSpawnedUnit(UNIT_HUNTRESS, UnitIds.huntress)
+        ..setPointValue(40)
+        ..tooltipStartListen()
+        ..setAttack1DamageBaseExt(20, 2, 10)
+        ..setAttack1AttackTypeExt(AttackType.Normal)
+        ..setAttack1RangeExt(300)
+        ..setDefenseBaseExt(2, 2, 5)
+        ..setArmorTypeExt(ArmorType.Medium)
+        ..setAttack1CooldownTimeExt(1.8)
+        ..setSpeedBaseExt(350)
+        ..setHitPointsMaximumBaseExt(120)
+        ..tooltipStopListen()
+
+        ..setAttack1MaximumNumberofTargets(2)
+        ..setCollisionSize(16.0)
+
+@compiletime function createDruidTalon()
+    createBuildingUnit(BUILDING_DRUID_TALON)
+        ..setModelFile(Units.druidoftheTalon)
+        ..setIconGameInterface(Icons.bTNDruidOfTheTalon)
+        ..setUnitSoundSet(Soundsets.druidOfTheTalon)
+
+    createSpawnedUnit(UNIT_DRUID_TALON, UnitIds.druidofthetalon)
+        ..setPointValue(50)
+        ..tooltipStartListen()
+        ..setAttack1DamageBaseExt(30)
+        ..setAttack1AttackTypeExt(AttackType.Magic)
+        ..setAttack1RangeExt(400)
+        ..setDefenseBaseExt(0, 2, 5)
+        ..setArmorTypeExt(ArmorType.Unarmored)
+        ..setAttack1CooldownTimeExt(1.75)
+        ..setSpeedBaseExt(270)
+        ..setHitPointsMaximumBaseExt(30, 200, 3)
+        ..setManaExt(200, 200, 3)
+        ..tooltipStopListen()
+
+        ..setCollisionSize(6.0)
+        ..setPriority(9)
+        ..setLevel(3)
+
+
+@compiletime function createDruidClaw()
+    createBuildingUnit(BUILDING_DRUID_CLAW_BEAR)
+        ..setModelFile(Units.druidoftheClaw1)
+        ..setIconGameInterface(Icons.bTNDruidOfTheClaw)
+        ..setUnitSoundSet(Soundsets.grizzlyBear)
+
+    createSpawnedUnit(UNIT_DRUID_CLAW_BEAR, UnitIds.druidoftheclawmorphed)
+        ..setPointValue(60)
+        ..tooltipStartListen()
+        ..setAttack1DamageBaseExt(90, 3, 10)
+        ..setAttack1AttackTypeExt(AttackType.Normal)
+        ..setDefenseBaseExt(4, 3, 5)
+        ..setArmorTypeExt(ArmorType.Large)
+        ..setAttack1CooldownTimeExt(1.5)
+        ..setSpeedBaseExt(270)
+        ..setHitPointsMaximumBaseExt(175)
+        ..setManaExt(200, 200, 3)
+        ..tooltipStopListen()
+
+        ..setMaximumPitchAngledegrees(10)
+        ..setAttack1Range(128)
+        ..setCollisionSize(16.)
+        ..setPriority(11)
+
+@compiletime function createDaemonHunter()
+    createBuildingUnit(BUILDING_DAEMON_HUNTER)
+        ..setModelFile(Units.heroDemonHunter1)
+        ..setIconGameInterface(Icons.bTNHeroDemonHunter)
+        ..setUnitSoundSet(Soundsets.heroDemonHunter)
+
+    createSpawnedUnit(UNIT_DAEMON_HUNTER, UnitIds.illidan)
+        ..setPointValue(200)
+        ..tooltipStartListen()
+        ..setAttack1DamageBaseExt(60, 3, 10)
+        ..setAttack1AttackTypeExt(AttackType.Normal)
+        ..setDefenseBaseExt(4, 3, 5)
+        ..setArmorTypeExt(ArmorType.Large)
+        ..setAttack1CooldownTimeExt(0.7)
+        ..setHitPointsMaximumBaseExt(330)
+        ..tooltipStopListen()
+
+        ..setManaInitialAmount(0)
+        ..setCollisionSize(16.)
+        ..setPriority(11)
+
+@compiletime function createPriestessOfTheMoon()
+    createBuildingUnit(BUILDING_PRIESTESS_OF_THE_MOON)
+        ..setModelFile(Units.heroMoonPriestess)
+        ..setIconGameInterface(Icons.bTNHeroMoonPriestess)
+        ..setUnitSoundSet(Soundsets.heroMoonPriestess)
+
+    createSpawnedUnit(UNIT_PRIESTESS_OF_THE_MOON, UnitIds.tyrande)
+        ..setPointValue(200)
+        ..tooltipStartListen()
+        ..setAttack1DamageBaseExt(80, 3, 10)
+        ..setAttack1AttackTypeExt(AttackType.Pierce)
+        ..setDefenseBaseExt(4, 3, 5)
+        ..setArmorTypeExt(ArmorType.Unarmored)
+        ..setAttack1CooldownTimeExt(1)
+        ..setHitPointsMaximumBaseExt(180)
+        ..tooltipStopListen()
+
+        ..setManaInitialAmount(0)
+        ..setCollisionSize(16.)
+        ..setPriority(11)
+
+
+@compiletime function createBuilder()
+    createBuilder(UNIT_NIGHT_ELF_BUILDER, UnitIds.wisp)
+        ..setNameEnhance("R", "Night Elf Builder")
+        ..setStructuresBuilt(commaList(
+            BUILDING_TREANT,
+            BUILDING_ARCHER,
+            BUILDING_HUNTRESS,
+            BUILDING_DRUID_TALON,
+            BUILDING_DRUID_CLAW_BEAR,
+            BUILDING_DAEMON_HUNTER,
+            BUILDING_PRIESTESS_OF_THE_MOON
+        ))

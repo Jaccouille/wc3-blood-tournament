@@ -1,10 +1,9 @@
-package MiddleAltar
+package Misc
 
 import LocalObjectIDs
-import UnitIds
-import Units
 import ObjectIds
 import AbilityObjEditing
+import Assets
 
 @compiletime function createAltar()
     new AbilityDefinitionLightningAttack(ABIL_ALTAR_LIGHTNING)
@@ -15,10 +14,10 @@ import AbilityObjEditing
 
 
     new UnitDefinition(UNIT_ALTAR, UnitIds.huntress)
-        ..setNormalAbilities(commaList(ABIL_ALTAR_LIGHTNING, AbilityIds.invulnerable, AbilityIds.magicSentry, AbilityIds.locust))
+        ..setNormalAbilities(commaList(ABIL_ALTAR_LIGHTNING, AbilityIds.invulnerable, AbilityIds.magicSentry))
         ..setModelFile(Units.forgottenOne1)
         ..setSpeedBase(0)
-        ..setScalingValue(1.6)
+        ..setScalingValue(1.0)
         ..setSelectionScale(2.0)
         ..setAcquisitionRange(2000)
         ..setAttack1AnimationBackswingPoint(0)
@@ -42,3 +41,20 @@ import AbilityObjEditing
         )
         ..setAttack1WeaponSound(WeaponSound.Nothing)
         ..setAttack1WeaponType(WeaponType.Instant)
+
+@compiletime function createRacePickerUnit() returns BuildingDefinition
+    return new BuildingDefinition(UNIT_RACE_PICKER, UnitIds.altarofkings)
+        ..setNormalAbilities(commaList(AbilityIds.invulnerable))
+        ..setBuildTime(1)
+        ..setFoodProduced(1)
+        ..setLumberCost(0)
+        ..setGoldCost(0)
+        ..setName("Race Picker")
+        ..setUpgradesTo("")
+        ..setPathingMap("PathTextures\\8x8SimpleSolid.tga")
+        ..setUnitsTrained(commaList(
+            UNIT_HUMAN_BUILDER,
+            UNIT_ORC_BUILDER,
+            UNIT_UNDEAD_BUILDER,
+            UNIT_NIGHT_ELF_BUILDER
+        ))

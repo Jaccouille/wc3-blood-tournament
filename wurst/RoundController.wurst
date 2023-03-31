@@ -3,9 +3,9 @@ package RoundController
 // Standard libs imports:
 import ClosureTimers
 import TimerUtils
+import ClosureForGroups
 
 // Local imports:
-import LocalObjectIDs
 import SoldierEntity
 import public Round
 
@@ -27,22 +27,22 @@ class RoundController
     function addrounds(LinkedList<Round> rounds)
         this.rounds.addAll(rounds.copy())
 
-    function startRoundSpawn()
-        roundSpawn()
-
     function roundSpawn()
+        forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->
+            u.pause()
         if rounds.isEmpty()
             onAllroundsFinished.execute()
             return
 
         let tim = getTimer()
-        let tdialog = tim.createTimerDialog()
-        ..setTitle("Time until next round:")
-        ..display(true)
+        // TODO: cleanup
+        // let tdialog = tim.createTimerDialog()
+        // ..setTitle("Time until next round:")
+        // ..display(true)
         tim.doAfter(SPAWN_TIME) ->
             Log.info("Round " + roundCount.toString())
             roundCount++
-            tdialog.destr()
+            // tdialog.destr()
 
             currentround = rounds.dequeue()
             currentround.start()
@@ -59,31 +59,45 @@ init
         Log.info("Round start")
 
 
-    // new Round()
-        // ..addMatchup(new Pair(0, 1))
-        // ..addMatchup(new Pair(2, 3))
-        // ..addMatchup(new Pair(4, 5))
-        // ..addMatchup(new Pair(6, 7))
+    new Round()
+        ..addMatchup(new Pair(0, 1))
+        ..addMatchup(new Pair(2, 3))
+        ..addMatchup(new Pair(4, 5))
+        ..addMatchup(new Pair(6, 7))
 
     roundController.addrounds(asList(
-        new Round()..addMatchup(new Pair(0, 1)),
-        new Round()..addMatchup(new Pair(0, 1)),
-        new Round()..addMatchup(new Pair(0, 1)),
-        new Round()..addMatchup(new Pair(0, 1)),
-        new Round()..addMatchup(new Pair(0, 1))
+            new Round()
+                ..addMatchup(new Pair(0, 1))
+                ..addMatchup(new Pair(2, 3))
+                ..addMatchup(new Pair(4, 5))
+                ..addMatchup(new Pair(6, 7)),
+            new Round()
+                ..addMatchup(new Pair(0, 1))
+                ..addMatchup(new Pair(2, 3))
+                ..addMatchup(new Pair(4, 5))
+                ..addMatchup(new Pair(6, 7)),
+            new Round()
+                ..addMatchup(new Pair(0, 1))
+                ..addMatchup(new Pair(2, 3))
+                ..addMatchup(new Pair(4, 5))
+                ..addMatchup(new Pair(6, 7)),
+            new Round()
+                ..addMatchup(new Pair(0, 1))
+                ..addMatchup(new Pair(2, 3))
+                ..addMatchup(new Pair(4, 5))
+                ..addMatchup(new Pair(6, 7))
         ))
 
     doAfter(2) ->
         roundController.roundSpawn()
 
-    let altar = createUnit(DUMMY_HOSTILE_PLAYER, UNIT_ALTAR, CENTER)
     onLastArmyRemaining = () ->
+        forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->
+            u.unpause()
         Log.info("Clean up phase")
-        altar.unpause()
 
     onAllUnitDead = () ->
         Log.info("All unit dead")
-        altar.pause()
         roundController.checkIfCurrentroundDone()
 
     onAllroundsFinished = () ->

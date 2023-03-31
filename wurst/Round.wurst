@@ -10,9 +10,9 @@ import public Lodash
 
 // Local imports:
 import ArmySpawner
-import IDListConstant
 import PlayerData
 import public GameConstants
+import ScoreBoard
 
 interface OnRoundStart
     function onStart(Round round)
@@ -56,7 +56,7 @@ public class Round
             spawnArmy(spawnZones.get(zoneIdx), pData.get(p1).army, p1)
             spawnArmy(spawnZones.get(zoneIdx + 1), pData.get(p2).army, p2)
             forUnitsAll() (unit u) ->
-                if HUMAN_UNITS.has(u.getTypeId())
+                if u.getMoveSpeed() > 1 and not u.isType(UNIT_TYPE_PEON)
                     u.issuePointOrder("attack", CENTER)
             zoneIdx += 2
 
