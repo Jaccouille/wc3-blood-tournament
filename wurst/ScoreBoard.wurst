@@ -1,0 +1,137 @@
+package ScoreBoard
+
+// Standard library imports:
+import HashMap
+import LinkedList
+import ClosureTimers
+import ClosureEvents
+
+// Local imports:
+import Boards
+import ColorUtils
+import PlayerData
+import GameConstants
+
+let KILL_COLUMN_WIDTH = 0.055
+let STAT_LABEL_WIDTH = 0.1
+let NAME_LABEL_WIDTH = 0.13
+let LEVEL_LABEL_WIDTH = 0.07
+
+let iconPlayerInGame = "UI\\widgets\\escmenu\\nightelf\\nightelf-checkbox-depressed.blp"
+public let iconPlayerDefeated = "UI\\widgets\\escmenu\\orc\\orc-checkbox-depressed.blp"
+
+class Category
+    string text
+    string icon
+    real width
+    color color
+
+    construct(string text, string icon, real width, color color)
+        this.text = text
+        this.icon = icon
+        this.width = width
+        this.color = color
+
+// ScoreBoard category listed
+let categories = asList(
+    new Category("PlayerName"   , null , NAME_LABEL_WIDTH  , HIGHLIGHT_COLOR ),
+    new Category("ArmyPoints"  , null , LEVEL_LABEL_WIDTH , HIGHLIGHT_COLOR ),
+    new Category("BloodPoints" , null , LEVEL_LABEL_WIDTH , HIGHLIGHT_COLOR )
+)
+
+public class ScoreBoardColumnEntries
+    static int column = 0
+    Category category
+    int entryColumn = 0
+
+    construct()
+        category = categories.get(column)
+        entryColumn = categories.indexOf(category)
+        initRow(0, category.text, category.icon)
+
+        var value = "0"
+        string icon = null
+        switch category.text
+            case "PlayerName"
+                value = "PlayerName"
+        initForPlayer(value, icon)
+        column++
+
+    function setEntry(player _player, string value, string icon)
+        let entryRow = scoreBoard.getPlayerPos(_player.getName())
+
+        scoreBoard.setValue(entryRow, entryColumn, value)
+        if icon != null
+            scoreBoard.setIcon(entryRow, entryColumn, icon)
+
+    function setEntryIcon(player _player, string icon)
+        let entryRow = scoreBoard.getPlayerPos(_player.getName())
+        scoreBoard.setIcon(entryRow, entryColumn, icon)
+
+    function setEntryColor(player _player, color color)
+        let entryRow = scoreBoard.getPlayerPos(_player.getName())
+        scoreBoard.setColor(entryRow, entryColumn, color)
+
+    function addValue(player _player, int value)
+        let playerRow = scoreBoard.getPlayerPos(_player.getName())
+        let currentValue = scoreBoard.getValue(playerRow, entryColumn)
+        let newValue = (currentValue.toInt() + value)
+        setEntry(_player, newValue.toString(), null)
+
+
+    function initForPlayer(string value, string icon)
+        var row = 1
+
+        pData.forEach() (player _player, PlayerData _) ->
+            if value == "PlayerName"
+                initRow(row, _player.getName(), iconPlayerInGame)
+                // In case player leave before board Init
+                if _player.isIngame()
+                    scoreBoard.setColor(row, entryColumn, _player.getColor().toColor())
+                else
+                    scoreBoard.setColor(row, entryColumn, COLOR_GRAY)
+            else
+                initRow(row, value, icon)
+            row++
+
+    function initRow(int row, string value, string icon)
+        scoreBoard.getItem(row, entryColumn)
+            ..setWidth(category.width)
+            ..setValueColor(category.color.withAlpha(0))
+        scoreBoard.setNewItem(row, entryColumn, value, icon)
+        scoreBoard.setItem(row, entryColumn, value, icon)
+
+        if row != 0 and category.color == HIGHLIGHT_COLOR
+            scoreBoard.setColor(row, entryColumn, COLOR_WHITE.withoutAlpha())
+
+
+public let scoreBoardEntries = new HashMap<string, ScoreBoardColumnEntries>
+
+public function initScoreBoard()
+    // TODO: Handle dynamic player
+    var rowCount = 8 + 1
+
+    // Trying to display a multiboard with 0 row result in wc3 crashing
+    if rowCount == 0
+        rowCount = 1
+    scoreBoard = new Board(rowCount, categories.size())
+
+    let title = getGameTimersBoardTitle()
+    scoreBoard.board.setTitle(title)
+
+    for category in categories
+        scoreBoardEntries.put(category.text, new ScoreBoardColumnEntries)
+    scoreBoard.board.display(true)
+
+init
+    // TODO: Add to game init
+    nullTimer() ->
+        initScoreBoard()
+        doPeriodically(1) (CallbackPeriodic cb) ->
+            scoreBoard.board.setTitle(getGameTimersBoardTitle())
+
+        EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
+            let owner = EventData.getKillingUnit().getOwner()
+            if owner != ALTAR_PLAYER
+                scoreBoardEntries.get("BloodPoints")
+                    .addValue(owner, EventData.getDyingUnit().getPointValue())

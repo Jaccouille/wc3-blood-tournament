@@ -45,6 +45,12 @@ public class Round
         for contestantPair in matchUp
             let p1 = players[contestantPair.a]
             let p2 = players[contestantPair.b]
+
+            scoreBoardEntries.get("ArmyPoints").setEntry(p1, "0", "")
+            scoreBoardEntries.get("ArmyPoints").setEntry(p2, "0", "")
+            scoreBoardEntries.get("BloodPoints").setEntry(p1, "0", "")
+            scoreBoardEntries.get("BloodPoints").setEntry(p2, "0", "")
+
             pData.get(p1).parseArmy()
             pData.get(p2).parseArmy()
             spawnArmy(spawnZones.get(zoneIdx), pData.get(p1).army, p1)
@@ -65,3 +71,8 @@ init
     onRoundFinish() (Round round) ->
         // TODO: compute reward
         Log.info("Round finish")
+        pData.forEach() (player key, PlayerData value) ->
+            value.giveReward()
+        forUnitsAll() (unit u) ->
+            if IsUnitDeadBJ(u)
+                u.remove()

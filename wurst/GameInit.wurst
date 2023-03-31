@@ -1,0 +1,10 @@
+package GameInit
+
+import Indicators
+
+// A timer for the core gameplay.
+public constant GAME_TIMER = CreateTimer()
+
+init
+    replaceIndicator()
+    GAME_TIMER.start(99999999, null)
