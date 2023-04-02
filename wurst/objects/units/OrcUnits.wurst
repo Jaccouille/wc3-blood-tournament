@@ -5,7 +5,6 @@ import Assets
 
 import LocalObjectIDs
 import UnitObjEditingUtils
-import UnitObjEditingExt
 
 @compiletime function createGrunt()
     createBuildingUnit(BUILDING_GRUNT)
@@ -22,7 +21,6 @@ import UnitObjEditingExt
         ..setHitPointsMaximumBase(150)
         ..setPriority(3)
         ..setNameEnhance("Q", "Grunt")
-        ..setTooltipExtended("Pew pew pew")
 
 @compiletime function createHeadhunter()
     createBuildingUnit(BUILDING_HEADHUNTER)
@@ -39,7 +37,6 @@ import UnitObjEditingExt
         ..setHitPointsMaximumBase(100)
         ..setPriority(3)
         ..setNameEnhance("Q", "Headhunter")
-        ..setTooltipExtended("Pew pew pew")
 
 @compiletime function createWarlock()
     createBuildingUnit(BUILDING_WARLOCK)
@@ -61,7 +58,6 @@ import UnitObjEditingExt
         ..setManaInitialAmount(0)
         ..setPriority(4)
         ..setNameEnhance("W", "Warlock")
-        ..setTooltipExtended("Pew pew pew")
 
 @compiletime function createShaman()
     createBuildingUnit(BUILDING_SHAMAN)
@@ -80,7 +76,6 @@ import UnitObjEditingExt
         ..setLevel(4)
         ..setPriority(10)
         ..setNameEnhance("X", "Shaman")
-        ..setTooltipExtended("Pew pew pew")
 
 @compiletime function createTauren()
     createBuildingUnit(BUILDING_TAUREN)
@@ -99,7 +94,6 @@ import UnitObjEditingExt
         ..setHitPointsMaximumBase(200)
         ..setPriority(7)
         ..setNameEnhance("S", "Tauren")
-        ..setTooltipExtended("Pew pew pew")
 
 @compiletime function createChieftain()
     createBuildingUnit(BUILDING_CHIEFTAIN)
@@ -118,7 +112,6 @@ import UnitObjEditingExt
         ..setHitPointsMaximumBase(400)
         ..setPriority(7)
         ..setNameEnhance("S", "Chieftain")
-        ..setTooltipExtended("Pew pew pew")
         ..setModelFile(Units.heroTaurenChieftain1)
 
 @compiletime function createShadowHunter()
@@ -136,7 +129,6 @@ import UnitObjEditingExt
         ..setHitPointsMaximumBase(175)
         ..setPriority(3)
         ..setNameEnhance("Q", "Shadow Hunter")
-        ..setTooltipExtended("Pew pew pew")
         ..setModelFile(Units.heroShadowHunter1)
 
 @compiletime function createBuilder()

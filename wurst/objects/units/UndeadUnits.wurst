@@ -5,7 +5,6 @@ import Assets
 
 import LocalObjectIDs
 import UnitObjEditingUtils
-import UnitObjEditingExt
 
 @compiletime function createGhoul()
     createBuildingUnit(BUILDING_GHOUL)

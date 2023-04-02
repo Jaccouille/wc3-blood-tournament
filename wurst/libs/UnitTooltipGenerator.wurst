@@ -1,17 +1,19 @@
 package UnitTooltipGenerator
 
 // import public ChannelAbilityPreset
-import UnitObjEditingExt
 import HashMap
 import UnitObjEditing
 
 public constant GOLD_COLOR = color(255, 215,   0)
 
-@configurable constant TITLE_TTYPE = "Format :".color(GOLD_COLOR)+
-    " starting value / +bonus per level / max level"
+@configurable constant TITLE_TTYPE = ""
 @configurable constant MAX_TITLES = 10
 @configurable constant DESCRIPTION_PATTERN = "$description$|r"
 
+/**
+    Bonus value is unused for this map
+    Removed its implementation
+**/
 class Attribute
     string value = ""
     string bonusValue = ""
@@ -24,6 +26,10 @@ class Attribute
 
     construct(string value)
         this.value = value
+
+public interface TooltipGenerator
+    function addProperty(string title, string value, int lvls)
+    function applyToDef(UnitOrBuildingOrHeroDefinition def)
 
 public class UnitTooltipGenerator implements TooltipGenerator
     private constant propMap = new IterableMap<string, Attribute>
@@ -38,34 +44,26 @@ public class UnitTooltipGenerator implements TooltipGenerator
     function setDescription(string description)
         this.description = description
 
-    override function addProperty(string title, string value, string bonusValue, int lvls)
-        propMap.put(title, new Attribute(value, bonusValue, lvls))
+    override function addProperty(string title, string value, int lvls)
+        propMap.put(title, new Attribute(value, "", lvls))
 
-    override function applyToDef(UnitOrHeroDefinition def)
+    override function applyToDef(UnitOrBuildingOrHeroDefinition def)
         name = propMap.has("Name") ? propMap.getAndRemove("Name").value : "unnamed"
         def.setTooltipExtended(generateTooltipExtended())
 
     private function generateTooltipExtended() returns string
         var s = ""
-        s += TITLE_TTYPE + "|r\n\n"
+        s += TITLE_TTYPE + "|r"
 
         for key in propMap
             var tmp = ""
             let val = fixValue(propMap.get(key).value)
-            let bonusValue = fixValue(propMap.get(key).bonusValue)
-            let lvls = fixValue(propMap.get(key).lvls)
 
             tmp +=  val
-            if bonusValue != ""
-                tmp += " / +" + bonusValue + " / " + lvls
 
-            s += (key + ": ").color(GOLD_COLOR) + tmp + "|r\n"
+            s += (key + ": ").color(GOLD_COLOR) + tmp + "|r\n\n"
         s += DESCRIPTION_PATTERN.replace("$description$", description)
-        this.description = s
         return s
-
-    override function getLastTooltip() returns string
-        return this.description
 
     private static function fixValue(string value) returns string
         var s = value
