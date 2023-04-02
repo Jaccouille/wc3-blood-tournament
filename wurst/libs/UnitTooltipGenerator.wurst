@@ -61,8 +61,8 @@ public class UnitTooltipGenerator implements TooltipGenerator
 
             tmp +=  val
 
-            s += (key + ": ").color(GOLD_COLOR) + tmp + "|r\n\n"
-        s += DESCRIPTION_PATTERN.replace("$description$", description)
+            s += (key + ": ").color(GOLD_COLOR) + tmp + "|r\n"
+        s += "\n" + DESCRIPTION_PATTERN.replace("$description$", description)
         return s
 
     private static function fixValue(string value) returns string

@@ -9,7 +9,7 @@ import ClosureEvents
 // Local imports:
 import LocalObjectIDs
 
-let armyMap = new HashMap<int, LinkedList<int>>
+public let armyMap = new HashMap<int, LinkedList<int>>
     ..put(BUILDING_FOOTMAN  , generateUnitList(UNIT_FOOTMAN  , 10))
     ..put(BUILDING_RIFLEMAN , generateUnitList(UNIT_RIFLEMAN , 5))
     ..put(BUILDING_KNIGHT   , generateUnitList(UNIT_KNIGHT   , 5))

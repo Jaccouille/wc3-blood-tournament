@@ -157,10 +157,10 @@ class BTUnitDefinition extends UnitDefinition
 public function UnitOrBuildingOrHeroDefinition.setNameEnhance(string hotkey, string name)
     this.setHotkeyEnhance(hotkey)
     this.setName(name)
-    this.setTooltipBasic(makeToolTipNorm(hotkey, name + " xX"))
+    this.setTooltipBasic(makeToolTipNorm(hotkey, name))
 
 public function UnitDefinition.setName(string name)
-    this.setTooltipBasic(makeToolTipNormAura(name + " xX"))
+    this.setTooltipBasic(makeToolTipNormAura(name))
     this.setButtonPositionX(0)
     this.setButtonPositionY(0)
 
