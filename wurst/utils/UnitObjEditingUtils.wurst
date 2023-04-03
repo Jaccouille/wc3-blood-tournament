@@ -9,7 +9,7 @@ import AbilityIds
 import Assets
 
 import UnitTooltipGenerator
-import HotkeysUtils
+import GridHotkeyPosition
 import TooltipsUtils
 
 
