@@ -3,7 +3,7 @@ package Boards
 // Local imports:
 import ColorUtils
 import TimeUtils
-import GameInit
+import initlater GameInit
 
 // Following code imported from https://github.com/Frotty/EBR/blob/8e58de4a392b1d6fef6a089b2d1b3d0ced5404b3/wurst/MapStuff/MultiboardClass.wurst
 // My initial design was bad so I just decided to look up frotty's code

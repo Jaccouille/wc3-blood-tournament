@@ -3,6 +3,7 @@ package PlayerData
 // Standard libs imports:
 import HashMap
 import LinkedList
+import ClosureEvents
 
 // Local imports:
 import ArmyParser
@@ -39,7 +40,7 @@ public class PlayerData
         p.addLumber(roundBountySum)
         roundBountySum = 0
 
-public function initPlayerDatas()
+public function initPlayers()
     new PlayerData(players[0], gg_rct_Red)
     new PlayerData(players[1], gg_rct_Blue)
     new PlayerData(players[2], gg_rct_Teal)

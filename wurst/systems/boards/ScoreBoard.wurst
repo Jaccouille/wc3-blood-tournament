@@ -123,15 +123,12 @@ public function initScoreBoard()
         scoreBoardEntries.put(category.text, new ScoreBoardColumnEntries)
     scoreBoard.board.display(true)
 
-init
-    // TODO: Add to game init
-    nullTimer() ->
-        initScoreBoard()
-        doPeriodically(1) (CallbackPeriodic cb) ->
-            scoreBoard.board.setTitle(getGameTimersBoardTitle())
+    // Scoreboard timer refresh
+    doPeriodically(1) (CallbackPeriodic cb) ->
+        scoreBoard.board.setTitle(getGameTimersBoardTitle())
 
-        EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
-            let owner = EventData.getKillingUnit().getOwner()
-            if owner != ALTAR_PLAYER
-                scoreBoardEntries.get("BloodPoints")
-                    .addValue(owner, EventData.getDyingUnit().getPointValue())
+    EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
+        let owner = EventData.getKillingUnit().getOwner()
+        if owner != ALTAR_PLAYER
+            scoreBoardEntries.get("BloodPoints")
+                .addValue(owner, EventData.getDyingUnit().getPointValue())

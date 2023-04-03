@@ -66,14 +66,10 @@ public function getArmyFromRect(rect armyRect, player _player) returns LinkedLis
             unitList.addtoStart(armyMap.get(u.getTypeId()))
     return unitList
 
-function initArmyTemplates()
+// TODO: replace with gamestate functional interface just like in ITTs
+public function initArmyTemplates()
     for i = 0 to 8
         pArmyTemplate.put(players[i], new LinkedList<unit>)
-
-
-init
-    initArmyTemplates()
-    // TODO: implement once builder has been implemented
     EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
         let u = EventData.getTriggerUnit()
 
@@ -82,11 +78,11 @@ init
             let soldierBuildingList = pArmyTemplate.get(u.getOwner())
             Log.info(u.getName())
 
-            // for soldierBuilding in soldierBuildingList
-            //     Log.info(soldierBuilding.getName())
-            //     if u.getPos().x > soldierBuilding.getPos().x
-            //         soldierBuildingList.addAt(u, soldierBuildingList.indexOf(soldierBuilding))
-            //         break
+        // for soldierBuilding in soldierBuildingList
+        //     Log.info(soldierBuilding.getName())
+        //     if u.getPos().x > soldierBuilding.getPos().x
+        //         soldierBuildingList.addAt(u, soldierBuildingList.indexOf(soldierBuilding))
+        //         break
 
     EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
         let u = EventData.getDyingUnit()

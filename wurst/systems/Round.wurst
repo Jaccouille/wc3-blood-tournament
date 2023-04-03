@@ -64,12 +64,9 @@ public class Round
     function finish()
         onFinishListener.onFinish(this)
 
-init
-    initPlayerDatas()
-    createFogModifier(players[0], FOG_OF_WAR_VISIBLE, bj_mapInitialPlayableArea, false, false).start()
-
+// TODO: replace with gamestate functional interface just like in ITTs
+public function initRounds()
     onRoundFinish() (Round round) ->
-        // TODO: compute reward
         Log.info("Round finish")
         pData.forEach() (player key, PlayerData value) ->
             value.giveReward()

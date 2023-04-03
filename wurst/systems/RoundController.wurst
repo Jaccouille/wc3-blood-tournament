@@ -53,12 +53,7 @@ class RoundController
             currentround = null
             roundSpawn()
 
-
-init
-    onRoundStart() (Round round) ->
-        Log.info("Round start")
-
-
+public function initRoundController()
     new Round()
         ..addMatchup(new Pair(0, 1))
         ..addMatchup(new Pair(2, 3))
@@ -90,6 +85,9 @@ init
 
     doAfter(2) ->
         roundController.roundSpawn()
+
+    onRoundStart() (Round round) ->
+        Log.info("Round start")
 
     onLastArmyRemaining = () ->
         forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->

@@ -2,9 +2,43 @@ package GameInit
 
 import Indicators
 
+import Preloader
+import ClosureTimers
+import ObjectIdGenerator
+import PlayerData
+import RoundController
+
+import ArmyParser
+import ScoreBoard
+
 // A timer for the core gameplay.
 public constant GAME_TIMER = CreateTimer()
 
+function preload()
+    let abils = new IdGenerator('AM00')
+    while preloadAbility(abils.next())
+        skip
+    destroy abils
+
+    let units = new IdGenerator('x000')
+    while preloadUnit(units.next())
+        skip
+    destroy units
+
+function initVision()
+    for i = 0 to bj_MAX_PLAYER_SLOTS - 1
+        if players[i].isIngame()
+            createFogModifier(players[i], FOG_OF_WAR_VISIBLE, bj_mapInitialPlayableArea, false, false)
+                .start()
+
 init
-    replaceIndicator()
+    // preload()
     GAME_TIMER.start(99999999, null)
+
+    replaceIndicator()
+    nullTimer() ->
+        initPlayers()
+        initArmyTemplates()
+        initRounds()
+        initRoundController()
+        initScoreBoard()
