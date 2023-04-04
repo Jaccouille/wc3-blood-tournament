@@ -3,14 +3,14 @@ package UnitObjEditingUtils
 // Standard libs imports:
 import Assets
 import ErrorHandling
-import ObjEditingNatives
 import ObjectIds
-import UnitObjEditing
+import AbilityObjEditing
 
 // Local imports:
 import GridHotkeyPosition
 import TooltipsUtils
 import UnitTooltipGenerator
+import LocalObjectIDs
 
 public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinition
     return new BTUnitDefinition(newId, origId)
@@ -30,15 +30,31 @@ public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinitio
 public function createBuildingUnit(int newId) returns BuildingDefinition
     return new BuildingDefinition(newId, UnitIds.farm)
         ..setRace(Race.Undead)
-        ..setGoldCost(0)
-        ..setLumberCost(0)
+        ..setGoldCost(100)
         ..setNormalAbilities(commaList(AbilityIds.invulnerable))
         ..setBuildTime(1)
         ..setFoodProduced(0)
 
+@compiletime function createSellBuilderAbility()
+    new AbilityDefinitionAlchemistTransmute(ABIL_SELL_BUILDING)
+        ..setManaCost(1, 0)
+        ..setCooldown(1, 0)
+        ..setGoldCostFactor(1, 1)
+        ..setLumberCostFactor(1, 1)
+        ..setHeroAbility(false)
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.player_t,
+            TargetsAllowed.structure,
+            TargetsAllowed.invulnerable
+        ))
+        ..setTooltipNormal(1, "Sell unit")
+        ..setTooltipNormalExtended(1, "Sell the unit and get 100% of its cost back")
+
+
+
 public function createBuilder(int newId, int origId) returns UnitDefinition
     return new UnitDefinition(newId, origId)
-        ..setNormalAbilities(commaList(AbilityIds.invulnerable))
+        ..setNormalAbilities(commaList(AbilityIds.invulnerable, ABIL_SELL_BUILDING))
         ..setAttacksEnabled(AttacksEnabled.None.toObjectInt())
         ..setSpeedBase(522)
         ..setMovementType(MovementType.Fly)
@@ -51,6 +67,8 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
         ..setPropulsionWindowdegrees(180)
         ..setMovementHeight(200)
         ..setRace(Race.Undead)
+        ..setAnimationCastBackswing(0)
+        ..setAnimationCastPoint(0)
 
 /** Configure this variable to `false` if you don't want the
 	property names to have spaces. */
@@ -59,13 +77,13 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
 class BTUnitDefinition extends UnitDefinition
     // UnitDefinition this
     // BuildingDefinition buildingDef
-    TooltipGenerator tooltipGen = null
+    UnitTooltipGenerator tooltipGen = null
     boolean listen = false
 
     construct(int newId, int origId)
         super(newId, origId)
 
-    function registerTooltipGenerator(TooltipGenerator tgen)
+    function registerTooltipGenerator(UnitTooltipGenerator tgen)
         tooltipGen = tgen
 
     private function addTooltipProperty(string pName, string value)

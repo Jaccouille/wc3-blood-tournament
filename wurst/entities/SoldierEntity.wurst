@@ -1,7 +1,6 @@
 package SoldierEntity
 
 // Standard libs imports:
-import ClosureKeyPresses
 import HashMap
 import LinkedList
 
@@ -9,6 +8,7 @@ import LinkedList
 import IDListConstant
 import PlayerData
 import UnitEntity
+import GameConstants
 
 let typeIDs = new LinkedList<int>
     ..addAll(HUMAN_UNITS)

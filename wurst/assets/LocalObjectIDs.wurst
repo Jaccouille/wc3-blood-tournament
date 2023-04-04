@@ -72,3 +72,4 @@ public let UNIT_UNDEAD_BUILDER     = compiletime(UNIT_ID_GEN.next())
 public let UNIT_NIGHT_ELF_BUILDER = compiletime(UNIT_ID_GEN.next())
 
 public let ABIL_ALTAR_LIGHTNING = compiletime(ABIL_ID_GEN.next())
+public let ABIL_SELL_BUILDING   = compiletime(ABIL_ID_GEN.next())
