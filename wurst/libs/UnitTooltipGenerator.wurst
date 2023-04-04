@@ -1,6 +1,6 @@
 package UnitTooltipGenerator
 
-// import public ChannelAbilityPreset
+// Standard libs imports:
 import HashMap
 import UnitObjEditing
 

@@ -1,7 +1,6 @@
 package TooltipsUtils
 
-
-// Standard library imports:
+// Standard libs imports:
 import LinkedList
 import ObjectIds
 

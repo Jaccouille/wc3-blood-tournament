@@ -3,7 +3,6 @@ package PlayerData
 // Standard libs imports:
 import HashMap
 import LinkedList
-import ClosureEvents
 
 // Local imports:
 import ArmyParser

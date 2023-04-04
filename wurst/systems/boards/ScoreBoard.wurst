@@ -1,16 +1,16 @@
 package ScoreBoard
 
-// Standard library imports:
+// Standard libs imports:
+import ClosureEvents
+import ClosureTimers
 import HashMap
 import LinkedList
-import ClosureTimers
-import ClosureEvents
 
 // Local imports:
 import Boards
 import ColorUtils
-import PlayerData
 import GameConstants
+import PlayerData
 
 let KILL_COLUMN_WIDTH = 0.055
 let STAT_LABEL_WIDTH = 0.1

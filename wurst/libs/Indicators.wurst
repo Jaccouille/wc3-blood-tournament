@@ -1,9 +1,9 @@
 package Indicators
 
-// Standard-library imports:
+// Standard libs imports:
+import ClosureTimers
 import HashMap
 import LinkedList
-import ClosureTimers
 
 // Local imports:
 import LocalObjectIDs

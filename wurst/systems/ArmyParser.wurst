@@ -1,10 +1,10 @@
 package ArmyParser
 
 // Standard libs imports:
+import ClosureEvents
 import ClosureForGroups
 import HashMap
 import LinkedList
-import ClosureEvents
 
 // Local imports:
 import LocalObjectIDs

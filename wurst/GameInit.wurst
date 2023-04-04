@@ -1,14 +1,15 @@
 package GameInit
 
-import Indicators
-
-import Preloader
+// Standard libs imports:
 import ClosureTimers
 import ObjectIdGenerator
+import Preloader
+
+// Local imports:
+import ArmyParser
+import Indicators
 import PlayerData
 import RoundController
-
-import ArmyParser
 import ScoreBoard
 
 // A timer for the core gameplay.

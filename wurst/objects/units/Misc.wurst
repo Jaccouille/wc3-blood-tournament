@@ -1,9 +1,12 @@
 package Misc
 
-import LocalObjectIDs
-import ObjectIds
+// Standard libs imports:
 import AbilityObjEditing
 import Assets
+import ObjectIds
+
+// Local imports:
+import LocalObjectIDs
 
 @compiletime function createAltar()
     new AbilityDefinitionLightningAttack(ABIL_ALTAR_LIGHTNING)

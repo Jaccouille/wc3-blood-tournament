@@ -1,17 +1,16 @@
 package UnitObjEditingUtils
 
-import UnitObjEditing
-import UnitIds
-import ObjEditingNatives
-import ErrorHandling
-import ObjectIds
-import AbilityIds
+// Standard libs imports:
 import Assets
+import ErrorHandling
+import ObjEditingNatives
+import ObjectIds
+import UnitObjEditing
 
-import UnitTooltipGenerator
+// Local imports:
 import GridHotkeyPosition
 import TooltipsUtils
-
+import UnitTooltipGenerator
 
 public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinition
     return new BTUnitDefinition(newId, origId)

@@ -1,9 +1,9 @@
 package RoundController
 
 // Standard libs imports:
+import ClosureForGroups
 import ClosureTimers
 import TimerUtils
-import ClosureForGroups
 
 // Local imports:
 import SoldierEntity

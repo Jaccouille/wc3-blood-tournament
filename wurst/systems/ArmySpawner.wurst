@@ -1,11 +1,9 @@
 package ArmySpawner
 
 // Standard libs imports:
-import ClosureForGroups
-import ClosureKeyPresses
 import LinkedList
-import ObjectIds
 
+// Local imports:
 import ScoreBoard
 
 // Distance between units positioned in formation mode
