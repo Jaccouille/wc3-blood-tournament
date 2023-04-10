@@ -3,6 +3,7 @@ package PlayerData
 // Standard libs imports:
 import HashMap
 import LinkedList
+import ClosureEvents
 
 // Local imports:
 import ArmyParser
@@ -14,6 +15,7 @@ public class PlayerData
     let army = new LinkedList<LinkedList<int>>
     rect buildingRect = null
     player p
+    int roundBountySum = 0
 
     construct(player p, rect buildingRect)
         this.p = p
@@ -28,10 +30,17 @@ public class PlayerData
 
     function parseArmy()
         army.clear()
-        army.addAll(getArmyFromRect(buildingRect))
+        army.addAll(getArmyFromRect(buildingRect, p))
 
+    function addBounty(int value)
+        roundBountySum += value
 
-public function initPlayerDatas()
+    function giveReward()
+        printTimedToPlayer("You acquired " + roundBountySum.toString() + " points", 15, p)
+        p.addLumber(roundBountySum)
+        roundBountySum = 0
+
+public function initPlayers()
     new PlayerData(players[0], gg_rct_Red)
     new PlayerData(players[1], gg_rct_Blue)
     new PlayerData(players[2], gg_rct_Teal)

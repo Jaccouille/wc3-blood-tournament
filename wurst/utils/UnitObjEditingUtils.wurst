@@ -1,16 +1,20 @@
 package UnitObjEditingUtils
 
 import UnitObjEditing
+import UnitIds
+import ObjEditingNatives
+import ErrorHandling
 import ObjectIds
+import AbilityIds
+import Assets
 
-import UnitObjEditingExt
 import UnitTooltipGenerator
+import GridHotkeyPosition
+import TooltipsUtils
 
 
-public function createSpawnedUnit(int newId, int origId) returns UnitExt
-    UnitTooltipGenerator tgen
-    tgen = new UnitTooltipGenerator()
-    return new UnitExt(newId, origId, tgen)
+public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinition
+    return new BTUnitDefinition(newId, origId)
         ..setDeathTimeseconds(1.0)
         ..setBuildTime(1)
         ..setAttack1DamageSidesperDie(1)
@@ -22,52 +26,148 @@ public function createSpawnedUnit(int newId, int origId) returns UnitExt
         ..setLumberCost(0)
         ..setAcquisitionRange(1000)
         ..setRequirements("")
+        ..setGoldCost(99999)
+
+public function createBuildingUnit(int newId) returns BuildingDefinition
+    return new BuildingDefinition(newId, UnitIds.farm)
+        ..setRace(Race.Undead)
+        ..setGoldCost(0)
+        ..setLumberCost(0)
+        ..setNormalAbilities(commaList(AbilityIds.invulnerable))
+        ..setBuildTime(1)
+        ..setFoodProduced(0)
+
+public function createBuilder(int newId, int origId) returns UnitDefinition
+    return new UnitDefinition(newId, origId)
+        ..setNormalAbilities(commaList(AbilityIds.invulnerable))
+        ..setAttacksEnabled(AttacksEnabled.None.toObjectInt())
+        ..setSpeedBase(522)
+        ..setMovementType(MovementType.Fly)
+        ..setBuildTime(1)
+        ..setFoodCost(0)
+        ..setGoldCost(0)
+        ..setStructuresBuilt("")
+        ..setUpgradesUsed("")
+        ..setTurnRate(3)
+        ..setPropulsionWindowdegrees(180)
+        ..setMovementHeight(200)
+        ..setRace(Race.Undead)
+
+/** Configure this variable to `false` if you don't want the
+	property names to have spaces. */
+@configurable constant USE_PROPERTY_SPACING = true
+
+class BTUnitDefinition extends UnitDefinition
+    // UnitDefinition this
+    // BuildingDefinition buildingDef
+    TooltipGenerator tooltipGen = null
+    boolean listen = false
+
+    construct(int newId, int origId)
+        super(newId, origId)
+
+    function registerTooltipGenerator(TooltipGenerator tgen)
+        tooltipGen = tgen
+
+    private function addTooltipProperty(string pName, string value)
+        if tooltipGen != null and listen
+            if USE_PROPERTY_SPACING
+                tooltipGen.addProperty(pName, value, 0)
+            else
+                tooltipGen.addProperty(pName.replace(" ", ""), value, 0)
+
+    private function addTooltipProperty(string pName, int value)
+        addTooltipProperty(pName, value.toString())
+
+    private function addTooltipProperty(string pName, real value)
+        var s = value.toString()
+        s = s.endsWith(".0") ? s.substring(0, s.length() - 2) : s
+        addTooltipProperty(pName, s)
+
+    function tooltipStartListen()
+        listen = true
+
+    function tooltipStopListen()
+        tooltipStopListen(true)
+
+    function tooltipStopListen(boolean build)
+        listen = false
+        if tooltipGen != null and build
+            tooltipGen.applyToDef(this)
+
+    /**
+        Used for copying current this UnitDefinition tooltip to another one
+    **/
+    function tooltipStopListen(boolean build, UnitOrBuildingOrHeroDefinition def)
+        listen = false
+        if tooltipGen != null and build
+            tooltipGen.applyToDef(def)
+            tooltipGen.applyToDef(this)
 
 
-public function createSiegeUnit(int newId, int origId) returns UnitDefinition
-    return createSpawnedUnit(newId, origId)
-        ..setAcquisitionRange(1150)
-        ..setAttack1AreaofEffectTargets(commaList(
-            TargetsAllowed.debris,
-            TargetsAllowed.enemies,
-            TargetsAllowed.ground,
-            TargetsAllowed.structure,
-            TargetsAllowed.wall
-        ))
-        ..setAttack1TargetsAllowed(commaList(
-            TargetsAllowed.ground,
-            TargetsAllowed.debris,
-            TargetsAllowed.tree,
-            TargetsAllowed.wall,
-            TargetsAllowed.item_t,
-            TargetsAllowed.ward
-        ))
-        ..setAttack1WeaponType(WeaponType.Artillery)
-        ..setAttack1DamageSpillRadius(0)
-        ..setAttack1AreaofEffectMediumDamage(150)
-        ..setAttack1AreaofEffectSmallDamage(250)
-        ..setAttack1DamageFactorMedium(0.250)
-        ..setAttack1DamageFactorSmall(0.100)
-        ..setAttack1DamageLossFactor(0)
-        ..setAttack1DamageSidesperDie(11)
-        ..setAttack2AreaofEffectFullDamage(0)
-        ..setAttack2AreaofEffectMediumDamage(0)
-        ..setAttack2AreaofEffectSmallDamage(0)
-        ..setAttack2CooldownTime(3.5)
-        ..setAttack2DamageFactorMedium(0)
-        ..setAttack2DamageFactorSmall(0)
-        ..setAttack2DamageLossFactor(0)
-        ..setAttack2DamageSpillRadius(0)
-        ..setAttack2DamageUpgradeAmount(1)
-        ..setAttack2TargetsAllowed(TargetsAllowed.structure)
-        ..setAttack2WeaponType(WeaponType.Missile)
-        ..setAttack2DamageSidesperDie(11)
-        ..setAttack2Range(1000)
-        ..setRepairCommon(30)
-        ..setHitPointsRegenerationRate(0.250)
-        ..setHitPointsRegenerationType("always")
-        // ..setUnitClassification(UnitClasses.mechanical)
+    override function setAttack1AttackType(AttackType data)
+        let dataStr = data.toObjectString()
+        def.setString("ua1t", dataStr)
+        addTooltipProperty("Damage Type", dataStr.firstUpper())
 
-public function UnitDefinition.setNameEnhance(string hotkey, string name)
+    override function setAttack1DamageBase(int data)
+        def.setInt("ua1b", data)
+        // Setting base damage to 15 without random spread set the damage to  16
+        // Add +1 to make sure the tooltip is accurate
+        let dataAdjusted = data + 1
+        addTooltipProperty("Damage", dataAdjusted)
+
+    override function setAttack1CooldownTime(real data)
+        def.setUnreal("ua1c", data)
+        addTooltipProperty("Attack Speed", data)
+
+    override function setHitPointsMaximumBase(int data)
+        def.setInt("uhpm", data)
+        addTooltipProperty("Health Point", data)
+
+    override function setDefenseBase(int data)
+        def.setInt("udef", data)
+        addTooltipProperty("Armor", data)
+
+    override function setArmorType(ArmorType data)
+        let dataStr = data.toObjectString()
+        def.setString("udty", dataStr)
+        addTooltipProperty("Armor Type", dataStr.firstUpper())
+
+    override function setSpeedBase(int data)
+        def.setInt("umvs", data)
+        addTooltipProperty("Movement Speed", data)
+
+    override function setAttack1Range(int data)
+        def.setInt("ua1r", data)
+        addTooltipProperty("Attack Range", data)
+
+    function setMana(int data)
+        def.setInt("umpm", data)
+        def.setInt("umpi", data)
+        addTooltipProperty("Mana", data)
+
+    function setGoldData(int data)
+        this.setGoldCost(data)
+
+    override function setPointValue(int data)
+        def.setInt("upoi", data)
+        addTooltipProperty("Bounty", data)
+
+public function UnitOrBuildingOrHeroDefinition.setNameEnhance(string hotkey, string name)
+    this.setHotkeyEnhance(hotkey)
     this.setName(name)
+    this.setTooltipBasic(makeToolTipNorm(hotkey, name))
+
+public function UnitDefinition.setName(string name)
+    this.setTooltipBasic(makeToolTipNormAura(name))
+    this.setButtonPositionX(0)
+    this.setButtonPositionY(0)
+
+function UnitOrBuildingOrHeroDefinition.setHotkeyEnhance(string hotkey)
+    if not hotKeyMapping.has(hotkey)
+        error("Hotkey button position mapping has no \"{0}\" element".format(hotkey))
+        return
     this.setHotkey(hotkey)
+    this.setButtonPositionX(hotKeyMapping.get(hotkey).x)
+    this.setButtonPositionY(hotKeyMapping.get(hotkey).y)

@@ -10,9 +10,9 @@ import public Lodash
 
 // Local imports:
 import ArmySpawner
-import IDListConstant
 import PlayerData
 import public GameConstants
+import ScoreBoard
 
 interface OnRoundStart
     function onStart(Round round)
@@ -45,12 +45,18 @@ public class Round
         for contestantPair in matchUp
             let p1 = players[contestantPair.a]
             let p2 = players[contestantPair.b]
+
+            scoreBoardEntries.get("ArmyPoints").setEntry(p1, "0", "")
+            scoreBoardEntries.get("ArmyPoints").setEntry(p2, "0", "")
+            scoreBoardEntries.get("BloodPoints").setEntry(p1, "0", "")
+            scoreBoardEntries.get("BloodPoints").setEntry(p2, "0", "")
+
             pData.get(p1).parseArmy()
             pData.get(p2).parseArmy()
             spawnArmy(spawnZones.get(zoneIdx), pData.get(p1).army, p1)
             spawnArmy(spawnZones.get(zoneIdx + 1), pData.get(p2).army, p2)
             forUnitsAll() (unit u) ->
-                if HUMAN_UNITS.has(u.getTypeId())
+                if u.getMoveSpeed() > 1 and not u.isType(UNIT_TYPE_PEON)
                     u.issuePointOrder("attack", CENTER)
             zoneIdx += 2
 
@@ -58,10 +64,12 @@ public class Round
     function finish()
         onFinishListener.onFinish(this)
 
-init
-    initPlayerDatas()
-    createFogModifier(players[0], FOG_OF_WAR_VISIBLE, bj_mapInitialPlayableArea, false, false).start()
-
+// TODO: replace with gamestate functional interface just like in ITTs
+public function initRounds()
     onRoundFinish() (Round round) ->
-        // TODO: compute reward
         Log.info("Round finish")
+        pData.forEach() (player key, PlayerData value) ->
+            value.giveReward()
+        forUnitsAll() (unit u) ->
+            if IsUnitDeadBJ(u)
+                u.remove()

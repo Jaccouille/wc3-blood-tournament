@@ -1,0 +1,145 @@
+package OrcUnits
+
+import ChannelAbilityPreset
+import Assets
+
+import LocalObjectIDs
+import UnitObjEditingUtils
+
+@compiletime function createGrunt()
+    createBuildingUnit(BUILDING_GRUNT)
+        ..setModelFile(Units.grunt1)
+        ..setIconGameInterface(Icons.bTNGrunt)
+        ..setUnitSoundSet(Soundsets.grunt)
+
+    createSpawnedUnit(UNIT_GRUNT, UnitIds.grunt)
+        ..setPointValue(20)
+        ..setAttack1CooldownTime(1.5)
+        ..setAttack1DamageBase(25)
+        ..setCollisionSize(15)
+        ..setDefenseBase(2)
+        ..setHitPointsMaximumBase(150)
+        ..setPriority(3)
+        ..setNameEnhance("Q", "Grunt")
+
+@compiletime function createHeadhunter()
+    createBuildingUnit(BUILDING_HEADHUNTER)
+        ..setModelFile(Units.headhunter1)
+        ..setIconGameInterface(Icons.bTNHeadhunter)
+        ..setUnitSoundSet(Soundsets.headHunter)
+
+    createSpawnedUnit(UNIT_HEADHUNTER, UnitIds.headhunter)
+        ..setPointValue(30)
+        ..setAttack1CooldownTime(2)
+        ..setAttack1DamageBase(20)
+        ..setAttack1Range(400)
+        ..setCollisionSize(15)
+        ..setHitPointsMaximumBase(100)
+        ..setPriority(3)
+        ..setNameEnhance("Q", "Headhunter")
+
+@compiletime function createWarlock()
+    createBuildingUnit(BUILDING_WARLOCK)
+        ..setModelFile(Units.orcWarlock1)
+        ..setIconGameInterface(Icons.bTNOrcWarlock)
+        ..setUnitSoundSet(Soundsets.orcWarlock)
+
+    createSpawnedUnit(UNIT_WARLOCK, UnitIds.war2warlock)
+        ..setPointValue(40)
+        ..setAttack1AttackType(AttackType.Magic)
+        ..setAttack1CooldownTime(1.25)
+        ..setAttack1DamageBase(40)
+        ..setAttack1Range(500)
+        ..setArmorType(ArmorType.Unarmored)
+        ..setCategorizationCampaign(false)
+        ..setCollisionSize(15)
+        ..setHitPointsMaximumBase(60)
+        ..setManaMaximum(0)
+        ..setManaInitialAmount(0)
+        ..setPriority(4)
+        ..setNameEnhance("W", "Warlock")
+
+@compiletime function createShaman()
+    createBuildingUnit(BUILDING_SHAMAN)
+        ..setModelFile(Units.shaman1)
+        ..setIconGameInterface(Icons.bTNShaman)
+        ..setUnitSoundSet(Soundsets.shaman)
+
+    createSpawnedUnit(UNIT_SHAMAN, UnitIds.shaman)
+        ..setPointValue(50)
+        ..setAttack1CooldownTime(1.75)
+        ..setAttack1DamageBase(20)
+        ..setAttack1Range(550)
+        ..setCollisionSize(15)
+        ..setHitPointsMaximumBase(40)
+        ..setManaInitialAmount(200)
+        ..setLevel(4)
+        ..setPriority(10)
+        ..setNameEnhance("X", "Shaman")
+
+@compiletime function createTauren()
+    createBuildingUnit(BUILDING_TAUREN)
+        ..setModelFile(Units.tauren)
+        ..setIconGameInterface(Icons.bTNTauren)
+        ..setUnitSoundSet(Soundsets.tauren)
+
+    createSpawnedUnit(UNIT_TAUREN, UnitIds.tauren)
+        ..setPointValue(60)
+        ..setAttack1CooldownTime(2)
+        ..setAttack1DamageBase(80)
+        ..setAttack1Range(120)
+        ..setDefenseBase(4)
+        ..setSpeedBase(250)
+        ..setCollisionSize(15)
+        ..setHitPointsMaximumBase(200)
+        ..setPriority(7)
+        ..setNameEnhance("S", "Tauren")
+
+@compiletime function createChieftain()
+    createBuildingUnit(BUILDING_CHIEFTAIN)
+        ..setModelFile(Units.heroTaurenChieftain1)
+        ..setIconGameInterface(Icons.bTNHeroTaurenChieftain)
+        ..setUnitSoundSet(Soundsets.heroTaurenChieftain)
+
+    createSpawnedUnit(UNIT_CHIEFTAIN, UnitIds.tauren)
+        ..setPointValue(200)
+        ..setAttack1CooldownTime(2)
+        ..setAttack1DamageBase(140)
+        ..setAttack1Range(120)
+        ..setDefenseBase(4)
+        ..setSpeedBase(250)
+        ..setCollisionSize(15)
+        ..setHitPointsMaximumBase(400)
+        ..setPriority(7)
+        ..setNameEnhance("S", "Chieftain")
+        ..setModelFile(Units.heroTaurenChieftain1)
+
+@compiletime function createShadowHunter()
+    createBuildingUnit(BUILDING_SHADOWHUNTER)
+        ..setModelFile(Units.heroShadowHunter1)
+        ..setIconGameInterface(Icons.bTNShadowHunter)
+        ..setUnitSoundSet(Soundsets.heroShadowHunter)
+
+    createSpawnedUnit(UNIT_SHADOWHUNTER, UnitIds.headhunter)
+        ..setPointValue(200)
+        ..setAttack1CooldownTime(1)
+        ..setAttack1DamageBase(75)
+        ..setAttack1Range(600)
+        ..setCollisionSize(15)
+        ..setHitPointsMaximumBase(175)
+        ..setPriority(3)
+        ..setNameEnhance("Q", "Shadow Hunter")
+        ..setModelFile(Units.heroShadowHunter1)
+
+@compiletime function createBuilder()
+    createBuilder(UNIT_ORC_BUILDER, UnitIds.peon)
+        ..setNameEnhance("W", "Orc Builder")
+        ..setStructuresBuilt(commaList(
+            BUILDING_GRUNT,
+            BUILDING_HEADHUNTER,
+            BUILDING_WARLOCK,
+            BUILDING_SHAMAN,
+            BUILDING_TAUREN,
+            BUILDING_CHIEFTAIN,
+            BUILDING_SHADOWHUNTER
+        ))

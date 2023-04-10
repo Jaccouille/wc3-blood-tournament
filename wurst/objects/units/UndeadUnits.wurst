@@ -1,0 +1,164 @@
+package UndeadUnits
+
+import ChannelAbilityPreset
+import Assets
+
+import LocalObjectIDs
+import UnitObjEditingUtils
+
+@compiletime function createGhoul()
+    createBuildingUnit(BUILDING_GHOUL)
+        ..setModelFile(Units.ghoul1)
+        ..setIconGameInterface(Icons.bTNGhoul)
+        ..setUnitSoundSet(Soundsets.ghoul)
+
+    createSpawnedUnit(UNIT_GHOUL, UnitIds.ghoul)
+        ..setPointValue(20)
+        ..setAttack1CooldownTime(1.3)
+        ..setAttack2DamageBase(10)
+        ..setAttack1Range(100)
+        ..setAttacksEnabled(1)
+        ..setDefenseBase(2)
+        ..setArmorType(ArmorType.Normal)
+        ..setCollisionSize(16.0)
+        ..setHitPointsMaximumBase(50)
+        ..setPriority(2)
+        ..setNameEnhance("Q", "Ghoul")
+        ..setTooltipExtended("Pew pew pew")
+
+@compiletime function createCryptFiend()
+    createBuildingUnit(BUILDING_CRYPT_FIEND)
+        ..setModelFile(Units.cryptFiend1)
+        ..setIconGameInterface(Icons.bTNCryptFiend)
+        ..setUnitSoundSet(Soundsets.cryptFiend)
+
+    createSpawnedUnit(UNIT_CRYPT_FIEND, UnitIds.cryptfiend)
+        ..setPointValue(30)
+        ..setAttack1CooldownTime(1.5)
+        ..setAttack1DamageBase(20)
+        ..setAttack1ProjectileSpeed(900)
+        ..setAttack1Range(400)
+        ..setAttack1TargetsAllowed(commaList(
+            TargetsAllowed.ground,
+            TargetsAllowed.structure,
+            TargetsAllowed.debris,
+            TargetsAllowed.air,
+            TargetsAllowed.item_t,
+            TargetsAllowed.ward
+        ))
+        ..setSpeedBase(320)
+        ..setCollisionSize(16.0)
+        ..setHitPointsMaximumBase(100)
+        ..setLevel(2)
+        ..setPriority(3)
+        ..setNameEnhance("Q", "Crypt Fiend")
+        ..setTooltipExtended("Pew pew pew")
+
+@compiletime function createNecromancer()
+    createBuildingUnit(BUILDING_NECROMANCER)
+        ..setModelFile(Units.necromancer1)
+        ..setIconGameInterface(Icons.bTNNecromancer)
+        ..setUnitSoundSet(Soundsets.necromancer)
+
+    createSpawnedUnit(UNIT_NECROMANCER, UnitIds.necromancer)
+        ..setPointValue(40)
+        ..setNormalAbilities("")
+        ..setAttack1CooldownTime(1.75)
+        ..setAttack1DamageBase(30)
+        ..setDefenseBase(2)
+        ..setCollisionSize(16.0)
+        ..setHitPointsMaximumBase(25)
+        ..setManaInitialAmount(200)
+        ..setPriority(9)
+        ..setNameEnhance("E", "Necromancer")
+        ..setTooltipExtended("Pew pew pew")
+
+@compiletime function createBanshee()
+    createBuildingUnit(BUILDING_BANSHEE)
+        ..setModelFile(Units.banshee1)
+        ..setIconGameInterface(Icons.bTNBanshee)
+        ..setUnitSoundSet(Soundsets.banshee)
+
+    createSpawnedUnit(UNIT_BANSHEE, UnitIds.banshee)
+        ..setPointValue(50)
+        ..setAttack1CooldownTime(1.75)
+        ..setAttack1DamageBase(20)
+        ..setDefenseBase(2)
+        ..setCollisionSize(16.0)
+        ..setHitPointsMaximumBase(25)
+        ..setManaInitialAmount(100)
+        ..setPriority(9)
+        ..setNameEnhance("E", "Banshee")
+        ..setTooltipExtended("Pew pew pew")
+
+@compiletime function createAbomination()
+    createBuildingUnit(BUILDING_ABOMINATION)
+        ..setModelFile(Units.abomination1)
+        ..setIconGameInterface(Icons.bTNAbomination)
+        ..setUnitSoundSet(Soundsets.abomination)
+
+    createSpawnedUnit(UNIT_ABOMINATION, UnitIds.abomination)
+        ..setPointValue(60)
+        ..setScalingValue(1.1)
+        ..setAttack1CooldownTime(2.5)
+        ..setAttack1DamageBase(85)
+        ..setDefenseBase(4)
+        ..setCollisionSize(22.0)
+        ..setHitPointsMaximumBase(500)
+        ..setPriority(8)
+        ..setNameEnhance("F", "Abomination")
+        ..setTooltipExtended("Pew pew pew")
+
+@compiletime function createDreadlord()
+    createBuildingUnit(BUILDING_DREADLORD)
+        ..setModelFile(Units.heroDreadLord)
+        ..setIconGameInterface(Icons.bTNHeroDreadLord)
+        ..setUnitSoundSet(Soundsets.heroDreadLord)
+
+    createSpawnedUnit(UNIT_DREADLORD, UnitIds.dreadlord)
+        ..setPointValue(200)
+        ..setAttack1CooldownTime(1.)
+        ..setAttack2DamageBase(70)
+        ..setAttack1Range(100)
+        ..setDefenseBase(4)
+        ..setArmorType(ArmorType.Normal)
+        ..setCollisionSize(16.0)
+        ..setHitPointsMaximumBase(350)
+        ..setPriority(2)
+        ..setNameEnhance("Q", "Dreadlord")
+        ..setTooltipExtended("Pew pew pew")
+        ..setModelFile(Units.heroDreadLord)
+
+@compiletime function createLich()
+    createBuildingUnit(BUILDING_LICH)
+        ..setModelFile(Units.heroLich1)
+        ..setIconGameInterface(Icons.bTNHeroLich)
+        ..setUnitSoundSet(Soundsets.heroLich)
+
+    createSpawnedUnit(UNIT_LICH, UnitIds.lich)
+        ..setPointValue(200)
+        ..setNormalAbilities("")
+        ..setAttack1CooldownTime(1.75)
+        ..setAttack1DamageBase(130)
+        ..setDefenseBase(4)
+        ..setCollisionSize(16.0)
+        ..setHitPointsMaximumBase(130)
+        ..setManaInitialAmount(200)
+        ..setPriority(9)
+        ..setNameEnhance("E", "Lich")
+        ..setTooltipExtended("Pew pew pew")
+        ..setAttack1ProjectileArt(Abilities.lichMissile)
+        ..setModelFile(Units.heroLich1)
+
+@compiletime function createBuilder()
+    createBuilder(UNIT_UNDEAD_BUILDER, UnitIds.acolyte)
+        ..setNameEnhance("E", "Undead Builder")
+        ..setStructuresBuilt(commaList(
+            BUILDING_GHOUL,
+            BUILDING_CRYPT_FIEND,
+            BUILDING_NECROMANCER,
+            BUILDING_BANSHEE,
+            BUILDING_ABOMINATION,
+            BUILDING_DREADLORD,
+            BUILDING_LICH
+        ))

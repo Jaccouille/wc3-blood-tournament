@@ -1,0 +1,105 @@
+package Indicators
+
+// Standard-library imports:
+import HashMap
+import LinkedList
+import ClosureTimers
+
+// Local imports:
+import LocalObjectIDs
+
+public interface Callback
+    function run(unit target)
+
+// A mapping of IDs from indicator units to actual units.
+public let indicators = new IterableMap<int, int>()
+    ..put('h001', BUILDING_FOOTMAN)
+    ..put('h002', BUILDING_RIFLEMAN)
+    ..put('h003', BUILDING_KNIGHT)
+    ..put('h004', BUILDING_PRIEST)
+    ..put('h005', BUILDING_SORCERESS)
+    ..put('h006', BUILDING_ARCHMAGE)
+    ..put('h000', BUILDING_PALADIN)
+
+    ..put('o001', BUILDING_GRUNT)
+    ..put('o002', BUILDING_HEADHUNTER)
+    ..put('o003', BUILDING_WARLOCK)
+    ..put('o004', BUILDING_SHAMAN)
+    ..put('o005', BUILDING_TAUREN)
+    ..put('o006', BUILDING_CHIEFTAIN)
+    ..put('o000', BUILDING_SHADOWHUNTER)
+
+    ..put('u001', BUILDING_GHOUL)
+    ..put('u002', BUILDING_CRYPT_FIEND)
+    ..put('u003', BUILDING_NECROMANCER)
+    ..put('u004', BUILDING_BANSHEE)
+    ..put('u005', BUILDING_ABOMINATION)
+    ..put('u006', BUILDING_DREADLORD)
+    ..put('u000', BUILDING_LICH)
+
+    ..put('e001', BUILDING_TREANT)
+    ..put('e002', BUILDING_ARCHER)
+    ..put('e003', BUILDING_HUNTRESS)
+    ..put('e004', BUILDING_DRUID_TALON)
+    ..put('e005', BUILDING_DRUID_CLAW_BEAR)
+    ..put('e006', BUILDING_DAEMON_HUNTER)
+    ..put('e000', BUILDING_PRIESTESS_OF_THE_MOON)
+
+    ..put('h007', UNIT_ALTAR)
+    ..put('h008', UNIT_RACE_PICKER)
+
+
+public let indicatorCallbacks = new IterableMap<int, LinkedList<Callback>>()
+
+public function registerIndicator(int originID, int targetID)
+    indicators.put(originID, targetID)
+
+public function registerCallback(int targetID, Callback cb)
+    // Look up the list of callbacks for the given type.
+    var list = indicatorCallbacks.get(targetID)
+
+    // Build a default element, as necessary.
+    if list == null
+        // Create a new list.
+        list = new LinkedList<Callback>()
+
+        // Register the list for later user.
+        indicatorCallbacks.put(targetID, list)
+
+    // Register the callback.
+    list.add(cb)
+
+// It's easier to place units on editor and then replace them with our
+// Wurst defined units
+public function replaceIndicator()
+    // Delay to ensure that all indicators are registered prior to execution.
+    nullTimer() ->
+        // Replace indicators one type at a time.
+        indicators.forEach() (integer originID, integer targetID) ->
+            // Find all matching indicators for the current type.
+            ENUM_GROUP..clear().enumUnitsOfType(originID, null)
+
+            // Replace each indicator with the corresponding unit.
+            for origin in ENUM_GROUP
+                // Extract the relevant information from the indicator.
+                let owner = origin.getOwner()
+                let pos   = origin.getPos()
+                let angle = origin.getFacingAngle()
+
+                // Remove the indicator once it is no longer needed.
+                origin.remove()
+
+                // Create the actual unit.
+                let target = createUnit(owner, targetID, pos, angle)
+
+                // TODO : for some reason this following code
+                // crashes due to HotkeyMapping definition in CommonUtils.wurst
+                // Find out why
+                // Look up the callbacks for this indicator.
+                if indicatorCallbacks.has(targetID)
+                    let list = indicatorCallbacks.get(targetID)
+
+                    // Execute each callback, as necessary.
+                    if list != null
+                        list.forEach() (Callback cb) ->
+                            cb.run(target)

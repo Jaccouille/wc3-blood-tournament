@@ -1,0 +1,102 @@
+package RoundController
+
+// Standard libs imports:
+import ClosureTimers
+import TimerUtils
+import ClosureForGroups
+
+// Local imports:
+import SoldierEntity
+import public Round
+
+public constant roundController = new RoundController()
+
+constant SPAWN_TIME = 5.
+
+interface OnAllroundsFinished
+    abstract function execute()
+
+public OnAllroundsFinished onAllroundsFinished
+
+class RoundController
+    int roundCount = 1
+    constant rounds = new LinkedList<Round>
+
+    Round currentround = null
+
+    function addrounds(LinkedList<Round> rounds)
+        this.rounds.addAll(rounds.copy())
+
+    function roundSpawn()
+        forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->
+            u.pause()
+        if rounds.isEmpty()
+            onAllroundsFinished.execute()
+            return
+
+        let tim = getTimer()
+        // TODO: cleanup
+        // let tdialog = tim.createTimerDialog()
+        // ..setTitle("Time until next round:")
+        // ..display(true)
+        tim.doAfter(SPAWN_TIME) ->
+            Log.info("Round " + roundCount.toString())
+            roundCount++
+            // tdialog.destr()
+
+            currentround = rounds.dequeue()
+            currentround.start()
+
+    function checkIfCurrentroundDone()
+        if currentround != null
+            currentround.finish()
+            currentround = null
+            roundSpawn()
+
+public function initRoundController()
+    new Round()
+        ..addMatchup(new Pair(0, 1))
+        ..addMatchup(new Pair(2, 3))
+        ..addMatchup(new Pair(4, 5))
+        ..addMatchup(new Pair(6, 7))
+
+    roundController.addrounds(asList(
+            new Round()
+                ..addMatchup(new Pair(0, 1))
+                ..addMatchup(new Pair(2, 3))
+                ..addMatchup(new Pair(4, 5))
+                ..addMatchup(new Pair(6, 7)),
+            new Round()
+                ..addMatchup(new Pair(0, 1))
+                ..addMatchup(new Pair(2, 3))
+                ..addMatchup(new Pair(4, 5))
+                ..addMatchup(new Pair(6, 7)),
+            new Round()
+                ..addMatchup(new Pair(0, 1))
+                ..addMatchup(new Pair(2, 3))
+                ..addMatchup(new Pair(4, 5))
+                ..addMatchup(new Pair(6, 7)),
+            new Round()
+                ..addMatchup(new Pair(0, 1))
+                ..addMatchup(new Pair(2, 3))
+                ..addMatchup(new Pair(4, 5))
+                ..addMatchup(new Pair(6, 7))
+        ))
+
+    doAfter(2) ->
+        roundController.roundSpawn()
+
+    onRoundStart() (Round round) ->
+        Log.info("Round start")
+
+    onLastArmyRemaining = () ->
+        forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->
+            u.unpause()
+        Log.info("Clean up phase")
+
+    onAllUnitDead = () ->
+        Log.info("All unit dead")
+        roundController.checkIfCurrentroundDone()
+
+    onAllroundsFinished = () ->
+        Log.info("Match over")

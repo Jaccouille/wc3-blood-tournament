@@ -1,17 +1,12 @@
 package ArmySpawner
 
 // Standard libs imports:
-import ClosureEvents
 import ClosureForGroups
 import ClosureKeyPresses
-import ClosureTimers
-import HashMap
 import LinkedList
 import ObjectIds
-import Texttag
 
-// Third party imports:
-import Lodash
+import ScoreBoard
 
 // Distance between units positioned in formation mode
 @configurable constant FORMATION_WIDTH = 120.
@@ -63,7 +58,8 @@ public function spawnArmy(SpawnZone spawnZone, LinkedList<LinkedList<int>> army,
     var idx = 0
     for subArmy in army
         for unitId in subArmy
-            createUnit(p, unitId, pos, spawnZone.angle)
+            let armyPoints = createUnit(p, unitId, pos, spawnZone.angle).getPointValue()
+            scoreBoardEntries.get("ArmyPoints").addValue(p, armyPoints)
             // createTTEx(pos.toVec3() + vec3(0, 0, 90), idx.toString(), 6)
             pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
             // Move to next line
@@ -72,25 +68,3 @@ public function spawnArmy(SpawnZone spawnZone, LinkedList<LinkedList<int>> army,
             idx++
             if (idx + 1) / unitPerLine > unitPerColumn
                 break
-    // return army.drop(idx)
-    // return army
-
-
-init
-    // let armyZone = gg_rct_Red
-    // let unitList = new LinkedList<int>
-
-    // forUnitsInRect(armyZone) (unit u) ->
-    //     unitList.addAll(armyMap.get(u.getTypeId()))
-
-    onKeyPress(OSKEY_END) ->
-        forUnitsAll() (unit u) ->
-            u.setAnimation("Stand - Victory")
-
-    onKeyPress(OSKEY_0) ->
-        forUnitsOfType('hfoo'.toRawCode()) (unit u) ->
-            u.kill()
-
-        spawnZones.forEach() (SpawnZone t) ->
-            // spawnArmy(t, unitList, players[0])
-        // formLines(gg_rct_Region_001.getRightBot(), gg_rct_Region_001.getCenter(), unitList,  270..asAngleDegrees())

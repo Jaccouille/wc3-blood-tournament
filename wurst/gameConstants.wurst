@@ -4,7 +4,7 @@ constant isProdBuild = compiletime(isProductionBuild())
 public constant allowCheats = not isProdBuild
 
 
-public constant ENEMY_PLAYER = players[8]
+public constant ALTAR_PLAYER = players[PLAYER_NEUTRAL_AGGRESSIVE]
 
 public constant REFUND_VALUE = 0.8
 
