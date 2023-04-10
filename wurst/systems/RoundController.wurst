@@ -8,6 +8,7 @@ import TimerUtils
 // Local imports:
 import SoldierEntity
 import public Round
+import AltarEntity
 
 public constant roundController = new RoundController()
 
@@ -47,9 +48,9 @@ class RoundController
             currentround = rounds.dequeue()
             currentround.start()
 
-    function checkIfCurrentroundDone()
+    function checkIfCurrentroundDone(player winner)
         if currentround != null
-            currentround.finish()
+            currentround.finish(winner)
             currentround = null
             roundSpawn()
 
@@ -93,25 +94,30 @@ public function initRoundController()
         forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->
             u.unpause()
         Log.info("Clean up phase")
+        altarEntity.showCounter()
 
-    onAllUnitDead = () ->
+    onAllUnitDead = (player winner) ->
         Log.info("All unit dead")
-        roundController.checkIfCurrentroundDone()
+        roundController.checkIfCurrentroundDone(winner)
+        altarEntity.hideCounter()
 
     onAllroundsFinished = () ->
         Log.info("Match over")
 
     onRoundFinish() (Round round) ->
         Log.info("Round finish")
-        if round.goldReward > 0
-            printTimed("You get " + round.goldReward.toString() + " golds from round income", 15)
-        if round.bloodPointReward > 0
-            printTimed("You get " + round.bloodPointReward.toString() + " blood points from round income", 15)
-        pData.forEach() (player key, PlayerData value) ->
-            value.giveReward()
-            key.addGold(round.goldReward)
-            key.addLumber(round.bloodPointReward)
-
-        forUnitsAll() (unit u) ->
-            if IsUnitDeadBJ(u)
-                u.remove()
+        doAfter(3) ->
+            let winner = round.winner
+            printTimed(winner.getName() + " gets " + altarEntity.bloodPointCounter.toString() + " for winning the round" , 15)
+            forUnitsAll() (unit u) ->
+                if IsUnitDeadBJ(u)
+                    u.remove()
+        doAfter(5) ->
+            if round.goldReward > 0
+                printTimed("You get " + round.goldReward.toString() + " golds from round income", 15)
+            if round.bloodPointReward > 0
+                printTimed("You get " + round.bloodPointReward.toString() + " blood points from round income", 15)
+            pData.forEach() (player key, PlayerData value) ->
+                value.giveReward()
+                key.addGold(round.goldReward)
+                key.addLumber(round.bloodPointReward)

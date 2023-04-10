@@ -1,0 +1,41 @@
+package AltarEntity
+
+// Local imports:
+import LocalObjectIDs
+
+import UnitEntity
+import LocalAssets
+
+public AltarEntity altarEntity = null
+
+public class AltarEntity extends UnitEntity
+    effect bloodOrb = null
+    texttag bloodPointCounterTag = null
+    int bloodPointCounter = 0
+
+    construct(unit whichUnit)
+        super(whichUnit)
+        altarEntity = this
+
+        // bloodOrb = addEffect(Abilities.manaFlareBase, whichUnit.getPos().toVec3() + vec3(0, 0, 100))
+        bloodOrb = addEffect(LocalUnits.orbBloodX, whichUnit, "overhead")
+        bloodOrb.setTimeScale(0.1)
+        let pos = whichUnit.getPos().withRealZ(whichUnit).op_plus(vec3(-10, 0, -500))
+        bloodPointCounterTag = createTTEx(pos, "0", 10)
+            ..setColor(255, 0, 0, 255)
+
+        EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
+            if EventData.getKillingUnit() == whichUnit
+                bloodOrb.setScale(bloodOrb.getScale() + 0.01)
+                bloodPointCounter += EventData.getDyingUnit().getPointValue()
+                bloodPointCounterTag.setText(bloodPointCounter.toString(), 10)
+
+    function hideCounter()
+        this.bloodPointCounterTag.setText("0", 10)
+        this.bloodPointCounterTag.setVisibility(false)
+
+    function showCounter()
+        this.bloodPointCounterTag.setVisibility(true)
+
+init
+    AltarEntity.register(UNIT_ALTAR, target -> new AltarEntity(target))

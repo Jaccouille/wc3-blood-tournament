@@ -22,7 +22,7 @@ interface LastArmyRemaining
 public LastArmyRemaining onLastArmyRemaining
 
 interface AllUnitDead
-    abstract function execute()
+    abstract function execute(player winner)
 
 public AllUnitDead onAllUnitDead
 
@@ -55,7 +55,7 @@ public class SoldierEntity extends UnitEntity
                 if playerSoldiers.size() == 1
                     onLastArmyRemaining.execute()
                 if playerSoldiers.size() == 0
-                    onAllUnitDead.execute()
+                    onAllUnitDead.execute(theUnit.getOwner())
         end)
 
     override function postCreate()
