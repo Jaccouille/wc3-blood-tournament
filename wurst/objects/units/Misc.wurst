@@ -10,29 +10,33 @@ import LocalObjectIDs
 
 @compiletime function createAltar()
     new AbilityDefinitionLightningAttack(ABIL_ALTAR_LIGHTNING)
-        ..setLightningEffects(LIGHTNING_MANA_FLARE)
+        ..setLightningEffects(LIGHTNING_FINGER_OF_DEATH)
         ..setGraphicDelay(1, 0.01)
         ..setArtSpecial("")
-        ..setArtTarget("")
+        ..setArtTarget(Abilities.demonBoltImpact)
+        ..setMissileSpeed(9999)
+        ..setGraphicDelay(1, 0)
+        ..setMissileArt("")
 
 
     new UnitDefinition(UNIT_ALTAR, UnitIds.huntress)
         ..setNormalAbilities(commaList(ABIL_ALTAR_LIGHTNING, AbilityIds.invulnerable, AbilityIds.magicSentry))
-        ..setModelFile(Units.forgottenOne1)
+        ..setModelFile(Units.tichondrius1)
         ..setSpeedBase(0)
         ..setScalingValue(1.0)
         ..setSelectionScale(2.0)
         ..setAcquisitionRange(2000)
         ..setAttack1AnimationBackswingPoint(0)
         ..setAttack1AnimationDamagePoint(0)
-        ..setAttack1AreaofEffectFullDamage(1)
+        ..setAttack1DamageFactorMedium(1)
+        ..setAttack1AreaofEffectFullDamage(100)
         ..setAttack1AttackType(AttackType.Chaos)
         ..setAttack1CooldownTime(0.1)
         ..setAttack1DamageBase(5000)
         ..setAttack1DamageSidesperDie(1)
         ..setAttack1MaximumNumberofTargets(1)
         ..setAttack1ProjectileArt("")
-        ..setAttack1ProjectileSpeed(5000)
+        ..setAttack1ProjectileSpeed(10000)
         ..setAttack1Range(2000)
         ..setAttack1TargetsAllowed(commaList(
             TargetsAllowed.air,
@@ -43,7 +47,8 @@ import LocalObjectIDs
             )
         )
         ..setAttack1WeaponSound(WeaponSound.Nothing)
-        ..setAttack1WeaponType(WeaponType.Instant)
+        ..setAttack1WeaponType(WeaponType.Artillery)
+        ..setName("Blood Master")
 
 @compiletime function createRacePickerUnit() returns BuildingDefinition
     return new BuildingDefinition(UNIT_RACE_PICKER, UnitIds.altarofkings)
