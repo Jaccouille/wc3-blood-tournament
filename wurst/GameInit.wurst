@@ -40,6 +40,13 @@ init
     nullTimer() ->
         initPlayers()
         initArmyTemplates()
-        initRounds()
         initRoundController()
         initScoreBoard()
+        ForForce(bj_FORCE_ALL_PLAYERS) ->
+            CreateFogModifierRect(
+                GetEnumPlayer(),
+                FOG_OF_WAR_VISIBLE,
+                bj_mapInitialPlayableArea,
+                true,
+                false
+            ).start()
