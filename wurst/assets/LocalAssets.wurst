@@ -1,0 +1,8 @@
+package LocalAssets
+
+public class LocalIcons
+    static constant infantryOWDGerman = "Icons/InfantryOWDGerman.blp"
+
+public class LocalUnits
+    static constant orbBloodX = "Models/Units/OrbBloodX.mdl"
+    static constant owdMilitiagerman = "Models/Units/OWD_MilitiaGerman.mdx"

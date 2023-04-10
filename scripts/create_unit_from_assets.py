@@ -32,13 +32,10 @@ def get_import_file_paths(directory):
     return file_paths
 
 
-# Define the file path and the start and end tokens
-file_path = "example.wurst"
-
 icon_pattern  = r"(?<=public class LocalIcons\n)[\s\S]*?(?=\n\n|$)"
 model_pattern = r"(?<=public class LocalUnits\n)[\s\S]*?(?=\n\n|$)"
 
-template_string = '''    static $key = "$file_path"'''
+template_string = '''    static constant $key = "$file_path"'''
 template = Template(template_string)
 
 def replace_section(pattern, replacement_list, contents, prefix=""):
@@ -72,30 +69,34 @@ def createUnitDefinition(model_list):
 
 def main():
         # Read the contents of the file
-    file_path = Path(__file__).resolve().parent / "example.wurst"
+    file_path = Path(__file__).resolve().parent / "AssetsOutput.wurst"
     unit_def_path = Path(__file__).resolve().parent / "UnitDef.wurst"
-    with open(file_path, "r") as f:
-        contents = f.read().rstrip("\n")
 
+    contents = "package AssetsOutput\n\npublic class LocalIcons\n\npublic class LocalUnits\nplaceholder"
+    if file_path.exists():
+        with open(file_path, "r") as f:
+            contents = f.read().rstrip("\n")
 
-        icon_list = get_import_file_paths(icon_directory_path)
-        print(icon_list)
-        icon_lines = [template.substitute(key=key, file_path=icon_list[key]).replace("\\", "/") for key in icon_list]
-        contents =  replace_contents(icon_pattern, contents, icon_lines);
+    icon_list = get_import_file_paths(icon_directory_path)
+    print(icon_list)
+    icon_lines = [template.substitute(key=key, file_path=icon_list[key]).replace("\\", "/") for key in icon_list]
+    contents =  replace_contents(icon_pattern, contents, icon_lines);
 
-        model_list = get_import_file_paths(model_directory_path)
-        model_lines = [template.substitute(key=key, file_path=model_list[key]).replace("\\", "/") for key in model_list]
-        contents =  replace_contents(model_pattern, contents, model_lines);
+    model_list = get_import_file_paths(model_directory_path)
+    model_lines = [template.substitute(key=key, file_path=model_list[key]).replace("\\", "/") for key in model_list]
+    print(model_lines)
+    contents =  replace_contents(model_pattern, contents, model_lines);
 
-        unit_def_content = createUnitDefinition(model_list)
+    unit_def_content = createUnitDefinition(model_list)
 
-        # Write the modified contents back to the file
-        with open(file_path, "w") as f:
-            f.write(contents)
+    # Write the modified contents back to the file
+    with open(file_path, "w") as f:
+        f.write(contents)
 
-        # Write the modified contents back to the file
-        with open(unit_def_path, "w") as f:
-            f.write(unit_def_content)
+    return
+    # Write the modified contents back to the file
+    with open(unit_def_path, "w") as f:
+        f.write(unit_def_content)
 
 if __name__ == "__main__":
     main()
