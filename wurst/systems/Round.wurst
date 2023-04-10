@@ -10,7 +10,7 @@ import public Lodash
 
 // Local imports:
 import ArmySpawner
-import PlayerData
+import public PlayerData
 import ScoreBoard
 import public GameConstants
 
@@ -31,6 +31,8 @@ public function onRoundFinish(OnRoundFinish onFinish)
     onFinishListener = onFinish
 
 public class Round
+    int goldReward = 0
+    int bloodPointReward = 0
     constant matchUp = new LinkedList<Pair<int, int>>
 
     function addMatchup(Pair<int, int> matchUp)
@@ -52,24 +54,17 @@ public class Round
             scoreBoardEntries.get("BloodPoints").setEntry(p2, "0", "")
 
             pData.get(p1).parseArmy()
-            pData.get(p2).parseArmy()
+            // pData.get(p2).parseArmy()
             spawnArmy(spawnZones.get(zoneIdx), pData.get(p1).army, p1)
-            spawnArmy(spawnZones.get(zoneIdx + 1), pData.get(p2).army, p2)
+            // spawnArmy(spawnZones.get(zoneIdx + 1), pData.get(p2).army, p2)
             forUnitsAll() (unit u) ->
                 if u.getMoveSpeed() > 1 and not u.isType(UNIT_TYPE_PEON)
                     u.issuePointOrder("attack", CENTER)
             zoneIdx += 2
 
+    function setRewards(int gold, int bloodPoint)
+        this.goldReward = gold
+        this.bloodPointReward = bloodPoint
 
     function finish()
         onFinishListener.onFinish(this)
-
-// TODO: replace with gamestate functional interface just like in ITTs
-public function initRounds()
-    onRoundFinish() (Round round) ->
-        Log.info("Round finish")
-        pData.forEach() (player key, PlayerData value) ->
-            value.giveReward()
-        forUnitsAll() (unit u) ->
-            if IsUnitDeadBJ(u)
-                u.remove()

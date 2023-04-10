@@ -29,7 +29,7 @@ class RoundController
 
     function roundSpawn()
         forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->
-            u.pause()
+            // u.pause()
         if rounds.isEmpty()
             onAllroundsFinished.execute()
             return
@@ -54,29 +54,27 @@ class RoundController
             roundSpawn()
 
 public function initRoundController()
-    new Round()
-        ..addMatchup(new Pair(0, 1))
-        ..addMatchup(new Pair(2, 3))
-        ..addMatchup(new Pair(4, 5))
-        ..addMatchup(new Pair(6, 7))
-
     roundController.addrounds(asList(
             new Round()
+                ..setRewards(600, 0)
                 ..addMatchup(new Pair(0, 1))
                 ..addMatchup(new Pair(2, 3))
                 ..addMatchup(new Pair(4, 5))
                 ..addMatchup(new Pair(6, 7)),
             new Round()
+                ..setRewards(600, 0)
                 ..addMatchup(new Pair(0, 1))
                 ..addMatchup(new Pair(2, 3))
                 ..addMatchup(new Pair(4, 5))
                 ..addMatchup(new Pair(6, 7)),
             new Round()
+                ..setRewards(600, 0)
                 ..addMatchup(new Pair(0, 1))
                 ..addMatchup(new Pair(2, 3))
                 ..addMatchup(new Pair(4, 5))
                 ..addMatchup(new Pair(6, 7)),
             new Round()
+                ..setRewards(600, 0)
                 ..addMatchup(new Pair(0, 1))
                 ..addMatchup(new Pair(2, 3))
                 ..addMatchup(new Pair(4, 5))
@@ -88,6 +86,8 @@ public function initRoundController()
 
     onRoundStart() (Round round) ->
         Log.info("Round start")
+        pData.forEach() (player key, PlayerData value) ->
+            pData.get(key).armyPoints = 0
 
     onLastArmyRemaining = () ->
         forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->
@@ -100,3 +100,18 @@ public function initRoundController()
 
     onAllroundsFinished = () ->
         Log.info("Match over")
+
+    onRoundFinish() (Round round) ->
+        Log.info("Round finish")
+        if round.goldReward > 0
+            printTimed("You get " + round.goldReward.toString() + " golds from round income", 15)
+        if round.bloodPointReward > 0
+            printTimed("You get " + round.bloodPointReward.toString() + " blood points from round income", 15)
+        pData.forEach() (player key, PlayerData value) ->
+            value.giveReward()
+            key.addGold(round.goldReward)
+            key.addLumber(round.bloodPointReward)
+
+        forUnitsAll() (unit u) ->
+            if IsUnitDeadBJ(u)
+                u.remove()

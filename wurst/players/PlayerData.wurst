@@ -15,6 +15,7 @@ public class PlayerData
     rect buildingRect = null
     player p
     int roundBountySum = 0
+    int armyPoints = 0
 
     construct(player p, rect buildingRect)
         this.p = p
@@ -34,9 +35,17 @@ public class PlayerData
     function addBounty(int value)
         roundBountySum += value
 
+    function addArmyPoints(int value)
+        armyPoints += value
+
     function giveReward()
-        printTimedToPlayer("You acquired " + roundBountySum.toString() + " points", 15, p)
-        p.addLumber(roundBountySum)
+        let msg = "You acquired " +
+            armyPoints.toString() +
+            " + " +
+            roundBountySum.toString() +
+            " points"
+        printTimedToPlayer(msg, 15, p)
+        p.addLumber(armyPoints + roundBountySum)
         roundBountySum = 0
 
 public function initPlayers()
