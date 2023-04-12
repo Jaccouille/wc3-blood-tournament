@@ -30,10 +30,14 @@ public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinitio
 public function createBuildingUnit(int newId) returns BuildingDefinition
     return new BuildingDefinition(newId, UnitIds.farm)
         ..setRace(Race.Undead)
-        ..setGoldCost(100)
+        ..setGoldCost(0)
+        ..setLumberCost(0)
         ..setNormalAbilities(commaList(AbilityIds.invulnerable))
         ..setBuildTime(1)
         ..setFoodProduced(0)
+        ..setPathingMap("PathTextures\\2x2Default.tga")
+        ..setGroundTexture("")
+
 
 @compiletime function createSellBuilderAbility()
     new AbilityDefinitionAlchemistTransmute(ABIL_SELL_BUILDING)
