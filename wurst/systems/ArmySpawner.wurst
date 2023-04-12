@@ -56,7 +56,8 @@ public function spawnArmy(SpawnZone spawnZone, LinkedList<LinkedList<int>> army,
     var idx = 0
     for subArmy in army
         for unitId in subArmy
-            let armyPoints = createUnit(p, unitId, pos, spawnZone.angle).getPointValue()
+            let u = createUnit(p, unitId, pos, spawnZone.angle)..pause()
+            let armyPoints = u.getPointValue()
             pData.get(p).addArmyPoints(armyPoints)
             scoreBoardEntries.get("ArmyPoints").addValue(p, armyPoints)
             // createTTEx(pos.toVec3() + vec3(0, 0, 90), idx.toString(), 6)
