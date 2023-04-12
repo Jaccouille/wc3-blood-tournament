@@ -28,6 +28,9 @@ public AllUnitDead onAllUnitDead
 
 public constant playerSoldiers = new HashMap<player, LinkedList<SoldierEntity>>
 
+public boolean preventOrder = false
+public trigger onOrder
+
 public class SoldierEntity extends UnitEntity
     construct(unit whichUnit)
         super(whichUnit)
@@ -62,6 +65,45 @@ public class SoldierEntity extends UnitEntity
         super.postCreate()
 
 
+function isProper() returns boolean
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "bloodlust"
+        return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "innerfire"
+        return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "faeriefire"
+        return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "raisedead"
+        return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "heal"
+        return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "spellsteal"
+        return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "stoneform"
+        return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "blizzard"
+        return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "phoenixmorph"
+        return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "frostarmor"
+        return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "undefend"
+        return false
+    return true
+
 init
     typeIDs.forEach() (int typeID) ->
         SoldierEntity.register(typeID, target -> new SoldierEntity(target))
+
+    onOrder = CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER)
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER)
+    // ..addCondition(Condition((function isProper)))
+    ..addAction() ->
+        if isProper() and preventOrder
+            preventOrder = false
+            print(OrderId2StringBJ(GetIssuedOrderIdBJ()))
+            let u = GetOrderedUnit()
+            u.issuePointOrder("attack", CENTER)
+            preventOrder = true
+    onOrder.disable()

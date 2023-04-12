@@ -4,6 +4,7 @@ package Round
 import ClosureForGroups
 import public ClosureKeyPresses
 import public LinkedList
+import ClosureTimers
 
 // Third party imports:
 import public Lodash
@@ -13,6 +14,7 @@ import ArmySpawner
 import public PlayerData
 import ScoreBoard
 import public GameConstants
+import SoldierEntity
 
 interface OnRoundStart
     function onStart(Round round)
@@ -45,6 +47,8 @@ public class Round
 
     function spawnArmies()
         var zoneIdx = 0
+        onOrder.disable()
+        preventOrder = false
         for contestantPair in matchUp
             let p1 = players[contestantPair.a]
             let p2 = players[contestantPair.b]
@@ -58,10 +62,15 @@ public class Round
             pData.get(p2).parseArmy()
             spawnArmy(spawnZones.get(zoneIdx), pData.get(p1).army, p1)
             spawnArmy(spawnZones.get(zoneIdx + 1), pData.get(p2).army, p2)
+            zoneIdx += 2
+        doAfter(2) ->
             forUnitsAll() (unit u) ->
                 if u.getMoveSpeed() > 1 and not u.isType(UNIT_TYPE_PEON)
-                    u.issuePointOrder("move", CENTER)
-            zoneIdx += 2
+                    u.unpause()
+                    u.issuePointOrder("attack", CENTER)
+            nullTimer() ->
+                preventOrder = true
+                onOrder.enable()
 
     function setRewards(int gold, int bloodPoint)
         this.goldReward = gold
