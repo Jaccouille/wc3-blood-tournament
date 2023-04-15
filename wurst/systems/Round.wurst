@@ -58,10 +58,10 @@ public class Round
             scoreBoardEntries.get("BloodPoints").setEntry(p1, "0", "")
             scoreBoardEntries.get("BloodPoints").setEntry(p2, "0", "")
 
-            pData.get(p1).parseArmy()
-            pData.get(p2).parseArmy()
-            spawnArmy(spawnZones.get(zoneIdx), pData.get(p1).army, p1)
-            spawnArmy(spawnZones.get(zoneIdx + 1), pData.get(p2).army, p2)
+            pDatas.get(p1).parseArmy()
+            pDatas.get(p2).parseArmy()
+            spawnArmy(spawnZones.get(zoneIdx), pDatas.get(p1).army, p1)
+            spawnArmy(spawnZones.get(zoneIdx + 1), pDatas.get(p2).army, p2)
             zoneIdx += 2
         doAfter(2) ->
             forUnitsAll() (unit u) ->

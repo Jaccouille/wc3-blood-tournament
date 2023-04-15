@@ -7,11 +7,12 @@ import LinkedList
 // Local imports:
 import ArmyParser
 
-public constant pData = new IterableMap<player, PlayerData>
+public constant pDatas = new IterableMap<player, PlayerData>
 
 
 public class PlayerData
     let army = new LinkedList<LinkedList<int>>
+    let spawnedUnits = new LinkedList<unit>
     rect buildingRect = null
     player p
     int roundBountySum = 0
@@ -20,7 +21,7 @@ public class PlayerData
     construct(player p, rect buildingRect)
         this.p = p
         this.buildingRect = buildingRect
-        pData.put(p, this)
+        pDatas.put(p, this)
 
     function addUnits(LinkedList<int> unitList)
         army.add(unitList)

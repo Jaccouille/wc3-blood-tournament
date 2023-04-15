@@ -9,6 +9,7 @@ import TimerUtils
 import SoldierEntity
 import public Round
 import AltarEntity
+import ArmySpawner
 
 public constant roundController = new RoundController()
 
@@ -87,8 +88,8 @@ public function initRoundController()
 
     onRoundStart() (Round round) ->
         Log.info("Round start")
-        pData.forEach() (player key, PlayerData value) ->
-            pData.get(key).armyPoints = 0
+        pDatas.forEach() (player key, PlayerData value) ->
+            pDatas.get(key).armyPoints = 0
 
     onLastArmyRemaining = () ->
         forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->
@@ -117,7 +118,7 @@ public function initRoundController()
                 printTimed("You get " + round.goldReward.toString() + " golds from round income", 15)
             if round.bloodPointReward > 0
                 printTimed("You get " + round.bloodPointReward.toString() + " blood points from round income", 15)
-            pData.forEach() (player key, PlayerData value) ->
+            pDatas.forEach() (player key, PlayerData value) ->
                 value.giveReward()
                 key.addGold(round.goldReward)
                 key.addLumber(round.bloodPointReward)

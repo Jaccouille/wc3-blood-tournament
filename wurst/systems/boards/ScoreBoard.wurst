@@ -82,7 +82,7 @@ public class ScoreBoardColumnEntries
     function initForPlayer(string value, string icon)
         var row = 1
 
-        pData.forEach() (player _player, PlayerData _) ->
+        pDatas.forEach() (player _player, PlayerData _) ->
             if value == "PlayerName"
                 initRow(row, _player.getName(), iconPlayerInGame)
                 // In case player leave before board Init

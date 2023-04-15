@@ -10,59 +10,8 @@ import PlayerData
 import UnitEntity
 import GameConstants
 
-let typeIDs = new LinkedList<int>
-    ..addAll(HUMAN_UNITS)
-    ..addAll(ORC_UNITS)
-    ..addAll(UNDEAD_UNITS)
-    ..addAll(NE_UNITS)
-
-interface LastArmyRemaining
-    abstract function execute()
-
-public LastArmyRemaining onLastArmyRemaining
-
-interface AllUnitDead
-    abstract function execute(player winner)
-
-public AllUnitDead onAllUnitDead
-
-public constant playerSoldiers = new HashMap<player, LinkedList<SoldierEntity>>
-
 public boolean preventOrder = false
 public trigger onOrder
-
-public class SoldierEntity extends UnitEntity
-    construct(unit whichUnit)
-        super(whichUnit)
-
-        let soldierList = playerSoldiers.get(theUnit.getOwner())
-
-        if soldierList == null
-            playerSoldiers.put(theUnit.getOwner(), asList(this))
-        else
-            soldierList.add(this)
-
-        EventListener.add(theUnit, EVENT_PLAYER_UNIT_DEATH, () -> begin
-            let killer = EventData.getKillingUnit().getOwner()
-
-            // Add blood points bounty
-            if killer != ALTAR_PLAYER
-                pData.get(killer).addBounty(theUnit.getPointValue())
-            playerSoldiers.get(theUnit.getOwner()).remove(this)
-
-            if playerSoldiers.get(theUnit.getOwner()).isEmpty()
-                playerSoldiers.remove(theUnit.getOwner())
-
-                Log.info("Removed " + theUnit.getOwner().getName())
-
-                if playerSoldiers.size() == 1
-                    onLastArmyRemaining.execute()
-                if playerSoldiers.size() == 0
-                    onAllUnitDead.execute(theUnit.getOwner())
-        end)
-
-    override function postCreate()
-        super.postCreate()
 
 
 function isProper() returns boolean
@@ -91,8 +40,6 @@ function isProper() returns boolean
     return true
 
 init
-    typeIDs.forEach() (int typeID) ->
-        SoldierEntity.register(typeID, target -> new SoldierEntity(target))
 
     onOrder = CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER)
@@ -102,7 +49,7 @@ init
     ..addAction() ->
         if isProper() and preventOrder
             preventOrder = false
-            print(OrderId2StringBJ(GetIssuedOrderIdBJ()))
+            // print(OrderId2StringBJ(GetIssuedOrderIdBJ()))
             let u = GetOrderedUnit()
             u.issuePointOrder("attack", CENTER)
             preventOrder = true

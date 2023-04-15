@@ -11,6 +11,7 @@ import Indicators
 import PlayerData
 import RoundController
 import ScoreBoard
+import ArmySpawner
 
 // A timer for the core gameplay.
 public constant GAME_TIMER = CreateTimer()
@@ -41,6 +42,7 @@ init
         initPlayers()
         initArmyTemplates()
         initRoundController()
+        initUnitTrigger()
         initScoreBoard()
         ForForce(bj_FORCE_ALL_PLAYERS) ->
             CreateFogModifierRect(
