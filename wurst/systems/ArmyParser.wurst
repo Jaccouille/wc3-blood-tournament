@@ -78,6 +78,7 @@ public function initArmyTemplates()
             let soldierBuildingList = pArmyTemplate.get(u.getOwner())
             Log.info(u.getName())
 
+        // TODO: enable at some point before release
         // for soldierBuilding in soldierBuildingList
         //     Log.info(soldierBuilding.getName())
         //     if u.getPos().x > soldierBuilding.getPos().x

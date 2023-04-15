@@ -1,0 +1,112 @@
+package ArmySpawner
+
+import LinkedList
+
+import SpawnZone
+import ClosureEvents
+
+import ScoreBoard
+import HashMap
+import GameConstants
+
+// Distance between units positioned in formation mode
+@configurable constant FORMATION_WIDTH = 120.
+@configurable constant FORMATION_HEIGHT = 80.
+
+@configurable constant UNIT_CAP = 80
+
+public let playerToArmySpawner = new HashMap<player, ArmySpawner>
+
+public class ArmySpawner
+    SpawnZone spawnZone
+    LinkedList<LinkedList<int>> armyIds
+    player _p
+    angle spawnDirection
+    int idx = 0
+    int nestedIdx = 0
+    int unitSpawned = 0
+    vec2 pos
+    EventListener reinforcementListener
+    boolean spawnFinished = false
+
+    construct(player _p)
+        this._p = _p
+
+    function setSpawnZone(SpawnZone spawnZone)
+        this.spawnZone = spawnZone
+        this.spawnDirection = (spawnZone.angle.cos() == 0 ? 0 : 90).asAngleDegrees()
+        this.pos = spawnZone.initialPos
+        this.setReinforcementZone()
+
+    function setArmy(LinkedList<LinkedList<int>> army)
+        this.armyIds = army
+
+    function spawnArmy()
+        spawnFinished = false
+        idx = 0
+        nestedIdx = 0
+        unitSpawned = 0
+        let pData = pDatas.get(_p)
+
+        // TODO: Add to gameConfig
+        int unitPerLine
+        if spawnDirection.degrees() == 0.
+            unitPerLine = (spawnZone.width / FORMATION_WIDTH).round()
+        else
+            unitPerLine = (spawnZone.height / FORMATION_WIDTH).round()
+
+        while idx < armyIds.size() and unitSpawned < UNIT_CAP
+            // Get list of unit mapped to the building
+            let squadIds = armyIds.get(idx)
+            while nestedIdx < squadIds.size()
+                let newUnit = createUnit(_p, squadIds.get(nestedIdx), pos, spawnZone.angle)
+                // Pause unit until battle start
+                newUnit.pause()
+                pData.spawnedUnits.add(newUnit)
+
+                // TODO: Move this to army parsing
+                let armyPoints = newUnit.getPointValue()
+                pData.addArmyPoints(armyPoints)
+                scoreBoardEntries.get("ArmyPoints").addValue(_p, armyPoints)
+
+                // Update position for next unit
+                pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+
+                // Move to next line
+                if (unitSpawned + 1) % unitPerLine == 0
+                    pos = spawnZone.initialPos.polarOffset(
+                        spawnZone.angle.op_minus(180..asAngleDegrees()),
+                        FORMATION_HEIGHT * unitSpawned / unitPerLine)
+                nestedIdx++
+                unitSpawned++
+            nestedIdx = 0
+            idx++
+        if idx >= armyIds.size()
+            spawnFinished = true
+        // Set position to the reinforcement spawn point
+        // 200 is kind of a random value
+        pos = spawnZone.spawnRect.getCenter().polarOffset(spawnDirection.op_minus(180..asAngleDegrees()), 200)
+
+    private function spawnReinforcement()
+        let unitId = armyIds.get(idx).get(nestedIdx)
+        let newUnit = createUnit(_p, unitId, pos, spawnZone.angle)
+            ..issuePointOrder("attack", CENTER)
+        pDatas.get(_p).spawnedUnits.add(newUnit)
+        nestedIdx++
+        if nestedIdx >= armyIds.get(idx).size()
+            nestedIdx = 0
+            idx++
+            if idx >= armyIds.size()
+                spawnFinished = true
+
+    private function setReinforcementZone()
+        reinforcementListener = EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
+            let dying = EventData.getDyingUnit()
+            let dyingOwner = dying.getOwner()
+            if dyingOwner == this._p and not spawnFinished
+                spawnReinforcement()
+
+// TODO: replace with gamestate functional interface just like in ITTs
+public function initArmySpawner()
+    for i = 0 to 8
+        playerToArmySpawner.put(players[i], new ArmySpawner(players[i]))

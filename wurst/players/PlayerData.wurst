@@ -14,12 +14,12 @@ public class PlayerData
     let army = new LinkedList<LinkedList<int>>
     let spawnedUnits = new LinkedList<unit>
     rect buildingRect = null
-    player p
+    player _p
     int roundBountySum = 0
     int armyPoints = 0
 
     construct(player p, rect buildingRect)
-        this.p = p
+        this._p = p
         this.buildingRect = buildingRect
         pDatas.put(p, this)
 
@@ -31,10 +31,11 @@ public class PlayerData
 
     function parseArmy()
         army.clear()
-        army.addAll(getArmyFromRect(buildingRect, p))
+        army.addAll(getArmyFromRect(buildingRect, _p))
 
     function addBounty(int value)
         roundBountySum += value
+        _p.addLumber(value)
 
     function addArmyPoints(int value)
         armyPoints += value
@@ -45,8 +46,8 @@ public class PlayerData
             " + " +
             roundBountySum.toString() +
             " points"
-        printTimedToPlayer(msg, 15, p)
-        p.addLumber(armyPoints + roundBountySum)
+        printTimedToPlayer(msg, 15, _p)
+        _p.addLumber(armyPoints)
         roundBountySum = 0
 
 public function initPlayers()

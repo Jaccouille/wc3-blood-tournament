@@ -8,10 +8,10 @@ import Preloader
 // Local imports:
 import ArmyParser
 import Indicators
-import PlayerData
 import RoundController
 import ScoreBoard
 import AltarEntity
+import ArmySpawner
 
 // A timer for the core gameplay.
 public constant GAME_TIMER = CreateTimer()
@@ -44,6 +44,7 @@ init
         initArmyTemplates()
         initRoundController()
         initUnitTrigger()
+        initArmySpawner()
         initScoreBoard()
         ForForce(bj_FORCE_ALL_PLAYERS) ->
             CreateFogModifierRect(
