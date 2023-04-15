@@ -12,6 +12,7 @@ import PlayerData
 import RoundController
 import ScoreBoard
 import ArmySpawner
+import AltarEntity
 
 // A timer for the core gameplay.
 public constant GAME_TIMER = CreateTimer()
@@ -37,6 +38,7 @@ init
     // preload()
     GAME_TIMER.start(99999999, null)
 
+    initAltar()
     replaceIndicator()
     nullTimer() ->
         initPlayers()

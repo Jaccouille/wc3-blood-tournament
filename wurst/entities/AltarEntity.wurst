@@ -1,20 +1,23 @@
 package AltarEntity
 
+import ClosureEvents
+
 // Local imports:
 import LocalObjectIDs
 
-import UnitEntity
 import LocalAssets
+import Indicators
 
 public AltarEntity altarEntity = null
 
-public class AltarEntity extends UnitEntity
+class AltarEntity
     effect bloodOrb = null
     texttag bloodPointCounterTag = null
     int bloodPointCounter = 0
+    unit theUnit
 
     construct(unit whichUnit)
-        super(whichUnit)
+        theUnit = whichUnit
         altarEntity = this
 
         // bloodOrb = addEffect(Abilities.manaFlareBase, whichUnit.getPos().toVec3() + vec3(0, 0, 100))
@@ -37,5 +40,6 @@ public class AltarEntity extends UnitEntity
     function showCounter()
         this.bloodPointCounterTag.setVisibility(true)
 
-init
-    AltarEntity.register(UNIT_ALTAR, target -> new AltarEntity(target))
+public function initAltar()
+    registerIndicatorCallback(UNIT_ALTAR) (unit target) ->
+        new AltarEntity(target)

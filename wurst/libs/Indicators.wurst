@@ -54,7 +54,7 @@ public let indicatorCallbacks = new IterableMap<int, LinkedList<Callback>>()
 public function registerIndicator(int originID, int targetID)
     indicators.put(originID, targetID)
 
-public function registerCallback(int targetID, Callback cb)
+public function registerIndicatorCallback(int targetID, Callback cb)
     // Look up the list of callbacks for the given type.
     var list = indicatorCallbacks.get(targetID)
 
