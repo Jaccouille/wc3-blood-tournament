@@ -1,4 +1,4 @@
-package SoldierEntity
+package OrderBlocker
 
 // Standard libs imports:
 import HashMap
@@ -7,7 +7,6 @@ import LinkedList
 // Local imports:
 import IDListConstant
 import PlayerData
-import UnitEntity
 import GameConstants
 
 public boolean preventOrder = false

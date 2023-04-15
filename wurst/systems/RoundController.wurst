@@ -6,10 +6,10 @@ import ClosureTimers
 import TimerUtils
 
 // Local imports:
-import SoldierEntity
+import OrderBlocker
 import public Round
 import AltarEntity
-import ArmySpawner
+import SpawnZone
 
 public constant roundController = new RoundController()
 
@@ -31,7 +31,7 @@ class RoundController
 
     function roundSpawn()
         forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->
-            // u.pause()
+            u.pause()
         if rounds.isEmpty()
             onAllroundsFinished.execute()
             return
@@ -100,7 +100,6 @@ public function initRoundController()
     onAllUnitDead = (player winner) ->
         Log.info("All unit dead")
         roundController.checkIfCurrentroundDone(winner)
-        altarEntity.hideCounter()
 
     onAllroundsFinished = () ->
         Log.info("Match over")
@@ -108,6 +107,7 @@ public function initRoundController()
     onRoundFinish() (Round round) ->
         Log.info("Round finish")
         doAfter(3) ->
+            altarEntity.hideCounter()
             let winner = round.winner
             printTimed(winner.getName() + " gets " + altarEntity.bloodPointCounter.toString() + " for winning the round" , 15)
             forUnitsAll() (unit u) ->
@@ -122,3 +122,43 @@ public function initRoundController()
                 value.giveReward()
                 key.addGold(round.goldReward)
                 key.addLumber(round.bloodPointReward)
+
+
+public function initUnitTrigger()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
+    ..addCondition(Condition(() -> GetDyingUnit().getPointValue() > 0))
+    ..addAction() ->
+        let killer = EventData.getKillingUnit().getOwner()
+        let dying = EventData.getDyingUnit()
+
+        let dyingOwner = dying.getOwner()
+
+        let pData = pDatas.get(dying.getOwner())
+        // Add blood points bounty
+        if killer != ALTAR_PLAYER
+            pDatas.get(killer).addBounty(dying.getPointValue())
+            createTTEx(
+                dying.getPos3Real(),
+                "+" + dying.getPointValue().toString(),
+                8,
+                colorA(255, 0, 0, 255),
+                killer
+            )
+            ..setVelocity(0.0, 0.03)
+            ..setFadepoint(1.5)
+            ..setLifespan(2.0)
+            ..setPermanent(false)
+
+        if pData.spawnedUnits.has(dying) == true
+            pData.spawnedUnits.remove(dying)
+
+        if pData.spawnedUnits.isEmpty()
+            roundController.currentround.roundParticipant.remove(dyingOwner)
+
+            Log.info("Removed " + dyingOwner.getName())
+
+            if roundController.currentround.roundParticipant.size() == 1
+                onLastArmyRemaining.execute()
+            if roundController.currentround.roundParticipant.isEmpty()
+                onAllUnitDead.execute(dyingOwner)

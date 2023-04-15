@@ -10,11 +10,32 @@ import ClosureTimers
 import public Lodash
 
 // Local imports:
-import ArmySpawner
+import OrderBlocker
 import public PlayerData
 import ScoreBoard
 import public GameConstants
-import SoldierEntity
+import SpawnZone
+
+
+// Distance between units positioned in formation mode
+@configurable constant FORMATION_WIDTH = 120.
+@configurable constant FORMATION_HEIGHT = 80.
+
+// Max number of unit per line
+@configurable constant UNIT_PER_LINE = 4
+
+@configurable constant UNIT_CAP = 80
+
+
+interface LastArmyRemaining
+    abstract function execute()
+
+public LastArmyRemaining onLastArmyRemaining
+
+interface AllUnitDead
+    abstract function execute(player winner)
+
+public AllUnitDead onAllUnitDead
 
 interface OnRoundStart
     function onStart(Round round)
@@ -33,6 +54,7 @@ public function onRoundFinish(OnRoundFinish onFinish)
     onFinishListener = onFinish
 
 public class Round
+    LinkedList<player> roundParticipant = new LinkedList<player>
     int goldReward = 0
     int bloodPointReward = 0
     constant matchUp = new LinkedList<Pair<int, int>>
@@ -40,6 +62,7 @@ public class Round
 
     function addMatchup(Pair<int, int> matchUp)
         this.matchUp.add(matchUp)
+        this.roundParticipant.add(players[matchUp.a], players[matchUp.b])
 
     function start()
         onStartListener.onStart(this)
@@ -71,6 +94,57 @@ public class Round
             nullTimer() ->
                 preventOrder = true
                 onOrder.enable()
+
+    function spawnArmy(SpawnZone spawnZone, LinkedList<LinkedList<int>> army, player p)
+        let spawnDirection = (spawnZone.angle.cos() == 0 ? 0 : 90).asAngleDegrees()
+
+        int unitPerLine
+        if spawnDirection.degrees() == 0.
+            unitPerLine = (spawnZone.width / FORMATION_WIDTH).round()
+        else
+            unitPerLine = (spawnZone.height / FORMATION_WIDTH).round()
+
+        var pos = spawnZone.initialPos
+        let unitPerColumn = (80 / unitPerLine).floor()
+        // TODO: adjust width computing for vertical rect
+
+        let pData = pDatas.get(p)
+
+        if roundParticipant.has(p) == false
+            roundParticipant.add(p)
+
+        var idx = 0
+        for subArmy in army
+            for unitId in subArmy
+
+                let newUnit = createUnit(p, unitId, pos, spawnZone.angle)..pause()
+                pData.spawnedUnits.add(newUnit)
+
+                let armyPoints = newUnit.getPointValue()
+                pData.addArmyPoints(armyPoints)
+                scoreBoardEntries.get("ArmyPoints").addValue(p, armyPoints)
+                pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+
+                // Move to next line
+                if (idx + 1) % unitPerLine == 0
+                    pos = spawnZone.initialPos.polarOffset(spawnZone.angle.op_minus(180..asAngleDegrees()), FORMATION_HEIGHT * idx / unitPerLine)
+                idx++
+                if (idx + 1) / unitPerLine > unitPerColumn
+                    break
+
+    // let soldierIds = army.flatten()
+    // int counter = 0
+    // while soldierIds.size() > 0 and counter < UNIT_CAP
+    //     let u = createUnit(p, soldierIds.dequeue(), pos, spawnZone.angle)
+    //     u.pause()
+    //     let armyPoints = u.getPointValue()
+    //     pData.get(p).addArmyPoints(armyPoints)
+    //     scoreBoardEntries.get("ArmyPoints").addValue(p, armyPoints)
+    //     pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+    //     // Move to next line
+    //     if (counter + 1) % unitPerLine == 0
+    //         pos = spawnZone.initialPos.polarOffset(spawnZone.angle.op_minus(180..asAngleDegrees()), FORMATION_HEIGHT * counter / unitPerLine)
+    //     counter++
 
     function setRewards(int gold, int bloodPoint)
         this.goldReward = gold

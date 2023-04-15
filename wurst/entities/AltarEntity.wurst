@@ -20,18 +20,19 @@ class AltarEntity
         theUnit = whichUnit
         altarEntity = this
 
-        // bloodOrb = addEffect(Abilities.manaFlareBase, whichUnit.getPos().toVec3() + vec3(0, 0, 100))
-        bloodOrb = addEffect(LocalUnits.orbBloodX, whichUnit, "overhead")
+        bloodOrb = addEffect(LocalUnits.orbBloodX, theUnit, "overhead")
         bloodOrb.setTimeScale(0.1)
-        let pos = whichUnit.getPos().withRealZ(whichUnit).op_plus(vec3(-10, 0, -500))
+        let pos = theUnit.getPos().withRealZ(theUnit).op_plus(vec3(-10, 0, -500))
         bloodPointCounterTag = createTTEx(pos, "0", 10)
             ..setColor(255, 0, 0, 255)
 
         EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
-            if EventData.getKillingUnit() == whichUnit
+            if EventData.getKillingUnit() == theUnit
                 bloodOrb.setScale(bloodOrb.getScale() + 0.01)
                 bloodPointCounter += EventData.getDyingUnit().getPointValue()
                 bloodPointCounterTag.setText(bloodPointCounter.toString(), 10)
+
+        // bloodPointCounterTag.setText(bloodPointCounter.toString(), 10)
 
     function hideCounter()
         this.bloodPointCounterTag.setText("0", 10)

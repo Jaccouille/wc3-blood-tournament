@@ -1,0 +1,35 @@
+package SpawnZone
+
+// Standard libs imports:
+import LinkedList
+import Lodash
+import HashMap
+
+// Local imports:
+import ScoreBoard
+import GameConstants
+
+public class SpawnZone
+    rect spawnRect
+    angle angle
+    vec2 initialPos
+    real width
+    real height
+
+    construct(rect spawnRect, vec2 initialPos, angle angle)
+        this.spawnRect = spawnRect
+        this.angle = angle
+        this.initialPos = initialPos
+        this.width = spawnRect.width()
+        this.height = spawnRect.height()
+
+public let spawnZones = new LinkedList<SpawnZone>()
+    ..add(new SpawnZone(gg_rct_Frontrank_SW, gg_rct_Frontrank_SW.getRightBot(), 0..asAngleDegrees()))
+    ..add(new SpawnZone(gg_rct_Frontrank_SE, gg_rct_Frontrank_SE.getLeftBot(), 180..asAngleDegrees()))
+    ..add(new SpawnZone(gg_rct_Frontrank_NW, gg_rct_Frontrank_NW.getRightBot(), 0..asAngleDegrees()))
+    ..add(new SpawnZone(gg_rct_Frontrank_NE, gg_rct_Frontrank_NE.getLeftBot(), 180..asAngleDegrees()))
+
+    ..add(new SpawnZone(gg_rct_Frontrank_ES, gg_rct_Frontrank_ES.getLeftTop(), 90..asAngleDegrees()))
+    ..add(new SpawnZone(gg_rct_Frontrank_EN, gg_rct_Frontrank_EN.getLeftBot(), 270..asAngleDegrees()))
+    ..add(new SpawnZone(gg_rct_Frontrank_WS, gg_rct_Frontrank_WS.getLeftTop(), 90..asAngleDegrees()))
+    ..add(new SpawnZone(gg_rct_Frontrank_WN, gg_rct_Frontrank_WN.getLeftBot(), 270..asAngleDegrees()))
