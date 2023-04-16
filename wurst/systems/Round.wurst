@@ -54,7 +54,7 @@ OnRoundFinish onFinishListener
 public function onRoundFinish(OnRoundFinish onFinish)
     onFinishListener = onFinish
 
-public class Round
+public abstract class Round
     LinkedList<player> roundParticipant = new LinkedList<player>
     int goldReward = 0
     int bloodPointReward = 0
@@ -66,13 +66,50 @@ public class Round
         this.roundParticipant.add(players[matchUp.a], players[matchUp.b])
 
     function start()
+        // Log.info("[Round][start]")
         onStartListener.onStart(this)
+        doBeforeSpawn()
         spawnArmies()
+        doAfterSpawn()
 
-    function spawnArmies()
-        var zoneIdx = 0
+    function doBeforeSpawn()
         onOrder.disable()
         preventOrder = false
+
+    function doAfterSpawn()
+        doAfter(2) ->
+            forUnitsAll() (unit u) ->
+                if u.getMoveSpeed() > 1 and not u.isType(UNIT_TYPE_PEON)
+                    u.unpause()
+                    u.issuePointOrder("attack", CENTER)
+            nullTimer() ->
+                preventOrder = true
+                onOrder.enable()
+
+    function setRewards(int gold, int bloodPoint)
+        this.goldReward = gold
+        this.bloodPointReward = bloodPoint
+
+    function finish(player winner)
+        this.winner = winner
+        onFinishListener.onFinish(this)
+
+    abstract function spawnArmies()
+
+    // Todo: rename
+    function spawnArmy(SpawnZone spawnZone, LinkedList<LinkedList<int>> army, player _p)
+        // Log.info("[Round][spawnArmy]")
+        if roundParticipant.has(_p) == false
+            roundParticipant.add(_p)
+
+        new ArmySpawner(_p)
+            ..setArmy(army)
+            ..setSpawnZone(spawnZone)
+            ..spawnArmy()
+
+public class NormalRound extends Round
+    override function spawnArmies()
+        var zoneIdx = 0
         for contestantPair in matchUp
             let p1 = players[contestantPair.a]
             let p2 = players[contestantPair.b]
@@ -87,28 +124,30 @@ public class Round
             spawnArmy(spawnZones.get(zoneIdx), pDatas.get(p1).army, p1)
             spawnArmy(spawnZones.get(zoneIdx + 1), pDatas.get(p2).army, p2)
             zoneIdx += 2
-        doAfter(2) ->
-            forUnitsAll() (unit u) ->
-                if u.getMoveSpeed() > 1 and not u.isType(UNIT_TYPE_PEON)
-                    u.unpause()
-                    u.issuePointOrder("attack", CENTER)
-            nullTimer() ->
-                preventOrder = true
-                onOrder.enable()
 
-    function spawnArmy(SpawnZone spawnZone, LinkedList<LinkedList<int>> army, player _p)
-        if roundParticipant.has(_p) == false
-            roundParticipant.add(_p)
+constant FINAL_ROUND_WEST_ZONE_IDX = 8
+constant FINAL_ROUND_EAST_ZONE_IDX = 9
 
-        new ArmySpawner(_p)
-            ..setArmy(army)
-            ..setSpawnZone(spawnZone)
-            ..spawnArmy()
+public class FinalRound extends Round
+    override function spawnArmies()
+        for contestantPair in matchUp
+            let p1 = players[contestantPair.a]
+            let p2 = players[contestantPair.b]
 
-    function setRewards(int gold, int bloodPoint)
-        this.goldReward = gold
-        this.bloodPointReward = bloodPoint
+            scoreBoardEntries.get("ArmyPoints").setEntry(p1, "0", "")
+            scoreBoardEntries.get("ArmyPoints").setEntry(p2, "0", "")
+            scoreBoardEntries.get("BloodPoints").setEntry(p1, "0", "")
+            scoreBoardEntries.get("BloodPoints").setEntry(p2, "0", "")
 
-    function finish(player winner)
-        this.winner = winner
-        onFinishListener.onFinish(this)
+            pDatas.get(p1).parseArmy()
+            pDatas.get(p2).parseArmy()
+
+            spawnArmy(spawnZones.get(FINAL_ROUND_WEST_ZONE_IDX), pDatas.get(p1).army, p1)
+            spawnArmy(spawnZones.get(FINAL_ROUND_EAST_ZONE_IDX), pDatas.get(p2).army, p2)
+
+            let msg = "{0} {1} units VS {2} {3} units"
+                .format(
+                    p1.getNameColored(true), pDatas.get(p1).spawnedUnits.size().toString(),
+                    p2.getNameColored(true), pDatas.get(p2).spawnedUnits.size().toString()
+                )
+            Log.info(msg)

@@ -13,8 +13,6 @@ import GameConstants
 @configurable constant FORMATION_WIDTH = 120.
 @configurable constant FORMATION_HEIGHT = 80.
 
-@configurable constant UNIT_CAP = 80
-
 public let playerToArmySpawner = new HashMap<player, ArmySpawner>
 
 public class ArmySpawner
@@ -30,6 +28,7 @@ public class ArmySpawner
     boolean spawnFinished = false
 
     construct(player _p)
+        // Log.info("[ArmySpawner] [construct]")
         this._p = _p
 
     function setSpawnZone(SpawnZone spawnZone)
@@ -39,23 +38,25 @@ public class ArmySpawner
         this.setReinforcementZone()
 
     function setArmy(LinkedList<LinkedList<int>> army)
+        // Log.info("[ArmySpawner] [setArmy]")
         this.armyIds = army
 
     function spawnArmy()
+        // Log.info("[ArmySpawner] [spawnArmy]")
         spawnFinished = false
         idx = 0
         nestedIdx = 0
         unitSpawned = 0
         let pData = pDatas.get(_p)
 
-        // TODO: Add to gameConfig
+        // TODO: Add to gameConfig?
         int unitPerLine
         if spawnDirection.degrees() == 0.
             unitPerLine = (spawnZone.width / FORMATION_WIDTH).round()
         else
             unitPerLine = (spawnZone.height / FORMATION_WIDTH).round()
 
-        while idx < armyIds.size() and unitSpawned < UNIT_CAP
+        while idx < armyIds.size() and unitSpawned < spawnZone.unitLimit
             // Get list of unit mapped to the building
             let squadIds = armyIds.get(idx)
             while nestedIdx < squadIds.size()

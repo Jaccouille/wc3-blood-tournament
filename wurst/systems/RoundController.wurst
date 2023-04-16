@@ -56,26 +56,29 @@ class RoundController
             roundSpawn()
 
 public function initRoundController()
-    roundController.addrounds(asList(
-            new Round()
+    roundController.addrounds(asList<Round>(
+            new FinalRound()
+                ..setRewards(600, 0)
+                ..addMatchup(new Pair(0, 1)),
+            new NormalRound()
                 ..setRewards(600, 0)
                 ..addMatchup(new Pair(0, 1))
                 ..addMatchup(new Pair(2, 3))
                 ..addMatchup(new Pair(4, 5))
                 ..addMatchup(new Pair(6, 7)),
-            new Round()
+            new NormalRound()
                 ..setRewards(600, 0)
                 ..addMatchup(new Pair(0, 1))
                 ..addMatchup(new Pair(2, 3))
                 ..addMatchup(new Pair(4, 5))
                 ..addMatchup(new Pair(6, 7)),
-            new Round()
+            new NormalRound()
                 ..setRewards(600, 0)
                 ..addMatchup(new Pair(0, 1))
                 ..addMatchup(new Pair(2, 3))
                 ..addMatchup(new Pair(4, 5))
                 ..addMatchup(new Pair(6, 7)),
-            new Round()
+            new NormalRound()
                 ..setRewards(600, 0)
                 ..addMatchup(new Pair(0, 1))
                 ..addMatchup(new Pair(2, 3))
