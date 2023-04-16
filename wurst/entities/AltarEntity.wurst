@@ -19,6 +19,7 @@ class AltarEntity
     construct(unit whichUnit)
         theUnit = whichUnit
         altarEntity = this
+        theUnit.setLevel(10, false)
 
         bloodOrb = addEffect(LocalUnits.orbBloodX, theUnit, "overhead")
         bloodOrb.setTimeScale(0.1)

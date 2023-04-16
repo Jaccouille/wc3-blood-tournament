@@ -64,7 +64,7 @@ public let BUILDING_DAEMON_HUNTER         = compiletime(UNIT_ID_GEN.next())
 public let UNIT_PRIESTESS_OF_THE_MOON     = compiletime(UNIT_ID_GEN.next())
 public let BUILDING_PRIESTESS_OF_THE_MOON = compiletime(UNIT_ID_GEN.next())
 
-public let UNIT_ALTAR              = compiletime(UNIT_ID_GEN.next())
+public let UNIT_ALTAR              = compiletime(HERO_ID_GEN.next())
 public let UNIT_RACE_PICKER        = compiletime(UNIT_ID_GEN.next())
 public let UNIT_HUMAN_BUILDER      = compiletime(UNIT_ID_GEN.next())
 public let UNIT_ORC_BUILDER        = compiletime(UNIT_ID_GEN.next())

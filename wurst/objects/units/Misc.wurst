@@ -19,8 +19,9 @@ import LocalObjectIDs
         ..setMissileArt("")
 
 
-    new UnitDefinition(UNIT_ALTAR, UnitIds.huntress)
+    new HeroDefinition(UNIT_ALTAR, UnitIds.huntress)
         ..setNormalAbilities(commaList(ABIL_ALTAR_LIGHTNING, AbilityIds.invulnerable, AbilityIds.magicSentry))
+        ..setLevel(10)
         ..setModelFile(Units.tichondrius1)
         ..setSpeedBase(0)
         ..setScalingValue(1.0)
@@ -48,7 +49,8 @@ import LocalObjectIDs
         )
         ..setAttack1WeaponSound(WeaponSound.Nothing)
         ..setAttack1WeaponType(WeaponType.Artillery)
-        ..setName("Blood Master")
+        ..setName("Lord Of Slaughter")
+        ..setProperNames("Bhaal")
 
 @compiletime function createRacePickerUnit() returns BuildingDefinition
     return new BuildingDefinition(UNIT_RACE_PICKER, UnitIds.altarofkings)
