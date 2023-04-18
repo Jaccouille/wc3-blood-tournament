@@ -6,10 +6,8 @@ import ClosureTimers
 import TimerUtils
 
 // Local imports:
-import OrderBlocker
 import public Round
 import AltarEntity
-import SpawnZone
 
 public constant roundController = new RoundController()
 
@@ -21,12 +19,15 @@ interface OnAllroundsFinished
 public OnAllroundsFinished onAllroundsFinished
 
 class RoundController
-    int roundCount = 1
     constant rounds = new LinkedList<Round>
+    player previousRoundWinner = null
 
-    Round currentround = null
+    Round currentRound = null
 
-    function addrounds(LinkedList<Round> rounds)
+    function addRound(Round round)
+        this.rounds.add(round)
+
+    function addRounds(LinkedList<Round> rounds)
         this.rounds.addAll(rounds.copy())
 
     function roundSpawn()
@@ -42,73 +43,102 @@ class RoundController
         // ..setTitle("Time until next round:")
         // ..display(true)
         tim.doAfter(SPAWN_TIME) ->
-            Log.info("Round " + roundCount.toString())
-            roundCount++
             // tdialog.destr()
 
-            currentround = rounds.dequeue()
-            currentround.start()
+            currentRound = rounds.dequeue()
+            currentRound.start()
 
     function checkIfCurrentroundDone(player winner)
-        if currentround != null
-            currentround.finish(winner)
-            currentround = null
+        if currentRound != null
+            currentRound.finish(winner)
+            if previousRoundWinner == null
+                Log.info("Adding previous winner " + winner.getName())
+                previousRoundWinner = winner
+            else
+                Log.info("Removing previous winner")
+                previousRoundWinner = null
+            currentRound = null
             roundSpawn()
 
-public function initRoundController()
-    roundController.addrounds(asList<Round>(
+function generateFinalMatchup() returns LinkedList<Pair<int, int>>
+    Log.info("[RoundController] [generateFinalMatchup]")
+    let matches = new LinkedList<Pair<int, int>>
+    let playerList = asList(0, 1, 2, 3, 4, 5, 6, 7, 8)
+    // var idx = 0
+
+    // print(playerList.get(idx))
+    for idx = 0 to playerList.size() - 2 step 2
+        Log.info("loop")
+        print(playerList.get(idx))
+        print(playerList.get(idx + 1))
+        matches.add(new Pair(playerList.get(idx), playerList.get(idx + 1)))
+    // let iterator = playerList.iterator()
+    // while iterator.hasNext()
+    //     Log.info("loop")
+    //     Log.info(iterator.next().toString())
+    // iterator.close()
+
+    // while idx < playerList.length()
+    //     Log.info("i = " + idx.toString())
+    //     Log.info(playerList.get(idx))
+    //     Log.info(playerList.get(idx + 1))
+    //     matches.add(new Pair(playerList.get(idx), playerList.get(idx + 1)))
+    //     idx += 2
+    return matches
+
+function generateFinalRoundQuarterFinal()
+    let matches = generateFinalMatchup()
+    for matchUp in matches
+        roundController.addRounds(asList<Round>(
             new FinalRound()
-                ..setRewards(600, 0)
-                ..addMatchup(new Pair(0, 1)),
-            new NormalRound()
-                ..setRewards(600, 0)
-                ..addMatchup(new Pair(0, 1))
-                ..addMatchup(new Pair(2, 3))
-                ..addMatchup(new Pair(4, 5))
-                ..addMatchup(new Pair(6, 7)),
-            new NormalRound()
-                ..setRewards(600, 0)
-                ..addMatchup(new Pair(0, 1))
-                ..addMatchup(new Pair(2, 3))
-                ..addMatchup(new Pair(4, 5))
-                ..addMatchup(new Pair(6, 7)),
-            new NormalRound()
-                ..setRewards(600, 0)
-                ..addMatchup(new Pair(0, 1))
-                ..addMatchup(new Pair(2, 3))
-                ..addMatchup(new Pair(4, 5))
-                ..addMatchup(new Pair(6, 7)),
-            new NormalRound()
-                ..setRewards(600, 0)
-                ..addMatchup(new Pair(0, 1))
-                ..addMatchup(new Pair(2, 3))
-                ..addMatchup(new Pair(4, 5))
-                ..addMatchup(new Pair(6, 7))
+                ..addMatchup(matchUp)
+            )
+        )
+
+function initRounds()
+    roundController.addRounds(asList<Round>(
+            // new NormalRound()
+            //     ..setRewards(600, 0)
+            //     ..addMatchup(new Pair(0, 1))
+            //     ..addMatchup(new Pair(2, 3))
+            //     ..addMatchup(new Pair(4, 5))
+            //     ..addMatchup(new Pair(6, 7)),
+            // new NormalRound()
+            //     ..setRewards(600, 0)
+            //     ..addMatchup(new Pair(0, 1))
+            //     ..addMatchup(new Pair(2, 3))
+            //     ..addMatchup(new Pair(4, 5))
+            //     ..addMatchup(new Pair(6, 7)),
+            // new NormalRound()
+            //     ..setRewards(600, 0)
+            //     ..addMatchup(new Pair(0, 1))
+            //     ..addMatchup(new Pair(2, 3))
+            //     ..addMatchup(new Pair(4, 5))
+            //     ..addMatchup(new Pair(6, 7)),
+            // new NormalRound()
+            //     ..setRewards(600, 0)
+            //     ..addMatchup(new Pair(0, 1))
+            //     ..addMatchup(new Pair(2, 3))
+            //     ..addMatchup(new Pair(4, 5))
+            //     ..addMatchup(new Pair(6, 7))
         ))
+
+public function initRoundController()
+    initRounds()
+    generateFinalRoundQuarterFinal()
 
     doAfter(2) ->
         roundController.roundSpawn()
 
-    onRoundStart() (Round round) ->
-        Log.info("Round start")
-        pDatas.forEach() (player key, PlayerData value) ->
-            pDatas.get(key).armyPoints = 0
-
-    onLastArmyRemaining = () ->
-        forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->
-            u.unpause()
-        Log.info("Clean up phase")
-        altarEntity.showCounter()
-
-    onAllUnitDead = (player winner) ->
-        Log.info("All unit dead")
-        roundController.checkIfCurrentroundDone(winner)
-
-    onAllroundsFinished = () ->
-        Log.info("Match over")
-
     onRoundFinish() (Round round) ->
-        Log.info("Round finish")
+        Log.info(round.roundName + " finished")
+        if roundController.currentRound instanceof FinalRound
+            if roundController.previousRoundWinner != null
+                Log.info("Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + round.winner.getNameColored(true))
+                roundController.addRound(
+                    new FinalRound()
+                        ..addMatchup(new Pair(roundController.previousRoundWinner.getId(), round.winner.getId())))
+
         doAfter(3) ->
             altarEntity.hideCounter()
             let winner = round.winner
@@ -126,8 +156,24 @@ public function initRoundController()
                 key.addGold(round.goldReward)
                 key.addLumber(round.bloodPointReward)
 
+    onLastArmyRemaining = () ->
+        forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->
+            u.unpause()
+        Log.info("Clean up phase")
+        altarEntity.showCounter()
 
-public function initUnitTrigger()
+    onAllUnitDead = (player winner) ->
+        Log.info("All unit dead")
+        roundController.checkIfCurrentroundDone(winner)
+
+    onAllroundsFinished = () ->
+        Log.info("Match over")
+        if roundController.previousRoundWinner != null
+            print(roundController.previousRoundWinner.getName() + " is the Blood tournament champion!")
+
+
+// TODO: Move else where
+public function initUnitDeathTrigger()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
     ..addCondition(Condition(() -> GetDyingUnit().getPointValue() > 0))
@@ -157,11 +203,11 @@ public function initUnitTrigger()
             pData.spawnedUnits.remove(dying)
 
         if pData.spawnedUnits.isEmpty()
-            roundController.currentround.roundParticipant.remove(dyingOwner)
+            roundController.currentRound.roundParticipant.remove(dyingOwner)
 
             Log.info("Removed " + dyingOwner.getName())
 
-            if roundController.currentround.roundParticipant.size() == 1
+            if roundController.currentRound.roundParticipant.size() == 1
                 onLastArmyRemaining.execute()
-            if roundController.currentround.roundParticipant.isEmpty()
+            if roundController.currentRound.roundParticipant.isEmpty()
                 onAllUnitDead.execute(dyingOwner)

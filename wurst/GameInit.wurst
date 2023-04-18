@@ -43,7 +43,7 @@ init
         initPlayers()
         initArmyTemplates()
         initRoundController()
-        initUnitTrigger()
+        initUnitDeathTrigger()
         initArmySpawner()
         initScoreBoard()
         ForForce(bj_FORCE_ALL_PLAYERS) ->
