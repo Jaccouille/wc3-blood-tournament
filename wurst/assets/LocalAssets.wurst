@@ -6,3 +6,4 @@ public class LocalIcons
 public class LocalUnits
     static constant orbBloodX = "Models/Units/OrbBloodX.mdl"
     static constant owdMilitiagerman = "Models/Units/OWD_MilitiaGerman.mdx"
+    static constant badGuy = "Models/BadGuy.mdx"

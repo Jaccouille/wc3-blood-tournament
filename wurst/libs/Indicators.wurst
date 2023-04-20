@@ -45,7 +45,7 @@ public let indicators = new IterableMap<int, int>()
     ..put('e006', BUILDING_DAEMON_HUNTER)
     ..put('e000', BUILDING_PRIESTESS_OF_THE_MOON)
 
-    ..put('h007', UNIT_ALTAR)
+    ..put('h009', UNIT_BAD_GUY)
     ..put('h008', UNIT_RACE_PICKER)
 
 

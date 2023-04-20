@@ -7,11 +7,14 @@ import LocalObjectIDs
 
 import LocalAssets
 import Indicators
+import GameConstants
 
 public AltarEntity altarEntity = null
 
 class AltarEntity
-    effect bloodOrb = null
+    unit bloodOrb = null
+    effect bloodOrbModel = null
+    real bloodOrbScale = 1.
     texttag bloodPointCounterTag = null
     int bloodPointCounter = 0
     unit theUnit
@@ -20,16 +23,20 @@ class AltarEntity
         theUnit = whichUnit
         altarEntity = this
         theUnit.setLevel(10, false)
+        theUnit.setColor(players[0].getColor())
 
-        bloodOrb = addEffect(LocalUnits.orbBloodX, theUnit, "overhead")
-        bloodOrb.setTimeScale(0.1)
+        bloodOrbModel = addEffect(LocalUnits.orbBloodX, theUnit, "overhead")
+        bloodOrb = createUnit(ALTAR_PLAYER, UNIT_DUMMY_ORB_BLOOD, theUnit.getPos(), 270..asAngleDegrees())
+        bloodOrbModel.setTimeScale(0.1)
         let pos = theUnit.getPos().withRealZ(theUnit).op_plus(vec3(-10, 0, -500))
         bloodPointCounterTag = createTTEx(pos, "0", 10)
             ..setColor(255, 0, 0, 255)
 
         EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
-            if EventData.getKillingUnit() == theUnit
-                bloodOrb.setScale(bloodOrb.getScale() + 0.01)
+            if EventData.getKillingUnit() == bloodOrb
+                bloodOrbScale = bloodOrbScale + 0.01
+                bloodOrbModel.setScale(bloodOrbScale)
+                bloodOrb.setPosFly(bloodOrb.getPos3Fly().add(0, 0, 0.8))
                 bloodPointCounter += EventData.getDyingUnit().getPointValue()
                 bloodPointCounterTag.setText(bloodPointCounter.toString(), 10)
 
@@ -42,6 +49,12 @@ class AltarEntity
     function showCounter()
         this.bloodPointCounterTag.setVisibility(true)
 
+    function getOrbUnit() returns unit
+        return this.bloodOrb
+
+    function getBadGuy() returns unit
+        return theUnit
+
 public function initAltar()
-    registerIndicatorCallback(UNIT_ALTAR) (unit target) ->
+    registerIndicatorCallback(UNIT_BAD_GUY) (unit target) ->
         new AltarEntity(target)

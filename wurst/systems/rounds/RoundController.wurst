@@ -31,8 +31,9 @@ class RoundController
         this.rounds.addAll(rounds.copy())
 
     function roundSpawn()
-        forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->
-            u.pause()
+        altarEntity.getOrbUnit().pause()
+        altarEntity.getBadGuy().setAnimation("Stand")
+
         if rounds.isEmpty()
             onAllroundsFinished.execute()
             return
@@ -64,29 +65,13 @@ function generateFinalMatchup() returns LinkedList<Pair<int, int>>
     Log.info("[RoundController] [generateFinalMatchup]")
     let matches = new LinkedList<Pair<int, int>>
     let playerList = asList(0, 1, 2, 3, 4, 5, 6, 7, 8)
-    // var idx = 0
 
-    // print(playerList.get(idx))
     for idx = 0 to playerList.size() - 2 step 2
-        Log.info("loop")
-        print(playerList.get(idx))
-        print(playerList.get(idx + 1))
         matches.add(new Pair(playerList.get(idx), playerList.get(idx + 1)))
-    // let iterator = playerList.iterator()
-    // while iterator.hasNext()
-    //     Log.info("loop")
-    //     Log.info(iterator.next().toString())
-    // iterator.close()
 
-    // while idx < playerList.length()
-    //     Log.info("i = " + idx.toString())
-    //     Log.info(playerList.get(idx))
-    //     Log.info(playerList.get(idx + 1))
-    //     matches.add(new Pair(playerList.get(idx), playerList.get(idx + 1)))
-    //     idx += 2
     return matches
 
-function generateFinalRoundQuarterFinal()
+function generateFinalRounds()
     let matches = generateFinalMatchup()
     for matchUp in matches
         roundController.addRounds(asList<Round>(
@@ -97,35 +82,35 @@ function generateFinalRoundQuarterFinal()
 
 function initRounds()
     roundController.addRounds(asList<Round>(
-            // new NormalRound()
-            //     ..setRewards(600, 0)
-            //     ..addMatchup(new Pair(0, 1))
-            //     ..addMatchup(new Pair(2, 3))
-            //     ..addMatchup(new Pair(4, 5))
-            //     ..addMatchup(new Pair(6, 7)),
-            // new NormalRound()
-            //     ..setRewards(600, 0)
-            //     ..addMatchup(new Pair(0, 1))
-            //     ..addMatchup(new Pair(2, 3))
-            //     ..addMatchup(new Pair(4, 5))
-            //     ..addMatchup(new Pair(6, 7)),
-            // new NormalRound()
-            //     ..setRewards(600, 0)
-            //     ..addMatchup(new Pair(0, 1))
-            //     ..addMatchup(new Pair(2, 3))
-            //     ..addMatchup(new Pair(4, 5))
-            //     ..addMatchup(new Pair(6, 7)),
-            // new NormalRound()
-            //     ..setRewards(600, 0)
-            //     ..addMatchup(new Pair(0, 1))
-            //     ..addMatchup(new Pair(2, 3))
-            //     ..addMatchup(new Pair(4, 5))
-            //     ..addMatchup(new Pair(6, 7))
+            new NormalRound()
+                ..setRewards(600, 0)
+                ..addMatchup(new Pair(0, 1))
+                ..addMatchup(new Pair(2, 3))
+                ..addMatchup(new Pair(4, 5))
+                ..addMatchup(new Pair(6, 7)),
+            new NormalRound()
+                ..setRewards(600, 0)
+                ..addMatchup(new Pair(0, 1))
+                ..addMatchup(new Pair(2, 3))
+                ..addMatchup(new Pair(4, 5))
+                ..addMatchup(new Pair(6, 7)),
+            new NormalRound()
+                ..setRewards(600, 0)
+                ..addMatchup(new Pair(0, 1))
+                ..addMatchup(new Pair(2, 3))
+                ..addMatchup(new Pair(4, 5))
+                ..addMatchup(new Pair(6, 7)),
+            new NormalRound()
+                ..setRewards(600, 0)
+                ..addMatchup(new Pair(0, 1))
+                ..addMatchup(new Pair(2, 3))
+                ..addMatchup(new Pair(4, 5))
+                ..addMatchup(new Pair(6, 7))
         ))
+    generateFinalRounds()
 
 public function initRoundController()
     initRounds()
-    generateFinalRoundQuarterFinal()
 
     doAfter(2) ->
         roundController.roundSpawn()
@@ -157,9 +142,9 @@ public function initRoundController()
                 key.addLumber(round.bloodPointReward)
 
     onLastArmyRemaining = () ->
-        forUnitsOfPlayer(ALTAR_PLAYER) (unit u) ->
-            u.unpause()
         Log.info("Clean up phase")
+        altarEntity.getOrbUnit().unpause()
+        altarEntity.getBadGuy().setAnimation("Spell Channel")
         altarEntity.showCounter()
 
     onAllUnitDead = (player winner) ->
@@ -170,44 +155,3 @@ public function initRoundController()
         Log.info("Match over")
         if roundController.previousRoundWinner != null
             print(roundController.previousRoundWinner.getName() + " is the Blood tournament champion!")
-
-
-// TODO: Move else where
-public function initUnitDeathTrigger()
-    CreateTrigger()
-    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
-    ..addCondition(Condition(() -> GetDyingUnit().getPointValue() > 0))
-    ..addAction() ->
-        let killer = EventData.getKillingUnit().getOwner()
-        let dying = EventData.getDyingUnit()
-
-        let dyingOwner = dying.getOwner()
-
-        let pData = pDatas.get(dying.getOwner())
-        // Add blood points bounty
-        if killer != ALTAR_PLAYER
-            pDatas.get(killer).addBounty(dying.getPointValue())
-            createTTEx(
-                dying.getPos3Real(),
-                "+" + dying.getPointValue().toString(),
-                8,
-                colorA(255, 0, 0, 255),
-                killer
-            )
-            ..setVelocity(0.0, 0.03)
-            ..setFadepoint(1.5)
-            ..setLifespan(2.0)
-            ..setPermanent(false)
-
-        if pData.spawnedUnits.has(dying) == true
-            pData.spawnedUnits.remove(dying)
-
-        if pData.spawnedUnits.isEmpty()
-            roundController.currentRound.roundParticipant.remove(dyingOwner)
-
-            Log.info("Removed " + dyingOwner.getName())
-
-            if roundController.currentRound.roundParticipant.size() == 1
-                onLastArmyRemaining.execute()
-            if roundController.currentRound.roundParticipant.isEmpty()
-                onAllUnitDead.execute(dyingOwner)

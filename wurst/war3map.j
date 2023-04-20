@@ -278,14 +278,14 @@ function CreateBuildingsForPlayer7 takes nothing returns nothing
 endfunction
 
 //===========================================================================
-function CreateNeutralHostileBuildings takes nothing returns nothing
+function CreateNeutralHostile takes nothing returns nothing
     local player p = Player(PLAYER_NEUTRAL_AGGRESSIVE)
     local unit u
     local integer unitID
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h007', 2624.0, -1472.0, 270.000, 'h007' )
+    set u = BlzCreateUnitWithSkin( p, 'h009', 2566.1, -1425.5, 283.057, 'h009' )
 endfunction
 
 //===========================================================================
@@ -306,8 +306,8 @@ endfunction
 
 //===========================================================================
 function CreateAllUnits takes nothing returns nothing
-    call CreateNeutralHostileBuildings(  )
     call CreatePlayerBuildings(  )
+    call CreateNeutralHostile(  )
     call CreatePlayerUnits(  )
 endfunction
 
@@ -382,8 +382,8 @@ function main takes nothing returns nothing
     call SetCameraBounds( -2816.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -7168.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 7936.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 3584.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -2816.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 3584.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 7936.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -7168.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM) )
     call SetDayNightModels( "Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl", "Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl" )
     call NewSoundEnvironment( "Default" )
-    call SetAmbientDaySound( "LordaeronSummerDay" )
-    call SetAmbientNightSound( "LordaeronSummerNight" )
+    call SetAmbientDaySound( "BlackCitadelDay" )
+    call SetAmbientNightSound( "BlackCitadelNight" )
     call SetMapMusic( "Music", true, 0 )
     call CreateRegions(  )
     call CreateAllUnits(  )

@@ -7,6 +7,7 @@ import ObjectIds
 
 // Local imports:
 import LocalObjectIDs
+import LocalAssets
 
 @compiletime function createAltar()
     new AbilityDefinitionLightningAttack(ABIL_ALTAR_LIGHTNING)
@@ -18,13 +19,57 @@ import LocalObjectIDs
         ..setGraphicDelay(1, 0)
         ..setMissileArt("")
 
-
-    new HeroDefinition(UNIT_ALTAR, UnitIds.huntress)
-        ..setNormalAbilities(commaList(ABIL_ALTAR_LIGHTNING, AbilityIds.invulnerable, AbilityIds.magicSentry))
-        ..setLevel(10)
-        ..setModelFile(Units.tichondrius1)
+    new UnitDefinition(UNIT_DUMMY_ORB_BLOOD, UnitIds.gryphonrider)
+        ..setUpgradesUsed("")
+        ..setAcquisitionRange(20000)
+        ..setSightRadiusDay(1800)
+        ..setSightRadiusNight(1800)
+        ..setAttacksEnabled(1)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
         ..setSpeedBase(0)
-        ..setScalingValue(1.0)
+        ..setScaleProjectiles(true)
+        ..setScalingValue(1)
+        ..setModelFile("")
+        ..setMovementHeight(600)
+        ..setNormalAbilities(commaList(ABIL_ALTAR_LIGHTNING, AbilityIds.invulnerable, AbilityIds.magicSentry, AbilityIds.locust))
+        ..setProjectileLaunchX(0.)
+        ..setProjectileLaunchY(0.)
+        ..setProjectileLaunchZ(0.)
+        ..setAttack1AnimationBackswingPoint(0)
+        ..setAttack1AnimationDamagePoint(0)
+        ..setAttack1DamageFactorMedium(1)
+        ..setAttack1AreaofEffectFullDamage(100)
+        ..setAttack1AttackType(AttackType.Chaos)
+        ..setAttack1CooldownTime(0.1)
+        ..setAttack1DamageBase(5000)
+        ..setAttack1DamageSidesperDie(1)
+        ..setAttack1MaximumNumberofTargets(1)
+        ..setAttack1ProjectileArt("")
+        ..setAttack1ProjectileSpeed(10000)
+        ..setAttack1Range(20000)
+        ..setAttack1TargetsAllowed(commaList(
+            TargetsAllowed.air,
+            TargetsAllowed.ground,
+            TargetsAllowed.debris,
+            TargetsAllowed.item_t,
+            TargetsAllowed.ward
+            )
+        )
+        ..setAttack1WeaponSound(WeaponSound.Nothing)
+        ..setAttack1WeaponType(WeaponType.Artillery)
+        ..setName("Ord Of Blood")
+
+    new HeroDefinition(UNIT_BAD_GUY, UnitIds.gryphonrider)
+        ..setAttacksEnabled(0)
+        ..setNormalAbilities(commaList(ABIL_ALTAR_LIGHTNING, AbilityIds.invulnerable, AbilityIds.magicSentry, AbilityIds.locust))
+        ..setLevel(10)
+        ..setModelFile(LocalUnits.badGuy)
+        ..setMovementHeight(465)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setScalingValue(0.8)
+        ..setSpeedBase(0)
         ..setSelectionScale(2.0)
         ..setAcquisitionRange(2000)
         ..setAttack1AnimationBackswingPoint(0)
