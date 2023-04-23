@@ -34,7 +34,7 @@ public function initUnitDeathTrigger()
         if pData.spawnedUnits.isEmpty()
             roundController.currentRound.roundParticipant.remove(dyingOwner)
 
-            Log.info("Removed " + dyingOwner.getName())
+            Log.info(dyingOwner.getName() + " has been eliminated")
 
             if roundController.currentRound.roundParticipant.size() == 1
                 onLastArmyRemaining.execute()
