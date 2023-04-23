@@ -62,8 +62,6 @@ public abstract class Round
         this.roundParticipant.add(players[matchUp.a], players[matchUp.b])
 
     function start()
-        // Log.info("[Round][start]")
-
         // Round stq
         Log.info(this.roundName + " start")
         pDatas.forEach() (player key, PlayerData value) ->

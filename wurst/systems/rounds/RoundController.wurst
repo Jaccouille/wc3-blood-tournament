@@ -8,15 +8,19 @@ import TimerUtils
 // Local imports:
 import public Round
 import AltarEntity
+import ScoreBoard
 
 public constant roundController = new RoundController()
 
-constant SPAWN_TIME = 5.
+constant SPAWN_TIME = 15.
 
 interface OnAllroundsFinished
     abstract function execute()
 
 public OnAllroundsFinished onAllroundsFinished
+
+boolean hasQuarterStarted = false
+boolean hasDemiStarted = false
 
 class RoundController
     constant rounds = new LinkedList<Round>
@@ -30,6 +34,23 @@ class RoundController
     function addRounds(LinkedList<Round> rounds)
         this.rounds.addAll(rounds.copy())
 
+    function buildScoreBoardForFinals(string roundPhase)
+        // Get all round from the same phase
+        let rounds = this.rounds.filter(r -> r.roundName == roundPhase)
+
+        // Get all participants for those rounds
+        let roundParticipants = currentRound.roundParticipant.copy()
+        if rounds.size() > 0
+            roundParticipants..addAll(
+                        rounds
+                            .map(elem -> elem.roundParticipant)
+                            .reduce((s, t) -> s.copy()..addAll(t))
+                        )
+
+        // Build list of matchup on the scoreBoard
+        ScoreBoardColumnEntries.orderRowsForNextRound(roundParticipants)
+        destroy roundParticipants
+
     function roundSpawn()
         altarEntity.getOrbUnit().pause()
         altarEntity.getBadGuy().setAnimation("Stand")
@@ -38,31 +59,50 @@ class RoundController
             onAllroundsFinished.execute()
             return
 
-        let tim = getTimer()
-        // TODO: cleanup
-        // let tdialog = tim.createTimerDialog()
-        // ..setTitle("Time until next round:")
-        // ..display(true)
-        tim.doAfter(SPAWN_TIME) ->
-            // tdialog.destr()
+        currentRound = rounds.dequeue()
 
-            currentRound = rounds.dequeue()
+        // TODO: refactor implementation, this is code smell
+        if currentRound instanceof FinalRound
+            Log.debug("Debug " + currentRound.roundName)
+            if currentRound.roundName == "Quarter Final" and not hasQuarterStarted
+                buildScoreBoardForFinals("Quarter Final")
+                hasQuarterStarted = true
+            else if currentRound.roundName == "Demi Final" and not hasDemiStarted
+                buildScoreBoardForFinals("Demi Final")
+                hasDemiStarted = true
+            else if currentRound.roundName == "Final"
+                buildScoreBoardForFinals("Final")
+
+        else
+            ScoreBoardColumnEntries.loadRoundLayout(currentRound.roundParticipant)
+
+        let tim = getTimer()
+        let tdialog = tim.createTimerDialog()
+            ..setTitle(currentRound.roundName + " begins in :")
+            ..display(true)
+            ..setRealTimeRemaining(SPAWN_TIME)
+
+        if currentRound instanceof FinalRound
+            tdialog.display(false)
+
+        tim.doAfter(SPAWN_TIME) ->
             currentRound.start()
+            BOARD_TITLE_PREFIX = currentRound.roundName
+            tdialog.destr()
 
     function checkIfCurrentroundDone(player winner)
         if currentRound != null
             currentRound.finish(winner)
             if previousRoundWinner == null
-                Log.info("Adding previous winner " + winner.getName())
+                Log.debug("Adding previous winner " + winner.getName())
                 previousRoundWinner = winner
             else
-                Log.info("Removing previous winner")
+                Log.debug("Removing previous winner")
                 previousRoundWinner = null
             currentRound = null
             roundSpawn()
 
 function generateFinalMatchup() returns LinkedList<Pair<int, int>>
-    Log.info("[RoundController] [generateFinalMatchup]")
     let matches = new LinkedList<Pair<int, int>>
     let playerList = asList(0, 1, 2, 3, 4, 5, 6, 7, 8)
 
@@ -119,7 +159,7 @@ public function initRoundController()
         Log.info(round.roundName + " finished")
         if roundController.currentRound instanceof FinalRound
             if roundController.previousRoundWinner != null
-                Log.info("Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + round.winner.getNameColored(true))
+                Log.debug("Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + round.winner.getNameColored(true))
                 roundController.addRound(
                     new FinalRound()
                         ..addMatchup(new Pair(roundController.previousRoundWinner.getId(), round.winner.getId())))

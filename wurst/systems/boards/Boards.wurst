@@ -1,10 +1,5 @@
 package Boards
 
-// Local imports:
-import ColorUtils
-import TimeUtils
-import initlater GameInit
-
 // Following code imported from https://github.com/Frotty/EBR/blob/8e58de4a392b1d6fef6a089b2d1b3d0ced5404b3/wurst/MapStuff/MultiboardClass.wurst
 // My initial design was bad so I just decided to look up frotty's code
 tuple MbItem(string value, string icon)
@@ -79,16 +74,22 @@ public class Board
                 return i
         return 0
 
+    function swapRow(int a, int b)
+        for int j = 0 to board.getColumnCount()
+            let tmp = getValue(a,j)
+            let tmpIcon = getIcon(a,j)
+            setValue(a, j, getValue(b,j))
+            setIcon(a, j, getIcon(b,j))
+
+            setValue(b, j, tmp)
+            setIcon(b, j, tmpIcon)
+
     function getValue(int i, int j) returns string
         return data[LoadInteger(mbdata,i,j)].value
+
+    function getIcon(int i, int j) returns string
+        return data[LoadInteger(mbdata,i,j)].icon
 
     ondestroy
         DestroyMultiboard(board)
         FlushParentHashtable(mbdata)
-
-public function getGameTimersBoardTitle() returns string
-    let time = GAME_TIMER.getElapsed().toInt()
-
-    let title = "Time[" + toTimeString(time).color(GENERAL_COLOR) + "]"
-
-    return title
