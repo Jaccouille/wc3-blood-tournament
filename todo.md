@@ -1,11 +1,14 @@
 # TODO
 
 - improved scoreboard
-  - Display match up players
-  - ADded pretty pretty race icon next to the player (Joli drapeau)
-- generate description
+  - Added pretty pretty race icon next to the player (Joli drapeau)
+    - Update board title to indicate round
+-
+- AI?
+- Debug load out (pre placed units)
+- Add game mode handling
+- generate description for abilities
 - Pan camera
-- Final round
 - Remove rally point from building
 
 ## Not important
@@ -15,6 +18,8 @@
 - setup a pipeline to handle external 3d assets in mdl
 - Speed boost after winning
 - Add some handicap/bonus point for weaker player
+- Generate a custom UI tech tree
+- Added a feature to buy items for units
 
 
 
