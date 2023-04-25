@@ -92,8 +92,13 @@ public function replaceIndicator()
                 // Create the actual unit.
                 let target = createUnit(owner, targetID, pos, angle)
 
+                // Only show race picker, rest of the units are hidden
+                // Only showed for debug purposes.
+                if targetID != UNIT_RACE_PICKER and targetID != UNIT_BAD_GUY
+                    target.hide()
+
                 // TODO : for some reason this following code
-                // crashes due to HotkeyMapping definition in CommonUtils.wurst
+                // may provoke crash due to HotkeyMapping definition in CommonUtils.wurst
                 // Find out why
                 // Look up the callbacks for this indicator.
                 if indicatorCallbacks.has(targetID)
