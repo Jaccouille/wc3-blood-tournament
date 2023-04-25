@@ -1,0 +1,25 @@
+package GameModeInit
+
+// Standard library imports:
+import LinkedList
+
+// Third-party imports:
+import Lodash
+
+// Local imports:
+import ColorUtils
+import GameConfig
+import GameMode
+import GameStates
+import Toolkit
+
+init
+    new GameMode("test-mode", "tm", "Testing", "No one can lose, enables test commands") (mode, args) ->
+        mode.message("Test mode enabled".color(SPECIAL_COLOR))
+        gameConfig.setTestMode(true)
+        GameStates.modesSelection.onExit() state ->
+            if gameConfig.isTestModeEnabled()
+                enableToolkit()
+
+    new GameMode("start", "st", "General", "Start the game") (mode, args) ->
+        GameMode.endModeSelection(true)

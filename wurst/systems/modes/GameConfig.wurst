@@ -1,0 +1,12 @@
+package GameConfig
+
+class GameConfig
+    var testMode = false
+
+    function setTestMode(boolean value)
+        testMode = value
+
+    function isTestModeEnabled() returns boolean
+        return testMode
+
+public constant gameConfig = new GameConfig()

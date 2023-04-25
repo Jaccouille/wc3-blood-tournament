@@ -9,6 +9,7 @@ import TimerUtils
 import public Round
 import AltarEntity
 import ScoreBoard
+import GameStates
 
 public constant roundController = new RoundController()
 
@@ -60,6 +61,7 @@ class RoundController
             return
 
         currentRound = rounds.dequeue()
+        BOARD_TITLE_PREFIX = currentRound.roundName
 
         // TODO: refactor implementation, this is code smell
         if currentRound instanceof FinalRound
@@ -87,7 +89,6 @@ class RoundController
 
         tim.doAfter(SPAWN_TIME) ->
             currentRound.start()
-            BOARD_TITLE_PREFIX = currentRound.roundName
             tdialog.destr()
 
     function checkIfCurrentroundDone(player winner)
@@ -152,7 +153,7 @@ function initRounds()
 public function initRoundController()
     initRounds()
 
-    doAfter(2) ->
+    GameStates.modesSelection.onExit() states ->
         roundController.roundSpawn()
 
     onRoundFinish() (Round round) ->

@@ -38,6 +38,7 @@ init
     // preload()
     GAME_TIMER.start(99999999, null)
 
+    // register altar callback indicator before replacing it
     initAltar()
     replaceIndicator()
     nullTimer() ->

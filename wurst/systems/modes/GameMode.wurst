@@ -1,0 +1,228 @@
+package GameMode
+
+// Standard library imports:
+import Assets
+import ClosureTimers
+import HashMap
+import LinkedList
+import TimerUtils
+
+// Third-party imports:
+import ChatCommands
+import Lodash
+
+// Local imports:
+import ColorUtils
+import GameStates
+
+// The interval, in seconds, during which modes can be selected.
+let MODES_TIME_LIMIT = 60.0
+
+let DISPLAY_STRING = compiletime(
+    asList(
+        "-{0} ".color(GOLD_COLOR),
+        "(".color(COLOR_GRAY),
+        "{1}".color(SPECIAL_COLOR),
+        ")".color(COLOR_GRAY)
+    ).join()
+)
+
+public interface GameModeHandler
+    function run(GameMode mode, LinkedList<string> args)
+
+public class GameMode
+    static let list = new OwnedLinkedList<thistype>()
+    static let modeboard = CreateMultiboard()
+    static let modes = new HashMap<string, thistype>()
+    static let clock = getTimer()
+    static var modePlayer = players[0]
+
+    // Handles global initialization for all modes.
+    static function initialize()
+        // Select the player allowed to input modes.
+        for i = 0 to bj_MAX_PLAYERS - 1
+            if players[i].isIngame()
+                modePlayer = players[i]
+                break
+
+        // Notify players of the selection.
+        print(modePlayer.getNameColored() + " can choose game modes.".color(GENERAL_COLOR))
+        printTimedToPlayer("You can select modes.".color(GENERAL_COLOR), 10, modePlayer)
+
+        createModeBoard()
+        createModeQuests()
+        registerAll(modePlayer)
+
+        clock.doAfter(MODES_TIME_LIMIT) ->
+            endModeSelection()
+
+        registerCommandAll("modes") (triggerPlayer, args) ->
+            printTimedToPlayer("Modes:".color(GENERAL_COLOR), 15, triggerPlayer)
+            printTimedToPlayer(getEnabledModes(), 15, triggerPlayer)
+
+    static function getEnabledModes() returns string
+        return list
+        .lodashFilter(mode -> mode.enabled)
+        .map(mode -> mode.message)
+        .joinBy("\n")
+
+    static function find(string query) returns thistype
+        return modes.get(query)
+
+    static function endModeSelection()
+        removeModeBoard()
+        deregisterAll()
+        GameStates.modesSelection.exit()
+
+    static function endModeSelection(bool forced)
+        if forced
+            clock.release()
+        endModeSelection()
+
+    static function registerAll(player modesPlayer)
+        for mode in list
+            mode.register(modesPlayer)
+
+    static function deregisterAll()
+        for mode in list
+            mode.deregister()
+
+    static function removeModeBoard()
+        modeboard
+        ..display(false)
+        ..destr()
+
+    static function createModeBoard()
+        let displayableModes = list.filter(mode -> mode.display)
+
+        modeboard
+            ..setColumnCount(2)
+            ..setRowCount(displayableModes.size())
+            ..setTitle("Modes - 00:{0}".format(MODES_TIME_LIMIT.toString(0)))
+            ..setItemsStyle(true, false)
+            ..display(true)
+            ..minimize()
+            ..maximize(modePlayer)
+
+        for row = 0 to displayableModes.size() - 1
+            let mode = displayableModes.get(row)
+
+            modeboard.getItem(row, 1)
+                ..setValue(mode.description)
+                ..setWidth(.60)
+                ..release()
+
+            modeboard.getItem(row, 0)
+                ..setValue(mode.getDisplayString())
+                ..setWidth(.15)
+                ..release()
+
+        doPeriodically(1.0) cb ->
+            let remaining = clock.getRemaining()
+            if remaining <= 0
+                destroy cb
+                GameMode.removeModeBoard()
+            else
+                var time = remaining.toInt().toString()
+                if remaining < 10
+                    time = "0" + time
+
+                modeboard.setTitle("Modes - 00:" + time)
+
+    static function createModeQuests()
+        list
+        .groupBy(mode -> mode.category)
+        .map((category, modes) -> begin
+            return modes
+                .chunk(10)
+                .map((modes, i) -> begin
+                    let contents = modes
+                        .map(mode -> mode.getDisplayString() + "\n" + mode.description)
+                        .joinBy("\n\n")
+
+                    return CreateQuestBJ(
+                        bj_QUESTTYPE_OPT_DISCOVERED,
+                        (category + " Modes (" + (i + 1).toString() + ")").color(GOLD_COLOR),
+                        contents,
+                        Icons.bTNBansheeMaster
+                    )
+                end)
+        end)
+
+    let description = ""
+    let name = ""
+    let abbrev = ""
+    var message = ""
+    var category = "General"
+    let display = true
+    var enabled = false
+    GameModeHandler action = null
+
+    construct(string _name, string _abbrev, string _description, GameModeHandler _action)
+        name = _name
+        abbrev = _abbrev
+        action = _action
+        description = _description
+        modes
+        ..put(abbrev, this)
+        ..put(name, this)
+        list.add(this)
+
+    construct(string _name, string _abbrev, string _category, string _description, GameModeHandler _action)
+        name = _name
+        abbrev = _abbrev
+        action = _action
+        category = _category
+        description = _description
+        modes
+        ..put(abbrev, this)
+        ..put(name, this)
+        list.add(this)
+
+    construct(string _name, string _abbrev, string _category, string _description, bool _display, GameModeHandler _action)
+        name = _name
+        abbrev = _abbrev
+        action = _action
+        display = _display
+        category = _category
+        description = _description
+        modes
+        ..put(abbrev, this)
+        ..put(name, this)
+        list.add(this)
+
+    function getDisplayString() returns string
+        return DISPLAY_STRING.format(name, abbrev)
+
+    function registerFor(player modesPlayer, string command)
+        registerCommand(modesPlayer, command, (enablePlayer, args) -> enable(args))
+
+    function deregisterFor(string command)
+        deregisterCommandAll(command)
+
+    function register(player modesPlayer)
+        registerFor(modesPlayer, name)
+        registerFor(modesPlayer, abbrev)
+
+    function deregister()
+        deregisterFor(name)
+        deregisterFor(abbrev)
+
+    function enable(LinkedList<string> elems)
+        enabled = true
+        action.run(this, elems)
+
+    function enable()
+        enable(new LinkedList<string>())
+
+    function message(string msg)
+        message = msg
+        print(msg)
+
+    function error(string msg)
+        print(msg.color(RED_COLOR))
+
+init
+    GameStates.modesSelection.onEnter() states ->
+        Log.info("Mode selection")
+        GameMode.initialize()
