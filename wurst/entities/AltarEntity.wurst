@@ -27,6 +27,7 @@ class AltarEntity
 
         bloodOrbModel = addEffect(LocalUnits.orbBloodX, theUnit, "overhead")
         bloodOrb = createUnit(ALTAR_PLAYER, UNIT_DUMMY_ORB_BLOOD, theUnit.getPos(), 270..asAngleDegrees())
+        bloodOrb.pause()
         bloodOrbModel.setTimeScale(0.1)
         let pos = theUnit.getPos().withRealZ(theUnit).op_plus(vec3(-10, 0, -500))
         bloodPointCounterTag = createTTEx(pos, "0", 10)

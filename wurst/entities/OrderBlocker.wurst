@@ -46,10 +46,10 @@ init
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER)
     // ..addCondition(Condition((function isProper)))
     ..addAction() ->
-        if isProper() and preventOrder
+        let u = GetOrderedUnit()
+        if isProper() and preventOrder and not u.isType(UNIT_TYPE_PEON)
             preventOrder = false
             // print(OrderId2StringBJ(GetIssuedOrderIdBJ()))
-            let u = GetOrderedUnit()
             u.issuePointOrder("attack", CENTER)
             preventOrder = true
     onOrder.disable()

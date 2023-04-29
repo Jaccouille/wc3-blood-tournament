@@ -73,10 +73,10 @@ public function initArmyTemplates()
     EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
         let u = EventData.getTriggerUnit()
 
-        Log.info(u.getName())
+        Log.debug(u.getName())
         if armyMap.has(u.getTypeId())
             let soldierBuildingList = pArmyTemplate.get(u.getOwner())
-            Log.info(u.getName())
+            Log.debug(u.getName())
 
         // TODO: enable at some point before release
         // for soldierBuilding in soldierBuildingList
