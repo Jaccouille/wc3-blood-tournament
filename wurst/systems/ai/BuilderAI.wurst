@@ -1,0 +1,94 @@
+package BuilderAI
+
+import HashMap
+import Toolkit
+import ClosureTimers
+import LinkedListModule
+
+import Players
+import GameStates
+import LocalObjectIDs
+import PlayerData
+import IDListConstant
+
+let playerToBuilderAI = new HashMap<player, BuilderAI>
+
+let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
+    ..put(UNIT_HUMAN_BUILDER, asList(
+        BUILDING_RIFLEMAN,
+        BUILDING_PRIEST,
+        BUILDING_KNIGHT,
+        BUILDING_FOOTMAN,
+        BUILDING_PRIEST,
+        BUILDING_SORCERESS,
+        BUILDING_ARCHMAGE,
+        BUILDING_PALADIN
+    ))
+    ..put(UNIT_ORC_BUILDER, asList(
+        BUILDING_GRUNT,
+        BUILDING_HEADHUNTER,
+        BUILDING_WARLOCK,
+        BUILDING_SHAMAN,
+        BUILDING_TAUREN,
+        BUILDING_CHIEFTAIN,
+        BUILDING_SHADOWHUNTER
+    ))
+    ..put(UNIT_UNDEAD_BUILDER, asList(
+        BUILDING_GHOUL,
+        BUILDING_CRYPT_FIEND,
+        BUILDING_NECROMANCER,
+        BUILDING_BANSHEE,
+        BUILDING_ABOMINATION,
+        BUILDING_DREADLORD,
+        BUILDING_LICH
+    ))
+    ..put(UNIT_NIGHT_ELF_BUILDER, asList(
+        BUILDING_TREANT,
+        BUILDING_ARCHER,
+        BUILDING_HUNTRESS,
+        BUILDING_DRUID_TALON,
+        BUILDING_DRUID_CLAW_BEAR,
+        BUILDING_DAEMON_HUNTER,
+        BUILDING_PRIESTESS_OF_THE_MOON
+    ))
+
+
+class BuilderAI
+    use LinkedListModule
+    player _player
+    PlayerData pData
+    CallbackPeriodic cb
+
+    construct(player _player)
+        playerToBuilderAI.put(_player, this)
+        pData = pDatas.get(_player)
+        if pData.builder == null
+            pData.racePicker.issueImmediateOrder(UnitId2String(BUILDER_LIST.getRandomElement()))
+        startAI()
+
+    // TODO: learn how to do AI
+    function startAI()
+        cb = doPeriodically(2) (CallbackPeriodic cb) ->
+            if pData.builder != null
+                let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()
+                let pos = pData.buildingRect.randomPoint()
+                BlzQueueBuildOrderById(pData.builder, unitToBuild, pos.x, pos.y)
+
+    function stopAI()
+        if cb != null
+            destroy cb
+
+public function startAI()
+    Log.debug("start builder AI")
+    for aiInstance in BuilderAI
+        aiInstance.startAI()
+
+public function stopAI()
+    Log.debug("stop builder AI")
+    for aiInstance in BuilderAI
+        aiInstance.stopAI()
+
+init
+    GameStates.gameplay.onEnter() state ->
+        ALL_PLAYERS.forEach() (player _player) ->
+            new BuilderAI(_player)

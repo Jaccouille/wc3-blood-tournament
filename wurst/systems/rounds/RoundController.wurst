@@ -10,6 +10,7 @@ import public Round
 import AltarEntity
 import ScoreBoard
 import GameStates
+import BuilderAI
 
 public constant roundController = new RoundController()
 
@@ -53,12 +54,10 @@ class RoundController
         destroy roundParticipants
 
     function roundSpawn()
-        altarEntity.getOrbUnit().pause()
-        altarEntity.getBadGuy().setAnimation("Stand")
-
         if rounds.isEmpty()
             onAllroundsFinished.execute()
             return
+
 
         currentRound = rounds.dequeue()
         BOARD_TITLE_PREFIX = currentRound.roundName
@@ -87,7 +86,10 @@ class RoundController
         if currentRound instanceof FinalRound
             tdialog.display(false)
 
+       // TODO: gameconfig parameters
+        startAI()
         tim.doAfter(SPAWN_TIME) ->
+            stopAI()
             currentRound.start()
             tdialog.destr()
 
@@ -158,6 +160,9 @@ public function initRoundController()
 
     onRoundFinish() (Round round) ->
         Log.info(round.roundName + " finished")
+        altarEntity.getOrbUnit().pause()
+        altarEntity.getBadGuy().setAnimation("Stand")
+
         if roundController.currentRound instanceof FinalRound
             if roundController.previousRoundWinner != null
                 Log.debug("Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + round.winner.getNameColored(true))

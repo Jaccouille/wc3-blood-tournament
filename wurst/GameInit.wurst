@@ -13,6 +13,7 @@ import ScoreBoard
 import AltarEntity
 import ArmySpawner
 import UnitDeathTrigger
+import LocalObjectIDs
 
 // A timer for the core gameplay.
 public constant GAME_TIMER = CreateTimer()
@@ -40,9 +41,13 @@ init
 
     // register altar callback indicator before replacing it
     initAltar()
+    initPlayers()
+
+    registerIndicatorCallback(UNIT_RACE_PICKER) (unit target) ->
+        let pData = pDatas.get(target.getOwner())
+        pData.racePicker = target
     replaceIndicator()
     nullTimer() ->
-        initPlayers()
         initArmyTemplates()
         initRoundController()
         initUnitDeathTrigger()
