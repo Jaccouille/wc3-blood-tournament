@@ -23,3 +23,7 @@ init
 
     new GameMode("start", "st", "General", "Start the game") (mode, args) ->
         GameMode.endModeSelection(true)
+
+    new GameMode("dev", "d", "Testing", "Development mode (-tm, -st)", false) (mode, args) ->
+        GameMode.find("tm").enable()
+        GameMode.find("st").enable()

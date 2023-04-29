@@ -57,7 +57,7 @@ public function getArmyFromRect(rect armyRect, player _player) returns LinkedLis
     let unitList = new LinkedList<LinkedList<int>>
     let unitList2 = new LinkedList<unit>
     forUnitsInRect(armyRect) (unit u) ->
-        if not u.getName().contains("Builder")
+        if not u.getName().contains("Builder") and not u.isHidden()
             unitList2.add(u)
     unitList2.sortWith(posComparator)
 

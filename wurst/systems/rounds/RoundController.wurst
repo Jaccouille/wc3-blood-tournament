@@ -195,4 +195,5 @@ public function initRoundController()
     onAllroundsFinished = () ->
         Log.info("Match over")
         if roundController.previousRoundWinner != null
+            GameStates.gameplay.exit()
             print(roundController.previousRoundWinner.getName() + " is the Blood tournament champion!")
