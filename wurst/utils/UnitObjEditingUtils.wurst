@@ -37,6 +37,9 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
         ..setFoodProduced(0)
         ..setPathingMap("PathTextures\\2x2Default.tga")
         ..setGroundTexture("")
+        ..setUpgradesUsed("")
+        ..setSelectionScale(1.0)
+        ..setShadowTextureBuilding("ShadowCrates")
 
 
 @compiletime function createSellBuilderAbility()
