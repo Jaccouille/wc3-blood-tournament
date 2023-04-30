@@ -76,11 +76,12 @@ class BuilderAI
                 let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()
                 let pos = pData.buildingRect.randomPoint()
                 BlzQueueBuildOrderById(pData.builder, unitToBuild, pos.x, pos.y)
+            if not isEnabled
+                destroy cb
 
     function stopAI()
-        if cb != null
-            isEnabled = false
-            destroy cb
+        BlzUnitForceStopOrder(pData.builder, true)
+        isEnabled = false
 
     function toggleAI()
         if isEnabled
