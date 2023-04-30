@@ -10,7 +10,6 @@ import public Round
 import AltarEntity
 import ScoreBoard
 import GameStates
-import BuilderAI
 
 public constant roundController = new RoundController()
 
@@ -53,16 +52,17 @@ class RoundController
         ScoreBoardColumnEntries.orderRowsForNextRound(roundParticipants)
         destroy roundParticipants
 
-    function roundSpawn()
+    function preRoundPhaseStart()
         if rounds.isEmpty()
             onAllroundsFinished.execute()
             return
 
-
         currentRound = rounds.dequeue()
+
+        // TODO: Maybe move board update to scoreboard package?
         BOARD_TITLE_PREFIX = currentRound.roundName
 
-        // TODO: refactor implementation, this is code smell
+        // TODO: refactor implementation, this doesn't look really right to me...
         if currentRound instanceof FinalRound
             Log.debug("Debug " + currentRound.roundName)
             if currentRound.roundName == "Quarter Final" and not hasQuarterStarted
@@ -83,19 +83,18 @@ class RoundController
             ..display(true)
             ..setRealTimeRemaining(SPAWN_TIME)
 
+        // TODO: Use different timer for final round
         if currentRound instanceof FinalRound
             tdialog.display(false)
 
-       // TODO: gameconfig parameters
-        startAI()
         tim.doAfter(SPAWN_TIME) ->
-            stopAI()
             currentRound.start()
             tdialog.destr()
 
     function checkIfCurrentroundDone(player winner)
         if currentRound != null
             currentRound.finish(winner)
+            // Registering the winner to create final round matchup
             if previousRoundWinner == null
                 Log.debug("Adding previous winner " + winner.getName())
                 previousRoundWinner = winner
@@ -103,7 +102,14 @@ class RoundController
                 Log.debug("Removing previous winner")
                 previousRoundWinner = null
             currentRound = null
-            roundSpawn()
+            preRoundPhaseStart()
+
+    function buildFinalRoundMatchup(player winner)
+        if roundController.previousRoundWinner != null
+            Log.debug("Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + winner.getNameColored(true))
+            roundController.addRound(
+                new FinalRound()
+                    ..addMatchup(new Pair(roundController.previousRoundWinner.getId(), winner.getId())))
 
 function generateFinalMatchup() returns LinkedList<Pair<int, int>>
     let matches = new LinkedList<Pair<int, int>>
@@ -156,19 +162,25 @@ public function initRoundController()
     initRounds()
 
     GameStates.modesSelection.onExit() states ->
-        roundController.roundSpawn()
+        roundController.preRoundPhaseStart()
 
-    onRoundFinish() (Round round) ->
+    onLastArmyRemaining = () ->
+        Log.info("Clean up phase")
+        altarEntity.getOrbUnit().unpause()
+        altarEntity.getBadGuy().setAnimation("Spell Channel")
+        altarEntity.showCounter()
+
+    onAllUnitDead = (player winner) ->
+        Log.info("All unit dead")
+        roundController.checkIfCurrentroundDone(winner)
+
+    OnRoundFinish.add() (Round round) ->
         Log.info(round.roundName + " finished")
         altarEntity.getOrbUnit().pause()
         altarEntity.getBadGuy().setAnimation("Stand")
 
         if roundController.currentRound instanceof FinalRound
-            if roundController.previousRoundWinner != null
-                Log.debug("Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + round.winner.getNameColored(true))
-                roundController.addRound(
-                    new FinalRound()
-                        ..addMatchup(new Pair(roundController.previousRoundWinner.getId(), round.winner.getId())))
+            roundController.buildFinalRoundMatchup(round.winner)
 
         doAfter(3) ->
             altarEntity.hideCounter()
@@ -186,16 +198,6 @@ public function initRoundController()
                 value.giveReward()
                 key.addGold(round.goldReward)
                 key.addLumber(round.bloodPointReward)
-
-    onLastArmyRemaining = () ->
-        Log.info("Clean up phase")
-        altarEntity.getOrbUnit().unpause()
-        altarEntity.getBadGuy().setAnimation("Spell Channel")
-        altarEntity.showCounter()
-
-    onAllUnitDead = (player winner) ->
-        Log.info("All unit dead")
-        roundController.checkIfCurrentroundDone(winner)
 
     onAllroundsFinished = () ->
         Log.info("Match over")

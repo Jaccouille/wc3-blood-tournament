@@ -38,13 +38,30 @@ interface AllUnitDead
 
 public AllUnitDead onAllUnitDead
 
-interface OnRoundFinish
-    function onFinish(Round round)
+public abstract class OnRoundFinish
+    static constant listenerList = new LinkedList<OnRoundFinish>
 
-OnRoundFinish onFinishListener
+    abstract function fire(Round round)
 
-public function onRoundFinish(OnRoundFinish onFinish)
-    onFinishListener = onFinish
+    static function add(OnRoundFinish listener)
+        listenerList.add(listener)
+
+    static function execute(Round round)
+        for listener in listenerList
+            listener.fire(round)
+
+public abstract class OnRoundStart
+    static constant listenerList = new LinkedList<OnRoundStart>
+
+    abstract function fire(Round round)
+
+    static function add(OnRoundStart listener)
+        listenerList.add(listener)
+
+    static function execute(Round round)
+        for listener in listenerList
+            listener.fire(round)
+
 
 public abstract class Round
     LinkedList<player> roundParticipant = new LinkedList<player>
@@ -63,6 +80,7 @@ public abstract class Round
 
     function start()
         // Round stq
+        OnRoundStart.execute(this)
         Log.info(this.roundName + " start")
         pDatas.forEach() (player key, PlayerData value) ->
             pDatas.get(key).armyPoints = 0
@@ -90,7 +108,7 @@ public abstract class Round
 
     function finish(player winner)
         this.winner = winner
-        onFinishListener.onFinish(this)
+        OnRoundFinish.execute(this)
 
     abstract function spawnArmies()
 

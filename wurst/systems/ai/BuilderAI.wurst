@@ -8,8 +8,8 @@ import LinkedListModule
 import Players
 import GameStates
 import LocalObjectIDs
-import PlayerData
 import IDListConstant
+import Round
 
 let playerToBuilderAI = new HashMap<player, BuilderAI>
 
@@ -58,8 +58,10 @@ class BuilderAI
     player _player
     PlayerData pData
     CallbackPeriodic cb
+    boolean isEnabled = false
 
     construct(player _player)
+        this._player = _player
         playerToBuilderAI.put(_player, this)
         pData = pDatas.get(_player)
         if pData.builder == null
@@ -68,6 +70,7 @@ class BuilderAI
 
     // TODO: learn how to do AI
     function startAI()
+        isEnabled = true
         cb = doPeriodically(2) (CallbackPeriodic cb) ->
             if pData.builder != null
                 let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()
@@ -76,19 +79,45 @@ class BuilderAI
 
     function stopAI()
         if cb != null
+            isEnabled = false
             destroy cb
 
-public function startAI()
+    function toggleAI()
+        if isEnabled
+            stopAI()
+            Log.info("stop builder AI for " + _player.getName())
+        else
+            startAI()
+            Log.info("start builder AI for " + _player.getName())
+
+function startAI()
     Log.debug("start builder AI")
     for aiInstance in BuilderAI
         aiInstance.startAI()
 
-public function stopAI()
+function stopAI()
     Log.debug("stop builder AI")
     for aiInstance in BuilderAI
         aiInstance.stopAI()
+
+function toggleAI()
+    Log.debug("toggle builder AI")
+    for aiInstance in BuilderAI
+        aiInstance.toggleAI()
+
 
 init
     GameStates.gameplay.onEnter() state ->
         ALL_PLAYERS.forEach() (player _player) ->
             new BuilderAI(_player)
+
+    // TODO: gameconfig parameters
+    OnRoundFinish.add() (Round round) ->
+        if round instanceof NormalRound
+            startAI()
+
+    OnRoundStart.add() (Round round) ->
+        stopAI()
+
+    registerToolkitCommand("ai") (player triggerPlayer, LinkedList<string> arguments) ->
+        toggleAI()
