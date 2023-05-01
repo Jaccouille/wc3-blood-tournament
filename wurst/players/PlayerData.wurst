@@ -6,6 +6,8 @@ import LinkedList
 
 // Local imports:
 import ArmyParser
+import GameStates
+import GameConfig
 
 public constant pDatas = new IterableMap<player, PlayerData>
 
@@ -70,3 +72,7 @@ public function initPlayers()
     ..addAction() ->
         let builder = GetTrainedUnit()
         pDatas.get(builder.getOwner()).builder = builder
+
+    GameStates.gameplay.onEnter() state ->
+        pDatas.forEach() (player _p, PlayerData _) ->
+            _p.addGold(gameConfig.getStartingGold())

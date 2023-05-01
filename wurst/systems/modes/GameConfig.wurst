@@ -1,12 +1,44 @@
 package GameConfig
 
+import LinkedList
+
 class GameConfig
     var testMode = false
+    var botAI = false
+    var startingGold = 600
+    let roundGoldIncome = asList(600)
+    var roundCount = 8
 
     function setTestMode(boolean value)
         testMode = value
 
     function isTestModeEnabled() returns boolean
         return testMode
+
+    function isBotAIEnabled() returns boolean
+        return botAI
+
+    function setBotAIMode(boolean value)
+        botAI = value
+
+    function setStartingGold(int value)
+        startingGold = value
+
+    function getStartingGold() returns int
+        return startingGold
+
+    function getRoundGoldIncome() returns LinkedList<int>
+        return roundGoldIncome
+
+    function setRoundGoldIncome(LinkedList<int> roundGoldIncome)
+        roundGoldIncome.clear()
+        roundGoldIncome.addAll(roundGoldIncome)
+
+    function setRoundCount(int value)
+        roundCount = value
+
+    function getRoundCount() returns int
+        return roundCount
+
 
 public constant gameConfig = new GameConfig()

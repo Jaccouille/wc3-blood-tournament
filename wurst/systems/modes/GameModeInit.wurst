@@ -14,7 +14,7 @@ import GameStates
 import Toolkit
 
 init
-    new GameMode("test-mode", "tm", "Testing", "No one can lose, enables test commands") (mode, args) ->
+    new GameMode("test-mode", "tm", "Testing", "Enables test commands") (mode, args) ->
         mode.message("Test mode enabled".color(SPECIAL_COLOR))
         gameConfig.setTestMode(true)
         GameStates.modesSelection.onExit() state ->
@@ -24,6 +24,39 @@ init
     new GameMode("start", "st", "General", "Start the game") (mode, args) ->
         GameMode.endModeSelection(true)
 
+    new GameMode("round-gold", "rg", "General", "Gold income per round") (mode, args) ->
+        if (args.size() > 1)
+            let roundGoldIncomes = args.drop(1).map(e -> e.toInt())
+            var msg = "Round gold income set to : "
+            msg += roundGoldIncomes.map(e -> e.toString().color(GOLD_COLOR)).join(", ")
+
+            msg += "\nRemaining round gold income set to "
+                + roundGoldIncomes.getLast().toString().color(GOLD_COLOR)
+            mode.message(msg)
+            gameConfig.setRoundGoldIncome(roundGoldIncomes)
+
+    new GameMode("round", "r", "General", "Number of rounds before elimination phase, default 8") (mode, args) ->
+        if (args.size() > 1)
+            let roundCount = args.get(1).toInt()
+            mode.message("Round number before elimination phase set to " + roundCount.toString().color(SPECIAL_COLOR))
+            gameConfig.setRoundCount(roundCount)
+
+    new GameMode("start-gold", "sg", "General", "First round gold amount per players") (mode, args) ->
+        if (args.size() > 1)
+            let roundCount = args.get(1).toInt()
+            mode.message("Starting gold set to " + roundCount.toString().color(GOLD_COLOR))
+            gameConfig.setRoundCount(roundCount)
+
+    new GameMode("bot", "b", "General", "Enable bot for leaver") (mode, args) ->
+        if not gameConfig.isBotAIEnabled()
+            mode.message("Bot mode enabled, a bot will replace leavers".color(SPECIAL_COLOR))
+            gameConfig.setBotAIMode(true)
+        else
+            mode.message("Bot mode disabled, bot won't replace leavers".color(SPECIAL_COLOR))
+            gameConfig.setBotAIMode(false)
+
+
     new GameMode("dev", "d", "Testing", "Development mode (-tm, -st)", false) (mode, args) ->
         GameMode.find("tm").enable()
+        GameMode.find("b").enable()
         GameMode.find("st").enable()
