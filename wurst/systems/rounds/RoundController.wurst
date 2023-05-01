@@ -4,12 +4,14 @@ package RoundController
 import ClosureForGroups
 import ClosureTimers
 import TimerUtils
+import HashSet
 
 // Local imports:
 import public Round
 import AltarEntity
 import ScoreBoard
 import GameStates
+import GameConfig
 
 public constant roundController = new RoundController()
 
@@ -31,6 +33,7 @@ class RoundController
 
     function addRound(Round round)
         this.rounds.add(round)
+        Log.info("Added " + round.roundName)
 
     function addRounds(LinkedList<Round> rounds)
         this.rounds.addAll(rounds.copy())
@@ -129,39 +132,69 @@ function generateFinalRounds()
             )
         )
 
-function initRounds()
-    roundController.addRounds(asList<Round>(
-            new NormalRound()
-                ..setRewards(600, 0)
-                ..addMatchup(new Pair(0, 1))
-                ..addMatchup(new Pair(2, 3))
-                ..addMatchup(new Pair(4, 5))
-                ..addMatchup(new Pair(6, 7)),
-            new NormalRound()
-                ..setRewards(600, 0)
-                ..addMatchup(new Pair(0, 1))
-                ..addMatchup(new Pair(2, 3))
-                ..addMatchup(new Pair(4, 5))
-                ..addMatchup(new Pair(6, 7)),
-            new NormalRound()
-                ..setRewards(600, 0)
-                ..addMatchup(new Pair(0, 1))
-                ..addMatchup(new Pair(2, 3))
-                ..addMatchup(new Pair(4, 5))
-                ..addMatchup(new Pair(6, 7)),
-            new NormalRound()
-                ..setRewards(600, 0)
-                ..addMatchup(new Pair(0, 1))
-                ..addMatchup(new Pair(2, 3))
-                ..addMatchup(new Pair(4, 5))
-                ..addMatchup(new Pair(6, 7))
-        ))
-    generateFinalRounds()
+function generateMatchups() returns LinkedList<LinkedList<Pair<int, int>>>
+    Log.info("[generateMatchups]")
+    let possibleMatchUp = new LinkedList<Pair<int, int>>
+    // TODO: handle player count?
+    for i = 0 to 7
+        for j = i + 1 to 7
+            possibleMatchUp.add(new Pair(i, j))
+
+    Log.info("[generateMatchups] shuffle")
+    // possibleMatchUp.shuffle()
+    let roundParticipantList = new LinkedList<LinkedList<Pair<int, int>>>
+
+    let used_pairs = new HashSet<Pair<int, int>>
+    let used_players = new HashSet<int>
+
+    Log.info("[generateMatchups] before build")
+    for x = 1 to gameConfig.getRoundCount() - 1
+        let round_pairs = new LinkedList<Pair<int, int>>
+
+        while round_pairs.size() < 4
+            used_pairs.forEach() (Pair<integer, integer> t) ->
+                Log.info("[generateMatchups] used_pairs : " + t.a.toString() + " " + t.b.toString())
+            for pair in possibleMatchUp
+                if not used_pairs.has(pair)
+                    and not used_players.has(pair.a)
+                    and not used_players.has(pair.b)
+
+                    round_pairs.add(pair)
+                    used_pairs.add(pair)
+                    used_players.add(pair.a, pair.b)
+                    break
+        round_pairs.shuffle()
+        roundParticipantList.add(round_pairs)
+        used_players.clear()
+    // Log.info("[generateMatchups] after combos")
+    // roundParticipantList.forEach() (LinkedList<Pair<integer, integer>> t) ->
+    //     Log.info("==============================")
+    //     t.forEach() (Pair<integer, integer> t) ->
+    //         Log.info("roundParticipantList : " + t.a.toString() + " " + t.b.toString())
+    roundParticipantList.shuffle()
+    return roundParticipantList
+
+function generateRounds()
+    let roundParticipantList = generateMatchups()
+    int idx = 0
+    while idx < gameConfig.getRoundCount() - 1
+        let matchUps = roundParticipantList.get(idx mod 7)
+        let round = new NormalRound()
+                ..addMatchup(matchUps.dequeue())
+                ..addMatchup(matchUps.dequeue())
+                ..addMatchup(matchUps.dequeue())
+                ..addMatchup(matchUps.dequeue())
+
+        let gold = gameConfig.getRoundGoldIncome().size() < idx
+            ? gameConfig.getRoundGoldIncome().getLast()
+            : gameConfig.getRoundGoldIncome().get(idx)
+        round.setRewards(gold, 0)
+        roundController.addRound(round)
+        idx++
 
 public function initRoundController()
-    initRounds()
-
     GameStates.modesSelection.onExit() states ->
+        generateRounds()
         roundController.preRoundPhaseStart()
 
     onLastArmyRemaining = () ->
