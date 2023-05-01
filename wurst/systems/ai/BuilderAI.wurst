@@ -10,6 +10,7 @@ import GameStates
 import LocalObjectIDs
 import IDListConstant
 import Round
+import GameConfig
 
 let playerToBuilderAI = new HashMap<player, BuilderAI>
 
@@ -64,13 +65,16 @@ class BuilderAI
         this._player = _player
         playerToBuilderAI.put(_player, this)
         pData = pDatas.get(_player)
+
+    function pickBuilder()
         if pData.builder == null
             pData.racePicker.issueImmediateOrder(UnitId2String(BUILDER_LIST.getRandomElement()))
-        startAI()
 
     // TODO: learn how to do AI
     function startAI()
         isEnabled = true
+        pickBuilder()
+
         cb = doPeriodically(2) (CallbackPeriodic cb) ->
             if pData.builder != null
                 let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()
@@ -92,33 +96,41 @@ class BuilderAI
             Log.info("start builder AI for " + _player.getName())
 
 function startAI()
-    Log.debug("start builder AI")
+    Log.debug("Start builder AI")
     for aiInstance in BuilderAI
         aiInstance.startAI()
 
 function stopAI()
-    Log.debug("stop builder AI")
+    Log.debug("Stop builder AI")
     for aiInstance in BuilderAI
         aiInstance.stopAI()
 
 function toggleAI()
-    Log.debug("toggle builder AI")
+    Log.debug("Toggle builder AI")
     for aiInstance in BuilderAI
-        aiInstance.toggleAI()
+        if not aiInstance._player.isIngame()
+            aiInstance.toggleAI()
 
 
 init
     GameStates.gameplay.onEnter() state ->
-        ALL_PLAYERS.forEach() (player _player) ->
-            new BuilderAI(_player)
+        // TODO: enable for computer by default
+        if gameConfig.isBotAIEnabled()
+            ALL_PLAYERS.forEach() (player _player) ->
+                let aiInstance = new BuilderAI(_player)
+                if not _player.isIngame()
+                    aiInstance.startAI()
 
-    // TODO: gameconfig parameters
-    OnRoundFinish.add() (Round round) ->
-        if round instanceof NormalRound
-            startAI()
+            // TODO: gameconfig parameters
+            OnRoundFinish.add() (Round round) ->
+                if round instanceof NormalRound
+                    startAI()
 
-    OnRoundStart.add() (Round round) ->
-        stopAI()
+            OnRoundStart.add() (Round round) ->
+                stopAI()
+
+    registerToolkitCommand("aibot") (player triggerPlayer, LinkedList<string> arguments) ->
+        toggleAI()
 
     registerToolkitCommand("ai") (player triggerPlayer, LinkedList<string> arguments) ->
-        toggleAI()
+        playerToBuilderAI.get(triggerPlayer).toggleAI()
