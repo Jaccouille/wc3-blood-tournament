@@ -84,7 +84,7 @@ public class ScoreBoardColumnEntries
                 let currentRow = scoreBoard.getPlayerPos(_p.getName(true))
                 if currentRow != row
                     scoreBoard.swapRow(row, currentRow)
-                    scoreBoard.board.setItemValueColor(row, 0, _p.getColor().toColor().withAlpha(0))
+                scoreBoard.board.setItemValueColor(row, 0, _p.getColor().toColor().withAlpha(0))
                 row += 2
             let expectedRow = playerList.size() * 2
             if scoreBoard.board.getRowCount() > expectedRow
