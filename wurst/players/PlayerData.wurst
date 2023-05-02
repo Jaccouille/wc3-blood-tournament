@@ -64,14 +64,7 @@ public function initPlayers()
     new PlayerData(players[5], gg_rct_Orange)
     new PlayerData(players[6], gg_rct_Green)
     new PlayerData(players[7], gg_rct_Pink)
-
-    // Register builder
-    CreateTrigger()
-    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_TRAIN_FINISH)
-    ..addCondition(Condition(() -> GetTrainedUnit().isType(UNIT_TYPE_PEON)))
-    ..addAction() ->
-        let builder = GetTrainedUnit()
-        pDatas.get(builder.getOwner()).builder = builder
+    
 
     GameStates.gameplay.onEnter() state ->
         pDatas.forEach() (player _p, PlayerData _) ->

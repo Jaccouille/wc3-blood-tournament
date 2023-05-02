@@ -1,0 +1,14 @@
+package BuilderSelection
+
+import ScoreBoard
+
+
+init
+    // Register builder
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_TRAIN_FINISH)
+    ..addCondition(Condition(() -> GetTrainedUnit().isType(UNIT_TYPE_PEON)))
+    ..addAction() ->
+        let builder = GetTrainedUnit()
+        pDatas.get(builder.getOwner()).builder = builder
+        scoreBoardEntries.get("PlayerName").setEntryIcon(builder.getOwner(), builder.getIcon())
