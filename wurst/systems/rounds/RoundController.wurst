@@ -114,24 +114,6 @@ class RoundController
                 new FinalRound()
                     ..addMatchup(new Pair(roundController.previousRoundWinner.getId(), winner.getId())))
 
-function generateFinalMatchup() returns LinkedList<Pair<int, int>>
-    let matches = new LinkedList<Pair<int, int>>
-    let playerList = asList(0, 1, 2, 3, 4, 5, 6, 7, 8)
-
-    for idx = 0 to playerList.size() - 2 step 2
-        matches.add(new Pair(playerList.get(idx), playerList.get(idx + 1)))
-
-    return matches
-
-function generateFinalRounds()
-    let matches = generateFinalMatchup()
-    for matchUp in matches
-        roundController.addRounds(asList<Round>(
-            new FinalRound()
-                ..addMatchup(matchUp)
-            )
-        )
-
 function generateMatchups() returns LinkedList<LinkedList<Pair<int, int>>>
     Log.info("[generateMatchups]")
     let possibleMatchUp = new LinkedList<Pair<int, int>>
@@ -144,28 +126,28 @@ function generateMatchups() returns LinkedList<LinkedList<Pair<int, int>>>
     // possibleMatchUp.shuffle()
     let roundParticipantList = new LinkedList<LinkedList<Pair<int, int>>>
 
-    let used_pairs = new HashSet<Pair<int, int>>
-    let used_players = new HashSet<int>
+    let usedPairs = new HashSet<Pair<int, int>>
+    let usedPlayers = new HashSet<int>
 
     Log.info("[generateMatchups] before build")
-    for x = 1 to gameConfig.getRoundCount() - 1
-        let round_pairs = new LinkedList<Pair<int, int>>
+    for x = 1 to gameConfig.getRoundCount()
+        let roundPairs = new LinkedList<Pair<int, int>>
 
-        while round_pairs.size() < 4
-            used_pairs.forEach() (Pair<integer, integer> t) ->
+        while roundPairs.size() < 4
+            usedPairs.forEach() (Pair<integer, integer> t) ->
                 Log.info("[generateMatchups] used_pairs : " + t.a.toString() + " " + t.b.toString())
             for pair in possibleMatchUp
-                if not used_pairs.has(pair)
-                    and not used_players.has(pair.a)
-                    and not used_players.has(pair.b)
+                if not usedPairs.has(pair)
+                    and not usedPlayers.has(pair.a)
+                    and not usedPlayers.has(pair.b)
 
-                    round_pairs.add(pair)
-                    used_pairs.add(pair)
-                    used_players.add(pair.a, pair.b)
+                    roundPairs.add(pair)
+                    usedPairs.add(pair)
+                    usedPlayers.add(pair.a, pair.b)
                     break
-        round_pairs.shuffle()
-        roundParticipantList.add(round_pairs)
-        used_players.clear()
+        roundPairs.shuffle()
+        roundParticipantList.add(roundPairs)
+        usedPlayers.clear()
     // Log.info("[generateMatchups] after combos")
     // roundParticipantList.forEach() (LinkedList<Pair<integer, integer>> t) ->
     //     Log.info("==============================")
@@ -177,7 +159,7 @@ function generateMatchups() returns LinkedList<LinkedList<Pair<int, int>>>
 function generateRounds()
     let roundParticipantList = generateMatchups()
     int idx = 0
-    while idx < gameConfig.getRoundCount() - 1
+    while idx < gameConfig.getRoundCount()
         let matchUps = roundParticipantList.get(idx mod 7)
         let round = new NormalRound()
                 ..addMatchup(matchUps.dequeue())
@@ -192,9 +174,19 @@ function generateRounds()
         roundController.addRound(round)
         idx++
 
+function generateFinalRounds()
+    let matches = generateMatchups().getRandomElement()
+    for matchUp in matches
+        roundController.addRounds(asList<Round>(
+            new FinalRound()
+                ..addMatchup(matchUp)
+            )
+        )
+
 public function initRoundController()
     GameStates.modesSelection.onExit() states ->
         generateRounds()
+        generateFinalRounds()
         roundController.preRoundPhaseStart()
 
     onLastArmyRemaining = () ->
