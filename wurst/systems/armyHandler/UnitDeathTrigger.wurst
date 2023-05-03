@@ -2,34 +2,39 @@ package UnitDeathTrigger
 
 import RoundController
 
+function createBountyTag(unit dyingUnit, player killerOwner)
+    createTTEx(
+        dyingUnit.getPos3Real(),
+        "+" + dyingUnit.getPointValue().toString(),
+        8,
+        colorA(255, 0, 0, 255),
+        killerOwner
+    )
+    ..setVelocity(0.0, 0.03)
+    ..setFadepoint(1.5)
+    ..setLifespan(2.0)
+    ..setPermanent(false)
+
 public function initUnitDeathTrigger()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
     ..addCondition(Condition(() -> GetDyingUnit().getPointValue() > 0))
     ..addAction() ->
-        let killer = EventData.getKillingUnit().getOwner()
-        let dying = EventData.getDyingUnit()
+        let killerOwner = EventData.getKillingUnit().getOwner()
+        let dyingUnit = EventData.getDyingUnit()
 
-        let dyingOwner = dying.getOwner()
+        let dyingOwner = dyingUnit.getOwner()
 
-        let pData = pDatas.get(dying.getOwner())
+        let pData = pDatas.get(dyingUnit.getOwner())
+
         // Add blood points bounty
-        if killer != ALTAR_PLAYER
-            pDatas.get(killer).addBounty(dying.getPointValue())
-            createTTEx(
-                dying.getPos3Real(),
-                "+" + dying.getPointValue().toString(),
-                8,
-                colorA(255, 0, 0, 255),
-                killer
-            )
-            ..setVelocity(0.0, 0.03)
-            ..setFadepoint(1.5)
-            ..setLifespan(2.0)
-            ..setPermanent(false)
+        if killerOwner != ALTAR_PLAYER and roundController.currentRound instanceof NormalRound
+            pDatas.get(killerOwner).addBounty(dyingUnit.getPointValue())
+            createBountyTag(dyingUnit, killerOwner)
 
-        if pData.spawnedUnits.has(dying) == true
-            pData.spawnedUnits.remove(dying)
+
+        if pData.spawnedUnits.has(dyingUnit) == true
+            pData.spawnedUnits.remove(dyingUnit)
 
         if pData.spawnedUnits.isEmpty()
             roundController.currentRound.roundParticipant.remove(dyingOwner)
