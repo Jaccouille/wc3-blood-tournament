@@ -60,11 +60,11 @@ import LocalAssets
         ..setAttack1WeaponType(WeaponType.Artillery)
         ..setName("Ord Of Blood")
 
-    new HeroDefinition(UNIT_BAD_GUY, UnitIds.gryphonrider)
+    new HeroDefinition(UNIT_ARENA_MASTER, UnitIds.gryphonrider)
         ..setAttacksEnabled(0)
         ..setNormalAbilities(commaList(ABIL_ALTAR_LIGHTNING, AbilityIds.invulnerable, AbilityIds.magicSentry, AbilityIds.locust))
         ..setLevel(10)
-        ..setModelFile(LocalUnits.badGuy)
+        ..setModelFile(LocalUnits.arenaMaster)
         ..setMovementHeight(465)
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)

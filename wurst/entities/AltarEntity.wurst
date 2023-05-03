@@ -53,9 +53,9 @@ class AltarEntity
     function getOrbUnit() returns unit
         return this.bloodOrb
 
-    function getBadGuy() returns unit
+    function getArenaMaster() returns unit
         return theUnit
 
 public function initAltar()
-    registerIndicatorCallback(UNIT_BAD_GUY) (unit target) ->
+    registerIndicatorCallback(UNIT_ARENA_MASTER) (unit target) ->
         new AltarEntity(target)
