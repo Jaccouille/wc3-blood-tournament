@@ -7,7 +7,7 @@ class GameConfig
     var botAI = false
     var startingGold = 600
     let roundGoldIncome = asList(600)
-    var roundCount = 8
+    var roundCount = 7
 
     function setTestMode(boolean value)
         testMode = value

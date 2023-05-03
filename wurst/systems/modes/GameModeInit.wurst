@@ -35,7 +35,7 @@ init
             mode.message(msg)
             gameConfig.setRoundGoldIncome(roundGoldIncomes)
 
-    new GameMode("round", "r", "General", "Number of rounds before elimination phase, default 8") (mode, args) ->
+    new GameMode("round", "r", "General", "Number of rounds before elimination phase, default 7") (mode, args) ->
         if (args.size() > 1)
             let roundCount = args.get(1).toInt()
             mode.message("Round number before elimination phase set to " + roundCount.toString().color(SPECIAL_COLOR))
