@@ -7,7 +7,49 @@ import ClosureEvents
 
 import ScoreBoard
 import HashMap
+import LocalObjectIDs
+import GameStates
 import GameConstants
+
+public let armyMap = new HashMap<int, LinkedList<int>>
+    ..put(BUILDING_FOOTMAN  , generateUnitList(UNIT_FOOTMAN  , 20))
+    ..put(BUILDING_RIFLEMAN , generateUnitList(UNIT_RIFLEMAN , 5))
+    ..put(BUILDING_KNIGHT   , generateUnitList(UNIT_KNIGHT   , 5))
+    ..put(BUILDING_PRIEST   , generateUnitList(UNIT_PRIEST   , 4))
+    ..put(BUILDING_SORCERESS, generateUnitList(UNIT_SORCERESS, 4))
+    ..put(BUILDING_ARCHMAGE , generateUnitList(UNIT_ARCHMAGE , 1))
+    ..put(BUILDING_PALADIN  , generateUnitList(UNIT_PALADIN  , 1))
+
+    ..put(BUILDING_GRUNT        , generateUnitList(UNIT_GRUNT        , 10))
+    ..put(BUILDING_HEADHUNTER   , generateUnitList(UNIT_HEADHUNTER   , 5))
+    ..put(BUILDING_WARLOCK      , generateUnitList(UNIT_WARLOCK      , 5))
+    ..put(BUILDING_SHAMAN       , generateUnitList(UNIT_SHAMAN       , 4))
+    ..put(BUILDING_TAUREN       , generateUnitList(UNIT_TAUREN       , 4))
+    ..put(BUILDING_CHIEFTAIN    , generateUnitList(UNIT_CHIEFTAIN    , 1))
+    ..put(BUILDING_SHADOWHUNTER , generateUnitList(UNIT_SHADOWHUNTER , 1))
+
+    ..put(BUILDING_GHOUL       , generateUnitList(UNIT_GHOUL       , 30))
+    ..put(BUILDING_CRYPT_FIEND , generateUnitList(UNIT_CRYPT_FIEND , 5))
+    ..put(BUILDING_NECROMANCER , generateUnitList(UNIT_NECROMANCER , 5))
+    ..put(BUILDING_BANSHEE     , generateUnitList(UNIT_BANSHEE     , 4))
+    ..put(BUILDING_ABOMINATION , generateUnitList(UNIT_ABOMINATION , 4))
+    ..put(BUILDING_DREADLORD   , generateUnitList(UNIT_DREADLORD   , 1))
+    ..put(BUILDING_LICH        , generateUnitList(UNIT_LICH        , 1))
+
+    ..put(BUILDING_TREANT                , generateUnitList(UNIT_TREANT                , 10))
+    ..put(BUILDING_ARCHER                , generateUnitList(UNIT_ARCHER                , 15))
+    ..put(BUILDING_HUNTRESS              , generateUnitList(UNIT_HUNTRESS              , 5))
+    ..put(BUILDING_DRUID_TALON           , generateUnitList(UNIT_DRUID_TALON           , 4))
+    ..put(BUILDING_DRUID_CLAW_BEAR       , generateUnitList(UNIT_DRUID_CLAW_BEAR       , 4))
+    ..put(BUILDING_DAEMON_HUNTER         , generateUnitList(UNIT_DAEMON_HUNTER         , 1))
+    ..put(BUILDING_PRIESTESS_OF_THE_MOON , generateUnitList(UNIT_PRIESTESS_OF_THE_MOON , 1))
+
+function generateUnitList(int unitId, int count) returns LinkedList<int>
+    let unitList = new LinkedList<int>
+    for i = 0 to count - 1
+        unitList.add(unitId)
+    return unitList
+
 
 // Distance between units positioned in formation mode
 @configurable constant FORMATION_WIDTH = 120.
@@ -17,7 +59,6 @@ public let playerToArmySpawner = new HashMap<player, ArmySpawner>
 
 public class ArmySpawner
     SpawnZone spawnZone
-    LinkedList<LinkedList<int>> armyIds
     player _p
     angle spawnDirection
     int idx = 0
@@ -26,6 +67,7 @@ public class ArmySpawner
     vec2 pos
     EventListener reinforcementListener
     boolean spawnFinished = false
+    LinkedList<unit> unitReserve = new LinkedList<unit>
 
     construct(player _p)
         // Log.info("[ArmySpawner] [construct]")
@@ -35,14 +77,9 @@ public class ArmySpawner
         this.spawnZone = spawnZone
         this.spawnDirection = (spawnZone.angle.cos() == 0 ? 0 : 90).asAngleDegrees()
         this.pos = spawnZone.initialPos
-        this.setReinforcementZone()
+        // this.setReinforcementZone()
 
-    function setArmy(LinkedList<LinkedList<int>> army)
-        // Log.info("[ArmySpawner] [setArmy]")
-        this.armyIds = army
-
-    function spawnArmy()
-        // Log.info("[ArmySpawner] [spawnArmy]")
+    function spawnArmy(LinkedList<unit> buildingList)
         spawnFinished = false
         idx = 0
         nestedIdx = 0
@@ -50,15 +87,15 @@ public class ArmySpawner
         let pData = pDatas.get(_p)
 
         // TODO: Add to gameConfig?
-        int unitPerLine
-        if spawnDirection.degrees() == 0.
-            unitPerLine = (spawnZone.width / FORMATION_WIDTH).round()
-        else
-            unitPerLine = (spawnZone.height / FORMATION_WIDTH).round()
+        // Determine number of unit per line
+        let unitPerLine = spawnDirection.degrees() == 0.
+            ? (spawnZone.width /  FORMATION_WIDTH).round()
+            : (spawnZone.height / FORMATION_WIDTH).round()
 
-        while idx < armyIds.size() and unitSpawned < spawnZone.unitLimit
+        while idx < buildingList.size()
             // Get list of unit mapped to the building
-            let squadIds = armyIds.get(idx)
+            let building = buildingList.get(idx)
+            let squadIds = armyMap.get(building.getTypeId())
             while nestedIdx < squadIds.size()
                 let newUnit = createUnit(_p, squadIds.get(nestedIdx), pos, spawnZone.angle)
                 // Pause unit until battle start
@@ -70,44 +107,77 @@ public class ArmySpawner
                 pData.addArmyPoints(armyPoints)
                 scoreBoardEntries.get("ArmyPoints").addValue(_p, armyPoints)
 
-                // Update position for next unit
-                pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+                if unitSpawned < spawnZone.unitLimit
+                    // Update position for next unit
+                    pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
 
-                // Move to next line
-                if (unitSpawned + 1) % unitPerLine == 0
-                    pos = spawnZone.initialPos.polarOffset(
-                        spawnZone.angle.op_minus(180..asAngleDegrees()),
-                        FORMATION_HEIGHT * unitSpawned / unitPerLine)
+                    // Move to next line
+                    if (unitSpawned + 1) % unitPerLine == 0
+                        pos = spawnZone.initialPos.polarOffset(
+                            spawnZone.angle.op_minus(180..asAngleDegrees()),
+                            FORMATION_HEIGHT * unitSpawned / unitPerLine)
+                else
+                    // Set reinforcement reserve
+                    newUnit.hide()
+                    newUnit.setPos(gg_rct_backupSpawn.getCenter())
+                    unitReserve.push(newUnit)
                 nestedIdx++
                 unitSpawned++
             nestedIdx = 0
             idx++
-        if idx >= armyIds.size()
+        if idx >= buildingList.size()
             spawnFinished = true
+
         // Set position to the reinforcement spawn point
-        // 200 is kind of a random value
-        pos = spawnZone.spawnRect.getCenter().polarOffset(spawnDirection.op_minus(180..asAngleDegrees()), 200)
-
-    private function spawnReinforcement()
-        let unitId = armyIds.get(idx).get(nestedIdx)
-        let newUnit = createUnit(_p, unitId, pos, spawnZone.angle)
-            ..issuePointOrder("attack", CENTER)
-        pDatas.get(_p).spawnedUnits.add(newUnit)
-        nestedIdx++
-        if nestedIdx >= armyIds.get(idx).size()
-            nestedIdx = 0
-            idx++
-            if idx >= armyIds.size()
-                spawnFinished = true
-
-    private function setReinforcementZone()
-        reinforcementListener = EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
-            let dying = EventData.getDyingUnit()
-            let dyingOwner = dying.getOwner()
-            if dyingOwner == this._p and not spawnFinished
-                spawnReinforcement()
+        // 300 is kind of a random value
+        pos = spawnZone.spawnRect.getCenter().polarOffset(spawnDirection.op_minus(180..asAngleDegrees()), 300)
 
 // TODO: replace with gamestate functional interface just like in ITTs
 public function initArmySpawner()
     for i = 0 to 8
         playerToArmySpawner.put(players[i], new ArmySpawner(players[i]))
+
+    GameStates.gameplay.onEnter() state ->
+        EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
+            let u = EventData.getTriggerUnit()
+            let pData = pDatas.get(u.getOwner())
+            let buildingList = pData.buildingList
+
+            if armyMap.has(u.getTypeId())
+                if buildingList.size() == 0
+                    buildingList.add(u)
+
+                // Insert new building so the list is sorted by top left position
+                // Descending
+                for building in buildingList
+
+                    // TODO: refactor? Code seems a bit ugly
+                    if u.getPos().x > building.getPos().x
+                        if buildingList.indexOf(building) == 0
+                            buildingList.addtoStart(u)
+                        else
+                            buildingList.addAt(u, buildingList.indexOf(building) - 1)
+                        break
+                    else if u.getPos().x == building.getPos().x
+                        if u.getPos().y > building.getPos().y
+                            buildingList.addAt(u, buildingList.indexOf(building) - 1)
+                            break
+
+                if not buildingList.has(u)
+                    buildingList.push(u)
+
+        EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
+            let u = EventData.getDyingUnit()
+            let owner = u.getOwner()
+
+            if armyMap.has(u.getTypeId())
+                pDatas.get(owner).buildingList.remove(u)
+
+            let spawner = playerToArmySpawner.get(owner)
+
+            if spawner.unitReserve.size() > 0
+                spawner.unitReserve.dequeue()
+                    ..setPos(spawner.pos)
+                    ..show()
+                    ..unpause()
+                    ..issuePointOrder("attack", CENTER)

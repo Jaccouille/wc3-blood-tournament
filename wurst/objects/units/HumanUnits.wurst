@@ -10,7 +10,7 @@ import LinkedList
 import Lodash
 
 // Local imports:
-import ArmyParser
+import ArmySpawner
 import LocalObjectIDs
 import UnitObjEditingUtils
 import UnitTooltipGenerator

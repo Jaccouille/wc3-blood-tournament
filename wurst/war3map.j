@@ -42,6 +42,7 @@ globals
     rect                    gg_rct_Pink                = null
     rect                    gg_rct_Final_Round_West    = null
     rect                    gg_rct_Final_Round_East    = null
+    rect                    gg_rct_backupSpawn         = null
 endglobals
 
 function InitGlobals takes nothing returns nothing
@@ -216,6 +217,7 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_Pink = Rect( -1056.0, 2272.0, 416.0, 2912.0 )
     set gg_rct_Final_Round_West = Rect( 1120.0, -2432.0, 2304.0, -320.0 )
     set gg_rct_Final_Round_East = Rect( 2912.0, -2432.0, 4096.0, -320.0 )
+    set gg_rct_backupSpawn = Rect( -2816.0, -7040.0, -2592.0, -6816.0 )
 endfunction
 
 //***************************************************************************

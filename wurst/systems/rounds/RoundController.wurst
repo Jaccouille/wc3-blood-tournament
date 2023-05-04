@@ -15,7 +15,7 @@ import GameConfig
 
 public constant roundController = new RoundController()
 
-constant SPAWN_TIME = 15.
+constant SPAWN_TIME = 30.
 
 interface OnAllroundsFinished
     abstract function execute()
@@ -33,7 +33,6 @@ class RoundController
 
     function addRound(Round round)
         this.rounds.add(round)
-        Log.info("Added " + round.roundName)
 
     function addRounds(LinkedList<Round> rounds)
         this.rounds.addAll(rounds.copy())
@@ -64,6 +63,8 @@ class RoundController
 
         // TODO: Maybe move board update to scoreboard package?
         BOARD_TITLE_PREFIX = currentRound.roundName
+        if currentRound instanceof NormalRound
+            BOARD_TITLE_PREFIX += "/" + gameConfig.getRoundCount().toString()
 
         // TODO: refactor implementation, this doesn't look really right to me...
         if currentRound instanceof FinalRound
@@ -88,7 +89,8 @@ class RoundController
 
         // TODO: Use different timer for final round
         if currentRound instanceof FinalRound
-            tdialog.display(false)
+            // tdialog.display(false)
+            tdialog.setRealTimeRemaining(5)
 
         tim.doAfter(SPAWN_TIME) ->
             currentRound.start()
@@ -109,33 +111,31 @@ class RoundController
 
     function buildFinalRoundMatchup(player winner)
         if roundController.previousRoundWinner != null
-            Log.debug("Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + winner.getNameColored(true))
+            Log.info("Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + winner.getNameColored(true))
             roundController.addRound(
                 new FinalRound()
                     ..addMatchup(new Pair(roundController.previousRoundWinner.getId(), winner.getId())))
 
 function generateMatchups() returns LinkedList<LinkedList<Pair<int, int>>>
-    Log.info("[generateMatchups]")
+    Log.debug("[generateMatchups]")
     let possibleMatchUp = new LinkedList<Pair<int, int>>
     // TODO: handle player count?
     for i = 0 to 7
         for j = i + 1 to 7
             possibleMatchUp.add(new Pair(i, j))
 
-    Log.info("[generateMatchups] shuffle")
     // possibleMatchUp.shuffle()
     let roundParticipantList = new LinkedList<LinkedList<Pair<int, int>>>
 
     let usedPairs = new HashSet<Pair<int, int>>
     let usedPlayers = new HashSet<int>
 
-    Log.info("[generateMatchups] before build")
     for x = 1 to gameConfig.getRoundCount()
         let roundPairs = new LinkedList<Pair<int, int>>
 
         while roundPairs.size() < 4
-            usedPairs.forEach() (Pair<integer, integer> t) ->
-                Log.info("[generateMatchups] used_pairs : " + t.a.toString() + " " + t.b.toString())
+            // usedPairs.forEach() (Pair<integer, integer> t) ->
+            //     Log.info("[generateMatchups] used_pairs : " + t.a.toString() + " " + t.b.toString())
             for pair in possibleMatchUp
                 if not usedPairs.has(pair)
                     and not usedPlayers.has(pair.a)
@@ -192,7 +192,7 @@ public function initRoundController()
     onLastArmyRemaining = () ->
         Log.info("Clean up phase")
         altarEntity.getOrbUnit().unpause()
-        altarEntity.getBadGuy().setAnimation("Spell Channel")
+        altarEntity.getArenaMaster().setAnimation("Spell Channel")
         altarEntity.showCounter()
 
     onAllUnitDead = (player winner) ->
@@ -202,7 +202,7 @@ public function initRoundController()
     OnRoundFinish.add() (Round round) ->
         Log.info(round.roundName + " finished")
         altarEntity.getOrbUnit().pause()
-        altarEntity.getBadGuy().setAnimation("Stand")
+        altarEntity.getArenaMaster().setAnimation("Stand")
 
         if roundController.currentRound instanceof FinalRound
             roundController.buildFinalRoundMatchup(round.winner)

@@ -6,7 +6,6 @@ import ObjectIdGenerator
 import Preloader
 
 // Local imports:
-import ArmyParser
 import Indicators
 import RoundController
 import ScoreBoard
@@ -48,7 +47,6 @@ init
         pData.racePicker = target
     replaceIndicator()
     nullTimer() ->
-        initArmyTemplates()
         initRoundController()
         initUnitDeathTrigger()
         initArmySpawner()
