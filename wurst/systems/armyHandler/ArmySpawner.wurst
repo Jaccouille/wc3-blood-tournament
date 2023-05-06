@@ -65,9 +65,7 @@ public class ArmySpawner
     int nestedIdx = 0
     int unitSpawned = 0
     vec2 pos
-    EventListener reinforcementListener
-    boolean spawnFinished = false
-    LinkedList<unit> unitReserve = new LinkedList<unit>
+    constant unitReserve = new LinkedList<unit>
 
     construct(player _p)
         // Log.info("[ArmySpawner] [construct]")
@@ -77,10 +75,8 @@ public class ArmySpawner
         this.spawnZone = spawnZone
         this.spawnDirection = (spawnZone.angle.cos() == 0 ? 0 : 90).asAngleDegrees()
         this.pos = spawnZone.initialPos
-        // this.setReinforcementZone()
 
     function spawnArmy(LinkedList<unit> buildingList)
-        spawnFinished = false
         idx = 0
         nestedIdx = 0
         unitSpawned = 0
@@ -125,16 +121,13 @@ public class ArmySpawner
                 unitSpawned++
             nestedIdx = 0
             idx++
-        if idx >= buildingList.size()
-            spawnFinished = true
-
         // Set position to the reinforcement spawn point
         // 300 is kind of a random value
         pos = spawnZone.spawnRect.getCenter().polarOffset(spawnDirection.op_minus(180..asAngleDegrees()), 300)
 
 // TODO: replace with gamestate functional interface just like in ITTs
 public function initArmySpawner()
-    for i = 0 to 8
+    for i = 0 to 7
         playerToArmySpawner.put(players[i], new ArmySpawner(players[i]))
 
     GameStates.gameplay.onEnter() state ->

@@ -117,7 +117,7 @@ public abstract class Round
         if roundParticipant.has(_p) == false
             roundParticipant.add(_p)
 
-        new ArmySpawner(_p)
+        playerToArmySpawner.get(_p)
             ..setSpawnZone(spawnZone)
             ..spawnArmy(buidingList)
 
