@@ -1,4 +1,4 @@
-package UnitObjEditingUtils
+package UnitObjEditingCommon
 
 // Standard libs imports:
 import Assets
@@ -6,26 +6,38 @@ import ErrorHandling
 import ObjectIds
 import AbilityObjEditing
 
+// Third party imports:
+import Lodash
+
 // Local imports:
+import ArmySpawner
 import GridHotkeyPosition
 import TooltipsUtils
 import UnitTooltipGenerator
 import LocalObjectIDs
 
+function BTUnitDefinition.setCommonAttr()
+    this.setDeathTimeseconds(1.0)
+    this.setBuildTime(1)
+    this.setAttack1DamageSidesperDie(1)
+    this.setAttack1DamageNumberofDice(1)
+    this.setAttack2DamageSidesperDie(1)
+    this.setAttack2DamageNumberofDice(1)
+    this.setFoodCost(0)
+    this.setLumberBountyAwardedBase(1)
+    this.setLumberCost(0)
+    this.setAcquisitionRange(1000)
+    this.setRequirements("")
+    this.setGoldCost(99999)
+
 public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinition
     return new BTUnitDefinition(newId, origId)
-        ..setDeathTimeseconds(1.0)
-        ..setBuildTime(1)
-        ..setAttack1DamageSidesperDie(1)
-        ..setAttack1DamageNumberofDice(1)
-        ..setAttack2DamageSidesperDie(1)
-        ..setAttack2DamageNumberofDice(1)
-        ..setFoodCost(0)
-        ..setLumberBountyAwardedBase(1)
-        ..setLumberCost(0)
-        ..setAcquisitionRange(1000)
-        ..setRequirements("")
-        ..setGoldCost(99999)
+        ..setCommonAttr()
+
+public function createSpawnedUnit(int newId, int origId, int buildingId) returns BTUnitDefinition
+    return new BTUnitDefinition(newId, origId, buildingId)
+        ..setCommonAttr()
+
 
 public function createBuildingUnit(int newId) returns BuildingDefinition
     return new BuildingDefinition(newId, UnitIds.farm)
@@ -82,13 +94,19 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
 @configurable constant USE_PROPERTY_SPACING = true
 
 class BTUnitDefinition extends UnitDefinition
-    // UnitDefinition this
-    // BuildingDefinition buildingDef
+    BuildingDefinition buildingDef
+    int spawnCount
     UnitTooltipGenerator tooltipGen = null
     boolean listen = false
 
     construct(int newId, int origId)
         super(newId, origId)
+
+    construct(int newId, int origId, int buildingId)
+        super(newId, origId)
+        buildingDef = createBuildingUnit(buildingId)
+            ..setUnitsTrained(commaList(newId))
+        spawnCount = armyMap.get(buildingId).countBy(Predicate.owned<int>(id -> id == newId))
 
     function registerTooltipGenerator(UnitTooltipGenerator tgen)
         tooltipGen = tgen
@@ -118,6 +136,8 @@ class BTUnitDefinition extends UnitDefinition
         listen = false
         if tooltipGen != null and build
             tooltipGen.applyToDef(this)
+            if this.buildingDef != null
+                tooltipGen.applyToDef(this.buildingDef)
 
     /**
         Used for copying current this UnitDefinition tooltip to another one
@@ -127,6 +147,7 @@ class BTUnitDefinition extends UnitDefinition
         if tooltipGen != null and build
             tooltipGen.applyToDef(def)
             tooltipGen.applyToDef(this)
+
 
 
     override function setAttack1AttackType(AttackType data)
@@ -177,6 +198,26 @@ class BTUnitDefinition extends UnitDefinition
     override function setPointValue(int data)
         def.setInt("upoi", data)
         addTooltipProperty("Bounty", data)
+
+    function setNameEnhance(string hotkey, string name)
+        this.setHotkeyEnhance(hotkey)
+        this.setName(name)
+        this.setTooltipBasic(makeToolTipNorm(hotkey, name))
+        if this.buildingDef != null
+            buildingDef.setNameEnhance(hotkey, name + " x" + spawnCount.toString())
+
+    function setModelFileExt(string data)
+        this.setModelFile(data)
+        this.buildingDef.setModelFile(data)
+
+    function setIconGameInterfaceExt(string data)
+        this.setIconGameInterface(data)
+        this.buildingDef.setIconGameInterface(data)
+
+    function setUnitSoundSetExt(string data)
+        this.setUnitSoundSet(data)
+        this.buildingDef.setUnitSoundSet(data)
+
 
 public function UnitOrBuildingOrHeroDefinition.setNameEnhance(string hotkey, string name)
     this.setHotkeyEnhance(hotkey)

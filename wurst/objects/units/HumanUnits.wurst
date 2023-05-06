@@ -3,57 +3,33 @@ package HumanUnits
 // Standard libs imports:
 import Assets
 import ChannelAbilityPreset
-import HashMap
-import LinkedList
-
-// Third party imports:
-import Lodash
 
 // Local imports:
-import ArmySpawner
 import LocalObjectIDs
-import UnitObjEditingUtils
+import UnitObjEditingCommon
 import UnitTooltipGenerator
 
-class UnitCount
-    int buildingId
-    int unitId
-    int count
-
-
 @compiletime function createFootman()
-    let spawnCount = armyMap.get(BUILDING_FOOTMAN).countBy(Predicate.owned<int>(id -> id == UNIT_FOOTMAN))
     let tooltip = new UnitTooltipGenerator("Footman Desc")
-    let buildingDef = createBuildingUnit(BUILDING_FOOTMAN)
-        ..setModelFile(Units.footman1)
-        ..setIconGameInterface(Icons.bTNFootman)
-        ..setUnitSoundSet(Soundsets.footman)
-        ..setUnitsTrained(commaList(UNIT_FOOTMAN))
-        ..setNameEnhance("Q", "Footman x" + spawnCount.toString())
-
-    createSpawnedUnit(UNIT_FOOTMAN, UnitIds.footman)
+    createSpawnedUnit(UNIT_FOOTMAN, UnitIds.footman, BUILDING_FOOTMAN)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setAttack1DamageBase(14)
         ..setPointValue(20)
         ..setHitPointsMaximumBase(100)
-        ..setName("Footman")
-        ..setIconGameInterface(Icons.bTNFootman)
-        ..tooltipStopListen(true, buildingDef)
+        ..setNameEnhance("Q", "Footman")
+        ..tooltipStopListen(true)
         ..setCollisionSize(15)
         ..setPriority(2)
 
-@compiletime function createRifleman()
-    let spawnCount = armyMap.get(BUILDING_RIFLEMAN).countBy(Predicate.owned<int>(id -> id == UNIT_RIFLEMAN))
-    let tooltip = new UnitTooltipGenerator("Footman Desc")
-    let buildingDef = createBuildingUnit(BUILDING_RIFLEMAN)
-        ..setModelFile(Units.rifleman1)
-        ..setIconGameInterface(Icons.bTNRifleman)
-        ..setUnitSoundSet(Soundsets.rifleman)
-        ..setUnitsTrained(commaList(UNIT_RIFLEMAN))
-        ..setNameEnhance("W", "Rifleman x" + spawnCount.toString())
+        ..setModelFileExt(Units.footman1)
+        ..setIconGameInterfaceExt(Icons.bTNFootman)
+        ..setUnitSoundSetExt(Soundsets.footman)
 
-    createSpawnedUnit(UNIT_RIFLEMAN, UnitIds.rifleman)
+@compiletime function createRifleman()
+    let tooltip = new UnitTooltipGenerator("Rifleman Desc")
+
+    createSpawnedUnit(UNIT_RIFLEMAN, UnitIds.rifleman, BUILDING_RIFLEMAN)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setPointValue(30)
@@ -66,26 +42,21 @@ class UnitCount
         ..setAttack1CooldownTime(1.350)
         ..setSpeedBase(270)
         ..setHitPointsMaximumBase(100)
-        ..tooltipStopListen(true, buildingDef)
+        ..tooltipStopListen(true)
 
         ..setCollisionSize(15)
         ..setLevel(2)
         ..setPriority(3)
+        ..setNameEnhance("W", "Rifleman")
 
-        ..setIconGameInterface(Icons.bTNRifleman)
-        ..setName("Rifleman")
+        ..setModelFileExt(Units.rifleman1)
+        ..setIconGameInterfaceExt(Icons.bTNRifleman)
+        ..setUnitSoundSetExt(Soundsets.rifleman)
 
 @compiletime function createPriest()
-    let spawnCount = armyMap.get(BUILDING_PRIEST).countBy(Predicate.owned<int>(id -> id == UNIT_PRIEST))
     let tooltip = new UnitTooltipGenerator("Footman Desc")
-    let buildingDef = createBuildingUnit(BUILDING_PRIEST)
-        ..setModelFile(Units.priest1)
-        ..setIconGameInterface(Icons.bTNPriest)
-        ..setUnitSoundSet(Soundsets.priest)
-        ..setUnitsTrained(commaList(UNIT_PRIEST))
-        ..setNameEnhance("A", "Priest x" + spawnCount.toString())
 
-    createSpawnedUnit(UNIT_PRIEST, UnitIds.priest)
+    createSpawnedUnit(UNIT_PRIEST, UnitIds.priest, BUILDING_PRIEST)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setPointValue(40)
@@ -98,25 +69,22 @@ class UnitCount
         ..setSpeedBase(270)
         ..setHitPointsMaximumBase(100)
         ..setMana(200)
-        ..tooltipStopListen(true, buildingDef)
+        ..tooltipStopListen(true)
 
         ..setCollisionSize(15)
         ..setPriority(9)
 
         ..setIconGameInterface(Icons.bTNPriest)
-        ..setName("Priest")
+        ..setNameEnhance("A", "Priest")
+
+        ..setModelFileExt(Units.priest1)
+        ..setIconGameInterfaceExt(Icons.bTNPriest)
+        ..setUnitSoundSetExt(Soundsets.priest)
 
 @compiletime function createKnight()
-    let spawnCount = armyMap.get(BUILDING_KNIGHT).countBy(Predicate.owned<int>(id -> id == UNIT_KNIGHT))
     let tooltip = new UnitTooltipGenerator("Footman Desc")
-    let buildingDef = createBuildingUnit(BUILDING_KNIGHT)
-        ..setModelFile(Units.knight1)
-        ..setIconGameInterface(Icons.bTNKnight)
-        ..setUnitSoundSet(Soundsets.knight)
-        ..setUnitsTrained(commaList(UNIT_KNIGHT))
-        ..setNameEnhance("E", "Knight x" + spawnCount.toString())
 
-    createSpawnedUnit(UNIT_KNIGHT, UnitIds.knight)
+    createSpawnedUnit(UNIT_KNIGHT, UnitIds.knight, BUILDING_KNIGHT)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setPointValue(30)
@@ -127,7 +95,7 @@ class UnitCount
         ..setAttack1CooldownTime(1.4)
         ..setSpeedBase(350)
         ..setHitPointsMaximumBase(100)
-        ..tooltipStopListen(true, buildingDef)
+        ..tooltipStopListen(true)
 
         ..setAttack1Range(120)
         ..setCollisionSize(15)
@@ -135,19 +103,16 @@ class UnitCount
         ..setPriority(5)
 
         ..setIconGameInterface(Icons.bTNKnight)
-        ..setName("Knight")
+        ..setNameEnhance("E", "Knight")
+
+        ..setModelFileExt(Units.knight1)
+        ..setIconGameInterfaceExt(Icons.bTNKnight)
+        ..setUnitSoundSetExt(Soundsets.knight)
 
 @compiletime function createSorceress()
-    let spawnCount = armyMap.get(BUILDING_SORCERESS).countBy(Predicate.owned<int>(id -> id == UNIT_SORCERESS))
     let tooltip = new UnitTooltipGenerator("Footman Desc")
-    let buildingDef = createBuildingUnit(BUILDING_SORCERESS)
-        ..setModelFile(Units.sorceress1)
-        ..setIconGameInterface(Icons.bTNSorceress)
-        ..setUnitSoundSet(Soundsets.sorceress)
-        ..setUnitsTrained(commaList(UNIT_SORCERESS))
-        ..setNameEnhance("S", "Sorceress x" + spawnCount.toString())
 
-    createSpawnedUnit(UNIT_SORCERESS, UnitIds.sorceress)
+    createSpawnedUnit(UNIT_SORCERESS, UnitIds.sorceress, BUILDING_SORCERESS)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setPointValue(50)
@@ -160,25 +125,22 @@ class UnitCount
         ..setSpeedBase(270)
         ..setHitPointsMaximumBase(25)
         ..setMana(200)
-        ..tooltipStopListen(true, buildingDef)
+        ..tooltipStopListen(true)
 
         ..setCollisionSize(15)
         ..setPriority(10)
 
         ..setIconGameInterface(Icons.bTNSorceress)
-        ..setName("Sorceress")
+        ..setNameEnhance("S", "Sorceress")
+
+        ..setModelFileExt(Units.sorceress1)
+        ..setIconGameInterfaceExt(Icons.bTNSorceress)
+        ..setUnitSoundSetExt(Soundsets.sorceress)
 
 @compiletime function createArchmage()
-    let spawnCount = armyMap.get(BUILDING_ARCHMAGE).countBy(Predicate.owned<int>(id -> id == UNIT_ARCHMAGE))
     let tooltip = new UnitTooltipGenerator("Footman Desc")
-    let buildingDef = createBuildingUnit(BUILDING_ARCHMAGE)
-        ..setModelFile(Units.heroArchMage)
-        ..setIconGameInterface(Icons.bTNHeroArchMage)
-        ..setUnitSoundSet(Soundsets.heroArchMage)
-        ..setUnitsTrained(commaList(UNIT_ARCHMAGE))
-        ..setNameEnhance("D", "Archmage x" + spawnCount.toString())
 
-    createSpawnedUnit(UNIT_ARCHMAGE, UnitIds.sorceress)
+    createSpawnedUnit(UNIT_ARCHMAGE, UnitIds.sorceress, BUILDING_ARCHMAGE)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setPointValue(200)
@@ -192,7 +154,7 @@ class UnitCount
         ..setSpeedBase(350)
         ..setHitPointsMaximumBase(150)
         ..setMana(400)
-        ..tooltipStopListen(true, buildingDef)
+        ..tooltipStopListen(true)
 
         ..setCollisionSize(15)
         ..setPriority(10)
@@ -200,20 +162,19 @@ class UnitCount
         ..setIconGameInterface(Icons.bTNHeroArchMage)
         ..setModelFile(Units.heroArchMage)
         ..setUnitSoundSet(Soundsets.heroArchMage)
-        ..setName("Archmage")
+        ..setNameEnhance("D", "Archmage")
+
         ..setAttack1ProjectileArt(Abilities.fireBallMissile)
 
-@compiletime function createPaladin()
-    let spawnCount = armyMap.get(BUILDING_PALADIN).countBy(Predicate.owned<int>(id -> id == UNIT_PALADIN))
-    let tooltip = new UnitTooltipGenerator("Footman Desc")
-    let buildingDef = createBuildingUnit(BUILDING_PALADIN)
-        ..setModelFile(Units.heroPaladin)
-        ..setIconGameInterface(Icons.bTNHeroPaladin)
-        ..setUnitSoundSet(Soundsets.heroPaladin)
-        ..setUnitsTrained(commaList(UNIT_PALADIN))
-        ..setNameEnhance("R", "Paladin x" + spawnCount.toString())
+        ..setModelFileExt(Units.heroArchMage)
+        ..setIconGameInterfaceExt(Icons.bTNHeroArchMage)
+        ..setUnitSoundSetExt(Soundsets.heroArchMage)
 
-    createSpawnedUnit(UNIT_PALADIN, UnitIds.paladin)
+
+@compiletime function createPaladin()
+    let tooltip = new UnitTooltipGenerator("Footman Desc")
+
+    createSpawnedUnit(UNIT_PALADIN, UnitIds.paladin, BUILDING_PALADIN)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setPointValue(200)
@@ -224,8 +185,12 @@ class UnitCount
         ..setModelFile(Units.heroPaladin)
         ..setUnitSoundSet(Soundsets.heroPaladin)
         ..setPriority(2)
-        ..tooltipStopListen(true, buildingDef)
-        ..setName("Paladin")
+        ..tooltipStopListen(true)
+        ..setNameEnhance("R", "Paladin")
+
+        ..setModelFileExt(Units.heroPaladin)
+        ..setIconGameInterfaceExt(Icons.bTNHeroPaladin)
+        ..setUnitSoundSetExt(Soundsets.heroPaladin)
 
 @compiletime function createBuilder()
     createBuilder(UNIT_HUMAN_BUILDER, UnitIds.peasant)
