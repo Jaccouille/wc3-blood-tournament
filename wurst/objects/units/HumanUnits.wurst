@@ -19,7 +19,7 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(100)
         ..setNameEnhance("Q", "Footman")
         ..tooltipStopListen(true)
-        ..setCollisionSize(15)
+        ..setSizeSmall()
         ..setPriority(2)
 
         ..setModelFileExt(Units.footman1)
@@ -44,7 +44,7 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(100)
         ..tooltipStopListen(true)
 
-        ..setCollisionSize(15)
+        ..setSizeSmall()
         ..setLevel(2)
         ..setPriority(3)
         ..setNameEnhance("W", "Rifleman")
@@ -71,7 +71,7 @@ import UnitTooltipGenerator
         ..setMana(200)
         ..tooltipStopListen(true)
 
-        ..setCollisionSize(15)
+        ..setSizeSmall()
         ..setPriority(9)
 
         ..setIconGameInterface(Icons.bTNPriest)
@@ -98,7 +98,7 @@ import UnitTooltipGenerator
         ..tooltipStopListen(true)
 
         ..setAttack1Range(120)
-        ..setCollisionSize(15)
+        ..setSizeSmall()
         ..setLevel(6)
         ..setPriority(5)
 
@@ -127,7 +127,7 @@ import UnitTooltipGenerator
         ..setMana(200)
         ..tooltipStopListen(true)
 
-        ..setCollisionSize(15)
+        ..setSizeSmall()
         ..setPriority(10)
 
         ..setIconGameInterface(Icons.bTNSorceress)
@@ -156,7 +156,7 @@ import UnitTooltipGenerator
         ..setMana(400)
         ..tooltipStopListen(true)
 
-        ..setCollisionSize(15)
+        ..setSizeSmall()
         ..setPriority(10)
 
         ..setIconGameInterface(Icons.bTNHeroArchMage)
@@ -180,7 +180,7 @@ import UnitTooltipGenerator
         ..setPointValue(200)
         ..setIconGameInterface(Icons.bTNHeroPaladin)
         ..setAttack1DamageBase(119)
-        ..setCollisionSize(15)
+        ..setSizeSmall()
         ..setHitPointsMaximumBase(400)
         ..setModelFile(Units.heroPaladin)
         ..setUnitSoundSet(Soundsets.heroPaladin)

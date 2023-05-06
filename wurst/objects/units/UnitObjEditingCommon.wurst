@@ -70,7 +70,6 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
         ..setTooltipNormalExtended(1, "Sell the unit and get 100% of its cost back")
 
 
-
 public function createBuilder(int newId, int origId) returns UnitDefinition
     return new UnitDefinition(newId, origId)
         ..setNormalAbilities(commaList(AbilityIds.invulnerable, ABIL_SELL_BUILDING))
@@ -192,6 +191,10 @@ class BTUnitDefinition extends UnitDefinition
         def.setInt("umpi", data)
         addTooltipProperty("Mana", data)
 
+    /**
+        Set gold cost
+        TODO: refactor, currently useless
+    **/
     function setGoldData(int data)
         this.setGoldCost(data)
 
@@ -218,6 +221,10 @@ class BTUnitDefinition extends UnitDefinition
         this.setUnitSoundSet(data)
         this.buildingDef.setUnitSoundSet(data)
 
+    function setNormalAbilitiesExt(string data)
+        this.setNormalAbilities(data)
+        this.buildingDef.setNormalAbilities(data)
+
 
 public function UnitOrBuildingOrHeroDefinition.setNameEnhance(string hotkey, string name)
     this.setHotkeyEnhance(hotkey)
@@ -228,6 +235,12 @@ public function UnitDefinition.setName(string name)
     this.setTooltipBasic(makeToolTipNormAura(name))
     this.setButtonPositionX(0)
     this.setButtonPositionY(0)
+
+/**
+    Set to lowest collision size possible (15)
+**/
+public function UnitDefinition.setSizeSmall()
+    this.setCollisionSize(15)
 
 function UnitOrBuildingOrHeroDefinition.setHotkeyEnhance(string hotkey)
     if not hotKeyMapping.has(hotkey)
