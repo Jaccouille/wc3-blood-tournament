@@ -15,15 +15,31 @@ function createBountyTag(unit dyingUnit, player killerOwner)
     ..setLifespan(2.0)
     ..setPermanent(false)
 
+function checkIfPlayerDefeated(PlayerData pData)
+    if pData.spawnedUnits.isEmpty()
+        roundController.currentRound.roundParticipant.remove(pData._p)
+
+        Log.info(pData._p.getName() + " has been eliminated")
+
+        if roundController.currentRound.roundParticipant.size() == 1
+            onLastArmyRemaining.execute()
+        if roundController.currentRound.roundParticipant.isEmpty()
+            onAllUnitDead.execute(pData._p)
+
+
 public function initUnitDeathTrigger()
+    OnRoundStart.add() (Round round) ->
+        pDatas.forEach() (player key, PlayerData pData) ->
+            if pData.buildingList.size() <= 0
+                roundController.currentRound.roundParticipant.remove(pData._p)
+                Log.info(pData._p.getName() + " has been eliminated")
+
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
     ..addCondition(Condition(() -> GetDyingUnit().getPointValue() > 0))
     ..addAction() ->
         let killerOwner = EventData.getKillingUnit().getOwner()
         let dyingUnit = EventData.getDyingUnit()
-
-        let dyingOwner = dyingUnit.getOwner()
 
         let pData = pDatas.get(dyingUnit.getOwner())
 
@@ -36,12 +52,4 @@ public function initUnitDeathTrigger()
         if pData.spawnedUnits.has(dyingUnit) == true
             pData.spawnedUnits.remove(dyingUnit)
 
-        if pData.spawnedUnits.isEmpty()
-            roundController.currentRound.roundParticipant.remove(dyingOwner)
-
-            Log.info(dyingOwner.getName() + " has been eliminated")
-
-            if roundController.currentRound.roundParticipant.size() == 1
-                onLastArmyRemaining.execute()
-            if roundController.currentRound.roundParticipant.isEmpty()
-                onAllUnitDead.execute(dyingOwner)
+        checkIfPlayerDefeated(pData)
