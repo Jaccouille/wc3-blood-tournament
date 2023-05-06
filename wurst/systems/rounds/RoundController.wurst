@@ -15,8 +15,6 @@ import GameConfig
 
 public constant roundController = new RoundController()
 
-constant SPAWN_TIME = 30.
-
 interface OnAllroundsFinished
     abstract function execute()
 
@@ -85,14 +83,14 @@ class RoundController
         let tdialog = tim.createTimerDialog()
             ..setTitle(currentRound.roundName + " begins in :")
             ..display(true)
-            ..setRealTimeRemaining(SPAWN_TIME)
+            ..setRealTimeRemaining(gameConfig.getRoundInterludeTime())
 
         // TODO: Use different timer for final round
         if currentRound instanceof FinalRound
             // tdialog.display(false)
             tdialog.setRealTimeRemaining(5)
 
-        tim.doAfter(SPAWN_TIME) ->
+        tim.doAfter(gameConfig.getRoundInterludeTime()) ->
             currentRound.start()
             tdialog.destr()
 

@@ -13,6 +13,7 @@ import GameMode
 import GameStates
 import Toolkit
 
+
 init
     new GameMode("test-mode", "tm", "Testing", "Enables test commands") (mode, args) ->
         mode.message("Test mode enabled".color(SPECIAL_COLOR))
@@ -55,6 +56,17 @@ init
             mode.message("Bot mode disabled, bot won't replace leavers".color(SPECIAL_COLOR))
             gameConfig.setBotAIMode(false)
 
+    new GameMode("start-gold", "sg", "General", "First round gold amount per players") (mode, args) ->
+        if (args.size() > 1)
+            let roundCount = args.get(1).toInt()
+            mode.message("Starting gold set to " + roundCount.toString().color(GOLD_COLOR))
+            gameConfig.setRoundCount(roundCount)
+
+    new GameMode("interlude-time", "it", "Time between each round (seconds)") (mode, args) ->
+        if (args.size() > 1)
+            let roundCount = args.get(1).toInt()
+            mode.message("Interlude time set to " + roundCount.toString().color(GOLD_COLOR))
+            gameConfig.setRoundInterludeTime(roundCount.toReal())
 
     new GameMode("dev", "d", "Testing", "Development mode (-tm, -st)", false) (mode, args) ->
         GameMode.find("tm").enable()
