@@ -191,18 +191,18 @@ endfunction
 function CreateRegions takes nothing returns nothing
     local weathereffect we
 
-    set gg_rct_Frontrank_SW = Rect( 1408.0, -6272.0, 2176.0, -4992.0 )
-    set gg_rct_Frontrank_NE = Rect( 2944.0, 2048.0, 3712.0, 3328.0 )
-    set gg_rct_Frontrank_ES = Rect( 6144.0, -2688.0, 7424.0, -1920.0 )
-    set gg_rct_Frontrank_WN = Rect( -2304.0, -1024.0, -1024.0, -256.0 )
+    set gg_rct_Frontrank_SW = Rect( 1408.0, -6176.0, 2176.0, -4992.0 )
+    set gg_rct_Frontrank_NE = Rect( 2944.0, 2048.0, 3712.0, 3200.0 )
+    set gg_rct_Frontrank_ES = Rect( 6144.0, -2688.0, 7296.0, -1920.0 )
+    set gg_rct_Frontrank_WN = Rect( -2176.0, -1024.0, -1024.0, -256.0 )
     set gg_rct_Reinforcements_SW = Rect( 1376.0, -5664.0, 1568.0, -5472.0 )
     set gg_rct_Reinforcements_ES = Rect( 6688.0, -2720.0, 6880.0, -2528.0 )
     set gg_rct_Reinforcements_NE = Rect( 3648.0, 2560.0, 3840.0, 2720.0 )
     set gg_rct_Reinforcements_WN = Rect( -1760.0, -288.0, -1568.0, -96.0 )
-    set gg_rct_Frontrank_SE = Rect( 2944.0, -6272.0, 3712.0, -4992.0 )
-    set gg_rct_Frontrank_EN = Rect( 6144.0, -1024.0, 7424.0, -256.0 )
-    set gg_rct_Frontrank_NW = Rect( 1536.0, 2048.0, 2304.0, 3328.0 )
-    set gg_rct_Frontrank_WS = Rect( -2304.0, -2688.0, -1024.0, -1920.0 )
+    set gg_rct_Frontrank_SE = Rect( 2944.0, -6176.0, 3712.0, -4992.0 )
+    set gg_rct_Frontrank_EN = Rect( 6144.0, -1024.0, 7296.0, -256.0 )
+    set gg_rct_Frontrank_NW = Rect( 1536.0, 2048.0, 2304.0, 3200.0 )
+    set gg_rct_Frontrank_WS = Rect( -2176.0, -2688.0, -1024.0, -1920.0 )
     set gg_rct_Reinforcements_SE = Rect( 3552.0, -5664.0, 3744.0, -5472.0 )
     set gg_rct_Reinforcements_EN = Rect( 6688.0, -288.0, 6880.0, -96.0 )
     set gg_rct_Reinforcements_NW = Rect( 1376.0, 2560.0, 1568.0, 2752.0 )
@@ -215,8 +215,8 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_Orange = Rect( -2336.0, -4928.0, -992.0, -4256.0 )
     set gg_rct_Green = Rect( -2336.0, 1504.0, -992.0, 2400.0 )
     set gg_rct_Pink = Rect( -1056.0, 2272.0, 416.0, 2912.0 )
-    set gg_rct_Final_Round_West = Rect( 1120.0, -2432.0, 2304.0, -320.0 )
-    set gg_rct_Final_Round_East = Rect( 2912.0, -2432.0, 4096.0, -320.0 )
+    set gg_rct_Final_Round_West = Rect( 1280.0, -2432.0, 2176.0, -384.0 )
+    set gg_rct_Final_Round_East = Rect( 2944.0, -2432.0, 3968.0, -384.0 )
     set gg_rct_backupSpawn = Rect( -2816.0, -7040.0, -2592.0, -6816.0 )
 endfunction
 
