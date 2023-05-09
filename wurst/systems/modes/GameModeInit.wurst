@@ -25,7 +25,8 @@ init
     new GameMode("start", "st", "General", "Start the game") (mode, args) ->
         GameMode.endModeSelection(true)
 
-    new GameMode("round-gold", "rg", "General", "Gold income per round") (mode, args) ->
+    new GameMode("round-gold", "rg", "General", "Gold income per round, default :" +
+        gameConfig.getRoundGoldIncome().getFirst().toString()) (mode, args) ->
         if (args.size() > 1)
             let roundGoldIncomes = args.drop(1).map(e -> e.toInt())
             var msg = "Round gold income set to : "
@@ -36,16 +37,11 @@ init
             mode.message(msg)
             gameConfig.setRoundGoldIncome(roundGoldIncomes)
 
-    new GameMode("round", "r", "General", "Number of rounds before elimination phase, default 7") (mode, args) ->
+    new GameMode("round", "r", "General", "Number of rounds before elimination phase, default :" +
+        gameConfig.getRoundCount().toString()) (mode, args) ->
         if (args.size() > 1)
             let roundCount = args.get(1).toInt()
             mode.message("Round number before elimination phase set to " + roundCount.toString().color(SPECIAL_COLOR))
-            gameConfig.setRoundCount(roundCount)
-
-    new GameMode("start-gold", "sg", "General", "First round gold amount per players") (mode, args) ->
-        if (args.size() > 1)
-            let roundCount = args.get(1).toInt()
-            mode.message("Starting gold set to " + roundCount.toString().color(GOLD_COLOR))
             gameConfig.setRoundCount(roundCount)
 
     new GameMode("bot", "b", "General", "Enable bot for leaver") (mode, args) ->
@@ -56,17 +52,26 @@ init
             mode.message("Bot mode disabled, bot won't replace leavers".color(SPECIAL_COLOR))
             gameConfig.setBotAIMode(false)
 
-    new GameMode("start-gold", "sg", "General", "First round gold amount per players") (mode, args) ->
+    new GameMode("start-gold", "sg", "General", "First round gold amount per players, default : " +
+    gameConfig.getStartingGold().toString()) (mode, args) ->
         if (args.size() > 1)
-            let roundCount = args.get(1).toInt()
-            mode.message("Starting gold set to " + roundCount.toString().color(GOLD_COLOR))
-            gameConfig.setRoundCount(roundCount)
+            let startingGold = args.get(1).toInt()
+            mode.message("Starting gold set to " + startingGold.toString().color(GOLD_COLOR))
+            gameConfig.setStartingGold(startingGold)
 
-    new GameMode("interlude-time", "it", "Time between each round (seconds)") (mode, args) ->
+    new GameMode("interlude-time", "it", "Time between each round (seconds) default : " +
+        gameConfig.roundInterludeTime.toString()) (mode, args) ->
         if (args.size() > 1)
-            let roundCount = args.get(1).toInt()
-            mode.message("Interlude time set to " + roundCount.toString().color(GOLD_COLOR))
-            gameConfig.setRoundInterludeTime(roundCount.toReal())
+            let interludeTime = args.get(1).toInt()
+            mode.message("Interlude time set to " + interludeTime.toString().color(GOLD_COLOR))
+            gameConfig.setRoundInterludeTime(interludeTime.toReal())
+
+    new GameMode("spawn-capacity", "sc", "Max unit capacity, default : " +
+        gameConfig.getSpawnCap().toString()) (mode, args) ->
+        if (args.size() > 1)
+            let spawnCap = args.get(1).toInt()
+            mode.message("Spawn capacity set to " + spawnCap.toString().color(GOLD_COLOR))
+            gameConfig.setSpawnCap(spawnCap)
 
     new GameMode("dev", "d", "Testing", "Development mode (-tm, -st)", false) (mode, args) ->
         GameMode.find("tm").enable()
