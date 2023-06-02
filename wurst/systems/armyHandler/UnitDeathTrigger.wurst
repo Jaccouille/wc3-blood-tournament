@@ -1,11 +1,15 @@
 package UnitDeathTrigger
 
 import RoundController
+import GameConfig
+
+function getBounty(unit dyingUnit) returns int
+    return (dyingUnit.getPointValue() * gameConfig.getBountyMultiplier()).toInt()
 
 function createBountyTag(unit dyingUnit, player killerOwner)
     createTTEx(
         dyingUnit.getPos3Real(),
-        "+" + dyingUnit.getPointValue().toString(),
+        "+" + getBounty(dyingUnit).toString(),
         8,
         colorA(255, 0, 0, 255),
         killerOwner
@@ -45,7 +49,7 @@ public function initUnitDeathTrigger()
 
         // Add blood points bounty
         if killerOwner != ALTAR_PLAYER and roundController.currentRound instanceof NormalRound
-            pDatas.get(killerOwner).addBounty(dyingUnit.getPointValue())
+            pDatas.get(killerOwner).addBounty(getBounty(dyingUnit))
             createBountyTag(dyingUnit, killerOwner)
 
 

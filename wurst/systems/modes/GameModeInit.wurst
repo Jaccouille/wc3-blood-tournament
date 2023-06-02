@@ -73,6 +73,13 @@ init
             mode.message("Spawn capacity set to " + spawnCap.toString().color(GOLD_COLOR))
             gameConfig.setSpawnCap(spawnCap)
 
+    new GameMode("bounty-multiplier", "bm", "Set blood points bounty multiplier, default : " +
+        gameConfig.getBountyMultiplier().toString()) (mode, args) ->
+        if (args.size() > 1)
+            let bountyMultiplier = args.get(1).toReal()
+            mode.message("Bounty multiplier set to " + bountyMultiplier.toString().color(GOLD_COLOR))
+            gameConfig.setBountyMultiplier(bountyMultiplier)
+
     new GameMode("dev", "d", "Testing", "Development mode (-tm, -st)", false) (mode, args) ->
         GameMode.find("tm").enable()
         GameMode.find("b").enable()
