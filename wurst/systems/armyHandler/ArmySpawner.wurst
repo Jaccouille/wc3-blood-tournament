@@ -4,6 +4,7 @@ import LinkedList
 
 import SpawnZone
 import ClosureEvents
+import ClosureTimers
 
 import ScoreBoard
 import HashMap
@@ -46,7 +47,7 @@ public let armyMap = new HashMap<int, LinkedList<int>>
 
 function generateUnitList(int unitId, int count) returns LinkedList<int>
     let unitList = new LinkedList<int>
-    for i = 0 to count - 1
+    for i = 0 to count * 1 - 1
         unitList.add(unitId)
     return unitList
 
@@ -57,6 +58,8 @@ function generateUnitList(int unitId, int count) returns LinkedList<int>
 
 public let playerToArmySpawner = new HashMap<player, ArmySpawner>
 
+public var count = 0
+
 public class ArmySpawner
     SpawnZone spawnZone
     player _p
@@ -66,64 +69,121 @@ public class ArmySpawner
     int unitSpawned = 0
     vec2 pos
     constant unitReserve = new LinkedList<unit>
+    int unitPerLine
+    PlayerData pData
 
     construct(player _p)
         // Log.info("[ArmySpawner] [construct]")
         this._p = _p
+        this.pData = pDatas.get(_p)
 
     function setSpawnZone(SpawnZone spawnZone)
         this.spawnZone = spawnZone
         this.spawnDirection = (spawnZone.angle.cos() == 0 ? 0 : 90).asAngleDegrees()
         this.pos = spawnZone.initialPos
 
+    function spawnUnit(int unitId)
+        let newUnit = createUnit(_p, unitId, pos, spawnZone.angle)
+        // Pause unit until battle start
+        newUnit.pause()
+        pData.spawnedUnits.add(newUnit)
+
+        // TODO: Move this to army parsing
+        let armyPoints = newUnit.getPointValue()
+        pData.addArmyPoints(armyPoints)
+        scoreBoardEntries.get("ArmyPoints").addValue(_p, armyPoints)
+
+        if unitSpawned < spawnZone.unitLimit
+            // Update position for next unit
+            pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+
+            // Move to next line
+            if (unitSpawned + 1) % unitPerLine == 0
+                pos = spawnZone.initialPos.polarOffset(
+                    spawnZone.angle.op_minus(180..asAngleDegrees()),
+                    FORMATION_HEIGHT * unitSpawned / unitPerLine)
+        else
+            // Set reinforcement reserve
+            newUnit.hide()
+            newUnit.setPos(gg_rct_backupSpawn.getCenter())
+            unitReserve.push(newUnit)
+        nestedIdx++
+        count++
+        unitSpawned++
+    // nestedIdx = 0
+    // idx++
+
+    function test(LinkedList<unit> buildingList)
+        let bIterator = buildingList.iterator()
+        let squadIds = armyMap.get(bIterator.next().getTypeId())
+        var sIterator = squadIds.iterator()
+        doPeriodically(0.003) (CallbackPeriodic cb) ->
+            if sIterator.hasNext()
+                spawnUnit(sIterator.next())
+            else
+                sIterator.close()
+                if bIterator.hasNext()
+                    sIterator = armyMap.get(bIterator.next().getTypeId()).iterator()
+                else
+                    bIterator.close()
+                    destroy cb
+
     function spawnArmy(LinkedList<unit> buildingList)
         idx = 0
         nestedIdx = 0
         unitSpawned = 0
-        let pData = pDatas.get(_p)
+        // let pData = pDatas.get(_p)
 
         // TODO: Add to gameConfig?
         // Determine number of unit per line
-        let unitPerLine = spawnDirection.degrees() == 0.
+        unitPerLine = spawnDirection.degrees() == 0.
             ? (spawnZone.width /  FORMATION_WIDTH).round()
             : (spawnZone.height / FORMATION_WIDTH).round()
+        test(buildingList)
 
-        while idx < buildingList.size()
-            // Get list of unit mapped to the building
-            let building = buildingList.get(idx)
-            let squadIds = armyMap.get(building.getTypeId())
-            while nestedIdx < squadIds.size()
-                let newUnit = createUnit(_p, squadIds.get(nestedIdx), pos, spawnZone.angle)
-                // Pause unit until battle start
-                newUnit.pause()
-                pData.spawnedUnits.add(newUnit)
+        // while idx < buildingList.size() and unitSpawned < spawnZone.unitLimit
+        //     // Get list of unit mapped to the building
+        //     let building = buildingList.get(idx)
+        //     let squadIds = armyMap.get(building.getTypeId())
+        //     doPeriodicallyCounted(0.005, squadIds.size()) (CallbackCounted cb) ->
+        //         let newUnit = createUnit(_p, squadIds.get(nestedIdx), pos, spawnZone.angle)
+        //         // Pause unit until battle start
+        //         newUnit.pause()
+        //         pData.spawnedUnits.add(newUnit)
 
-                // TODO: Move this to army parsing
-                let armyPoints = newUnit.getPointValue()
-                pData.addArmyPoints(armyPoints)
-                scoreBoardEntries.get("ArmyPoints").addValue(_p, armyPoints)
+        //         // TODO: Move this to army parsing
+        //         let armyPoints = newUnit.getPointValue()
+        //         pData.addArmyPoints(armyPoints)
+        //         scoreBoardEntries.get("ArmyPoints").addValue(_p, armyPoints)
 
-                if unitSpawned < spawnZone.unitLimit
-                    // Update position for next unit
-                    pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+        //         if unitSpawned < spawnZone.unitLimit
+        //             // Update position for next unit
+        //             pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
 
-                    // Move to next line
-                    if (unitSpawned + 1) % unitPerLine == 0
-                        pos = spawnZone.initialPos.polarOffset(
-                            spawnZone.angle.op_minus(180..asAngleDegrees()),
-                            FORMATION_HEIGHT * unitSpawned / unitPerLine)
-                else
-                    // Set reinforcement reserve
-                    newUnit.hide()
-                    newUnit.setPos(gg_rct_backupSpawn.getCenter())
-                    unitReserve.push(newUnit)
-                nestedIdx++
-                unitSpawned++
-            nestedIdx = 0
-            idx++
+        //             // Move to next line
+        //             if (unitSpawned + 1) % unitPerLine == 0
+        //                 pos = spawnZone.initialPos.polarOffset(
+        //                     spawnZone.angle.op_minus(180..asAngleDegrees()),
+        //                     FORMATION_HEIGHT * unitSpawned / unitPerLine)
+        //         else
+        //             // Set reinforcement reserve
+        //             newUnit.hide()
+        //             newUnit.setPos(gg_rct_backupSpawn.getCenter())
+        //             unitReserve.push(newUnit)
+        //         nestedIdx++
+        //         count++
+        //         unitSpawned++
+        //         Log.info("Count : " + count.toString())
+        //         Log.info("NestedIdx : " + nestedIdx.toString())
+        //         if nestedIdx < squadIds.size() and count < 1000
+        //             destroy cb
+        //     nestedIdx = 0
+        //     idx++
+
         // Set position to the reinforcement spawn point
         // 300 is kind of a random value
         pos = spawnZone.spawnRect.getCenter().polarOffset(spawnDirection.op_minus(180..asAngleDegrees()), 300)
+        // Log.info("Position reserve : " + pos.toString())
 
 // TODO: replace with gamestate functional interface just like in ITTs
 public function initArmySpawner()
