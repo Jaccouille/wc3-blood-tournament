@@ -1,16 +1,19 @@
 package OrderBlocker
 
+// Standard libs imports:
+import ColorUtils
 
 // Local imports:
-import SimError
 import GameConstants
 
 public boolean preventOrder = false
-public trigger onOrder
+public trigger orderBlocker
 
 
 function isProper() returns boolean
     if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "bloodlust"
+        return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "bloodluston"
         return false
     if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "innerfire"
         return false
@@ -36,7 +39,7 @@ function isProper() returns boolean
 
 init
 
-    onOrder = CreateTrigger()
+    orderBlocker = CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER)
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER)
@@ -48,5 +51,9 @@ init
             // print(OrderId2StringBJ(GetIssuedOrderIdBJ()))
             u.issuePointOrder("attack", CENTER)
             preventOrder = true
-            simError(u.getOwner(), "Cannot control builder during round phase")
-    onOrder.disable()
+            if u.isType(UNIT_TYPE_PEON)
+                let msg = "Cannot control builder during round phase".color(SPECIAL_COLOR)
+                printTimedToPlayer(msg, 4, u.getOwner())
+            else
+                printTimedToPlayer("Order blocked : " + OrderId2StringBJ(GetIssuedOrderIdBJ()) + " id : " + GetIssuedOrderIdBJ().toString(), 4, u.getOwner())
+    orderBlocker.disable()

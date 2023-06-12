@@ -89,8 +89,6 @@ public abstract class Round
         doAfterSpawn()
 
     function doBeforeSpawn()
-        onOrder.disable()
-        preventOrder = false
         forUnitsAll() (unit u) ->
             if IsUnitDeadBJ(u)
                 u.remove()
@@ -103,7 +101,7 @@ public abstract class Round
                     u.issuePointOrder("attack", CENTER)
             nullTimer() ->
                 preventOrder = true
-                onOrder.enable()
+                orderBlocker.enable()
 
     function setRewards(int gold, int bloodPoint)
         this.goldReward = gold
