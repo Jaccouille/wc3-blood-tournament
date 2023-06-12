@@ -28,7 +28,7 @@ function BTUnitDefinition.setCommonAttr()
     this.setFoodCost(0)
     this.setLumberBountyAwardedBase(1)
     this.setLumberCost(0)
-    this.setAcquisitionRange(1000)
+    this.setAcquisitionRange(2000)
     this.setRequirements("")
     this.setGoldCost(99999)
 
@@ -89,6 +89,7 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
         ..setRace(Race.Undead)
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
+        ..setFoodCost(1)
 
 /** Configure this variable to `false` if you don't want the
 	property names to have spaces. */

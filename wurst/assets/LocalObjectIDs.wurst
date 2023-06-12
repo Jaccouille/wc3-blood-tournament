@@ -3,7 +3,6 @@ package LocalObjectIDs
 // Standard libs imports:
 import ObjectIdGenerator
 
-public let UNIT_PEASANT       = compiletime(UNIT_ID_GEN.next())
 public let UNIT_FOOTMAN       = compiletime(UNIT_ID_GEN.next())
 public let BUILDING_FOOTMAN   = compiletime(UNIT_ID_GEN.next())
 public let UNIT_RIFLEMAN      = compiletime(UNIT_ID_GEN.next())
@@ -75,3 +74,5 @@ public let UNIT_NIGHT_ELF_BUILDER = compiletime(UNIT_ID_GEN.next())
 public let ABIL_ALTAR_LIGHTNING = compiletime(ABIL_ID_GEN.next())
 public let ABIL_SELL_BUILDING   = compiletime(ABIL_ID_GEN.next())
 public let ABIL_BLOODLUST       = compiletime(ABIL_ID_GEN.next())
+
+public let UPGD_RACE_PICK       = compiletime(UPGD_ID_GEN.next())

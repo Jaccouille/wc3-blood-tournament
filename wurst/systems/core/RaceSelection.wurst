@@ -1,0 +1,15 @@
+package RaceSelection
+
+import ClosureEvents
+
+import GameConfig
+
+
+init
+    EventListener.add(EVENT_PLAYER_UNIT_TRAIN_FINISH) ->
+        let u = EventData.getTrainedUnit()
+        if u.isType(UNIT_TYPE_PEON)
+            // Remove unit from building UI
+            SetPlayerTechMaxAllowed(u.getOwner(), u.getTypeId(), 0)
+            if gameConfig.isMultipleBuilderEnabled()
+                u.setUseFood(false)

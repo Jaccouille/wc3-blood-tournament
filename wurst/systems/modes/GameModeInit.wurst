@@ -25,7 +25,7 @@ init
     new GameMode("start", "st", "General", "Start the game") (mode, args) ->
         GameMode.endModeSelection(true)
 
-    new GameMode("round-gold", "rg", "General", "Gold income per round, default :" +
+    new GameMode("round-gold", "rg", "General", "Gold income per round, default : " +
         gameConfig.getRoundGoldIncome().getFirst().toString()) (mode, args) ->
         if (args.size() > 1)
             let roundGoldIncomes = args.drop(1).map(e -> e.toInt())
@@ -37,7 +37,7 @@ init
             mode.message(msg)
             gameConfig.setRoundGoldIncome(roundGoldIncomes)
 
-    new GameMode("round", "r", "General", "Number of rounds before elimination phase, default :" +
+    new GameMode("round", "r", "General", "Number of rounds before elimination phase, default : " +
         gameConfig.getRoundCount().toString()) (mode, args) ->
         if (args.size() > 1)
             let roundCount = args.get(1).toInt()
@@ -52,33 +52,41 @@ init
             mode.message("Bot mode disabled, bot won't replace leavers".color(SPECIAL_COLOR))
             gameConfig.setBotAIMode(false)
 
-    new GameMode("start-gold", "sg", "General", "First round gold amount per players, default : " +
+    new GameMode("start-gold", "sg", "General", "First round gold amount per players, default :  " +
     gameConfig.getStartingGold().toString()) (mode, args) ->
         if (args.size() > 1)
             let startingGold = args.get(1).toInt()
             mode.message("Starting gold set to " + startingGold.toString().color(GOLD_COLOR))
             gameConfig.setStartingGold(startingGold)
 
-    new GameMode("interlude-time", "it", "Time between each round (seconds) default : " +
+    new GameMode("interlude-time", "it", "Time between each round (seconds) default :  " +
         gameConfig.roundInterludeTime.toString()) (mode, args) ->
         if (args.size() > 1)
             let interludeTime = args.get(1).toInt()
             mode.message("Interlude time set to " + interludeTime.toString().color(GOLD_COLOR))
             gameConfig.setRoundInterludeTime(interludeTime.toReal())
 
-    new GameMode("spawn-capacity", "sc", "Max unit capacity, default : " +
+    new GameMode("spawn-capacity", "sc", "Max unit capacity, default :  " +
         gameConfig.getSpawnCap().toString()) (mode, args) ->
         if (args.size() > 1)
             let spawnCap = args.get(1).toInt()
             mode.message("Spawn capacity set to " + spawnCap.toString().color(GOLD_COLOR))
             gameConfig.setSpawnCap(spawnCap)
 
-    new GameMode("bounty-multiplier", "bm", "Set blood points bounty multiplier, default : " +
+    new GameMode("bounty-multiplier", "bm", "Set blood points bounty multiplier, default :  " +
         gameConfig.getBountyMultiplier().toString()) (mode, args) ->
         if (args.size() > 1)
             let bountyMultiplier = args.get(1).toReal()
-            mode.message("Bounty multiplier set to " + bountyMultiplier.toString().color(GOLD_COLOR))
+            mode.message("Bounty multiplier set to " + bountyMultiplier.toString(2).color(GOLD_COLOR))
             gameConfig.setBountyMultiplier(bountyMultiplier)
+
+    new GameMode("multiple-builder", "mb", "Disable builder limit") (mode, args) ->
+        if not gameConfig.isMultipleBuilderEnabled()
+            mode.message("Multiple builder enabled, players can use more than 1 builder".color(SPECIAL_COLOR))
+            gameConfig.setMultipleBuilder(true)
+        else
+            mode.message("Multiple builder disabled, players can use only 1 builder".color(SPECIAL_COLOR))
+            gameConfig.setMultipleBuilder(false)
 
     new GameMode("dev", "d", "Testing", "Development mode (-tm, -st)", false) (mode, args) ->
         GameMode.find("tm").enable()

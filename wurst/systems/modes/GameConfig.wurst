@@ -11,6 +11,7 @@ class GameConfig
     var roundInterludeTime = 30.
     var spawnCap = 80
     var bountyMultiplier = 1.
+    var multipleBuilder = false
 
     function setTestMode(boolean value)
         testMode = value
@@ -61,5 +62,10 @@ class GameConfig
     function getBountyMultiplier() returns real
         return bountyMultiplier
 
+    function setMultipleBuilder(boolean value)
+        multipleBuilder = value
+
+    function isMultipleBuilderEnabled() returns boolean
+        return multipleBuilder
 
 public constant gameConfig = new GameConfig()
