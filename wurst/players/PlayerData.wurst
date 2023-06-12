@@ -34,6 +34,9 @@ public class PlayerData
     function addArmyPoints(int value)
         armyPoints += value
 
+    function subArmyPoints(int value)
+        armyPoints -= value
+
     function giveReward()
         let msg = "You acquired " +
             armyPoints.toString() +
@@ -81,6 +84,7 @@ public function initPlayers()
         ..add("Curry Sovereign")
     botNames.shuffle()
 
+    // TODO: refactor for release
     new PlayerData(players[0], gg_rct_Red)
     new PlayerData(players[1], gg_rct_Blue)
     players[1].setName(botNames.pop())

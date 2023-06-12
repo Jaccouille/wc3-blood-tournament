@@ -1,17 +1,12 @@
 package DebugCommande
 
 import Toolkit
-import ArmySpawner
 import RoundController
 
 init
     registerToolkitCommand("su") (player triggerPlayer, LinkedList<string> arguments) ->
         pDatas.forEach() (player key, PlayerData value) ->
             Log.info("SpawnedUnits size : " + value.spawnedUnits.size().toString())
-
-    registerToolkitCommand("ur") (player triggerPlayer, LinkedList<string> arguments) ->
-        pDatas.forEach() (player key, PlayerData value) ->
-            Log.info("SpawnedUnits size : " + playerToArmySpawner.get(key).unitReserve.size().toString())
 
     registerToolkitCommand("al") (player triggerPlayer, LinkedList<string> arguments) ->
         Log.info("roundParticipant size : " + roundController.currentRound.roundParticipant.size().toString())

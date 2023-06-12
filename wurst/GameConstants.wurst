@@ -1,6 +1,6 @@
 package GameConstants
 
-constant isProdBuild = compiletime(isProductionBuild())
+public constant isProdBuild = compiletime(isProductionBuild())
 public constant allowCheats = not isProdBuild
 
 

@@ -83,27 +83,30 @@ class RoundController
         let tdialog = tim.createTimerDialog()
             ..setTitle(currentRound.roundName + " begins in :")
             ..display(true)
-            ..setRealTimeRemaining(gameConfig.getRoundInterludeTime())
 
+        real interludeTime
         // TODO: Use different timer for final round
         if currentRound instanceof FinalRound
-            // tdialog.display(false)
-            tdialog.setRealTimeRemaining(5)
+            interludeTime = 3.
+        else
+            interludeTime = gameConfig.getRoundInterludeTime()
 
-        tim.doAfter(gameConfig.getRoundInterludeTime()) ->
+        tdialog.setRealTimeRemaining(interludeTime)
+        tim.doAfter(interludeTime) ->
             currentRound.start()
             tdialog.destr()
 
     function checkIfCurrentroundDone(player winner)
         if currentRound != null
             currentRound.finish(winner)
-            // Registering the winner to create final round matchup
-            if previousRoundWinner == null
-                Log.debug("Adding previous winner " + winner.getName())
-                previousRoundWinner = winner
-            else
-                Log.debug("Removing previous winner")
-                previousRoundWinner = null
+            if currentRound instanceof FinalRound
+                // Registering the winner to create final round matchup
+                if previousRoundWinner == null
+                    Log.info("Adding previous winner " + winner.getName())
+                    previousRoundWinner = winner
+                else
+                    Log.info("Removing previous winner")
+                    previousRoundWinner = null
             currentRound = null
             preRoundPhaseStart()
 
@@ -204,23 +207,21 @@ public function initRoundController()
 
         if roundController.currentRound instanceof FinalRound
             roundController.buildFinalRoundMatchup(round.winner)
-
-        doAfter(3) ->
-            altarEntity.hideCounter()
-            let winner = round.winner
-            printTimed(winner.getName() + " gets " + altarEntity.bloodPointCounter.toString() + " for winning the round" , 15)
-            forUnitsAll() (unit u) ->
-                if IsUnitDeadBJ(u)
-                    u.remove()
-        doAfter(5) ->
-            if round.goldReward > 0
-                printTimed("You get " + round.goldReward.toString() + " golds from round income", 15)
-            if round.bloodPointReward > 0
-                printTimed("You get " + round.bloodPointReward.toString() + " blood points from round income", 15)
-            pDatas.forEach() (player key, PlayerData value) ->
-                value.giveReward()
-                key.addGold(round.goldReward)
-                key.addLumber(round.bloodPointReward)
+            let loser = round.roundParticipant.find(Predicate.owned<player>(_p -> _p != (round.winner)))
+            printTimed(round.winner.getName() + " has eliminated " + loser.getName() , 3)
+        else
+            doAfter(3) ->
+                altarEntity.hideCounter()
+                printTimed(round.winner.getName() + " gets " + altarEntity.bloodPointCounter.toString() + " for winning the round" , 15)
+            doAfter(5) ->
+                if round.goldReward > 0
+                    printTimed("You get " + round.goldReward.toString() + " golds from round income", 15)
+                if round.bloodPointReward > 0
+                    printTimed("You get " + round.bloodPointReward.toString() + " blood points from round income", 15)
+                pDatas.forEach() (player key, PlayerData value) ->
+                    value.giveReward()
+                    key.addGold(round.goldReward)
+                    key.addLumber(round.bloodPointReward)
 
     onAllroundsFinished = () ->
         Log.info("Match over")

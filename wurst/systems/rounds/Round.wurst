@@ -91,6 +91,9 @@ public abstract class Round
     function doBeforeSpawn()
         onOrder.disable()
         preventOrder = false
+        forUnitsAll() (unit u) ->
+            if IsUnitDeadBJ(u)
+                u.remove()
 
     function doAfterSpawn()
         doAfter(2) ->
@@ -119,7 +122,8 @@ public abstract class Round
 
         playerToArmySpawner.get(_p)
             ..setSpawnZone(spawnZone)
-            ..spawnArmy(buidingList)
+            ..setBuildingList(buidingList)
+            ..spawnArmy()
 
 public class NormalRound extends Round
     static int counter = 0
@@ -134,8 +138,6 @@ public class NormalRound extends Round
             let p1 = players[contestantPair.a]
             let p2 = players[contestantPair.b]
 
-            scoreBoardEntries.get("ArmyPoints").setEntry(p1, "0", "")
-            scoreBoardEntries.get("ArmyPoints").setEntry(p2, "0", "")
             scoreBoardEntries.get("BloodPoints").setEntry(p1, "0", "")
             scoreBoardEntries.get("BloodPoints").setEntry(p2, "0", "")
 
@@ -164,8 +166,6 @@ public class FinalRound extends Round
             let p1 = players[contestantPair.a]
             let p2 = players[contestantPair.b]
 
-            scoreBoardEntries.get("ArmyPoints").setEntry(p1, "0", "")
-            scoreBoardEntries.get("ArmyPoints").setEntry(p2, "0", "")
             scoreBoardEntries.get("BloodPoints").setEntry(p1, "0", "")
             scoreBoardEntries.get("BloodPoints").setEntry(p2, "0", "")
 

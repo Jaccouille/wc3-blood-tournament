@@ -7,7 +7,7 @@ import LinkedList
 import GameStates
 import GameConfig
 
-constant FINAL_ROUND_SPAWN_LIMIT = 300
+constant FINAL_ROUND_SPAWN_LIMIT = 200
 
 public class SpawnZone
     rect spawnRect

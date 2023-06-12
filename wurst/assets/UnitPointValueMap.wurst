@@ -1,0 +1,34 @@
+package UnitPointValueMap
+
+import HashMap
+import LocalObjectIDs
+
+public let unitToPoint = new HashMap<int, int>
+    ..put(UNIT_FOOTMAN, 20)
+    ..put(UNIT_RIFLEMAN, 30)
+    ..put(UNIT_PRIEST, 40)
+    ..put(UNIT_KNIGHT, 30)
+    ..put(UNIT_SORCERESS, 50)
+    ..put(UNIT_ARCHMAGE, 200)
+    ..put(UNIT_PALADIN, 200)
+    ..put(UNIT_TREANT, 20)
+    ..put(UNIT_ARCHER, 30)
+    ..put(UNIT_HUNTRESS, 40)
+    ..put(UNIT_DRUID_TALON, 50)
+    ..put(UNIT_DRUID_CLAW_BEAR, 60)
+    ..put(UNIT_DAEMON_HUNTER, 200)
+    ..put(UNIT_PRIESTESS_OF_THE_MOON, 200)
+    ..put(UNIT_GRUNT, 20)
+    ..put(UNIT_HEADHUNTER, 30)
+    ..put(UNIT_WARLOCK, 40)
+    ..put(UNIT_SHAMAN, 50)
+    ..put(UNIT_TAUREN, 60)
+    ..put(UNIT_CHIEFTAIN, 200)
+    ..put(UNIT_SHADOWHUNTER, 200)
+    ..put(UNIT_GHOUL, 20)
+    ..put(UNIT_CRYPT_FIEND, 30)
+    ..put(UNIT_NECROMANCER, 40)
+    ..put(UNIT_BANSHEE, 50)
+    ..put(UNIT_ABOMINATION, 60)
+    ..put(UNIT_DREADLORD, 200)
+    ..put(UNIT_LICH, 200)

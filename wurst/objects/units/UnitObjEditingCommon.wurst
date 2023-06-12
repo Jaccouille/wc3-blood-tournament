@@ -15,6 +15,8 @@ import GridHotkeyPosition
 import TooltipsUtils
 import UnitTooltipGenerator
 import LocalObjectIDs
+import UnitPointValueMap
+
 
 function BTUnitDefinition.setCommonAttr()
     this.setDeathTimeseconds(1.0)
@@ -105,7 +107,7 @@ class BTUnitDefinition extends UnitDefinition
         super(newId, origId)
         buildingDef = createBuildingUnit(buildingId)
             ..setUnitsTrained(commaList(newId))
-        spawnCount = armyMap.get(buildingId).countBy(Predicate.owned<int>(id -> id == newId))
+        spawnCount = armyMap.get(buildingId).unitToSpawn.countBy(Predicate.owned<int>(id -> id == newId))
 
     function registerTooltipGenerator(UnitTooltipGenerator tgen)
         tooltipGen = tgen
@@ -146,7 +148,6 @@ class BTUnitDefinition extends UnitDefinition
         if tooltipGen != null and build
             tooltipGen.applyToDef(def)
             tooltipGen.applyToDef(this)
-
 
 
     override function setAttack1AttackType(AttackType data)
@@ -197,6 +198,11 @@ class BTUnitDefinition extends UnitDefinition
     **/
     function setGoldData(int data)
         this.setGoldCost(data)
+
+    function setAutoPointValue()
+        if not unitToPoint.has(newId)
+            error("Missing point value for " + newId.toRawCode())
+        setPointValue(unitToPoint.get(newId))
 
     override function setPointValue(int data)
         def.setInt("upoi", data)

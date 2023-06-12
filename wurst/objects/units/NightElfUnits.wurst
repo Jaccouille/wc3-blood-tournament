@@ -14,7 +14,6 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_TREANT, UnitIds.forceofnature, BUILDING_TREANT)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setPointValue(20)
         ..setAttack1CooldownTime(2)
         ..setAttack1DamageBase(20)
         ..setDefenseBase(4)
@@ -23,6 +22,7 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(120)
         ..setIconGameInterface(Icons.bTNForceOfNature)
         ..setNameEnhance("Q", "Treant")
+        ..setAutoPointValue()
         ..tooltipStopListen(true)
 
         ..setModelFileExt(Units.ent)
@@ -34,7 +34,6 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_ARCHER, UnitIds.archer, BUILDING_ARCHER)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setPointValue(30)
         ..setAttack1DamageBase(16)
         ..setAttack1Range(650)
         ..setDefenseBase(0)
@@ -44,6 +43,7 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(70)
         ..setSizeSmall()
         ..setNameEnhance("W", "Archer")
+        ..setAutoPointValue()
         ..tooltipStopListen()
 
         ..setModelFileExt(Units.archer)
@@ -56,7 +56,6 @@ import UnitTooltipGenerator
 
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setPointValue(40)
         ..tooltipStartListen()
         ..setAttack1DamageBase(20)
         ..setAttack1AttackType(AttackType.Normal)
@@ -69,6 +68,7 @@ import UnitTooltipGenerator
         ..setAttack1MaximumNumberofTargets(2)
         ..setSizeSmall()
         ..setNameEnhance("E", "Huntress")
+        ..setAutoPointValue()
         ..tooltipStopListen()
 
         ..setModelFileExt(Units.huntress)
@@ -80,7 +80,6 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_DRUID_TALON, UnitIds.druidofthetalon, BUILDING_DRUID_TALON)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setPointValue(50)
         ..tooltipStartListen()
         ..setAttack1DamageBase(30)
         ..setAttack1AttackType(AttackType.Magic)
@@ -93,6 +92,7 @@ import UnitTooltipGenerator
         ..setMana(200)
         ..setSizeSmall()
         ..setNameEnhance("R", "Druid of the Talon")
+        ..setAutoPointValue()
         ..tooltipStopListen()
 
         ..setModelFileExt(Units.druidoftheTalon)
@@ -105,7 +105,6 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_DRUID_CLAW_BEAR, UnitIds.druidoftheclawmorphed, BUILDING_DRUID_CLAW_BEAR)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setPointValue(60)
         ..tooltipStartListen()
         ..setAttack1DamageBase(90)
         ..setAttack1AttackType(AttackType.Normal)
@@ -116,6 +115,7 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(175)
         ..setMana(200)
         ..setNameEnhance("A", "Druid of the Claw")
+        ..setAutoPointValue()
         ..tooltipStopListen()
 
         ..setMaximumPitchAngledegrees(10)
@@ -131,7 +131,6 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_DAEMON_HUNTER, UnitIds.illidan, BUILDING_DAEMON_HUNTER)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setPointValue(200)
         ..tooltipStartListen()
         ..setAttack1DamageBase(60)
         ..setAttack1AttackType(AttackType.Normal)
@@ -140,6 +139,7 @@ import UnitTooltipGenerator
         ..setAttack1CooldownTime(0.7)
         ..setHitPointsMaximumBase(330)
         ..setSizeSmall()
+        ..setAutoPointValue()
         ..tooltipStopListen()
 
         ..setNameEnhance("S", "Daemon Hunter")
@@ -154,7 +154,6 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_PRIESTESS_OF_THE_MOON, UnitIds.tyrande, BUILDING_PRIESTESS_OF_THE_MOON)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setPointValue(200)
         ..tooltipStartListen()
         ..setAttack1DamageBase(80)
         ..setAttack1AttackType(AttackType.Pierce)
@@ -163,6 +162,7 @@ import UnitTooltipGenerator
         ..setAttack1CooldownTime(1)
         ..setHitPointsMaximumBase(180)
         ..setSizeSmall()
+        ..setAutoPointValue()
         ..tooltipStopListen()
         ..setNameEnhance("D", "Priestess of the Moon")
 
