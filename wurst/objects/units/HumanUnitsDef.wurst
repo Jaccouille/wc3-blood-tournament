@@ -1,4 +1,4 @@
-package HumanUnits
+package HumanUnitsDef
 
 // Standard libs imports:
 import Assets
