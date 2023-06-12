@@ -1,12 +1,8 @@
 package OrderBlocker
 
-// Standard libs imports:
-import HashMap
-import LinkedList
 
 // Local imports:
-import IDListConstant
-import PlayerData
+import SimError
 import GameConstants
 
 public boolean preventOrder = false
@@ -47,9 +43,10 @@ init
     // ..addCondition(Condition((function isProper)))
     ..addAction() ->
         let u = GetOrderedUnit()
-        if isProper() and preventOrder and not u.isType(UNIT_TYPE_PEON)
+        if isProper() and preventOrder
             preventOrder = false
             // print(OrderId2StringBJ(GetIssuedOrderIdBJ()))
             u.issuePointOrder("attack", CENTER)
             preventOrder = true
+            simError(u.getOwner(), "Cannot control builder during round phase")
     onOrder.disable()
