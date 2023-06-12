@@ -5,7 +5,7 @@ import LinkedList
 import SpawnZone
 import ClosureEvents
 
-import ScoreBoard
+import PlayerData
 import HashMap
 import LocalObjectIDs
 import GameStates
@@ -238,16 +238,3 @@ public function initArmySpawner()
                     buildingList.push(u)
 
                 pData.addArmyPoints(armyMap.get(u.getTypeId()).pointValue)
-                scoreBoardEntries.get("ArmyPoints").addValue(pData._p, pData.armyPoints)
-
-        EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
-            let u = EventData.getDyingUnit()
-            let owner = u.getOwner()
-
-            // Is a building
-            if armyMap.has(u.getTypeId())
-                pDatas.get(owner).buildingList.remove(u)
-                pDatas.get(owner).subArmyPoints(armyMap.get(u.getTypeId()).pointValue)
-                Log.info(owner.getName() + " " + armyMap.get(u.getTypeId()).pointValue.toString())
-
-                scoreBoardEntries.get("ArmyPoints").addValue(owner, pDatas.get(owner).armyPoints)

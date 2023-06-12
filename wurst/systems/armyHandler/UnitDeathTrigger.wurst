@@ -2,6 +2,7 @@ package UnitDeathTrigger
 
 import RoundController
 import GameConfig
+import ArmySpawner
 
 function getBounty(unit dyingUnit) returns int
     return (dyingUnit.getPointValue() * gameConfig.getBountyMultiplier()).toInt()
@@ -47,13 +48,18 @@ public function initUnitDeathTrigger()
 
         let pData = pDatas.get(dyingUnit.getOwner())
 
-        // Add blood points bounty
-        if killerOwner != ALTAR_PLAYER and roundController.currentRound instanceof NormalRound
-            pDatas.get(killerOwner).addBounty(getBounty(dyingUnit))
-            createBountyTag(dyingUnit, killerOwner)
 
+        // Is a building
+        if armyMap.has(dyingUnit.getTypeId())
+            let owner = dyingUnit.getOwner()
+            pDatas.get(owner).subArmyPoints(armyMap.get(dyingUnit.getTypeId()).pointValue)
+            pDatas.get(owner).buildingList.remove(dyingUnit)
+        else
+            // Add blood points bounty
+            if killerOwner != ALTAR_PLAYER and roundController.currentRound instanceof NormalRound
+                pDatas.get(killerOwner).addBounty(getBounty(dyingUnit))
+                createBountyTag(dyingUnit, killerOwner)
 
-        if pData.spawnedUnits.has(dyingUnit) == true
-            pData.spawnedUnits.remove(dyingUnit)
-
-        checkIfPlayerDefeated(pData)
+            if pData.spawnedUnits.has(dyingUnit) == true
+                pData.spawnedUnits.remove(dyingUnit)
+                checkIfPlayerDefeated(pData)

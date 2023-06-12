@@ -13,6 +13,7 @@ import ColorUtils
 import GameConstants
 import Players
 import public PlayerData
+import ArmySpawner
 
 let KILL_COLUMN_WIDTH = 0.055
 let STAT_LABEL_WIDTH = 0.1
@@ -187,16 +188,27 @@ public function setBoardTitle(string title)
 public function initScoreBoard()
     scoreBoard.board.setTitle("Game init")
 
-    // ScoreBoardColumnEntries.loadRoundLayout(ALL_PLAYERS)
-    // ScoreBoardColumnEntries.loadBuildLayout()
-    // scoreBoard.board.display(true)
-
     // Scoreboard timer refresh
     doPeriodically(1) (CallbackPeriodic cb) ->
         scoreBoard.board.setTitle(BOARD_TITLE_PREFIX)
 
     EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
         let owner = EventData.getKillingUnit().getOwner()
+        let dyingUnit = EventData.getDyingUnit()
+        let pData = pDatas.get(dyingUnit.getOwner())
         if owner != ALTAR_PLAYER
-            scoreBoardEntries.get("BloodPoints")
-                .addValue(owner, EventData.getDyingUnit().getPointValue())
+            // Is a building
+            if armyMap.has(dyingUnit.getTypeId())
+                scoreBoardEntries.get("ArmyPoints")
+                    .addValue(pData._p, -armyMap.get(dyingUnit.getTypeId()).pointValue)
+            else
+                scoreBoardEntries.get("BloodPoints")
+                    .addValue(owner, dyingUnit.getPointValue())
+
+    EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
+        let u = EventData.getTriggerUnit()
+        let pData = pDatas.get(u.getOwner())
+
+        if armyMap.has(u.getTypeId())
+            scoreBoardEntries.get("ArmyPoints")
+                .addValue(pData._p, armyMap.get(u.getTypeId()).pointValue)
