@@ -32,7 +32,7 @@ import LocalAssets
         ..setScalingValue(1)
         ..setModelFile("")
         ..setMovementHeight(600)
-        ..setNormalAbilities(commaList(ABIL_ALTAR_LIGHTNING, AbilityIds.invulnerable, AbilityIds.magicSentry, AbilityIds.locust))
+        ..setNormalAbilities(commaList(ABIL_ALTAR_LIGHTNING, AbilityIds.invulnerable, AbilityIds.trueSight, AbilityIds.locust))
         ..setProjectileLaunchX(0.)
         ..setProjectileLaunchY(0.)
         ..setProjectileLaunchZ(0.)
