@@ -13,6 +13,7 @@ import GameConstants
 import UnitPointValueMap
 import Assets
 import ClosureTimers
+import PlayerExtension
 
 class BuildingTemplate
     LinkedList<int> unitToSpawn
@@ -66,10 +67,10 @@ function generateUnitList(int unitId, int count) returns LinkedList<int>
 // Distance between units positioned in formation mode
 @configurable constant FORMATION_WIDTH = 120.
 @configurable constant FORMATION_HEIGHT = 80.
+@configurable constant MAX_UNIT_PER_PLAYER = 80
 
 public let playerToArmySpawner = new HashMap<player, ArmySpawner>
 
-public var count = 0
 
 public class ArmySpawner
     SpawnZone spawnZone
@@ -77,7 +78,6 @@ public class ArmySpawner
     angle spawnDirection
     int idx = 0
     int nestedIdx = 0
-    int unitSpawned = 0
     vec2 pos
     LinkedList<unit> buildingList
     int unitPerLine
@@ -89,6 +89,7 @@ public class ArmySpawner
         // Log.info("[ArmySpawner] [construct]")
         this._p = _p
         this.pData = pDatas.get(_p)
+        this.initReinforcementListener()
 
     function setBuildingList(LinkedList<unit> buildingList)
         this.buildingList = buildingList
@@ -97,34 +98,24 @@ public class ArmySpawner
         this.spawnZone = spawnZone
         this.spawnDirection = (spawnZone.angle.cos() == 0 ? 0 : 90).asAngleDegrees()
         this.pos = spawnZone.initialPos
-        this.initReinforcementListener()
 
-    function spawnUnit(int unitId)
-        let newUnit = createUnit(_p, unitId, pos, spawnZone.angle)
+    function spawnUnit(int unitId, vec2 spawnPos)
+        let spawnedUnits = pDatas.get(_p).spawnedUnits
+        let dummyPlayerIdx = spawnedUnits.size() div MAX_UNIT_PER_PLAYER mod pDatas.get(_p).dummyPlayers.size()
+
+        let newUnit = createUnit(_p.getDummyPlayer(dummyPlayerIdx), unitId, spawnPos, spawnZone.angle)
         // Pause unit until battle start
         newUnit.pause()
-        pData.spawnedUnits.add(newUnit)
+        if newUnit.getName() == ""
+            Log.info("GROSSE MERDE")
+            newUnit.kill()
+        else
+            pData.spawnedUnits.add(newUnit)
 
-        // Update position for next unit
-        pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
-
-        // Move to next line
-        if (unitSpawned + 1) % unitPerLine == 0
-            pos = spawnZone.initialPos.polarOffset(
-                spawnZone.angle.op_minus(180..asAngleDegrees()),
-                FORMATION_HEIGHT * unitSpawned / unitPerLine)
-
-        nestedIdx++
-        count++
-        unitSpawned++
-
-        // Log.info("Count : " + count.toString())
-        // Log.info("NestedIdx : " + nestedIdx.toString())
 
     function spawnArmy()
         idx = 0
         nestedIdx = 0
-        unitSpawned = 0
         // let pData = pDatas.get(_p)
         spawnFinished = false
         // TODO: Add to gameConfig?
@@ -136,11 +127,24 @@ public class ArmySpawner
         if buildingList.isEmpty()
             spawnUnit(UNIT_DUMMY_SOLDIER, pos)
 
+        while idx < buildingList.size() and pData.spawnedUnits.size() < spawnZone.unitLimit
             // Get list of unit mapped to the building
             let building = buildingList.get(idx)
             let squadIds = armyMap.get(building.getTypeId())
-            while nestedIdx < squadIds.unitToSpawn.size() and unitSpawned < spawnZone.unitLimit
-                spawnUnit(squadIds.unitToSpawn.get(nestedIdx))
+
+            // Spawn while there's something to spawn and unitLimit isn't reached
+            while nestedIdx < squadIds.unitToSpawn.size() and pData.spawnedUnits.size() < spawnZone.unitLimit
+                spawnUnit(squadIds.unitToSpawn.get(nestedIdx), pos)
+
+                // Update position for next unit
+                pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+
+                // Move to next line
+                if (pData.spawnedUnits.size() + 1) % unitPerLine == 0
+                    pos = spawnZone.initialPos.polarOffset(
+                        spawnZone.angle.op_minus(180..asAngleDegrees()),
+                        FORMATION_HEIGHT * pData.spawnedUnits.size() / unitPerLine)
+                nestedIdx++
             nestedIdx = 0
             idx++
         if isBuildingSpawnOver() and isSquadSpawnOver()
@@ -168,7 +172,7 @@ public class ArmySpawner
         let squadIds = armyMap.get(building.getTypeId())
         return nestedIdx >= squadIds.unitToSpawn.size()
 
-    private function getRandomPos() returns vec2
+    private function getRandomReinforcementPos() returns vec2
         let spawnRect = spawnZone.spawnRect
         let offset = (spawnZone.angle.cos() == 0 ? spawnRect.height() / 2 : spawnRect.width() / 2)
         if spawnZone.angle.cos() == 0
@@ -183,12 +187,8 @@ public class ArmySpawner
         let squadIds = armyMap.get(building.getTypeId()).unitToSpawn
         // Log.info("Nested idx " + nestedIdx.toString() + " squad size " + squadIds.size().toString())
         let unitId = squadIds.get(nestedIdx)
+        spawnUnit(unitId, getRandomReinforcementPos())
 
-
-        let newUnit = createUnit(_p, unitId, getRandomPos(), spawnZone.angle)
-            ..issuePointOrder("attack", CENTER)
-
-        pDatas.get(_p).spawnedUnits.add(newUnit)
         nestedIdx++
         if isSquadSpawnOver()
             nestedIdx = 0
@@ -199,7 +199,7 @@ public class ArmySpawner
     private function initReinforcementListener()
         reinforcementListener = EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
             let dying = EventData.getDyingUnit()
-            let dyingOwner = dying.getOwner()
+            let dyingOwner = dying.getOwner().getTruePlayerFromDummy()
             if dyingOwner == this._p and not spawnFinished
                 spawnReinforcement()
 

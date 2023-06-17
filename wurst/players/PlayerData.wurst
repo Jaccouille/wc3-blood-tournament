@@ -21,11 +21,30 @@ public class PlayerData
     int armyPoints = 0
     unit racePicker
     unit builder
+    LinkedList<player> dummyPlayers = new LinkedList<player>
 
     construct(player p, rect buildingRect)
         this._p = p
         this.buildingRect = buildingRect
         pDatas.put(p, this)
+        // TODO: replace 8 by human player size
+        initDummyPlayer(_p.getId() + 8)
+        initDummyPlayer(_p.getId() + 16)
+
+    function initDummyPlayer(int playerId)
+        let dummyPlayer = players[playerId]
+
+        SetPlayerAllianceStateBJ(_p, dummyPlayer, bj_ALLIANCE_ALLIED_VISION)
+        dummyPlayers.forEach() (player t) ->
+            SetPlayerAllianceStateBJ(t, dummyPlayer, bj_ALLIANCE_ALLIED_VISION)
+            SetPlayerAllianceStateBJ(dummyPlayer, t, bj_ALLIANCE_ALLIED_VISION)
+
+        dummyPlayer.setColor(_p.getColor())
+        dummyPlayers.push(dummyPlayer)
+        dummyPlayer.setName(_p.getName() + " " + dummyPlayers.size().toString())
+
+    function getDummyPlayer(int idx) returns player
+        return dummyPlayers.get(idx)
 
     function addBounty(int value)
         roundBountySum += value
@@ -86,20 +105,20 @@ public function initPlayers()
 
     // TODO: refactor for release
     new PlayerData(players[0], gg_rct_Red)
-    new PlayerData(players[1], gg_rct_Blue)
     players[1].setName(botNames.pop())
-    new PlayerData(players[2], gg_rct_Teal)
+    new PlayerData(players[1], gg_rct_Blue)
     players[2].setName(botNames.pop())
-    new PlayerData(players[3], gg_rct_Purple)
+    new PlayerData(players[2], gg_rct_Teal)
     players[3].setName(botNames.pop())
-    new PlayerData(players[4], gg_rct_Yellow)
+    new PlayerData(players[3], gg_rct_Purple)
     players[4].setName(botNames.pop())
-    new PlayerData(players[5], gg_rct_Orange)
+    new PlayerData(players[4], gg_rct_Yellow)
     players[5].setName(botNames.pop())
-    new PlayerData(players[6], gg_rct_Green)
+    new PlayerData(players[5], gg_rct_Orange)
     players[6].setName(botNames.pop())
-    new PlayerData(players[7], gg_rct_Pink)
+    new PlayerData(players[6], gg_rct_Green)
     players[7].setName(botNames.pop())
+    new PlayerData(players[7], gg_rct_Pink)
 
 
     GameStates.gameplay.onEnter() state ->

@@ -14,6 +14,7 @@ import GameConstants
 import Players
 import public PlayerData
 import ArmySpawner
+import PlayerExtension
 
 let KILL_COLUMN_WIDTH = 0.055
 let STAT_LABEL_WIDTH = 0.1
@@ -195,7 +196,7 @@ public function initScoreBoard()
     EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
         let owner = EventData.getKillingUnit().getOwner()
         let dyingUnit = EventData.getDyingUnit()
-        let pData = pDatas.get(dyingUnit.getOwner())
+        let pData = pDatas.get(dyingUnit.getOwner().getTruePlayerFromDummy())
         if owner != ALTAR_PLAYER
             // Is a building
             if armyMap.has(dyingUnit.getTypeId())
@@ -203,7 +204,7 @@ public function initScoreBoard()
                     .addValue(pData._p, -armyMap.get(dyingUnit.getTypeId()).pointValue)
             else
                 scoreBoardEntries.get("BloodPoints")
-                    .addValue(owner, dyingUnit.getPointValue())
+                    .addValue(pData._p, dyingUnit.getPointValue())
 
     EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
         let u = EventData.getTriggerUnit()

@@ -1,6 +1,7 @@
 package UnitDeathTrigger
 
 import RoundController
+import PlayerExtension
 import GameConfig
 import ArmySpawner
 
@@ -43,17 +44,16 @@ public function initUnitDeathTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
     ..addCondition(Condition(() -> GetDyingUnit().getPointValue() > 0))
     ..addAction() ->
-        let killerOwner = EventData.getKillingUnit().getOwner()
+        let killerOwner = EventData.getKillingUnit().getOwner().getTruePlayerFromDummy()
         let dyingUnit = EventData.getDyingUnit()
 
-        let pData = pDatas.get(dyingUnit.getOwner())
+        let pData = pDatas.get(dyingUnit.getOwner().getTruePlayerFromDummy())
 
 
         // Is a building
         if armyMap.has(dyingUnit.getTypeId())
-            let owner = dyingUnit.getOwner()
-            pDatas.get(owner).subArmyPoints(armyMap.get(dyingUnit.getTypeId()).pointValue)
-            pDatas.get(owner).buildingList.remove(dyingUnit)
+            pData.subArmyPoints(armyMap.get(dyingUnit.getTypeId()).pointValue)
+            pData.buildingList.remove(dyingUnit)
         else
             // Add blood points bounty
             if killerOwner != ALTAR_PLAYER and roundController.currentRound instanceof NormalRound
