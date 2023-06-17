@@ -24,6 +24,7 @@ boolean hasQuarterStarted = false
 boolean hasDemiStarted = false
 
 class RoundController
+    boolean hasFinalStarted = false
     constant rounds = new LinkedList<Round>
     player previousRoundWinner = null
 
@@ -59,10 +60,6 @@ class RoundController
 
         currentRound = rounds.dequeue()
 
-        // Allow builder to construct
-        orderBlocker.disable()
-        preventOrder = false
-
         // TODO: Maybe move board update to scoreboard package?
         BOARD_TITLE_PREFIX = currentRound.roundName
         if currentRound instanceof NormalRound
@@ -89,10 +86,17 @@ class RoundController
             ..display(true)
 
         real interludeTime
-        // TODO: Use different timer for final round
         if currentRound instanceof FinalRound
-            interludeTime = 3.
+            if hasFinalStarted
+                interludeTime = 3.
+            else
+                // Allow builder to construct
+                disableOrderBlocker()
+                interludeTime = 120.
+                hasFinalStarted = true
         else
+            // Allow builder to construct
+            disableOrderBlocker()
             interludeTime = gameConfig.getRoundInterludeTime()
 
         tdialog.setRealTimeRemaining(interludeTime)
@@ -135,7 +139,7 @@ function generateMatchups() returns LinkedList<LinkedList<Pair<int, int>>>
     let usedPairs = new HashSet<Pair<int, int>>
     let usedPlayers = new HashSet<int>
 
-    for x = 1 to gameConfig.getRoundCount()
+    for x = 1 to 7
         let roundPairs = new LinkedList<Pair<int, int>>
 
         while roundPairs.size() < 4
@@ -181,6 +185,7 @@ function generateRounds()
 
 function generateFinalRounds()
     let matches = generateMatchups().getRandomElement()
+    Log.info("matches " + matches.size().toString())
     for matchUp in matches
         roundController.addRounds(asList<Round>(
             new FinalRound()

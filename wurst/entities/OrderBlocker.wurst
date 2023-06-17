@@ -37,6 +37,11 @@ function isProper() returns boolean
         return false
     return true
 
+public function disableOrderBlocker()
+    orderBlocker.disable()
+    preventOrder = false
+
+
 init
 
     orderBlocker = CreateTrigger()
@@ -56,4 +61,4 @@ init
                 printTimedToPlayer(msg, 4, u.getOwner())
             else
                 printTimedToPlayer("Order blocked : " + OrderId2StringBJ(GetIssuedOrderIdBJ()) + " id : " + GetIssuedOrderIdBJ().toString(), 4, u.getOwner())
-    orderBlocker.disable()
+    disableOrderBlocker()
