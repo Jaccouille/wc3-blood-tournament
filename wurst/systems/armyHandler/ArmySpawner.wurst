@@ -133,7 +133,9 @@ public class ArmySpawner
             ? (spawnZone.width /  FORMATION_WIDTH).round()
             : (spawnZone.height / FORMATION_WIDTH).round()
 
-        while idx < buildingList.size() and unitSpawned < spawnZone.unitLimit
+        if buildingList.isEmpty()
+            spawnUnit(UNIT_DUMMY_SOLDIER, pos)
+
             // Get list of unit mapped to the building
             let building = buildingList.get(idx)
             let squadIds = armyMap.get(building.getTypeId())

@@ -8,6 +8,7 @@ import ObjectIds
 // Local imports:
 import LocalObjectIDs
 import LocalAssets
+import UnitObjEditingCommon
 
 @compiletime function createAltar()
     new AbilityDefinitionLightningAttack(ABIL_ALTAR_LIGHTNING)
@@ -113,3 +114,10 @@ import LocalAssets
             UNIT_UNDEAD_BUILDER,
             UNIT_NIGHT_ELF_BUILDER
         ))
+
+@compiletime function createDummySoldier()
+    createSpawnedUnit(UNIT_DUMMY_SOLDIER, UnitIds.footman)
+        ..setAttack1DamageBase(1)
+        ..setModelFile(Units.peasant1)
+        ..setHitPointsMaximumBase(1)
+        ..setName("Unlucky peasant")
