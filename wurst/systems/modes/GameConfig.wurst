@@ -12,6 +12,7 @@ class GameConfig
     var spawnCap = 80
     var bountyMultiplier = 1.
     var multipleBuilder = false
+    var allRandom = false
 
     function setTestMode(boolean value)
         testMode = value
@@ -67,5 +68,11 @@ class GameConfig
 
     function isMultipleBuilderEnabled() returns boolean
         return multipleBuilder
+
+    function setAllRandom(boolean value)
+        allRandom = value
+
+    function isAllRandomEnabled() returns boolean
+        return allRandom
 
 public constant gameConfig = new GameConfig()

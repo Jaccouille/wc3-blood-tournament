@@ -1,0 +1,13 @@
+package AbilityObjEditingCommons
+
+import AbilityObjEditing
+import GridHotkeyPosition
+import ErrorHandling
+
+
+public function AbilityDefinition.setHotkeyEnhance(string hotkey)
+    if not hotKeyMapping.has(hotkey)
+        error("Hotkey button position mapping has no \"{0}\" element".format(hotkey))
+        return
+    this.setHotkeyNormal(hotkey)
+    this.presetButtonPosNormal(hotKeyMapping.get(hotkey).x, hotKeyMapping.get(hotkey).y)

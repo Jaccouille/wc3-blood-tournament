@@ -100,12 +100,13 @@ import UnitObjEditingCommon
 
 @compiletime function createRacePickerUnit() returns BuildingDefinition
     return new BuildingDefinition(UNIT_RACE_PICKER, UnitIds.altarofkings)
-        ..setNormalAbilities(commaList(AbilityIds.invulnerable))
+        ..setNormalAbilities(commaList(AbilityIds.invulnerable, ABIL_RANDOM_RACE, ABIL_REPICK))
         ..setBuildTime(1)
         ..setFoodProduced(1)
         ..setLumberCost(0)
         ..setGoldCost(0)
         ..setName("Race Picker")
+        ..setUpgradesUsed("")
         ..setUpgradesTo("")
         ..setPathingMap("PathTextures\\8x8SimpleSolid.tga")
         ..setUnitsTrained(commaList(

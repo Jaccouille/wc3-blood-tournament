@@ -1,0 +1,14 @@
+package RacePickerUpgradeDef
+
+import UpgradeObjEditing
+
+import LocalObjectIDs
+
+@compiletime function createRacePickerUpgrade()
+    new UpgradeDefinition(UPGD_RACE_PICK)
+        ..setName(1, "Mode selection finished")
+        ..setTooltip(1, "Mode selection finished")
+
+    new UpgradeDefinition(UPGD_ALL_RANDOM)
+        ..setName(1, "All random disabled")
+        ..setTooltip(1, "All random disabled")

@@ -19,7 +19,6 @@ import UnitPointValueMap
 
 
 function BTUnitDefinition.setCommonAttr()
-    this.setDeathTimeseconds(1.0)
     this.setBuildTime(1)
     this.setAttack1DamageSidesperDie(1)
     this.setAttack1DamageNumberofDice(1)
@@ -30,6 +29,7 @@ function BTUnitDefinition.setCommonAttr()
     this.setLumberCost(0)
     this.setAcquisitionRange(2000)
     this.setRequirements("")
+    this.setUpgradesUsed("")
     this.setGoldCost(99999)
 
 public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinition
@@ -52,6 +52,7 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
         ..setPathingMap("PathTextures\\2x2Default.tga")
         ..setGroundTexture("")
         ..setUpgradesUsed("")
+        ..setRequirements("")
         ..setSelectionScale(1.0)
         ..setShadowTextureBuilding("ShadowCrates")
 
@@ -90,6 +91,7 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
         ..setFoodCost(1)
+        ..setRequirements(commaList(UPGD_RACE_PICK, UPGD_ALL_RANDOM))
 
 /** Configure this variable to `false` if you don't want the
 	property names to have spaces. */
@@ -239,6 +241,7 @@ public function UnitOrBuildingOrHeroDefinition.setNameEnhance(string hotkey, str
     this.setTooltipBasic(makeToolTipNorm(hotkey, name))
 
 public function UnitDefinition.setName(string name)
+    this.def.setString("unam", name)
     this.setTooltipBasic(makeToolTipNormAura(name))
     this.setButtonPositionX(0)
     this.setButtonPositionY(0)

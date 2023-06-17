@@ -76,5 +76,8 @@ public let UNIT_NIGHT_ELF_BUILDER = compiletime(UNIT_ID_GEN.next())
 public let ABIL_ALTAR_LIGHTNING = compiletime(ABIL_ID_GEN.next())
 public let ABIL_SELL_BUILDING   = compiletime(ABIL_ID_GEN.next())
 public let ABIL_BLOODLUST       = compiletime(ABIL_ID_GEN.next())
+public let ABIL_RANDOM_RACE     = compiletime(ABIL_ID_GEN.next())
+public let ABIL_REPICK          = compiletime(ABIL_ID_GEN.next())
 
 public let UPGD_RACE_PICK       = compiletime(UPGD_ID_GEN.next())
+public let UPGD_ALL_RANDOM      = compiletime(UPGD_ID_GEN.next())

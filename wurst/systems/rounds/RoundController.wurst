@@ -25,6 +25,8 @@ boolean hasDemiStarted = false
 
 class RoundController
     boolean hasFinalStarted = false
+    // TODO: refactor, currently only used for disabled race repick
+    boolean hasRoundStarted = false
     constant rounds = new LinkedList<Round>
     player previousRoundWinner = null
 
@@ -101,6 +103,7 @@ class RoundController
 
         tdialog.setRealTimeRemaining(interludeTime)
         tim.doAfter(interludeTime) ->
+            hasRoundStarted = true
             currentRound.start()
             tdialog.destr()
 

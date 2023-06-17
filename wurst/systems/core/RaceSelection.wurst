@@ -3,9 +3,34 @@ package RaceSelection
 import ClosureEvents
 
 import GameConfig
+import GameStates
+import LocalObjectIDs
+import IDListConstant
+import RoundController
+import ColorUtils
 
 
 init
+    EventListener.onCast(ABIL_RANDOM_RACE) (unit caster) ->
+        let owner = caster.getOwner()
+        let pData = pDatas.get(owner)
+        if pData.builder != null
+            SetPlayerTechMaxAllowed(owner, pData.builder.getTypeId(), 1)
+            pData.builder.remove()
+        pData.racePicker.issueImmediateOrder(UnitId2String(BUILDER_LIST.getRandomElement()))
+
+    EventListener.onCast(ABIL_REPICK) (unit caster) ->
+        let owner = caster.getOwner()
+        let pData = pDatas.get(owner)
+        if not roundController.hasRoundStarted
+            if pData.builder != null
+                SetPlayerTechMaxAllowed(owner, pData.builder.getTypeId(), 1)
+                pData.builder.remove()
+            else
+                printTimedToPlayer("No builder to repick".color(SPECIAL_COLOR), 5, owner)
+        else
+            printTimedToPlayer("Cannot repick after first round".color(SPECIAL_COLOR), 5, owner)
+
     EventListener.add(EVENT_PLAYER_UNIT_TRAIN_FINISH) ->
         let u = EventData.getTrainedUnit()
         if u.isType(UNIT_TYPE_PEON)
@@ -13,3 +38,13 @@ init
             SetPlayerTechMaxAllowed(u.getOwner(), u.getTypeId(), 0)
             if gameConfig.isMultipleBuilderEnabled()
                 u.setUseFood(false)
+
+    GameStates.modesSelection.onExit() (state) ->
+        pDatas.forEach() (player key, PlayerData pData) ->
+            SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 1, key)
+            if gameConfig.isAllRandomEnabled()
+                pData.builder = createUnit(key, BUILDER_LIST.getRandomElement(), pData.racePicker.getPos())
+                pData.racePicker.removeAbility(ABIL_REPICK)
+                pData.racePicker.removeAbility(ABIL_RANDOM_RACE)
+            else
+                SetPlayerTechResearchedSwap(UPGD_ALL_RANDOM, 1, key)

@@ -1,0 +1,35 @@
+package MiscAbilitiesDef
+
+import ChannelAbilityPreset
+import LocalObjectIDs
+import AbilityObjEditingCommons
+import TooltipsUtils
+
+@compiletime function createRacePickingMiscAbilities()
+    new ChannelAbilityPreset(ABIL_RANDOM_RACE, 1, true)
+        ..presetManaCost(lvl -> 0)
+        ..presetCooldown(lvl -> 0)
+        ..setDummyAbility()
+        ..setHotkeyEnhance("Z")
+        ..setName("Pick Random Race")
+        ..presetTooltipNormal(lvl -> makeToolTipNorm("Z", "Pick Random Race"))
+        ..presetTooltipNormalExtended(lvl -> "Pick Random Race")
+        ..setIconNormal(Icons.bTNSelectHeroOn)
+        ..setIconResearch(Icons.bTNSelectHeroOn)
+        ..setIconTurnOff(Icons.bTNSelectHeroOn)
+        ..setRequirements(UPGD_RACE_PICK.toRawCode())
+        ..setCheckDependencies(true)
+
+    new ChannelAbilityPreset(ABIL_REPICK, 1, true)
+        ..presetManaCost(lvl -> 0)
+        ..presetCooldown(lvl -> 0)
+        ..setDummyAbility()
+        ..setHotkeyEnhance("C")
+        ..setName("Repick builder")
+        ..presetTooltipNormal(lvl -> makeToolTipNorm("C", "Repick builder"))
+        ..presetTooltipNormalExtended(lvl -> "Repick builder")
+        ..setIconNormal(Icons.bTNPatrol)
+        ..setIconResearch(Icons.bTNPatrol)
+        ..setIconTurnOff(Icons.bTNPatrol)
+        ..setRequirements(UPGD_RACE_PICK.toRawCode())
+        ..setCheckDependencies(true)

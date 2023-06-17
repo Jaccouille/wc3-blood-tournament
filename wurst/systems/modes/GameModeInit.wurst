@@ -88,6 +88,14 @@ init
             mode.message("Multiple builder disabled, players can use only 1 builder".color(SPECIAL_COLOR))
             gameConfig.setMultipleBuilder(false)
 
+    new GameMode("all-random", "ar", "Every players get 1 random builder (doesn't work with mb)") (mode, args) ->
+        if not gameConfig.isAllRandomEnabled()
+            mode.message("All random enabled, players get random builder".color(SPECIAL_COLOR))
+            gameConfig.setAllRandom(true)
+        else
+            mode.message("All random disabled, players can choose builder".color(SPECIAL_COLOR))
+            gameConfig.setAllRandom(false)
+
     new GameMode("dev", "d", "Testing", "Development mode (-tm, -st)", false) (mode, args) ->
         GameMode.find("tm").enable()
         GameMode.find("b").enable()
