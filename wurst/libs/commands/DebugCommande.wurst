@@ -2,11 +2,23 @@ package DebugCommande
 
 import Toolkit
 import RoundController
+import ArmySpawner
+import ObjectIds
 
 init
     registerToolkitCommand("su") (player triggerPlayer, LinkedList<string> arguments) ->
         pDatas.forEach() (player key, PlayerData value) ->
-            Log.info("SpawnedUnits size : " + value.spawnedUnits.size().toString())
+            Log.info("SpawnedUnits size : " + value.spawnedUnits.size().toString() + " for " + key.getNameColored(true))
+
+    registerToolkitCommand("show-indexes") (player triggerPlayer, LinkedList<string> arguments) ->
+        pDatas.forEach() (player key, PlayerData value) ->
+            let idx = playerToArmySpawner.get(key).idx
+            let nestedIdx = playerToArmySpawner.get(key).nestedIdx
+            let spawnFinished = playerToArmySpawner.get(key).spawnFinished
+            Log.info("si : " + idx.toString() +
+                     "sni : " + nestedIdx.toString() +
+                     "sf : " + spawnFinished.toString() +
+                     " for " + key.getNameColored(true))
 
     registerToolkitCommand("al") (player triggerPlayer, LinkedList<string> arguments) ->
         Log.info("roundParticipant size : " + roundController.currentRound.roundParticipant.size().toString())
@@ -16,5 +28,7 @@ init
     registerToolkitCommand("lu") (player triggerPlayer, LinkedList<string> arguments) ->
         if (arguments.size() > 1)
             let playerIdx = arguments.get(1).toInt()
-            pDatas.get(players[playerIdx]).spawnedUnits.forEach() (unit t) ->
-                Log.info("Unit : " + t.getName() + " at pos :" + t.getPos().toString())
+            pDatas.get(players[playerIdx]).spawnedUnits.forEach() (unit u) ->
+                Log.info("Unit : " + u.getName() +
+                         " at pos :" + u.getPos().toString() +
+                         " " + u.getTypeId().toRawCode())
