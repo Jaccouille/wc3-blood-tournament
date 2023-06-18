@@ -20,17 +20,17 @@ import UnitPointValueMap
 
 function BTUnitDefinition.setCommonAttr()
     this.setBuildTime(1)
-    this.setAttack1DamageSidesperDie(1)
-    this.setAttack1DamageNumberofDice(1)
     this.setAttack2DamageSidesperDie(1)
     this.setAttack2DamageNumberofDice(1)
-    this.setFoodCost(0)
     this.setLumberBountyAwardedBase(1)
     this.setLumberCost(0)
     this.setAcquisitionRange(2000)
     this.setRequirements("")
     this.setUpgradesUsed("")
-    this.setGoldCost(99999)
+    this.setGoldCost(0)
+    this.setFoodCost(30)
+    this.setButtonPositionX(0)
+    this.setButtonPositionY(2)
 
 public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinition
     return new BTUnitDefinition(newId, origId)
@@ -195,12 +195,14 @@ class BTUnitDefinition extends UnitDefinition
         def.setInt("umpi", data)
         addTooltipProperty("Mana", data)
 
-    /**
-        Set gold cost
-        TODO: refactor, currently useless
-    **/
-    function setGoldData(int data)
-        this.setGoldCost(data)
+    function setBuildingGoldCost(int data)
+        buildingDef.setGoldCost(data)
+
+    function setBuildingLumberCost(int data)
+        buildingDef.setLumberCost(data)
+
+    function setUpgradeTo(string data)
+        buildingDef.setUpgradesTo(data)
 
     function setAutoPointValue()
         if not unitToPoint.has(newId)
