@@ -93,6 +93,7 @@ def main():
     with open(file_path, "w") as f:
         f.write(contents)
 
+    # To avoid unit def creation
     return
     # Write the modified contents back to the file
     with open(unit_def_path, "w") as f:
