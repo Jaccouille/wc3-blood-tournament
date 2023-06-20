@@ -1,8 +1,11 @@
 package MiscAbilitiesDef
 
+// Standard libs imports:
 import ChannelAbilityPreset
-import LocalObjectIDs
+
+// Local imports:
 import AbilityObjEditingCommons
+import LocalObjectIDs
 import TooltipsUtils
 
 @compiletime function createRacePickingMiscAbilities()

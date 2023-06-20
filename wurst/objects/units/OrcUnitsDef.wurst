@@ -6,9 +6,9 @@ import ChannelAbilityPreset
 
 // Local imports:
 import LocalObjectIDs
+import OrcAbilities
 import UnitObjEditingCommon
 import UnitTooltipGenerator
-import OrcAbilities
 
 @compiletime function createGrunt()
     let tooltip = new UnitTooltipGenerator("Footman Desc")

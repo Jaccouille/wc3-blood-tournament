@@ -1,6 +1,9 @@
 package UnitPointValueMap
 
+// Standard libs imports:
 import HashMap
+
+// Local imports:
 import LocalObjectIDs
 
 public let unitToPoint = new HashMap<int, int>
@@ -11,6 +14,13 @@ public let unitToPoint = new HashMap<int, int>
     ..put(UNIT_SORCERESS, 50)
     ..put(UNIT_ARCHMAGE, 200)
     ..put(UNIT_PALADIN, 200)
+    ..put(UNIT_UTHER, 500)
+    ..put(UNIT_DANATH, 500)
+    ..put(UNIT_LOTHAR, 500)
+    ..put(UNIT_TURALYON, 500)
+    ..put(UNIT_KHADGAR, 500)
+    ..put(UNIT_MAGE, 100)
+
     ..put(UNIT_TREANT, 20)
     ..put(UNIT_ARCHER, 30)
     ..put(UNIT_HUNTRESS, 40)
@@ -18,6 +28,7 @@ public let unitToPoint = new HashMap<int, int>
     ..put(UNIT_DRUID_CLAW_BEAR, 60)
     ..put(UNIT_DAEMON_HUNTER, 200)
     ..put(UNIT_PRIESTESS_OF_THE_MOON, 200)
+
     ..put(UNIT_GRUNT, 20)
     ..put(UNIT_HEADHUNTER, 30)
     ..put(UNIT_WARLOCK, 40)
@@ -25,6 +36,7 @@ public let unitToPoint = new HashMap<int, int>
     ..put(UNIT_TAUREN, 60)
     ..put(UNIT_CHIEFTAIN, 200)
     ..put(UNIT_SHADOWHUNTER, 200)
+
     ..put(UNIT_GHOUL, 20)
     ..put(UNIT_CRYPT_FIEND, 30)
     ..put(UNIT_NECROMANCER, 40)

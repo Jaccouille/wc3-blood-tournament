@@ -5,8 +5,8 @@ import HashMap
 import LinkedList
 
 // Local imports:
-import GameStates
 import GameConfig
+import GameStates
 
 public constant pDatas = new IterableMap<player, PlayerData>
 

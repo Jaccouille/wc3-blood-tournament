@@ -1,10 +1,14 @@
 package GameStates
 
-// Standard library imports:
+// Standard libs imports:
 import ClosureTimers
 
-// Third-party imports:
+// Local imports:
 import GameState
+
+// Standard library imports:
+
+// Third-party imports:
 
 // Use a class as a namespace.
 public class GameStates

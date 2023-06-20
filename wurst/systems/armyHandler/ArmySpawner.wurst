@@ -1,19 +1,20 @@
 package ArmySpawner
 
+// Standard libs imports:
+import Assets
+import ClosureEvents
+import ClosureTimers
+import HashMap
 import LinkedList
 
-import SpawnZone
-import ClosureEvents
-
-import PlayerData
-import HashMap
-import LocalObjectIDs
-import GameStates
+// Local imports:
 import GameConstants
-import UnitPointValueMap
-import Assets
-import ClosureTimers
+import GameStates
+import LocalObjectIDs
+import PlayerData
 import PlayerExtension
+import SpawnZone
+import UnitPointValueMap
 
 class BuildingTemplate
     LinkedList<int> unitToSpawn
@@ -32,6 +33,12 @@ public let armyMap = new HashMap<int, BuildingTemplate>
     ..put(BUILDING_SORCERESS, new BuildingTemplate(generateUnitList(UNIT_SORCERESS, 4)))
     ..put(BUILDING_ARCHMAGE , new BuildingTemplate(generateUnitList(UNIT_ARCHMAGE , 1)))
     ..put(BUILDING_PALADIN  , new BuildingTemplate(generateUnitList(UNIT_PALADIN  , 1)))
+    ..put(BUILDING_UTHER    , new BuildingTemplate(generateUnitList(UNIT_UTHER  , 1)))
+    ..put(BUILDING_DANATH    , new BuildingTemplate(generateUnitList(UNIT_DANATH  , 1)))
+    ..put(BUILDING_LOTHAR    , new BuildingTemplate(generateUnitList(UNIT_LOTHAR  , 1)))
+    ..put(BUILDING_TURALYON    , new BuildingTemplate(generateUnitList(UNIT_TURALYON  , 1)))
+    ..put(BUILDING_KHADGAR    , new BuildingTemplate(generateUnitList(UNIT_KHADGAR  , 1)))
+    ..put(BUILDING_MAGE    , new BuildingTemplate(generateUnitList(UNIT_MAGE  , 3)))
 
     ..put(BUILDING_GRUNT        , new BuildingTemplate(generateUnitList(UNIT_GRUNT        , 10)))
     ..put(BUILDING_HEADHUNTER   , new BuildingTemplate(generateUnitList(UNIT_HEADHUNTER   , 5)))

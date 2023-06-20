@@ -4,17 +4,17 @@ package ScoreBoard
 import ClosureEvents
 import ClosureTimers
 import HashMap
-import LinkedListModule
 import Icons
+import LinkedListModule
 
 // Local imports:
+import ArmySpawner
 import Boards
 import ColorUtils
 import GameConstants
+import PlayerExtension
 import Players
 import public PlayerData
-import ArmySpawner
-import PlayerExtension
 
 let KILL_COLUMN_WIDTH = 0.055
 let STAT_LABEL_WIDTH = 0.1

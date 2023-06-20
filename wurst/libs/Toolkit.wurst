@@ -1,10 +1,14 @@
 package Toolkit
 
-// Standard library imports:
+// Standard libs imports:
 import LinkedList
 
-// Third-party imports:
+// Local imports:
 import ChatCommands
+
+// Standard library imports:
+
+// Third-party imports:
 
 // The interface used for callbacks.
 interface Callback

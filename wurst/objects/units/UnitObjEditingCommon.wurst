@@ -1,10 +1,10 @@
 package UnitObjEditingCommon
 
 // Standard libs imports:
+import AbilityObjEditing
 import Assets
 import ErrorHandling
 import ObjectIds
-import AbilityObjEditing
 
 // Third party imports:
 import Lodash
@@ -12,11 +12,10 @@ import Lodash
 // Local imports:
 import ArmySpawner
 import GridHotkeyPosition
-import TooltipsUtils
-import UnitTooltipGenerator
 import LocalObjectIDs
+import TooltipsUtils
 import UnitPointValueMap
-
+import UnitTooltipGenerator
 
 function BTUnitDefinition.setCommonAttr()
     this.setBuildTime(1)
@@ -223,6 +222,10 @@ class BTUnitDefinition extends UnitDefinition
     function setModelFileExt(string data)
         this.setModelFile(data)
         this.buildingDef.setModelFile(data)
+
+    function setRequiredAnimationNamesExt(string data)
+        this.setRequiredAnimationNames(data)
+        this.buildingDef.setRequiredAnimationNames(data)
 
     function setIconGameInterfaceExt(string data)
         this.setIconGameInterface(data)

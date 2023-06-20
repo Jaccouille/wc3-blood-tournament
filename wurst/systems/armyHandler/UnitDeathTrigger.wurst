@@ -1,9 +1,10 @@
 package UnitDeathTrigger
 
-import RoundController
-import PlayerExtension
-import GameConfig
+// Local imports:
 import ArmySpawner
+import GameConfig
+import PlayerExtension
+import RoundController
 
 function getBounty(unit dyingUnit) returns int
     return (dyingUnit.getPointValue() * gameConfig.getBountyMultiplier()).toInt()

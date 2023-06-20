@@ -1,12 +1,16 @@
 package ModifySelected
 
-// Standard library imports:
-import ClosureForGroups
+// Standard libs imports:
 import ClosureEvents
+import ClosureForGroups
 import ClosureTimers
 
-// Third-party imports:
+// Local imports:
 import Toolkit
+
+// Standard library imports:
+
+// Third-party imports:
 
 init
     // Sets hit points per unit to a given amount.

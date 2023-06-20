@@ -6,8 +6,8 @@ import Assets
 import ObjectIds
 
 // Local imports:
-import LocalObjectIDs
 import LocalAssets
+import LocalObjectIDs
 import UnitObjEditingCommon
 
 @compiletime function createAltar()

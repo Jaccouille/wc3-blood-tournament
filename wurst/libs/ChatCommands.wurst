@@ -1,12 +1,16 @@
 package ChatCommands
 
-// Standard library imports:
+// Standard libs imports:
 import HashMap
 import LinkedList
 import StringUtils
 
-// Third-party imports:
+// Third party imports:
 import Lodash
+
+// Standard library imports:
+
+// Third-party imports:
 
 public interface CommandHandler
     function run(player triggerPlayer, LinkedList<string> arguments)

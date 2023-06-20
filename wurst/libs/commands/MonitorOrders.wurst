@@ -1,13 +1,17 @@
 package MonitorOrders
 
-// Standard library imports:
+// Standard libs imports:
 import ClosureForGroups
 import HashMap
 import HashSet
 import RegisterEvents
 
-// Third-party imports:
+// Local imports:
 import Toolkit
+
+// Standard library imports:
+
+// Third-party imports:
 
 // The set of units monitored per player.
 let monitored = new HashMap<player, HashSet<unit>>()

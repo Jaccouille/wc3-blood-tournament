@@ -1,14 +1,15 @@
 package RaceSelection
 
+// Standard libs imports:
 import ClosureEvents
 
+// Local imports:
+import ColorUtils
 import GameConfig
 import GameStates
-import LocalObjectIDs
 import IDListConstant
+import LocalObjectIDs
 import RoundController
-import ColorUtils
-
 
 init
     EventListener.onCast(ABIL_RANDOM_RACE) (unit caster) ->

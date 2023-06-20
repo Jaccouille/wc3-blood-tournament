@@ -1,9 +1,11 @@
 package GameState
 
-// Standard library imports:
+// Standard libs imports:
+import ErrorHandling
 import LinkedList
 import LinkedListModule
-import ErrorHandling
+
+// Standard library imports:
 
 // Third-party imports:
 

@@ -1,8 +1,11 @@
 package OrcAbilities
 
+// Standard libs imports:
 import AbilityObjEditing
-import LocalObjectIDs
+
+// Local imports:
 import ColorUtils
+import LocalObjectIDs
 
 public constant TOOLTIP_BLOODLUST = "Bloodlust".color(SPECIAL_COLOR)
 public constant TOOLTIP_EXT_BLOODLUST = ("" +

@@ -1,19 +1,24 @@
 package GameMode
 
-// Standard library imports:
+// Standard libs imports:
 import Assets
 import ClosureTimers
 import HashMap
 import LinkedList
 import TimerUtils
 
-// Third-party imports:
-import ChatCommands
+// Third party imports:
 import Lodash
 
 // Local imports:
+import ChatCommands
 import ColorUtils
 import GameStates
+
+// Standard library imports:
+
+// Third-party imports:
+
 
 // The interval, in seconds, during which modes can be selected.
 let MODES_TIME_LIMIT = 60.0

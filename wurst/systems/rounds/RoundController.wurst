@@ -2,16 +2,16 @@ package RoundController
 
 // Standard libs imports:
 import ClosureTimers
-import TimerUtils
 import HashSet
+import TimerUtils
 
 // Local imports:
-import public Round
 import AltarEntity
-import ScoreBoard
-import GameStates
 import GameConfig
+import GameStates
 import OrderBlocker
+import ScoreBoard
+import public Round
 
 public constant roundController = new RoundController()
 

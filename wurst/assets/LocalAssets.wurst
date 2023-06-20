@@ -1,9 +1,24 @@
 package LocalAssets
 
 public class LocalIcons
-    static constant infantryOWDGerman = "Icons/InfantryOWDGerman.blp"
+    static constant bTNDanath = "Icons/BTNDanath.BLP"
+    static constant bTNKhadgar = "Icons/BTNKhadgar.blp"
+    static constant bTNLothar = "Icons/BTNLothar.BLP"
+    static constant bTNTuralyon = "Icons/BTNTuralyon.BLP"
+    static constant dISBTNDanath = "Icons/DISBTNDanath.BLP"
+    static constant dISBTNKhadgar = "Icons/DISBTNKhadgar.blp"
+    static constant dISBTNLothar = "Icons/DISBTNLothar.BLP"
+    static constant dISBTNTuralyon = "Icons/DISBTNTuralyon.BLP"
 
 public class LocalUnits
-    static constant orbBloodX = "Models/Units/OrbBloodX.mdl"
-    static constant owdMilitiagerman = "Models/Units/OWD_MilitiaGerman.mdx"
     static constant arenaMaster = "Models/ArenaMaster.mdx"
+    static constant demonPillar = "Models/DemonPillar.mdx"
+    static constant bloodEvisceration = "Models/Fx/Blood Evisceration.mdl"
+    static constant bloodMassacre = "Models/Fx/Blood Massacre.mdl"
+    static constant bloodMissile = "Models/Fx/Blood Missile.mdl"
+    static constant danath = "Models/Units/Danath.mdl"
+    static constant heroBanditwizard = "Models/Units/Hero_BanditWizard.mdl"
+    static constant khadgarOld = "Models/Units/KhadgarOld.mdl"
+    static constant lothar = "Models/Units/Lothar.mdl"
+    static constant orbBloodX = "Models/Units/OrbBloodX.mdl"
+    static constant turalyon = "Models/Units/Turalyon.mdl"

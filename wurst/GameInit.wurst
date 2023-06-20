@@ -6,13 +6,13 @@ import ObjectIdGenerator
 import Preloader
 
 // Local imports:
-import Indicators
-import RoundController
-import ScoreBoard
 import AltarEntity
 import ArmySpawner
-import UnitDeathTrigger
+import Indicators
 import LocalObjectIDs
+import RoundController
+import ScoreBoard
+import UnitDeathTrigger
 
 // A timer for the core gameplay.
 public constant GAME_TIMER = CreateTimer()

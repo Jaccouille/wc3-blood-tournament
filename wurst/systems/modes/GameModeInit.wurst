@@ -1,9 +1,9 @@
 package GameModeInit
 
-// Standard library imports:
+// Standard libs imports:
 import LinkedList
 
-// Third-party imports:
+// Third party imports:
 import Lodash
 
 // Local imports:
@@ -12,6 +12,11 @@ import GameConfig
 import GameMode
 import GameStates
 import Toolkit
+
+// Standard library imports:
+
+// Third-party imports:
+
 
 
 init

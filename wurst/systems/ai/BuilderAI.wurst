@@ -1,16 +1,18 @@
 package BuilderAI
 
-import HashMap
-import Toolkit
+// Standard libs imports:
 import ClosureTimers
+import HashMap
 import LinkedListModule
 
-import Players
-import GameStates
-import LocalObjectIDs
-import IDListConstant
-import Round
+// Local imports:
 import GameConfig
+import GameStates
+import IDListConstant
+import LocalObjectIDs
+import Players
+import Round
+import Toolkit
 
 let playerToBuilderAI = new HashMap<player, BuilderAI>
 

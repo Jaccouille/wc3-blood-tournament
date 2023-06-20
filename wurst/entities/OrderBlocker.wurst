@@ -1,9 +1,7 @@
 package OrderBlocker
 
-// Standard libs imports:
-import ColorUtils
-
 // Local imports:
+import ColorUtils
 import GameConstants
 
 public boolean preventOrder = false

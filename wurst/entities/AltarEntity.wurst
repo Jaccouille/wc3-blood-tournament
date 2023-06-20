@@ -1,13 +1,13 @@
 package AltarEntity
 
+// Standard libs imports:
 import ClosureEvents
 
 // Local imports:
-import LocalObjectIDs
-
-import LocalAssets
-import Indicators
 import GameConstants
+import Indicators
+import LocalAssets
+import LocalObjectIDs
 
 public AltarEntity altarEntity = null
 

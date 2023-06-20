@@ -1,7 +1,7 @@
 package BuilderSelection
 
+// Local imports:
 import ScoreBoard
-
 
 init
     // Register builder

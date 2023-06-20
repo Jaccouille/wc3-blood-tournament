@@ -1,9 +1,12 @@
 package DebugCommande
 
-import Toolkit
-import RoundController
-import ArmySpawner
+// Standard libs imports:
 import ObjectIds
+
+// Local imports:
+import ArmySpawner
+import RoundController
+import Toolkit
 
 init
     registerToolkitCommand("su") (player triggerPlayer, LinkedList<string> arguments) ->

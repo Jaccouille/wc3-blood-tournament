@@ -4,8 +4,8 @@ package SpawnZone
 import LinkedList
 
 // Local imports:
-import GameStates
 import GameConfig
+import GameStates
 
 constant FINAL_ROUND_SPAWN_LIMIT = 200
 

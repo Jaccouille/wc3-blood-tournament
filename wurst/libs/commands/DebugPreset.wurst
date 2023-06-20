@@ -1,9 +1,12 @@
 package DebugPreset
 
+// Standard libs imports:
 import ClosureForGroups
 
-// Third-party imports:
+// Local imports:
 import Toolkit
+
+// Third-party imports:
 
 init
     // Spawn preset placed from the base map

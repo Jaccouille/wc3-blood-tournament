@@ -1,9 +1,11 @@
 package AbilityObjEditingCommons
 
+// Standard libs imports:
 import AbilityObjEditing
-import GridHotkeyPosition
 import ErrorHandling
 
+// Local imports:
+import GridHotkeyPosition
 
 public function AbilityDefinition.setHotkeyEnhance(string hotkey)
     if not hotKeyMapping.has(hotkey)
