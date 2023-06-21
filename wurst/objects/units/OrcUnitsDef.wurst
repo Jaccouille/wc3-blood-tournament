@@ -8,6 +8,7 @@ import ChannelAbilityPreset
 import LocalObjectIDs
 import OrcAbilities
 import UnitObjEditingCommon
+import LocalAssets
 import UnitTooltipGenerator
 
 @compiletime function createGrunt()
@@ -24,14 +25,35 @@ import UnitTooltipGenerator
         ..setNameEnhance("Q", "Grunt")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-
+        ..setUpgradeTo(commaList(BUILDING_FEL_GRUNT,
+                                BUILDING_KILROGG,
+                                BUILDING_DUROTAN,
+                                BUILDING_HELLSCREAM
+                                ))
         ..setModelFileExt(Units.grunt1)
         ..setIconGameInterfaceExt(Icons.bTNGrunt)
         ..setUnitSoundSetExt(Soundsets.grunt)
 
-@compiletime function createHeadhunter()
+    createSpawnedUnit(UNIT_FEL_GRUNT, UnitIds.grunt, BUILDING_FEL_GRUNT)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1CooldownTime(1.2)
+        ..setAttack1DamageBase(40)
+        ..setSizeSmall()
+        ..setDefenseBase(2)
+        ..setHitPointsMaximumBase(200)
+        ..setPriority(3)
+        ..setNameEnhance("Z", "Fel Grunt")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+        ..setModelFileExt(Units.chaosGrunt1)
+        ..setIconGameInterfaceExt(Icons.bTNChaosGrunt)
+        ..setUnitSoundSetExt(Soundsets.grunt)
+
+@compiletime function createOrcSpearThrower()
     let tooltip = new UnitTooltipGenerator("Footman Desc")
-    createSpawnedUnit(UNIT_HEADHUNTER, UnitIds.headhunter, BUILDING_HEADHUNTER)
+    createSpawnedUnit(UNIT_ORC_SPEARTHROWER, UnitIds.headhunter, BUILDING_ORC_SPEARTHROWER)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setAttack1CooldownTime(2)
@@ -40,13 +62,50 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setHitPointsMaximumBase(100)
         ..setPriority(3)
-        ..setNameEnhance("W", "Headhunter")
+        ..setNameEnhance("W", "Orc Spear Thrower")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
 
-        ..setModelFileExt(Units.headhunter1)
-        ..setIconGameInterfaceExt(Icons.bTNHeadhunter)
-        ..setUnitSoundSetExt(Soundsets.headHunter)
+        ..setModelFileExt(LocalUnits.orcSpearThrower)
+        ..setIconGameInterfaceExt(Icons.bTNGrunt)
+        ..setUnitSoundSetExt(Soundsets.grunt)
+
+@compiletime function createRaider()
+    let tooltip = new UnitTooltipGenerator("Footman Desc")
+    createSpawnedUnit(UNIT_RAIDER, UnitIds.wolfrider, BUILDING_RAIDER)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1CooldownTime(1.8)
+        ..setAttack1DamageBase(65)
+        ..setSizeSmall()
+        ..setDefenseBase(2)
+        ..setHitPointsMaximumBase(250)
+        ..setPriority(3)
+        ..setNameEnhance("E", "Raider")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setUpgradeTo(commaList(BUILDING_FEL_RAIDER))
+
+        ..setModelFileExt(Units.wolfrider1)
+        ..setIconGameInterfaceExt(Icons.bTNRaider)
+        ..setUnitSoundSetExt(Soundsets.wolfrider)
+
+    createSpawnedUnit(UNIT_FEL_RAIDER, UnitIds.wolfrider, BUILDING_FEL_RAIDER)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1CooldownTime(1.8)
+        ..setAttack1DamageBase(90)
+        ..setSizeSmall()
+        ..setDefenseBase(2)
+        ..setHitPointsMaximumBase(350)
+        ..setPriority(3)
+        ..setNameEnhance("Z", "Fel Raider")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+        ..setModelFileExt(Units.chaosWolfrider1)
+        ..setIconGameInterfaceExt(Icons.bTNChaosWolfRider)
+        ..setUnitSoundSetExt(Soundsets.wolfrider)
 
 @compiletime function createWarlock()
     let tooltip = new UnitTooltipGenerator("test")
@@ -67,9 +126,36 @@ import UnitTooltipGenerator
         ..setNameEnhance("E", "Warlock")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
+        ..setUpgradeTo(commaList(BUILDING_FEL_WARLOCK,
+                                BUILDING_GULDAN,
+                                BUILDING_THRALL,
+                                BUILDING_GOREFIEND
+                                ))
 
-        ..setModelFileExt(Units.orcWarlock1)
-        ..setIconGameInterfaceExt(Icons.bTNOrcWarlock)
+        ..setModelFileExt(Units.chaosWarlockGreen)
+        ..setIconGameInterfaceExt(Icons.bTNChaosWarlockGreen)
+        ..setUnitSoundSetExt(Soundsets.warlock)
+
+    createSpawnedUnit(UNIT_FEL_WARLOCK, UnitIds.war2warlock, BUILDING_FEL_WARLOCK)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1AttackType(AttackType.Magic)
+        ..setAttack1CooldownTime(1.25)
+        ..setAttack1DamageBase(60)
+        ..setAttack1Range(500)
+        ..setArmorType(ArmorType.Unarmored)
+        ..setCategorizationCampaign(false)
+        ..setSizeSmall()
+        ..setHitPointsMaximumBase(60)
+        ..setManaMaximum(0)
+        ..setManaInitialAmount(0)
+        ..setPriority(4)
+        ..setNameEnhance("Z", "Fel Warlock")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+        ..setModelFileExt(Units.chaosWarlock1)
+        ..setIconGameInterfaceExt(Icons.bTNChaosWarlock)
         ..setUnitSoundSetExt(Soundsets.orcWarlock)
 
 @compiletime function createShaman()
@@ -94,6 +180,70 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.shaman1)
         ..setIconGameInterfaceExt(Icons.bTNShaman)
         ..setUnitSoundSetExt(Soundsets.shaman)
+
+@compiletime function createOgre()
+    let tooltip = new UnitTooltipGenerator("Footman Desc")
+    createSpawnedUnit(UNIT_OGRE, UnitIds.ogre1, BUILDING_OGRE)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1CooldownTime(2)
+        ..setAttack1DamageBase(80)
+        ..setAttack1Range(120)
+        ..setDefenseBase(4)
+        ..setSpeedBase(250)
+        ..setSizeSmall()
+        ..setHitPointsMaximumBase(200)
+        ..setPriority(7)
+        ..setNameEnhance("A", "Ogre")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setUpgradeTo(commaList(
+            BUILDING_OGRE_MAGI,
+            BUILDING_OGRE_ARMORED,
+            BUILDING_CHOGALL
+            ))
+
+        ..setModelFileExt(Units.ogre1)
+        ..setIconGameInterfaceExt(Icons.bTNOgre)
+        ..setUnitSoundSetExt(Soundsets.ogre)
+
+    createSpawnedUnit(UNIT_OGRE_MAGI, UnitIds.ogre1, BUILDING_OGRE_MAGI)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1CooldownTime(2)
+        ..setAttack1DamageBase(80)
+        ..setAttack1Range(120)
+        ..setDefenseBase(4)
+        ..setSpeedBase(250)
+        ..setSizeSmall()
+        ..setHitPointsMaximumBase(200)
+        ..setPriority(7)
+        ..setNameEnhance("Z", "Ogre Magi")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+        ..setModelFileExt(Units.ogreMagi1)
+        ..setIconGameInterfaceExt(Icons.bTNOgreMagi)
+        ..setUnitSoundSetExt(Soundsets.ogre)
+
+    createSpawnedUnit(UNIT_OGRE_ARMORED, UnitIds.ogre1, BUILDING_OGRE_ARMORED)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1CooldownTime(2)
+        ..setAttack1DamageBase(80)
+        ..setAttack1Range(120)
+        ..setDefenseBase(8)
+        ..setSpeedBase(250)
+        ..setSizeSmall()
+        ..setHitPointsMaximumBase(400)
+        ..setPriority(7)
+        ..setNameEnhance("W", "Armored Ogre")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+        ..setModelFileExt(Units.ogreLord1)
+        ..setIconGameInterfaceExt(Icons.bTNOgreLord)
+        ..setUnitSoundSetExt(Soundsets.ogre)
 
 @compiletime function createTauren()
     let tooltip = new UnitTooltipGenerator("Footman Desc")
@@ -156,15 +306,131 @@ import UnitTooltipGenerator
         ..setIconGameInterfaceExt(Icons.bTNShadowHunter)
         ..setUnitSoundSetExt(Soundsets.heroShadowHunter)
 
+@compiletime function createHeroes()
+    let tooltip = new UnitTooltipGenerator("Footman Desc")
+    createSpawnedUnit(UNIT_GULDAN, UnitIds.guldan, BUILDING_GULDAN)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1CooldownTime(1)
+        ..setAttack1DamageBase(200)
+        ..setAttack1Range(600)
+        ..setSizeSmall()
+        ..setHitPointsMaximumBase(175)
+        ..setPriority(3)
+        ..setNameEnhance("C", "Guldan")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+        ..setModelFileExt(LocalUnits.guldan)
+        ..setIconGameInterfaceExt(LocalIcons.bTNCorruptGulDan)
+        ..setUnitSoundSetExt(Soundsets.orcWarlock)
+
+    createSpawnedUnit(UNIT_GOREFIEND, UnitIds.guldan, BUILDING_GOREFIEND)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1CooldownTime(1)
+        ..setAttack1DamageBase(200)
+        ..setAttack1Range(600)
+        ..setSizeSmall()
+        ..setHitPointsMaximumBase(175)
+        ..setPriority(3)
+        ..setNameEnhance("V", "Teron Gorefiend")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+        ..setModelFileExt(LocalUnits.deathKnightWC2V1)
+        ..setIconGameInterfaceExt(LocalIcons.bTNTeronGorefiend)
+        ..setUnitSoundSetExt(Soundsets.heroDeathKnight)
+
+    createSpawnedUnit(UNIT_THRALL, UnitIds.thrall, BUILDING_THRALL)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1CooldownTime(1)
+        ..setAttack1DamageBase(200)
+        ..setAttack1Range(600)
+        ..setSizeSmall()
+        ..setHitPointsMaximumBase(175)
+        ..setPriority(3)
+        ..setNameEnhance("X", "Thrall")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+        ..setModelFileExt(Units.thrall1)
+        ..setIconGameInterfaceExt(Icons.bTNThrall)
+        ..setUnitSoundSetExt(Soundsets.thrall)
+
+    createSpawnedUnit(UNIT_KILROGG, UnitIds.blademaster, BUILDING_KILROGG)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1CooldownTime(1)
+        ..setAttack1DamageBase(100)
+        ..setSizeSmall()
+        ..setHitPointsMaximumBase(600)
+        ..setPriority(3)
+        ..setNameEnhance("X", "Kilrogg")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+        ..setModelFileExt(LocalUnits.kilrogg)
+        ..setIconGameInterfaceExt(LocalIcons.bTNKilrogg)
+        ..setUnitSoundSetExt(Soundsets.hellscream)
+
+    createSpawnedUnit(UNIT_HELLSCREAM, UnitIds.blademaster, BUILDING_HELLSCREAM)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1CooldownTime(1)
+        ..setAttack1DamageBase(100)
+        ..setSizeSmall()
+        ..setHitPointsMaximumBase(600)
+        ..setPriority(3)
+        ..setNameEnhance("C", "Grom Hellscream")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+        ..setModelFileExt(LocalUnits.grommashHellscream)
+        ..setIconGameInterfaceExt(Icons.bTNHellScream)
+        ..setUnitSoundSetExt(Soundsets.hellscream)
+
+    createSpawnedUnit(UNIT_DUROTAN, UnitIds.blademaster, BUILDING_DUROTAN)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1CooldownTime(1)
+        ..setAttack1DamageBase(100)
+        ..setSizeSmall()
+        ..setHitPointsMaximumBase(600)
+        ..setPriority(3)
+        ..setNameEnhance("V", "Durotan")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+        ..setModelFileExt(LocalUnits.durotan)
+        ..setIconGameInterfaceExt(LocalIcons.bTNShaman)
+        ..setUnitSoundSetExt(Soundsets.thrall)
+
+    createSpawnedUnit(UNIT_CHOGALL, UnitIds.ogremagi, BUILDING_CHOGALL)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1CooldownTime(1)
+        ..setAttack1DamageBase(300)
+        ..setSizeSmall()
+        ..setHitPointsMaximumBase(900)
+        ..setPriority(3)
+        ..setNameEnhance("C", "Cho'Gall")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+        ..setModelFileExt(LocalUnits.chogall)
+        ..setIconGameInterfaceExt(LocalIcons.bTNChogall)
+        ..setUnitSoundSetExt(Soundsets.ogre)
+
 @compiletime function createBuilder()
     createBuilder(UNIT_ORC_BUILDER, UnitIds.peon)
         ..setNameEnhance("W", "Orc Builder")
         ..setStructuresBuilt(commaList(
             BUILDING_GRUNT,
-            BUILDING_HEADHUNTER,
+            BUILDING_ORC_SPEARTHROWER,
+            BUILDING_RAIDER,
             BUILDING_WARLOCK,
             BUILDING_SHAMAN,
-            BUILDING_TAUREN,
-            BUILDING_CHIEFTAIN,
-            BUILDING_SHADOWHUNTER
+            BUILDING_OGRE
         ))

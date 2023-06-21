@@ -100,6 +100,7 @@ class BuilderAI
 function startAI()
     Log.debug("Start builder AI")
     for aiInstance in BuilderAI
+        // TODO: only enable if player isn't bot
         aiInstance.startAI()
 
 function stopAI()

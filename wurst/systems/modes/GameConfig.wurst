@@ -9,7 +9,7 @@ class GameConfig
     var startingGold = 600
     let roundGoldIncome = asList(600)
     var roundCount = 7
-    var roundInterludeTime = 30.
+    var roundInterludeTime = 60.
     var spawnCap = 80
     var bountyMultiplier = 1.
     var multipleBuilder = false
