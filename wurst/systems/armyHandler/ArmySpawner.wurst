@@ -90,6 +90,18 @@ public let armyMap = new HashMap<int, BuildingTemplate>
     ..put(BUILDING_MAIEV                 , new BuildingTemplate(generateUnitList(UNIT_MAIEV                 , 1 )))
     ..put(BUILDING_NE_PRIESTESS          , new BuildingTemplate(generateUnitList(UNIT_NE_PRIESTESS          , 3 )))
 
+    ..put(BUILDING_LIZARD_ASSASSIN     , new BuildingTemplate(generateUnitList(UNIT_LIZARD_ASSASSIN     , 7)))
+    ..put(BUILDING_LIZARD_RAPTOR_RIDER , new BuildingTemplate(generateUnitList(UNIT_LIZARD_RAPTOR_RIDER , 5)))
+    ..put(BUILDING_LIZARD_SPEARMAN     , new BuildingTemplate(generateUnitList(UNIT_LIZARD_SPEARMAN     , 10)))
+    ..put(BUILDING_LIZARD_KNIGHT       , new BuildingTemplate(generateUnitList(UNIT_LIZARD_KNIGHT       , 4)))
+    ..put(BUILDING_LIZARD_WARLORD      , new BuildingTemplate(generateUnitList(UNIT_LIZARD_WARLORD      , 4)))
+    ..put(BUILDING_LIZARD_ARCHER       , new BuildingTemplate(generateUnitList(UNIT_LIZARD_ARCHER       , 10)))
+    ..put(BUILDING_LIZARD_DRAGON_PRIEST, new BuildingTemplate(generateUnitList(UNIT_LIZARD_DRAGON_PRIEST, 5)))
+    ..put(BUILDING_LIZARD_WITCH        , new BuildingTemplate(generateUnitList(UNIT_LIZARD_WITCH        , 4)))
+    ..put(BUILDING_LIZARD_WARRIOR      , new BuildingTemplate(generateUnitList(UNIT_LIZARD_WARRIOR      , 10)))
+    ..put(BUILDING_LIZARD_ROYAL_GUARD  , new BuildingTemplate(generateUnitList(UNIT_LIZARD_ROYAL_GUARD  , 1)))
+    ..put(BUILDING_LIZARD_HIGH_ARCHER  , new BuildingTemplate(generateUnitList(UNIT_LIZARD_HIGH_ARCHER  , 3)))
+
 
 function generateUnitList(int unitId, int count) returns LinkedList<int>
     let unitList = new LinkedList<int>

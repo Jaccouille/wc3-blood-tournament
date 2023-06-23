@@ -1,0 +1,232 @@
+package LizardUnitsDef
+
+// Standard libs imports:
+import Assets
+import ChannelAbilityPreset
+
+// Local imports:
+import LocalAssets
+import LocalObjectIDs
+import UnitObjEditingCommon
+import UnitTooltipGenerator
+
+// UNIT_LIZARD_ASSASSIN
+// UNIT_LIZARD_RAPTOR_RIDER
+// UNIT_LIZARD_SPEARMAN
+// UNIT_LIZARD_KNIGHT
+// UNIT_LIZARD_WARLORD
+// UNIT_LIZARD_ARCHER
+// UNIT_LIZARD_DRAGON_PRIEST
+// UNIT_LIZARD_WITCH
+// UNIT_LIZARD_WARRIOR
+// UNIT_LIZARD_ROYAL_GUARD
+// UNIT_LIZARD_HIGH_ARCHER
+
+@compiletime function createLizardUnitsDef()
+    let tooltip = new UnitTooltipGenerator("Footman Desc")
+    createSpawnedUnit(UNIT_LIZARD_WARRIOR, UnitIds.footman, BUILDING_LIZARD_WARRIOR)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1DamageBase(14)
+        ..setHitPointsMaximumBase(100)
+        ..setNameEnhance("Q", "Warrior")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setSizeSmall()
+        ..setPriority(2)
+        ..setBuildingGoldCost(100)
+        ..setUpgradeTo(commaList(""))
+
+        ..setModelFileExt(LocalUnits.lizWarrior)
+        ..setIconGameInterfaceExt(LocalIcons.bTNlizicon)
+        ..setUnitSoundSetExt(Soundsets.windSerpent)
+
+    createSpawnedUnit(UNIT_LIZARD_ASSASSIN, UnitIds.blademaster, BUILDING_LIZARD_ASSASSIN)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1DamageBase(14)
+        ..setHitPointsMaximumBase(100)
+        ..setNameEnhance("C", "Assassin")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setSizeSmall()
+        ..setPriority(2)
+        ..setBuildingGoldCost(100)
+        ..setUpgradeTo(commaList(""))
+
+        ..setModelFileExt(LocalUnits.lizAssasin33Unit)
+        ..setIconGameInterfaceExt(LocalIcons.bTNlizassasin)
+        ..setUnitSoundSetExt(Soundsets.windSerpent)
+
+    createSpawnedUnit(UNIT_LIZARD_RAPTOR_RIDER, UnitIds.wolfrider, BUILDING_LIZARD_RAPTOR_RIDER)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1DamageBase(14)
+        ..setHitPointsMaximumBase(100)
+        ..setNameEnhance("A", "Raptor Rider")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setSizeSmall()
+        ..setPriority(2)
+        ..setBuildingGoldCost(100)
+        ..setUpgradeTo(commaList(""))
+
+        ..setModelFileExt(LocalUnits.raptorier12)
+        ..setIconGameInterfaceExt(LocalIcons.bTNlizrider)
+        ..setUnitSoundSetExt(Soundsets.windSerpent)
+
+    createSpawnedUnit(UNIT_LIZARD_SPEARMAN, UnitIds.footman, BUILDING_LIZARD_SPEARMAN)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1DamageBase(14)
+        ..setHitPointsMaximumBase(100)
+        ..setNameEnhance("E", "Spearman")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setSizeSmall()
+        ..setPriority(2)
+        ..setBuildingGoldCost(100)
+        ..setUpgradeTo(commaList(""))
+
+        ..setModelFileExt(LocalUnits.lizSpear29)
+        ..setIconGameInterfaceExt(LocalIcons.bTNlizpear)
+        ..setUnitSoundSetExt(Soundsets.windSerpent)
+
+    createSpawnedUnit(UNIT_LIZARD_KNIGHT, UnitIds.tauren, BUILDING_LIZARD_KNIGHT)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1DamageBase(14)
+        ..setHitPointsMaximumBase(100)
+        ..setNameEnhance("S", "Lizard Knight")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setSizeSmall()
+        ..setPriority(2)
+        ..setBuildingGoldCost(100)
+        ..setUpgradeTo(commaList(""))
+
+        ..setModelFileExt(LocalUnits.lizArmorNew22Unit)
+        ..setIconGameInterfaceExt(LocalIcons.bTNserpentknight)
+        ..setUnitSoundSetExt(Soundsets.windSerpent)
+
+    createSpawnedUnit(UNIT_LIZARD_WARLORD, UnitIds.tauren, BUILDING_LIZARD_WARLORD)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1DamageBase(14)
+        ..setHitPointsMaximumBase(100)
+        ..setNameEnhance("D", "Lizard Warlord")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setSizeSmall()
+        ..setPriority(2)
+        ..setBuildingGoldCost(100)
+        ..setUpgradeTo(commaList(""))
+
+        ..setModelFileExt(LocalUnits.lizWarlord20Unit)
+        ..setIconGameInterfaceExt(LocalIcons.bTNwarlordicon)
+        ..setUnitSoundSetExt(Soundsets.windSerpent)
+
+    createSpawnedUnit(UNIT_LIZARD_ARCHER, UnitIds.archer, BUILDING_LIZARD_ARCHER)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1DamageBase(14)
+        ..setHitPointsMaximumBase(100)
+        ..setNameEnhance("W", "Archer")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setSizeSmall()
+        ..setPriority(2)
+        ..setBuildingGoldCost(100)
+        ..setUpgradeTo(commaList(""))
+
+        ..setModelFileExt(LocalUnits.lizBowman25)
+        ..setIconGameInterfaceExt(LocalIcons.btnlizArcherIcon)
+        ..setUnitSoundSetExt(Soundsets.windSerpent)
+
+    createSpawnedUnit(UNIT_LIZARD_DRAGON_PRIEST, UnitIds.chaoswarlock, BUILDING_LIZARD_DRAGON_PRIEST)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1DamageBase(14)
+        ..setHitPointsMaximumBase(100)
+        ..setNameEnhance("R", "Dragon Priest")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setSizeSmall()
+        ..setPriority(2)
+        ..setBuildingGoldCost(100)
+        ..setUpgradeTo(commaList(""))
+
+        ..setModelFileExt(LocalUnits.lizPyroNew15noglow)
+        ..setIconGameInterfaceExt(LocalIcons.bTNdragonpriest)
+        ..setUnitSoundSetExt(Soundsets.windSerpent)
+
+    createSpawnedUnit(UNIT_LIZARD_WITCH, UnitIds.siren, BUILDING_LIZARD_WITCH)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1DamageBase(14)
+        ..setHitPointsMaximumBase(100)
+        ..setNameEnhance("F", "Witch")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setSizeSmall()
+        ..setPriority(2)
+        ..setBuildingGoldCost(100)
+        ..setUpgradeTo(commaList(""))
+
+        ..setModelFileExt(LocalUnits.lizWitch11Unit2)
+        ..setIconGameInterfaceExt(LocalIcons.bTNlizwitch)
+        ..setUnitSoundSetExt(Soundsets.windSerpent)
+
+    createSpawnedUnit(UNIT_LIZARD_ROYAL_GUARD, UnitIds.blademaster, BUILDING_LIZARD_ROYAL_GUARD)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1DamageBase(14)
+        ..setHitPointsMaximumBase(100)
+        ..setNameEnhance("Z", "Temple Guard")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setSizeSmall()
+        ..setPriority(2)
+        ..setBuildingGoldCost(100)
+        ..setUpgradeTo(commaList(""))
+
+        ..setModelFileExt(LocalUnits.lizGuard28)
+        ..setIconGameInterfaceExt(LocalIcons.btnlizguardIcon)
+        ..setUnitSoundSetExt(Soundsets.windSerpent)
+
+    createSpawnedUnit(UNIT_LIZARD_HIGH_ARCHER, UnitIds.archer, BUILDING_LIZARD_HIGH_ARCHER)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1DamageBase(14)
+        ..setHitPointsMaximumBase(100)
+        ..setNameEnhance("X", "High Archer")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setSizeSmall()
+        ..setPriority(2)
+        ..setBuildingGoldCost(100)
+        ..setUpgradeTo(commaList(""))
+
+        ..setModelFileExt(LocalUnits.demonArcher)
+        ..setIconGameInterfaceExt(LocalIcons.btnlizArcherIcon)
+        ..setUnitSoundSetExt(Soundsets.windSerpent)
+
+@compiletime function createBuilder()
+    createBuilder(UNIT_LIZARD_WORKER, UnitIds.peasant)
+        ..setNameEnhance("A", "LizardMan Builder")
+        ..setModelFile(LocalUnits.lizSlaveHd16)
+        ..setIconGameInterface(LocalIcons.bTNlizlaveicon2)
+        ..setUnitSoundSet(Soundsets.nagaMyrmidon)
+        ..setStructuresBuilt(commaList(
+            BUILDING_LIZARD_WARRIOR,
+            BUILDING_LIZARD_RAPTOR_RIDER,
+            BUILDING_LIZARD_SPEARMAN,
+            BUILDING_LIZARD_KNIGHT,
+            BUILDING_LIZARD_WARLORD,
+            BUILDING_LIZARD_ARCHER,
+            BUILDING_LIZARD_DRAGON_PRIEST,
+            BUILDING_LIZARD_WITCH,
+            BUILDING_LIZARD_ROYAL_GUARD,
+            BUILDING_LIZARD_ASSASSIN,
+            BUILDING_LIZARD_HIGH_ARCHER
+        ))
