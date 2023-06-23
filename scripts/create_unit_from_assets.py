@@ -6,7 +6,7 @@ from string import Template
 import string
 
 model_directory_path = Path(__file__).resolve().parent.parent / "imports/Models"
-icon_directory_path = Path(__file__).resolve().parent.parent / "imports/Icons"
+icon_directory_path = Path(__file__).resolve().parent.parent / "imports/ReplaceableTextures"
 
 def to_camelcase(string, separators=["_", "-", " "]):
     string = string[0].lower() + string[1:]
