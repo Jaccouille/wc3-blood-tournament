@@ -151,6 +151,8 @@ class BTUnitDefinition extends UnitDefinition
             tooltipGen.applyToDef(def)
             tooltipGen.applyToDef(this)
 
+    function setUnitsTrained(string data)
+        this.buildingDef.setUnitsTrained(data)
 
     override function setAttack1AttackType(AttackType data)
         let dataStr = data.toObjectString()
@@ -218,6 +220,9 @@ class BTUnitDefinition extends UnitDefinition
         this.setTooltipBasic(makeToolTipNorm(hotkey, name))
         if this.buildingDef != null
             buildingDef.setNameEnhance(hotkey, name + " x" + spawnCount.toString())
+
+    function setBuildingName(string hotkey, string name)
+        this.buildingDef.setNameEnhance(hotkey, name)
 
     function setModelFileExt(string data)
         this.setModelFile(data)

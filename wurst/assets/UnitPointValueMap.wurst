@@ -6,6 +6,7 @@ import HashMap
 // Local imports:
 import LocalObjectIDs
 
+
 public let unitToPoint = new HashMap<int, int>
     ..put(UNIT_FOOTMAN, 20)
     ..put(UNIT_RIFLEMAN, 30)
@@ -45,7 +46,6 @@ public let unitToPoint = new HashMap<int, int>
     ..put(UNIT_ORC_SPEARTHROWER, 30)
     ..put(UNIT_WARLOCK, 40)
     ..put(UNIT_SHAMAN, 50)
-    ..put(UNIT_TAUREN, 60)
     ..put(UNIT_CHIEFTAIN, 200)
     ..put(UNIT_SHADOWHUNTER, 200)
     ..put(UNIT_FEL_GRUNT, 30)
@@ -82,3 +82,23 @@ public let unitToPoint = new HashMap<int, int>
     ..put(UNIT_LIZARD_WARRIOR, 50)
     ..put(UNIT_LIZARD_ROYAL_GUARD, 50)
     ..put(UNIT_LIZARD_HIGH_ARCHER, 50)
+
+    ..put(UNIT_GNOLL, 50)
+    ..put(UNIT_RAZORMAN, 50)
+    ..put(UNIT_WOLF, 50)
+    ..put(UNIT_FURBOLG, 50)
+    ..put(UNIT_SASQUATCH, 50)
+    ..put(UNIT_GNOLL_UPGRADE, 50)
+    ..put(UNIT_RAZORMAN_UPGRADE, 50)
+    ..put(UNIT_WOLF_UPGRADE, 50)
+    ..put(UNIT_FURBOLG_UPGRADE, 50)
+    ..put(UNIT_SASQUATCH_UPGRADE, 50)
+    ..put(UNIT_TAUREN, 50)
+    ..put(UNIT_TAUREN_BRUTE, 50)
+    ..put(UNIT_MOUNTAIN_MAMMOTH, 50)
+    ..put(UNIT_THUNDER_LIZARD, 50)
+    ..put(UNIT_CENTAUR, 50)
+    ..put(UNIT_HYDRA, 50)
+    ..put(UNIT_REXXAR, 50)
+    ..put(UNIT_CHEN, 50)
+    ..put(UNIT_CAIRNE, 50)

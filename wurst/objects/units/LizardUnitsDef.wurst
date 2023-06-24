@@ -10,17 +10,6 @@ import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
 
-// UNIT_LIZARD_ASSASSIN
-// UNIT_LIZARD_RAPTOR_RIDER
-// UNIT_LIZARD_SPEARMAN
-// UNIT_LIZARD_KNIGHT
-// UNIT_LIZARD_WARLORD
-// UNIT_LIZARD_ARCHER
-// UNIT_LIZARD_DRAGON_PRIEST
-// UNIT_LIZARD_WITCH
-// UNIT_LIZARD_WARRIOR
-// UNIT_LIZARD_ROYAL_GUARD
-// UNIT_LIZARD_HIGH_ARCHER
 
 @compiletime function createLizardUnitsDef()
     let tooltip = new UnitTooltipGenerator("Footman Desc")

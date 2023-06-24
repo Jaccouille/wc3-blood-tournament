@@ -102,6 +102,18 @@ public let armyMap = new HashMap<int, BuildingTemplate>
     ..put(BUILDING_LIZARD_ROYAL_GUARD  , new BuildingTemplate(generateUnitList(UNIT_LIZARD_ROYAL_GUARD  , 1)))
     ..put(BUILDING_LIZARD_HIGH_ARCHER  , new BuildingTemplate(generateUnitList(UNIT_LIZARD_HIGH_ARCHER  , 3)))
 
+    ..put(BUILDING_GNOLL           , new BuildingTemplate(asList(UNIT_GNOLL,UNIT_RAZORMAN, UNIT_WOLF, UNIT_FURBOLG, UNIT_SASQUATCH)))
+    ..put(BUILDING_GNOLL_UPGRADE   , new BuildingTemplate(asList(UNIT_GNOLL_UPGRADE, UNIT_RAZORMAN_UPGRADE, UNIT_WOLF_UPGRADE, UNIT_FURBOLG_UPGRADE, UNIT_SASQUATCH_UPGRADE)))
+    ..put(BUILDING_TAUREN          , new BuildingTemplate(generateUnitList(UNIT_TAUREN          , 5)))
+    ..put(BUILDING_TAUREN_BRUTE    , new BuildingTemplate(generateUnitList(UNIT_TAUREN_BRUTE    , 5)))
+    ..put(BUILDING_MOUNTAIN_MAMMOTH, new BuildingTemplate(generateUnitList(UNIT_MOUNTAIN_MAMMOTH, 1)))
+    ..put(BUILDING_THUNDER_LIZARD  , new BuildingTemplate(generateUnitList(UNIT_THUNDER_LIZARD  , 4)))
+    ..put(BUILDING_CENTAUR         , new BuildingTemplate(generateUnitList(UNIT_CENTAUR         , 10)))
+    ..put(BUILDING_HYDRA           , new BuildingTemplate(generateUnitList(UNIT_HYDRA           , 3)))
+    ..put(BUILDING_REXXAR          , new BuildingTemplate(generateUnitList(UNIT_REXXAR          , 1)))
+    ..put(BUILDING_CHEN            , new BuildingTemplate(generateUnitList(UNIT_CHEN            , 1)))
+    ..put(BUILDING_CAIRNE          , new BuildingTemplate(generateUnitList(UNIT_CAIRNE          , 1)))
+
 
 function generateUnitList(int unitId, int count) returns LinkedList<int>
     let unitList = new LinkedList<int>
@@ -151,6 +163,7 @@ public class ArmySpawner
 
         let newUnit = createUnit(_p.getDummyPlayer(dummyPlayerIdx), unitId, spawnPos, spawnZone.angle)
         // Pause unit until battle start
+        BlzShowUnitTeamGlow(newUnit, false)
         newUnit.pause()
         if newUnit.getName() == ""
             Log.info("GROSSE MERDE")
