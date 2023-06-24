@@ -1,0 +1,296 @@
+Version {
+	FormatVersion 800,
+}
+Model "ThroneOfWar_Spear" {
+	NumGeosets 2,
+	NumGeosetAnims 2,
+	NumBones 1,
+	NumRibbonEmitters 1,
+	NumEvents 2,
+	BlendTime 0,
+	MinimumExtent { -34.0967, -3.25847, -6.10978 },
+	MaximumExtent { 42.2832, 2.86119, 5.86748 },
+	BoundsRadius 32.457,
+}
+Sequences 3 {
+	Anim "Birth" {
+		Interval { 1000, 1040 },
+		NonLooping,
+		MinimumExtent { -34.0967, -3.25847, -6.10978 },
+		MaximumExtent { 42.2832, 2.86119, 5.86748 },
+		BoundsRadius 32.457,
+	}
+	Anim "Stand" {
+		Interval { 3000, 3400 },
+		MinimumExtent { -34.0967, -3.25847, -6.10978 },
+		MaximumExtent { 42.2832, 2.86119, 5.86748 },
+		BoundsRadius 32.457,
+	}
+	Anim "Death" {
+		Interval { 5000, 5200 },
+		NonLooping,
+		MinimumExtent { -34.0967, -3.25847, -6.10978 },
+		MaximumExtent { 42.2832, 2.86119, 5.86748 },
+		BoundsRadius 32.457,
+	}
+}
+Textures 4 {
+	Bitmap {
+		ReplaceableId 1,
+		WrapWidth,
+		WrapHeight,
+	}
+	Bitmap {
+		Image "Units\Orc\Hellscream\Hellscream.blp",
+		WrapWidth,
+		WrapHeight,
+	}
+	Bitmap {
+		Image "Textures\GoblinShipyard.blp",
+		WrapWidth,
+		WrapHeight,
+	}
+	Bitmap {
+		Image "Textures\RibbonBlur1.blp",
+	}
+}
+Materials 3 {
+	Material {
+		Layer {
+			FilterMode None,
+			static TextureID 0,
+		}
+		Layer {
+			FilterMode Blend,
+			static TextureID 1,
+		}
+	}
+	Material {
+		Layer {
+			FilterMode None,
+			static TextureID 0,
+		}
+		Layer {
+			FilterMode Blend,
+			static TextureID 2,
+		}
+	}
+	Material {
+		Layer {
+			FilterMode AddAlpha,
+			Unshaded,
+			TwoSided,
+			static TextureID 3,
+		}
+	}
+}
+Geoset {
+	Vertices 9 {
+		{ 14.4902, -0.799882, -0.541123 },
+		{ 14.4848, 1.40154, -0.501098 },
+		{ 14.5063, 0.244431, 2.51038 },
+		{ -34.0625, 0.114285, 3.60853 },
+		{ -34.0625, 0.114285, 3.60853 },
+		{ -34.0844, -2.46158, -1.05049 },
+		{ -34.0967, 2.86119, -0.952257 },
+		{ -34.0844, -2.46158, -1.05049 },
+		{ -34.0967, 2.86119, -0.952257 },
+	}
+	Normals 9 {
+		{ 0.0245782, -0.994051, -0.10611 },
+		{ 0.0232908, 0.508644, -0.860662 },
+		{ 0.0299696, 0.575567, 0.817205 },
+		{ -0.695268, -0.42242, 0.581519 },
+		{ -0.695268, -0.42242, 0.581519 },
+		{ -0.699416, -0.349007, -0.623707 },
+		{ -0.699488, 0.713207, -0.0453016 },
+		{ -0.699416, -0.349007, -0.623707 },
+		{ -0.699488, 0.713207, -0.0453016 },
+	}
+	TVertices 9 {
+		{ 0.043301, 0.983436 },
+		{ 0.0433002, 0.983436 },
+		{ 0.00180943, 0.964761 },
+		{ 0.00302321, 0.573121 },
+		{ 0.00302321, 0.573121 },
+		{ 0.0404501, 0.571288 },
+		{ 0.0404501, 0.571288 },
+		{ 0.0404501, 0.571288 },
+		{ 0.0404501, 0.571288 },
+	}
+	VertexGroup {
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+	}
+	Faces 1 21 {
+		Triangles {
+			{ 7, 0, 4, 7, 1, 0, 4, 0, 2, 8, 1, 7, 8, 2, 1, 4, 2, 8, 5, 3, 6 },
+		}
+	}
+	Groups 1 1 {
+		Matrices { 0 },
+	}
+	MinimumExtent { -34.0967, -2.46158, -1.05049 },
+	MaximumExtent { 14.5063, 2.86119, 3.60853 },
+	BoundsRadius 32.457,
+	Anim {
+		MinimumExtent { -34.0967, -2.46158, -1.05049 },
+		MaximumExtent { 14.5063, 2.86119, 3.60853 },
+		BoundsRadius 32.457,
+	}
+	Anim {
+		MinimumExtent { -34.0967, -2.46158, -1.05049 },
+		MaximumExtent { 14.5063, 2.86119, 3.60853 },
+		BoundsRadius 32.457,
+	}
+	Anim {
+		MinimumExtent { -34.0967, -2.46158, -1.05049 },
+		MaximumExtent { 14.5063, 2.86119, 3.60853 },
+		BoundsRadius 32.457,
+	}
+	MaterialID 0,
+	SelectionGroup 0,
+}
+Geoset {
+	Vertices 7 {
+		{ 24.4435, -0.778609, 5.86748 },
+		{ 25.3934, 1.37528, -6.02426 },
+		{ 25.4044, -3.25847, -6.10978 },
+		{ 42.2832, -0.0581694, 0.118675 },
+		{ 14.5063, 0.244431, 2.51038 },
+		{ 14.4848, 1.40154, -0.501098 },
+		{ 14.4902, -0.799882, -0.541123 },
+	}
+	Normals 7 {
+		{ 0.0222572, 0.648234, 0.761115 },
+		{ -0.142475, 0.642021, -0.753333 },
+		{ -0.0692695, -0.929639, -0.361902 },
+		{ 0.647781, 0.0412797, -0.760707 },
+		{ -0.17714, -0.736233, 0.653133 },
+		{ -0.190957, 0.965913, -0.174775 },
+		{ -0.483207, -0.464631, -0.742044 },
+	}
+	TVertices 7 {
+		{ 1.16075, 1.11363 },
+		{ 1.22636, 1.1132 },
+		{ 1.22636, 1.1132 },
+		{ 1.14613, 1.01201 },
+		{ 1.18913, 1.1633 },
+		{ 1.20999, 1.16364 },
+		{ 1.20999, 1.16364 },
+	}
+	VertexGroup {
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+	}
+	Faces 1 27 {
+		Triangles {
+			{ 4, 0, 5, 5, 0, 1, 4, 2, 0, 2, 3, 0, 0, 3, 1, 5, 1, 6, 6, 1, 2, 1, 3, 2, 6, 2, 4 },
+		}
+	}
+	Groups 1 1 {
+		Matrices { 0 },
+	}
+	MinimumExtent { 14.4848, -3.25847, -6.10978 },
+	MaximumExtent { 42.2832, 1.40154, 5.86748 },
+	BoundsRadius 19.2996,
+	Anim {
+		MinimumExtent { 14.4848, -3.25847, -6.10978 },
+		MaximumExtent { 42.2832, 1.40154, 5.86748 },
+		BoundsRadius 19.2996,
+	}
+	Anim {
+		MinimumExtent { 14.4848, -3.25847, -6.10978 },
+		MaximumExtent { 42.2832, 1.40154, 5.86748 },
+		BoundsRadius 19.2996,
+	}
+	Anim {
+		MinimumExtent { 14.4848, -3.25847, -6.10978 },
+		MaximumExtent { 42.2832, 1.40154, 5.86748 },
+		BoundsRadius 19.2996,
+	}
+	MaterialID 1,
+	SelectionGroup 0,
+}
+GeosetAnim {
+	Alpha 2 {
+		DontInterp,
+		5000: 1,
+		5100: 0,
+	}
+	GeosetId 0,
+}
+GeosetAnim {
+	Alpha 2 {
+		DontInterp,
+		5000: 1,
+		5100: 0,
+	}
+	GeosetId 1,
+}
+Bone "Bone_Spear" {
+	ObjectId 0,
+	GeosetId Multiple,
+	GeosetAnimId 0,
+	Translation 1 {
+		DontInterp,
+		0: { 0, 0, 0 },
+	}
+	Rotation 4 {
+		Linear,
+		1000: { -0.00872654, 0, 0, 0.999962 },
+		3000: { -0.00872654, 0, 0, 0.999962 },
+		3200: { 1, 0, 0, -2.62633e-07 },
+		3400: { 0.00872338, 0, 0, 0.999962 },
+	}
+}
+PivotPoints 4 {
+	{ 0, 0, 0 },
+	{ -30, 0, 0 },
+	{ 0, 0, 0 },
+	{ 0, 0, 0 },
+}
+RibbonEmitter "Ribbon" {
+	ObjectId 1,
+	static HeightAbove 6,
+	static HeightBelow 6,
+	static Alpha 0.4,
+	static Color { 0.223529, 0.415686, 0.607843 },
+	static TextureSlot 0,
+	Visibility 4 {
+		DontInterp,
+		1000: 0,
+		3000: 1,
+		3400: 0,
+		5000: 0,
+	}
+	EmissionRate 24,
+	LifeSpan 0.2,
+	Rows 1,
+	Columns 1,
+	MaterialID 2,
+}
+EventObject "SNDxKGUA" {
+	ObjectId 2,
+	EventTrack 1 {
+		1000,
+	}
+}
+EventObject "SNDxMWYV" {
+	ObjectId 3,
+	EventTrack 1 {
+		5000,
+	}
+}

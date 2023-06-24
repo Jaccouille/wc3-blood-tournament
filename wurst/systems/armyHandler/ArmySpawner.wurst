@@ -41,13 +41,11 @@ public let armyMap = new HashMap<int, BuildingTemplate>
     ..put(BUILDING_MAGE    , new BuildingTemplate(generateUnitList(UNIT_MAGE  , 3)))
 
     ..put(BUILDING_GRUNT            , new BuildingTemplate(generateUnitList(UNIT_GRUNT            , 10)))
-    ..put(BUILDING_HEADHUNTER       , new BuildingTemplate(generateUnitList(UNIT_HEADHUNTER       , 5 )))
     ..put(BUILDING_WARLOCK          , new BuildingTemplate(generateUnitList(UNIT_WARLOCK          , 5 )))
     ..put(BUILDING_SHAMAN           , new BuildingTemplate(generateUnitList(UNIT_SHAMAN           , 4 )))
     ..put(BUILDING_TAUREN           , new BuildingTemplate(generateUnitList(UNIT_TAUREN           , 4 )))
     ..put(BUILDING_RAIDER           , new BuildingTemplate(generateUnitList(UNIT_RAIDER           , 4 )))
     ..put(BUILDING_CHIEFTAIN        , new BuildingTemplate(generateUnitList(UNIT_CHIEFTAIN        , 1 )))
-    ..put(BUILDING_SHADOWHUNTER     , new BuildingTemplate(generateUnitList(UNIT_SHADOWHUNTER     , 1 )))
     ..put(BUILDING_ORC_SPEARTHROWER , new BuildingTemplate(generateUnitList(UNIT_ORC_SPEARTHROWER , 1 )))
     ..put(BUILDING_FEL_GRUNT        , new BuildingTemplate(generateUnitList(UNIT_FEL_GRUNT        , 10 )))
     ..put(BUILDING_FEL_RAIDER       , new BuildingTemplate(generateUnitList(UNIT_FEL_RAIDER       , 5 )))
@@ -113,6 +111,19 @@ public let armyMap = new HashMap<int, BuildingTemplate>
     ..put(BUILDING_REXXAR          , new BuildingTemplate(generateUnitList(UNIT_REXXAR          , 1)))
     ..put(BUILDING_CHEN            , new BuildingTemplate(generateUnitList(UNIT_CHEN            , 1)))
     ..put(BUILDING_CAIRNE          , new BuildingTemplate(generateUnitList(UNIT_CAIRNE          , 1)))
+
+    ..put(BUILDING_HEADHUNTER      , new BuildingTemplate(generateUnitList(UNIT_HEADHUNTER      , 10)))
+    ..put(BUILDING_SHADOWHUNTER    , new BuildingTemplate(generateUnitList(UNIT_SHADOWHUNTER    , 3)))
+    ..put(BUILDING_AXE_THROWER     , new BuildingTemplate(generateUnitList(UNIT_AXE_THROWER     , 10)))
+    ..put(BUILDING_DIRE_TROLL      , new BuildingTemplate(generateUnitList(UNIT_DIRE_TROLL      , 4)))
+    ..put(BUILDING_WITCH_DOCTOR    , new BuildingTemplate(generateUnitList(UNIT_WITCH_DOCTOR    , 5)))
+    ..put(BUILDING_PYTHON_WARRIORES, new BuildingTemplate(generateUnitList(UNIT_PYTHON_WARRIORES, 3)))
+    ..put(BUILDING_VOLJIN          , new BuildingTemplate(generateUnitList(UNIT_VOLJIN          , 1)))
+    ..put(BUILDING_ZULJIN          , new BuildingTemplate(generateUnitList(UNIT_ZULJIN          , 1)))
+    ..put(BUILDING_DIREHORN        , new BuildingTemplate(generateUnitList(UNIT_DIREHORN        , 4)))
+    ..put(BUILDING_WARRIOR_TROLL   , new BuildingTemplate(generateUnitList(UNIT_WARRIOR_TROLL   , 10)))
+    ..put(BUILDING_SPEAR_TROLL     , new BuildingTemplate(generateUnitList(UNIT_SPEAR_TROLL     , 10)))
+    ..put(BUILDING_BIG_DINO        , new BuildingTemplate(generateUnitList(UNIT_BIG_DINO        , 1)))
 
 
 function generateUnitList(int unitId, int count) returns LinkedList<int>
