@@ -29,12 +29,8 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
     ))
     ..put(UNIT_ORC_BUILDER, asList(
         BUILDING_GRUNT,
-        BUILDING_HEADHUNTER,
         BUILDING_WARLOCK,
-        BUILDING_SHAMAN,
-        BUILDING_TAUREN,
-        BUILDING_CHIEFTAIN,
-        BUILDING_SHADOWHUNTER
+        BUILDING_SHAMAN
     ))
     ..put(UNIT_UNDEAD_BUILDER, asList(
         BUILDING_GHOUL,

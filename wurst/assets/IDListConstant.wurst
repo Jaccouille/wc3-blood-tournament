@@ -19,12 +19,9 @@ public let HUMAN_UNITS = asList(
 
 public let ORC_UNITS = asList(
     UNIT_GRUNT,
-    UNIT_HEADHUNTER,
     UNIT_WARLOCK,
     UNIT_SHAMAN,
-    UNIT_TAUREN,
-    UNIT_CHIEFTAIN,
-    UNIT_SHADOWHUNTER
+    UNIT_TAUREN
 )
 
 public let UNDEAD_UNITS = asList(

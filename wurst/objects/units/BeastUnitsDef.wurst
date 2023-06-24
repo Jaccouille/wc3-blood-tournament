@@ -5,14 +5,12 @@ import Assets
 import ChannelAbilityPreset
 
 // Local imports:
-import LocalAssets
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
 
 
 @compiletime function createBeastUnitsDef()
-
     let tooltip = new UnitTooltipGenerator("Footman Desc")
     createSpawnedUnit(UNIT_GNOLL, UnitIds.gnoll1, BUILDING_GNOLL)
         ..registerTooltipGenerator(tooltip)
@@ -151,43 +149,10 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setPriority(2)
         ..setBuildingGoldCost(100)
-        ..setUpgradeTo(commaList(BUILDING_TAUREN_BRUTE))
 
         ..setModelFileExt(Units.tauren)
         ..setIconGameInterfaceExt(Icons.bTNTauren)
         ..setUnitSoundSetExt(Soundsets.tauren)
-
-    createSpawnedUnit(UNIT_TAUREN_BRUTE, UnitIds.tauren, BUILDING_TAUREN_BRUTE)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(14)
-        ..setHitPointsMaximumBase(100)
-        ..setNameEnhance("Z", "Tauren Brute")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setSizeSmall()
-        ..setPriority(2)
-        ..setBuildingGoldCost(100)
-
-        ..setModelFileExt(LocalUnits.taurenBrute2)
-        ..setIconGameInterfaceExt(Icons.bTNTauren)
-        ..setUnitSoundSetExt(Soundsets.tauren)
-
-    createSpawnedUnit(UNIT_MOUNTAIN_MAMMOTH, UnitIds.mountaingiant, BUILDING_MOUNTAIN_MAMMOTH)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(14)
-        ..setHitPointsMaximumBase(100)
-        ..setNameEnhance("A", "Big Ass mammoth")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setSizeSmall()
-        ..setPriority(2)
-        ..setBuildingGoldCost(100)
-
-        ..setModelFileExt(LocalUnits.mammothRavager)
-        ..setIconGameInterfaceExt(Icons.bTNMammoth)
-        ..setUnitSoundSetExt(Soundsets.magnataur)
 
     createSpawnedUnit(UNIT_THUNDER_LIZARD, UnitIds.thunderlizard, BUILDING_THUNDER_LIZARD)
         ..registerTooltipGenerator(tooltip)
@@ -269,24 +234,9 @@ import UnitTooltipGenerator
         ..setIconGameInterfaceExt(Icons.bTNPandarenBrewmaster)
         ..setUnitSoundSetExt(Soundsets.pandarenBrewmaster)
 
-    createSpawnedUnit(UNIT_CAIRNE, UnitIds.cairnebloodhoof, BUILDING_CAIRNE)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(14)
-        ..setHitPointsMaximumBase(100)
-        ..setNameEnhance("C", "Cairne")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setSizeSmall()
-        ..setPriority(2)
-        ..setBuildingGoldCost(100)
-
-        ..setModelFileExt(Units.heroTaurenChieftain1)
-        ..setIconGameInterfaceExt(Icons.bTNHeroTaurenChieftain)
-        ..setUnitSoundSetExt(Soundsets.cairne)
 
 @compiletime function createBuilder()
-    createBuilder(UNIT_BEAST_WORKER, UnitIds.peasant)
+    createBuilder(UNIT_BEAST_BUILDER, UnitIds.peasant)
         ..setNameEnhance("S", "Beast Builder")
         ..setModelFile(Units.kobold1)
         ..setIconGameInterface(Icons.bTNKobold)
@@ -294,11 +244,9 @@ import UnitTooltipGenerator
         ..setStructuresBuilt(commaList(
             BUILDING_GNOLL,
             BUILDING_TAUREN,
-            BUILDING_MOUNTAIN_MAMMOTH,
             BUILDING_THUNDER_LIZARD,
             BUILDING_CENTAUR,
             BUILDING_HYDRA,
             BUILDING_REXXAR,
-            BUILDING_CHEN,
-            BUILDING_CAIRNE
+            BUILDING_CHEN
         ))

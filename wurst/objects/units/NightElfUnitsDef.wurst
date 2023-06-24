@@ -8,7 +8,6 @@ import ChannelAbilityPreset
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
-import LocalAssets
 
 @compiletime function createTreant()
     let tooltip = new UnitTooltipGenerator("Footman Desc")
@@ -29,44 +28,6 @@ import LocalAssets
         ..setModelFileExt(Units.ent)
         ..setIconGameInterfaceExt(Icons.bTNEnt)
         ..setUnitSoundSetExt(Soundsets.ent)
-
-@compiletime function createSentry()
-    let tooltip = new UnitTooltipGenerator("Footman Desc")
-    createSpawnedUnit(UNIT_SENTRY, UnitIds.watcher, BUILDING_SENTRY)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1CooldownTime(2)
-        ..setAttack1DamageBase(20)
-        ..setDefenseBase(4)
-        ..setArmorType(ArmorType.Normal)
-        ..setSizeSmall()
-        ..setHitPointsMaximumBase(120)
-        ..setNameEnhance("X", "Watcher")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_MAIEV, BUILDING_NE_PRIESTESS))
-        // ..setUpgradeTo(commaList(BUILDING_PANTHER))
-
-        ..setModelFileExt(LocalUnits.watcherWatchersV1)
-        ..setIconGameInterfaceExt(Icons.bTNSentinel)
-        ..setUnitSoundSetExt(Soundsets.watcher)
-
-    // createSpawnedUnit(UNIT_PANTHER, UnitIds.watcher, BUILDING_PANTHER)
-    //     ..registerTooltipGenerator(tooltip)
-    //     ..tooltipStartListen()
-    //     ..setAttack1CooldownTime(2)
-    //     ..setAttack1DamageBase(20)
-    //     ..setDefenseBase(4)
-    //     ..setArmorType(ArmorType.Normal)
-    //     ..setSizeSmall()
-    //     ..setHitPointsMaximumBase(120)
-    //     ..setNameEnhance("Z", "Watcher")
-    //     ..setAutoPointValue()
-    //     ..tooltipStopListen(true)
-
-    //     ..setModelFileExt(LocalUnits.watcherWatchersV1)
-    //     ..setIconGameInterfaceExt(Icons.bTNSentinel)
-    //     ..setUnitSoundSetExt(Soundsets.watcher)
 
 @compiletime function createArcher()
     let tooltip = new UnitTooltipGenerator("Footman Desc")
@@ -237,30 +198,9 @@ import LocalAssets
         ..setIconGameInterfaceExt(Icons.bTNHeroDemonHunter)
         ..setUnitSoundSetExt(Soundsets.heroDemonHunter)
 
-    createSpawnedUnit(UNIT_SHADOW_WARRIOR, UnitIds.illidan, BUILDING_SHADOW_WARRIOR)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(60)
-        ..setAttack1AttackType(AttackType.Normal)
-        ..setDefenseBase(4)
-        ..setArmorType(ArmorType.Large)
-        ..setAttack1CooldownTime(0.7)
-        ..setHitPointsMaximumBase(330)
-        ..setSizeSmall()
-        ..setAutoPointValue()
-        ..tooltipStopListen()
-        ..setUpgradeTo(commaList(BUILDING_DAEMON_HUNTER, BUILDING_JAROD))
-
-        ..setNameEnhance("V", "Shadow Warrior")
-        ..setManaInitialAmount(0)
-
-        ..setModelFileExt(LocalUnits.shadowWarrior)
-        ..setIconGameInterfaceExt(LocalIcons.bTNShadowWarrior)
-        ..setUnitSoundSetExt(Soundsets.heroDemonHunter)
-
 @compiletime function createPriestessOfTheMoon()
     let tooltip = new UnitTooltipGenerator("Footman Desc")
-    createSpawnedUnit(UNIT_PRIESTESS_OF_THE_MOON, UnitIds.tyrande, BUILDING_PRIESTESS_OF_THE_MOON)
+    createSpawnedUnit(UNIT_PRIESTESS_OF_THE_MOON, UnitIds.priestessofthemoon, BUILDING_PRIESTESS_OF_THE_MOON)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setAttack1DamageBase(80)
@@ -273,101 +213,17 @@ import LocalAssets
         ..setAutoPointValue()
         ..tooltipStopListen()
         ..setNameEnhance("D", "Priestess of the Moon")
-        ..setUpgradeTo(commaList(BUILDING_TYRANDE))
 
         ..setManaInitialAmount(0)
         ..setPriority(11)
 
-        ..setModelFileExt(LocalUnits.moonPriestess)
-        ..setIconGameInterfaceExt(LocalIcons.bTNPTMOON)
-        ..setUnitSoundSetExt(Soundsets.heroMoonPriestess)
-
-    createSpawnedUnit(UNIT_NE_PRIESTESS, UnitIds.jaina, BUILDING_NE_PRIESTESS)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(80)
-        ..setAttack1AttackType(AttackType.Magic)
-        ..setDefenseBase(4)
-        ..setArmorType(ArmorType.Unarmored)
-        ..setAttack1CooldownTime(1)
-        ..setHitPointsMaximumBase(180)
-        ..setSizeSmall()
-        ..setAutoPointValue()
-        ..tooltipStopListen()
-        ..setNameEnhance("C", "Battle Priestess")
-
-        ..setManaInitialAmount(0)
-        ..setPriority(11)
-
-        ..setModelFileExt(LocalUnits.elfBattlePriestess)
-        ..setIconGameInterfaceExt(Icons.bTNJaina)
+        ..setModelFileExt(Units.heroMoonPriestess)
+        ..setIconGameInterfaceExt(Icons.bTNHeroMoonPriestess)
         ..setUnitSoundSetExt(Soundsets.heroMoonPriestess)
 
 
 @compiletime function createHeroes()
     let tooltip = new UnitTooltipGenerator("Footman Desc")
-    createSpawnedUnit(UNIT_TYRANDE, UnitIds.tyrande, BUILDING_TYRANDE)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(80)
-        ..setAttack1AttackType(AttackType.Pierce)
-        ..setDefenseBase(4)
-        ..setArmorType(ArmorType.Unarmored)
-        ..setAttack1CooldownTime(1)
-        ..setHitPointsMaximumBase(180)
-        ..setSizeSmall()
-        ..setAutoPointValue()
-        ..tooltipStopListen()
-        ..setNameEnhance("Z", "Tyrande")
-
-        ..setManaInitialAmount(0)
-        ..setPriority(11)
-
-        ..setModelFileExt(LocalUnits.tyrandeV2)
-        ..setIconGameInterfaceExt(Icons.bTNPriestessOfTheMoon)
-        ..setUnitSoundSetExt(Soundsets.tyrande)
-
-    createSpawnedUnit(UNIT_JAROD, UnitIds.blademaster, BUILDING_JAROD)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(80)
-        ..setAttack1AttackType(AttackType.Normal)
-        ..setDefenseBase(4)
-        ..setArmorType(ArmorType.Large)
-        ..setAttack1CooldownTime(1)
-        ..setHitPointsMaximumBase(600)
-        ..setSizeSmall()
-        ..setAutoPointValue()
-        ..tooltipStopListen()
-        ..setNameEnhance("Z", "Jarod Shadowsong")
-
-        ..setManaInitialAmount(0)
-        ..setPriority(11)
-
-        ..setModelFileExt(LocalUnits.jarodWOTA)
-        ..setIconGameInterfaceExt(Icons.bTNHeroBlademaster)
-        ..setUnitSoundSetExt(Soundsets.heroBladeMaster)
-
-    createSpawnedUnit(UNIT_MAIEV, UnitIds.warden, BUILDING_MAIEV)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(80)
-        ..setAttack1AttackType(AttackType.Normal)
-        ..setDefenseBase(4)
-        ..setArmorType(ArmorType.Large)
-        ..setAttack1CooldownTime(1)
-        ..setHitPointsMaximumBase(600)
-        ..setSizeSmall()
-        ..setAutoPointValue()
-        ..tooltipStopListen()
-        ..setNameEnhance("X", "Maiev Shadowsong")
-
-        ..setManaInitialAmount(0)
-        ..setPriority(11)
-
-        ..setModelFileExt(Units.heroWarden)
-        ..setIconGameInterfaceExt(Icons.bTNHeroWarden)
-        ..setUnitSoundSetExt(Soundsets.maiev)
 
     createSpawnedUnit(UNIT_FURION, UnitIds.furion, BUILDING_FURION)
         ..registerTooltipGenerator(tooltip)
@@ -398,10 +254,8 @@ import LocalAssets
             BUILDING_TREANT,
             BUILDING_ARCHER,
             BUILDING_HUNTRESS,
-            BUILDING_SENTRY,
             BUILDING_DRYAD,
             BUILDING_DRUID_TALON,
             BUILDING_DRUID_CLAW_BEAR,
-            BUILDING_SHADOW_WARRIOR,
             BUILDING_PRIESTESS_OF_THE_MOON
         ))

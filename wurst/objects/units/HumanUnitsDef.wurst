@@ -5,7 +5,6 @@ import Assets
 import ChannelAbilityPreset
 
 // Local imports:
-import LocalAssets
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
@@ -23,7 +22,6 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setPriority(2)
         ..setBuildingGoldCost(100)
-        ..setUpgradeTo(commaList(BUILDING_DANATH))
 
         ..setModelFileExt(Units.footman1)
         ..setIconGameInterfaceExt(Icons.bTNFootman)
@@ -101,7 +99,6 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setBuildingGoldCost(100)
-        ..setUpgradeTo(commaList(BUILDING_UTHER, BUILDING_TURALYON, BUILDING_LOTHAR))
 
         ..setAttack1Range(120)
         ..setSizeSmall()
@@ -159,7 +156,6 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setBuildingGoldCost(100)
-        ..setUpgradeTo(commaList(BUILDING_KHADGAR))
 
         ..setSizeSmall()
         ..setPriority(10)
@@ -167,7 +163,7 @@ import UnitTooltipGenerator
         ..setIconGameInterface(Icons.bTNBanditMage)
         ..setNameEnhance("Z", "Mage")
 
-        ..setModelFileExt(LocalUnits.heroBanditwizard)
+        ..setModelFileExt(Units.banditMage1)
         ..setIconGameInterfaceExt(Icons.bTNBanditMage)
         ..setUnitSoundSetExt(Soundsets.heroArchMage)
 
@@ -225,120 +221,6 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.heroPaladin)
         ..setIconGameInterfaceExt(Icons.bTNHeroPaladin)
         ..setUnitSoundSetExt(Soundsets.heroPaladin)
-
-@compiletime function createHeroes()
-    var tooltip = new UnitTooltipGenerator("Chad Man Uther")
-
-    createSpawnedUnit(UNIT_UTHER, UnitIds.paladin, BUILDING_UTHER)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setIconGameInterface(Icons.bTNHeroPaladin)
-        ..setAttack1DamageBase(119)
-        ..setAttack1CooldownTime(0.7)
-        ..setSizeSmall()
-        ..setHitPointsMaximumBase(3000)
-        ..setModelFile(Units.heroPaladin)
-        ..setUnitSoundSet(Soundsets.heroPaladin)
-        ..setPriority(2)
-        ..setScalingValue(1.3)
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setNameEnhance("Z", "Uther the Lightbringer")
-        ..setBuildingGoldCost(0)
-        ..setBuildingLumberCost(0)
-
-        ..setModelFileExt(Units.heroPaladin)
-        ..setIconGameInterfaceExt(Icons.bTNHeroPaladin)
-        ..setUnitSoundSetExt(Soundsets.heroPaladin)
-
-    createSpawnedUnit(UNIT_DANATH, UnitIds.paladin, BUILDING_DANATH)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(119)
-        ..setAttack1CooldownTime(0.7)
-        ..setSizeSmall()
-        ..setHitPointsMaximumBase(3000)
-        ..setUnitSoundSet(Soundsets.heroPaladin)
-        ..setPriority(2)
-        ..setScalingValue(1.1)
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setNameEnhance("Z", "Danath Trollbane")
-        ..setBuildingGoldCost(0)
-        ..setBuildingLumberCost(0)
-
-        ..setModelFileExt(LocalUnits.danath)
-        ..setRequiredAnimationNamesExt("alternate")
-        ..setIconGameInterfaceExt(LocalIcons.bTNDanath)
-        ..setUnitSoundSetExt(Soundsets.heroPaladin)
-
-    createSpawnedUnit(UNIT_LOTHAR, UnitIds.paladin, BUILDING_LOTHAR)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(119)
-        ..setAttack1CooldownTime(0.7)
-        ..setSizeSmall()
-        ..setHitPointsMaximumBase(3000)
-        ..setUnitSoundSet(Soundsets.heroPaladin)
-        ..setPriority(2)
-        ..setScalingValue(1.1)
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setNameEnhance("X", "Anduin Lothar")
-        ..setBuildingGoldCost(0)
-        ..setBuildingLumberCost(0)
-
-        ..setModelFileExt(LocalUnits.lothar)
-        ..setIconGameInterfaceExt(LocalIcons.bTNLothar)
-        ..setUnitSoundSetExt(Soundsets.heroPaladin)
-
-    createSpawnedUnit(UNIT_TURALYON, UnitIds.paladin, BUILDING_TURALYON)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(119)
-        ..setAttack1CooldownTime(0.7)
-        ..setSizeSmall()
-        ..setHitPointsMaximumBase(3000)
-        ..setUnitSoundSet(Soundsets.heroPaladin)
-        ..setPriority(2)
-        ..setScalingValue(1.1)
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setNameEnhance("C", "Turalyon")
-        ..setBuildingGoldCost(0)
-        ..setBuildingLumberCost(0)
-
-        ..setModelFileExt(LocalUnits.turalyon)
-        ..setIconGameInterfaceExt(LocalIcons.bTNTuralyon)
-        ..setUnitSoundSetExt(Soundsets.heroPaladin)
-
-
-    tooltip = new UnitTooltipGenerator("Footman Desc")
-    createSpawnedUnit(UNIT_KHADGAR, UnitIds.sorceress, BUILDING_KHADGAR)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setNormalAbilities("")
-        ..setAttack1DamageBase(99)
-        ..setAttack1AttackType(AttackType.Magic)
-        ..setAttack1Range(600)
-        ..setDefenseBase(0)
-        ..setArmorType(ArmorType.Unarmored)
-        ..setAttack1CooldownTime(1.75)
-        ..setSpeedBase(350)
-        ..setHitPointsMaximumBase(150)
-        ..setMana(400)
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-
-        ..setSizeSmall()
-        ..setPriority(10)
-        ..setNameEnhance("Z", "Khadgar")
-
-        ..setAttack1ProjectileArt(Abilities.fireBallMissile)
-
-        ..setModelFileExt(LocalUnits.khadgarOld)
-        ..setIconGameInterfaceExt(LocalIcons.bTNKhadgar)
-        ..setUnitSoundSetExt(Soundsets.heroArchMage)
 
 @compiletime function createBuilder()
     createBuilder(UNIT_HUMAN_BUILDER, UnitIds.peasant)

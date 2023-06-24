@@ -13,38 +13,6 @@ public interface Callback
 
 // A mapping of IDs from indicator units to actual units.
 public let indicators = new IterableMap<int, int>()
-    ..put('h001', BUILDING_FOOTMAN)
-    ..put('h002', BUILDING_RIFLEMAN)
-    ..put('h003', BUILDING_KNIGHT)
-    ..put('h004', BUILDING_PRIEST)
-    ..put('h005', BUILDING_SORCERESS)
-    ..put('h006', BUILDING_ARCHMAGE)
-    ..put('h000', BUILDING_PALADIN)
-
-    ..put('o001', BUILDING_GRUNT)
-    ..put('o002', BUILDING_HEADHUNTER)
-    ..put('o003', BUILDING_WARLOCK)
-    ..put('o004', BUILDING_SHAMAN)
-    ..put('o005', BUILDING_TAUREN)
-    ..put('o006', BUILDING_CHIEFTAIN)
-    ..put('o000', BUILDING_SHADOWHUNTER)
-
-    ..put('u001', BUILDING_GHOUL)
-    ..put('u002', BUILDING_CRYPT_FIEND)
-    ..put('u003', BUILDING_NECROMANCER)
-    ..put('u004', BUILDING_BANSHEE)
-    ..put('u005', BUILDING_ABOMINATION)
-    ..put('u006', BUILDING_DREADLORD)
-    ..put('u000', BUILDING_LICH)
-
-    ..put('e001', BUILDING_TREANT)
-    ..put('e002', BUILDING_ARCHER)
-    ..put('e003', BUILDING_HUNTRESS)
-    ..put('e004', BUILDING_DRUID_TALON)
-    ..put('e005', BUILDING_DRUID_CLAW_BEAR)
-    ..put('e006', BUILDING_DAEMON_HUNTER)
-    ..put('e000', BUILDING_PRIESTESS_OF_THE_MOON)
-
     ..put('h009', UNIT_ARENA_MASTER)
     ..put('h008', UNIT_RACE_PICKER)
 
