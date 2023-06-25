@@ -90,6 +90,15 @@ public let armyMap = new HashMap<int, BuildingTemplate>
     ..put(BUILDING_DRYAD                 , new BuildingTemplate(generateUnitList(UNIT_DRYAD                 , 7 )))
     ..put(BUILDING_FURION                , new BuildingTemplate(generateUnitList(UNIT_FURION               , 1 )))
 
+    ..put(BUILDING_ANCIENT_PROTECTOR  , new BuildingTemplate(generateUnitList(UNIT_ANCIENT_PROTECTOR  , 4)))
+    ..put(BUILDING_NE_RANGER          , new BuildingTemplate(generateUnitList(UNIT_NE_RANGER          , 6)))
+    ..put(BUILDING_SENTRY             , new BuildingTemplate(generateUnitList(UNIT_SENTRY             , 10)))
+    ..put(BUILDING_SPECTRE            , new BuildingTemplate(generateUnitList(UNIT_SPECTRE            , 10)))
+    ..put(BUILDING_ARCH_DRUID         , new BuildingTemplate(generateUnitList(UNIT_ARCH_DRUID         , 3)))
+    ..put(BUILDING_WARDEN             , new BuildingTemplate(generateUnitList(UNIT_WARDEN             , 3)))
+    ..put(BUILDING_AVATAR_OF_VENGEANCE, new BuildingTemplate(generateUnitList(UNIT_AVATAR_OF_VENGEANCE, 3)))
+    ..put(BUILDING_BALLISTA           , new BuildingTemplate(generateUnitList(UNIT_BALLISTA           , 2)))
+
 
     ..put(BUILDING_GNOLL           , new BuildingTemplate(asList(UNIT_GNOLL,UNIT_RAZORMAN, UNIT_WOLF, UNIT_FURBOLG, UNIT_SASQUATCH)))
     ..put(BUILDING_GNOLL_UPGRADE   , new BuildingTemplate(asList(UNIT_GNOLL_UPGRADE, UNIT_RAZORMAN_UPGRADE, UNIT_WOLF_UPGRADE, UNIT_FURBOLG_UPGRADE, UNIT_SASQUATCH_UPGRADE)))

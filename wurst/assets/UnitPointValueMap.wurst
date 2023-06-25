@@ -36,10 +36,18 @@ public let unitToPoint = new HashMap<int, int>
     ..put(UNIT_DRUID_CLAW_BEAR, 60)
     ..put(UNIT_DAEMON_HUNTER, 200)
     ..put(UNIT_PRIESTESS_OF_THE_MOON, 200)
-
     ..put(UNIT_OWLBEAR, 80)
     ..put(UNIT_DRYAD, 50)
     ..put(UNIT_FURION, 300)
+    ..put(UNIT_ANCIENT_PROTECTOR, 10)
+    ..put(UNIT_NE_RANGER, 10)
+    ..put(UNIT_SENTRY, 10)
+    ..put(UNIT_SPECTRE, 10)
+    ..put(UNIT_ARCH_DRUID, 10)
+    ..put(UNIT_WARDEN, 10)
+    ..put(UNIT_AVATAR_OF_VENGEANCE, 10)
+    ..put(UNIT_BALLISTA, 10)
+
 
     ..put(UNIT_GRUNT, 20)
     ..put(UNIT_WARLOCK, 40)
