@@ -67,6 +67,7 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setPriority(3)
         ..setNameEnhance("X", "Rifleman")
+        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
 
         ..setModelFileExt(Units.rifleman1)
         ..setIconGameInterfaceExt(Icons.bTNRifleman)
@@ -395,6 +396,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Sword Master")
+        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
 
         ..setModelFileExt(Units.arthaswithSword)
         ..setIconGameInterfaceExt(Icons.bTNArthas)
@@ -418,6 +420,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setNameEnhance("C", "Elven Mage")
+        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
 
         ..setModelFileExt(Units.kael)
         ..setIconGameInterfaceExt(Icons.bTNHeroBloodElfPrince)

@@ -1,0 +1,12 @@
+package EliminationPhaseUpgradeDef
+
+// Standard libs imports:
+import UpgradeObjEditing
+
+// Local imports:
+import LocalObjectIDs
+
+@compiletime function createRacePickerUpgrade()
+    new UpgradeDefinition(UPGD_ELIMINATION)
+        ..setName(1, "Available at Elimination Phase")
+        ..setTooltip(1, "Available at Elimination Phase")

@@ -199,6 +199,9 @@ public class BTUnitDefinition extends UnitDefinition
     function setBuildingGoldCost(int data)
         buildingDef.setGoldCost(data)
 
+    function setBuildingRequirement(string data)
+        buildingDef.setRequirements(data)
+
     function setBuildingLumberCost(int data)
         buildingDef.setLumberCost(data)
 

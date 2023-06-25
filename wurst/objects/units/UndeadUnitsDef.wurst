@@ -314,6 +314,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("Z", "Crypt Lord")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
+        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
 
         ..setModelFileExt(Units.heroCryptLord1)
         ..setIconGameInterfaceExt(Icons.bTNHeroCryptLord)
@@ -334,6 +335,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("X", "Death Knight")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
+        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
 
         ..setModelFileExt(Units.heroDeathKnight)
         ..setIconGameInterfaceExt(Icons.bTNHeroDeathKnight)
@@ -353,6 +355,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("C", "Archimonde")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
+        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
 
         ..setModelFileExt(Units.warlock)
         ..setIconGameInterfaceExt(Icons.bTNArchimonde)

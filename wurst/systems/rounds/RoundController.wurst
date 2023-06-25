@@ -12,6 +12,7 @@ import GameStates
 import OrderBlocker
 import ScoreBoard
 import public Round
+import LocalObjectIDs
 
 public constant roundController = new RoundController()
 
@@ -96,6 +97,8 @@ class RoundController
                 disableOrderBlocker()
                 interludeTime = 120.
                 hasFinalStarted = true
+                pDatas.forEach() (player key, PlayerData value) ->
+                    SetPlayerTechResearched(key, UPGD_ELIMINATION, 1)
         else
             // Allow builder to construct
             disableOrderBlocker()

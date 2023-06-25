@@ -320,6 +320,7 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("Z", "Daemon Hunter")
         ..setManaInitialAmount(0)
+        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
 
         ..setModelFileExt(Units.heroDemonHunter1)
         ..setIconGameInterfaceExt(Icons.bTNHeroDemonHunter)
@@ -340,6 +341,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen()
         ..setNameEnhance("X", "Priestess of the Moon")
+        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
 
         ..setManaInitialAmount(0)
 
@@ -387,6 +389,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen()
         ..setNameEnhance("C", "Ballista")
+        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
 
         ..setModelFileExt(Units.ballista_V1)
         ..setIconGameInterfaceExt(Icons.bTNBallista)

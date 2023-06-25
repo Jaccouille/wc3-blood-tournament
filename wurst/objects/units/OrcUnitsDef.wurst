@@ -297,6 +297,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("X", "Shadow Hunter")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
+        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
 
         ..setModelFileExt(Units.heroShadowHunter1)
         ..setIconGameInterfaceExt(Icons.bTNShadowHunter)
@@ -318,6 +319,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("Z", "Blade Master")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
+        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
 
         ..setModelFileExt(Units.heroBladeMaster1)
         ..setIconGameInterfaceExt(Icons.bTNHeroBlademaster)
@@ -334,6 +336,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("C", "Demolisher")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
+        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
 
         ..setModelFileExt(Units.catapult_V1)
         ..setIconGameInterfaceExt(Icons.bTNDemolisher)
