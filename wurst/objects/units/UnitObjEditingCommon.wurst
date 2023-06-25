@@ -96,7 +96,7 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
 	property names to have spaces. */
 @configurable constant USE_PROPERTY_SPACING = true
 
-class BTUnitDefinition extends UnitDefinition
+public class BTUnitDefinition extends UnitDefinition
     BuildingDefinition buildingDef
     int spawnCount
     UnitTooltipGenerator tooltipGen = null

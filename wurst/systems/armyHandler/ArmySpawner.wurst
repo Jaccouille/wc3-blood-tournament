@@ -26,14 +26,23 @@ class BuildingTemplate
             pointValue += unitToPoint.get(unitId)
 
 public let armyMap = new HashMap<int, BuildingTemplate>
-    ..put(BUILDING_FOOTMAN  , new BuildingTemplate(generateUnitList(UNIT_FOOTMAN  , 20)))
-    ..put(BUILDING_RIFLEMAN , new BuildingTemplate(generateUnitList(UNIT_RIFLEMAN , 5)))
+    ..put(BUILDING_FOOTMAN  , new BuildingTemplate(generateUnitList(UNIT_FOOTMAN  , 10)))
+    ..put(BUILDING_ROYAL_GUARD, new BuildingTemplate(generateUnitList(UNIT_ROYAL_GUARD, 10)))
+    ..put(BUILDING_ELVEN_ARCHER, new BuildingTemplate(generateUnitList(UNIT_ELVEN_ARCHER, 10)))
+    ..put(BUILDING_RANGER, new BuildingTemplate(generateUnitList(UNIT_RANGER, 5)))
     ..put(BUILDING_KNIGHT   , new BuildingTemplate(generateUnitList(UNIT_KNIGHT   , 5)))
+    ..put(BUILDING_CRUSADER, new BuildingTemplate(generateUnitList(UNIT_CRUSADER, 5)))
+    ..put(BUILDING_PALADIN  , new BuildingTemplate(asList(UNIT_PALADIN_1, UNIT_PALADIN_2, UNIT_PALADIN_3)))
     ..put(BUILDING_PRIEST   , new BuildingTemplate(generateUnitList(UNIT_PRIEST   , 4)))
+    ..put(BUILDING_SPELL_BREAKER, new BuildingTemplate(generateUnitList(UNIT_SPELL_BREAKER, 4)))
     ..put(BUILDING_SORCERESS, new BuildingTemplate(generateUnitList(UNIT_SORCERESS, 4)))
-    ..put(BUILDING_ARCHMAGE , new BuildingTemplate(generateUnitList(UNIT_ARCHMAGE , 1)))
-    ..put(BUILDING_PALADIN  , new BuildingTemplate(generateUnitList(UNIT_PALADIN  , 1)))
+    ..put(BUILDING_SORCERESS_UPGRADE, new BuildingTemplate(generateUnitList(UNIT_SORCERESS_UPGRADE, 3)))
     ..put(BUILDING_MAGE    , new BuildingTemplate(generateUnitList(UNIT_MAGE  , 3)))
+    ..put(BUILDING_ARCHMAGE , new BuildingTemplate(generateUnitList(UNIT_ARCHMAGE , 1)))
+
+    ..put(BUILDING_SWORD_MASTER, new BuildingTemplate(generateUnitList(UNIT_SWORD_MASTER, 4)))
+    ..put(BUILDING_ELVEN_MAGE, new BuildingTemplate(generateUnitList(UNIT_ELVEN_MAGE, 3)))
+    ..put(BUILDING_RIFLEMAN , new BuildingTemplate(generateUnitList(UNIT_RIFLEMAN , 5)))
 
     ..put(BUILDING_GRUNT            , new BuildingTemplate(generateUnitList(UNIT_GRUNT            , 10)))
     ..put(BUILDING_WARLOCK          , new BuildingTemplate(generateUnitList(UNIT_WARLOCK          , 5 )))
@@ -229,10 +238,17 @@ public function initArmySpawner()
         playerToArmySpawner.put(players[i], new ArmySpawner(players[i]))
 
     GameStates.gameplay.onEnter() state ->
+
+        EventListener.add(EVENT_PLAYER_UNIT_UPGRADE_FINISH) ->
+            let u = EventData.getTriggerUnit()
+            BlzShowUnitTeamGlow(u, false)
+
         EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
             let u = EventData.getTriggerUnit()
             let pData = pDatas.get(u.getOwner())
             let buildingList = pData.buildingList
+
+            BlzShowUnitTeamGlow(u, false)
 
             if armyMap.has(u.getTypeId())
                 // Not need to find insertion index if list is empty

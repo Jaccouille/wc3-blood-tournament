@@ -14,7 +14,9 @@ public let HUMAN_UNITS = asList(
     UNIT_PRIEST,
     UNIT_SORCERESS,
     UNIT_ARCHMAGE,
-    UNIT_PALADIN
+    UNIT_PALADIN_1,
+    UNIT_PALADIN_2,
+    UNIT_PALADIN_3
 )
 
 public let ORC_UNITS = asList(

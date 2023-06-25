@@ -58,8 +58,9 @@ public function initUnitDeathTrigger()
         else
             // Add blood points bounty
             if killerOwner != ALTAR_PLAYER and roundController.currentRound instanceof NormalRound
-                pDatas.get(killerOwner).addBounty(getBounty(dyingUnit))
-                createBountyTag(dyingUnit, killerOwner)
+                if dyingUnit.getPointValue() > 0
+                    pDatas.get(killerOwner).addBounty(getBounty(dyingUnit))
+                    createBountyTag(dyingUnit, killerOwner)
 
             if pData.spawnedUnits.has(dyingUnit) == true
                 pData.spawnedUnits.remove(dyingUnit)
