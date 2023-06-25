@@ -38,7 +38,6 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
         BUILDING_NECROMANCER,
         BUILDING_BANSHEE,
         BUILDING_ABOMINATION,
-        BUILDING_DREADLORD,
         BUILDING_LICH
     ))
     ..put(UNIT_NIGHT_ELF_BUILDER, asList(
