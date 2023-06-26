@@ -159,6 +159,16 @@ public class BTUnitDefinition extends UnitDefinition
         def.setString("ua1t", dataStr)
         addTooltipProperty("Damage Type", dataStr.firstUpper())
 
+    function setAttack1DamageExt(int damage, int nbDice, int sidePerDice)
+        def.setInt("ua1b", damage)
+        this.setAttack1DamageNumberofDice(nbDice)
+        this.setAttack1DamageSidesperDie(sidePerDice)
+
+        let min = damage
+        let max = damage + nbDice * sidePerDice
+        addTooltipProperty("Damage", min.toString() + " - " + max.toString())
+
+
     override function setAttack1DamageBase(int data)
         def.setInt("ua1b", data)
         // Setting base damage to 15 without random spread set the damage to  16

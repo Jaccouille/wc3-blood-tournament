@@ -254,7 +254,9 @@ public class ArmySpawner
         reinforcementListener = EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
             let dying = EventData.getDyingUnit()
             let dyingOwner = dying.getOwner().getTruePlayerFromDummy()
-            if dyingOwner == this._p and not spawnFinished
+            if dyingOwner == this._p
+                and not spawnFinished
+                and unitToPoint.has(dying.getTypeId())
                 spawnReinforcement()
 
 
