@@ -64,6 +64,13 @@ init
             mode.message("Starting gold set to " + startingGold.toString().color(GOLD_COLOR))
             gameConfig.setStartingGold(startingGold)
 
+    new GameMode("start-bp", "sb", "General", "First round blood point amount per players, default : " +
+    gameConfig.getStartingLumber().toString() + ", min : 0") (mode, args) ->
+        if (args.size() > 1)
+            let startingLumber = max(args.get(1).toInt(), 0)
+            mode.message("Starting blood point set to " + startingLumber.toString().color(RED_COLOR))
+            gameConfig.setStartingLumber(startingLumber)
+
     new GameMode("interlude-time", "it", "Time between each round (seconds) default : " +
         gameConfig.roundInterludeTime.toString(0) + ", max : 180, min : 10") (mode, args) ->
         if (args.size() > 1)

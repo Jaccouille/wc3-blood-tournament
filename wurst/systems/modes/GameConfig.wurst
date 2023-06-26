@@ -7,6 +7,7 @@ class GameConfig
     var testMode = false
     var botAI = false
     var startingGold = 600
+    var startingLumber = 0
     let roundGoldIncome = asList(600)
     var roundCount = 7
     var roundInterludeTime = 60.
@@ -32,6 +33,12 @@ class GameConfig
 
     function getStartingGold() returns int
         return startingGold
+
+    function setStartingLumber(int value)
+        startingLumber = value
+
+    function getStartingLumber() returns int
+        return startingLumber
 
     function getRoundGoldIncome() returns LinkedList<int>
         return roundGoldIncome

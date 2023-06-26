@@ -124,3 +124,4 @@ public function initPlayers()
     GameStates.gameplay.onEnter() state ->
         pDatas.forEach() (player _p, PlayerData _) ->
             _p.addGold(gameConfig.getStartingGold())
+            _p.addLumber(gameConfig.getStartingLumber())
