@@ -14,16 +14,20 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_TREANT, UnitIds.forceofnature, BUILDING_TREANT)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1CooldownTime(2)
-        ..setAttack1DamageBase(20)
-        ..setDefenseBase(4)
-        ..setArmorType(ArmorType.Normal)
-        ..setSizeSmall()
+
+        ..setAttack1Data(AttackType.Normal, 14, 4, 2, 2)
+
+        ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(120)
+
+        ..setSpeedBase(250)
+
+        ..setSizeSmall()
         ..setNameEnhance("Q", "Treant")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setUpgradeTo(commaList(BUILDING_ANCIENT_PROTECTOR))
+        ..setBuildingGoldCost(100)
 
         ..setModelFileExt(Units.ent)
         ..setIconGameInterfaceExt(Icons.bTNEnt)
@@ -33,16 +37,19 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_ANCIENT_PROTECTOR, UnitIds.forceofnature, BUILDING_ANCIENT_PROTECTOR)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setScalingValue(1.3)
-        ..setAttack1CooldownTime(3)
-        ..setAttack1DamageBase(140)
-        ..setDefenseBase(7)
-        ..setArmorType(ArmorType.Normal)
+
+        ..setAttack1Data(AttackType.Siege, 127, 9, 4, 3)
+
+        ..setArmorData(ArmorType.Large, 7)
+        ..setHitPointsMaximumBase(700)
+
+        ..setSpeedBase(240)
+
         ..setSizeSmall()
-        ..setHitPointsMaximumBase(450)
         ..setNameEnhance("Z", "Ancient Protector")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
+        ..setBuildingLumberCost(1600)
 
         ..setModelFileExt(Buildings.ancientProtector1)
         ..setIconGameInterfaceExt(Icons.bTNTreant)
@@ -53,18 +60,21 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_ARCHER, UnitIds.archer, BUILDING_ARCHER)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1DamageBase(16)
+
+        ..setAttack1Data(AttackType.Pierce, 16, 4, 1, 1.8)
         ..setAttack1Range(650)
-        ..setDefenseBase(0)
-        ..setArmorType(ArmorType.Medium)
-        ..setAttack1CooldownTime(2)
-        ..setSpeedBase(270)
+
+        ..setArmorData(ArmorType.Medium, 0)
         ..setHitPointsMaximumBase(70)
+
+        ..setSpeedBase(270)
+
         ..setSizeSmall()
         ..setNameEnhance("E", "Archer")
         ..setAutoPointValue()
         ..tooltipStopListen()
         ..setUpgradeTo(commaList(BUILDING_NE_RANGER))
+        ..setBuildingGoldCost(100)
 
         ..setModelFileExt(Units.archer)
         ..setIconGameInterfaceExt(Icons.bTNArcher)
@@ -74,17 +84,19 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_NE_RANGER, UnitIds.shandris, BUILDING_NE_RANGER)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1DamageBase(70)
+
+        ..setAttack1Data(AttackType.Normal, 65, 3, 4, 1.4)
         ..setAttack1Range(700)
-        ..setDefenseBase(0)
-        ..setArmorType(ArmorType.Medium)
-        ..setAttack1CooldownTime(1.7)
-        ..setSpeedBase(300)
+
+        ..setArmorData(ArmorType.Medium, 0)
         ..setHitPointsMaximumBase(120)
+
+        ..setSpeedBase(300)
         ..setSizeSmall()
         ..setNameEnhance("Z", "Night Elf Ranger")
         ..setAutoPointValue()
         ..tooltipStopListen()
+        ..setBuildingLumberCost(700)
 
         ..setModelFileExt(Units.shandris1)
         ..setIconGameInterfaceExt(Icons.bTNShandris)
@@ -95,13 +107,15 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_DRYAD, UnitIds.dryad, BUILDING_DRYAD)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1DamageBase(45)
+
+        ..setAttack1Data(AttackType.Normal, 45, 1, 2, 2)
         ..setAttack1Range(400)
-        ..setDefenseBase(0)
-        ..setArmorType(ArmorType.Medium)
-        ..setAttack1CooldownTime(2)
-        ..setSpeedBase(270)
+
+        ..setArmorData(ArmorType.Medium, 3)
         ..setHitPointsMaximumBase(120)
+
+        ..setSpeedBase(300)
+
         ..setSizeSmall()
         ..setNameEnhance("C", "Dryad")
         ..setAutoPointValue()
@@ -117,20 +131,20 @@ import UnitTooltipGenerator
 
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(45)
-        ..setAttack1AttackType(AttackType.Normal)
+
+        ..setAttack1Data(AttackType.Normal, 45, 4, 4, 1.6)
         ..setAttack1Range(300)
-        ..setDefenseBase(4)
-        ..setArmorType(ArmorType.Medium)
-        ..setAttack1CooldownTime(1.6)
+
+        ..setArmorData(ArmorType.Medium, 4)
+        ..setHitPointsMaximumBase(200)
+
         ..setSpeedBase(350)
-        ..setHitPointsMaximumBase(120)
         ..setAttack1MaximumNumberofTargets(2)
         ..setSizeSmall()
         ..setNameEnhance("Z", "Huntress")
         ..setAutoPointValue()
         ..tooltipStopListen()
+        ..setBuildingLumberCost(700)
 
         ..setModelFileExt(Units.huntress)
         ..setIconGameInterfaceExt(Icons.bTNHuntress)
@@ -141,21 +155,22 @@ import UnitTooltipGenerator
 
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1DamageBase(20)
-        ..setAttack1AttackType(AttackType.Normal)
+
+        ..setAttack1Data(AttackType.Normal, 24, 4, 2, 1.6)
         ..setAttack1Range(300)
-        ..setDefenseBase(2)
-        ..setArmorType(ArmorType.Medium)
-        ..setAttack1CooldownTime(1.8)
-        ..setSpeedBase(270)
+
+        ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(80)
-        ..setAttack1MaximumNumberofTargets(0)
+
+        ..setSpeedBase(270)
         ..setSizeSmall()
         ..setNameEnhance("W", "Sentry")
         ..setAutoPointValue()
         ..tooltipStopListen()
         ..setUpgradeTo(commaList(BUILDING_HUNTRESS, BUILDING_SPECTRE))
+        ..setBuildingGoldCost(100)
 
+        ..setAttack1ProjectileArt(Abilities.huntermissile)
         ..setModelFileExt(Units.watcher1)
         ..setIconGameInterfaceExt(Icons.bTNSentinel)
         ..setUnitSoundSetExt(Soundsets.watcher)
@@ -165,18 +180,20 @@ import UnitTooltipGenerator
 
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1DamageBase(35)
-        ..setAttack1AttackType(AttackType.Magic)
+
+        ..setAttack1Data(AttackType.Magic, 35, 4, 2, 1.6)
         ..setAttack1Range(300)
-        ..setDefenseBase(2)
-        ..setArmorType(ArmorType.Medium)
-        ..setAttack1CooldownTime(1.6)
-        ..setSpeedBase(270)
+
+        ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(150)
+
+        ..setSpeedBase(270)
+
         ..setSizeSmall()
         ..setNameEnhance("X", "Spectre")
         ..setAutoPointValue()
         ..tooltipStopListen()
+        ..setBuildingLumberCost(1100)
 
         ..setModelFileExt(Units.vengeance)
         ..setIconGameInterfaceExt(Icons.bTNAvengingWatcher)
@@ -187,20 +204,23 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_DRUID_TALON, UnitIds.druidofthetalon, BUILDING_DRUID_TALON)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1DamageBase(30)
-        ..setAttack1AttackType(AttackType.Magic)
+
+        ..setAttack1Data(AttackType.Magic, 30, 3, 2, 1.75)
         ..setAttack1Range(400)
-        ..setDefenseBase(0)
-        ..setArmorType(ArmorType.Unarmored)
-        ..setAttack1CooldownTime(1.75)
-        ..setSpeedBase(270)
+
+        ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(30)
+
+        ..setSpeedBase(270)
+
         ..setMana(200)
+        ..setManaMaximum(200)
         ..setSizeSmall()
         ..setNameEnhance("A", "Druid of the Talon")
         ..setAutoPointValue()
         ..tooltipStopListen()
         ..setUpgradeTo(commaList(BUILDING_FURION))
+        ..setBuildingGoldCost(100)
 
         ..setModelFileExt(Units.druidoftheTalon)
         ..setIconGameInterfaceExt(Icons.bTNDruidOfTheTalon)
@@ -212,18 +232,22 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_DRUID_CLAW_BEAR, UnitIds.druidoftheclawmorphed, BUILDING_DRUID_CLAW_BEAR)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1DamageBase(90)
-        ..setAttack1AttackType(AttackType.Normal)
-        ..setDefenseBase(4)
-        ..setArmorType(ArmorType.Large)
-        ..setAttack1CooldownTime(1.5)
-        ..setSpeedBase(270)
+
+        ..setAttack1Data(AttackType.Normal, 90, 3, 13, 1.5)
+
+        ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(175)
+
+        ..setSpeedBase(270)
+
         ..setMana(200)
+        ..setManaMaximum(200)
+
         ..setNameEnhance("S", "Druid of the Claw")
         ..setAutoPointValue()
         ..tooltipStopListen()
         ..setUpgradeTo(commaList(BUILDING_OWLBEAR))
+        ..setBuildingGoldCost(100)
 
         ..setMaximumPitchAngledegrees(10)
         ..setAttack1Range(128)
@@ -237,17 +261,17 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_OWLBEAR, UnitIds.owlbear, BUILDING_OWLBEAR)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1DamageBase(90)
-        ..setAttack1AttackType(AttackType.Normal)
-        ..setDefenseBase(4)
-        ..setArmorType(ArmorType.Large)
-        ..setAttack1CooldownTime(1.5)
+
+        ..setAttack1Data(AttackType.Normal, 110, 3, 17, 1.2)
+
+        ..setArmorData(ArmorType.Large, 4)
+        ..setHitPointsMaximumBase(450)
+
         ..setSpeedBase(270)
-        ..setHitPointsMaximumBase(175)
-        ..setMana(200)
         ..setNameEnhance("Z", "Owl Bear")
         ..setAutoPointValue()
         ..tooltipStopListen()
+        ..setBuildingLumberCost(1200)
 
         ..setMaximumPitchAngledegrees(10)
         ..setAttack1Range(128)
@@ -259,16 +283,17 @@ import UnitTooltipGenerator
 
 @compiletime function createWarden()
     var tooltip = new UnitTooltipGenerator("Warden Desc")
-    createSpawnedUnit(UNIT_WARDEN, UnitIds.illidan, BUILDING_WARDEN)
+    createSpawnedUnit(UNIT_WARDEN, UnitIds.warden, BUILDING_WARDEN)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(60)
-        ..setAttack1AttackType(AttackType.Normal)
-        ..setDefenseBase(4)
-        ..setArmorType(ArmorType.Large)
-        ..setAttack1CooldownTime(0.9)
+
+        ..setAttack1Data(AttackType.Normal, 60, 7, 4, 0.9)
+
+        ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(330)
+
+        ..setSpeedBase(330)
+
         ..setSizeSmall()
         ..setAutoPointValue()
         ..tooltipStopListen()
@@ -276,28 +301,31 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("D", "Warden")
         ..setManaInitialAmount(0)
+        ..setBuildingGoldCost(100)
 
         ..setModelFileExt(Units.heroWarden)
         ..setIconGameInterfaceExt(Icons.bTNHeroWarden)
         ..setUnitSoundSetExt(Soundsets.maiev)
 
     tooltip = new UnitTooltipGenerator("Avatar Of Vengeance Desc")
-    createSpawnedUnit(UNIT_AVATAR_OF_VENGEANCE, UnitIds.illidan, BUILDING_AVATAR_OF_VENGEANCE)
+    createSpawnedUnit(UNIT_AVATAR_OF_VENGEANCE, UnitIds.warden, BUILDING_AVATAR_OF_VENGEANCE)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(120)
-        ..setAttack1AttackType(AttackType.Magic)
-        ..setDefenseBase(7)
-        ..setArmorType(ArmorType.Large)
-        ..setAttack1CooldownTime(0.9)
+
+        ..setAttack1Data(AttackType.Magic, 120, 7, 4, 0.9)
+
+        ..setArmorData(ArmorType.Large, 7)
         ..setHitPointsMaximumBase(500)
+
+        ..setSpeedBase(330)
+
         ..setSizeSmall()
         ..setAutoPointValue()
         ..tooltipStopListen()
 
         ..setNameEnhance("Z", "Avatar Of Vengeance")
         ..setManaInitialAmount(0)
+        ..setBuildingLumberCost(1500)
 
         ..setModelFileExt(Units.spiritOfVengeance)
         ..setIconGameInterfaceExt(Icons.bTNSpiritOfVengeance)
@@ -308,12 +336,14 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_DAEMON_HUNTER, UnitIds.illidan, BUILDING_DAEMON_HUNTER)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1DamageBase(200)
-        ..setAttack1AttackType(AttackType.Normal)
-        ..setDefenseBase(9)
-        ..setArmorType(ArmorType.Unarmored)
-        ..setAttack1CooldownTime(0.7)
+
+        ..setAttack1Data(AttackType.Normal, 177, 7, 16, 0.7)
+
+        ..setArmorData(ArmorType.Unarmored, 9)
         ..setHitPointsMaximumBase(750)
+
+        ..setSpeedBase(350)
+
         ..setSizeSmall()
         ..setAutoPointValue()
         ..tooltipStopListen()
@@ -321,6 +351,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("Z", "Daemon Hunter")
         ..setManaInitialAmount(0)
         ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
+        ..setBuildingLumberCost(3000)
 
         ..setModelFileExt(Units.heroDemonHunter1)
         ..setIconGameInterfaceExt(Icons.bTNHeroDemonHunter)
@@ -331,17 +362,21 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_PRIESTESS_OF_THE_MOON, UnitIds.priestessofthemoon, BUILDING_PRIESTESS_OF_THE_MOON)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1DamageBase(190)
-        ..setAttack1AttackType(AttackType.Pierce)
-        ..setDefenseBase(6)
-        ..setArmorType(ArmorType.Medium)
-        ..setAttack1CooldownTime(1)
+
+        ..setAttack1Data(AttackType.Pierce, 190, 9, 6, 1)
+        ..setAttack1Range(650)
+
+        ..setArmorData(ArmorType.Medium, 6)
         ..setHitPointsMaximumBase(600)
+
+        ..setSpeedBase(270)
+
         ..setSizeSmall()
         ..setAutoPointValue()
         ..tooltipStopListen()
         ..setNameEnhance("X", "Priestess of the Moon")
         ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
+        ..setBuildingLumberCost(3000)
 
         ..setManaInitialAmount(0)
 
@@ -350,21 +385,25 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.heroMoonPriestess)
 
 @compiletime function createHeroes()
-    let tooltip = new UnitTooltipGenerator("Footman Desc")
+    let tooltip = new UnitTooltipGenerator("Archdruid Desc")
 
     createSpawnedUnit(UNIT_FURION, UnitIds.furion, BUILDING_FURION)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1DamageBase(80)
-        ..setAttack1AttackType(AttackType.Magic)
-        ..setDefenseBase(4)
-        ..setArmorType(ArmorType.Large)
-        ..setAttack1CooldownTime(1)
+
+        ..setAttack1Data(AttackType.Magic, 80, 4, 8, 1.2)
+        ..setAttack1Range(450)
+
+        ..setArmorData(ArmorType.Unarmored, 4)
         ..setHitPointsMaximumBase(600)
+
+        ..setSpeedBase(270)
+
         ..setSizeSmall()
         ..setAutoPointValue()
         ..tooltipStopListen()
-        ..setNameEnhance("Z", "Gigachad Furion")
+        ..setNameEnhance("Z", "Archdruid")
+        ..setBuildingLumberCost(900)
 
         ..setManaInitialAmount(0)
         ..setPriority(11)
@@ -379,17 +418,21 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_BALLISTA, UnitIds.glaivethrower, BUILDING_BALLISTA)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1DamageBase(490)
-        ..setAttack1AttackType(AttackType.Pierce)
-        ..setDefenseBase(4)
-        ..setArmorType(ArmorType.Large)
-        ..setAttack1CooldownTime(1.6)
+
+        ..setAttack1Data(AttackType.Pierce, 400, 9, 11, 2)
+        ..setAttack1Range(1200)
+
+        ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(150)
+
+        ..setSpeedBase(240)
+
         ..setSizeSmall()
         ..setAutoPointValue()
         ..tooltipStopListen()
         ..setNameEnhance("C", "Ballista")
         ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
+        ..setBuildingLumberCost(3000)
 
         ..setModelFileExt(Units.ballista_V1)
         ..setIconGameInterfaceExt(Icons.bTNBallista)

@@ -10,16 +10,14 @@ import UnitObjEditingCommon
 import UnitTooltipGenerator
 
 @compiletime function createFootman()
-    var tooltip = new UnitTooltipGenerator("Footman Desc")
+    var tooltip = new UnitTooltipGenerator("Basic Human melee unit")
     createSpawnedUnit(UNIT_FOOTMAN, UnitIds.footman, BUILDING_FOOTMAN)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1AttackType(AttackType.Normal)
-        ..setAttack1DamageExt(14, 1, 2)
-        ..setAttack1CooldownTime(1.4)
 
-        ..setArmorType(ArmorType.Large)
-        ..setDefenseBase(3)
+        ..setAttack1Data(AttackType.Normal, 14, 1, 2, 1.4)
+
+        ..setArmorData(ArmorType.Large, 3)
         ..setHitPointsMaximumBase(100)
 
         ..setSpeedBase(270)
@@ -41,13 +39,9 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1AttackType(AttackType.Normal)
-        ..setAttack1DamageExt(34, 1, 2)
-        ..setAttack1DamageBase(34)
-        ..setAttack1CooldownTime(1.3)
+        ..setAttack1Data(AttackType.Normal, 34, 2, 4, 1.3)
 
-        ..setArmorType(ArmorType.Large)
-        ..setDefenseBase(6)
+        ..setArmorData(ArmorType.Large, 6)
         ..setHitPointsMaximumBase(250)
 
         ..setSpeedBase(270)
@@ -63,33 +57,6 @@ import UnitTooltipGenerator
         ..setIconGameInterfaceExt(Icons.bTNTheCaptain)
         ..setUnitSoundSetExt(Soundsets.theCaptain)
 
-@compiletime function createRifleman()
-    var tooltip = new UnitTooltipGenerator("Rifleman Desc")
-
-    createSpawnedUnit(UNIT_RIFLEMAN, UnitIds.rifleman, BUILDING_RIFLEMAN)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(250)
-        ..setAttack1AttackType(AttackType.Pierce)
-        ..setAttack1Range(550)
-        ..setDefenseBase(8)
-        ..setArmorType(ArmorType.Medium)
-        ..setAttack1CooldownTime(1.5)
-        ..setSpeedBase(240)
-        ..setHitPointsMaximumBase(200)
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingGoldCost(100)
-
-        ..setSizeSmall()
-        ..setPriority(3)
-        ..setNameEnhance("X", "Rifleman")
-        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-
-        ..setModelFileExt(Units.rifleman1)
-        ..setIconGameInterfaceExt(Icons.bTNRifleman)
-        ..setUnitSoundSetExt(Soundsets.rifleman)
-
 @compiletime function createArcher()
     var tooltip = new UnitTooltipGenerator("Elven Archer Desc")
 
@@ -97,13 +64,11 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1AttackType(AttackType.Pierce)
-        ..setAttack1DamageExt(10, 1, 3)
-        ..setAttack1CooldownTime(1.3)
+
+        ..setAttack1Data(AttackType.Pierce, 10, 1, 3, 1.3)
         ..setAttack1Range(550)
 
-        ..setArmorType(ArmorType.Medium)
-        ..setDefenseBase(2)
+        ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(75)
 
         ..setSpeedBase(270)
@@ -125,13 +90,10 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1AttackType(AttackType.Pierce)
-        ..setAttack1DamageExt(60, 3, 4)
-        ..setAttack1CooldownTime(1.2)
+        ..setAttack1Data(AttackType.Pierce, 60, 3, 4, 1.2)
         ..setAttack1Range(700)
 
-        ..setArmorType(ArmorType.Medium)
-        ..setDefenseBase(3)
+        ..setArmorData(ArmorType.Medium, 3)
         ..setHitPointsMaximumBase(125)
 
         ..setSpeedBase(300)
@@ -153,13 +115,11 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_PRIEST, UnitIds.priest, BUILDING_PRIEST)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1AttackType(AttackType.Magic)
-        ..setAttack1DamageExt(10, 2, 3)
-        ..setAttack1CooldownTime(1.75)
+
+        ..setAttack1Data(AttackType.Magic, 10, 2, 3, 1.75)
         ..setAttack1Range(400)
 
-        ..setArmorType(ArmorType.Unarmored)
-        ..setDefenseBase(2)
+        ..setArmorData(ArmorType.Unarmored, 2)
         ..setHitPointsMaximumBase(80)
 
         ..setMana(200)
@@ -185,13 +145,11 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1AttackType(AttackType.Normal)
-        ..setAttack1DamageExt(35, 4, 5)
-        ..setAttack1CooldownTime(1.4)
+
+        ..setAttack1Data(AttackType.Normal, 35, 4, 5, 1.4)
         ..setAttack1Range(300)
 
-        ..setArmorType(ArmorType.Medium)
-        ..setDefenseBase(4)
+        ..setArmorData(ArmorType.Medium, 4)
         ..setHitPointsMaximumBase(350)
 
         ..setMana(200)
@@ -216,12 +174,10 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1AttackType(AttackType.Normal)
-        ..setAttack1DamageExt(49, 4, 6)
-        ..setAttack1CooldownTime(1.4)
 
-        ..setArmorType(ArmorType.Large)
-        ..setDefenseBase(4)
+        ..setAttack1Data(AttackType.Normal, 49, 4, 6, 1.4)
+
+        ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(350)
 
         ..setSpeedBase(350)
@@ -242,12 +198,10 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1AttackType(AttackType.Normal)
-        ..setAttack1DamageExt(90, 4, 6)
-        ..setAttack1CooldownTime(1.4)
 
-        ..setArmorType(ArmorType.Large)
-        ..setDefenseBase(8)
+        ..setAttack1Data(AttackType.Normal, 90, 4, 6, 1.4)
+
+        ..setArmorData(ArmorType.Large, 8)
         ..setHitPointsMaximumBase(600)
 
         ..setSpeedBase(350)
@@ -271,12 +225,9 @@ function createPaladin(int paladinId) returns BTUnitDefinition
             ..registerTooltipGenerator(tooltip)
             ..tooltipStartListen()
 
-            ..setAttack1AttackType(AttackType.Magic)
-            ..setAttack1DamageExt(120, 5, 7)
-            ..setAttack1CooldownTime(1.3)
+            ..setAttack1Data(AttackType.Magic, 120, 5, 7, 1.3)
 
-            ..setArmorType(ArmorType.Large)
-            ..setDefenseBase(6)
+            ..setArmorData(ArmorType.Large, 6)
             ..setHitPointsMaximumBase(500)
 
             ..setSpeedBase(300)
@@ -314,13 +265,11 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1AttackType(AttackType.Magic)
-        ..setAttack1DamageExt(34, 2, 5)
-        ..setAttack1CooldownTime(1.75)
+
+        ..setAttack1Data(AttackType.Magic, 34, 2, 5, 1.75)
         ..setAttack1Range(550)
 
-        ..setArmorType(ArmorType.Unarmored)
-        ..setDefenseBase(0)
+        ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(40)
 
         ..setMana(200)
@@ -344,13 +293,11 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1AttackType(AttackType.Magic)
-        ..setAttack1DamageExt(70, 3, 9)
-        ..setAttack1CooldownTime(1.75)
+
+        ..setAttack1Data(AttackType.Magic, 70, 3, 9, 1.75)
         ..setAttack1Range(600)
 
-        ..setArmorType(ArmorType.Unarmored)
-        ..setDefenseBase(0)
+        ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(60)
 
         ..setMana(500)
@@ -373,14 +320,13 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     createSpawnedUnit(UNIT_MAGE, UnitIds.renegadewizard, BUILDING_MAGE)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
+        ..setNormalAbilities(commaList(AbilityIds.firebolt))
 
-        ..setAttack1AttackType(AttackType.Magic)
-        ..setAttack1DamageExt(90, 3, 7)
-        ..setAttack1CooldownTime(1.9)
+
+        ..setAttack1Data(AttackType.Magic, 90, 3, 7, 1.9)
         ..setAttack1Range(650)
 
-        ..setArmorType(ArmorType.Unarmored)
-        ..setDefenseBase(4)
+        ..setArmorData(ArmorType.Unarmored, 4)
         ..setHitPointsMaximumBase(140)
 
         ..setMana(400)
@@ -406,14 +352,12 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1AttackType(AttackType.Magic)
-        ..setAttack1DamageExt(160, 5, 12)
-        ..setAttack1CooldownTime(1.8)
+
+        ..setAttack1Data(AttackType.Magic, 160, 5, 12, 1.8)
 
         ..setAttack1Range(650)
 
-        ..setArmorType(ArmorType.Unarmored)
-        ..setDefenseBase(6)
+        ..setArmorData(ArmorType.Unarmored, 6)
         ..setHitPointsMaximumBase(200)
 
         ..setMana(700)
@@ -440,12 +384,10 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1AttackType(AttackType.Magic)
-        ..setAttack1DamageExt(250, 5, 14)
-        ..setAttack1CooldownTime(0.8)
 
-        ..setArmorType(ArmorType.Large)
-        ..setDefenseBase(10)
+        ..setAttack1Data(AttackType.Magic, 250, 5, 14, 0.8)
+
+        ..setArmorData(ArmorType.Large, 10)
         ..setHitPointsMaximumBase(900)
 
         ..setSpeedBase(300)
@@ -469,13 +411,11 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1AttackType(AttackType.Magic)
-        ..setAttack1DamageExt(200, 5, 8)
-        ..setAttack1CooldownTime(1.5)
+
+        ..setAttack1Data(AttackType.Magic, 200, 5, 8, 1.5)
         ..setAttack1Range(450)
 
-        ..setArmorType(ArmorType.Medium)
-        ..setDefenseBase(6)
+        ..setArmorData(ArmorType.Medium, 6)
         ..setHitPointsMaximumBase(300)
 
         ..setMana(1400)
@@ -491,6 +431,32 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setModelFileExt(Units.kael)
         ..setIconGameInterfaceExt(Icons.bTNHeroBloodElfPrince)
         ..setUnitSoundSetExt(Soundsets.kael)
+
+@compiletime function createRifleman()
+    let tooltip = new UnitTooltipGenerator("Rifleman Desc")
+
+    createSpawnedUnit(UNIT_RIFLEMAN, UnitIds.rifleman, BUILDING_RIFLEMAN)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1Data(AttackType.Pierce, 120, 17, 4, 1.3)
+        ..setAttack1Range(550)
+
+        ..setArmorData(ArmorType.Medium, 8)
+        ..setHitPointsMaximumBase(250)
+
+        ..setSpeedBase(240)
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setBuildingGoldCost(100)
+
+        ..setSizeSmall()
+        ..setPriority(3)
+        ..setNameEnhance("X", "Rifleman")
+        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
+
+        ..setModelFileExt(Units.rifleman1)
+        ..setIconGameInterfaceExt(Icons.bTNRifleman)
+        ..setUnitSoundSetExt(Soundsets.rifleman)
 
 @compiletime function createBuilder()
     createBuilder(UNIT_HUMAN_BUILDER, UnitIds.peasant)
