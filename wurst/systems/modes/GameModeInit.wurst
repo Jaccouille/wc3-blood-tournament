@@ -92,6 +92,20 @@ init
             mode.message("Bounty multiplier set to " + bountyMultiplier.toString(2).color(GOLD_COLOR))
             gameConfig.setBountyMultiplier(bountyMultiplier)
 
+    new GameMode("damage-multiplier", "dm", "Set unit damage multiplier, default : " +
+        gameConfig.getDamageMultiplier().toString(1) + ", max : 2.0, min : 0.5") (mode, args) ->
+        if (args.size() > 1)
+            let damageMultiplier = min(max(args.get(1).toReal(), 0.5), 2.0)
+            mode.message("Damage multiplier set to " + damageMultiplier.toString(2).color(GOLD_COLOR))
+            gameConfig.setDamageMultiplier(damageMultiplier)
+
+    new GameMode("health-multiplier", "hm", "Set blood points health multiplier, default : " +
+        gameConfig.getHealthMultiplier().toString(1) + ", max : 2.0, min : 0.5") (mode, args) ->
+        if (args.size() > 1)
+            let healthMultiplier = min(max(args.get(1).toReal(), 0.5), 2.0)
+            mode.message("Health multiplier set to " + healthMultiplier.toString(2).color(GOLD_COLOR))
+            gameConfig.setHealthMultiplier(healthMultiplier)
+
     new GameMode("multiple-builder", "mb", "Disable builder limit") (mode, args) ->
         if not gameConfig.isMultipleBuilderEnabled()
             mode.message("Multiple builder enabled, players can use more than 1 builder".color(SPECIAL_COLOR))

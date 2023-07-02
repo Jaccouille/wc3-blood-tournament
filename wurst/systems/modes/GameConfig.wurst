@@ -13,6 +13,8 @@ class GameConfig
     var roundInterludeTime = 60.
     var spawnCap = 80
     var bountyMultiplier = 1.
+    var damageMultiplier = 1.
+    var healthMultiplier = 1.
     var multipleBuilder = false
     var allRandom = false
 
@@ -70,6 +72,18 @@ class GameConfig
 
     function getBountyMultiplier() returns real
         return bountyMultiplier
+
+    function setDamageMultiplier(real value)
+        damageMultiplier = value
+
+    function getDamageMultiplier() returns real
+        return damageMultiplier
+
+    function setHealthMultiplier(real value)
+        healthMultiplier = value
+
+    function getHealthMultiplier() returns real
+        return healthMultiplier
 
     function setMultipleBuilder(boolean value)
         multipleBuilder = value

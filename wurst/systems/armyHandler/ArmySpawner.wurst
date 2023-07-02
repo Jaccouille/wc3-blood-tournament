@@ -15,6 +15,7 @@ import PlayerData
 import PlayerExtension
 import SpawnZone
 import UnitPointValueMap
+import GameConfig
 
 class BuildingTemplate
     LinkedList<int> unitToSpawn
@@ -157,11 +158,17 @@ public class ArmySpawner
         let dummyPlayerIdx = spawnedUnits.size() div MAX_UNIT_PER_PLAYER mod pDatas.get(_p).dummyPlayers.size()
 
         let newUnit = createUnit(_p.getDummyPlayer(dummyPlayerIdx), unitId, spawnPos, spawnZone.angle)
+        if gameConfig.getHealthMultiplier() != 1.
+            newUnit.setHP(newUnit.getHP() * gameConfig.getHealthMultiplier())
+        if gameConfig.getDamageMultiplier() != 1.
+            newUnit.setBaseDamage(
+                (newUnit.getBaseDamage(0) * gameConfig.getDamageMultiplier()).toInt() , 0)
+
         // Pause unit until battle start
         BlzShowUnitTeamGlow(newUnit, false)
         newUnit.pause()
         if newUnit.getName() == ""
-            Log.info("GROSSE MERDE")
+            Log.info("Unknown unit spawned")
             newUnit.kill()
         else
             pData.spawnedUnits.add(newUnit)
