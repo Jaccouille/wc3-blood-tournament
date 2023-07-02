@@ -69,6 +69,7 @@ public abstract class Round
     constant matchUp = new LinkedList<Pair<int, int>>
     player winner
     string roundName
+    boolean isOver = false
 
     function setName(string name)
         this.roundName = name

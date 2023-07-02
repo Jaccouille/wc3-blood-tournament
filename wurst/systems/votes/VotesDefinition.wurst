@@ -1,0 +1,27 @@
+package VotesDefinition
+
+import Vote
+import ChatCommands
+import HashMap
+import RoundController
+import GameStates
+
+let voteInstanceMap = new HashMap<string, Vote>
+
+
+init
+    GameStates.gameplay.onEnter() (state) ->
+        registerCommandAll("skip") (player triggerPlayer, LinkedList<string> arguments) ->
+            if voteInstanceMap.has("skip")
+                voteInstanceMap.get("skip").castVote(triggerPlayer)
+            else
+                let voteInstance = new Vote("Skip Round", 60., 1)
+                voteInstance.addAction() () ->
+                    if not roundController.hasRoundStarted
+                        roundController.startRound()
+                    else
+                        printTimed("Vote failed! Round already started!", 3)
+                voteInstance.castVote(triggerPlayer)
+        OnRoundStart.add() (Round round) ->
+            if voteInstanceMap.has("skip")
+                voteInstanceMap.get("skip").endVote()

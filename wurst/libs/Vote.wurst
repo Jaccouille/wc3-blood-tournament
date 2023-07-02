@@ -1,0 +1,52 @@
+package Vote
+
+import LinkedList
+import ClosureTimers
+import ColorUtils
+
+public interface VoteCallback
+    function execute()
+
+public class Vote
+    private VoteCallback cb
+    private LinkedList<player> hasVoted
+    private string name
+    private real timeRemaining
+    private int amountToPass
+
+    construct(string name, real timeRemaining, int amountToPass)
+        this.name = name
+        this.timeRemaining = timeRemaining
+        this.amountToPass = amountToPass
+        hasVoted = new LinkedList<player>()
+        doAfter(timeRemaining) ->
+            if this != null
+                this.endVote()
+
+    function addAction(VoteCallback cb)
+        this.cb = cb
+
+    function castVote(player _p)
+        if not hasVoted.has(_p)
+            hasVoted.push(_p)
+            let remainingVote = amountToPass - hasVoted.size()
+            let msg = _p.getNameColored(true) +
+                " has voted for " + this.name.color(SPECIAL_COLOR) +
+                ", " + remainingVote.toString() + " vote remaining"
+            printTimed(msg, 7)
+            if hasVoted.size() >= amountToPass
+                this.endVote()
+        else
+            printTimedToPlayer("You already voted for " + this.name, 5, _p)
+
+    function endVote()
+        if hasVoted.size() >= amountToPass
+            printTimed(this.name + " vote passed!", 5)
+            cb.execute()
+        else
+            printTimed(this.name + " vote failed!", 5)
+        destroy this
+
+    ondestroy
+        destroy cb
+        destroy hasVoted

@@ -30,6 +30,8 @@ class RoundController
     boolean hasRoundStarted = false
     constant rounds = new LinkedList<Round>
     player previousRoundWinner = null
+    timerdialog tdialog
+    timer tim
 
     Round currentRound = null
 
@@ -83,8 +85,8 @@ class RoundController
         else
             ScoreBoardColumnEntries.loadRoundLayout(currentRound.roundParticipant)
 
-        let tim = getTimer()
-        let tdialog = tim.createTimerDialog()
+        tim = getTimer()
+        tdialog = tim.createTimerDialog()
             ..setTitle(currentRound.roundName + " begins in :")
             ..display(true)
 
@@ -106,9 +108,14 @@ class RoundController
 
         tdialog.setRealTimeRemaining(interludeTime)
         tim.doAfter(interludeTime) ->
-            hasRoundStarted = true
-            currentRound.start()
-            tdialog.destr()
+            startRound()
+
+    function startRound()
+        hasRoundStarted = true
+        currentRound.start()
+        tdialog.destr()
+        if tim != null
+            tim.destr()
 
     function checkIfCurrentroundDone(player winner)
         if currentRound != null
