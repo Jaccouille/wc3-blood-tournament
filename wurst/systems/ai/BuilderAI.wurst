@@ -103,6 +103,7 @@ class BuilderAI
     PlayerData pData
     CallbackPeriodic cb
     boolean isEnabled = false
+    boolean enableForHumanPlayer = false
 
     construct(player _player)
         this._player = _player
@@ -141,10 +142,10 @@ class BuilderAI
         isEnabled = false
 
     function toggleAI()
-        if isEnabled
+        if isEnabled and enableForHumanPlayer
             stopAI()
             Log.info("stop builder AI for " + _player.getName())
-        else
+        else if enableForHumanPlayer
             startAI()
             Log.info("start builder AI for " + _player.getName())
 
@@ -152,7 +153,8 @@ function startAI()
     Log.debug("Start builder AI")
     for aiInstance in BuilderAI
         // TODO: only enable if player isn't bot
-        aiInstance.startAI()
+        if aiInstance.enableForHumanPlayer
+            aiInstance.startAI()
 
 function stopAI()
     Log.debug("Stop builder AI")
@@ -174,6 +176,7 @@ init
                 let aiInstance = new BuilderAI(_player)
                 if not _player.isIngame()
                     aiInstance.startAI()
+                    aiInstance.enableForHumanPlayer = true
 
             // TODO: gameconfig parameters
             OnRoundFinish.add() (Round round) ->
@@ -182,9 +185,6 @@ init
 
             OnRoundStart.add() (Round round) ->
                 stopAI()
-
-    registerToolkitCommand("aibot") (player triggerPlayer, LinkedList<string> arguments) ->
-        toggleAI()
 
     registerToolkitCommand("ai") (player triggerPlayer, LinkedList<string> arguments) ->
         playerToBuilderAI.get(triggerPlayer).toggleAI()

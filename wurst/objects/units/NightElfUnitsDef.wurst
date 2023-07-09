@@ -74,7 +74,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen()
         ..setUpgradeTo(commaList(BUILDING_NE_RANGER))
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(150)
 
         ..setModelFileExt(Units.archer)
         ..setIconGameInterfaceExt(Icons.bTNArcher)
@@ -126,6 +126,33 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.dryad)
 
 @compiletime function createHuntress()
+    tooltip = new UnitTooltipGenerator("Sentry Desc")
+    createSpawnedUnit(UNIT_SENTRY, UnitIds.watcher, BUILDING_SENTRY)
+
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Normal, 24, 4, 2, 1.6)
+        ..setAttack1Range(300)
+
+        ..setArmorData(ArmorType.Medium, 2)
+        ..setHitPointsMaximumBase(80)
+
+        ..setSpeedBase(270)
+        ..setSizeSmall()
+        ..setNameEnhance("W", "Sentry")
+        ..setAutoPointValue()
+        ..tooltipStopListen()
+        ..setUpgradeTo(commaList(BUILDING_HUNTRESS, BUILDING_SPECTRE))
+        ..setBuildingGoldCost(200)
+        ..setManaMaximum(0)
+
+        ..setAttack1ProjectileArt(Abilities.sentinelMissile)
+        ..setAttack1WeaponType(WeaponType.Missile)
+        ..setModelFileExt(Units.watcher1)
+        ..setIconGameInterfaceExt(Icons.bTNSentinel)
+        ..setUnitSoundSetExt(Soundsets.watcher)
+
     var tooltip = new UnitTooltipGenerator("Huntress Desc")
     createSpawnedUnit(UNIT_HUNTRESS, UnitIds.huntress, BUILDING_HUNTRESS)
 
@@ -150,31 +177,6 @@ import UnitTooltipGenerator
         ..setIconGameInterfaceExt(Icons.bTNHuntress)
         ..setUnitSoundSetExt(Soundsets.huntress)
 
-    tooltip = new UnitTooltipGenerator("Sentry Desc")
-    createSpawnedUnit(UNIT_SENTRY, UnitIds.watcher, BUILDING_SENTRY)
-
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Normal, 24, 4, 2, 1.6)
-        ..setAttack1Range(300)
-
-        ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(80)
-
-        ..setSpeedBase(270)
-        ..setSizeSmall()
-        ..setNameEnhance("W", "Sentry")
-        ..setAutoPointValue()
-        ..tooltipStopListen()
-        ..setUpgradeTo(commaList(BUILDING_HUNTRESS, BUILDING_SPECTRE))
-        ..setBuildingGoldCost(100)
-
-        ..setAttack1ProjectileArt(Abilities.huntermissile)
-        ..setModelFileExt(Units.watcher1)
-        ..setIconGameInterfaceExt(Icons.bTNSentinel)
-        ..setUnitSoundSetExt(Soundsets.watcher)
-
     tooltip = new UnitTooltipGenerator("Spectre Desc")
     createSpawnedUnit(UNIT_SPECTRE, UnitIds.spiritofvengeance, BUILDING_SPECTRE)
 
@@ -184,7 +186,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Magic, 35, 4, 2, 1.6)
         ..setAttack1Range(300)
 
-        ..setArmorData(ArmorType.Medium, 2)
+        ..setArmorData(ArmorType.Divine, 2)
         ..setHitPointsMaximumBase(150)
 
         ..setSpeedBase(270)
@@ -220,7 +222,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen()
         ..setUpgradeTo(commaList(BUILDING_FURION))
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(50)
 
         ..setModelFileExt(Units.druidoftheTalon)
         ..setIconGameInterfaceExt(Icons.bTNDruidOfTheTalon)
@@ -247,7 +249,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen()
         ..setUpgradeTo(commaList(BUILDING_OWLBEAR))
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(250)
 
         ..setMaximumPitchAngledegrees(10)
         ..setAttack1Range(128)
@@ -300,8 +302,9 @@ import UnitTooltipGenerator
         ..setUpgradeTo(commaList(BUILDING_AVATAR_OF_VENGEANCE))
 
         ..setNameEnhance("D", "Warden")
+        ..setManaMaximum(0)
         ..setManaInitialAmount(0)
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(350)
 
         ..setModelFileExt(Units.heroWarden)
         ..setIconGameInterfaceExt(Icons.bTNHeroWarden)
@@ -314,7 +317,7 @@ import UnitTooltipGenerator
 
         ..setAttack1Data(AttackType.Magic, 120, 7, 4, 0.9)
 
-        ..setArmorData(ArmorType.Large, 7)
+        ..setArmorData(ArmorType.Divine, 7)
         ..setHitPointsMaximumBase(500)
 
         ..setSpeedBase(330)

@@ -69,7 +69,7 @@ public abstract class Round
     constant matchUp = new LinkedList<Pair<int, int>>
     player winner
     string roundName
-    boolean isOver = false
+    boolean hasStarted = false
 
     function setName(string name)
         this.roundName = name
@@ -92,6 +92,7 @@ public abstract class Round
         forUnitsAll() (unit u) ->
             if IsUnitDeadBJ(u)
                 u.remove()
+        hasStarted = true
 
     function doAfterSpawn()
         doAfter(2) ->
@@ -109,6 +110,7 @@ public abstract class Round
 
     function finish(player winner)
         this.winner = winner
+        hasStarted = false
         OnRoundFinish.execute(this)
 
     abstract function spawnArmies()

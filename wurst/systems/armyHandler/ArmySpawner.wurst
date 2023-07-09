@@ -49,7 +49,7 @@ public let armyMap = new HashMap<int, BuildingTemplate>
     ..put(BUILDING_HEADHUNTER           , new BuildingTemplate(generateUnitList(UNIT_HEADHUNTER           , 10 )))
     ..put(BUILDING_SHAMAN               , new BuildingTemplate(generateUnitList(UNIT_SHAMAN               , 4  )))
     ..put(BUILDING_TAUREN               , new BuildingTemplate(generateUnitList(UNIT_TAUREN               , 4  )))
-    ..put(BUILDING_RAIDER               , new BuildingTemplate(generateUnitList(UNIT_RAIDER               , 4  )))
+    ..put(BUILDING_RAIDER               , new BuildingTemplate(generateUnitList(UNIT_RAIDER               , 7  )))
     ..put(BUILDING_OGRE                 , new BuildingTemplate(generateUnitList(UNIT_OGRE                 , 4  )))
     ..put(BUILDING_OGRE_ARMORED         , new BuildingTemplate(generateUnitList(UNIT_OGRE_ARMORED         , 4  )))
     ..put(BUILDING_BERSERKER            , new BuildingTemplate(generateUnitList(UNIT_BERSERKER            , 7  )))
@@ -201,7 +201,7 @@ public class ArmySpawner
                 pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
 
                 // Move to next line
-                if (pData.spawnedUnits.size() + 1) % unitPerLine == 0
+                if pData.spawnedUnits.size() % unitPerLine == 0
                     pos = spawnZone.initialPos.polarOffset(
                         spawnZone.angle.op_minus(180..asAngleDegrees()),
                         FORMATION_HEIGHT * pData.spawnedUnits.size() / unitPerLine)
@@ -216,11 +216,8 @@ public class ArmySpawner
         let invertedAngle = (180 + spawnZone.angle.degrees() % 360).asAngleDegrees()
         pos = spawnZone.spawnRect.getCenter().polarOffset(invertedAngle, 400)
         if not isProdBuild
-            let efx = addEffect(Abilities.divineShieldTarget, pos)..setScale(0.5)
             createTTEx(pos.withZ(100.), invertedAngle.degrees().toString(), 10)
             createTTEx(pos.withZ(300.), invertedAngle.direction().toString(), 10)
-            doAfter(10) ->
-                efx.destr()
         // Log.info("Position reserve : " + pos.toString())
 
     private function isBuildingSpawnOver() returns boolean

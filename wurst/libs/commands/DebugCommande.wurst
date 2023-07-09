@@ -19,8 +19,8 @@ init
             let nestedIdx = playerToArmySpawner.get(key).nestedIdx
             let spawnFinished = playerToArmySpawner.get(key).spawnFinished
             Log.info("si : " + idx.toString() +
-                     "sni : " + nestedIdx.toString() +
-                     "sf : " + spawnFinished.toString() +
+                     " sni : " + nestedIdx.toString() +
+                     " sf : " + spawnFinished.toString() +
                      " for " + key.getNameColored(true))
 
     registerToolkitCommand("al") (player triggerPlayer, LinkedList<string> arguments) ->

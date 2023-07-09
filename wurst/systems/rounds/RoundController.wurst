@@ -189,7 +189,7 @@ function generateRounds()
                 ..addMatchup(matchUps.dequeue())
                 ..addMatchup(matchUps.dequeue())
 
-        let gold = gameConfig.getRoundGoldIncome().size() < idx
+        let gold = gameConfig.getRoundGoldIncome().size() <= idx
             ? gameConfig.getRoundGoldIncome().getLast()
             : gameConfig.getRoundGoldIncome().get(idx)
         round.setRewards(gold, 0)

@@ -75,7 +75,7 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setNameEnhance("W", "Head Hunter")
         ..setAutoPointValue()
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(150)
 
         ..setUpgradeTo(commaList(BUILDING_HEADHUNTER_BERSERKER, BUILDING_TRAPPER))
 
@@ -102,6 +102,7 @@ import UnitTooltipGenerator
         ..setBuildingLumberCost(900)
 
         ..setModelFileExt(Units.headhunter_V1)
+        ..setRequiredAnimationNamesExt("alternate")
         ..setIconGameInterfaceExt(Icons.bTNHeadHunterBerserker)
         ..setUnitSoundSetExt(Soundsets.headHunter)
 
@@ -145,7 +146,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setUpgradeTo(commaList(BUILDING_WARMONGER))
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(200)
 
         ..setModelFileExt(Units.wolfrider1)
         ..setIconGameInterfaceExt(Icons.bTNRaider)
@@ -182,7 +183,7 @@ import UnitTooltipGenerator
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Magic, 36, 2, 6, 1.45)
-        ..setAttack1Range(500)
+        ..setAttack1Range(400)
 
         ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(60)
@@ -197,7 +198,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setUpgradeTo(commaList(BUILDING_OCCULTIST))
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(150)
 
         ..setModelFileExt(Units.chaosWarlockGreen)
         ..setIconGameInterfaceExt(Icons.bTNChaosWarlockGreen)
@@ -251,7 +252,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setUpgradeTo(commaList(BUILDING_FARSEER))
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(200)
 
         ..setModelFileExt(Units.shaman1)
         ..setIconGameInterfaceExt(Icons.bTNShaman)
@@ -291,14 +292,14 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Siege, 80, 9, 11, 2)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(550)
+        ..setHitPointsMaximumBase(750)
 
         ..setSpeedBase(240)
         ..setSizeSmall()
         ..setNameEnhance("A", "Ogre")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(300)
 
         ..setAttack1Range(120)
         ..setUpgradeTo(commaList(BUILDING_OGRE_ARMORED))
@@ -314,7 +315,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Siege, 80, 9, 11, 2)
 
         ..setArmorData(ArmorType.Large, 8)
-        ..setHitPointsMaximumBase(650)
+        ..setHitPointsMaximumBase(850)
 
         ..setSpeedBase(240)
         ..setSizeSmall()

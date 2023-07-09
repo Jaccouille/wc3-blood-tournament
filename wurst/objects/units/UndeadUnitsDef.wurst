@@ -64,7 +64,7 @@ import UnitTooltipGenerator
 
         ..setAttack1Data(AttackType.Magic, 52, 8, 3, 1.5)
 
-        ..setArmorData(ArmorType.Large, 4)
+        ..setArmorData(ArmorType.Divine, 4)
         ..setHitPointsMaximumBase(90)
 
         ..setSpeedBase(270)
@@ -108,7 +108,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setUpgradeTo(commaList(BUILDING_NERUBIAN))
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(150)
 
         ..setModelFileExt(Units.cryptFiend1)
         ..setIconGameInterfaceExt(Icons.bTNCryptFiend)
@@ -170,7 +170,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setUpgradeTo(commaList(BUILDING_LICH))
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(200)
 
         ..setModelFileExt(Units.necromancer1)
         ..setIconGameInterfaceExt(Icons.bTNNecromancer)
@@ -185,7 +185,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Magic, 115, 4, 9, 1.75)
         ..setAttack1Range(550)
 
-        ..setArmorData(ArmorType.Unarmored, 4)
+        ..setArmorData(ArmorType.Divine, 4)
         ..setHitPointsMaximumBase(130)
 
         ..setSpeedBase(270)
@@ -211,7 +211,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Magic, 20, 4, 6, 1.75)
         ..setAttack1Range(550)
 
-        ..setArmorData(ArmorType.Small, 2)
+        ..setArmorData(ArmorType.Divine, 2)
         ..setHitPointsMaximumBase(25)
 
         ..setSpeedBase(270)
@@ -223,7 +223,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setUpgradeTo(commaList(BUILDING_DARK_RANGER))
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(50)
 
         ..setModelFileExt(Units.banshee1)
         ..setIconGameInterfaceExt(Icons.bTNBanshee)
@@ -273,7 +273,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setUpgradeTo(commaList(BUILDING_FLESH_GOLEM))
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(300)
 
         ..setModelFileExt(Units.abomination1)
         ..setIconGameInterfaceExt(Icons.bTNAbomination)
@@ -321,7 +321,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setUpgradeTo(commaList(BUILDING_GREATER_VAMPIRE))
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(350)
 
         ..setModelFileExt(Units.heroDreadLord)
         ..setIconGameInterfaceExt(Icons.bTNHeroDreadLord)

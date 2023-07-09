@@ -30,6 +30,7 @@ function BTUnitDefinition.setCommonAttr()
     this.setFoodCost(30)
     this.setButtonPositionX(0)
     this.setButtonPositionY(2)
+    this.setNormalAbilities("")
 
 public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinition
     return new BTUnitDefinition(newId, origId)

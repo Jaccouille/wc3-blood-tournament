@@ -74,7 +74,7 @@ import UnitTooltipGenerator
         ..setSpeedBase(270)
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(150)
         ..setUpgradeTo(commaList(BUILDING_RANGER))
 
         ..setSizeSmall()
@@ -127,7 +127,7 @@ import UnitTooltipGenerator
         ..setSpeedBase(270)
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(50)
         ..setUpgradeTo(commaList(BUILDING_SPELL_BREAKER))
 
         ..setSizeSmall()
@@ -183,7 +183,7 @@ import UnitTooltipGenerator
         ..setSpeedBase(350)
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(200)
         ..setUpgradeTo(commaList(BUILDING_CRUSADER, BUILDING_PALADIN))
 
         ..setSizeSmall()
@@ -277,7 +277,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setSpeedBase(270)
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(200)
         ..setUpgradeTo(commaList(BUILDING_SORCERESS_UPGRADE))
 
         ..setSizeSmall()
@@ -334,7 +334,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setSpeedBase(320)
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-        ..setBuildingGoldCost(100)
+        ..setBuildingGoldCost(300)
         ..setUpgradeTo(commaList(BUILDING_ARCHMAGE))
 
         ..setSizeSmall()
