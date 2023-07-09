@@ -3,11 +3,16 @@ package Vote
 import LinkedList
 import ClosureTimers
 import ColorUtils
+import HashMap
 
 public interface VoteCallback
     function execute()
 
+
+
 public class Vote
+    static let voteInstanceMap = new HashMap<string, Vote>
+
     private VoteCallback cb
     private LinkedList<player> hasVoted
     private string name
@@ -19,8 +24,9 @@ public class Vote
         this.timeRemaining = timeRemaining
         this.amountToPass = amountToPass
         hasVoted = new LinkedList<player>()
+        voteInstanceMap.put(name, this)
         doAfter(timeRemaining) ->
-            if this != null
+            if voteInstanceMap.has(name)
                 this.endVote()
 
     function addAction(VoteCallback cb)
@@ -48,5 +54,7 @@ public class Vote
         destroy this
 
     ondestroy
+        if voteInstanceMap.has(this.name)
+            voteInstanceMap.remove(this.name)
         destroy cb
         destroy hasVoted
