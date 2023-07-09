@@ -1,0 +1,21 @@
+[CustomSkin]
+InfoPanelIconArmorDivine=UI\Widgets\Console\Human\infocard-armor-spectral.dds
+
+[FrameDef]
+ARMORTIP_NONE=Normal : 100%|nPierce  : 200%|nMagic   : 100%|nSiege   : 200%
+ARMORTIP_NORMAL=Normal : 100%|nPierce  : 200%|nMagic   : 100%|nSiege   : 200%
+
+ARMORTIP_FORT=damage received from:|n|cffFF0000Siege: 160%|r|n|cffFFFF00Chaos: 100%|r|n|cff00FF00Hero: 60%|nNormal: 50%|nPierce: 50%|nMagic: 40%|r
+ARMORTIP_LARGE=damage received from:|n|cffFF0000Magic: 175%|r|n|cffFFFF00Hero: 110%|nNormal: 100%|nChaos: 100%|r|n|cff00FF00Pierce: 70%|nSiege: 70%|r
+ARMORTIP_MEDIUM=damage received from:|n|cffFF0000Normal: 175%|r|n|cffFFFF00Hero: 110%|nPierce: 100%|nChaos: 100%|r|n|cff00FF00Magic: 70%|nSiege: 70%|r
+ARMORTIP_NONE=damage received from:|cffFFFF00Hero: 110%|nNormal: 105%|nPierce: 105%|nMagic: 105%|nChaos: 100%|nSiege: 100%|r
+ARMORTIP_SMALL=damage received from:|n|cffFF0000Pierce: 175%|r|n|cffFFFF00Hero: 110%|nMagic: 100%|nChaos: 100%|r|n|cff00FF00Normal: 70%|nSiege: 70%|r
+
+DAMAGETIP_MAGIC=damage against:|n|cff00FF00Heavy: 175%|r|n|cffFFFF00Unarmored: 105%|nLight: 100%|r|n|cffFF0000Medium: 70%|nFortified: 40%|nDivine: 25%|r
+DAMAGETIP_MELEE=damage against:|n|cff00FF00Medium: 175%|r|n|cffFFFF00Unarmored: 105%|nHeavy: 100%|r|n|cffFF0000Light: 70%|nFortified: 50%|nDivine: 25%|r
+DAMAGETIP_PIERCE=damage against:|n|cff00FF00Light: 175%|r|n|cffFFFF00Unarmored: 105%|nMedium: 100%|r|n|cffFF0000Heavy: 70%|nFortified: 50%|nDivine: 25%|r
+DAMAGETIP_SIEGE=damage against:|n|cff00FF00Fortified: 160%|r|n|cffFFFF00Unarmored: 100%|r|n|cffFF0000Light: 70%|nMedium: 70%|nHeavy: 70%|nDivine: 20%|r
+DAMAGETIP_CHAOS=damage against:|n|cffFFFF00All armor types: 100%|r
+
+COLON_LUMBER=Blood points:
+RESOURCE_UBERTIP_LUMBER=Blood point are harvested from kills.
