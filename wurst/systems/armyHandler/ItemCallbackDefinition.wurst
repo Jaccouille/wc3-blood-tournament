@@ -37,7 +37,6 @@ init
         ..addAction() (LinkedList<int> unitTospawn, int count) ->
         for i = 0 to count
             unitTospawn.push(UNIT_ROYAL_GUARD)
-
     itemAddUnitMap.put(ITEM_CAPTAIN, captainAction)
 
     let crusaderAction = new ItemAddUnit()
@@ -48,6 +47,24 @@ init
     let crusaderUnitAction = new ItemModifyUnit()
         ..addAction() (unit u) ->
         u.setScale(2.0)
-
     itemAddUnitMap.put(ITEM_CRUSADER, crusaderAction)
     itemModifyUnitMap.put(ITEM_CRUSADER, crusaderUnitAction)
+
+    let rangerAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitTospawn, int count) ->
+        for i = 0 to count
+            unitTospawn.push(UNIT_RANGER)
+    itemAddUnitMap.put(ITEM_RANGER, rangerAction)
+
+    let spellBreakerAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitTospawn, int count) ->
+        for i = 0 to count
+            unitTospawn.push(UNIT_SPELL_BREAKER)
+    itemAddUnitMap.put(ITEM_SPELL_BREAKER, spellBreakerAction)
+
+
+    let archmageAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitTospawn, int count) ->
+        for i = 0 to count
+            unitTospawn.push(UNIT_ARCHMAGE)
+    itemAddUnitMap.put(ITEM_ARCHMAGE, archmageAction)

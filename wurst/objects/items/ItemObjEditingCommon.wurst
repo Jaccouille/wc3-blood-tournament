@@ -23,12 +23,6 @@ function createBasicItem(int newId, int oldId) returns ItemDefinition
         ..setStockReplenishInterval(99999)
 
 
-@compiletime function createUnitItem()
-    createBasicItem(ITEM_CRUSADER)
-        ..setStockMaximum(3)
-        ..setMaxStack(3)
-        ..setNumberofCharges(1)
-
 init
     EventListener.add(EVENT_PLAYER_UNIT_SELL_ITEM) ->
         let building = EventData.getTriggerUnit()

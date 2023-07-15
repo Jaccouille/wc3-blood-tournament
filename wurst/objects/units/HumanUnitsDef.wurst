@@ -29,7 +29,6 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setPriority(2)
         ..setBuildingGoldCost(100)
-        ..setUpgradeTo(commaList(BUILDING_ROYAL_GUARD))
         ..setBuildingItemsMade(commaList(ITEM_CAPTAIN))
 
         ..setModelFileExt(Units.footman1)
@@ -54,8 +53,7 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("Z", "Royal Guard")
         ..setSizeSmall()
-        ..setPriority(2)
-        ..setBuildingLumberCost(500)
+        ..setItemCost(0, 50, 1)
 
         ..setModelFileExt(Units.theCaptain1)
         ..setIconGameInterfaceExt(Icons.bTNTheCaptain)
@@ -79,7 +77,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setBuildingGoldCost(150)
-        ..setUpgradeTo(commaList(BUILDING_RANGER))
+        ..setBuildingItemsMade(commaList(ITEM_RANGER))
 
         ..setSizeSmall()
         ..setPriority(3)
@@ -90,7 +88,9 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.archer)
 
     tooltip = new UnitTooltipGenerator("Elven Ranger Desc")
+    let itm = createBasicItem(ITEM_RANGER)
     createSpawnedUnit(UNIT_RANGER, UnitIds.sylvanuswindrunner, BUILDING_RANGER)
+        ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -102,8 +102,8 @@ import UnitTooltipGenerator
 
         ..setSpeedBase(300)
         ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingLumberCost(800)
+        ..tooltipStopListen(true, itm)
+        ..setItemCost(0, 80, 1)
 
         ..setSizeSmall()
         ..setPriority(3)
@@ -132,7 +132,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setBuildingGoldCost(50)
-        ..setUpgradeTo(commaList(BUILDING_SPELL_BREAKER))
+        ..setBuildingItemsMade(commaList(ITEM_SPELL_BREAKER))
 
         ..setSizeSmall()
         ..setPriority(9)
@@ -145,7 +145,9 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.priest)
 
     tooltip = new UnitTooltipGenerator("Spell Breaker Desc")
+    let itm = createBasicItem(ITEM_SPELL_BREAKER)
     createSpawnedUnit(UNIT_SPELL_BREAKER, UnitIds.spellbreaker, BUILDING_SPELL_BREAKER)
+        ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -160,8 +162,8 @@ import UnitTooltipGenerator
         ..setManaMaximum(200)
         ..setSpeedBase(270)
         ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingLumberCost(600)
+        ..tooltipStopListen(true, itm)
+        ..setItemCost(0, 150, 5, 1, 5)
 
         ..setSizeSmall()
         ..setPriority(9)
@@ -188,7 +190,6 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setBuildingGoldCost(200)
-        ..setUpgradeTo(commaList(BUILDING_CRUSADER, BUILDING_PALADIN))
         ..setBuildingItemsMade(commaList(ITEM_CRUSADER))
 
         ..setSizeSmall()
@@ -199,10 +200,11 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.knight)
 
     tooltip = new UnitTooltipGenerator("Crusader Desc")
+    let itm = createBasicItem(ITEM_CRUSADER)
     createSpawnedUnit(UNIT_CRUSADER, UnitIds.lordgarithos, BUILDING_CRUSADER)
+        ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-
 
         ..setAttack1Data(AttackType.Normal, 90, 4, 6, 1.4)
 
@@ -211,8 +213,8 @@ import UnitTooltipGenerator
 
         ..setSpeedBase(350)
         ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingLumberCost(1000)
+        ..tooltipStopListen(true, itm)
+        ..setItemCost(0, 70, 1)
 
         ..setAttack1Range(120)
         ..setSizeSmall()
@@ -254,7 +256,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setModelFile(Units.heroPaladinBoss2)
 
     let buildingDef = createBuildingUnit(BUILDING_PALADIN)
-        ..setNameEnhance("X", "Paladin 3x")
+        ..setNameEnhance("R", "Paladin 3x")
         ..setUnitsTrained(commaList(UNIT_PALADIN_1))
         ..setLumberCost(1500)
         ..setModelFile(Units.heroPaladin)
@@ -283,7 +285,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setBuildingGoldCost(200)
-        ..setUpgradeTo(commaList(BUILDING_SORCERESS_UPGRADE))
+        ..setBuildingItemsMade(commaList(ITEM_CAPTAIN))
 
         ..setSizeSmall()
         ..setPriority(10)
@@ -340,7 +342,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setBuildingGoldCost(300)
-        ..setUpgradeTo(commaList(BUILDING_ARCHMAGE))
+        ..setBuildingItemsMade(commaList(ITEM_ARCHMAGE))
 
         ..setSizeSmall()
         ..setPriority(10)
@@ -352,8 +354,9 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setUnitSoundSetExt(Soundsets.heroArchMage)
 
     tooltip = new UnitTooltipGenerator("Archmage Desc")
-
+    let itm = createBasicItem(ITEM_ARCHMAGE)
     createSpawnedUnit(UNIT_ARCHMAGE, UnitIds.archmage, BUILDING_ARCHMAGE)
+        ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -369,8 +372,8 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setManaMaximum(700)
         ..setSpeedBase(320)
         ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingLumberCost(2000)
+        ..tooltipStopListen(true, itm)
+        ..setItemCost(0, 200, 1)
 
         ..setSizeSmall()
         ..setPriority(10)
@@ -400,7 +403,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..tooltipStopListen(true)
         ..setPriority(2)
         ..setSizeSmall()
-        ..setNameEnhance("Z", "Sword Master")
+        ..setNameEnhance("Z", "SwordMaster")
         ..setBuildingLumberCost(3000)
         ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
 
@@ -470,8 +473,8 @@ function createPaladin(int paladinId) returns BTUnitDefinition
             BUILDING_FOOTMAN,
             BUILDING_ELVEN_ARCHER,
             BUILDING_KNIGHT,
+            BUILDING_PALADIN,
             BUILDING_PRIEST,
-            BUILDING_SORCERESS,
             BUILDING_MAGE,
             BUILDING_SWORD_MASTER,
             BUILDING_RIFLEMAN,

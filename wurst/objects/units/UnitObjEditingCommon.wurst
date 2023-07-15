@@ -59,7 +59,7 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
     new AbilityDefinitionShopSharing(ABIL_SHOP_SHARING)
         ..setShowUnitIndicator(1, false)
         ..setShowSelectUnitButton(1, true)
-        ..setCastRange(1, 1)
+        ..setCastRange(1, 9000)
         ..setActivationRadius(1, 9000)
 
     new AbilityDefinition(ABIL_SHOP_PURCHASE, AbilityIds.shopPurchaseItem)
@@ -83,7 +83,7 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
 
 public function createBuilder(int newId, int origId) returns UnitDefinition
     return new UnitDefinition(newId, origId)
-        ..setNormalAbilities(commaList(AbilityIds.invulnerable, ABIL_SELL_BUILDING))
+        ..setNormalAbilities(commaList(AbilityIds.invulnerable, ABIL_SELL_BUILDING, AbilityIds.inventory))
         ..setAttacksEnabled(AttacksEnabled.None.toObjectInt())
         ..setSpeedBase(522)
         ..setMovementType(MovementType.Fly)
@@ -233,11 +233,11 @@ public class BTUnitDefinition extends UnitDefinition
     function setBuildingGoldCost(int data)
         buildingDef.setGoldCost(data)
 
-    function setBuildingRequirement(string data)
-        buildingDef.setRequirements(data)
-
     function setBuildingLumberCost(int data)
         buildingDef.setLumberCost(data)
+
+    function setBuildingRequirement(string data)
+        buildingDef.setRequirements(data)
 
     function setUpgradeTo(string data)
         buildingDef.setUpgradesTo(data)
@@ -248,6 +248,17 @@ public class BTUnitDefinition extends UnitDefinition
     function setAutoBuildingCost()
         setBuildingGoldCost(buildingData.goldCost)
         setBuildingLumberCost(buildingData.lumberCost)
+
+    function setItemCost(int gold, int lumber, int charges)
+        setItemCost(gold, lumber, charges, charges, charges)
+
+    function setItemCost(int gold, int lumber, int charges, int maxStock, int maxStack)
+        itemDef.setStockMaximum(maxStock)
+        itemDef.setMaxStack(maxStack)
+        itemDef.setGoldCost(gold)
+        itemDef.setLumberCost(lumber)
+        itemDef.setNumberofCharges(charges)
+        setPointValue(getUnitPointValue(gold, lumber, charges))
 
     function setAutoPointValue()
         if this.buildingDef != null

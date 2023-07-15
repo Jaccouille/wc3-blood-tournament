@@ -18,6 +18,12 @@ import GameConfig
 import UnitExtensions
 import ItemCallbackDefinition
 
+public function getUnitPointValue(int goldCost, int lumberCost, int unitCount) returns int
+    var pointValue = 0
+    pointValue += (goldCost / unitCount).toInt()
+    pointValue += (lumberCost / unitCount).toInt()
+    return pointValue
+
 public class BTBuildingData
     LinkedList<int> unitToSpawn
     int buildingPointValue = 0
@@ -29,14 +35,9 @@ public class BTBuildingData
         this.unitToSpawn = unitToSpawn
         this.goldCost = goldCost
         this.lumberCost = lumberCost
-        unitPointValue = getUnitPointValue()
+        unitPointValue = getUnitPointValue(goldCost, lumberCost, unitToSpawn.size())
         buildingPointValue += unitPointValue * unitToSpawn.size()
 
-    function getUnitPointValue() returns int
-        var pointValue = 0
-        pointValue += (goldCost / unitToSpawn.size()).toInt()
-        pointValue += (lumberCost / unitToSpawn.size()).toInt()
-        return pointValue
 
 
 public let armyMap = new HashMap<int, BTBuildingData>
