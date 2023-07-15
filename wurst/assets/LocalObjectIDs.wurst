@@ -187,6 +187,11 @@ public let ABIL_SELL_BUILDING   = compiletime(ABIL_ID_GEN.next())
 public let ABIL_BLOODLUST       = compiletime(ABIL_ID_GEN.next())
 public let ABIL_RANDOM_RACE     = compiletime(ABIL_ID_GEN.next())
 public let ABIL_REPICK          = compiletime(ABIL_ID_GEN.next())
+public let ABIL_SHOP_SHARING    = compiletime(ABIL_ID_GEN.next())
+public let ABIL_SHOP_PURCHASE   = compiletime(ABIL_ID_GEN.next())
+
+public let ITEM_CAPTAIN          = compiletime(ITEM_ID_GEN.next())
+public let ITEM_CRUSADER         = compiletime(ITEM_ID_GEN.next())
 
 public let UPGD_RACE_PICK       = compiletime(UPGD_ID_GEN.next())
 public let UPGD_ALL_RANDOM      = compiletime(UPGD_ID_GEN.next())

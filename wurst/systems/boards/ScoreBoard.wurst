@@ -201,7 +201,7 @@ public function initScoreBoard()
             // Is a building
             if armyMap.has(dyingUnit.getTypeId())
                 scoreBoardEntries.get("ArmyPoints")
-                    .addValue(pData._p, -armyMap.get(dyingUnit.getTypeId()).pointValue)
+                    .addValue(pData._p, -armyMap.get(dyingUnit.getTypeId()).buildingPointValue)
             else
                 scoreBoardEntries.get("BloodPoints")
                     .addValue(pData._p, dyingUnit.getPointValue())
@@ -212,4 +212,4 @@ public function initScoreBoard()
 
         if armyMap.has(u.getTypeId())
             scoreBoardEntries.get("ArmyPoints")
-                .addValue(pData._p, armyMap.get(u.getTypeId()).pointValue)
+                .addValue(pData._p, armyMap.get(u.getTypeId()).buildingPointValue)

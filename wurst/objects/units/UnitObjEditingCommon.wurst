@@ -5,16 +5,15 @@ import AbilityObjEditing
 import Assets
 import ErrorHandling
 import ObjectIds
+import ItemObjEditing
 
 // Third party imports:
-import Lodash
 
 // Local imports:
 import ArmySpawner
 import GridHotkeyPosition
 import LocalObjectIDs
 import TooltipsUtils
-import UnitPointValueMap
 import UnitTooltipGenerator
 
 function BTUnitDefinition.setCommonAttr()
@@ -46,7 +45,7 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
         ..setRace(Race.Undead)
         ..setGoldCost(0)
         ..setLumberCost(0)
-        ..setNormalAbilities(commaList(AbilityIds.invulnerable))
+        ..setNormalAbilities(commaList(AbilityIds.invulnerable, AbilityIds.inventory, ABIL_SHOP_PURCHASE, ABIL_SHOP_SHARING))
         ..setBuildTime(1)
         ..setFoodProduced(0)
         ..setPathingMap("PathTextures\\2x2Default.tga")
@@ -56,6 +55,15 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
         ..setSelectionScale(1.0)
         ..setShadowTextureBuilding("ShadowCrates")
 
+@compiletime function createShopSharingAbility()
+    new AbilityDefinitionShopSharing(ABIL_SHOP_SHARING)
+        ..setShowUnitIndicator(1, false)
+        ..setShowSelectUnitButton(1, true)
+        ..setCastRange(1, 1)
+        ..setActivationRadius(1, 9000)
+
+    new AbilityDefinition(ABIL_SHOP_PURCHASE, AbilityIds.shopPurchaseItem)
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.self))
 
 @compiletime function createSellBuilderAbility()
     new AbilityDefinitionAlchemistTransmute(ABIL_SELL_BUILDING)
@@ -97,11 +105,19 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
 	property names to have spaces. */
 @configurable constant USE_PROPERTY_SPACING = true
 
+public enum ItemModifierType
+    Replace
+    Addition
+    Other
+
 public class BTUnitDefinition extends UnitDefinition
     BuildingDefinition buildingDef
+    ItemDefinition itemDef
+    BTBuildingData buildingData
     int spawnCount
     UnitTooltipGenerator tooltipGen = null
     boolean listen = false
+    ItemModifierType modifierType
 
     construct(int newId, int origId)
         super(newId, origId)
@@ -110,7 +126,12 @@ public class BTUnitDefinition extends UnitDefinition
         super(newId, origId)
         buildingDef = createBuildingUnit(buildingId)
             ..setUnitsTrained(commaList(newId))
-        spawnCount = armyMap.get(buildingId).unitToSpawn.countBy(Predicate.owned<int>(id -> id == newId))
+        buildingData = armyMap.get(buildingId)
+        spawnCount = buildingData.unitToSpawn.size()
+
+    function registerItemDef(ItemDefinition itemDef, ItemModifierType modifierType)
+        this.itemDef = itemDef
+        this.modifierType = modifierType
 
     function registerTooltipGenerator(UnitTooltipGenerator tgen)
         tooltipGen = tgen
@@ -152,8 +173,14 @@ public class BTUnitDefinition extends UnitDefinition
             tooltipGen.applyToDef(def)
             tooltipGen.applyToDef(this)
 
-    function setUnitsTrained(string data)
-        this.buildingDef.setUnitsTrained(data)
+    /**
+        Used for copying current this UnitDefinition tooltip to another one
+    **/
+    function tooltipStopListen(boolean build, ItemDefinition def)
+        listen = false
+        if tooltipGen != null and build
+            tooltipGen.applyToDef(def)
+            tooltipGen.applyToDef(this)
 
     function setAttack1Data(AttackType attackType, int damage, int nbDice, int sidePerDice, real attackCooldown)
         let attackTypeStr = attackType.toObjectString()
@@ -215,10 +242,16 @@ public class BTUnitDefinition extends UnitDefinition
     function setUpgradeTo(string data)
         buildingDef.setUpgradesTo(data)
 
+    function setBuildingItemsMade(string data)
+        buildingDef.setItemsMade(data)
+
+    function setAutoBuildingCost()
+        setBuildingGoldCost(buildingData.goldCost)
+        setBuildingLumberCost(buildingData.lumberCost)
+
     function setAutoPointValue()
-        if not unitToPoint.has(newId)
-            error("Missing point value for " + newId.toRawCode())
-        setPointValue(unitToPoint.get(newId))
+        if this.buildingDef != null
+            setPointValue(buildingData.unitPointValue)
 
     override function setPointValue(int data)
         def.setInt("upoi", data)
@@ -230,6 +263,10 @@ public class BTUnitDefinition extends UnitDefinition
         this.setTooltipBasic(makeToolTipNorm(hotkey, name))
         if this.buildingDef != null
             buildingDef.setNameEnhance(hotkey, name + " x" + spawnCount.toString())
+        if this.itemDef != null
+            var itemName = modifierType == modifierType.Addition ? "Add 1 " : "Upgrade 1 unit to "
+            itemName += name
+            itemDef.setNameEnhance(hotkey, itemName)
 
     function setBuildingName(string hotkey, string name)
         this.buildingDef.setNameEnhance(hotkey, name)
@@ -244,7 +281,10 @@ public class BTUnitDefinition extends UnitDefinition
 
     function setIconGameInterfaceExt(string data)
         this.setIconGameInterface(data)
-        this.buildingDef.setIconGameInterface(data)
+        if this.buildingDef != null
+            this.buildingDef.setIconGameInterface(data)
+        if this.itemDef != null
+            this.itemDef.setInterfaceIcon(data)
 
     function setUnitSoundSetExt(string data)
         this.setUnitSoundSet(data)
@@ -256,6 +296,11 @@ public class BTUnitDefinition extends UnitDefinition
 
 
 public function UnitOrBuildingOrHeroDefinition.setNameEnhance(string hotkey, string name)
+    this.setHotkeyEnhance(hotkey)
+    this.setName(name)
+    this.setTooltipBasic(makeToolTipNorm(hotkey, name))
+
+public function ItemDefinition.setNameEnhance(string hotkey, string name)
     this.setHotkeyEnhance(hotkey)
     this.setName(name)
     this.setTooltipBasic(makeToolTipNorm(hotkey, name))
@@ -272,7 +317,15 @@ public function UnitDefinition.setName(string name)
 public function UnitDefinition.setSizeSmall()
     this.setCollisionSize(15)
 
-function UnitOrBuildingOrHeroDefinition.setHotkeyEnhance(string hotkey)
+function W3UDefinition.setHotkeyEnhance(string hotkey)
+    if not hotKeyMapping.has(hotkey)
+        error("Hotkey button position mapping has no \"{0}\" element".format(hotkey))
+        return
+    this.setHotkey(hotkey)
+    this.setButtonPositionX(hotKeyMapping.get(hotkey).x)
+    this.setButtonPositionY(hotKeyMapping.get(hotkey).y)
+
+function W3TDefinition.setHotkeyEnhance(string hotkey)
     if not hotKeyMapping.has(hotkey)
         error("Hotkey button position mapping has no \"{0}\" element".format(hotkey))
         return

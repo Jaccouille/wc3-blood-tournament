@@ -1,0 +1,37 @@
+package ItemObjEditingCommon
+
+import ItemObjEditing
+import ItemIds
+import LocalObjectIDs
+import ClosureEvents
+
+
+public function createBasicItem(int newId) returns ItemDefinition
+    return createBasicItem(newId, ItemIds.bootsofSpeed)
+
+function createBasicItem(int newId, int oldId) returns ItemDefinition
+    return new ItemDefinition(newId, oldId)
+        ..setGoldCost(0)
+        ..setLumberCost(0)
+        ..setDroppedWhenCarrierDies(false)
+        ..setHotkey("")
+        ..setLevel(0)
+        ..setHitPoints(75)
+        ..setClassification("Charged")
+        ..setMaxStack(0)
+        ..setAbilities("")
+        ..setStockReplenishInterval(99999)
+
+
+@compiletime function createUnitItem()
+    createBasicItem(ITEM_CRUSADER)
+        ..setStockMaximum(3)
+        ..setMaxStack(3)
+        ..setNumberofCharges(1)
+
+init
+    EventListener.add(EVENT_PLAYER_UNIT_SELL_ITEM) ->
+        let building = EventData.getTriggerUnit()
+        let itemSold = EventData.getSoldItem()
+        building.addItemById(itemSold.getTypeId())
+        itemSold.remove()

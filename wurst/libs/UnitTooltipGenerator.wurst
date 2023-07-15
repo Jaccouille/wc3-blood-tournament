@@ -3,6 +3,7 @@ package UnitTooltipGenerator
 // Standard libs imports:
 import HashMap
 import UnitObjEditing
+import ItemObjEditing
 
 public constant GOLD_COLOR = color(255, 215,   0)
 
@@ -30,6 +31,7 @@ class Attribute
 public interface TooltipGenerator
     function addProperty(string title, string value, int lvls)
     function applyToDef(UnitOrBuildingOrHeroDefinition def)
+    function applyToDef(ItemDefinition def)
 
 public class UnitTooltipGenerator implements TooltipGenerator
     private constant propMap = new IterableMap<string, Attribute>
@@ -48,6 +50,10 @@ public class UnitTooltipGenerator implements TooltipGenerator
         propMap.put(title, new Attribute(value, "", lvls))
 
     override function applyToDef(UnitOrBuildingOrHeroDefinition def)
+        name = propMap.has("Name") ? propMap.getAndRemove("Name").value : "unnamed"
+        def.setTooltipExtended(generateTooltipExtended())
+
+    override function applyToDef(ItemDefinition def)
         name = propMap.has("Name") ? propMap.getAndRemove("Name").value : "unnamed"
         def.setTooltipExtended(generateTooltipExtended())
 

@@ -5,6 +5,7 @@ import Assets
 import ChannelAbilityPreset
 
 // Local imports:
+import ItemObjEditingCommon
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
@@ -29,13 +30,16 @@ import UnitTooltipGenerator
         ..setPriority(2)
         ..setBuildingGoldCost(100)
         ..setUpgradeTo(commaList(BUILDING_ROYAL_GUARD))
+        ..setBuildingItemsMade(commaList(ITEM_CAPTAIN))
 
         ..setModelFileExt(Units.footman1)
         ..setIconGameInterfaceExt(Icons.bTNFootman)
         ..setUnitSoundSetExt(Soundsets.footman)
 
     tooltip = new UnitTooltipGenerator("Royal Guard Desc")
+    let itm = createBasicItem(ITEM_CAPTAIN)
     createSpawnedUnit(UNIT_ROYAL_GUARD, UnitIds.thecaptain, BUILDING_ROYAL_GUARD)
+        ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -46,7 +50,7 @@ import UnitTooltipGenerator
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
-        ..tooltipStopListen(true)
+        ..tooltipStopListen(true, itm)
 
         ..setNameEnhance("Z", "Royal Guard")
         ..setSizeSmall()
@@ -185,6 +189,7 @@ import UnitTooltipGenerator
         ..tooltipStopListen(true)
         ..setBuildingGoldCost(200)
         ..setUpgradeTo(commaList(BUILDING_CRUSADER, BUILDING_PALADIN))
+        ..setBuildingItemsMade(commaList(ITEM_CRUSADER))
 
         ..setSizeSmall()
         ..setNameEnhance("E", "Knight")
@@ -231,7 +236,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
             ..setHitPointsMaximumBase(500)
 
             ..setSpeedBase(300)
-            ..setAutoPointValue()
+            ..setPointValue(400)
             ..tooltipStopListen(true)
             ..setAttack1Range(120)
             ..setSizeSmall()
