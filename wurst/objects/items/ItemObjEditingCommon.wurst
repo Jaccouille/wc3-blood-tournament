@@ -1,10 +1,21 @@
 package ItemObjEditingCommon
 
+import ErrorHandling
+
 import ItemObjEditing
 import ItemIds
-import LocalObjectIDs
 import ClosureEvents
 
+// Local imports:
+import GridHotkeyPosition
+
+public function ItemDefinition.setHotkeyEnhance(string hotkey)
+    if not hotKeyMapping.has(hotkey)
+        error("Hotkey button position mapping has no \"{0}\" element".format(hotkey))
+        return
+    this.setHotkey(hotkey)
+    this.setButtonPositionX(hotKeyMapping.get(hotkey).x)
+    this.setButtonPositionY(hotKeyMapping.get(hotkey).y)
 
 public function createBasicItem(int newId) returns ItemDefinition
     return createBasicItem(newId, ItemIds.bootsofSpeed)
@@ -22,6 +33,12 @@ function createBasicItem(int newId, int oldId) returns ItemDefinition
         ..setAbilities("")
         ..setStockReplenishInterval(99999)
 
+public function ItemDefinition.setItemCost(int gold, int lumber, int charges, int maxStack, int maxStock)
+    this.setGoldCost(gold)
+    this.setLumberCost(lumber)
+    this.setNumberofCharges(charges)
+    this.setMaxStack(maxStack)
+    this.setStockMaximum(maxStock)
 
 init
     EventListener.add(EVENT_PLAYER_UNIT_SELL_ITEM) ->

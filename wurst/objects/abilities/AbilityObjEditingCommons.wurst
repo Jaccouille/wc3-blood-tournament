@@ -3,9 +3,16 @@ package AbilityObjEditingCommons
 // Standard libs imports:
 import AbilityObjEditing
 import ErrorHandling
+import TooltipsUtils
 
 // Local imports:
 import GridHotkeyPosition
+
+
+public function AbilityDefinition.setNameEnhance(string hotkey, string name)
+    this.setHotkeyEnhance(hotkey)
+    this.setName(name)
+    this.setTooltipNormal(1, makeToolTipNorm(hotkey, name))
 
 public function AbilityDefinition.setHotkeyEnhance(string hotkey)
     if not hotKeyMapping.has(hotkey)
@@ -13,3 +20,19 @@ public function AbilityDefinition.setHotkeyEnhance(string hotkey)
         return
     this.setHotkeyNormal(hotkey)
     this.presetButtonPosNormal(hotKeyMapping.get(hotkey).x, hotKeyMapping.get(hotkey).y)
+
+public function createAutoCasteEnenmyAbility(int abilId) returns AbilityDefinition
+    return new AbilityDefinitionCursecreep(abilId)
+
+public function createAutoCasteAlliedAbility(int abilId) returns AbilityDefinition
+    return new AbilityDefinitionHealCreepNormal(abilId)
+
+public class BTAutoCasteAbility extends AbilityDefinition
+    AbilityDefinition dummyAutoCastAbil
+
+    construct(int newId, int origId, int dummyAutoCastAbilId, boolean targetsAllied)
+        super(newId, origId)
+        if targetsAllied
+            this.dummyAutoCastAbil = createAutoCasteAlliedAbility(dummyAutoCastAbilId)
+        else
+            this.dummyAutoCastAbil = createAutoCasteEnenmyAbility(dummyAutoCastAbilId)

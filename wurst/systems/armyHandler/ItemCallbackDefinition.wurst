@@ -68,3 +68,11 @@ init
         for i = 0 to count
             unitTospawn.push(UNIT_ARCHMAGE)
     itemAddUnitMap.put(ITEM_ARCHMAGE, archmageAction)
+
+
+    let innerFireAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_INNER_FIRE)
+        u.issueImmediateOrder("innerfireon")
+
+    itemModifyUnitMap.put(ITEM_INNER_FIRE, innerFireAction)

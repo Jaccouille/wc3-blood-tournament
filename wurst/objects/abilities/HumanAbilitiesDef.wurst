@@ -1,0 +1,29 @@
+package HumanAbilitiesDef
+
+import AbilityObjEditingCommons
+import LocalObjectIDs
+import ItemObjEditingCommon
+import AbilityTooltipGenerator
+import UnitObjEditingCommon
+
+
+@compiletime function createAbilitiesDefinition()
+    let itm = createBasicItem(ITEM_INNER_FIRE)
+        ..setItemCost(0, 50, 1, 4, 4)
+        ..setNameEnhance("X", "Add 1 Inner Fire")
+        ..setInterfaceIcon(Icons.bTNInnerFire)
+
+    let tgen = new AbilityTooltipGenerator("Inner fiiiire")
+    new AbilityDefinitionInnerFireCreep(ABIL_INNER_FIRE)
+        ..registerTooltipGenerator(tgen)
+        ..setLevels(1)
+        ..tooltipStartListen()
+        ..setNameEnhance("X", "Inner Fire")
+        ..setName("Inner fire")
+        ..presetDefenseIncrease(_ -> 5)
+        ..presetDamageIncrease(_ -> 0.25)
+        ..presetCooldown(_ -> 2)
+        ..presetManaCost(_ -> 50)
+        ..presetCastRange(_ -> 600)
+        ..tooltipStopListen(true)
+    tgen.applyToDefItem(itm)

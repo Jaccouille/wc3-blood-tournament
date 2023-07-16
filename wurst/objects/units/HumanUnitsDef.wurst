@@ -132,7 +132,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setBuildingGoldCost(50)
-        ..setBuildingItemsMade(commaList(ITEM_SPELL_BREAKER))
+        ..setBuildingItemsMade(commaList(ITEM_SPELL_BREAKER, ITEM_INNER_FIRE))
 
         ..setSizeSmall()
         ..setPriority(9)

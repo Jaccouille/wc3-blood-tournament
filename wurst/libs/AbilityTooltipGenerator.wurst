@@ -1,0 +1,136 @@
+package AbilityTooltipGenerator
+
+import public ChannelAbilityPreset
+import ItemObjEditing
+import HashMap
+
+@configurable constant TITLE_COLOR = "|cff3B97D3"
+@configurable constant TITLE_TTYPE = "Target Type:"
+@configurable constant MAX_TITLES = 10
+
+@configurable function buildLearnTooltip(string name) returns string
+    return "|cffFFCC00Learn|r " + name + " - [|cffffcc00Level %d|r]"
+
+@configurable function buildActiveTooltip(string name) returns string
+    return name
+
+@configurable function buildPassiveTooltip(string name) returns string
+    return name
+
+@configurable function buildDescription(string description) returns string
+    return "|cff919191" + description + "|r"
+
+
+/***
+    Copied from https://github.com/Frotty/Ability-Tooltip-Generator/blob/master/wurst/AbilityTooltipGenerator.wurst
+    Credits to Frotty
+***/
+public class AbilityTooltipGenerator implements TooltipGenerator
+    private constant propMap = new IterableMap<string, StringLevelClosure>
+    private var description = ""
+
+    private var levels = 1
+    private var hotkey = ""
+    private var name = ""
+    private var targettype = Targettype.NONE
+
+    construct(Targettype ttype, string description)
+        this.description = description
+        this.targettype = ttype
+
+    construct(string description)
+        this.description = description
+
+    construct()
+
+    override function addProperty(string title, StringLevelClosure lc)
+        propMap.put(title, lc)
+
+    override function applyToDef(AbilityDefinition def)
+        name = propMap.has("Name") ? propMap.get("Name").run(0) : "unnamed"
+        hotkey = propMap.has("Hotkey") ? propMap.get("Hotkey").run(0) : "Q"
+        targettype = propMap.has("Target Type") ? propMap.get("Target Type").run(0).toInt() castTo Targettype : targettype
+        def..setTooltipLearn(generateTooltipLearn())
+        ..setTooltipLearnExtended(generateTooltipExtended(true))
+        def..setTooltipNormal(1, generateTooltipNormal())
+        ..setTooltipNormalExtended(1, generateTooltipExtended(false))
+
+    function applyToDefItem(ItemDefinition defItem)
+        defItem.setTooltipExtended(generateTooltipExtended(false))
+
+    private function generateTooltipLearn() returns string
+        return buildLearnTooltip(name)
+
+    private function generateTooltipNormal() returns string
+        if targettype == Targettype.PASSIVE
+            return buildPassiveTooltip(name)
+        else
+            return buildActiveTooltip(name)
+
+    private function generateTooltipExtended(boolean learn) returns string
+        var s = ""
+        if targettype == Targettype.PASSIVE
+            s += TITLE_COLOR + "Passive|r\n"
+        else
+            if learn
+                s += TITLE_COLOR + TITLE_TTYPE + "|r " + targettype.toString() + "\n"
+            else
+                s += TITLE_COLOR + TITLE_TTYPE + " |cffFFCC00" + targettype.toString() + "|r\n"
+
+        for key in propMap
+            var tmp = ""
+            var isConstantValue = true
+            let val = fixValue(propMap.get(key).run(1))
+            for i = 2 to levels
+                let tval = fixValue(propMap.get(key).run(i))
+                if val != tval
+                    isConstantValue = false
+                    break
+
+            if isConstantValue
+                tmp += "|cffFFCC00" + val + "|r "
+            else
+                for i = 1 to levels
+                    tmp += fixValue(propMap.get(key).run(i)) + (i < levels ? "/" : "")
+
+            s += TITLE_COLOR + key + ":|r " + colorLevelValue(tmp, 1, levels) + "\n"
+        s += "\n"
+        s += buildDescription(description)
+        return s
+
+    private static function fixValue(string value) returns string
+        if value == ""
+            return ""
+        var s = value
+        let len = s.length()
+        let lastChar = s.substring(len-1, len)
+        if lastChar == "."
+            s = s.substring(0, len-1)
+        else if len > 1 and s.substring(len-2, len) == ".0"
+            s = s.substring(0, len-2)
+        return s
+
+    private static function colorLevelValue(string oldString, int lvl, int maxLevel) returns string
+        var _newString = ""
+        var charCount = 0
+        var charPosCount = 0
+        int array charPos
+        let oldLen = oldString.length()
+        for char in oldString
+            if char == "/"
+                charPos[charPosCount] = charCount
+                charPosCount++
+            charCount++
+        if lvl == -1
+            _newString = oldString
+        else if charPosCount <= 0
+            _newString = "|cffFFCC00" + oldString
+        else if maxLevel <= 1
+            _newString = "|cffFFCC00" + oldString
+        else if lvl == 1
+            _newString = "|cffFFCC00" + oldString.substring(0, charPos[0]) + "|r" + oldString.substring(charPos[0], oldLen)
+        else if lvl == maxLevel
+            _newString = oldString.substring(0, charPos[lvl-2] + 1) + "|cffFFCC00" + oldString.substring(charPos[lvl-2] + 1, oldLen) + "|r"
+        else
+            _newString = oldString.substring(0, charPos[lvl-2] + 1) + "|cffFFCC00" + oldString.substring(charPos[lvl-2] + 1, charPos[lvl-1]) + "|r" + oldString.substring(charPos[lvl-1], oldLen)
+        return _newString

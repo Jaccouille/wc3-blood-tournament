@@ -44,6 +44,7 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
     return new BuildingDefinition(newId, UnitIds.farm)
         ..setRace(Race.Undead)
         ..setGoldCost(0)
+        ..setPointValue(0)
         ..setLumberCost(0)
         ..setNormalAbilities(commaList(AbilityIds.invulnerable, AbilityIds.inventory, ABIL_SHOP_PURCHASE, ABIL_SHOP_SHARING))
         ..setBuildTime(1)

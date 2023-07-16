@@ -190,11 +190,15 @@ public let ABIL_REPICK          = compiletime(ABIL_ID_GEN.next())
 public let ABIL_SHOP_SHARING    = compiletime(ABIL_ID_GEN.next())
 public let ABIL_SHOP_PURCHASE   = compiletime(ABIL_ID_GEN.next())
 
+public let ABIL_INNER_FIRE   = compiletime(ABIL_ID_GEN.next())
+
 public let ITEM_CAPTAIN           = compiletime(ITEM_ID_GEN.next())
 public let ITEM_CRUSADER          = compiletime(ITEM_ID_GEN.next())
 public let ITEM_RANGER            = compiletime(ITEM_ID_GEN.next())
 public let ITEM_SPELL_BREAKER     = compiletime(ITEM_ID_GEN.next())
 public let ITEM_ARCHMAGE          = compiletime(ITEM_ID_GEN.next())
+
+public let ITEM_INNER_FIRE          = compiletime(ITEM_ID_GEN.next())
 
 
 public let UPGD_RACE_PICK       = compiletime(UPGD_ID_GEN.next())

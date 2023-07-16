@@ -15,8 +15,8 @@ init
 
     registerToolkitCommand("show-indexes") (player triggerPlayer, LinkedList<string> arguments) ->
         pDatas.forEach() (player key, PlayerData value) ->
-            let idx = playerToArmySpawner.get(key).idx
-            let nestedIdx = playerToArmySpawner.get(key).nestedIdx
+            let idx = playerToArmySpawner.get(key).buildingIdx
+            let nestedIdx = playerToArmySpawner.get(key).squadIdx
             let spawnFinished = playerToArmySpawner.get(key).spawnFinished
             Log.info("si : " + idx.toString() +
                      " sni : " + nestedIdx.toString() +
