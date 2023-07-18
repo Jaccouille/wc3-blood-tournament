@@ -237,6 +237,9 @@ public class BTUnitDefinition extends UnitDefinition
     function setBuildingLumberCost(int data)
         buildingDef.setLumberCost(data)
 
+    function setBuildingUnitsTrained(string data)
+        buildingDef.setUnitsTrained(data)
+
     function setBuildingRequirement(string data)
         buildingDef.setRequirements(data)
 
@@ -245,6 +248,9 @@ public class BTUnitDefinition extends UnitDefinition
 
     function setBuildingItemsMade(string data)
         buildingDef.setItemsMade(data)
+
+    function setBuildingItemsSold(string data)
+        buildingDef.setItemsSold(data)
 
     function setAutoBuildingCost()
         setBuildingGoldCost(buildingData.goldCost)

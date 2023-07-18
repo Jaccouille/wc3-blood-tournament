@@ -33,6 +33,8 @@ function isProper() returns boolean
         return false
     if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "frostarmor"
         return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "frostarmoron"
+        return false
     if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "undefend"
         return false
     return true

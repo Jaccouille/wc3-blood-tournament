@@ -327,8 +327,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     createSpawnedUnit(UNIT_MAGE, UnitIds.renegadewizard, BUILDING_MAGE)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setNormalAbilities(commaList(AbilityIds.firebolt))
-
+        ..setNormalAbilities("")
 
         ..setAttack1Data(AttackType.Magic, 90, 3, 7, 1.9)
         ..setAttack1Range(650)
@@ -342,7 +341,8 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setBuildingGoldCost(300)
-        ..setBuildingItemsMade(commaList(ITEM_ARCHMAGE))
+        ..setBuildingUnitsTrained(commaList(UNIT_MAGE, UNIT_GHOST))
+        ..setBuildingItemsMade(commaList(ITEM_DARK_MAGE, ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
 
         ..setSizeSmall()
         ..setPriority(10)
@@ -352,6 +352,25 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setModelFileExt(Units.banditMage1)
         ..setIconGameInterfaceExt(Icons.bTNBanditMage)
         ..setUnitSoundSetExt(Soundsets.heroArchMage)
+
+    tooltip = new UnitTooltipGenerator("Ghost Desc")
+    createSpawnedUnit(UNIT_GHOST, UnitIds.lesservoidwalker)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setNormalAbilities("")
+
+        ..setAttack1Data(AttackType.Magic, 12, 3, 3, 1.6)
+        ..setAttack1Range(300)
+
+        ..setArmorData(ArmorType.Divine, 2)
+        ..setHitPointsMaximumBase(40)
+
+        ..setManaMaximum(0)
+        ..setSpeedBase(270)
+        ..setPointValue(5)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("W", "Ghost")
+
 
     tooltip = new UnitTooltipGenerator("Archmage Desc")
     let itm = createBasicItem(ITEM_ARCHMAGE)
@@ -378,7 +397,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setSizeSmall()
         ..setPriority(10)
 
-        ..setNameEnhance("Z", "Archmage")
+        ..setNameEnhance("F", "Archmage")
 
         ..setModelFileExt(Units.heroArchMage)
         ..setIconGameInterfaceExt(Icons.bTNHeroArchMage)
@@ -476,6 +495,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
             BUILDING_PALADIN,
             BUILDING_PRIEST,
             BUILDING_MAGE,
+            BUILDING_ARCHMAGE,
             BUILDING_SWORD_MASTER,
             BUILDING_RIFLEMAN,
             BUILDING_ELVEN_MAGE

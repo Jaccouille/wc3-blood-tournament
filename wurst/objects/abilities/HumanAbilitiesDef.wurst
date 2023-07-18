@@ -5,15 +5,19 @@ import LocalObjectIDs
 import ItemObjEditingCommon
 import AbilityTooltipGenerator
 import UnitObjEditingCommon
+import Assets
+import ColorUtils
+import HashMap
+import LinkedList
 
 
 @compiletime function createAbilitiesDefinition()
-    let itm = createBasicItem(ITEM_INNER_FIRE)
+    var itm = createBasicItem(ITEM_INNER_FIRE)
         ..setItemCost(0, 50, 1, 4, 4)
         ..setNameEnhance("X", "Add 1 Inner Fire")
         ..setInterfaceIcon(Icons.bTNInnerFire)
 
-    let tgen = new AbilityTooltipGenerator("Inner fiiiire")
+    var tgen = new AbilityTooltipGenerator("Increase armor and damage")
     new AbilityDefinitionInnerFireCreep(ABIL_INNER_FIRE)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
@@ -27,3 +31,100 @@ import UnitObjEditingCommon
         ..presetCastRange(_ -> 600)
         ..tooltipStopListen(true)
     tgen.applyToDefItem(itm)
+
+
+    itm = createBasicItem(ITEM_DARK_MAGE)
+        ..setItemCost(0, 50, 1, 3, 3)
+        ..setNameEnhance("Z", "Upgrade into 1 Dark Mage")
+        ..setInterfaceIcon(Icons.bTNOrbOfDarkness)
+
+    var darkMageTooltip = "Orb of Darkness\n".color(SPECIAL_COLOR)
+    tgen = new AbilityTooltipGenerator("Increase damage. Units killed by the mage will turn into Ghost.")
+    let abilId = ABIL_ID_GEN.next()
+    new AbilityDefinitionOrbofDarkness(ABIL_ORB_DARKNESS)
+        ..setEffectAbility(1, abilId.toRawCode())
+        ..setDamageBonus(1, 30)
+
+    new AbilityDefinitionOrbofDarknessBlackArrow(abilId)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDamageBonus(_ -> 30)
+        ..presetNumberofSummonedUnits(_ -> 1)
+        ..presetSummonedUnitType(_ -> "Ghost")
+        ..presetTargetsAllowed(_ -> commaList(
+                TargetsAllowed.enemies
+                )
+            )
+        ..tooltipStopListen(true)
+        ..presetSummonedUnitType(_ -> commaList(UNIT_GHOST))
+    darkMageTooltip += tgen.generateTooltipExtended(false)
+    itm.setTooltipExtended(darkMageTooltip)
+
+    itm = createBasicItem(ITEM_FIRE_MAGE)
+        ..setItemCost(0, 50, 1, 3, 3)
+        ..setNameEnhance("X", "Upgrade into 1 Fire Mage")
+        ..setInterfaceIcon(Icons.bTNOrbOfFire)
+
+    var fireMageItemTooltip = "Incinerate\n".color(SPECIAL_COLOR)
+    tgen = new AbilityTooltipGenerator()
+    new AbilityDefinitionFirelordIncinerate(ABIL_INCINERATE)
+        ..setLevels(1)
+        ..presetBonusDamageMultiplier(_ -> 0)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDeathDamageFullAmount(_ -> 50)
+        ..presetDeathDamageHalfAmount(_ -> 25)
+        ..tooltipStopListen(true)
+        ..setArtTarget(Abilities.aIfbTarget)
+        ..setTargetAttachmentPoint1("weapon")
+    fireMageItemTooltip += tgen.generateTooltipExtended(false)
+    fireMageItemTooltip += "Increase damage. Units killed by the mage will explode."
+    itm.setTooltipExtended(fireMageItemTooltip)
+
+
+    itm = createBasicItem(ITEM_ICE_MAGE)
+        ..setItemCost(0, 50, 1, 3, 3)
+        ..setNameEnhance("C", "Upgrade into 1 Ice Mage")
+        ..setInterfaceIcon(Icons.bTNOrbOfFrost)
+
+    var iceMageItemTooltip = "Frost Orb\n".color(SPECIAL_COLOR)
+    tgen = new AbilityTooltipGenerator()
+    new AbilityDefinitionFrostDamageBonus(ABIL_ORB_FROST)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDamageBonus(_ -> 20)
+        ..tooltipStopListen(true)
+    iceMageItemTooltip += tgen.generateTooltipExtended(false)
+    iceMageItemTooltip += "Increase damage. Slow the movement speed and attack rate of the enemy for <AIob,Dur1> seconds."
+
+    new AbilityDefinitionLichFrostArmorAutocast(ABIL_FROST_ARMOR)
+        ..setLevels(1)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetArmorBonus(_ -> 4)
+        ..presetCooldown(_ -> 4)
+        ..presetManaCost(_ -> 50)
+        ..presetDurationNormal(_ -> 30)
+        ..tooltipStopListen(true)
+    iceMageItemTooltip += "\n\nFrost Armor\n".color(SPECIAL_COLOR)
+    iceMageItemTooltip += tgen.generateTooltipExtended(false)
+    iceMageItemTooltip += "Creates a shield of frost around a target friendly unit." +
+        " The shield adds armor and slows melee units that attack it"
+    itm.setTooltipExtended(iceMageItemTooltip)
+
+let unitToItemMap = new HashMap<int, LinkedList<int>>()
+    ..put(BUILDING_MAGE, asList(ITEM_DARK_MAGE, ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
+
+init
+    PauseTimer(bj_stockUpdateTimer)
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SELL_ITEM)
+    ..addCondition(Condition(() -> unitToItemMap.has(GetSellingUnit().getTypeId())))
+    ..addAction() ->
+        print(GetSellingUnit().getName())
+        GetSellingUnit().addItemToStock(ITEM_INNER_FIRE, 2, 2)
+        unitToItemMap.get(GetSellingUnit().getTypeId())

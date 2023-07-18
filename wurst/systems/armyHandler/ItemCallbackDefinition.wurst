@@ -76,3 +76,26 @@ init
         u.issueImmediateOrder("innerfireon")
 
     itemModifyUnitMap.put(ITEM_INNER_FIRE, innerFireAction)
+
+
+    let darkMageAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_ORB_DARKNESS)
+
+    itemModifyUnitMap.put(ITEM_DARK_MAGE, darkMageAction)
+
+
+    let fireMageAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_INCINERATE)
+
+    itemModifyUnitMap.put(ITEM_FIRE_MAGE, fireMageAction)
+
+
+    let iceMageAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_ORB_FROST)
+        u.addAbility(ABIL_FROST_ARMOR)
+        u.issueImmediateOrder("frostarmoron")
+
+    itemModifyUnitMap.put(ITEM_ICE_MAGE, iceMageAction)

@@ -1,0 +1,12 @@
+package UnitCreationTrigger
+
+import PlayerData
+import GameConstants
+
+init
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SUMMON)
+    ..addCondition(Condition(() -> GetSummonedUnit().getPointValue() > 0))
+    ..addAction() ->
+        pDatas.get(GetSummonedUnit().getOwner()).spawnedUnits.push(GetSummonedUnit())
+        GetSummonedUnit().issuePointOrder("attack", CENTER)

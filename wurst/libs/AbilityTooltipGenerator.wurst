@@ -3,9 +3,9 @@ package AbilityTooltipGenerator
 import public ChannelAbilityPreset
 import ItemObjEditing
 import HashMap
+import ColorUtils
 
-@configurable constant TITLE_COLOR = "|cff3B97D3"
-@configurable constant TITLE_TTYPE = "Target Type:"
+@configurable constant TITLE_COLOR = GOLD_COLOR.toColorString()
 @configurable constant MAX_TITLES = 10
 
 @configurable function buildLearnTooltip(string name) returns string
@@ -18,11 +18,11 @@ import HashMap
     return name
 
 @configurable function buildDescription(string description) returns string
-    return "|cff919191" + description + "|r"
+    return description + "|r"
 
 
 /***
-    Copied from https://github.com/Frotty/Ability-Tooltip-Generator/blob/master/wurst/AbilityTooltipGenerator.wurst
+    Copied and reworked from https://github.com/Frotty/Ability-Tooltip-Generator/blob/master/wurst/AbilityTooltipGenerator.wurst
     Credits to Frotty
 ***/
 public class AbilityTooltipGenerator implements TooltipGenerator
@@ -43,6 +43,9 @@ public class AbilityTooltipGenerator implements TooltipGenerator
 
     construct()
 
+    function setDescription(string description)
+        this.description = description
+
     override function addProperty(string title, StringLevelClosure lc)
         propMap.put(title, lc)
 
@@ -58,24 +61,17 @@ public class AbilityTooltipGenerator implements TooltipGenerator
     function applyToDefItem(ItemDefinition defItem)
         defItem.setTooltipExtended(generateTooltipExtended(false))
 
-    private function generateTooltipLearn() returns string
+    function generateTooltipLearn() returns string
         return buildLearnTooltip(name)
 
-    private function generateTooltipNormal() returns string
+    function generateTooltipNormal() returns string
         if targettype == Targettype.PASSIVE
             return buildPassiveTooltip(name)
         else
             return buildActiveTooltip(name)
 
-    private function generateTooltipExtended(boolean learn) returns string
+    function generateTooltipExtended(boolean learn) returns string
         var s = ""
-        if targettype == Targettype.PASSIVE
-            s += TITLE_COLOR + "Passive|r\n"
-        else
-            if learn
-                s += TITLE_COLOR + TITLE_TTYPE + "|r " + targettype.toString() + "\n"
-            else
-                s += TITLE_COLOR + TITLE_TTYPE + " |cffFFCC00" + targettype.toString() + "|r\n"
 
         for key in propMap
             var tmp = ""
@@ -88,7 +84,7 @@ public class AbilityTooltipGenerator implements TooltipGenerator
                     break
 
             if isConstantValue
-                tmp += "|cffFFCC00" + val + "|r "
+                tmp += val + "|r "
             else
                 for i = 1 to levels
                     tmp += fixValue(propMap.get(key).run(i)) + (i < levels ? "/" : "")
@@ -124,13 +120,13 @@ public class AbilityTooltipGenerator implements TooltipGenerator
         if lvl == -1
             _newString = oldString
         else if charPosCount <= 0
-            _newString = "|cffFFCC00" + oldString
+            _newString = oldString
         else if maxLevel <= 1
-            _newString = "|cffFFCC00" + oldString
+            _newString = oldString
         else if lvl == 1
-            _newString = "|cffFFCC00" + oldString.substring(0, charPos[0]) + "|r" + oldString.substring(charPos[0], oldLen)
+            _newString = oldString.substring(0, charPos[0]) + "|r" + oldString.substring(charPos[0], oldLen)
         else if lvl == maxLevel
-            _newString = oldString.substring(0, charPos[lvl-2] + 1) + "|cffFFCC00" + oldString.substring(charPos[lvl-2] + 1, oldLen) + "|r"
+            _newString = oldString.substring(0, charPos[lvl-2] + 1) + oldString.substring(charPos[lvl-2] + 1, oldLen) + "|r"
         else
-            _newString = oldString.substring(0, charPos[lvl-2] + 1) + "|cffFFCC00" + oldString.substring(charPos[lvl-2] + 1, charPos[lvl-1]) + "|r" + oldString.substring(charPos[lvl-1], oldLen)
+            _newString = oldString.substring(0, charPos[lvl-2] + 1) + oldString.substring(charPos[lvl-2] + 1, charPos[lvl-1]) + "|r" + oldString.substring(charPos[lvl-1], oldLen)
         return _newString
