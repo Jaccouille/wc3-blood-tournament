@@ -17,11 +17,15 @@ function isProper() returns boolean
         return false
     if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "innerfireon"
         return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "lightningshield"
+        return false
     if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "faeriefire"
         return false
     if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "raisedead"
         return false
     if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "heal"
+        return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "healon"
         return false
     if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "spellsteal"
         return false
@@ -30,6 +34,8 @@ function isProper() returns boolean
     if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "blizzard"
         return false
     if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "phoenixmorph"
+        return false
+    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "curse"
         return false
     if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "frostarmor"
         return false

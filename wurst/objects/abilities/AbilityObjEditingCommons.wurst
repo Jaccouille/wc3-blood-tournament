@@ -21,18 +21,22 @@ public function AbilityDefinition.setHotkeyEnhance(string hotkey)
     this.setHotkeyNormal(hotkey)
     this.presetButtonPosNormal(hotKeyMapping.get(hotkey).x, hotKeyMapping.get(hotkey).y)
 
-public function createAutoCasteEnenmyAbility(int abilId) returns AbilityDefinition
+public function createAutoCasteEnenmyAbility(int abilId) returns AbilityDefinitionCursecreep
     return new AbilityDefinitionCursecreep(abilId)
+        ..presetManaCost(_ -> 0)
+        ..presetDurationNormal(_ -> 0.01)
+        ..presetChancetoMiss(_ -> 0)
+        ..presetBuffs(_ -> "")
+        ..setArtTarget("")
+        ..setLevels(1)
+        ..setCheckDependencies(false)
 
-public function createAutoCasteAlliedAbility(int abilId) returns AbilityDefinition
-    return new AbilityDefinitionHealCreepNormal(abilId)
-
-public class BTAutoCasteAbility extends AbilityDefinition
-    AbilityDefinition dummyAutoCastAbil
-
-    construct(int newId, int origId, int dummyAutoCastAbilId, boolean targetsAllied)
-        super(newId, origId)
-        if targetsAllied
-            this.dummyAutoCastAbil = createAutoCasteAlliedAbility(dummyAutoCastAbilId)
-        else
-            this.dummyAutoCastAbil = createAutoCasteEnenmyAbility(dummyAutoCastAbilId)
+public function createAutoCasteAlliedAbility(int abilId) returns AbilityDefinitionLichFrostArmorAutocast
+    return new AbilityDefinitionLichFrostArmorAutocast(abilId)
+        ..presetManaCost(_ -> 0)
+        ..presetArmorDuration(_ -> 0.01)
+        ..presetDurationNormal(_ -> 0.01)
+        ..presetArmorBonus(_ -> 0)
+        ..presetBuffs(_ -> "")
+        ..setArtTarget("")
+        ..setLevels(1)

@@ -8,8 +8,10 @@ import UnitObjEditingCommon
 import Assets
 import ColorUtils
 import HashMap
+import BuffObjEditing
 import LinkedList
-
+import TooltipsUtils
+import DummyAutoCasting
 
 @compiletime function createAbilitiesDefinition()
     var itm = createBasicItem(ITEM_INNER_FIRE)
@@ -82,6 +84,36 @@ import LinkedList
     fireMageItemTooltip += "Increase damage. Units killed by the mage will explode."
     itm.setTooltipExtended(fireMageItemTooltip)
 
+    fireMageItemTooltip += "\n\nFire shield\n".color(SPECIAL_COLOR)
+
+    tgen = new AbilityTooltipGenerator()
+    new AbilityDefinitionPermanentImmolation(ABIL_FIRE_SHIELD)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDamageperInterval(_ -> 20)
+        ..tooltipStopListen(false)
+        ..setAreaofEffect(1, 160.)
+        ..setBuffs(1, BuffIds.permanentImmolationRed.toRawCode())
+        ..setRequirements("")
+        ..setCheckDependencies(false)
+
+    createAutoCasteAlliedAbility(ABIL_AUTOCAST_FIRE_SHIELD)
+        ..presetCastRange(_ -> 600)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 10)
+        ..presetManaCost(_ -> 30)
+        ..setCheckDependencies(false)
+    fireMageItemTooltip += tgen.generateTooltipExtended(false)
+    fireMageItemTooltip += "" +
+    ("Permanently add a shield of fire around an allied unit, dealing {0} " +
+    "damage per second to enemies around it. |nLasts {1} seconds.")
+    .format(
+            getAbilityDataField(ABIL_FIRE_SHIELD, "DataA1").color(COLOR_RED),
+            getAbilityDataField(ABIL_FIRE_SHIELD, "Dur1").color(COLOR_LIGHT_BLUE)
+            )
+    itm.setTooltipExtended(fireMageItemTooltip)
+
 
     itm = createBasicItem(ITEM_ICE_MAGE)
         ..setItemCost(0, 50, 1, 3, 3)
@@ -115,8 +147,12 @@ import LinkedList
         " The shield adds armor and slows melee units that attack it"
     itm.setTooltipExtended(iceMageItemTooltip)
 
+
 let unitToItemMap = new HashMap<int, LinkedList<int>>()
     ..put(BUILDING_MAGE, asList(ITEM_DARK_MAGE, ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
+
+
+
 
 init
     PauseTimer(bj_stockUpdateTimer)

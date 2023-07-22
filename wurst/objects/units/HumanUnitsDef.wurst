@@ -2,13 +2,16 @@ package HumanUnitsDef
 
 // Standard libs imports:
 import Assets
-import ChannelAbilityPreset
 
 // Local imports:
 import ItemObjEditingCommon
+import AbilityTooltipGenerator
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
+import ColorUtils
+import AbilityObjEditingCommons
+import DummyAutoCasting
 
 @compiletime function createFootman()
     var tooltip = new UnitTooltipGenerator("Basic Human melee unit")
@@ -372,10 +375,48 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setNameEnhance("W", "Ghost")
 
 
-    tooltip = new UnitTooltipGenerator("Archmage Desc")
-    let itm = createBasicItem(ITEM_ARCHMAGE)
+    var archMageDesc = "Blizzard\n".color(SPECIAL_COLOR)
+    let tgen = new AbilityTooltipGenerator()
+    new AbilityDefinitionArchMageBlizzard(ABIL_BLIZZARD)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDamage(_ -> 50)
+        ..presetMaximumDamageperWave(_ -> 600)
+        ..presetNumberofShards(_ -> 8)
+        ..presetNumberofWaves(_ -> 6)
+        ..presetCooldown(_ -> 30)
+        ..presetManaCost(_ -> 100)
+        ..tooltipStopListen(true)
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
+
+    archMageDesc += tgen.generateTooltipExtended(false)
+
+    tooltip = new UnitTooltipGenerator("Water Elemental Desc")
+    createSpawnedUnit(UNIT_WATER_ELEMENTAL, UnitIds.waterelemental3)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setNormalAbilities("")
+
+        ..setAttack1Data(AttackType.Pierce, 55, 9, 4, 1.3)
+        ..setAttack1Range(300)
+
+        ..setArmorData(ArmorType.Divine, 2)
+        ..setHitPointsMaximumBase(300)
+
+        ..setManaMaximum(0)
+        ..setSpeedBase(270)
+        ..setPointValue(50)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("W", "Water Elemental")
+
+    createAutoCasteEnenmyAbility(ABIL_AUTOCAST_BLIZZARD)
+        ..presetCastRange(_ -> 800)
+        ..presetCooldown(_ -> 30)
+
+    tooltip = new UnitTooltipGenerator(archMageDesc)
     createSpawnedUnit(UNIT_ARCHMAGE, UnitIds.archmage, BUILDING_ARCHMAGE)
-        ..registerItemDef(itm, ItemModifierType.Addition)
+        ..setNormalAbilities(commaList(ABIL_AUTOCAST_BLIZZARD, ABIL_BLIZZARD))
+        ..setDefaultActiveAbility(ABIL_AUTOCAST_BLIZZARD.toRawCode())
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -390,14 +431,15 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setMana(700)
         ..setManaMaximum(700)
         ..setSpeedBase(320)
-        ..setAutoPointValue()
-        ..tooltipStopListen(true, itm)
-        ..setItemCost(0, 200, 1)
+        ..setPointValue(100)
+        ..tooltipStopListen(true)
 
         ..setSizeSmall()
         ..setPriority(10)
 
         ..setNameEnhance("F", "Archmage")
+        ..setBuildingName("F", "1x Archmage")
+        ..setBuildingUnitsTrained(commaList(UNIT_ARCHMAGE, UNIT_WATER_ELEMENTAL))
 
         ..setModelFileExt(Units.heroArchMage)
         ..setIconGameInterfaceExt(Icons.bTNHeroArchMage)
@@ -500,3 +542,6 @@ function createPaladin(int paladinId) returns BTUnitDefinition
             BUILDING_RIFLEMAN,
             BUILDING_ELVEN_MAGE
         ))
+
+init
+    dummyToRealCastMapTarget.put(ABIL_AUTOCAST_BLIZZARD, "blizzard")

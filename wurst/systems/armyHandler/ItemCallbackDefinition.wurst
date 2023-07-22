@@ -63,13 +63,6 @@ init
     itemAddUnitMap.put(ITEM_SPELL_BREAKER, spellBreakerAction)
 
 
-    let archmageAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitTospawn, int count) ->
-        for i = 0 to count
-            unitTospawn.push(UNIT_ARCHMAGE)
-    itemAddUnitMap.put(ITEM_ARCHMAGE, archmageAction)
-
-
     let innerFireAction = new ItemModifyUnit()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_INNER_FIRE)
@@ -88,6 +81,8 @@ init
     let fireMageAction = new ItemModifyUnit()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_INCINERATE)
+        u.addAbility(ABIL_AUTOCAST_FIRE_SHIELD)
+        u.issueImmediateOrder("frostarmoron")
 
     itemModifyUnitMap.put(ITEM_FIRE_MAGE, fireMageAction)
 

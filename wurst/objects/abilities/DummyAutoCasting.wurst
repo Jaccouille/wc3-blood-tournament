@@ -1,0 +1,27 @@
+package DummyAutoCasting
+
+import HashMap
+import ClosureEvents
+import LocalObjectIDs
+import GameConstants
+
+public let dummyToRealCastMapTarget = new HashMap<int, string>
+
+init
+    dummyToRealCastMapTarget.put(ABIL_AUTOCAST_FIRE_SHIELD, "")
+
+    registerPlayerUnitEvent(EVENT_PLAYER_UNIT_SPELL_CAST) ->
+        let abilId = EventData.getSpellAbilityId()
+        let caster = EventData.getSpellAbilityUnit()
+        if dummyToRealCastMapTarget.has(abilId)
+            if abilId == ABIL_AUTOCAST_FIRE_SHIELD
+                EventData.getSpellTargetUnit().addAbility(ABIL_FIRE_SHIELD)
+            else
+                let orderId = dummyToRealCastMapTarget.get(abilId)
+                caster.startAbilityCooldown(abilId)
+                caster.issueTargetOrder(orderId, EventData.getSpellTargetUnit())
+
+    registerPlayerUnitEvent(EVENT_PLAYER_UNIT_SPELL_FINISH) ->
+        let caster = EventData.getSpellAbilityUnit()
+        if not dummyToRealCastMapTarget.has(EventData.getSpellAbilityId())
+            caster.issuePointOrder("attack", CENTER)
