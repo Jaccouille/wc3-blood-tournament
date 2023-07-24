@@ -21,7 +21,7 @@ import ItemCallbackDefinition
 public function getUnitPointValue(int goldCost, int lumberCost, int unitCount) returns int
     var pointValue = 0
     pointValue += (goldCost / unitCount).toInt()
-    pointValue += (lumberCost / unitCount).toInt()
+    pointValue += (lumberCost / unitCount / 10).toInt()
     return pointValue
 
 public class BTBuildingData
@@ -58,19 +58,20 @@ public let armyMap = new HashMap<int, BTBuildingData>
     ..put(BUILDING_RIFLEMAN          , new BTBuildingData(generateUnitList(UNIT_RIFLEMAN          , 5  ), 0, 3000))
     ..put(BUILDING_PALADIN           , new BTBuildingData(asList(UNIT_PALADIN_1, UNIT_PALADIN_2, UNIT_PALADIN_3), 0, 1600))
 
-    ..put(BUILDING_GRUNT                , new BTBuildingData(generateUnitList(UNIT_GRUNT                , 7  ), 100, 0))
-    ..put(BUILDING_WARLOCK              , new BTBuildingData(generateUnitList(UNIT_WARLOCK              , 5  ), 200, 0))
+    ..put(BUILDING_GRUNT                , new BTBuildingData(generateUnitList(UNIT_GRUNT                , 7  ), 140, 0))
     ..put(BUILDING_HEADHUNTER           , new BTBuildingData(generateUnitList(UNIT_HEADHUNTER           , 10 ), 150, 0))
+    ..put(BUILDING_RAIDER               , new BTBuildingData(generateUnitList(UNIT_RAIDER               , 7  ), 210, 0))
+    ..put(BUILDING_WITCH_DOCTOR         , new BTBuildingData(generateUnitList(UNIT_WITCH_DOCTOR         , 3  ), 150, 0))
     ..put(BUILDING_SHAMAN               , new BTBuildingData(generateUnitList(UNIT_SHAMAN               , 4  ), 200, 0))
-    ..put(BUILDING_TAUREN               , new BTBuildingData(generateUnitList(UNIT_TAUREN               , 4  ), 200, 0))
-    ..put(BUILDING_RAIDER               , new BTBuildingData(generateUnitList(UNIT_RAIDER               , 7  ), 200, 0))
     ..put(BUILDING_OGRE                 , new BTBuildingData(generateUnitList(UNIT_OGRE                 , 4  ), 300, 0))
+    ..put(BUILDING_WARLOCK              , new BTBuildingData(generateUnitList(UNIT_WARLOCK              , 5  ), 200, 0))
+    ..put(BUILDING_TAUREN               , new BTBuildingData(generateUnitList(UNIT_TAUREN               , 4  ), 200, 0))
     ..put(BUILDING_OGRE_ARMORED         , new BTBuildingData(generateUnitList(UNIT_OGRE_ARMORED         , 4  ), 0, 1200))
     ..put(BUILDING_BERSERKER            , new BTBuildingData(generateUnitList(UNIT_BERSERKER            , 7  ), 0, 500))
     ..put(BUILDING_TRAPPER              , new BTBuildingData(generateUnitList(UNIT_TRAPPER              , 10 ), 0, 600))
     ..put(BUILDING_HEADHUNTER_BERSERKER , new BTBuildingData(generateUnitList(UNIT_HEADHUNTER_BERSERKER , 10 ), 0, 700))
-    ..put(BUILDING_WARMONGER            , new BTBuildingData(generateUnitList(UNIT_WARMONGER            , 7  ), 0, 800))
-    ..put(BUILDING_FARSEER              , new BTBuildingData(generateUnitList(UNIT_FARSEER              , 4  ), 0, 1200))
+    ..put(BUILDING_PACK_LEADER            , new BTBuildingData(generateUnitList(UNIT_PACK_LEADER            , 7  ), 0, 800))
+    ..put(BUILDING_FARSEER              , new BTBuildingData(generateUnitList(UNIT_FARSEER              , 1  ), 0, 1200))
     ..put(BUILDING_OCCULTIST            , new BTBuildingData(generateUnitList(UNIT_OCCULTIST            , 5  ), 0, 900))
     ..put(BUILDING_BLADE_MASTER         , new BTBuildingData(generateUnitList(UNIT_BLADE_MASTER         , 4  ), 0, 3000))
     ..put(BUILDING_SHADOW_HUNTER        , new BTBuildingData(generateUnitList(UNIT_SHADOW_HUNTER        , 3  ), 0, 3000))

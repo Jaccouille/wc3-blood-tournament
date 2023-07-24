@@ -3,47 +3,36 @@ package OrderBlocker
 // Local imports:
 import ColorUtils
 import GameConstants
+import HashSet
+import OrderIds
 
 public boolean preventOrder = false
 public trigger orderBlocker
 
+let validOrder = new HashSet<int>()
+    ..add(OrderIds.bloodlust)
+    ..add(OrderIds.bloodluston)
+    ..add(OrderIds.innerfire)
+    ..add(OrderIds.innerfireon)
+    ..add(OrderIds.lightningshield)
+    ..add(OrderIds.lightningshield)
+    ..add(OrderIds.faeriefire)
+    ..add(OrderIds.raisedead)
+    ..add(OrderIds.heal)
+    ..add(OrderIds.healon)
+    ..add(OrderIds.spellsteal)
+    ..add(OrderIds.stoneform)
+    ..add(OrderIds.blizzard)
+    ..add(OrderIds.phoenixmorph)
+    ..add(OrderIds.curse)
+    ..add(OrderIds.frostarmor)
+    ..add(OrderIds.frostarmoron)
+    ..add(OrderIds.undefend)
+    ..add(OrderIds.healingwave)
 
-function isProper() returns boolean
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "bloodlust"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "bloodluston"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "innerfire"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "innerfireon"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "lightningshield"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "faeriefire"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "raisedead"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "heal"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "healon"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "spellsteal"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "stoneform"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "blizzard"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "phoenixmorph"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "curse"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "frostarmor"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "frostarmoron"
-        return false
-    if OrderId2StringBJ(GetIssuedOrderIdBJ()) == "undefend"
-        return false
-    return true
+
+function isValid() returns boolean
+    return validOrder.has(GetIssuedOrderIdBJ())
 
 public function disableOrderBlocker()
     orderBlocker.disable()
@@ -56,10 +45,11 @@ init
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER)
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER)
-    // ..addCondition(Condition((function isProper)))
+    // ..addCondition(Condition((function isValid)))
     ..addAction() ->
         let u = GetOrderedUnit()
-        if isProper() and preventOrder
+        if not isValid() and preventOrder
+            Log.info(u.getName())
             preventOrder = false
             // print(OrderId2StringBJ(GetIssuedOrderIdBJ()))
             u.issuePointOrder("attack", CENTER)

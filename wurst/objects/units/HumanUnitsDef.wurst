@@ -12,6 +12,7 @@ import UnitTooltipGenerator
 import ColorUtils
 import AbilityObjEditingCommons
 import DummyAutoCasting
+import OrderIds
 
 @compiletime function createFootman()
     var tooltip = new UnitTooltipGenerator("Basic Human melee unit")
@@ -542,6 +543,3 @@ function createPaladin(int paladinId) returns BTUnitDefinition
             BUILDING_RIFLEMAN,
             BUILDING_ELVEN_MAGE
         ))
-
-init
-    dummyToRealCastMapTarget.put(ABIL_AUTOCAST_BLIZZARD, "blizzard")
