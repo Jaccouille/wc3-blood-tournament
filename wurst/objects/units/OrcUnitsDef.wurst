@@ -6,9 +6,14 @@ import ChannelAbilityPreset
 
 // Local imports:
 import LocalObjectIDs
-import OrcAbilities
+import OrcAbilitiesDef
 import UnitObjEditingCommon
 import UnitTooltipGenerator
+import AbilityObjEditingCommons
+import AbilityObjEditing
+import AbilityTooltipGenerator
+import ColorUtils
+import ItemObjEditingCommon
 
 @compiletime function createGrunt()
     var tooltip = new UnitTooltipGenerator("Grunt Desc")
@@ -30,7 +35,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("Q", "Grunt")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_BERSERKER))
+        ..setBuildingItemsMade(commaList(ITEM_BERSERKER))
         ..setBuildingGoldCost(100)
 
         ..setModelFileExt(Units.grunt1)
@@ -38,7 +43,9 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.grunt)
 
     tooltip = new UnitTooltipGenerator("Berserker Desc")
+    let itm = createBasicItem(ITEM_BERSERKER)
     createSpawnedUnit(UNIT_BERSERKER, UnitIds.gromhellscream, BUILDING_BERSERKER)
+        ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -49,10 +56,11 @@ import UnitTooltipGenerator
 
         ..setSpeedBase(270)
         ..setSizeSmall()
-        ..setNameEnhance("Z", "Berserker")
         ..setAutoPointValue()
-        ..tooltipStopListen(true)
+        ..tooltipStopListen(true, itm)
         ..setBuildingLumberCost(700)
+        ..setItemCost(0, 100, 1, 4, 4)
+        ..setNameEnhance("Z", "Berserker")
 
         ..setModelFileExt(Units.hellscream1)
         ..setIconGameInterfaceExt(Icons.bTNHellScream)
@@ -145,31 +153,33 @@ import UnitTooltipGenerator
         ..setNameEnhance("E", "Raider")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_WARMONGER))
         ..setBuildingGoldCost(200)
+        ..setBuildingItemsMade(commaList(ITEM_PACK_LEADER))
 
         ..setModelFileExt(Units.wolfrider1)
         ..setIconGameInterfaceExt(Icons.bTNRaider)
         ..setUnitSoundSetExt(Soundsets.wolfrider)
 
-    tooltip = new UnitTooltipGenerator("Warmonger Desc")
-    createSpawnedUnit(UNIT_WARMONGER, UnitIds.thrall, BUILDING_WARMONGER)
+    tooltip = new UnitTooltipGenerator("Pack Leader Desc")
+    let itm = createBasicItem(ITEM_PACK_LEADER)
+    createSpawnedUnit(UNIT_PACK_LEADER, UnitIds.thrall, BUILDING_PACK_LEADER)
+        ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 87, 6, 7, 1.6)
+        ..setAttack1Data(AttackType.Normal, 111, 6, 7, 1.6)
 
-        ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(350)
+        ..setArmorData(ArmorType.Large, 7)
+        ..setHitPointsMaximumBase(600)
 
         ..setSpeedBase(350)
         ..setSizeSmall()
         ..setPriority(3)
-        ..setNameEnhance("Z", "Warmonger")
         ..setAutoPointValue()
-        ..tooltipStopListen(true)
+        ..tooltipStopListen(true, itm)
         ..setAttack1Range(120)
-        ..setBuildingLumberCost(1200)
+        ..setItemCost(0, 700, 1, 1, 1)
+        ..setNameEnhance("Z", "Pack Leader")
 
         ..setModelFileExt(Units.thrall1)
         ..setIconGameInterfaceExt(Icons.bTNThrall)
@@ -228,6 +238,34 @@ import UnitTooltipGenerator
         ..setIconGameInterfaceExt(Icons.bTNOrcWarlock)
         ..setUnitSoundSetExt(Soundsets.orcWarlock)
 
+@compiletime function creatWitchDoctor()
+    var tooltip = new UnitTooltipGenerator()
+    createSpawnedUnit(UNIT_WITCH_DOCTOR, UnitIds.witchdoctor, BUILDING_WITCH_DOCTOR)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 11, 2, 4, 1.75)
+        ..setAttack1Range(450)
+
+        ..setArmorData(ArmorType.Unarmored, 0)
+        ..setHitPointsMaximumBase(60)
+
+        ..setManaMaximum(200)
+        ..setManaInitialAmount(200)
+        ..setSpeedBase(270)
+        ..setNormalAbilities(commaList(""))
+        ..setSizeSmall()
+        ..setLevel(4)
+        ..setNameEnhance("A", "Witch Doctor")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+        ..setBuildingItemsMade(commaList(ITEM_HEALING_WAVE))
+        ..setBuildingGoldCost(200)
+
+        ..setModelFileExt(Units.witchDoctor1)
+        ..setIconGameInterfaceExt(Icons.bTNWitchDoctor)
+        ..setUnitSoundSetExt(Soundsets.witchDoctor)
+
 
 @compiletime function createShaman()
     let abilTooltips = TOOLTIP_BLOODLUST + "\n" + TOOLTIP_EXT_BLOODLUST
@@ -251,14 +289,57 @@ import UnitTooltipGenerator
         ..setNameEnhance("S", "Shaman")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_FARSEER))
+        ..setBuildingItemsMade(commaList(ITEM_SPIRIT_WOLF1))
         ..setBuildingGoldCost(200)
 
         ..setModelFileExt(Units.shaman1)
         ..setIconGameInterfaceExt(Icons.bTNShaman)
         ..setUnitSoundSetExt(Soundsets.shaman)
 
-    tooltip = new UnitTooltipGenerator(abilTooltips)
+
+    tooltip = new UnitTooltipGenerator("Spirit Wolf Desc")
+    let itm = createBasicItem(ITEM_SPIRIT_WOLF1)
+    createSpawnedUnit(UNIT_SPIRIT_WOLF1, UnitIds.spiritwolf2)
+        ..registerItemDef(itm, ItemModifierType.Addition)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setNormalAbilities("")
+
+        ..setAttack1Data(AttackType.Normal, 33, 4, 3, 1.1)
+
+        ..setArmorData(ArmorType.Divine, 2)
+        ..setHitPointsMaximumBase(100)
+
+        ..setManaMaximum(0)
+        ..setSpeedBase(350)
+        ..setPointValue(30)
+        ..tooltipStopListen(true, itm)
+        ..setItemCost(0, 200, 4, 1, 1)
+        ..setNameEnhance("Z", "Spirit Wolf")
+
+        ..setIconGameInterfaceExt(Icons.bTNSpiritWolf)
+
+
+    createOrbAbility(ABIL_CHAIN_LIGHTNING_ORB)
+        ..setEffectAbility(1, ABIL_CHAIN_LIGHTNING.toRawCode())
+    var farseerDesc = "Chain Lightning\n".color(SPECIAL_COLOR)
+    let tgen = new AbilityTooltipGenerator("Calls forth a bolt of lightning that deals damage and bounce.")
+    new AbilityDefinitionChainLightningcreep(ABIL_CHAIN_LIGHTNING)
+        ..registerTooltipGenerator(tgen)
+        ..setLevels(1)
+        ..tooltipStartListen()
+        ..presetDamageperTarget(_ -> 100)
+        ..presetNumberofTargetsHit(_ -> 5)
+        ..presetCooldown(_ -> 10)
+        ..presetManaCost(_ -> 50)
+        ..presetCastRange(_ -> 550)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Chain Lightning")
+        ..presetDamageReductionperTarget(_ -> 0)
+
+    farseerDesc += tgen.generateTooltipExtended(false)
+
+    tooltip = new UnitTooltipGenerator(farseerDesc)
     createSpawnedUnit(UNIT_FARSEER, UnitIds.farseer, BUILDING_FARSEER)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -272,9 +353,9 @@ import UnitTooltipGenerator
         ..setManaMaximum(200)
         ..setManaInitialAmount(200)
         ..setSpeedBase(300)
-        ..setNormalAbilities(commaList(ABIL_BLOODLUST))
+        ..setNormalAbilities(commaList(ABIL_CHAIN_LIGHTNING_ORB))
         ..setSizeSmall()
-        ..setNameEnhance("Z", "Farseer")
+        ..setNameEnhance("F", "Farseer")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setBuildingLumberCost(1500)
@@ -302,13 +383,15 @@ import UnitTooltipGenerator
         ..setBuildingGoldCost(300)
 
         ..setAttack1Range(120)
-        ..setUpgradeTo(commaList(BUILDING_OGRE_ARMORED))
+        ..setBuildingItemsMade(commaList(ITEM_OGRE_ARMORED))
 
         ..setModelFileExt(Units.ogre1)
         ..setIconGameInterfaceExt(Icons.bTNOgre)
         ..setUnitSoundSetExt(Soundsets.ogre)
 
+    let itm = createBasicItem(ITEM_OGRE_ARMORED)
     createSpawnedUnit(UNIT_OGRE_ARMORED, UnitIds.ogre1, BUILDING_OGRE_ARMORED)
+        ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -319,10 +402,10 @@ import UnitTooltipGenerator
 
         ..setSpeedBase(240)
         ..setSizeSmall()
-        ..setNameEnhance("Z", "Armored Ogre")
         ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingLumberCost(1400)
+        ..tooltipStopListen(true, itm)
+        ..setItemCost(0, 200, 1, 3, 3)
+        ..setNameEnhance("Z", "Armored Ogre")
 
         ..setModelFileExt(Units.ogreLord1)
         ..setIconGameInterfaceExt(Icons.bTNOgreLord)
@@ -406,9 +489,10 @@ import UnitTooltipGenerator
             BUILDING_GRUNT,
             BUILDING_HEADHUNTER,
             BUILDING_RAIDER,
-            BUILDING_WARLOCK,
+            BUILDING_WITCH_DOCTOR,
             BUILDING_SHAMAN,
             BUILDING_OGRE,
+            BUILDING_FARSEER,
             BUILDING_BLADE_MASTER,
             BUILDING_SHADOW_HUNTER,
             BUILDING_DEMOLISHER

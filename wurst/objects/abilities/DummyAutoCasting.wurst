@@ -4,11 +4,15 @@ import HashMap
 import ClosureEvents
 import LocalObjectIDs
 import GameConstants
+import OrderIds
 
-public let dummyToRealCastMapTarget = new HashMap<int, string>
+public let dummyToRealCastMapTarget = new HashMap<int, int>
 
 init
-    dummyToRealCastMapTarget.put(ABIL_AUTOCAST_FIRE_SHIELD, "")
+    dummyToRealCastMapTarget
+        ..put(ABIL_AUTOCAST_FIRE_SHIELD, 0)
+        ..put(ABIL_AUTOCAST_HEALING_WAVE, OrderIds.healingwave)
+        ..put(ABIL_AUTOCAST_BLIZZARD, OrderIds.blizzard)
 
     registerPlayerUnitEvent(EVENT_PLAYER_UNIT_SPELL_CAST) ->
         let abilId = EventData.getSpellAbilityId()
@@ -16,10 +20,11 @@ init
         if dummyToRealCastMapTarget.has(abilId)
             if abilId == ABIL_AUTOCAST_FIRE_SHIELD
                 EventData.getSpellTargetUnit().addAbility(ABIL_FIRE_SHIELD)
-            else
+            else if EventData.getSpellTargetUnit().isAlive()
+                Log.info(caster.getName())
                 let orderId = dummyToRealCastMapTarget.get(abilId)
                 caster.startAbilityCooldown(abilId)
-                caster.issueTargetOrder(orderId, EventData.getSpellTargetUnit())
+                caster.issueTargetOrderById(orderId, EventData.getSpellTargetUnit())
 
     registerPlayerUnitEvent(EVENT_PLAYER_UNIT_SPELL_FINISH) ->
         let caster = EventData.getSpellAbilityUnit()

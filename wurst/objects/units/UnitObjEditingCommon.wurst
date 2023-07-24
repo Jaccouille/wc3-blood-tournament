@@ -119,6 +119,7 @@ public class BTUnitDefinition extends UnitDefinition
     UnitTooltipGenerator tooltipGen = null
     boolean listen = false
     ItemModifierType modifierType
+    int charges
 
     construct(int newId, int origId)
         super(newId, origId)
@@ -265,6 +266,7 @@ public class BTUnitDefinition extends UnitDefinition
         itemDef.setGoldCost(gold)
         itemDef.setLumberCost(lumber)
         itemDef.setNumberofCharges(charges)
+        this.charges = charges
         setPointValue(getUnitPointValue(gold, lumber, charges))
 
     function setAutoPointValue()
@@ -282,7 +284,9 @@ public class BTUnitDefinition extends UnitDefinition
         if this.buildingDef != null
             buildingDef.setNameEnhance(hotkey, name + " x" + spawnCount.toString())
         if this.itemDef != null
-            var itemName = modifierType == modifierType.Addition ? "Add 1 " : "Upgrade 1 unit to "
+            var itemName = modifierType == modifierType.Addition ?
+                "Add {0} ".format(this.charges.toString()) :
+                "Replace {0} unit with ".format(this.charges.toString())
             itemName += name
             itemDef.setNameEnhance(hotkey, itemName)
 

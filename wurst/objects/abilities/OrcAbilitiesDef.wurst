@@ -1,0 +1,62 @@
+package OrcAbilitiesDef
+
+// Standard libs imports:
+import AbilityObjEditing
+
+// Local imports:
+import ColorUtils
+import LocalObjectIDs
+import ItemObjEditingCommon
+import AbilityObjEditingCommons
+import AbilityTooltipGenerator
+import UnitObjEditingCommon
+import TooltipsUtils
+
+public constant TOOLTIP_BLOODLUST = "Bloodlust".color(SPECIAL_COLOR)
+public constant TOOLTIP_EXT_BLOODLUST = ("" +
+    "Increases a friendly unit's attack rate by "+
+    "{0} and movement speed by "+
+    "{1}.\nLasts {2} seconds.")
+    .format(
+        "<Ablo,DataA1,%>%".color(COLOR_RED),
+        "<Ablo,DataB1,%>%".color(COLOR_ORANGE),
+        "<Ablo,Dur1>".color(COLOR_LIGHT_BLUE)
+    )
+
+
+@compiletime function orcAbilites()
+    new AbilityDefinitionBloodlustCreep(ABIL_BLOODLUST)
+        ..setTooltipNormal(1, TOOLTIP_BLOODLUST)
+        ..setTooltipNormalExtended(1, TOOLTIP_EXT_BLOODLUST)
+
+    var itm = createBasicItem(ITEM_HEALING_WAVE)
+        ..setItemCost(0, 750, 4, 1, 1)
+        ..setNameEnhance("X", "Learn Healing Wave")
+        ..setInterfaceIcon(Icons.bTNHealingWave)
+    createAutoCasteAlliedAbility(ABIL_AUTOCAST_HEALING_WAVE)
+        ..presetCooldown(_ -> 10)
+        ..presetManaCost(_ -> 0)
+        ..presetCastRange(_ -> 600)
+
+    var tgen = new AbilityTooltipGenerator("")
+    new AbilityDefinitionHealingWaveCreep(ABIL_HEALING_WAVE)
+        ..registerTooltipGenerator(tgen)
+        ..setLevels(1)
+        ..tooltipStartListen()
+        ..setNameEnhance("X", "Healing Wave")
+        ..presetDamageperTarget(_ -> 100)
+        ..presetNumberofTargetsHit(_ -> 4)
+        ..presetCooldown(_ -> 10)
+        ..presetManaCost(_ -> 50)
+        ..presetCastRange(_ -> 600)
+        ..tooltipStopListen(true)
+    tgen.applyToDefItem(itm)
+
+
+    itm = createBasicItem(ITEM_SERPENT_WARD)
+        ..setItemCost(0, 500, 4, 1, 1)
+        ..setNameEnhance("X", "Learn Serpent Ward")
+        ..setInterfaceIcon(Icons.bTNSerpentWard)
+    createAutoCasteAlliedAbility(ABIL_AUTOCAST_SERPENT_WARD)
+    tgen = new AbilityTooltipGenerator("Increase damage. Units killed by the mage will turn into Ghost.")
+    new AbilityDefinitionHealingWaveCreep(ABIL_SERPENT_WARD)
