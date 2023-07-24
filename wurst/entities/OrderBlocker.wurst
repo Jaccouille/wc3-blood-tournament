@@ -49,7 +49,6 @@ init
     ..addAction() ->
         let u = GetOrderedUnit()
         if not isValid() and preventOrder
-            Log.info(u.getName())
             preventOrder = false
             // print(OrderId2StringBJ(GetIssuedOrderIdBJ()))
             u.issuePointOrder("attack", CENTER)

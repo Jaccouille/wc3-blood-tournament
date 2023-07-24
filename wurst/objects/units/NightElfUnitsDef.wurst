@@ -18,7 +18,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 14, 4, 2, 2)
 
         ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(120)
+        ..setHitPointsMaximumBase(240)
 
         ..setSpeedBase(250)
 
@@ -41,7 +41,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Siege, 127, 9, 4, 3)
 
         ..setArmorData(ArmorType.Large, 7)
-        ..setHitPointsMaximumBase(700)
+        ..setHitPointsMaximumBase(1400)
 
         ..setSpeedBase(240)
 
@@ -65,7 +65,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(650)
 
         ..setArmorData(ArmorType.Medium, 0)
-        ..setHitPointsMaximumBase(70)
+        ..setHitPointsMaximumBase(140)
 
         ..setSpeedBase(270)
 
@@ -89,7 +89,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(700)
 
         ..setArmorData(ArmorType.Medium, 0)
-        ..setHitPointsMaximumBase(120)
+        ..setHitPointsMaximumBase(240)
 
         ..setSpeedBase(300)
         ..setSizeSmall()
@@ -112,7 +112,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(400)
 
         ..setArmorData(ArmorType.Medium, 3)
-        ..setHitPointsMaximumBase(120)
+        ..setHitPointsMaximumBase(240)
 
         ..setSpeedBase(300)
 
@@ -136,7 +136,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(300)
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(80)
+        ..setHitPointsMaximumBase(160)
 
         ..setSpeedBase(270)
         ..setSizeSmall()
@@ -163,7 +163,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(300)
 
         ..setArmorData(ArmorType.Medium, 4)
-        ..setHitPointsMaximumBase(200)
+        ..setHitPointsMaximumBase(400)
 
         ..setSpeedBase(350)
         ..setAttack1MaximumNumberofTargets(2)
@@ -187,7 +187,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(300)
 
         ..setArmorData(ArmorType.Divine, 2)
-        ..setHitPointsMaximumBase(150)
+        ..setHitPointsMaximumBase(300)
 
         ..setSpeedBase(270)
 
@@ -211,7 +211,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(400)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(30)
+        ..setHitPointsMaximumBase(60)
 
         ..setSpeedBase(270)
 
@@ -238,7 +238,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 90, 3, 13, 1.5)
 
         ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(175)
+        ..setHitPointsMaximumBase(350)
 
         ..setSpeedBase(270)
 
@@ -267,7 +267,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 110, 3, 17, 1.2)
 
         ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(450)
+        ..setHitPointsMaximumBase(900)
 
         ..setSpeedBase(270)
         ..setNameEnhance("Z", "Owl Bear")
@@ -292,7 +292,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 60, 7, 4, 0.9)
 
         ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(330)
+        ..setHitPointsMaximumBase(660)
 
         ..setSpeedBase(330)
 
@@ -318,7 +318,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Magic, 120, 7, 4, 0.9)
 
         ..setArmorData(ArmorType.Divine, 7)
-        ..setHitPointsMaximumBase(500)
+        ..setHitPointsMaximumBase(1000)
 
         ..setSpeedBase(330)
 
@@ -343,7 +343,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 177, 7, 16, 0.7)
 
         ..setArmorData(ArmorType.Unarmored, 9)
-        ..setHitPointsMaximumBase(750)
+        ..setHitPointsMaximumBase(1500)
 
         ..setSpeedBase(350)
 
@@ -370,7 +370,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(650)
 
         ..setArmorData(ArmorType.Medium, 6)
-        ..setHitPointsMaximumBase(600)
+        ..setHitPointsMaximumBase(1200)
 
         ..setSpeedBase(270)
 
@@ -398,7 +398,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(450)
 
         ..setArmorData(ArmorType.Unarmored, 4)
-        ..setHitPointsMaximumBase(600)
+        ..setHitPointsMaximumBase(1200)
 
         ..setSpeedBase(270)
 
@@ -426,7 +426,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(1200)
 
         ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(150)
+        ..setHitPointsMaximumBase(300)
 
         ..setSpeedBase(240)
 

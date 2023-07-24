@@ -21,7 +21,6 @@ init
             if abilId == ABIL_AUTOCAST_FIRE_SHIELD
                 EventData.getSpellTargetUnit().addAbility(ABIL_FIRE_SHIELD)
             else if EventData.getSpellTargetUnit().isAlive()
-                Log.info(caster.getName())
                 let orderId = dummyToRealCastMapTarget.get(abilId)
                 caster.startAbilityCooldown(abilId)
                 caster.issueTargetOrderById(orderId, EventData.getSpellTargetUnit())
