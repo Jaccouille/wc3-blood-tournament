@@ -410,7 +410,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..tooltipStopListen(true)
         ..setNameEnhance("W", "Water Elemental")
 
-    createAutoCasteEnenmyAbility(ABIL_AUTOCAST_BLIZZARD)
+    createAutoCastedEnenmyAbility(ABIL_AUTOCAST_BLIZZARD)
         ..presetCastRange(_ -> 800)
         ..presetCooldown(_ -> 30)
 

@@ -213,6 +213,8 @@ public let ABIL_HEALING_WAVE          = compiletime(ABIL_ID_GEN.next())
 public let ABIL_AUTOCAST_HEALING_WAVE = compiletime(ABIL_ID_GEN.next())
 public let ABIL_SERPENT_WARD          = compiletime(ABIL_ID_GEN.next())
 public let ABIL_AUTOCAST_SERPENT_WARD = compiletime(ABIL_ID_GEN.next())
+public let ABIL_OGRE_SWING            = compiletime(ABIL_ID_GEN.next())
+public let ABIL_OGRE_SWING_SLAM       = compiletime(ABIL_ID_GEN.next())
 
 public let ITEM_CAPTAIN           = compiletime(ITEM_ID_GEN.next())
 public let ITEM_CRUSADER          = compiletime(ITEM_ID_GEN.next())

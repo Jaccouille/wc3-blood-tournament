@@ -29,6 +29,7 @@ let validOrder = new HashSet<int>()
     ..add(OrderIds.frostarmoron)
     ..add(OrderIds.undefend)
     ..add(OrderIds.healingwave)
+    ..add(OrderIds.thunderclap)
 
 
 function isValid() returns boolean

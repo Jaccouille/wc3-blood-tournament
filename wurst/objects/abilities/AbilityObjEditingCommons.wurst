@@ -21,7 +21,7 @@ public function AbilityDefinition.setHotkeyEnhance(string hotkey)
     this.setHotkeyNormal(hotkey)
     this.presetButtonPosNormal(hotKeyMapping.get(hotkey).x, hotKeyMapping.get(hotkey).y)
 
-public function createAutoCasteEnenmyAbility(int abilId) returns AbilityDefinitionCursecreep
+public function createAutoCastedEnenmyAbility(int abilId) returns AbilityDefinitionCursecreep
     return new AbilityDefinitionCursecreep(abilId)
         ..presetManaCost(_ -> 0)
         ..presetDurationNormal(_ -> 0.01)
@@ -31,7 +31,7 @@ public function createAutoCasteEnenmyAbility(int abilId) returns AbilityDefiniti
         ..setLevels(1)
         ..setCheckDependencies(false)
 
-public function createAutoCasteAlliedAbility(int abilId) returns AbilityDefinitionLichFrostArmorAutocast
+public function createAutoCastedAlliedAbility(int abilId) returns AbilityDefinitionLichFrostArmorAutocast
     return new AbilityDefinitionLichFrostArmorAutocast(abilId)
         ..presetManaCost(_ -> 0)
         ..presetArmorDuration(_ -> 0.01)

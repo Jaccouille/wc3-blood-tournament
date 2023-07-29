@@ -24,6 +24,8 @@ init
                 let orderId = dummyToRealCastMapTarget.get(abilId)
                 caster.startAbilityCooldown(abilId)
                 caster.issueTargetOrderById(orderId, EventData.getSpellTargetUnit())
+            else
+                caster.resetAbilityCooldown(abilId)
 
     registerPlayerUnitEvent(EVENT_PLAYER_UNIT_SPELL_FINISH) ->
         let caster = EventData.getSpellAbilityUnit()

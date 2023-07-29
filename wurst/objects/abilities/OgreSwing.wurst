@@ -1,0 +1,93 @@
+package OgreSwing
+
+import ClosureEvents
+import TimerUtils
+import OrderIds
+import DummyCaster
+import Assets
+import LocalObjectIDs
+import TerrainUtils
+
+constant ANGLE = 45.
+constant gravity = 175.
+constant HEIGHT_CHANGE_RATE = 10000.
+constant MAX_TURNSPEED = 3.
+
+
+constant duration = 0.75
+constant MAX_DIST = 700
+constant MIN_DIST = 300
+
+
+class OgreSwing
+    use TimedLoop
+    unit caster
+    unit target
+    vec3 velocity
+    vec2 velXY
+    int dist
+    real elapse_time = 0
+    vec3 targetPos
+    real groundSpeed
+    angle ang
+    real height = 0
+    real originalTurnspeed
+
+    construct(unit caster, unit target, int dist)
+        this.caster = caster
+        this.target = target
+        this.originalTurnspeed = target.getTurnSpeed()
+
+        this.groundSpeed = dist / duration
+        velXY = caster.getFacingAngle().toVec(groundSpeed)
+        this.targetPos = (target.getPos() + velXY).withTerrainZ()
+        let velZ = (gravity * duration) / 2
+        this.velocity = velXY.withZ(velZ)
+        this.ang = velXY.getAngle()
+
+        target.setAnimation("walk")
+        target.setTimeScale(10)
+        target.setPathing(false)
+
+        // Add crowform to enable flying height adjustment
+        target.addAbility(AbilityIds.crowForm)
+        target.removeAbility(AbilityIds.crowForm)
+        target.pause()
+        startTimedLoop()
+
+    override function onTimedLoop()
+        if duration < elapse_time
+            onLanding()
+            stopTimedLoopAndDestroy()
+
+        target.setPos(target.getPos() + this.velocity.toVec2() * ANIMATION_PERIOD)
+        this.height += this.velocity.z
+        this.velocity.z -= gravity * ANIMATION_PERIOD
+        target.setFlyHeight(this.height, HEIGHT_CHANGE_RATE)
+
+        elapse_time += ANIMATION_PERIOD
+
+    function onLanding()
+
+        if target.getPos().isTerrainDeepWater()
+            caster.damageTarget(target, 999999, true, true,
+            ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS)
+            flashEffect(Objects.nagaDeath, target.getPos3Real())
+            target.remove()
+        else
+            target.unpause()
+            target.setPathing(true)
+            target.setFlyHeight(target.getDefaultFlyHeight(), HEIGHT_CHANGE_RATE)
+            target.setTimeScale(1)
+            new DummyCaster()
+                ..origin(target.getPos())
+                ..owner(caster.getOwner())
+                ..delay(1)
+                ..castImmediate(ABIL_OGRE_SWING_SLAM, 1,  OrderIds.thunderclap)
+
+    ondestroy
+
+
+init
+    EventListener.onTargetCast(ABIL_OGRE_SWING) (unit caster, unit target) ->
+        new OgreSwing(caster, target, GetRandomInt(MIN_DIST, MAX_DIST))

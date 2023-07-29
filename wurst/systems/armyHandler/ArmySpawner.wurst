@@ -63,10 +63,10 @@ public let armyMap = new HashMap<int, BTBuildingData>
     ..put(BUILDING_RAIDER               , new BTBuildingData(generateUnitList(UNIT_RAIDER               , 7  ), 210, 0))
     ..put(BUILDING_WITCH_DOCTOR         , new BTBuildingData(generateUnitList(UNIT_WITCH_DOCTOR         , 3  ), 150, 0))
     ..put(BUILDING_SHAMAN               , new BTBuildingData(generateUnitList(UNIT_SHAMAN               , 4  ), 200, 0))
-    ..put(BUILDING_OGRE                 , new BTBuildingData(generateUnitList(UNIT_OGRE                 , 4  ), 300, 0))
+    ..put(BUILDING_OGRE                 , new BTBuildingData(generateUnitList(UNIT_OGRE                 , 3  ), 300, 0))
     ..put(BUILDING_WARLOCK              , new BTBuildingData(generateUnitList(UNIT_WARLOCK              , 5  ), 200, 0))
     ..put(BUILDING_TAUREN               , new BTBuildingData(generateUnitList(UNIT_TAUREN               , 4  ), 200, 0))
-    ..put(BUILDING_OGRE_ARMORED         , new BTBuildingData(generateUnitList(UNIT_OGRE_ARMORED         , 4  ), 0, 1200))
+    ..put(BUILDING_OGRE_ARMORED         , new BTBuildingData(generateUnitList(UNIT_OGRE_ARMORED         , 3  ), 0, 1200))
     ..put(BUILDING_BERSERKER            , new BTBuildingData(generateUnitList(UNIT_BERSERKER            , 7  ), 0, 500))
     ..put(BUILDING_TRAPPER              , new BTBuildingData(generateUnitList(UNIT_TRAPPER              , 10 ), 0, 600))
     ..put(BUILDING_HEADHUNTER_BERSERKER , new BTBuildingData(generateUnitList(UNIT_HEADHUNTER_BERSERKER , 10 ), 0, 700))
@@ -278,6 +278,7 @@ public class ArmySpawner
 
         let unitId = squadIds.get(squadIdx)
         spawnUnit(unitId, getRandomReinforcementPos())
+            ..issuePointOrder("attack", CENTER)
 
         squadIdx++
         if isSquadSpawnOver()

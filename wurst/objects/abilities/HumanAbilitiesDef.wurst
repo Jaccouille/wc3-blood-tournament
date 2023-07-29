@@ -97,7 +97,7 @@ import DummyAutoCasting
         ..setRequirements("")
         ..setCheckDependencies(false)
 
-    createAutoCasteAlliedAbility(ABIL_AUTOCAST_FIRE_SHIELD)
+    createAutoCastedAlliedAbility(ABIL_AUTOCAST_FIRE_SHIELD)
         ..presetCastRange(_ -> 600)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
