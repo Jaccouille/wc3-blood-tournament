@@ -5,6 +5,9 @@ import ArmySpawner
 import GameConfig
 import PlayerExtension
 import RoundController
+import ClosureTimers
+import LocalObjectIDs
+import Assets
 
 function getBounty(unit dyingUnit) returns int
     return (dyingUnit.getPointValue() * gameConfig.getBountyMultiplier()).toInt()
@@ -65,3 +68,13 @@ public function initUnitDeathTrigger()
             if pData.spawnedUnits.has(dyingUnit) == true
                 pData.spawnedUnits.remove(dyingUnit)
                 checkIfPlayerDefeated(pData)
+
+        if dyingUnit.getTypeId() == UNIT_PALADIN_1
+            or dyingUnit.getTypeId() == UNIT_PALADIN_2
+            or dyingUnit.getTypeId() == UNIT_PALADIN_3
+            doAfter(1) ->
+                flashEffect(Abilities.resurrecttarget, dyingUnit.getPos())
+                let u = createUnit(dyingUnit.getOwner(), UNIT_GHOST_PALADIN,
+                    dyingUnit.getPos(), dyingUnit.getFacingAngle())
+                ..issuePointOrder("attack", CENTER)
+                pData.spawnedUnits.add(u)

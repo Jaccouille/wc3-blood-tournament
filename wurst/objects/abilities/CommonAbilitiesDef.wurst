@@ -1,0 +1,49 @@
+package CommonAbilitiesDef
+
+import AbilityObjEditing
+import LocalObjectIDs
+
+function createCleave(int abilId, real distributedDamage, real aoe) returns AbilityDefinitionPitLordCleavingAttack
+    return new AbilityDefinitionPitLordCleavingAttack(abilId)
+    ..setLevels(1)
+    ..setDistributedDamageFactor(1, distributedDamage)
+    ..setAreaofEffect(1, aoe)
+    ..setName("Cleave " + distributedDamage.toString() + "%")
+
+function createCriticalStrike(int abilId, real chance, real multiplier) returns AbilityDefinitionCriticalStrikecreep
+    return new AbilityDefinitionCriticalStrikecreep(abilId)
+    ..setChancetoCriticalStrike(1, chance)
+    ..setDamageMultiplier(1, multiplier)
+    ..setNeverMiss(1, true)
+    ..setName("Critical Strike " + chance.toString() + "%, " + multiplier.toString() + "x")
+
+function createEvasion(int abilId, real value) returns AbilityDefinitionEvasioncreep
+    return new AbilityDefinitionEvasioncreep(abilId)
+    ..setChancetoEvade(1, value)
+    ..setName("Evasion " + value.toString() + "%")
+
+function createBash(int abilId, real value) returns AbilityDefinitionBashcreep
+    return new AbilityDefinitionBashcreep(abilId)
+    ..setChancetoBash(1, value)
+    ..setDamageBonus(1, 0)
+    ..setName("Bash " + value.toString() + "%")
+
+@compiletime function createCleaveAbilities()
+    createCleave(ABIL_CLEAVE_10, 0.10, 250.)
+    createCleave(ABIL_CLEAVE_20, 0.20, 250.)
+    createCleave(ABIL_CLEAVE_30, 0.30, 250.)
+
+@compiletime function createCriticalStrikeAbilities()
+    createCriticalStrike(ABIL_CRITICAL_STRIKE_10, 0.10, 2.)
+    createCriticalStrike(ABIL_CRITICAL_STRIKE_20, 0.20, 2.)
+    createCriticalStrike(ABIL_CRITICAL_STRIKE_30, 0.30, 2.)
+
+@compiletime function createEvasionAbilities()
+    createEvasion(ABIL_EVASION_10, 0.10)
+    createEvasion(ABIL_EVASION_20, 0.20)
+    createEvasion(ABIL_EVASION_30, 0.30)
+
+@compiletime function createBashAbilities()
+    createBash(ABIL_BASH_10, 0.10)
+    createBash(ABIL_BASH_20, 0.20)
+    createBash(ABIL_BASH_30, 0.30)

@@ -10,3 +10,4 @@ public class LocalUnits
     static constant bloodMassacre = "Models/Fx/Blood Massacre.mdl"
     static constant bloodMissile = "Models/Fx/Blood Missile.mdl"
     static constant orbBloodX = "Models/Units/OrbBloodX.mdl"
+    static constant paladinGhost = "Models/Units/PaladinGhost.mdx"

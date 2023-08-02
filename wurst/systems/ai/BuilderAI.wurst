@@ -187,4 +187,6 @@ init
                 stopAI()
 
     registerToolkitCommand("ai") (player triggerPlayer, LinkedList<string> arguments) ->
+        let aiInstance = playerToBuilderAI.get(triggerPlayer)
+        aiInstance.enableForHumanPlayer = aiInstance.enableForHumanPlayer == false ? true : false
         playerToBuilderAI.get(triggerPlayer).toggleAI()

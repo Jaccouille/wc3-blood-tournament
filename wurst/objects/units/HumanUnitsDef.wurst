@@ -11,8 +11,7 @@ import UnitObjEditingCommon
 import UnitTooltipGenerator
 import ColorUtils
 import AbilityObjEditingCommons
-import DummyAutoCasting
-import OrderIds
+import LocalAssets
 
 @compiletime function createFootman()
     var tooltip = new UnitTooltipGenerator("Basic Human melee unit")
@@ -234,24 +233,47 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     let tooltip = new UnitTooltipGenerator("Paladin Desc")
     return createSpawnedUnit(paladinId, UnitIds.paladin)
             ..registerTooltipGenerator(tooltip)
+            ..setNormalAbilities(commaList(ABIL_BASH_20))
             ..tooltipStartListen()
 
-            ..setAttack1Data(AttackType.Magic, 120, 5, 7, 1.3)
+            ..setAttack1Data(AttackType.Siege, 120, 5, 7, 1.3)
 
             ..setArmorData(ArmorType.Large, 6)
             ..setHitPointsMaximumBase(1000)
 
+            ..setPointValue(0, 1500, 3)
             ..setSpeedBase(300)
-            ..setPointValue(400)
             ..tooltipStopListen(true)
             ..setAttack1Range(120)
             ..setSizeSmall()
             ..setPriority(5)
             ..setIconGameInterface(Icons.bTNHeroPaladin)
-            ..setNameEnhance("Q", "Paladin")
+            ..setNameEnhance("Q", "Paladingue")
 
 
 @compiletime function createPaladinSquad()
+    let tooltip = new UnitTooltipGenerator("Paladin Ghost Desc")
+    createSpawnedUnit(UNIT_GHOST_PALADIN, UnitIds.paladin)
+                ..registerTooltipGenerator(tooltip)
+                ..setNormalAbilities(commaList(""))
+                ..tooltipStartListen()
+
+                ..setAttack1Data(AttackType.Magic, 120, 5, 7, 1.3)
+
+                ..setArmorData(ArmorType.Divine, 4)
+                ..setHitPointsMaximumBase(600)
+                ..setHitPointsRegenerationRate(-15)
+
+                ..setSpeedBase(300)
+                ..setPointValue(0, 1000, 3)
+                ..tooltipStopListen(true)
+                ..setAttack1Range(120)
+                ..setSizeSmall()
+                ..setPriority(5)
+                ..setIconGameInterface(Icons.bTNResurrection)
+                ..setModelFile(LocalUnits.paladinGhost)
+                ..setNameEnhance("W", "Paladin Ghost")
+
     let unitDef = createPaladin(UNIT_PALADIN_1)
         ..setModelFile(Units.heroPaladin)
     createPaladin(UNIT_PALADIN_2)
@@ -261,7 +283,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 
     let buildingDef = createBuildingUnit(BUILDING_PALADIN)
         ..setNameEnhance("R", "Paladin 3x")
-        ..setUnitsTrained(commaList(UNIT_PALADIN_1))
+        ..setUnitsTrained(commaList(UNIT_PALADIN_1, UNIT_GHOST_PALADIN))
         ..setLumberCost(1500)
         ..setModelFile(Units.heroPaladin)
         ..setIconGameInterface(Icons.bTNHeroPaladin)

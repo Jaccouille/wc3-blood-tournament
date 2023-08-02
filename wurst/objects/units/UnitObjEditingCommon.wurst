@@ -267,11 +267,14 @@ public class BTUnitDefinition extends UnitDefinition
         itemDef.setLumberCost(lumber)
         itemDef.setNumberofCharges(charges)
         this.charges = charges
-        setPointValue(getUnitPointValue(gold, lumber, charges))
+        setPointValue(gold, lumber, charges)
 
     function setAutoPointValue()
         if this.buildingDef != null
             setPointValue(buildingData.unitPointValue)
+
+    function setPointValue(int gold, int lumber, int count)
+        setPointValue(getUnitPointValue(gold, lumber, count))
 
     override function setPointValue(int data)
         def.setInt("upoi", data)
