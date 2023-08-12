@@ -5,27 +5,51 @@ import ClosureEvents
 import LocalObjectIDs
 import GameConstants
 import OrderIds
+import BuffIds
 
-public let dummyToRealCastMapTarget = new HashMap<int, int>
+
+public class BuffTuple
+    int orderId
+    int buffId
+
+    construct(int abilId, int buffId)
+        this.orderId = abilId
+        this.buffId = buffId
+
+public let dummyToRealCastMapTarget = new HashMap<int, BuffTuple>
 
 init
     dummyToRealCastMapTarget
-        ..put(ABIL_AUTOCAST_FIRE_SHIELD, 0)
-        ..put(ABIL_AUTOCAST_HEALING_WAVE, OrderIds.healingwave)
-        ..put(ABIL_AUTOCAST_BLIZZARD, OrderIds.blizzard)
+        ..put(ABIL_AUTOCAST_FIRE_SHIELD, new BuffTuple(0, -1))
+        ..put(ABIL_AUTOCAST_HEALING_WAVE, new BuffTuple(OrderIds.healingwave, -1))
+        ..put(ABIL_AUTOCAST_BLIZZARD, new BuffTuple(OrderIds.blizzard, -1))
+        ..put(ABIL_AUTOCAST_UNHOLY_FRENZY,
+            new BuffTuple(OrderIds.unholyfrenzy, BuffIds.unholyFrenzy)
+        )
+        ..put(ABIL_AUTOCAST_ANTI_MAGIC_SHELL,
+            new BuffTuple(OrderIds.antimagicshell, BuffIds.antiMagicShellExtra)
+        )
 
     registerPlayerUnitEvent(EVENT_PLAYER_UNIT_SPELL_CAST) ->
         let abilId = EventData.getSpellAbilityId()
         let caster = EventData.getSpellAbilityUnit()
+        let target = EventData.getSpellTargetUnit()
+
+        // Check if we're casting a dummy spell
         if dummyToRealCastMapTarget.has(abilId)
-            if abilId == ABIL_AUTOCAST_FIRE_SHIELD
-                EventData.getSpellTargetUnit().addAbility(ABIL_FIRE_SHIELD)
-            else if EventData.getSpellTargetUnit().isAlive()
-                let orderId = dummyToRealCastMapTarget.get(abilId)
+            let buffId = dummyToRealCastMapTarget.get(abilId).buffId
+            if target.isAlive()
+                and not target.hasAbility(buffId)
+                let orderId = dummyToRealCastMapTarget.get(abilId).orderId
                 caster.startAbilityCooldown(abilId)
-                caster.issueTargetOrderById(orderId, EventData.getSpellTargetUnit())
+                caster.issueTargetOrderById(orderId, target)
             else
+                caster.issuePointOrder("attack", CENTER)
                 caster.resetAbilityCooldown(abilId)
+
+            // TODO: refactor into previous if condition
+            if abilId == ABIL_AUTOCAST_FIRE_SHIELD
+                target.addAbility(ABIL_FIRE_SHIELD)
 
     registerPlayerUnitEvent(EVENT_PLAYER_UNIT_SPELL_FINISH) ->
         let caster = EventData.getSpellAbilityUnit()

@@ -21,7 +21,7 @@ import LocalAssets
 
         ..setAttack1Data(AttackType.Normal, 14, 1, 2, 1.4)
 
-        ..setArmorData(ArmorType.Large, 3)
+        ..setArmorData(BTArmorType.Large, 3)
         ..setHitPointsMaximumBase(200)
 
         ..setSpeedBase(270)
@@ -47,7 +47,7 @@ import LocalAssets
 
         ..setAttack1Data(AttackType.Normal, 34, 2, 4, 1.3)
 
-        ..setArmorData(ArmorType.Large, 6)
+        ..setArmorData(BTArmorType.Large, 6)
         ..setHitPointsMaximumBase(500)
 
         ..setSpeedBase(270)
@@ -73,7 +73,7 @@ import LocalAssets
         ..setAttack1Data(AttackType.Pierce, 10, 1, 3, 1.3)
         ..setAttack1Range(550)
 
-        ..setArmorData(ArmorType.Medium, 2)
+        ..setArmorData(BTArmorType.Medium, 2)
         ..setHitPointsMaximumBase(150)
 
         ..setSpeedBase(270)
@@ -100,7 +100,7 @@ import LocalAssets
         ..setAttack1Data(AttackType.Pierce, 60, 3, 4, 1.2)
         ..setAttack1Range(700)
 
-        ..setArmorData(ArmorType.Medium, 3)
+        ..setArmorData(BTArmorType.Medium, 3)
         ..setHitPointsMaximumBase(250)
 
         ..setSpeedBase(300)
@@ -126,7 +126,7 @@ import LocalAssets
         ..setAttack1Data(AttackType.Magic, 10, 2, 3, 1.75)
         ..setAttack1Range(400)
 
-        ..setArmorData(ArmorType.Unarmored, 2)
+        ..setArmorData(BTArmorType.Unarmored, 2)
         ..setHitPointsMaximumBase(160)
 
         ..setMana(200)
@@ -158,7 +158,7 @@ import LocalAssets
         ..setAttack1Data(AttackType.Normal, 35, 4, 5, 1.4)
         ..setAttack1Range(300)
 
-        ..setArmorData(ArmorType.Medium, 4)
+        ..setArmorData(BTArmorType.Medium, 4)
         ..setHitPointsMaximumBase(700)
 
         ..setMana(200)
@@ -186,7 +186,7 @@ import LocalAssets
 
         ..setAttack1Data(AttackType.Normal, 49, 4, 6, 1.4)
 
-        ..setArmorData(ArmorType.Large, 4)
+        ..setArmorData(BTArmorType.Large, 4)
         ..setHitPointsMaximumBase(700)
 
         ..setSpeedBase(350)
@@ -211,7 +211,7 @@ import LocalAssets
 
         ..setAttack1Data(AttackType.Normal, 90, 4, 6, 1.4)
 
-        ..setArmorData(ArmorType.Large, 8)
+        ..setArmorData(BTArmorType.Large, 8)
         ..setHitPointsMaximumBase(1200)
 
         ..setSpeedBase(350)
@@ -238,7 +238,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 
             ..setAttack1Data(AttackType.Siege, 120, 5, 7, 1.3)
 
-            ..setArmorData(ArmorType.Large, 6)
+            ..setArmorData(BTArmorType.Large, 6)
             ..setHitPointsMaximumBase(1000)
 
             ..setPointValue(0, 1500, 3)
@@ -254,25 +254,25 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 @compiletime function createPaladinSquad()
     let tooltip = new UnitTooltipGenerator("Paladin Ghost Desc")
     createSpawnedUnit(UNIT_GHOST_PALADIN, UnitIds.paladin)
-                ..registerTooltipGenerator(tooltip)
-                ..setNormalAbilities(commaList(""))
-                ..tooltipStartListen()
+        ..registerTooltipGenerator(tooltip)
+        ..setNormalAbilities(commaList(""))
+        ..tooltipStartListen()
 
-                ..setAttack1Data(AttackType.Magic, 120, 5, 7, 1.3)
+        ..setAttack1Data(AttackType.Magic, 120, 5, 7, 1.3)
 
-                ..setArmorData(ArmorType.Divine, 4)
-                ..setHitPointsMaximumBase(600)
-                ..setHitPointsRegenerationRate(-15)
+        ..setArmorData(BTArmorType.Spectral, 4)
+        ..setHitPointsMaximumBase(600)
+        ..setHitPointsRegenerationRate(-15)
 
-                ..setSpeedBase(300)
-                ..setPointValue(0, 1000, 3)
-                ..tooltipStopListen(true)
-                ..setAttack1Range(120)
-                ..setSizeSmall()
-                ..setPriority(5)
-                ..setIconGameInterface(Icons.bTNResurrection)
-                ..setModelFile(LocalUnits.paladinGhost)
-                ..setNameEnhance("W", "Paladin Ghost")
+        ..setSpeedBase(300)
+        ..setPointValue(0, 1000, 3)
+        ..tooltipStopListen(true)
+        ..setAttack1Range(120)
+        ..setSizeSmall()
+        ..setPriority(5)
+        ..setIconGameInterface(Icons.bTNResurrection)
+        ..setModelFile(LocalUnits.paladinGhost)
+        ..setNameEnhance("W", "Paladin Ghost")
 
     let unitDef = createPaladin(UNIT_PALADIN_1)
         ..setModelFile(Units.heroPaladin)
@@ -302,7 +302,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAttack1Data(AttackType.Magic, 34, 2, 5, 1.75)
         ..setAttack1Range(550)
 
-        ..setArmorData(ArmorType.Unarmored, 0)
+        ..setArmorData(BTArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(80)
 
         ..setMana(200)
@@ -330,7 +330,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAttack1Data(AttackType.Magic, 70, 3, 9, 1.75)
         ..setAttack1Range(600)
 
-        ..setArmorData(ArmorType.Unarmored, 0)
+        ..setArmorData(BTArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(120)
 
         ..setMana(500)
@@ -358,7 +358,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAttack1Data(AttackType.Magic, 90, 3, 7, 1.9)
         ..setAttack1Range(650)
 
-        ..setArmorData(ArmorType.Unarmored, 4)
+        ..setArmorData(BTArmorType.Unarmored, 4)
         ..setHitPointsMaximumBase(280)
 
         ..setMana(400)
@@ -388,7 +388,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAttack1Data(AttackType.Magic, 12, 3, 3, 1.6)
         ..setAttack1Range(300)
 
-        ..setArmorData(ArmorType.Divine, 2)
+        ..setArmorData(BTArmorType.Spectral, 2)
         ..setHitPointsMaximumBase(80)
 
         ..setManaMaximum(0)
@@ -423,7 +423,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAttack1Data(AttackType.Pierce, 55, 9, 4, 1.3)
         ..setAttack1Range(300)
 
-        ..setArmorData(ArmorType.Divine, 2)
+        ..setArmorData(BTArmorType.Spectral, 2)
         ..setHitPointsMaximumBase(600)
 
         ..setManaMaximum(0)
@@ -448,7 +448,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 
         ..setAttack1Range(650)
 
-        ..setArmorData(ArmorType.Unarmored, 6)
+        ..setArmorData(BTArmorType.Unarmored, 6)
         ..setHitPointsMaximumBase(400)
 
         ..setMana(700)
@@ -479,7 +479,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 
         ..setAttack1Data(AttackType.Magic, 250, 5, 14, 0.8)
 
-        ..setArmorData(ArmorType.Large, 10)
+        ..setArmorData(BTArmorType.Large, 10)
         ..setHitPointsMaximumBase(1800)
 
         ..setSpeedBase(300)
@@ -507,7 +507,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAttack1Data(AttackType.Magic, 200, 5, 8, 1.5)
         ..setAttack1Range(450)
 
-        ..setArmorData(ArmorType.Medium, 6)
+        ..setArmorData(BTArmorType.Medium, 6)
         ..setHitPointsMaximumBase(600)
 
         ..setMana(1400)
@@ -533,7 +533,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAttack1Data(AttackType.Pierce, 120, 17, 4, 1.3)
         ..setAttack1Range(550)
 
-        ..setArmorData(ArmorType.Medium, 8)
+        ..setArmorData(BTArmorType.Medium, 8)
         ..setHitPointsMaximumBase(500)
 
         ..setSpeedBase(240)

@@ -12,10 +12,10 @@ import ColorUtils
     return "|cffFFCC00Learn|r " + name + " - [|cffffcc00Level %d|r]"
 
 @configurable function buildActiveTooltip(string name) returns string
-    return name
+    return name.color(SPECIAL_COLOR)
 
 @configurable function buildPassiveTooltip(string name) returns string
-    return name
+    return name.color(SPECIAL_COLOR)
 
 @configurable function buildDescription(string description) returns string
     return description + "|r"
@@ -130,3 +130,18 @@ public class AbilityTooltipGenerator implements TooltipGenerator
         else
             _newString = oldString.substring(0, charPos[lvl-2] + 1) + oldString.substring(charPos[lvl-2] + 1, charPos[lvl-1]) + "|r" + oldString.substring(charPos[lvl-1], oldLen)
         return _newString
+
+public class BTAbilityTooltipGenerator extends AbilityTooltipGenerator
+    construct(Targettype ttype, string description)
+        super(ttype, description)
+
+    construct(string description)
+        super(description)
+
+    construct()
+        super()
+
+    function generateFullTooltip() returns string
+        let name = generateTooltipNormal()
+        let tooltipExt = generateTooltipExtended(false)
+        return name + "\n" + tooltipExt

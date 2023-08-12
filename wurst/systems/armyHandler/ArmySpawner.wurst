@@ -39,7 +39,7 @@ public class BTBuildingData
         buildingPointValue += unitPointValue * unitToSpawn.size()
 
 
-
+// TODO: refactor, spawn count should be located in the unit definition files
 public let armyMap = new HashMap<int, BTBuildingData>
     ..put(BUILDING_FOOTMAN           , new BTBuildingData(generateUnitList(UNIT_FOOTMAN           , 10 ), 100, 0))
     ..put(BUILDING_ROYAL_GUARD       , new BTBuildingData(generateUnitList(UNIT_ROYAL_GUARD       , 10 ), 0, 500))
@@ -78,6 +78,7 @@ public let armyMap = new HashMap<int, BTBuildingData>
     ..put(BUILDING_DEMOLISHER           , new BTBuildingData(generateUnitList(UNIT_DEMOLISHER           , 3  ), 0, 3000))
 
     ..put(BUILDING_GHOUL       , new BTBuildingData(generateUnitList(UNIT_GHOUL       , 30), 0, 600))
+    ..put(BUILDING_SKELETAL_ARCHER, new BTBuildingData(generateUnitList(UNIT_SKELETAL_ARCHER , 10), 150, 0))
     ..put(BUILDING_CRYPT_FIEND , new BTBuildingData(generateUnitList(UNIT_CRYPT_FIEND , 5), 150, 0))
     ..put(BUILDING_NECROMANCER , new BTBuildingData(generateUnitList(UNIT_NECROMANCER , 5), 200, 0))
     ..put(BUILDING_BANSHEE     , new BTBuildingData(generateUnitList(UNIT_BANSHEE     , 4), 200, 0))
@@ -220,6 +221,7 @@ public class ArmySpawner
         while buildingIdx < buildingList.size() and pData.spawnedUnits.size() < spawnZone.unitLimit
             // Get list of unit mapped to the building
             let building = buildingList.get(buildingIdx)
+            Log.info("Spawning " + building.getName())
             squadIds.addAll(armyMap.get(building.getTypeId()).unitToSpawn)
 
             executeItemBonus(building.getInventory())

@@ -15,7 +15,6 @@ let validOrder = new HashSet<int>()
     ..add(OrderIds.innerfire)
     ..add(OrderIds.innerfireon)
     ..add(OrderIds.lightningshield)
-    ..add(OrderIds.lightningshield)
     ..add(OrderIds.faeriefire)
     ..add(OrderIds.raisedead)
     ..add(OrderIds.heal)
@@ -30,6 +29,12 @@ let validOrder = new HashSet<int>()
     ..add(OrderIds.undefend)
     ..add(OrderIds.healingwave)
     ..add(OrderIds.thunderclap)
+    ..add(OrderIds.flamingarrows)
+    ..add(OrderIds.coldarrows)
+    ..add(OrderIds.unholyfrenzy)
+    ..add(OrderIds.antimagicshell)
+    ..add(OrderIds.transmute)
+
 
 
 function isValid() returns boolean
@@ -57,6 +62,6 @@ init
             if u.isType(UNIT_TYPE_PEON)
                 let msg = "Cannot control builder during round phase".color(SPECIAL_COLOR)
                 printTimedToPlayer(msg, 4, u.getOwner())
-            else
-                printTimedToPlayer("Order blocked : " + OrderId2StringBJ(GetIssuedOrderIdBJ()) + " id : " + GetIssuedOrderIdBJ().toString(), 4, u.getOwner())
+            // else
+                // printTimedToPlayer("Order blocked : " + OrderId2StringBJ(GetIssuedOrderIdBJ()) + " id : " + GetIssuedOrderIdBJ().toString(), 4, u.getOwner())
     disableOrderBlocker()

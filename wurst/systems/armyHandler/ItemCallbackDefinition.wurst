@@ -3,6 +3,8 @@ package ItemCallbackDefinition
 import HashMap
 import LinkedList
 import LocalObjectIDs
+import Assets
+import OrderIds
 
 public let itemAddUnitMap = new HashMap<int, ItemAddUnit>
 public let itemModifyUnitMap = new HashMap<int, ItemModifyUnit>
@@ -69,7 +71,7 @@ init
     let innerFireAction = new ItemModifyUnit()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_INNER_FIRE)
-        u.issueImmediateOrder("innerfireon")
+        u.issueImmediateOrderById(OrderIds.innerfireon)
 
     itemModifyUnitMap.put(ITEM_INNER_FIRE, innerFireAction)
 
@@ -85,7 +87,7 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_INCINERATE)
         u.addAbility(ABIL_AUTOCAST_FIRE_SHIELD)
-        u.issueImmediateOrder("frostarmoron")
+        u.issueImmediateOrderById(OrderIds.innerfireon)
 
     itemModifyUnitMap.put(ITEM_FIRE_MAGE, fireMageAction)
 
@@ -94,7 +96,7 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ORB_FROST)
         u.addAbility(ABIL_FROST_ARMOR)
-        u.issueImmediateOrder("frostarmoron")
+        u.issueImmediateOrderById(OrderIds.innerfireon)
 
     itemModifyUnitMap.put(ITEM_ICE_MAGE, iceMageAction)
 
@@ -109,7 +111,7 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_HEALING_WAVE)
         u.addAbility(ABIL_AUTOCAST_HEALING_WAVE)
-        u.issueImmediateOrder("frostarmoron")
+        u.issueImmediateOrderById(OrderIds.innerfireon)
 
     itemModifyUnitMap.put(ITEM_HEALING_WAVE, healingWaveAction)
 
@@ -130,3 +132,40 @@ init
         for i = 1 to count
             replaceUnit(unitToSpawn, UNIT_OGRE, UNIT_OGRE_ARMORED)
     itemAddUnitMap.put(ITEM_OGRE_ARMORED, armoredOgreAction)
+
+
+    let fireArrowAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            replaceUnit(unitToSpawn, UNIT_SKELETAL_ARCHER, UNIT_BURNING_ARCHER)
+    itemAddUnitMap.put(ITEM_BURNING_ARCHER, fireArrowAction)
+
+    let frostArrowAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            replaceUnit(unitToSpawn, UNIT_SKELETAL_ARCHER, UNIT_FROST_ARCHER)
+    itemAddUnitMap.put(ITEM_FROST_ARCHER, frostArrowAction)
+
+    let unholyFrenzyAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.removeAbility(ABIL_AUTOCAST_ANTI_MAGIC_SHELL)
+        u.removeAbility(ABIL_ANTI_MAGIC_SHELL)
+        u.addAbility(ABIL_AUTOCAST_UNHOLY_FRENZY)
+        u.addAbility(ABIL_UNHOLY_FRENZY)
+        u.issueImmediateOrderById(OrderIds.innerfireon)
+
+    itemModifyUnitMap.put(ITEM_UNHOLY_FRENZY, unholyFrenzyAction)
+
+    let raiseSkeletonMageAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.removeAbility(ABIL_RAISE_SKELETON)
+        u.addAbility(ABIL_RAISE_SKELETON_MAGE)
+        u.issueImmediateOrderById(OrderIds.raisedeadon)
+
+    itemModifyUnitMap.put(ITEM_RAISE_SKELETON_MAGE, raiseSkeletonMageAction)
+
+    let crippleAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_CRIPPLE_ORB)
+
+    itemModifyUnitMap.put(ITEM_CRIPPLE, crippleAction)

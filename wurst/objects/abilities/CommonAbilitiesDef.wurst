@@ -1,7 +1,9 @@
 package CommonAbilitiesDef
 
-import AbilityObjEditing
 import LocalObjectIDs
+import AbilityTooltipGenerator
+import AbilityObjEditingCommons
+import BTAbilities
 
 function createCleave(int abilId, real distributedDamage, real aoe) returns AbilityDefinitionPitLordCleavingAttack
     return new AbilityDefinitionPitLordCleavingAttack(abilId)
@@ -47,3 +49,31 @@ function createBash(int abilId, real value) returns AbilityDefinitionBashcreep
     createBash(ABIL_BASH_10, 0.10)
     createBash(ABIL_BASH_20, 0.20)
     createBash(ABIL_BASH_30, 0.30)
+
+
+@compiletime function createArrowAbilites()
+    var tgen = new AbilityTooltipGenerator("Add Spell damage")
+    new AbilityDefinitionSearingArrowscreep(ABIL_FIRE_ARROW)
+        ..registerTooltipGenerator(tgen)
+        ..setLevels(1)
+        ..tooltipStartListen()
+        ..presetDamageBonus(_ -> 25)
+        ..tooltipStopListen(true)
+        ..presetManaCost(_ -> 0)
+        ..presetCastRange(_ -> 700)
+        ..setNameEnhance("Z", "Fire Arrow")
+    abilTooltipMap.put(ABIL_FIRE_ARROW, tgen.generateTooltipExtended(false))
+
+    tgen = new AbilityTooltipGenerator("Slows target movement and attack speed")
+    new AbilityDefinitionColdArrowscreep(ABIL_FROST_ARROW)
+        ..registerTooltipGenerator(tgen)
+        ..setLevels(1)
+        ..tooltipStartListen()
+        ..presetAttackSpeedFactor(_ -> 0.35)
+        ..presetMovementSpeedFactor(_ -> 0.35)
+        ..presetDurationNormal(_ -> 3)
+        ..tooltipStopListen(true)
+        ..presetManaCost(_ -> 0)
+        ..presetCastRange(_ -> 700)
+        ..setNameEnhance("Z", "Frost Arrow")
+    abilTooltipMap.put(ABIL_FROST_ARROW, tgen.generateTooltipExtended(false))

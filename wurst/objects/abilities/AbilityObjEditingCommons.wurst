@@ -4,6 +4,10 @@ package AbilityObjEditingCommons
 import AbilityObjEditing
 import ErrorHandling
 import TooltipsUtils
+import BuffObjEditing
+import Assets
+import ObjectIdGenerator
+import ObjectIds
 
 // Local imports:
 import GridHotkeyPosition
@@ -31,15 +35,32 @@ public function createAutoCastedEnenmyAbility(int abilId) returns AbilityDefinit
         ..setLevels(1)
         ..setCheckDependencies(false)
 
-public function createAutoCastedAlliedAbility(int abilId) returns AbilityDefinitionLichFrostArmorAutocast
-    return new AbilityDefinitionLichFrostArmorAutocast(abilId)
+public function createDummyBuffAllied(int buffId) returns BuffDefinition
+    return new BuffDefinition(buffId, BuffIds.innerFire)
+        ..setArtSpecial(1,"")
+        ..setArtTarget("")
+        ..setIcon(Icons.bTNtemp)
+        ..setTooltipNormal(1, "Dummy buff")
+        ..setTooltipNormalExtended(1, "")
+
+public function createAutoCastedAlliedAbility(int abilId) returns AbilityDefinitionInnerFire
+    let DUMMY_BUFF = BUFF_ID_GEN.next()
+    createDummyBuffAllied(DUMMY_BUFF)
+        ..setIcon(Icons.bTNAntiMagicShell)
+        ..setName(1, "Dummy Buff")
+        ..setTooltipNormal(1, "Dummy Buff")
+        ..setTooltipNormalExtended("Used to hide buff art")
+
+    return new AbilityDefinitionInnerFire(abilId)
+        ..setCheckDependencies(false)
         ..presetManaCost(_ -> 0)
-        ..presetArmorDuration(_ -> 0.01)
         ..presetDurationNormal(_ -> 0.01)
-        ..presetArmorBonus(_ -> 0)
+        ..presetDamageIncrease(_ -> 0)
+        ..presetDefenseIncrease(_ -> 0)
         ..presetBuffs(_ -> "")
         ..setArtTarget("")
         ..setLevels(1)
+        ..setBuffs(1, DUMMY_BUFF.toRawCode())
 
 public function createOrbAbility(int abilId) returns AbilityDefinitionOrbofLightning
     return new  AbilityDefinitionOrbofLightning(abilId)

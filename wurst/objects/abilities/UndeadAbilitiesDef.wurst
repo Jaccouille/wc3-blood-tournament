@@ -1,0 +1,142 @@
+package UndeadAbilitiesDef
+
+import BTAbilities
+import AbilityTooltipGenerator
+import AbilityObjEditingCommons
+import Assets
+import ItemObjEditingCommon
+import UnitObjEditingCommon
+
+import LocalObjectIDs
+
+
+@compiletime function createUndeadAbilities()
+    var itm = createBasicItem(ITEM_UNHOLY_FRENZY)
+        ..setItemCost(0, 100, 1, 4, 4)
+        ..setNameEnhance("Z", "Add 1 Unholy Frenzy")
+        ..setInterfaceIcon(Icons.bTNUnholyFrenzy)
+
+    var tgen = new BTAbilityTooltipGenerator("Increases the attack rate of a " +
+        "target unit but drains hit points.")
+    new AbilityDefinitionUnholyFrenzycreep(ABIL_UNHOLY_FRENZY)
+        ..setCheckDependencies(false)
+        ..presetCooldown(_ -> 0)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetAttackSpeedBonus(_ -> 0.60)
+        ..presetCastRange(_ -> 500)
+        ..presetDamageperSecond(_ -> 4)
+        ..presetManaCost(_ -> 40)
+        ..presetDurationNormal(_ -> 45)
+        ..setNameEnhance("Z", "Unholy Frenzy")
+        ..tooltipStopListen(false)
+
+    createAutoCastedAlliedAbility(ABIL_AUTOCAST_UNHOLY_FRENZY)
+        ..presetManaCost(_ -> 40)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 3)
+        ..presetCastRange(_ -> 500)
+        ..presetDurationNormal(_ -> 45)
+        ..tooltipStopListen(true)
+        ..setIconNormal(Icons.bTNUnholyFrenzy)
+        ..setIconTurnOff(Icons.bTNUnholyFrenzy)
+        ..setBuffs(1, BuffIds.unholyFrenzy.toRawCode())
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_UNHOLY_FRENZY, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator("Creates a barrier that block spell " +
+        "and magic damage from affecting a target unit.")
+    new AbilityDefinitionAntimagicShieldcreep(ABIL_ANTI_MAGIC_SHELL)
+        ..presetCooldown(_ -> 0)
+        ..setCheckDependencies(false)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetShieldLife(_ -> 300)
+        ..presetCastRange(_ -> 500)
+        ..presetManaCost(_ -> 40)
+        ..presetDurationNormal(_ -> 90)
+        ..setNameEnhance("X", "Anti-Magic Shell")
+        ..setBuffs(1, BuffIds.antiMagicShellExtra.toRawCode())
+        ..tooltipStopListen(false)
+
+    createAutoCastedAlliedAbility(ABIL_AUTOCAST_ANTI_MAGIC_SHELL)
+        ..presetManaCost(_ -> 40)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 2)
+        ..presetDurationNormal(_ -> 90)
+        ..tooltipStopListen(true)
+        ..presetCastRange(_ -> 500)
+        ..setNameEnhance("X", "Anti-Magic Shell")
+        ..setBuffs(1, BuffIds.antiMagicShellExtra.toRawCode())
+        ..setIconNormal(Icons.bTNAntiMagicShell)
+        ..setIconTurnOff(Icons.bTNAntiMagicShell)
+
+    abilTooltipMap.put(ABIL_ANTI_MAGIC_SHELL, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator("Raises skeletons from a corpse.")
+    new AbilityDefinitionRaiseDeadCreep(ABIL_RAISE_SKELETON)
+        ..registerTooltipGenerator(tgen)
+        ..presetUnitTypeOne(_ -> commaList(UNIT_SKELETON))
+        ..tooltipStartListen()
+        ..presetUnitsSummonedTypeOne(_ -> 2)
+        ..presetManaCost(_ -> 75)
+        ..presetCastRange(_ -> 600)
+        ..presetCooldown(_ -> 12)
+        ..presetDurationNormal(_ -> 40)
+        ..setNameEnhance("Z", "Raise Dead")
+        ..tooltipStopListen(true)
+    abilTooltipMap.put(ABIL_RAISE_SKELETON, tgen.generateFullTooltip())
+
+    itm = createBasicItem(ITEM_RAISE_SKELETON_MAGE)
+        ..setItemCost(0, 200, 1, 3, 3)
+        ..setNameEnhance("Z", "Replace Skeleton Warrior by Skeletal Mage")
+        ..setInterfaceIcon(Icons.bTNSkeletonMage)
+
+    tgen = new BTAbilityTooltipGenerator("Raises skeleton mages from a corpse.")
+    new AbilityDefinitionRaiseDeadCreep(ABIL_RAISE_SKELETON_MAGE)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetUnitTypeOne(_ -> commaList(UNIT_SKELETON_MAGE))
+        ..presetUnitsSummonedTypeOne(_ -> 2)
+        ..presetManaCost(_ -> 75)
+        ..presetCastRange(_ -> 600)
+        ..presetCooldown(_ -> 12)
+        ..presetDurationNormal(_ -> 40)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Raise Dead")
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_RAISE_SKELETON_MAGE, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator("Reduces attack rate and movement speed of target units.")
+    new AbilityDefinitionOrbofSpells(ABIL_CRIPPLE_ORB)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetChanceToHitUnits(_ -> 100)
+        ..setEnabledAttackIndex(1, 0)
+        ..tooltipStopListen(true)
+        ..presetDamageBonus(_ -> 0)
+        ..presetEffectAbility(_ -> commaList(ABIL_CRIPPLE))
+        ..presetChanceToHitSummons(_ -> 0.25)
+
+    itm = createBasicItem(ITEM_CRIPPLE)
+        ..setItemCost(0, 300, 3, 1, 1)
+        ..setNameEnhance("X", "Add 3 Cripple")
+        ..setInterfaceIcon(Icons.bTNCripple)
+
+    new AbilityDefinitionCripplecreep(ABIL_CRIPPLE)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetAttackSpeedReduction(_ -> 0.3)
+        ..presetMovementSpeedReduction(_ -> 0.20)
+        ..presetDamageReduction(_ -> 0.40)
+        ..presetDurationNormal(_ -> 5)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Cripple")
+        ..setCooldown(1, 0)
+        ..setBuffs(1, commaList(BuffIds.cripple))
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_CRIPPLE, tgen.generateFullTooltip())

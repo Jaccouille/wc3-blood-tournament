@@ -1,0 +1,5 @@
+package BTAbilities
+
+import HashMap
+
+public let abilTooltipMap = compiletime(new HashMap<int, string>)
