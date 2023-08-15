@@ -25,7 +25,7 @@ public function AbilityDefinition.setHotkeyEnhance(string hotkey)
     this.setHotkeyNormal(hotkey)
     this.presetButtonPosNormal(hotKeyMapping.get(hotkey).x, hotKeyMapping.get(hotkey).y)
 
-public function createAutoCastedEnenmyAbility(int abilId) returns AbilityDefinitionCursecreep
+public function createAutoCastedEnemyAbility(int abilId) returns AbilityDefinitionCursecreep
     return new AbilityDefinitionCursecreep(abilId)
         ..presetManaCost(_ -> 0)
         ..presetDurationNormal(_ -> 0.01)

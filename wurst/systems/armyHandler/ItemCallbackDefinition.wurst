@@ -169,3 +169,15 @@ init
         u.addAbility(ABIL_CRIPPLE_ORB)
 
     itemModifyUnitMap.put(ITEM_CRIPPLE, crippleAction)
+
+    let lichAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            unitToSpawn.push(UNIT_LICH)
+    itemAddUnitMap.put(ITEM_LICH, lichAction)
+
+    let vampireLordAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            unitToSpawn.push(UNIT_VAMPIRE_LORD)
+    itemAddUnitMap.put(ITEM_VAMPIRE_LORD, vampireLordAction)

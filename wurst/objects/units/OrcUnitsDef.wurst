@@ -21,7 +21,7 @@ import ItemObjEditingCommon
 
         ..setAttack1Data(AttackType.Normal, 25, 2, 4, 1.5)
 
-        ..setArmorData(BTArmorType.Large, 2)
+        ..setArmorData(ArmorType.Large, 2)
         ..setHitPointsMaximumBase(300)
 
         ..setSpeedBase(270)
@@ -49,7 +49,7 @@ import ItemObjEditingCommon
 
         ..setAttack1Data(AttackType.Normal, 48, 4, 4, 1.1)
 
-        ..setArmorData(BTArmorType.Large, 3)
+        ..setArmorData(ArmorType.Large, 3)
         ..setHitPointsMaximumBase(500)
 
         ..setSpeedBase(270)
@@ -73,7 +73,7 @@ import ItemObjEditingCommon
         ..setAttack1Data(AttackType.Pierce, 24, 2, 8, 1.8)
         ..setAttack1Range(550)
 
-        ..setArmorData(BTArmorType.Unarmored, 2)
+        ..setArmorData(ArmorType.Unarmored, 2)
         ..setHitPointsMaximumBase(80)
 
         ..setSpeedBase(270)
@@ -97,7 +97,7 @@ import ItemObjEditingCommon
         ..setAttack1Data(AttackType.Pierce, 40, 4, 9, 1.6)
         ..setAttack1Range(550)
 
-        ..setArmorData(BTArmorType.Unarmored, 3)
+        ..setArmorData(ArmorType.Unarmored, 3)
         ..setHitPointsMaximumBase(140)
 
         ..setSpeedBase(270)
@@ -120,7 +120,7 @@ import ItemObjEditingCommon
         ..setAttack1Data(AttackType.Normal, 40, 2, 4, 1.4)
         ..setAttack1Range(350)
 
-        ..setArmorData(BTArmorType.Medium, 4)
+        ..setArmorData(ArmorType.Medium, 4)
         ..setHitPointsMaximumBase(160)
 
         ..setSpeedBase(270)
@@ -142,7 +142,7 @@ import ItemObjEditingCommon
 
         ..setAttack1Data(AttackType.Normal, 55, 7, 4, 1.8)
 
-        ..setArmorData(BTArmorType.Small, 2)
+        ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(500)
 
         ..setSpeedBase(350)
@@ -167,7 +167,7 @@ import ItemObjEditingCommon
 
         ..setAttack1Data(AttackType.Normal, 111, 6, 7, 1.6)
 
-        ..setArmorData(BTArmorType.Large, 7)
+        ..setArmorData(ArmorType.Large, 7)
         ..setHitPointsMaximumBase(1200)
 
         ..setSpeedBase(350)
@@ -195,7 +195,7 @@ import ItemObjEditingCommon
         ..setAttack1Data(AttackType.Magic, 36, 2, 6, 1.45)
         ..setAttack1Range(400)
 
-        ..setArmorData(BTArmorType.Small, 2)
+        ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(120)
 
         ..setManaMaximum(200)
@@ -221,7 +221,7 @@ import ItemObjEditingCommon
 
         ..setAttack1Data(AttackType.Magic, 63, 2, 9, 1.45)
 
-        ..setArmorData(BTArmorType.Small, 2)
+        ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(180)
 
         ..setManaMaximum(200)
@@ -247,7 +247,7 @@ import ItemObjEditingCommon
         ..setAttack1Data(AttackType.Magic, 11, 2, 4, 1.75)
         ..setAttack1Range(450)
 
-        ..setArmorData(BTArmorType.Unarmored, 0)
+        ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(120)
 
         ..setManaMaximum(200)
@@ -277,7 +277,7 @@ import ItemObjEditingCommon
         ..setAttack1Data(AttackType.Magic, 19, 2, 4, 1.75)
         ..setAttack1Range(550)
 
-        ..setArmorData(BTArmorType.Unarmored, 0)
+        ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(80)
 
         ..setManaMaximum(200)
@@ -307,7 +307,7 @@ import ItemObjEditingCommon
 
         ..setAttack1Data(AttackType.Normal, 33, 4, 3, 1.1)
 
-        ..setArmorData(BTArmorType.Spectral, 2)
+        ..setArmorData(ArmorType.Divine, 2)
         ..setHitPointsMaximumBase(200)
 
         ..setManaMaximum(0)
@@ -347,7 +347,7 @@ import ItemObjEditingCommon
         ..setAttack1Data(AttackType.Magic, 79, 4, 14, 1.60)
         ..setAttack1Range(550)
 
-        ..setArmorData(BTArmorType.Small, 4)
+        ..setArmorData(ArmorType.Small, 4)
         ..setHitPointsMaximumBase(220)
 
         ..setManaMaximum(200)
@@ -411,7 +411,7 @@ import ItemObjEditingCommon
 
         ..setAttack1Data(AttackType.Siege, 80, 9, 11, 2)
 
-        ..setArmorData(BTArmorType.Unarmored, 0)
+        ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(1500)
 
         ..setSpeedBase(240)
@@ -439,7 +439,7 @@ import ItemObjEditingCommon
 
         ..setAttack1Data(AttackType.Siege, 80, 9, 11, 2)
 
-        ..setArmorData(BTArmorType.Large, 8)
+        ..setArmorData(ArmorType.Large, 8)
         ..setHitPointsMaximumBase(1700)
 
         ..setSpeedBase(240)
@@ -464,7 +464,7 @@ import ItemObjEditingCommon
         ..setAttack1Data(AttackType.Normal, 60, 10, 4, 1.1)
         ..setAttack1Range(550)
 
-        ..setArmorData(BTArmorType.Small, 4)
+        ..setArmorData(ArmorType.Small, 4)
         ..setHitPointsMaximumBase(800)
 
         ..setSpeedBase(300)
@@ -487,7 +487,7 @@ import ItemObjEditingCommon
 
         ..setAttack1Data(AttackType.Normal, 00, 13, 6, 0.7)
 
-        ..setArmorData(BTArmorType.Small, 8)
+        ..setArmorData(ArmorType.Small, 8)
         ..setHitPointsMaximumBase(2400)
 
         ..setSpeedBase(320)
@@ -511,7 +511,7 @@ import ItemObjEditingCommon
         ..setAttack1Data(AttackType.Normal, 50, 15, 15, 2)
         ..setAttack1Range(1100)
 
-        ..setArmorData(BTArmorType.Large, 2)
+        ..setArmorData(ArmorType.Large, 2)
         ..setHitPointsMaximumBase(240)
 
         ..setSpeedBase(230)

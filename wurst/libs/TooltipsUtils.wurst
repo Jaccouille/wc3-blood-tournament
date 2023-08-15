@@ -7,7 +7,7 @@ import ObjectIds
 // Local imports:
 import ColorUtils
 
-function real.formatForTooltip() returns string
+public function real.toPercent() returns string
     if this > 1 and this - this.toInt() != 0
         return this.toString()
     else if this < 1 and this > 0
@@ -55,43 +55,43 @@ public function makeToolTipDuration(real DURATION_HERO, real DURATION_NORMAL, re
     )
 
 public function real.toToolTip() returns string
-    return this.formatForTooltip()
+    return this.toPercent()
 
 public function real.toToolTipRed() returns string
-    return this.formatForTooltip().color(COLOR_RED)
+    return this.toPercent().color(COLOR_RED)
 
 public function real.toToolTipGreen() returns string
-    return this.formatForTooltip().color(COLOR_GREEN)
+    return this.toPercent().color(COLOR_GREEN)
 
 public function real.toToolTipBlue() returns string
-    return this.formatForTooltip().color(COLOR_TURQUOISE)
+    return this.toPercent().color(COLOR_TURQUOISE)
 
 public function real.toToolTipTeal() returns string
-    return this.formatForTooltip().color(COLOR_TEAL)
+    return this.toPercent().color(COLOR_TEAL)
 
 public function real.toToolTipOrange() returns string
-    return this.formatForTooltip().color(COLOR_ORANGE)
+    return this.toPercent().color(COLOR_ORANGE)
 
 public function real.toToolTipYellow() returns string
-    return this.formatForTooltip().color(COLOR_YELLOW)
+    return this.toPercent().color(COLOR_YELLOW)
 
 public function real.toToolTipPurple() returns string
-    return this.formatForTooltip().color(COLOR_VIOLET)
+    return this.toPercent().color(COLOR_VIOLET)
 
 public function real.toToolTipLightBlue() returns string
-    return this.formatForTooltip().color(COLOR_LIGHT_BLUE)
+    return this.toPercent().color(COLOR_LIGHT_BLUE)
 
 public function real.toToolTipGray() returns string
-    return this.formatForTooltip().color(COLOR_GRAY)
+    return this.toPercent().color(COLOR_GRAY)
 
 public function real.toToolTipDarkGreen() returns string
-    return this.formatForTooltip().color(COLOR_DARK_GREEN)
+    return this.toPercent().color(COLOR_DARK_GREEN)
 
 public function real.toToolTipPink() returns string
-    return this.formatForTooltip().color(COLOR_PINK)
+    return this.toPercent().color(COLOR_PINK)
 
 public function real.toToolTipBrown() returns string
-    return this.formatForTooltip().color(COLOR_BROWN)
+    return this.toPercent().color(COLOR_BROWN)
 
 public function int.formatStat() returns string
     return this.toReal().toToolTipGreen()

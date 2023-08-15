@@ -4,36 +4,78 @@ import LocalObjectIDs
 import AbilityTooltipGenerator
 import AbilityObjEditingCommons
 import BTAbilities
+import TooltipsUtils
 
 function createCleave(int abilId, real distributedDamage, real aoe) returns AbilityDefinitionPitLordCleavingAttack
-    return new AbilityDefinitionPitLordCleavingAttack(abilId)
-    ..setLevels(1)
-    ..setDistributedDamageFactor(1, distributedDamage)
-    ..setAreaofEffect(1, aoe)
-    ..setName("Cleave " + distributedDamage.toString() + "%")
+    let tgen = new BTAbilityTooltipGenerator(
+        "This unit damage strikes through to enemies near the primary attacked unit.")
+    let abilDef =  new AbilityDefinitionPitLordCleavingAttack(abilId)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..presetDistributedDamageFactor(_ -> distributedDamage)
+        ..tooltipStartListen()
+        ..presetAreaofEffect(_ -> aoe)
+        ..setName("Cleave " + distributedDamage.toPercent())
+        ..tooltipStopListen()
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
 
 function createCriticalStrike(int abilId, real chance, real multiplier) returns AbilityDefinitionCriticalStrikecreep
-    return new AbilityDefinitionCriticalStrikecreep(abilId)
-    ..setChancetoCriticalStrike(1, chance)
-    ..setDamageMultiplier(1, multiplier)
-    ..setNeverMiss(1, true)
-    ..setName("Critical Strike " + chance.toString() + "%, " + multiplier.toString() + "x")
+    let tgen = new BTAbilityTooltipGenerator(
+        "Gives a chance to do multiply total damage on an attack.")
+    let abilDef = new AbilityDefinitionCriticalStrikecreep(abilId)
+        ..registerTooltipGenerator(tgen)
+        ..presetChancetoCriticalStrike(_ -> chance)
+        ..tooltipStartListen()
+        ..presetDamageMultiplier(_ -> multiplier)
+        ..presetNeverMiss(_ -> true)
+        ..setName("Critical Strike " + chance.toPercent() + ", " + multiplier.toString() + "x")
+        ..tooltipStopListen()
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
 
 function createEvasion(int abilId, real value) returns AbilityDefinitionEvasioncreep
-    return new AbilityDefinitionEvasioncreep(abilId)
-    ..setChancetoEvade(1, value)
-    ..setName("Evasion " + value.toString() + "%")
+    let tgen = new BTAbilityTooltipGenerator(
+        "Gives a chance to avoid an attack.")
+    let abilDef = new AbilityDefinitionEvasioncreep(abilId)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..setName("Evasion " + value.toPercent())
+        ..tooltipStopListen()
+        ..presetChancetoEvade(_ -> value)
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
 
 function createBash(int abilId, real value) returns AbilityDefinitionBashcreep
-    return new AbilityDefinitionBashcreep(abilId)
-    ..setChancetoBash(1, value)
-    ..setDamageBonus(1, 0)
-    ..setName("Bash " + value.toString() + "%")
+    let tgen = new BTAbilityTooltipGenerator(
+        "Gives a chance to stun the target.")
+    let abilDef = new AbilityDefinitionBashcreep(abilId)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..setName("Bash " + value.toPercent())
+        ..tooltipStopListen()
+        ..presetDamageBonus(_ -> 0)
+        ..presetChancetoBash(_ -> value)
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
+
+function createLifeSteal(int abilId, real value) returns AbilityDefinitionVampiricattack
+    let tgen = new BTAbilityTooltipGenerator(
+        "Recover hit points when hitting an enemy unit.")
+    let abilDef = new AbilityDefinitionVampiricattack(abilId)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..setName("Lifesteal " + value.toPercent())
+        ..tooltipStopListen()
+        ..presetLifeStolenPerAttack(_ -> value)
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
 
 @compiletime function createCleaveAbilities()
-    createCleave(ABIL_CLEAVE_10, 0.10, 250.)
-    createCleave(ABIL_CLEAVE_20, 0.20, 250.)
-    createCleave(ABIL_CLEAVE_30, 0.30, 250.)
+    createCleave(ABIL_CLEAVE_10, 0.10, 150.)
+    createCleave(ABIL_CLEAVE_20, 0.20, 150.)
+    createCleave(ABIL_CLEAVE_30, 0.30, 150.)
 
 @compiletime function createCriticalStrikeAbilities()
     createCriticalStrike(ABIL_CRITICAL_STRIKE_10, 0.10, 2.)
@@ -50,9 +92,14 @@ function createBash(int abilId, real value) returns AbilityDefinitionBashcreep
     createBash(ABIL_BASH_20, 0.20)
     createBash(ABIL_BASH_30, 0.30)
 
+@compiletime function createLifeStealAbilities()
+    createLifeSteal(ABIL_LIFESTEAL_50, 0.50)
+    createLifeSteal(ABIL_LIFESTEAL_75, 0.75)
+    createLifeSteal(ABIL_LIFESTEAL_100, 1.)
+
 
 @compiletime function createArrowAbilites()
-    var tgen = new AbilityTooltipGenerator("Add Spell damage")
+    var tgen = new AbilityTooltipGenerator("Add Spell damage.")
     new AbilityDefinitionSearingArrowscreep(ABIL_FIRE_ARROW)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
@@ -64,7 +111,7 @@ function createBash(int abilId, real value) returns AbilityDefinitionBashcreep
         ..setNameEnhance("Z", "Fire Arrow")
     abilTooltipMap.put(ABIL_FIRE_ARROW, tgen.generateTooltipExtended(false))
 
-    tgen = new AbilityTooltipGenerator("Slows target movement and attack speed")
+    tgen = new AbilityTooltipGenerator("Slow target movement and attack speed.")
     new AbilityDefinitionColdArrowscreep(ABIL_FROST_ARROW)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)

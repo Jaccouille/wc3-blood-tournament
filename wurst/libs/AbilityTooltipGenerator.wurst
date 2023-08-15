@@ -50,7 +50,7 @@ public class AbilityTooltipGenerator implements TooltipGenerator
         propMap.put(title, lc)
 
     override function applyToDef(AbilityDefinition def)
-        name = propMap.has("Name") ? propMap.get("Name").run(0) : "unnamed"
+        name = propMap.has("Name") ? propMap.getAndRemove("Name").run(0) : "unnamed"
         hotkey = propMap.has("Hotkey") ? propMap.get("Hotkey").run(0) : "Q"
         targettype = propMap.has("Target Type") ? propMap.get("Target Type").run(0).toInt() castTo Targettype : targettype
         def..setTooltipLearn(generateTooltipLearn())
@@ -90,7 +90,8 @@ public class AbilityTooltipGenerator implements TooltipGenerator
                     tmp += fixValue(propMap.get(key).run(i)) + (i < levels ? "/" : "")
 
             s += TITLE_COLOR + key + ":|r " + colorLevelValue(tmp, 1, levels) + "\n"
-        s += "\n"
+        if propMap.size() > 0
+            s += "\n"
         s += buildDescription(description)
         return s
 

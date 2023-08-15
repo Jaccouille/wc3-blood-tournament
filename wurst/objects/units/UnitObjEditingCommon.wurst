@@ -16,38 +16,6 @@ import LocalObjectIDs
 import TooltipsUtils
 import UnitTooltipGenerator
 
-public enum BTArmorType
-	Small
-	Medium
-	Large
-	Fortified
-	Normal
-	Hero
-	Spectral
-	Unarmored
-
-public function BTArmorType.toObjectString() returns string
-	string result
-	switch this
-		case Normal
-			result = "normal"
-		case Small
-			result = "small"
-		case Medium
-			result = "medium"
-		case Large
-			result = "large"
-		case Fortified
-			result = "fort"
-		case Hero
-			result = "hero"
-		case Spectral
-			result = "spectral"
-		case Unarmored
-			result = "none"
-	return result
-
-
 function BTUnitDefinition.setCommonAttr()
     this.setBuildTime(1)
     this.setAttack2DamageSidesperDie(1)
@@ -236,17 +204,19 @@ public class BTUnitDefinition extends UnitDefinition
         def.setInt("uhpm", data)
         addTooltipProperty("Health Point", data)
 
-    function setArmorData(BTArmorType data, int defenseAmount)
-        let dataStr = data.toObjectString()
+    function setArmorData(ArmorType data, int defenseAmount)
+        var dataStr = data.toObjectString()
         def.setString("udty", dataStr)
         def.setInt("udef", defenseAmount)
+        if dataStr == "divine"
+            dataStr = "spectral"
         addTooltipProperty("Armor", dataStr.firstUpper() + " | " + defenseAmount.toString())
 
     override function setDefenseBase(int data)
         def.setInt("udef", data)
         addTooltipProperty("Armor", data)
 
-    function setArmorType(BTArmorType data)
+    override function setArmorType(ArmorType data)
         let dataStr = data.toObjectString()
         def.setString("udty", dataStr)
         addTooltipProperty("Armor Type", dataStr.firstUpper())

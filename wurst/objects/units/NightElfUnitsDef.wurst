@@ -17,7 +17,7 @@ import UnitTooltipGenerator
 
         ..setAttack1Data(AttackType.Normal, 14, 4, 2, 2)
 
-        ..setArmorData(BTArmorType.Large, 4)
+        ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(240)
 
         ..setSpeedBase(250)
@@ -40,7 +40,7 @@ import UnitTooltipGenerator
 
         ..setAttack1Data(AttackType.Siege, 127, 9, 4, 3)
 
-        ..setArmorData(BTArmorType.Large, 7)
+        ..setArmorData(ArmorType.Large, 7)
         ..setHitPointsMaximumBase(1400)
 
         ..setSpeedBase(240)
@@ -64,7 +64,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Pierce, 16, 4, 1, 1.8)
         ..setAttack1Range(650)
 
-        ..setArmorData(BTArmorType.Medium, 0)
+        ..setArmorData(ArmorType.Medium, 0)
         ..setHitPointsMaximumBase(140)
 
         ..setSpeedBase(270)
@@ -88,7 +88,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 65, 3, 4, 1.4)
         ..setAttack1Range(700)
 
-        ..setArmorData(BTArmorType.Medium, 0)
+        ..setArmorData(ArmorType.Medium, 0)
         ..setHitPointsMaximumBase(240)
 
         ..setSpeedBase(300)
@@ -111,7 +111,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 45, 1, 2, 2)
         ..setAttack1Range(400)
 
-        ..setArmorData(BTArmorType.Medium, 3)
+        ..setArmorData(ArmorType.Medium, 3)
         ..setHitPointsMaximumBase(240)
 
         ..setSpeedBase(300)
@@ -135,7 +135,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 24, 4, 2, 1.6)
         ..setAttack1Range(300)
 
-        ..setArmorData(BTArmorType.Medium, 2)
+        ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(160)
 
         ..setSpeedBase(270)
@@ -162,7 +162,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 45, 4, 4, 1.6)
         ..setAttack1Range(300)
 
-        ..setArmorData(BTArmorType.Medium, 4)
+        ..setArmorData(ArmorType.Medium, 4)
         ..setHitPointsMaximumBase(400)
 
         ..setSpeedBase(350)
@@ -186,7 +186,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Magic, 35, 4, 2, 1.6)
         ..setAttack1Range(300)
 
-        ..setArmorData(BTArmorType.Spectral, 2)
+        ..setArmorData(ArmorType.Divine, 2)
         ..setHitPointsMaximumBase(300)
 
         ..setSpeedBase(270)
@@ -210,7 +210,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Magic, 30, 3, 2, 1.75)
         ..setAttack1Range(400)
 
-        ..setArmorData(BTArmorType.Unarmored, 0)
+        ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(60)
 
         ..setSpeedBase(270)
@@ -237,7 +237,7 @@ import UnitTooltipGenerator
 
         ..setAttack1Data(AttackType.Normal, 90, 3, 13, 1.5)
 
-        ..setArmorData(BTArmorType.Large, 4)
+        ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(350)
 
         ..setSpeedBase(270)
@@ -266,7 +266,7 @@ import UnitTooltipGenerator
 
         ..setAttack1Data(AttackType.Normal, 110, 3, 17, 1.2)
 
-        ..setArmorData(BTArmorType.Large, 4)
+        ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(900)
 
         ..setSpeedBase(270)
@@ -291,7 +291,7 @@ import UnitTooltipGenerator
 
         ..setAttack1Data(AttackType.Normal, 60, 7, 4, 0.9)
 
-        ..setArmorData(BTArmorType.Large, 4)
+        ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(660)
 
         ..setSpeedBase(330)
@@ -317,7 +317,7 @@ import UnitTooltipGenerator
 
         ..setAttack1Data(AttackType.Magic, 120, 7, 4, 0.9)
 
-        ..setArmorData(BTArmorType.Spectral, 7)
+        ..setArmorData(ArmorType.Divine, 7)
         ..setHitPointsMaximumBase(1000)
 
         ..setSpeedBase(330)
@@ -342,7 +342,7 @@ import UnitTooltipGenerator
 
         ..setAttack1Data(AttackType.Normal, 177, 7, 16, 0.7)
 
-        ..setArmorData(BTArmorType.Unarmored, 9)
+        ..setArmorData(ArmorType.Unarmored, 9)
         ..setHitPointsMaximumBase(1500)
 
         ..setSpeedBase(350)
@@ -369,7 +369,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Pierce, 190, 9, 6, 1)
         ..setAttack1Range(650)
 
-        ..setArmorData(BTArmorType.Medium, 6)
+        ..setArmorData(ArmorType.Medium, 6)
         ..setHitPointsMaximumBase(1200)
 
         ..setSpeedBase(270)
@@ -397,7 +397,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Magic, 80, 4, 8, 1.2)
         ..setAttack1Range(450)
 
-        ..setArmorData(BTArmorType.Unarmored, 4)
+        ..setArmorData(ArmorType.Unarmored, 4)
         ..setHitPointsMaximumBase(1200)
 
         ..setSpeedBase(270)
@@ -425,7 +425,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Pierce, 400, 9, 11, 2)
         ..setAttack1Range(1200)
 
-        ..setArmorData(BTArmorType.Large, 4)
+        ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(300)
 
         ..setSpeedBase(240)
