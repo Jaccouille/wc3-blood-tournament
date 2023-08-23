@@ -23,6 +23,8 @@ function customAction(unit killer, unit dying)
         let hpBonus = (dying.getMaxHP() / 20).toInt()
         killer.setMaxHP(killer.getMaxHP().toInt() + hpBonus, true)
         flashEffect(Abilities.aIsmTarget, killer, "origin")
+    else if dying.getTypeId() == UNIT_WISP
+        flashEffect(Units.wispExplode, dying.getPos())
 
 function getBounty(unit dyingUnit) returns int
     return (dyingUnit.getPointValue() * gameConfig.getBountyMultiplier()).toInt()
@@ -79,7 +81,9 @@ public function initUnitDeathTrigger()
             customAction(killer, dyingUnit)
 
             // Add blood points bounty
-            if killerOwner != ALTAR_PLAYER and roundController.currentRound instanceof NormalRound
+            if killerOwner != ALTAR_PLAYER
+                and roundController.currentRound instanceof NormalRound
+                and killerOwner != dyingUnit.getOwner()
                 if dyingUnit.getPointValue() > 0
                     pDatas.get(killerOwner).addBounty(getBounty(dyingUnit))
                     createBountyTag(dyingUnit, killerOwner)

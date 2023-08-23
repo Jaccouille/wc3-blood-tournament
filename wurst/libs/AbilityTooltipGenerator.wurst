@@ -54,9 +54,9 @@ public class AbilityTooltipGenerator implements TooltipGenerator
         hotkey = propMap.has("Hotkey") ? propMap.get("Hotkey").run(0) : "Q"
         targettype = propMap.has("Target Type") ? propMap.get("Target Type").run(0).toInt() castTo Targettype : targettype
         def..setTooltipLearn(generateTooltipLearn())
-        ..setTooltipLearnExtended(generateTooltipExtended(true))
+            ..setTooltipLearnExtended(generateTooltipExtended(true))
         def..setTooltipNormal(1, generateTooltipNormal())
-        ..setTooltipNormalExtended(1, generateTooltipExtended(false))
+            ..setTooltipNormalExtended(1, generateTooltipExtended(false))
 
     function applyToDefItem(ItemDefinition defItem)
         defItem.setTooltipExtended(generateTooltipExtended(false))

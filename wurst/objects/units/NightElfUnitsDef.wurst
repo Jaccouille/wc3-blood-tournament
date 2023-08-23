@@ -5,9 +5,15 @@ import Assets
 import ChannelAbilityPreset
 
 // Local imports:
+import ItemObjEditingCommon
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
+import BTAbilities
+import LinkedList
+import ColorUtils
+import NightElfAbilitiesDef
+
 
 @compiletime function createTreant()
     var tooltip = new UnitTooltipGenerator("Footman Desc")
@@ -18,16 +24,18 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 14, 4, 2, 2)
 
         ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(240)
+        ..setHitPointsMaximumBase(120)
+        ..setHitPointsRegenerationRate(-10)
 
         ..setSpeedBase(250)
 
         ..setSizeSmall()
         ..setNameEnhance("Q", "Treant")
         ..setAutoPointValue()
+       ..setAutoBuildingCost()
+
         ..tooltipStopListen(true)
         ..setUpgradeTo(commaList(BUILDING_ANCIENT_PROTECTOR))
-        ..setBuildingGoldCost(100)
 
         ..setModelFileExt(Units.ent)
         ..setIconGameInterfaceExt(Icons.bTNEnt)
@@ -56,12 +64,12 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.ent)
 
 @compiletime function createArcher()
-    var tooltip = new UnitTooltipGenerator("Night Elf Archer Desc")
+    var tooltip = new UnitTooltipGenerator("Basic ranged unit.")
     createSpawnedUnit(UNIT_ARCHER, UnitIds.archer, BUILDING_ARCHER)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 16, 4, 1, 1.8)
+        ..setAttack1Data(AttackType.Pierce, 14, 4, 4, 1.8)
         ..setAttack1Range(650)
 
         ..setArmorData(ArmorType.Medium, 0)
@@ -70,60 +78,108 @@ import UnitTooltipGenerator
         ..setSpeedBase(270)
 
         ..setSizeSmall()
-        ..setNameEnhance("E", "Archer")
         ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..setNameEnhance("Q", "Archer")
         ..tooltipStopListen()
         ..setUpgradeTo(commaList(BUILDING_NE_RANGER))
-        ..setBuildingGoldCost(150)
 
         ..setModelFileExt(Units.archer)
         ..setIconGameInterfaceExt(Icons.bTNArcher)
         ..setUnitSoundSetExt(Soundsets.archer)
 
-    tooltip = new UnitTooltipGenerator("Nigth Elf Ranger Desc")
+    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_MULTISHOT_3))
     createSpawnedUnit(UNIT_NE_RANGER, UnitIds.shandris, BUILDING_NE_RANGER)
+        ..setNormalAbilities(commaList(ABIL_MULTISHOT_3))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 65, 3, 4, 1.4)
-        ..setAttack1Range(700)
+        ..setAttack1Data(AttackType.Pierce, 44, 3, 4, 1.4)
+        ..setAttack1Range(750)
 
         ..setArmorData(ArmorType.Medium, 0)
         ..setHitPointsMaximumBase(240)
 
         ..setSpeedBase(300)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
         ..setSizeSmall()
         ..setNameEnhance("Z", "Night Elf Ranger")
-        ..setAutoPointValue()
         ..tooltipStopListen()
-        ..setBuildingLumberCost(700)
 
         ..setModelFileExt(Units.shandris1)
         ..setIconGameInterfaceExt(Icons.bTNShandris)
         ..setUnitSoundSetExt(Soundsets.shandris)
 
 @compiletime function createDryad()
-    let tooltip = new UnitTooltipGenerator("Footman Desc")
+    var tooltip = new UnitTooltipGenerator(asList(
+        abilTooltipMap.get(ABIL_REJUVENATION),
+        abilTooltipMap.get(ABIL_POISON_SPEAR)
+        ).joinBy("\n\n"))
     createSpawnedUnit(UNIT_DRYAD, UnitIds.dryad, BUILDING_DRYAD)
         ..registerTooltipGenerator(tooltip)
+        ..setNormalAbilities(commaList(
+            ABIL_POISON_SPEAR,
+            ABIL_AUTOCAST_REJUVENATION,
+            ABIL_REJUVENATION
+        ))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_REJUVENATION))
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 45, 1, 2, 2)
-        ..setAttack1Range(400)
+        ..setAttack1Data(AttackType.Pierce, 32, 1, 8, 2)
+        ..setAttack1Range(450)
 
         ..setArmorData(ArmorType.Medium, 3)
         ..setHitPointsMaximumBase(240)
+        ..setMana(200)
+        ..setManaRegeneration(0.75)
 
-        ..setSpeedBase(300)
+        ..setSpeedBase(330)
 
         ..setSizeSmall()
-        ..setNameEnhance("C", "Dryad")
         ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..setNameEnhance("E", "Dryad")
+        ..setBuildingItemsMade(commaList(ITEM_KEEPER_OF_THE_GROVE))
         ..tooltipStopListen()
 
         ..setModelFileExt(Units.dryad1)
         ..setIconGameInterfaceExt(Icons.bTNDryad)
         ..setUnitSoundSetExt(Soundsets.dryad)
+
+    tooltip = new UnitTooltipGenerator(asList(
+        abilTooltipMap.get(ABIL_PARASITE_SEED),
+        abilTooltipMap.get(ABIL_THORN_AURA)
+        ).joinBy("\n\n"))
+    let itm = createBasicItem(ITEM_KEEPER_OF_THE_GROVE)
+    createSpawnedUnit(UNIT_KEEPER_OF_THE_GROVE, UnitIds.keeperofthegrove)
+        ..registerItemDef(itm, ItemModifierType.Addition)
+        ..setNormalAbilities(commaList(
+            ABIL_PARASITE_SEED,
+            ABIL_THORN_AURA
+        ))
+        ..setDefaultActiveAbility(commaList(ABIL_PARASITE_SEED))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 97, 4, 8, 1.5)
+        ..setAttack1Range(500)
+
+        ..setArmorData(ArmorType.Medium, 5)
+        ..setHitPointsMaximumBase(550)
+        ..setMana(200)
+
+        ..setSpeedBase(330)
+
+        ..setSizeSmall()
+        ..setItemCost(0, 1000, 1)
+
+        ..tooltipStopListen(true, itm)
+        ..setNameEnhance("Z", "Keeper of the Grove")
+
+        .setIconGameInterfaceExt(Icons.bTNKeeperOfTheGrove)
 
 @compiletime function createHuntress()
     tooltip = new UnitTooltipGenerator("Sentry Desc")
@@ -142,6 +198,7 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setNameEnhance("W", "Sentry")
         ..setAutoPointValue()
+
         ..tooltipStopListen()
         ..setUpgradeTo(commaList(BUILDING_HUNTRESS, BUILDING_SPECTRE))
         ..setBuildingGoldCost(200)
@@ -153,33 +210,38 @@ import UnitTooltipGenerator
         ..setIconGameInterfaceExt(Icons.bTNSentinel)
         ..setUnitSoundSetExt(Soundsets.watcher)
 
-    var tooltip = new UnitTooltipGenerator("Huntress Desc")
+    var tooltip = new UnitTooltipGenerator("" +
+    "Moon Glaives\n".color(SPECIAL_COLOR) +
+    "Attack bounces up to 3 times, each bounce reduces damage by 50%."
+    )
     createSpawnedUnit(UNIT_HUNTRESS, UnitIds.huntress, BUILDING_HUNTRESS)
 
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Normal, 45, 4, 4, 1.6)
+        ..setAttack1MaximumNumberofTargets(3)
+        ..setAttack1DamageLossFactor(0.50)
         ..setAttack1Range(300)
 
         ..setArmorData(ArmorType.Medium, 4)
         ..setHitPointsMaximumBase(400)
 
         ..setSpeedBase(350)
-        ..setAttack1MaximumNumberofTargets(2)
-        ..setSizeSmall()
-        ..setNameEnhance("Z", "Huntress")
         ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..setSizeSmall()
+        ..setNameEnhance("W", "Huntress")
         ..tooltipStopListen()
-        ..setBuildingLumberCost(700)
+        ..setBuildingItemsMade(commaList(ITEM_PRIESTESS_OF_THE_MOON))
 
         ..setModelFileExt(Units.huntress)
         ..setIconGameInterfaceExt(Icons.bTNHuntress)
         ..setUnitSoundSetExt(Soundsets.huntress)
 
-    tooltip = new UnitTooltipGenerator("Spectre Desc")
-    createSpawnedUnit(UNIT_SPECTRE, UnitIds.spiritofvengeance, BUILDING_SPECTRE)
-
+    tooltip = new UnitTooltipGenerator("")
+    createSpawnedUnit(UNIT_SPECTRE, UnitIds.vengeance, BUILDING_SPECTRE)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -193,18 +255,22 @@ import UnitTooltipGenerator
 
         ..setSizeSmall()
         ..setNameEnhance("X", "Spectre")
-        ..setAutoPointValue()
+        ..setPointValue(25)
+
         ..tooltipStopListen()
-        ..setBuildingLumberCost(1100)
 
         ..setModelFileExt(Units.vengeance)
         ..setIconGameInterfaceExt(Icons.bTNAvengingWatcher)
         ..setUnitSoundSetExt(Soundsets.vengeance)
 
 @compiletime function createDruidTalon()
-    let tooltip = new UnitTooltipGenerator("Druid Of The Talon Desc")
+    let tooltip = new UnitTooltipGenerator(asList(
+        abilTooltipMap.get(ABIL_FAERIE_FIRE)
+    ).joinBy("\n\n"))
     createSpawnedUnit(UNIT_DRUID_TALON, UnitIds.druidofthetalon, BUILDING_DRUID_TALON)
         ..registerTooltipGenerator(tooltip)
+        ..setNormalAbilities(commaList(ABIL_FAERIE_FIRE))
+        ..setDefaultActiveAbility(commaList(ABIL_FAERIE_FIRE))
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Magic, 30, 3, 2, 1.75)
@@ -212,17 +278,18 @@ import UnitTooltipGenerator
 
         ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(60)
+        ..setMana(200)
 
         ..setSpeedBase(270)
 
-        ..setMana(200)
-        ..setManaMaximum(200)
         ..setSizeSmall()
-        ..setNameEnhance("A", "Druid of the Talon")
         ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..setNameEnhance("A", "Druid of the Talon")
+        ..setBuildingItemsMade(commaList(ITEM_ARCHDRUID, ITEM_WAND_OF_ILLUSION, ITEM_ENTANGLING_ROOT))
+
         ..tooltipStopListen()
-        ..setUpgradeTo(commaList(BUILDING_FURION))
-        ..setBuildingGoldCost(50)
 
         ..setModelFileExt(Units.druidoftheTalon)
         ..setIconGameInterfaceExt(Icons.bTNDruidOfTheTalon)
@@ -230,109 +297,196 @@ import UnitTooltipGenerator
 
 
 @compiletime function createDruidClaw()
-    var tooltip = new UnitTooltipGenerator("Druid Of The Claw Desc")
-    createSpawnedUnit(UNIT_DRUID_CLAW_BEAR, UnitIds.druidoftheclawmorphed, BUILDING_DRUID_CLAW_BEAR)
+    var tooltip = new UnitTooltipGenerator(asList(
+        abilTooltipMap.get(ABIL_DRUID_FRENZY),
+        abilTooltipMap.get(ABIL_HARDENED_SKIN_5)
+        ).joinBy("\n\n"))
+    createSpawnedUnit(UNIT_DRUID_CLAW, UnitIds.druidoftheclaw, BUILDING_DRUID_CLAW)
+        ..setNormalAbilities(commaList(ABIL_DRUID_FRENZY, ABIL_HARDENED_SKIN_5))
+        ..setDefaultActiveAbility(commaList(ABIL_DRUID_FRENZY))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 90, 3, 13, 1.5)
+        ..setAttack1Data(AttackType.Normal, 39, 3, 13, 1.5)
 
-        ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(350)
+        ..setArmorData(ArmorType.Unarmored, 4)
+        ..setHitPointsMaximumBase(400)
 
         ..setSpeedBase(270)
-
-        ..setMana(200)
-        ..setManaMaximum(200)
-
-        ..setNameEnhance("S", "Druid of the Claw")
         ..setAutoPointValue()
-        ..tooltipStopListen()
-        ..setUpgradeTo(commaList(BUILDING_OWLBEAR))
-        ..setBuildingGoldCost(250)
+        ..setAutoBuildingCost()
 
-        ..setMaximumPitchAngledegrees(10)
-        ..setAttack1Range(128)
-        ..setCollisionSize(16.)
+        ..tooltipStopListen()
+        ..setNameEnhance("S", "Druid of the Claw")
+
+        ..setSizeSmall()
+        ..setMana(0)
+        ..setBuildingItemsMade(commaList(ITEM_BEAR, ITEM_OWLBEAR))
 
         ..setModelFileExt(Units.druidoftheClaw)
         ..setIconGameInterfaceExt(Icons.bTNDruidOfTheClaw)
-        ..setUnitSoundSetExt(Soundsets.grizzlyBear)
+        ..setUnitSoundSetExt(Soundsets.druidOfTheClaw)
 
-    tooltip = new UnitTooltipGenerator("Owl Bear Desc")
-    createSpawnedUnit(UNIT_OWLBEAR, UnitIds.owlbear, BUILDING_OWLBEAR)
+    tooltip = new UnitTooltipGenerator(asList(
+        abilTooltipMap.get(ABIL_BASH_20),
+        abilTooltipMap.get(ABIL_HARDENED_SKIN_15)
+        ).joinBy("\n\n"))
+    var itm = createBasicItem(ITEM_BEAR)
+    createSpawnedUnit(UNIT_BEAR, UnitIds.druidoftheclawmorphed)
+        ..registerItemDef(itm, ItemModifierType.Replace)
+        ..setNormalAbilities(commaList(ABIL_BASH_20, ABIL_HARDENED_SKIN_15))
+        ..setDefaultActiveAbility(commaList(""))
+        ..setRequiredAnimationNames("alternate")
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 110, 3, 17, 1.2)
+        ..setAttack1Data(AttackType.Normal, 67, 5, 13, 1.5)
+
+        ..setArmorData(ArmorType.Unarmored, 6)
+        ..setHitPointsMaximumBase(800)
+
+        ..setSpeedBase(270)
+
+        ..setItemCost(0, 500, 1, 5, 5)
+        ..tooltipStopListen()
+        ..setNameEnhance("Z", "Bear Form")
+
+        ..tooltipStopListen(true, itm)
+        ..setSizeLarge()
+        ..setMana(0)
+        ..setScalingValue(1.15)
+
+        ..setIconGameInterfaceExt(Icons.bTNBearForm)
+
+    tooltip = new UnitTooltipGenerator(asList(
+        abilTooltipMap.get(ABIL_HOWL_OF_TERROR),
+        abilTooltipMap.get(ABIL_CLEAVE_30),
+        abilTooltipMap.get(ABIL_HARDENED_SKIN_10)
+        ).joinBy("\n\n"))
+    itm = createBasicItem(ITEM_OWLBEAR)
+    createSpawnedUnit(UNIT_OWLBEAR, UnitIds.owlbear, BUILDING_OWLBEAR)
+        ..registerItemDef(itm, ItemModifierType.Replace)
+        ..setNormalAbilities(commaList(
+            ABIL_HOWL_OF_TERROR,
+            ABIL_CLEAVE_30,
+            ABIL_AUTOCAST_HOWL_OF_TERROR,
+            ABIL_HARDENED_SKIN_10
+            ))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_HOWL_OF_TERROR))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Siege, 75, 3, 17, 1.2)
 
         ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(900)
+        ..setMana(200)
 
         ..setSpeedBase(270)
-        ..setNameEnhance("Z", "Owl Bear")
-        ..setAutoPointValue()
-        ..tooltipStopListen()
-        ..setBuildingLumberCost(1200)
 
-        ..setMaximumPitchAngledegrees(10)
-        ..setAttack1Range(128)
-        ..setCollisionSize(16.)
+        ..setItemCost(0, 500, 1, 5, 5)
+        ..setNameEnhance("X", "Owlbear Form")
+
+
+        ..tooltipStopListen(true, itm)
+        ..setSizeLarge()
 
         ..setModelFileExt(Units.owlbear)
         ..setIconGameInterfaceExt(Icons.bTNOwlBear)
         ..setUnitSoundSetExt(Soundsets.owlbear)
 
+@compiletime function createMountainGiant()
+    let tooltip = new UnitTooltipGenerator(asList(
+        abilTooltipMap.get(ABIL_TAUNT)
+        ).joinBy("\n\n"))
+    createSpawnedUnit(UNIT_MOUNTAIN_GIANT, UnitIds.mountaingiant, BUILDING_MOUNTAIN_GIANT)
+        ..setNormalAbilities(commaList(
+            ABIL_TAUNT,
+            ABIL_AUTOCAST_TAUNT
+        ))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_TAUNT))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Siege, 113, 10, 7, 2)
+
+        ..setArmorData(ArmorType.Fortified, 6)
+        ..setHitPointsMaximumBase(2600)
+
+        ..setSpeedBase(240)
+
+        ..setSizeSmall()
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..tooltipStopListen()
+
+        ..setNameEnhance("D", "Mountain Giant")
+
+        ..setModelFileExt(Units.mountainGiant1)
+        ..setIconGameInterfaceExt(Icons.bTNMountainGiant)
+        ..setUnitSoundSetExt(Soundsets.mountainGiant)
+        ..setBuildingScalingValue(0.65)
+
 @compiletime function createWarden()
-    var tooltip = new UnitTooltipGenerator("Warden Desc")
+    var tooltip = new UnitTooltipGenerator(asList(
+        abilTooltipMap.get(ABIL_BLINK),
+        abilTooltipMap.get(ABIL_FAN_OF_KNIVES),
+        abilTooltipMap.get(ABIL_FEEDBACK)
+    ).joinBy("\n\n"))
     createSpawnedUnit(UNIT_WARDEN, UnitIds.warden, BUILDING_WARDEN)
+        ..setNormalAbilities(commaList(
+            ABIL_BLINK,
+            ABIL_FAN_OF_KNIVES,
+            ABIL_FEEDBACK))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Normal, 60, 7, 4, 0.9)
 
-        ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(660)
+        ..setArmorData(ArmorType.Medium, 4)
+        ..setHitPointsMaximumBase(800)
+        ..setMana(200)
 
         ..setSpeedBase(330)
 
         ..setSizeSmall()
         ..setAutoPointValue()
-        ..tooltipStopListen()
-        ..setUpgradeTo(commaList(BUILDING_AVATAR_OF_VENGEANCE))
+        ..setAutoBuildingCost()
 
-        ..setNameEnhance("D", "Warden")
-        ..setManaMaximum(0)
-        ..setManaInitialAmount(0)
-        ..setBuildingGoldCost(350)
+        ..tooltipStopListen()
+
+        ..setNameEnhance("R", "Warden")
 
         ..setModelFileExt(Units.heroWarden)
         ..setIconGameInterfaceExt(Icons.bTNHeroWarden)
         ..setUnitSoundSetExt(Soundsets.maiev)
 
-    tooltip = new UnitTooltipGenerator("Avatar Of Vengeance Desc")
-    createSpawnedUnit(UNIT_AVATAR_OF_VENGEANCE, UnitIds.warden, BUILDING_AVATAR_OF_VENGEANCE)
+    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_SPIRIT_OF_VENGEANCE))
+    createSpawnedUnit(UNIT_AVATAR_OF_VENGEANCE, UnitIds.spiritofvengeance, BUILDING_AVATAR_OF_VENGEANCE)
+        ..setNormalAbilities(commaList(ABIL_SPIRIT_OF_VENGEANCE))
+        ..setDefaultActiveAbility(commaList(ABIL_SPIRIT_OF_VENGEANCE))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 120, 7, 4, 0.9)
+        ..setAttack1Data(AttackType.Magic, 66, 7, 4, 0.9)
+        ..setAttack1Range(450)
 
         ..setArmorData(ArmorType.Divine, 7)
-        ..setHitPointsMaximumBase(1000)
+        ..setHitPointsMaximumBase(550)
 
         ..setSpeedBase(330)
 
         ..setSizeSmall()
         ..setAutoPointValue()
-        ..tooltipStopListen()
+        ..setAutoBuildingCost()
 
-        ..setNameEnhance("Z", "Avatar Of Vengeance")
-        ..setManaInitialAmount(0)
-        ..setBuildingLumberCost(1500)
+        ..setNameEnhance("R", "Avatar Of Vengeance")
+        ..tooltipStopListen(true)
+        ..setScalingValue(0.85)
+        ..setMana(0)
 
-        ..setModelFileExt(Units.spiritOfVengeance)
         ..setIconGameInterfaceExt(Icons.bTNSpiritOfVengeance)
-        ..setUnitSoundSetExt(Soundsets.spiritOfVengeance)
 
 @compiletime function createDaemonHunter()
     let tooltip = new UnitTooltipGenerator("Daemon Hunter Desc")
@@ -361,36 +515,52 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.heroDemonHunter)
 
 @compiletime function createPriestessOfTheMoon()
-    let tooltip = new UnitTooltipGenerator("Moon Priestess Desc")
+    let tooltip = new UnitTooltipGenerator(asList(
+        abilTooltipMap.get(ABIL_MULTISHOT_5),
+        abilTooltipMap.get(ABIL_STARFALL)
+        ).joinBy("\n\n"))
+    let itm = createBasicItem(ITEM_PRIESTESS_OF_THE_MOON)
     createSpawnedUnit(UNIT_PRIESTESS_OF_THE_MOON, UnitIds.priestessofthemoon, BUILDING_PRIESTESS_OF_THE_MOON)
+        ..registerItemDef(itm, ItemModifierType.Addition)
+        ..setNormalAbilities(commaList(
+            ABIL_MULTISHOT_5,
+            ABIL_AUTOCAST_STARFALL,
+            ABIL_STARFALL
+        ))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_STARFALL))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 190, 9, 6, 1)
-        ..setAttack1Range(650)
+        ..setAttack1Data(AttackType.Pierce, 110, 9, 6, 1)
+        ..setAttack1Range(600)
 
         ..setArmorData(ArmorType.Medium, 6)
         ..setHitPointsMaximumBase(1200)
+        ..setMana(300)
 
-        ..setSpeedBase(270)
+        ..setSpeedBase(300)
 
         ..setSizeSmall()
-        ..setAutoPointValue()
-        ..tooltipStopListen()
-        ..setNameEnhance("X", "Priestess of the Moon")
-        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-        ..setBuildingLumberCost(3000)
+        ..setPointValue(0, 1000, 1)
+        ..setItemCost(0, 1000, 1)
 
-        ..setManaInitialAmount(0)
+        ..tooltipStopListen(true, itm)
+        ..setNameEnhance("Z", "Priestess of the Moon")
 
         ..setModelFileExt(Units.heroMoonPriestess)
         ..setIconGameInterfaceExt(Icons.bTNPriestessOfTheMoon)
         ..setUnitSoundSetExt(Soundsets.heroMoonPriestess)
 
-@compiletime function createHeroes()
-    let tooltip = new UnitTooltipGenerator("Archdruid Desc")
+@compiletime function createArchdruid()
+    var tooltip = new UnitTooltipGenerator(asList(
+        abilTooltipMap.get(ABIL_SUMMON_WISP)
+        ).joinBy("\n\n"))
 
-    createSpawnedUnit(UNIT_FURION, UnitIds.furion, BUILDING_FURION)
+    let itm = createBasicItem(ITEM_ARCHDRUID)
+    createSpawnedUnit(UNIT_ARCHDRUID, UnitIds.furion)
+        ..setNormalAbilities(commaList(ABIL_SUMMON_WISP, ABIL_AUTOCAST_SUMMON_WISP))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_SUMMON_WISP))
+        ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -398,22 +568,44 @@ import UnitTooltipGenerator
         ..setAttack1Range(450)
 
         ..setArmorData(ArmorType.Unarmored, 4)
-        ..setHitPointsMaximumBase(1200)
+        ..setHitPointsMaximumBase(900)
+        ..setMana(500)
 
         ..setSpeedBase(270)
 
         ..setSizeSmall()
-        ..setAutoPointValue()
-        ..tooltipStopListen()
-        ..setNameEnhance("Z", "Archdruid")
-        ..setBuildingLumberCost(900)
+        ..setPointValue(0, 1000, 1)
+        ..setItemCost(0, 1000, 1)
+        ..tooltipStopListen(true, itm)
 
-        ..setManaInitialAmount(0)
-        ..setPriority(11)
-
-        ..setModelFileExt(Units.furion1)
+        ..setNameEnhance("C", "Archdruid")
         ..setIconGameInterfaceExt(Icons.bTNFurion)
-        ..setUnitSoundSetExt(Soundsets.furion)
+        ..setModelFile(Units.furion1)
+
+    tooltip = new UnitTooltipGenerator(asList(
+        abilTooltipMap.get(ABIL_WISP_EXPLODE)
+        ).joinBy("\n\n"))
+
+    createSpawnedUnit(UNIT_WISP, UnitIds.wisp)
+        ..setNormalAbilities(commaList(ABIL_WISP_EXPLODE))
+        ..setDefaultActiveAbility(commaList(ABIL_WISP_EXPLODE))
+        ..registerTooltipGenerator(tooltip)
+        ..setAttacksEnabled(AttacksEnabled.AttackOneOnly.toObjectInt())
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 1, 1, 1, 2)
+        ..setArmorData(ArmorType.Divine, 0)
+        ..setHitPointsMaximumBase(10)
+
+        ..setSpeedBase(250)
+
+        ..setSizeSmall()
+        ..setUnitClassification(commaList("Sapper"))
+        ..setPointValue(0, 300, 3)
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("W", "Wisp")
+        ..setIconGameInterfaceExt(Icons.bTNWisp)
 
 @compiletime function createBallista()
     let tooltip = new UnitTooltipGenerator("Ballista Desc")
@@ -446,13 +638,14 @@ import UnitTooltipGenerator
     createBuilder(UNIT_NIGHT_ELF_BUILDER, UnitIds.wisp)
         ..setNameEnhance("R", "Night Elf Builder")
         ..setStructuresBuilt(commaList(
-            BUILDING_TREANT,
+            // BUILDING_TREANT,
             BUILDING_ARCHER,
-            BUILDING_SENTRY,
+            BUILDING_HUNTRESS,
+            BUILDING_DRYAD,
             BUILDING_DRUID_TALON,
-            BUILDING_DRUID_CLAW_BEAR,
-            BUILDING_WARDEN,
+            BUILDING_DRUID_CLAW,
+            BUILDING_MOUNTAIN_GIANT,
+            BUILDING_AVATAR_OF_VENGEANCE,
             BUILDING_DAEMON_HUNTER,
-            BUILDING_PRIESTESS_OF_THE_MOON,
             BUILDING_BALLISTA
         ))

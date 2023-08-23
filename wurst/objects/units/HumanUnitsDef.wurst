@@ -409,6 +409,8 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..presetNumberofWaves(_ -> 6)
         ..presetCooldown(_ -> 30)
         ..presetManaCost(_ -> 100)
+        ..presetAreaofEffect(_ -> 300)
+        ..presetCastRange(_ -> 800)
         ..tooltipStopListen(true)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 

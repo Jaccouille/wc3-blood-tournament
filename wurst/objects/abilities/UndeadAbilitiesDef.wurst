@@ -162,7 +162,7 @@ import LocalObjectIDs
     tgen = new BTAbilityTooltipGenerator(
         "A coil of death that deal damage to an enemy unit.")
     new AbilityDefinitionFireBoltcreep(ABIL_DEATH_COIL)
-        ..presetDurationNormal(_ -> 0)
+        ..presetDurationNormal(_ -> 0.01)
         ..setCheckDependencies(false)
         ..presetCooldown(_ -> 0)
         ..registerTooltipGenerator(tgen)

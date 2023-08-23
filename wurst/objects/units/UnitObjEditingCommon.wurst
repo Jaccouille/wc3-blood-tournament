@@ -30,6 +30,7 @@ function BTUnitDefinition.setCommonAttr()
     this.setButtonPositionX(0)
     this.setButtonPositionY(2)
     this.setNormalAbilities("")
+    this.setHitPointsRegenerationType("always")
 
 public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinition
     return new BTUnitDefinition(newId, origId)
@@ -234,6 +235,9 @@ public class BTUnitDefinition extends UnitDefinition
         def.setInt("umpi", data)
         addTooltipProperty("Mana", data)
 
+    function setBuildingScalingValue(real data)
+        buildingDef.setScalingValue(data)
+
     function setBuildingGoldCost(int data)
         buildingDef.setGoldCost(data)
 
@@ -343,6 +347,9 @@ public function UnitDefinition.setName(string name)
 **/
 public function UnitDefinition.setSizeSmall()
     this.setCollisionSize(15)
+
+public function UnitDefinition.setSizeLarge()
+    this.setCollisionSize(32)
 
 function W3UDefinition.setHotkeyEnhance(string hotkey)
     if not hotKeyMapping.has(hotkey)

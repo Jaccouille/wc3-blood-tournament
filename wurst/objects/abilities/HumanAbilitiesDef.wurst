@@ -52,11 +52,6 @@ import DummyAutoCasting
         ..tooltipStartListen()
         ..presetDamageBonus(_ -> 30)
         ..presetNumberofSummonedUnits(_ -> 1)
-        ..presetSummonedUnitType(_ -> "Ghost")
-        ..presetTargetsAllowed(_ -> commaList(
-                TargetsAllowed.enemies
-                )
-            )
         ..tooltipStopListen(true)
         ..presetSummonedUnitType(_ -> commaList(UNIT_GHOST))
     darkMageTooltip += tgen.generateTooltipExtended(false)

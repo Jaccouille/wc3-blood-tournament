@@ -181,3 +181,49 @@ init
         for i = 1 to count
             unitToSpawn.push(UNIT_VAMPIRE_LORD)
     itemAddUnitMap.put(ITEM_VAMPIRE_LORD, vampireLordAction)
+
+    let priestOfTheMoonAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            unitToSpawn.push(UNIT_PRIESTESS_OF_THE_MOON)
+    itemAddUnitMap.put(ITEM_PRIESTESS_OF_THE_MOON, priestOfTheMoonAction)
+
+    let archdruidAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            unitToSpawn.push(UNIT_ARCHDRUID)
+    itemAddUnitMap.put(ITEM_ARCHDRUID, archdruidAction)
+
+    let entanglingRootAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_ENTANGLING_ROOT)
+        u.addAbility(ABIL_AUTOCAST_ENTANGLING_ROOT)
+        u.issueImmediateOrderById(OrderIds.curseon)
+
+    itemModifyUnitMap.put(ITEM_ENTANGLING_ROOT, entanglingRootAction)
+
+    let wandOfIllusionAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_WAND_OF_ILLUSION)
+        u.addAbility(ABIL_AUTOCAST_WAND_OF_ILLUSION)
+        u.issueImmediateOrderById(OrderIds.innerfireon)
+
+    itemModifyUnitMap.put(ITEM_WAND_OF_ILLUSION, wandOfIllusionAction)
+
+    let keeperOfTheGroveAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            unitToSpawn.push(UNIT_KEEPER_OF_THE_GROVE)
+    itemAddUnitMap.put(ITEM_KEEPER_OF_THE_GROVE, keeperOfTheGroveAction)
+
+    let bearAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            replaceUnit(unitToSpawn, UNIT_DRUID_CLAW, UNIT_BEAR)
+    itemAddUnitMap.put(ITEM_BEAR, bearAction)
+
+    let owlbearAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            replaceUnit(unitToSpawn, UNIT_DRUID_CLAW, UNIT_OWLBEAR)
+    itemAddUnitMap.put(ITEM_OWLBEAR, owlbearAction)

@@ -72,6 +72,20 @@ function createLifeSteal(int abilId, real value) returns AbilityDefinitionVampir
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
     return abilDef
 
+function createHardenedSkin(int abilId, real value) returns AbilityDefinitionHardenedSkin
+    let tgen = new BTAbilityTooltipGenerator(
+        "Reduces all attacks damage.")
+    let abilDef = new AbilityDefinitionHardenedSkin(abilId)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetChancetoReduceDamage(_ -> 100)
+        ..presetIgnoredDamage(_ -> value)
+        ..presetMinimumDamage(_ -> 3)
+        ..setName("Hardened Skin " + value.toString())
+        ..tooltipStopListen()
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
+
 @compiletime function createCleaveAbilities()
     createCleave(ABIL_CLEAVE_10, 0.10, 150.)
     createCleave(ABIL_CLEAVE_20, 0.20, 150.)
@@ -97,6 +111,10 @@ function createLifeSteal(int abilId, real value) returns AbilityDefinitionVampir
     createLifeSteal(ABIL_LIFESTEAL_75, 0.75)
     createLifeSteal(ABIL_LIFESTEAL_100, 1.)
 
+@compiletime function createHardenedSkinAbilities()
+    createHardenedSkin(ABIL_HARDENED_SKIN_5, 5)
+    createHardenedSkin(ABIL_HARDENED_SKIN_10, 10)
+    createHardenedSkin(ABIL_HARDENED_SKIN_15, 15)
 
 @compiletime function createArrowAbilites()
     var tgen = new AbilityTooltipGenerator("Add Spell damage.")

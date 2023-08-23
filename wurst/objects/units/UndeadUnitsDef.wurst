@@ -297,7 +297,7 @@ function createSkeletalArcher(int skeletalArcherId) returns BTUnitDefinition
         ..tooltipStopListen(true)
 
     tooltip = new UnitTooltipGenerator("Summoned by Lich.")
-    createSpawnedUnit(UNIT_REVENANT, UnitIds.firerevenant, BUILDING_REVENANT)
+    createSpawnedUnit(UNIT_REVENANT, UnitIds.firerevenant)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -314,14 +314,9 @@ function createSkeletalArcher(int skeletalArcherId) returns BTUnitDefinition
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setAttack1Range(120)
-        ..setBuildingLumberCost(800)
         ..setMana(0)
         ..setAttack1WeaponType(WeaponType.None)
         ..setAttack1WeaponSound(WeaponSound.MetalMediumBash)
-
-        ..setModelFileExt(Units.revenant1)
-        ..setIconGameInterfaceExt(Icons.bTNRevenant)
-        ..setUnitSoundSetExt(Soundsets.revenant)
 
     tooltip = new UnitTooltipGenerator(asList(
         abilTooltipMap.get(ABIL_RAISE_REVENANT),

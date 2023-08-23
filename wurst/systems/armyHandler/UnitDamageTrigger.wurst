@@ -1,0 +1,18 @@
+package UnitDamageTrigger
+
+import DamageEvent
+import LocalObjectIDs
+import OrderIds
+import ClosureTimers
+
+
+init
+    DamageEvent.addListener() ->
+        let target = DamageEvent.getTarget()
+        let src = DamageEvent.getSource()
+        switch target.getTypeId()
+            case UNIT_WARDEN
+                if target.getPos().distanceTo(src.getPos()) > 200
+                    BlzQueuePointOrderById(target, OrderIds.blink, src.getPos().x, src.getPos().y)
+                    doAfter(0.9) ->
+                        BlzQueueImmediateOrderById(target, OrderIds.fanofknives)
