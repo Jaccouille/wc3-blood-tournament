@@ -34,8 +34,8 @@ public class ItemModifyUnit
         this.listener.execute(u)
 
 function replaceUnit(LinkedList<int> unitToSpawn, int oldUnit, int newUnit)
-    unitToSpawn.replace(oldUnit, newUnit)
-    unitToSpawn.shuffle()
+    if unitToSpawn.replace(oldUnit, newUnit)
+        unitToSpawn.shuffle()
 
 init
     let captainAction = new ItemAddUnit()

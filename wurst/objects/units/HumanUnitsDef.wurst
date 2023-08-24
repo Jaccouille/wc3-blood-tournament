@@ -62,7 +62,7 @@ import LocalAssets
         ..setIconGameInterfaceExt(Icons.bTNTheCaptain)
         ..setUnitSoundSetExt(Soundsets.theCaptain)
 
-@compiletime function createArcher()
+@compiletime function createElvenArcher()
     var tooltip = new UnitTooltipGenerator("Elven Archer Desc")
 
     createSpawnedUnit(UNIT_ELVEN_ARCHER, UnitIds.highelvenarcher, BUILDING_ELVEN_ARCHER)
