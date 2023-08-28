@@ -19,6 +19,7 @@ public class BuffTuple
 public let dummyToRealCastMapTarget = new HashMap<int, BuffTuple>
 public let dummyToRealImmediateCastMap = new HashMap<int, int>
 
+
 init
     dummyToRealCastMapTarget
         ..put(ABIL_AUTOCAST_FIRE_SHIELD, new BuffTuple(0, -1))

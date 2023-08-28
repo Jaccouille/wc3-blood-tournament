@@ -8,31 +8,87 @@ import UnitObjEditingCommon
 import Assets
 import ColorUtils
 import HashMap
-import BuffObjEditing
-import LinkedList
 import TooltipsUtils
-import DummyAutoCasting
+import BTAbilities
+import BuffObjEditing
 
-@compiletime function createAbilitiesDefinition()
-    var itm = createBasicItem(ITEM_INNER_FIRE)
-        ..setItemCost(0, 50, 1, 4, 4)
-        ..setNameEnhance("X", "Add 1 Inner Fire")
-        ..setInterfaceIcon(Icons.bTNInnerFire)
 
-    var tgen = new AbilityTooltipGenerator("Increase armor and damage")
-    new AbilityDefinitionInnerFireCreep(ABIL_INNER_FIRE)
+@compiletime function createHumanAbilities()
+    var tgen = new BTAbilityTooltipGenerator("Heals 1 friendly unit.")
+    new AbilityDefinitionHealCreepNormal(ABIL_HEAL)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
         ..tooltipStartListen()
-        ..setNameEnhance("X", "Inner Fire")
-        ..setName("Inner fire")
-        ..presetDefenseIncrease(_ -> 5)
-        ..presetDamageIncrease(_ -> 0.25)
+        ..setNameEnhance("Z", "Heal")
+        ..presetHitPointsGained(_ -> 30)
+        ..presetCooldown(_ -> 1)
+        ..presetManaCost(_ -> 10)
+        ..presetCastRange(_ -> 250)
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_HEAL, tgen.generateFullTooltip())
+
+    let ARMOR_BLESSING_BUFF = BUFF_ID_GEN.next()
+    new BuffDefinition(ARMOR_BLESSING_BUFF, BuffIds.innerFire)
+        ..setIcon(Icons.bTNBarkSkin)
+        ..setArtSpecial(1,"")
+        ..setTooltipNormal(1, "Armor Blessing")
+        ..setTooltipNormalExtended(1, "Gains additional armor")
+        ..setArtTarget(1, Abilities.aIdaTarget)
+
+    var itm = createBasicItem(ITEM_ARMOR_BLESSING)
+        ..setItemCost(0, 50, 1, 5, 5)
+        ..setNameEnhance("X", "Add 1 Armor Blessing")
+        ..setInterfaceIcon(Icons.bTNBarkSkin)
+
+    tgen = new BTAbilityTooltipGenerator("Increase armor.")
+    new AbilityDefinitionInnerFireCreep(ABIL_ARMOR_BLESSING)
+        ..registerTooltipGenerator(tgen)
+        ..setLevels(1)
+        ..tooltipStartListen()
+        ..setDamageIncrease(1, 0)
+        ..setNameEnhance("X", "Armor Blessing")
+        ..setName("Armor Blessing")
+        ..presetDefenseIncrease(_ -> 4)
         ..presetCooldown(_ -> 2)
         ..presetManaCost(_ -> 50)
         ..presetCastRange(_ -> 600)
+        ..setBuffs(1, ARMOR_BLESSING_BUFF.toRawCode())
         ..tooltipStopListen(true)
+
     tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_ARMOR_BLESSING, tgen.generateFullTooltip())
+
+    let WEAPON_BLESSING_BUFF = BUFF_ID_GEN.next()
+    new BuffDefinition(WEAPON_BLESSING_BUFF, BuffIds.innerFire)
+        ..setIcon(Icons.bTNTransmute)
+        ..setArtSpecial(1,"")
+        ..setTooltipNormal(1, "Weapon Blessing")
+        ..setTooltipNormalExtended(1, "Gains additional damage")
+
+    itm = createBasicItem(ITEM_WEAPON_BLESSING)
+        ..setItemCost(0, 50, 1, 5, 5)
+        ..setNameEnhance("C", "Add 1 Weapon Blessing")
+        ..setInterfaceIcon(Icons.bTNTransmute)
+
+    tgen = new BTAbilityTooltipGenerator("Increase damage.")
+    new AbilityDefinitionInnerFireCreep(ABIL_WEAPON_BLESSING)
+        ..registerTooltipGenerator(tgen)
+        ..setLevels(1)
+        ..presetDefenseIncrease(_ -> 0)
+        ..tooltipStartListen()
+        ..setNameEnhance("C", "Weapon Blessing")
+        ..setName("Weapon Blessing")
+        ..addTooltipProperty("Damage Increase", _-> 0.5.toPercent())
+        ..setDamageIncrease(1, 0.5)
+        ..presetCooldown(_ -> 2)
+        ..presetManaCost(_ -> 50)
+        ..presetCastRange(_ -> 600)
+        ..setBuffs(1, WEAPON_BLESSING_BUFF.toRawCode())
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_WEAPON_BLESSING, tgen.generateFullTooltip())
 
 
     itm = createBasicItem(ITEM_DARK_MAGE)
@@ -40,30 +96,35 @@ import DummyAutoCasting
         ..setNameEnhance("Z", "Upgrade into 1 Dark Mage")
         ..setInterfaceIcon(Icons.bTNOrbOfDarkness)
 
-    var darkMageTooltip = "Orb of Darkness\n".color(SPECIAL_COLOR)
-    tgen = new AbilityTooltipGenerator("Increase damage. Units killed by the mage will turn into Ghost.")
+    tgen = new BTAbilityTooltipGenerator("Increase damage. Units killed "+
+        "by the mage will spawn a Ghost."
+        )
     let abilId = ABIL_ID_GEN.next()
     new AbilityDefinitionOrbofDarkness(ABIL_ORB_DARKNESS)
+        ..setEnabledAttackIndex(1, 0)
         ..setEffectAbility(1, abilId.toRawCode())
         ..setDamageBonus(1, 30)
 
     new AbilityDefinitionOrbofDarknessBlackArrow(abilId)
         ..registerTooltipGenerator(tgen)
+        ..presetSummonedUnitType(_ -> commaList(UNIT_GHOST))
         ..tooltipStartListen()
         ..presetDamageBonus(_ -> 30)
         ..presetNumberofSummonedUnits(_ -> 1)
+        ..setNameEnhance("Z", "Orb of Darkness")
         ..tooltipStopListen(true)
-        ..presetSummonedUnitType(_ -> commaList(UNIT_GHOST))
-    darkMageTooltip += tgen.generateTooltipExtended(false)
-    itm.setTooltipExtended(darkMageTooltip)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_ORB_DARKNESS, tgen.generateFullTooltip())
+
 
     itm = createBasicItem(ITEM_FIRE_MAGE)
         ..setItemCost(0, 50, 1, 3, 3)
         ..setNameEnhance("X", "Upgrade into 1 Fire Mage")
         ..setInterfaceIcon(Icons.bTNOrbOfFire)
 
-    var fireMageItemTooltip = "Incinerate\n".color(SPECIAL_COLOR)
-    tgen = new AbilityTooltipGenerator()
+    tgen = new BTAbilityTooltipGenerator(
+        "Increase damage. Units killed by the mage will explode.")
     new AbilityDefinitionFirelordIncinerate(ABIL_INCINERATE)
         ..setLevels(1)
         ..presetBonusDamageMultiplier(_ -> 0)
@@ -72,61 +133,69 @@ import DummyAutoCasting
         ..tooltipStartListen()
         ..presetDeathDamageFullAmount(_ -> 50)
         ..presetDeathDamageHalfAmount(_ -> 25)
+        ..setNameEnhance("X", "Incinerate")
         ..tooltipStopListen(true)
         ..setArtTarget(Abilities.aIfbTarget)
         ..setTargetAttachmentPoint1("weapon")
-    fireMageItemTooltip += tgen.generateTooltipExtended(false)
-    fireMageItemTooltip += "Increase damage. Units killed by the mage will explode."
-    itm.setTooltipExtended(fireMageItemTooltip)
 
-    fireMageItemTooltip += "\n\nFire shield\n".color(SPECIAL_COLOR)
+    var tooltip = tgen.generateFullTooltip()
 
-    tgen = new AbilityTooltipGenerator()
+    tgen = new BTAbilityTooltipGenerator(
+        ("Permanently add a shield of fire around an allied unit, dealing {0} " +
+        "damage per second to enemies around it.")
+    .format(
+            getAbilityDataField(ABIL_FIRE_SHIELD, "DataA1").color(COLOR_RED)
+            )
+    )
     new AbilityDefinitionPermanentImmolation(ABIL_FIRE_SHIELD)
         ..registerTooltipGenerator(tgen)
-        ..tooltipStartListen()
-        ..presetDamageperInterval(_ -> 20)
-        ..tooltipStopListen(false)
         ..setAreaofEffect(1, 160.)
         ..setBuffs(1, BuffIds.permanentImmolationRed.toRawCode())
         ..setRequirements("")
         ..setCheckDependencies(false)
+        ..tooltipStartListen()
+        ..presetDamageperInterval(_ -> 20)
+        ..setNameEnhance("Z", "Fire Shield")
+        ..tooltipStopListen(false)
 
     createAutoCastedAlliedAbility(ABIL_AUTOCAST_FIRE_SHIELD)
-        ..presetCastRange(_ -> 600)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 10)
         ..presetManaCost(_ -> 30)
+        ..presetCastRange(_ -> 600)
+        ..setNameEnhance("Z", "Fire Shield")
         ..setCheckDependencies(false)
-    fireMageItemTooltip += tgen.generateTooltipExtended(false)
-    fireMageItemTooltip += "" +
-    ("Permanently add a shield of fire around an allied unit, dealing {0} " +
-    "damage per second to enemies around it. |nLasts {1} seconds.")
-    .format(
-            getAbilityDataField(ABIL_FIRE_SHIELD, "DataA1").color(COLOR_RED),
-            getAbilityDataField(ABIL_FIRE_SHIELD, "Dur1").color(COLOR_LIGHT_BLUE)
-            )
-    itm.setTooltipExtended(fireMageItemTooltip)
+        ..tooltipStopListen(true)
 
+    tooltip += "\n\n" + tgen.generateFullTooltip()
+    itm.setTooltipExtended(tooltip)
 
     itm = createBasicItem(ITEM_ICE_MAGE)
         ..setItemCost(0, 50, 1, 3, 3)
         ..setNameEnhance("C", "Upgrade into 1 Ice Mage")
         ..setInterfaceIcon(Icons.bTNOrbOfFrost)
 
-    var iceMageItemTooltip = "Frost Orb\n".color(SPECIAL_COLOR)
-    tgen = new AbilityTooltipGenerator()
+    tgen = new BTAbilityTooltipGenerator(
+        "Increase damage. Slow the movement speed and attack "+
+        "rate of the enemy for <AIob,Dur1> seconds."
+    )
     new AbilityDefinitionFrostDamageBonus(ABIL_ORB_FROST)
+        ..setEnabledAttackIndex(1, 0)
         ..setLevels(1)
         ..setHeroAbility(false)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetDamageBonus(_ -> 20)
+        ..setNameEnhance("Z", "Frost Orb")
         ..tooltipStopListen(true)
-    iceMageItemTooltip += tgen.generateTooltipExtended(false)
-    iceMageItemTooltip += "Increase damage. Slow the movement speed and attack rate of the enemy for <AIob,Dur1> seconds."
 
+    tooltip = tgen.generateFullTooltip()
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Creates a shield of frost around a target friendly unit." +
+        " The shield adds armor and slows melee units that attack it"
+    )
     new AbilityDefinitionLichFrostArmorAutocast(ABIL_FROST_ARMOR)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
@@ -135,27 +204,170 @@ import DummyAutoCasting
         ..presetCooldown(_ -> 4)
         ..presetManaCost(_ -> 50)
         ..presetDurationNormal(_ -> 30)
+        ..setNameEnhance("X", "Frost Armor")
         ..tooltipStopListen(true)
-    iceMageItemTooltip += "\n\nFrost Armor\n".color(SPECIAL_COLOR)
-    iceMageItemTooltip += tgen.generateTooltipExtended(false)
-    iceMageItemTooltip += "Creates a shield of frost around a target friendly unit." +
-        " The shield adds armor and slows melee units that attack it"
-    itm.setTooltipExtended(iceMageItemTooltip)
+
+    tooltip += "\n\n" + tgen.generateFullTooltip()
+    itm.setTooltipExtended(tooltip)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Calls down waves of freezing ice shards that damage units " +
+        "in a target area."
+    )
+
+    new AbilityDefinitionArchMageBlizzard(ABIL_BLIZZARD)
+        ..registerTooltipGenerator(tgen)
+        ..presetNumberofShards(_ -> 8)
+        ..presetAreaofEffect(_ -> 300)
+        ..presetCooldown(_ -> 0)
+        ..tooltipStartListen()
+        ..presetDamage(_ -> 50)
+        ..presetMaximumDamageperWave(_ -> 600)
+        ..presetNumberofWaves(_ -> 6)
+        ..presetManaCost(_ -> 100)
+        ..presetCastRange(_ -> 800)
+        ..setNameEnhance("Z", "Blizzard")
+        ..tooltipStopListen(false)
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
+
+    createAutoCastedEnemyAbility(ABIL_AUTOCAST_BLIZZARD)
+        ..registerTooltipGenerator(tgen)
+        ..presetCastRange(_ -> 800)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 30)
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_BLIZZARD, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Reduces piercing damage."
+    )
+
+    itm = createBasicItem(ITEM_DEFEND)
+        ..setItemCost(0, 500, 11, 1, 1)
+        ..setNameEnhance("X", "Add Defend ability")
+        ..setInterfaceIcon(Icons.bTNDefend)
+
+    new AbilityDefinitionDefend(ABIL_DEFEND)
+        ..setCheckDependencies(false)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetChancetoDeflect(_ -> 30)
+        ..presetDamageDealt(_ -> 1)
+        ..presetDamageTaken(_ -> 0.35)
+        ..presetMovementSpeedFactor(_ -> 0.3)
+        ..setNameEnhance("Z", "Defend")
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_DEFEND, tgen.generateFullTooltip())
 
 
-let unitToItemMap = new HashMap<int, LinkedList<int>>()
-    ..put(BUILDING_MAGE, asList(ITEM_DARK_MAGE, ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
+    tgen = new BTAbilityTooltipGenerator(
+        "Steals a positive buff from an enemy unit and applies it to a " +
+        "nearby friendly unit, or takes a negative buff from a friendly " +
+        "unit and applies it to a nearby enemy unit."
+    )
+
+    new AbilityDefinition(ABIL_SPELL_STEAL, AbilityIds.spellSteal)
+        ..setCheckDependencies(false)
+        ..presetAreaofEffect(_ -> 700)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 3)
+        ..presetManaCost(_ -> 40)
+        ..presetCastRange(_ -> 700)
+        ..setNameEnhance("Z", "Spell Steal")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_SPELL_STEAL, tgen.generateFullTooltip())
 
 
+    tgen = new BTAbilityTooltipGenerator(
+        "Apply a burning damage ignoring armor over time."
+    )
+    let BUFF_BURN_ID_STACK = BUFF_ID_GEN.next()
+    new BuffDefinition(BUFF_BURN_ID_STACK, BuffIds.slowPoisonStacking)
+        ..setIcon(Icons.bTNArcaniteMelee)
+        ..setTooltipNormal(1, "Holy Blade burn")
+        ..setTooltipNormalExtended(1, "This unit is burning; takes pure damage over time.")
+        ..setTargetAttachments(1, 1)
+        ..setTargetAttachmentPoint0(1, "chest")
+        ..setArtTarget(1, Abilities.breathOfFireDamage)
+
+    let BUFF_BURN_ID_NON_STACK = BUFF_ID_GEN.next()
+    new BuffDefinition(BUFF_BURN_ID_NON_STACK, BuffIds.slowPoisonNonStacking)
+        ..setIcon(Icons.bTNArcaniteMelee)
+        ..setTooltipNormal(1, "Holy Blade burn")
+        ..setTooltipNormalExtended(1, "This unit is burning; takes pure damage over time.")
+        ..setTargetAttachments(1, 1)
+        ..setTargetAttachmentPoint0(1, "chest")
+        ..setArtTarget(1, Abilities.breathOfFireDamage)
+
+    createVisualAbility(ABIL_HOLY_BLADE_VISUAL)
+        ..setTargetAttachments(1)
+        ..setTargetAttachmentPoint("weapon,right")
+        ..setArtTarget(Abilities.sunderingBlades)
+        ..setName("Visual Holy Blade")
+
+    new AbilityDefinitionSlowPoison(ABIL_HOLY_BLADE)
+        ..setCheckDependencies(false)
+        ..setMovementSpeedFactor(1, 0)
+        ..setAttackSpeedFactor(1, 0)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDamagePerSecond(_ -> 15)
+        ..presetDurationNormal(_ -> 5)
+        ..setNameEnhance("Z", "Holy Blade")
+        ..tooltipStopListen(true)
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.ground))
+        ..setBuffs(1, commaList(BUFF_BURN_ID_STACK, BUFF_BURN_ID_NON_STACK))
+
+    abilTooltipMap.put(ABIL_HOLY_BLADE, tgen.generateFullTooltip())
 
 
-init
-    PauseTimer(bj_stockUpdateTimer)
+    tgen = new BTAbilityTooltipGenerator(
+        "Add splash damage."
+    )
+    itm = createBasicItem(ITEM_EXPLOSIVE_AMMO)
+        ..setItemCost(0, 50, 1, 5, 5)
+        ..setNameEnhance("X", "Add 1 Explosive Ammo")
+        ..setInterfaceIcon(Icons.bTNHumanMissileUpThree)
 
-    CreateTrigger()
-    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SELL_ITEM)
-    ..addCondition(Condition(() -> unitToItemMap.has(GetSellingUnit().getTypeId())))
-    ..addAction() ->
-        print(GetSellingUnit().getName())
-        GetSellingUnit().addItemToStock(ITEM_INNER_FIRE, 2, 2)
-        unitToItemMap.get(GetSellingUnit().getTypeId())
+    new AbilityDefinitionOrbofAnnihilation(ABIL_EXPLOSIVE_AMMO)
+        ..setCastRange(1, 0)
+        ..setManaCost(1, 0)
+        ..presetDamageBonus(_ -> 0)
+        ..setFullDamageRadius(1, 25)
+        ..setHalfDamageRadius(1, 100)
+        ..setAreaofEffect(1, 150)
+        ..setMediumDamageFactor(1, 0.4)
+        ..setSmallDamageFactor(1, 0.1)
+        ..setArtSpecial("")
+        ..setSpecialAttachmentPoint("")
+        ..setMissileArt(Abilities.cannonTowerMissile)
+        ..setArtTarget(Abilities.cannonTowerMissile)
+        ..tooltipStartListen()
+        ..setNameEnhance("Z", "Explosive Ammo Visual")
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_EXPLOSIVE_AMMO, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Summon Water Elemental."
+    )
+    new AbilityDefinitionArchMageSummonWaterElemental(ABIL_WATER_ELEMENTAL)
+        ..setHeroAbility(false)
+        ..setLevels(1)
+        ..registerTooltipGenerator(tgen)
+        ..setSummonedUnitType(1, commaList(UNIT_WATER_ELEMENTAL))
+        ..tooltipStartListen()
+        ..setSummonedUnitCount(1, 1)
+        ..presetManaCost(_ -> 100)
+        ..presetDurationNormal(_ -> 30)
+        ..presetCooldown(_ -> 60)
+        ..setNameEnhance("Z", "Summon Water Elemental")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_WATER_ELEMENTAL, tgen.generateFullTooltip())

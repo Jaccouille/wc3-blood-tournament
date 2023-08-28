@@ -70,3 +70,8 @@ public function createOrbAbility(int abilId) returns AbilityDefinitionOrbofLight
         ..presetDamageBonus(_ -> 0)
         ..setArtSpecial("")
         ..setArtTarget("")
+
+public function createVisualAbility(int abilId) returns AbilityDefinitionDefenseBonusPlus1
+    return new AbilityDefinitionDefenseBonusPlus1(abilId)
+        ..setDefenseBonus(1, 0)
+        ..setName("Visual buff ability")

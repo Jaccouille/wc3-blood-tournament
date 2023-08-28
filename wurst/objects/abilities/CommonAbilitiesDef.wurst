@@ -86,6 +86,71 @@ function createHardenedSkin(int abilId, real value) returns AbilityDefinitionHar
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
     return abilDef
 
+function createDevotionAura(int abilId, real value) returns AbilityDefinitionPaladinDevotionAura
+    let tgen = new BTAbilityTooltipGenerator(
+        "Gives additional armor to nearby friendly units.")
+    let abilDef = new AbilityDefinitionPaladinDevotionAura(abilId)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetArmorBonus(_ -> value)
+        ..presetAreaofEffect(_ -> 900)
+        ..setName("Devotion Aura " + value.toString(0))
+        ..tooltipStopListen()
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
+
+function createBrillianceAura(int abilId, real value) returns AbilityDefinitionArchMageBrillianceAura
+    let tgen = new BTAbilityTooltipGenerator(
+        "Gives additional mana regeneration to nearby friendly units.")
+    let abilDef = new AbilityDefinitionArchMageBrillianceAura(abilId)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetManaRegenerationIncrease(_ -> value)
+        ..presetAreaofEffect(_ -> 900)
+        ..setName("Brilliance Aura " + value.toString(0))
+        ..tooltipStopListen()
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
+
+function createMeleeAura(int abilId, real value) returns AbilityDefinitionAuraCommandCreep
+    let tgen = new BTAbilityTooltipGenerator(
+        "Gives extra damage to the attacks of nearby melee friendly units.")
+    let abilDef = new AbilityDefinitionAuraCommandCreep(abilId)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..presetRangedBonus(_ -> false)
+        ..presetFlatBonus(_ -> true)
+        ..tooltipStartListen()
+        ..presetAttackDamageIncrease(_ -> value)
+        ..presetAreaofEffect(_ -> 900)
+        ..setName("Melee Aura " + value.toString(0))
+        ..tooltipStopListen()
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
+
+function createMagicResistance(int abilId, real value) returns AbilityDefinitionElunesGrace
+    let tgen = new BTAbilityTooltipGenerator(
+        "Reduces the damage taken from Spells and Magic attacks.")
+    let abilDef = new AbilityDefinitionElunesGrace(abilId)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..setMagicDamageReduction(1, value)
+        ..setDamageTaken(1, 1)
+        ..setChancetoDeflect(1, 0)
+        ..setDeflectDamageTakenPiercing(1, 1)
+        ..setDeflectDamageTakenSpells(1, 0)
+        ..tooltipStartListen()
+        ..setName("Magic Resistance " + value.toPercent())
+        ..tooltipStopListen()
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
+
 @compiletime function createCleaveAbilities()
     createCleave(ABIL_CLEAVE_10, 0.10, 150.)
     createCleave(ABIL_CLEAVE_20, 0.20, 150.)
@@ -116,8 +181,24 @@ function createHardenedSkin(int abilId, real value) returns AbilityDefinitionHar
     createHardenedSkin(ABIL_HARDENED_SKIN_10, 10)
     createHardenedSkin(ABIL_HARDENED_SKIN_15, 15)
 
+@compiletime function createDevotionAbilities()
+    createDevotionAura(ABIL_DEVOTION_AURA_2, 2)
+    createDevotionAura(ABIL_DEVOTION_AURA_4, 4)
+
+@compiletime function createBrillianceAbilities()
+    createBrillianceAura(ABIL_BRILLANCE_AURA_1, 1)
+    createBrillianceAura(ABIL_BRILLANCE_AURA_2, 2)
+
+@compiletime function createMeleeAuraAbilities()
+    createMeleeAura(ABIL_MELEE_AURA_FLAT_10, 10)
+    createMeleeAura(ABIL_MELEE_AURA_FLAT_20, 20)
+
+@compiletime function createMagicResistanceAbilities()
+    createMagicResistance(ABIL_MAGIC_ARMOR_30, 0.3)
+    createMagicResistance(ABIL_MAGIC_ARMOR_50, 0.5)
+
 @compiletime function createArrowAbilites()
-    var tgen = new AbilityTooltipGenerator("Add Spell damage.")
+    var tgen = new BTAbilityTooltipGenerator("Add Spell damage.")
     new AbilityDefinitionSearingArrowscreep(ABIL_FIRE_ARROW)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
@@ -127,9 +208,9 @@ function createHardenedSkin(int abilId, real value) returns AbilityDefinitionHar
         ..presetManaCost(_ -> 0)
         ..presetCastRange(_ -> 700)
         ..setNameEnhance("Z", "Fire Arrow")
-    abilTooltipMap.put(ABIL_FIRE_ARROW, tgen.generateTooltipExtended(false))
+    abilTooltipMap.put(ABIL_FIRE_ARROW, tgen.generateFullTooltip())
 
-    tgen = new AbilityTooltipGenerator("Slow target movement and attack speed.")
+    tgen = new BTAbilityTooltipGenerator("Slow target movement and attack speed.")
     new AbilityDefinitionColdArrowscreep(ABIL_FROST_ARROW)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
@@ -141,4 +222,20 @@ function createHardenedSkin(int abilId, real value) returns AbilityDefinitionHar
         ..presetManaCost(_ -> 0)
         ..presetCastRange(_ -> 700)
         ..setNameEnhance("Z", "Frost Arrow")
-    abilTooltipMap.put(ABIL_FROST_ARROW, tgen.generateTooltipExtended(false))
+    abilTooltipMap.put(ABIL_FROST_ARROW, tgen.generateFullTooltip())
+
+
+@compiletime function createManashield()
+    let tgen = new BTAbilityTooltipGenerator(
+        "Activates a shield that absorbs 3 damage per point of mana."
+    )
+    new AbilityDefinitionManaShieldCreep(ABIL_MANA_SHIELD)
+        ..registerTooltipGenerator(tgen)
+        ..setManaperHitPoint(1, 3)
+        ..presetManaCost(_ -> 0)
+        ..setLevels(1)
+        ..tooltipStartListen()
+        ..setNameEnhance("Z", "Mana Shield")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_MANA_SHIELD, tgen.generateFullTooltip())

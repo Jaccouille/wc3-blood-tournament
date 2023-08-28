@@ -139,17 +139,17 @@ public class BTUnitDefinition extends UnitDefinition
     function registerTooltipGenerator(UnitTooltipGenerator tgen)
         tooltipGen = tgen
 
-    private function addTooltipProperty(string pName, string value)
+    function addTooltipProperty(string pName, string value)
         if tooltipGen != null and listen
             if USE_PROPERTY_SPACING
                 tooltipGen.addProperty(pName, value, 0)
             else
                 tooltipGen.addProperty(pName.replace(" ", ""), value, 0)
 
-    private function addTooltipProperty(string pName, int value)
+    function addTooltipProperty(string pName, int value)
         addTooltipProperty(pName, value.toString())
 
-    private function addTooltipProperty(string pName, real value)
+    function addTooltipProperty(string pName, real value)
         var s = value.toString()
         s = s.endsWith(".0") ? s.substring(0, s.length() - 2) : s
         addTooltipProperty(pName, s)
@@ -350,6 +350,14 @@ public function UnitDefinition.setSizeSmall()
 
 public function UnitDefinition.setSizeLarge()
     this.setCollisionSize(32)
+
+public function BTUnitDefinition.setSmallSplash()
+    this.setAttack1AreaofEffectFullDamage(25)
+    this.setAttack1AreaofEffectMediumDamage(50)
+    this.setAttack1AreaofEffectSmallDamage(120)
+    this.setAttack1DamageFactorSmall(0.1)
+    this.setAttack1DamageFactorMedium(0.4)
+    this.addTooltipProperty("Splash", "Small")
 
 function W3UDefinition.setHotkeyEnhance(string hotkey)
     if not hotKeyMapping.has(hotkey)

@@ -16,3 +16,5 @@ init
                     BlzQueuePointOrderById(target, OrderIds.blink, src.getPos().x, src.getPos().y)
                     doAfter(0.9) ->
                         BlzQueueImmediateOrderById(target, OrderIds.fanofknives)
+
+        // switch src.getTypeId()
