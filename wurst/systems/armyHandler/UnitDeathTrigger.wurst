@@ -8,23 +8,47 @@ import RoundController
 import ClosureTimers
 import LocalObjectIDs
 import Assets
+import OrderIds
 
-function customAction(unit killer, unit dying)
-    if killer.getTypeId() == UNIT_DEATH_KNIGHT and killer.isAlive()
-        let manaRestored = dying.getMaxHP() / 10
-        flashEffect(Abilities.darkRitualTarget, dying, "origin")
+function customAction(unit killer, unit dyingUnit, PlayerData pData)
+
+    if dyingUnit.getTypeId() == UNIT_PALADIN_1
+        or dyingUnit.getTypeId() == UNIT_PALADIN_2
+        or dyingUnit.getTypeId() == UNIT_PALADIN_3
+        doAfter(1) ->
+            // if roundController.currentRound.
+            flashEffect(Abilities.resurrecttarget, dyingUnit.getPos())
+            let u = createUnit(dyingUnit.getOwner(), UNIT_GHOST_PALADIN,
+                dyingUnit.getPos(), dyingUnit.getFacingAngle())
+            ..issuePointOrder("attack", CENTER)
+            pData.spawnedUnits.add(u)
+
+    else if dyingUnit.getTypeId() == UNIT_GHOST_PALADIN
+        flashEffect(Abilities.holyBoltSpecialArt, dyingUnit.getPos())
+        dyingUnit.remove()
+
+    else if killer.getTypeId() == UNIT_DEATH_KNIGHT and killer.isAlive()
+        let manaRestored = dyingUnit.getMaxHP() / 10
+        flashEffect(Abilities.darkRitualTarget, dyingUnit, "origin")
         flashEffect(Abilities.replenishManaCaster, killer, "origin")
         killer.addMana(manaRestored)
+
     else if killer.getTypeId() == UNIT_VAMPIRE and killer.isAlive()
-        let hpBonus = (dying.getMaxHP() / 10).toInt()
+        let hpBonus = (dyingUnit.getMaxHP() / 10).toInt()
         killer.setMaxHP(killer.getMaxHP().toInt() + hpBonus, true)
         flashEffect(Abilities.aIsmTarget, killer, "origin")
+
     else if killer.getTypeId() == UNIT_VAMPIRE_LORD and killer.isAlive()
-        let hpBonus = (dying.getMaxHP() / 20).toInt()
+        let hpBonus = (dyingUnit.getMaxHP() / 20).toInt()
         killer.setMaxHP(killer.getMaxHP().toInt() + hpBonus, true)
         flashEffect(Abilities.aIsmTarget, killer, "origin")
-    else if dying.getTypeId() == UNIT_WISP
-        flashEffect(Units.wispExplode, dying.getPos())
+
+    else if dyingUnit.getTypeId() == UNIT_WISP
+        flashEffect(Units.wispExplode, dyingUnit.getPos())
+
+    else if killer.getTypeId() == UNIT_TRAPPER
+        and killer.getAbilityCooldownRemaining(ABIL_BERSERK) <= 0
+        killer.issueImmediateOrderById(OrderIds.berserk)
 
 function getBounty(unit dyingUnit) returns int
     return (dyingUnit.getPointValue() * gameConfig.getBountyMultiplier()).toInt()
@@ -70,14 +94,11 @@ public function initUnitDeathTrigger()
 
         let pData = pDatas.get(dyingUnit.getOwner().getTruePlayerFromDummy())
 
-
         // Is a building
-        if armyMap.has(dyingUnit.getTypeId())
-            pData.subArmyPoints(armyMap.get(dyingUnit.getTypeId()).buildingPointValue)
+        if BTBuildingData.unitIdToDataMap.has(dyingUnit.getTypeId())
+            pData.subArmyPoints(BTBuildingData.unitIdToDataMap.get(dyingUnit.getTypeId()).buildingPointValue)
             pData.buildingList.remove(dyingUnit)
         else
-            // Custom Action affecting killer unit
-            customAction(killer, dyingUnit)
 
             // Add blood points bounty
             if killerOwner != ALTAR_PLAYER
@@ -86,17 +107,12 @@ public function initUnitDeathTrigger()
                 if dyingUnit.getPointValue() > 0
                     pDatas.get(killerOwner).addBounty(getBounty(dyingUnit))
                     createBountyTag(dyingUnit, killerOwner)
+                    if dyingUnit.getTypeId() == UNIT_GHOST_PALADIN
+                        Log.debug(killerOwner.getName())
 
             if pData.spawnedUnits.has(dyingUnit) == true
                 pData.spawnedUnits.remove(dyingUnit)
                 checkIfPlayerDefeated(pData)
 
-        if dyingUnit.getTypeId() == UNIT_PALADIN_1
-            or dyingUnit.getTypeId() == UNIT_PALADIN_2
-            or dyingUnit.getTypeId() == UNIT_PALADIN_3
-            doAfter(1) ->
-                flashEffect(Abilities.resurrecttarget, dyingUnit.getPos())
-                let u = createUnit(dyingUnit.getOwner(), UNIT_GHOST_PALADIN,
-                    dyingUnit.getPos(), dyingUnit.getFacingAngle())
-                ..issuePointOrder("attack", CENTER)
-                pData.spawnedUnits.add(u)
+            // Custom Action affecting killer unit
+            customAction(killer, dyingUnit, pData)

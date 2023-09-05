@@ -12,7 +12,7 @@ import LocalObjectIDs
 
 @compiletime function createUndeadAbilities()
     var itm = createBasicItem(ITEM_UNHOLY_FRENZY)
-        ..setItemCost(0, 100, 1, 4, 4)
+        ..setItemCost(0, 100, 1, 3, 3)
         ..setNameEnhance("Z", "Add 1 Unholy Frenzy")
         ..setInterfaceIcon(Icons.bTNUnholyFrenzy)
 

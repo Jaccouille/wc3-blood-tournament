@@ -131,7 +131,7 @@ import NightElfAbilitiesDef
         ..setAttack1Data(AttackType.Pierce, 32, 1, 8, 2)
         ..setAttack1Range(450)
 
-        ..setArmorData(ArmorType.Medium, 3)
+        ..setArmorData(ArmorType.Unarmored, 3)
         ..setHitPointsMaximumBase(240)
         ..setMana(200)
         ..setManaRegeneration(0.75)
@@ -474,6 +474,7 @@ import NightElfAbilitiesDef
 
         ..setArmorData(ArmorType.Divine, 7)
         ..setHitPointsMaximumBase(550)
+        ..setMana(200)
 
         ..setSpeedBase(330)
 
@@ -484,7 +485,6 @@ import NightElfAbilitiesDef
         ..setNameEnhance("R", "Avatar Of Vengeance")
         ..tooltipStopListen(true)
         ..setScalingValue(0.85)
-        ..setMana(0)
 
         ..setIconGameInterfaceExt(Icons.bTNSpiritOfVengeance)
 
@@ -644,7 +644,7 @@ import NightElfAbilitiesDef
             BUILDING_DRYAD,
             BUILDING_DRUID_TALON,
             BUILDING_DRUID_CLAW,
-            BUILDING_MOUNTAIN_GIANT,
+            // BUILDING_MOUNTAIN_GIANT,
             BUILDING_AVATAR_OF_VENGEANCE,
             BUILDING_DAEMON_HUNTER,
             BUILDING_BALLISTA

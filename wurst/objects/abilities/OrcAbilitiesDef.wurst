@@ -1,8 +1,5 @@
 package OrcAbilitiesDef
 
-// Standard libs imports:
-import AbilityObjEditing
-
 // Local imports:
 import ColorUtils
 import LocalObjectIDs
@@ -10,6 +7,10 @@ import ItemObjEditingCommon
 import AbilityObjEditingCommons
 import AbilityTooltipGenerator
 import UnitObjEditingCommon
+import HashMap
+import BTAbilities
+import BuffObjEditing
+import Assets
 import TooltipsUtils
 
 public constant TOOLTIP_BLOODLUST = "Bloodlust".color(SPECIAL_COLOR)
@@ -30,33 +31,326 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
         ..setTooltipNormalExtended(1, TOOLTIP_EXT_BLOODLUST)
 
     var itm = createBasicItem(ITEM_HEALING_WAVE)
-        ..setItemCost(0, 750, 4, 1, 1)
-        ..setNameEnhance("X", "Learn Healing Wave")
+        ..setItemCost(0, 400, 4, 1, 1)
+        ..setNameEnhance("X", "Add Healing Wave")
         ..setInterfaceIcon(Icons.bTNHealingWave)
-    createAutoCastedAlliedAbility(ABIL_AUTOCAST_HEALING_WAVE)
-        ..presetCooldown(_ -> 10)
-        ..presetManaCost(_ -> 0)
-        ..presetCastRange(_ -> 600)
 
-    var tgen = new AbilityTooltipGenerator("")
+    var tgen = new BTAbilityTooltipGenerator(
+        "Calls forth a wave of healing energy that bounces.")
     new AbilityDefinitionHealingWaveCreep(ABIL_HEALING_WAVE)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
+        ..presetCooldown(_ -> 0)
         ..tooltipStartListen()
         ..setNameEnhance("X", "Healing Wave")
-        ..presetDamageperTarget(_ -> 100)
+        ..setDamageperTarget(1, 100)
+        ..addTooltipProperty("Heal by target", _ -> "100")
         ..presetNumberofTargetsHit(_ -> 4)
-        ..presetCooldown(_ -> 10)
         ..presetManaCost(_ -> 50)
         ..presetCastRange(_ -> 600)
         ..tooltipStopListen(true)
+
+    createAutoCastedAlliedAbility(ABIL_AUTOCAST_HEALING_WAVE)
+        ..registerTooltipGenerator(tgen)
+        ..presetCastRange(_ -> 600)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 10)
+        ..tooltipStopListen(true)
+
     tgen.applyToDefItem(itm)
 
 
-    itm = createBasicItem(ITEM_SERPENT_WARD)
-        ..setItemCost(0, 500, 4, 1, 1)
-        ..setNameEnhance("X", "Learn Serpent Ward")
-        ..setInterfaceIcon(Icons.bTNSerpentWard)
-    createAutoCastedAlliedAbility(ABIL_AUTOCAST_SERPENT_WARD)
-    tgen = new AbilityTooltipGenerator("Increase damage. Units killed by the mage will turn into Ghost.")
-    new AbilityDefinitionHealingWaveCreep(ABIL_SERPENT_WARD)
+    // itm = createBasicItem(ITEM_SERPENT_WARD)
+    //     ..setItemCost(0, 500, 4, 1, 1)
+    //     ..setNameEnhance("X", "Learn Serpent Ward")
+    //     ..setInterfaceIcon(Icons.bTNSerpentWard)
+    // createAutoCastedAlliedAbility(ABIL_AUTOCAST_SERPENT_WARD)
+
+    // tgen = new BTAbilityTooltipGenerator("Increase damage. Units killed by the mage will turn into Ghost.")
+    // new AbilityDefinitionHealingWaveCreep(ABIL_SERPENT_WARD)
+
+    let BUFF_BERSERK = BUFF_ID_GEN.next()
+
+    new BuffDefinition(BUFF_BERSERK, BuffIds.berserk)
+        ..setTargetAttachmentPoint0(1, "hand,left")
+        ..setTargetAttachmentPoint1(1, "hand,right")
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Upon killing, causes this unit to attack faster, but take more damage.")
+    new AbilityDefinitionBerserk(ABIL_BERSERK)
+        ..registerTooltipGenerator(tgen)
+        ..setLevels(1)
+        ..tooltipStartListen()
+        ..setAttackSpeedIncrease(1, 1)
+        ..addTooltipProperty("Attack Speed Bonus", _ -> "100%")
+        ..setDamageTakenIncrease(1, 0.4)
+        ..addTooltipProperty("Damage Taken Bonus", _ -> 0.4.toPercent())
+        ..setMovementSpeedIncrease(1, 0.3)
+        ..addTooltipProperty("Movement Speed Bonus", _ -> 0.3.toPercent())
+        ..presetDurationNormal(_ -> 3)
+        ..presetCooldown(_ -> 10)
+        ..setNameEnhance("Z", "Berserk")
+        ..tooltipStopListen(true)
+        ..setBuffs(1, BUFF_BERSERK.toRawCode())
+
+    abilTooltipMap.put(ABIL_BERSERK, tgen.generateFullTooltip())
+
+    // Head hunter poison visual
+    createVisualAbility(ABIL_POISON_VISUAL)
+        ..setTargetAttachments(1)
+        ..setTargetAttachmentPoint("weapon")
+        ..setArtTarget(Abilities.bottleImpact)
+        ..setName("Visual Poison")
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Causes a target enemy unit to be bound to the ground so that it cannot" +
+        " move.")
+    new AbilityDefinitionWeb(ABIL_ENSNARE)
+        ..setCheckDependencies(false)
+        ..setMissileArt(Abilities.ensnaremissile)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDurationNormal(_ -> 4)
+        ..presetCooldown(_ -> 7)
+        ..presetCastRange(_ -> 550)
+        ..setNameEnhance("Z", "Ensnare")
+        ..tooltipStopListen(true)
+        ..setBuffs(1, commaList(BuffIds.ensnareAir, BuffIds.ensnareGround))
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
+
+    abilTooltipMap.put(ABIL_ENSNARE, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Reduces the effectiveness of healing and regeneration on enemy units.")
+    new AbilityDefinitionHealReductionBonus(ABIL_BURNING_BLADE_50)
+        ..setCheckDependencies(false)
+        ..setArtTarget(Abilities.flameStrikeEmbers)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..setHealingMultiplier(1, 0.5)
+        ..addTooltipProperty("Heal Reduction", _ -> 0.5.toPercent())
+        ..presetDurationNormal(_ -> 4)
+        ..setNameEnhance("Z", "Burning Blade")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_BURNING_BLADE_50, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Reduces the effectiveness of healing and regeneration on enemy units.")
+    new AbilityDefinitionHealReductionBonus(ABIL_BURNING_BLADE_75)
+        ..setCheckDependencies(false)
+        ..setArtTarget(Abilities.flameStrikeEmbers)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..setHealingMultiplier(1, 0.8)
+        ..addTooltipProperty("Heal Reduction", _ -> 0.8.toPercent())
+        ..presetDurationNormal(_ -> 4)
+        ..setNameEnhance("Z", "Chaos Burning Blade")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_BURNING_BLADE_75, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Decreases armor of the target and nearby enemy units.")
+    new AbilityDefinitionAlchemistAcidBomb(ABIL_ACID_BOMB)
+        ..setLevels(1)
+        ..presetCooldown(_ -> 0)
+        ..setCheckDependencies(false)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetArmorPenalty(_ -> 4)
+        ..presetDurationNormal(_ -> 6)
+        ..presetManaCost(_ -> 100)
+        ..presetAreaofEffect(_ -> 100)
+        ..presetCastRange(_ -> 600)
+        ..setNameEnhance("Z", "Acid Bomb")
+        ..tooltipStopListen(false)
+
+    createAutoCastedEnemyAbility(ABIL_AUTOCAST_ACID_BOMB)
+        ..registerTooltipGenerator(tgen)
+        ..presetCastRange(_ -> 600)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 8)
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_ACID_BOMB, tgen.generateFullTooltip())
+
+
+    itm = createBasicItem(ITEM_DRUNKEN_HAZE)
+        ..setItemCost(0, 125, 1, 3, 3)
+        ..setNameEnhance("Z", "Add Drunken Haze ability")
+        ..setInterfaceIcon(Icons.bTNStrongDrink)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Drenches enemy units in alcohol, causing their attack to miss.")
+    new AbilityDefinitionBrewmasterDrunkenHaze(ABIL_DRUNKEN_HAZE)
+        ..setLevels(1)
+        ..presetCooldown(_ -> 0)
+        ..setCheckDependencies(false)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..setChanceToMiss(1, 0.40)
+        ..addTooltipProperty("Chance to miss", _ -> 0.40.toPercent())
+        ..presetDurationNormal(_ -> 6)
+        ..presetManaCost(_ -> 100)
+        ..presetAreaofEffect(_ -> 100)
+        ..presetCastRange(_ -> 600)
+        ..setNameEnhance("Z", "Acid Bomb")
+        ..tooltipStopListen(false)
+
+    createAutoCastedEnemyAbility(ABIL_AUTOCAST_DRUNKEN_HAZE)
+        ..registerTooltipGenerator(tgen)
+        ..presetCastRange(_ -> 600)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 6)
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_DRUNKEN_HAZE, tgen.generateFullTooltip())
+
+
+    itm = createBasicItem(ITEM_ORB_LIGHTNING)
+        ..setItemCost(0, 50, 1, 3, 3)
+        ..setNameEnhance("X", "Add 1 Lightning Orb")
+        ..setInterfaceIcon(Icons.bTNOrbOfLightning)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Removes all buffs from a target unit, and slows its movement speed." +
+        "Deals damage to summoned units."
+        )
+    let abilId = ABIL_ID_GEN.next()
+    new AbilityDefinitionOrbofLightning(ABIL_ORB_LIGHTNING)
+        ..setEnabledAttackIndex(1, 0)
+        ..presetChanceToHitUnits(_ -> 0.3)
+        ..presetChanceToHitSummons(_ -> 0.6)
+        ..setEffectAbility(1, abilId.toRawCode())
+        ..setDamageBonus(1, 30)
+
+    new AbilityDefinitionPurgeorb(abilId)
+        ..presetCastRange(_ -> 700)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..addTooltipProperty("Chance to hit units", _ ->  0.3.toPercent())
+        ..addTooltipProperty("Chance to hit summons", _ ->  0.6.toPercent())
+        ..addTooltipProperty("Damage Bonus", _ -> "30")
+        ..presetSummonedUnitDamage(_ -> 200)
+        ..presetUnitPauseDuration(_ -> 1.5)
+        ..presetDurationNormal(_ -> 5)
+        ..setNameEnhance("Z", "Orb of Lightning")
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_ORB_LIGHTNING, tgen.generateFullTooltip())
+
+
+    itm = createBasicItem(ITEM_SPIRIT_WOLF1)
+        ..setItemCost(0, 50, 1, 3, 3)
+        ..setNameEnhance("Z", "Add 1 Summon Spirit Wolf")
+        ..setInterfaceIcon(Icons.bTNSpiritWolf)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Summon a Spirit Wolf."
+    )
+    new AbilityDefinitionSpiritWolfcreep(ABIL_SUMMON_SPIRIT_WOLF1)
+        ..setHeroAbility(false)
+        ..setLevels(1)
+        ..setAreaofEffect(1, 100)
+        ..registerTooltipGenerator(tgen)
+        ..setSummonedUnit(1, commaList(UNIT_SPIRIT_WOLF1))
+        ..tooltipStartListen()
+        ..setNumberofSummonedUnits(1, 1)
+        ..presetManaCost(_ -> 0)
+        ..presetDurationNormal(_ -> 30)
+        ..presetCooldown(_ -> 15)
+        ..setNameEnhance("Z", "Summon Spirit Wolf")
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_SUMMON_SPIRIT_WOLF1, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Summon a Dire Spirit Wolf."
+    )
+    new AbilityDefinitionSpiritWolfcreep(ABIL_SUMMON_SPIRIT_WOLF2)
+        ..setHeroAbility(false)
+        ..setLevels(1)
+        ..setAreaofEffect(1, 100)
+        ..registerTooltipGenerator(tgen)
+        ..setSummonedUnit(1, commaList(UNIT_SPIRIT_WOLF2))
+        ..tooltipStartListen()
+        ..setNumberofSummonedUnits(1, 1)
+        ..presetManaCost(_ -> 0)
+        ..presetDurationNormal(_ -> 30)
+        ..presetCooldown(_ -> 15)
+        ..setNameEnhance("Z", "Summon Dire Spirit Wolf")
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_SUMMON_SPIRIT_WOLF2, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Calls forth a bolt of lightning that deals damage and bounce.")
+    new AbilityDefinitionChainLightningcreep(ABIL_CHAIN_LIGHTNING)
+        ..setAnimationNames(commaList("spell", "chain"))
+        ..registerTooltipGenerator(tgen)
+        ..setLevels(1)
+        ..presetDamageReductionperTarget(_ -> 0)
+        ..presetCooldown(_ -> 0)
+        ..tooltipStartListen()
+        ..presetDamageperTarget(_ -> 100)
+        ..presetNumberofTargetsHit(_ -> 5)
+        ..presetManaCost(_ -> 75)
+        ..presetCastRange(_ -> 600)
+        ..setNameEnhance("Z", "Chain Lightning")
+        ..tooltipStopListen(false)
+
+    createAutoCastedEnemyAbility(ABIL_AUTOCAST_CHAIN_LIGHTNING)
+        ..registerTooltipGenerator(tgen)
+        ..presetCastRange(_ -> 600)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 5)
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_CHAIN_LIGHTNING, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "The Ogre tosses a unit with its club, " +
+        "deals damage to unit on landing zone and reduces " +
+        "their attack and movement speed."
+        )
+
+    new AbilityDefinitionMountainKingThunderClap(ABIL_OGRE_SWING_SLAM)
+        ..setDummyAbility()
+        ..setHeroAbility(false)
+        ..setLevels(1)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..setAttackSpeedReduction(1, 0.2)
+        ..addTooltipProperty("Attack Speed Reduction", _ -> 0.2.toPercent())
+        ..setMovementSpeedReduction(1, 0.5)
+        ..addTooltipProperty("Movement Speed Reduction", _ -> 0.5.toPercent())
+        ..presetAOEDamage(_ -> 30)
+        ..presetMaximumDamage(_ -> 300)
+        ..presetAreaofEffect(_ -> 250)
+        ..presetDurationNormal(_ -> 3.)
+        ..tooltipStopListen(true)
+        ..setName("Ogre Slam")
+
+    createAutoCastedEnemyAbility(ABIL_OGRE_SWING)
+        ..registerTooltipGenerator(tgen)
+        ..setAnimationNames("attack,slam")
+        ..setCastRange(1, 120)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 30)
+        ..setNameEnhance("Z", "Ogre Swing")
+        ..tooltipStopListen(true)
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.enemies,
+            TargetsAllowed.ground
+            ))
+
+    abilTooltipMap.put(ABIL_OGRE_SWING, tgen.generateFullTooltip())

@@ -199,9 +199,9 @@ public function initScoreBoard()
         let pData = pDatas.get(dyingUnit.getOwner().getTruePlayerFromDummy())
         if owner != ALTAR_PLAYER
             // Is a building
-            if armyMap.has(dyingUnit.getTypeId())
+            if BTBuildingData.unitIdToDataMap.has(dyingUnit.getTypeId())
                 scoreBoardEntries.get("ArmyPoints")
-                    .addValue(pData._p, -armyMap.get(dyingUnit.getTypeId()).buildingPointValue)
+                    .addValue(pData._p, -BTBuildingData.unitIdToDataMap.get(dyingUnit.getTypeId()).buildingPointValue)
             else
                 scoreBoardEntries.get("BloodPoints")
                     .addValue(pData._p, dyingUnit.getPointValue())
@@ -210,6 +210,6 @@ public function initScoreBoard()
         let u = EventData.getTriggerUnit()
         let pData = pDatas.get(u.getOwner())
 
-        if armyMap.has(u.getTypeId())
+        if BTBuildingData.unitIdToDataMap.has(u.getTypeId())
             scoreBoardEntries.get("ArmyPoints")
-                .addValue(pData._p, armyMap.get(u.getTypeId()).buildingPointValue)
+                .addValue(pData._p, BTBuildingData.unitIdToDataMap.get(u.getTypeId()).buildingPointValue)

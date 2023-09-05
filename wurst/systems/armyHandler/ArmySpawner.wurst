@@ -18,6 +18,8 @@ import GameConfig
 import UnitExtensions
 import ItemCallbackDefinition
 
+
+
 public function getUnitPointValue(int goldCost, int lumberCost, int unitCount) returns int
     var pointValue = 0
     pointValue += (goldCost / unitCount).toInt()
@@ -25,109 +27,122 @@ public function getUnitPointValue(int goldCost, int lumberCost, int unitCount) r
     return pointValue
 
 public class BTBuildingData
+    static let unitIdToDataMap = new HashMap<int, BTBuildingData>
+
     LinkedList<int> unitToSpawn
     int buildingPointValue = 0
     int unitPointValue = 0
     int goldCost = 0
     int lumberCost = 0
 
-    construct(LinkedList<int> unitToSpawn, int goldCost, int lumberCost)
+    construct(int buildingId, int goldCost, int lumberCost, LinkedList<int> unitToSpawn)
+        unitIdToDataMap.put(buildingId, this)
         this.unitToSpawn = unitToSpawn
         this.goldCost = goldCost
         this.lumberCost = lumberCost
         unitPointValue = getUnitPointValue(goldCost, lumberCost, unitToSpawn.size())
         buildingPointValue += unitPointValue * unitToSpawn.size()
 
-
-// TODO: refactor, spawn count should be located in the unit definition files
-public let armyMap = new HashMap<int, BTBuildingData>
-    ..put(BUILDING_FOOTMAN           , new BTBuildingData(generateUnitList(UNIT_FOOTMAN           , 10 ), 100, 0))
-    ..put(BUILDING_ROYAL_GUARD       , new BTBuildingData(generateUnitList(UNIT_ROYAL_GUARD       , 10 ), 0, 500))
-    ..put(BUILDING_RIFLEMAN          , new BTBuildingData(generateUnitList(UNIT_RIFLEMAN          , 5  ), 150, 0))
-    ..put(BUILDING_ELVEN_ARCHER      , new BTBuildingData(generateUnitList(UNIT_ELVEN_ARCHER      , 10 ), 150, 0))
-    ..put(BUILDING_RANGER            , new BTBuildingData(generateUnitList(UNIT_RANGER            , 5  ), 0, 700))
-    ..put(BUILDING_KNIGHT            , new BTBuildingData(generateUnitList(UNIT_KNIGHT            , 5  ), 200, 0))
-    ..put(BUILDING_CRUSADER          , new BTBuildingData(generateUnitList(UNIT_CRUSADER          , 5  ), 0, 1000))
-    ..put(BUILDING_PRIEST            , new BTBuildingData(generateUnitList(UNIT_PRIEST            , 5  ), 200, 0))
-    ..put(BUILDING_SPELL_BREAKER     , new BTBuildingData(generateUnitList(UNIT_SPELL_BREAKER     , 4  ), 0, 1500))
-    ..put(BUILDING_SORCERESS         , new BTBuildingData(generateUnitList(UNIT_SORCERESS         , 3  ), 150, 0))
-    ..put(BUILDING_MAGE              , new BTBuildingData(generateUnitList(UNIT_MAGE              , 3  ), 300, 0))
-    ..put(BUILDING_ARCHMAGE          , new BTBuildingData(asList(UNIT_WATER_ELEMENTAL, UNIT_WATER_ELEMENTAL, UNIT_ARCHMAGE), 0, 2000))
-    ..put(BUILDING_SWORD_MASTER      , new BTBuildingData(generateUnitList(UNIT_SWORD_MASTER      , 4  ), 0, 3000))
-    ..put(BUILDING_ELVEN_MAGE        , new BTBuildingData(generateUnitList(UNIT_ELVEN_MAGE        , 3  ), 0, 3000))
-    ..put(BUILDING_PALADIN           , new BTBuildingData(asList(UNIT_PALADIN_1, UNIT_PALADIN_2, UNIT_PALADIN_3), 0, 1600))
-
-    ..put(BUILDING_GRUNT                , new BTBuildingData(generateUnitList(UNIT_GRUNT                , 7  ), 140, 0   ))
-    ..put(BUILDING_HEADHUNTER           , new BTBuildingData(generateUnitList(UNIT_HEADHUNTER           , 10 ), 150, 0   ))
-    ..put(BUILDING_RAIDER               , new BTBuildingData(generateUnitList(UNIT_RAIDER               , 7  ), 210, 0   ))
-    ..put(BUILDING_WITCH_DOCTOR         , new BTBuildingData(generateUnitList(UNIT_WITCH_DOCTOR         , 3  ), 150, 0   ))
-    ..put(BUILDING_SHAMAN               , new BTBuildingData(generateUnitList(UNIT_SHAMAN               , 4  ), 200, 0   ))
-    ..put(BUILDING_OGRE                 , new BTBuildingData(generateUnitList(UNIT_OGRE                 , 3  ), 300, 0   ))
-    ..put(BUILDING_WARLOCK              , new BTBuildingData(generateUnitList(UNIT_WARLOCK              , 5  ), 200, 0   ))
-    ..put(BUILDING_TAUREN               , new BTBuildingData(generateUnitList(UNIT_TAUREN               , 4  ), 200, 0   ))
-    ..put(BUILDING_OGRE_ARMORED         , new BTBuildingData(generateUnitList(UNIT_OGRE_ARMORED         , 3  ), 0  , 1200))
-    ..put(BUILDING_BERSERKER            , new BTBuildingData(generateUnitList(UNIT_BERSERKER            , 7  ), 0  , 500 ))
-    ..put(BUILDING_TRAPPER              , new BTBuildingData(generateUnitList(UNIT_TRAPPER              , 10 ), 0  , 600 ))
-    ..put(BUILDING_HEADHUNTER_BERSERKER , new BTBuildingData(generateUnitList(UNIT_HEADHUNTER_BERSERKER , 10 ), 0  , 700 ))
-    ..put(BUILDING_PACK_LEADER          , new BTBuildingData(generateUnitList(UNIT_PACK_LEADER          , 7  ), 0  , 800 ))
-    ..put(BUILDING_FARSEER              , new BTBuildingData(generateUnitList(UNIT_FARSEER              , 1  ), 0  , 1200))
-    ..put(BUILDING_OCCULTIST            , new BTBuildingData(generateUnitList(UNIT_OCCULTIST            , 5  ), 0  , 900 ))
-    ..put(BUILDING_BLADE_MASTER         , new BTBuildingData(generateUnitList(UNIT_BLADE_MASTER         , 4  ), 0  , 3000))
-    ..put(BUILDING_SHADOW_HUNTER        , new BTBuildingData(generateUnitList(UNIT_SHADOW_HUNTER        , 3  ), 0  , 3000))
-    ..put(BUILDING_DEMOLISHER           , new BTBuildingData(generateUnitList(UNIT_DEMOLISHER           , 3  ), 0  , 3000))
-
-    ..put(BUILDING_ZOMBIE          , new BTBuildingData(generateUnitList(UNIT_ZOMBIE          , 10), 50 , 0   ))
-    ..put(BUILDING_GHOUL           , new BTBuildingData(generateUnitList(UNIT_GHOUL           , 10), 0  , 600 ))
-    ..put(BUILDING_SKELETAL_ARCHER , new BTBuildingData(generateUnitList(UNIT_SKELETAL_ARCHER , 10), 150, 0   ))
-    ..put(BUILDING_CRYPT_FIEND     , new BTBuildingData(generateUnitList(UNIT_CRYPT_FIEND     , 5 ), 150, 0   ))
-    ..put(BUILDING_NERUBIAN        , new BTBuildingData(generateUnitList(UNIT_NERUBIAN        , 5 ), 0  , 800 ))
-    ..put(BUILDING_NECROMANCER     , new BTBuildingData(generateUnitList(UNIT_NECROMANCER     , 5 ), 200, 0   ))
-    ..put(BUILDING_LICH            , new BTBuildingData(generateUnitList(UNIT_LICH            , 1 ), 0  , 1000))
-    ..put(BUILDING_DEATH_KNIGHT    , new BTBuildingData(generateUnitList(UNIT_DEATH_KNIGHT    , 3 ), 0  , 1500))
-    ..put(BUILDING_BANSHEE         , new BTBuildingData(generateUnitList(UNIT_BANSHEE         , 3 ), 150, 0   ))
-    ..put(BUILDING_ABOMINATION     , new BTBuildingData(generateUnitList(UNIT_ABOMINATION     , 3 ), 300, 0   ))
-    ..put(BUILDING_FLESH_GOLEM     , new BTBuildingData(generateUnitList(UNIT_FLESH_GOLEM     , 4 ), 0  , 1400))
-    ..put(BUILDING_VAMPIRE         , new BTBuildingData(generateUnitList(UNIT_VAMPIRE         , 5 ), 350, 0   ))
-    ..put(BUILDING_VAMPIRE_LORD    , new BTBuildingData(generateUnitList(UNIT_VAMPIRE_LORD    , 3 ), 0  , 1000))
-    ..put(BUILDING_CRYPT_LORD      , new BTBuildingData(generateUnitList(UNIT_CRYPT_LORD      , 3 ), 0  , 3000))
-    ..put(BUILDING_DARK_RANGER     , new BTBuildingData(generateUnitList(UNIT_DARK_RANGER     , 5 ), 0  , 3000))
-    ..put(BUILDING_ARCHIMONDE      , new BTBuildingData(generateUnitList(UNIT_ARCHIMONDE      , 1 ), 0  , 3000))
-
-    ..put(BUILDING_TREANT      , new BTBuildingData(generateUnitList(UNIT_TREANT      , 10 ), 100, 0   ))
-    ..put(BUILDING_ARCHER      , new BTBuildingData(generateUnitList(UNIT_ARCHER      , 5  ), 100, 0   ))
-    ..put(BUILDING_HUNTRESS    , new BTBuildingData(generateUnitList(UNIT_HUNTRESS    , 5  ), 200, 0   ))
-    ..put(BUILDING_DRUID_TALON , new BTBuildingData(generateUnitList(UNIT_DRUID_TALON , 4  ), 200, 0   ))
-    ..put(BUILDING_DRUID_CLAW  , new BTBuildingData(generateUnitList(UNIT_DRUID_CLAW  , 5  ), 250, 0   ))
-    ..put(BUILDING_OWLBEAR     , new BTBuildingData(generateUnitList(UNIT_OWLBEAR     , 4  ), 0  , 1400))
-    ..put(BUILDING_DRYAD       , new BTBuildingData(generateUnitList(UNIT_DRYAD       , 5  ), 200, 0   ))
-
-    ..put(BUILDING_ANCIENT_PROTECTOR  , new BTBuildingData(generateUnitList(UNIT_ANCIENT_PROTECTOR  , 4), 0, 1600))
-    ..put(BUILDING_MOUNTAIN_GIANT     , new BTBuildingData(generateUnitList(UNIT_MOUNTAIN_GIANT   , 1), 300, 0))
-    ..put(BUILDING_NE_RANGER          , new BTBuildingData(generateUnitList(UNIT_NE_RANGER          , 6), 0, 1800))
-    ..put(BUILDING_SENTRY             , new BTBuildingData(generateUnitList(UNIT_SENTRY             , 10), 150, 0))
-    ..put(BUILDING_SPECTRE            , new BTBuildingData(generateUnitList(UNIT_SPECTRE            , 10), 0, 800))
-    ..put(BUILDING_WARDEN             , new BTBuildingData(generateUnitList(UNIT_WARDEN             , 3), 0, 1500))
-    ..put(BUILDING_AVATAR_OF_VENGEANCE, new BTBuildingData(generateUnitList(UNIT_AVATAR_OF_VENGEANCE, 3), 0, 2100))
-    ..put(BUILDING_BALLISTA           , new BTBuildingData(generateUnitList(UNIT_BALLISTA           , 2), 0, 3000))
-    ..put(BUILDING_DAEMON_HUNTER         , new BTBuildingData(generateUnitList(UNIT_DAEMON_HUNTER         , 3 ), 0, 3000))
-    ..put(BUILDING_PRIESTESS_OF_THE_MOON , new BTBuildingData(generateUnitList(UNIT_PRIESTESS_OF_THE_MOON , 3 ), 0, 3000))
+    construct(int upgradeFrom, int buildingId, int goldCost, int lumberCost, LinkedList<int> unitToSpawn)
+        unitIdToDataMap.put(buildingId, this)
+        this.unitToSpawn = unitToSpawn
+        this.goldCost = goldCost
+        this.lumberCost = lumberCost
+        unitPointValue = getUnitPointValue(goldCost, lumberCost, unitToSpawn.size())
+        buildingPointValue += unitPointValue * unitToSpawn.size()
+        if unitIdToDataMap.get(upgradeFrom) != null
+            unitPointValue += unitIdToDataMap.get(upgradeFrom).unitPointValue
+            buildingPointValue += unitIdToDataMap.get(upgradeFrom).buildingPointValue
+        else
+            printLog(Loglevel.ERROR, "Unknown upgrade from id")
 
 
-    ..put(BUILDING_GNOLL           , new BTBuildingData(asList(UNIT_GNOLL,UNIT_RAZORMAN, UNIT_WOLF, UNIT_FURBOLG, UNIT_SASQUATCH), 0, 0))
-    ..put(BUILDING_GNOLL_UPGRADE   , new BTBuildingData(asList(UNIT_GNOLL_UPGRADE, UNIT_RAZORMAN_UPGRADE, UNIT_WOLF_UPGRADE, UNIT_FURBOLG_UPGRADE, UNIT_SASQUATCH_UPGRADE), 0, 0))
-    ..put(BUILDING_TAUREN          , new BTBuildingData(generateUnitList(UNIT_TAUREN          , 5), 0, 0))
-    ..put(BUILDING_THUNDER_LIZARD  , new BTBuildingData(generateUnitList(UNIT_THUNDER_LIZARD  , 4), 0, 0))
-    ..put(BUILDING_CENTAUR         , new BTBuildingData(generateUnitList(UNIT_CENTAUR         , 10), 0, 0))
-    ..put(BUILDING_HYDRA           , new BTBuildingData(generateUnitList(UNIT_HYDRA           , 3), 0, 0))
-    ..put(BUILDING_REXXAR          , new BTBuildingData(generateUnitList(UNIT_REXXAR          , 1), 0, 0))
-    ..put(BUILDING_CHEN            , new BTBuildingData(generateUnitList(UNIT_CHEN            , 1), 0, 0))
-
-
-function generateUnitList(int unitId, int count) returns LinkedList<int>
+function genList(int unitId, int count) returns LinkedList<int>
     let unitList = new LinkedList<int>
     for i = 0 to count * 1 - 1
         unitList.add(unitId)
     return unitList
+
+@compiletime function setupBuildingData()
+// TODO: refactor, spawn count should be located in the unit definition files
+    new BTBuildingData(BUILDING_FOOTMAN      , 100, 0   , genList(UNIT_FOOTMAN         , 10))
+    new BTBuildingData(BUILDING_ROYAL_GUARD  , 0  , 500 , genList(UNIT_ROYAL_GUARD     , 10))
+    new BTBuildingData(BUILDING_RIFLEMAN     , 150, 0   , genList(UNIT_RIFLEMAN        , 5))
+    new BTBuildingData(BUILDING_ELVEN_ARCHER , 150, 0   , genList(UNIT_ELVEN_ARCHER    , 10))
+    new BTBuildingData(BUILDING_RANGER       , 0  , 700 , genList(UNIT_RANGER          , 5))
+    new BTBuildingData(BUILDING_KNIGHT       , 200, 0   , genList(UNIT_KNIGHT          , 5))
+    new BTBuildingData(BUILDING_CRUSADER     , 0  , 1000, genList(UNIT_CRUSADER        , 5))
+    new BTBuildingData(BUILDING_PRIEST       , 200, 0   , genList(UNIT_PRIEST          , 5))
+    new BTBuildingData(BUILDING_SPELL_BREAKER, 0  , 1500, genList(UNIT_SPELL_BREAKER   , 4))
+    new BTBuildingData(BUILDING_SORCERESS    , 150, 0   , genList(UNIT_SORCERESS       , 3))
+    new BTBuildingData(BUILDING_MAGE         , 300, 0   , genList(UNIT_MAGE            , 3))
+    new BTBuildingData(BUILDING_SWORD_MASTER , 0  , 3000, genList(UNIT_SWORD_MASTER    , 4))
+    new BTBuildingData(BUILDING_ELVEN_MAGE   , 0  , 3000, genList(UNIT_ELVEN_MAGE      , 3))
+    new BTBuildingData(BUILDING_PALADIN      , 0  , 1600, asList (UNIT_PALADIN_1       , UNIT_PALADIN_2, UNIT_PALADIN_3))
+    new BTBuildingData(BUILDING_ARCHMAGE     , 0  , 2000, asList (UNIT_WATER_ELEMENTAL , UNIT_WATER_ELEMENTAL, UNIT_ARCHMAGE))
+
+    new BTBuildingData(BUILDING_GRUNT                , 100 , 0   , genList(UNIT_GRUNT                , 4 ))
+    new BTBuildingData(BUILDING_HEADHUNTER           , 150 , 0   , genList(UNIT_HEADHUNTER           , 10))
+    new BTBuildingData(BUILDING_HEADHUNTER, BUILDING_TRAPPER              , 0   , 600 , genList(UNIT_TRAPPER              , 10))
+    new BTBuildingData(BUILDING_RAIDER               , 250 , 0   , genList(UNIT_RAIDER               , 5 ))
+    new BTBuildingData(BUILDING_WITCH_DOCTOR         , 150 , 0   , genList(UNIT_WITCH_DOCTOR         , 3 ))
+    new BTBuildingData(BUILDING_SHAMAN               , 200 , 0   , genList(UNIT_SHAMAN               , 4 ))
+    new BTBuildingData(BUILDING_OGRE                 , 300 , 0   , genList(UNIT_OGRE                 , 3 ))
+    new BTBuildingData(BUILDING_WARLOCK              , 200 , 0   , genList(UNIT_WARLOCK              , 5 ))
+    new BTBuildingData(BUILDING_TAUREN               , 200 , 0   , genList(UNIT_TAUREN               , 4 ))
+    new BTBuildingData(BUILDING_OGRE_ARMORED         , 0   , 1200, genList(UNIT_OGRE_ARMORED         , 3 ))
+    new BTBuildingData(BUILDING_BERSERKER            , 0   , 500 , genList(UNIT_BERSERKER            , 7 ))
+    new BTBuildingData(BUILDING_HEADHUNTER_BERSERKER , 0   , 700 , genList(UNIT_HEADHUNTER_BERSERKER , 10))
+    new BTBuildingData(BUILDING_PACK_LEADER          , 0   , 800 , genList(UNIT_PACK_LEADER          , 7 ))
+    new BTBuildingData(BUILDING_FARSEER              , 0   , 1200, genList(UNIT_FARSEER              , 1 ))
+    new BTBuildingData(BUILDING_OCCULTIST            , 0   , 900 , genList(UNIT_OCCULTIST            , 5 ))
+    new BTBuildingData(BUILDING_BLADE_MASTER         , 0   , 3000, genList(UNIT_BLADE_MASTER         , 4 ))
+    new BTBuildingData(BUILDING_SHADOW_HUNTER        , 0   , 3000, genList(UNIT_SHADOW_HUNTER        , 3 ))
+    new BTBuildingData(BUILDING_DEMOLISHER           , 0   , 3000, genList(UNIT_DEMOLISHER           , 3 ))
+
+    new BTBuildingData(BUILDING_ZOMBIE         , 50  , 0   , genList(UNIT_ZOMBIE          , 10 ))
+    new BTBuildingData(BUILDING_GHOUL          , 0   , 600 , genList(UNIT_GHOUL           , 10 ))
+    new BTBuildingData(BUILDING_SKELETAL_ARCHER, 150 , 0   , genList(UNIT_SKELETAL_ARCHER , 10 ))
+    new BTBuildingData(BUILDING_CRYPT_FIEND    , 150 , 0   , genList(UNIT_CRYPT_FIEND     , 5  ))
+    new BTBuildingData(BUILDING_NERUBIAN       , 0   , 800 , genList(UNIT_NERUBIAN        , 5  ))
+    new BTBuildingData(BUILDING_NECROMANCER    , 200 , 0   , genList(UNIT_NECROMANCER     , 5  ))
+    new BTBuildingData(BUILDING_LICH           , 0   , 1000, genList(UNIT_LICH            , 1  ))
+    new BTBuildingData(BUILDING_DEATH_KNIGHT   , 0   , 1500, genList(UNIT_DEATH_KNIGHT    , 3  ))
+    new BTBuildingData(BUILDING_BANSHEE        , 150 , 0   , genList(UNIT_BANSHEE         , 3  ))
+    new BTBuildingData(BUILDING_ABOMINATION    , 300 , 0   , genList(UNIT_ABOMINATION     , 3  ))
+    new BTBuildingData(BUILDING_FLESH_GOLEM    , 0   , 1400, genList(UNIT_FLESH_GOLEM     , 4  ))
+    new BTBuildingData(BUILDING_VAMPIRE        , 350 , 0   , genList(UNIT_VAMPIRE         , 5  ))
+    new BTBuildingData(BUILDING_VAMPIRE_LORD   , 0   , 1000, genList(UNIT_VAMPIRE_LORD    , 3  ))
+    new BTBuildingData(BUILDING_CRYPT_LORD     , 0   , 3000, genList(UNIT_CRYPT_LORD      , 3  ))
+    new BTBuildingData(BUILDING_DARK_RANGER    , 0   , 3000, genList(UNIT_DARK_RANGER     , 5  ))
+    new BTBuildingData(BUILDING_ARCHIMONDE     , 0   , 3000, genList(UNIT_ARCHIMONDE      , 1  ))
+
+    new BTBuildingData(BUILDING_TREANT                , 100 , 0   , genList(UNIT_TREANT                , 10 ))
+    new BTBuildingData(BUILDING_ARCHER                , 100 , 0   , genList(UNIT_ARCHER                , 5  ))
+    new BTBuildingData(BUILDING_HUNTRESS              , 200 , 0   , genList(UNIT_HUNTRESS              , 5  ))
+    new BTBuildingData(BUILDING_DRUID_TALON           , 200 , 0   , genList(UNIT_DRUID_TALON           , 4  ))
+    new BTBuildingData(BUILDING_DRUID_CLAW            , 250 , 0   , genList(UNIT_DRUID_CLAW            , 5  ))
+    new BTBuildingData(BUILDING_OWLBEAR               , 0   , 1400, genList(UNIT_OWLBEAR               , 4  ))
+    new BTBuildingData(BUILDING_DRYAD                 , 200 , 0   , genList(UNIT_DRYAD                 , 5  ))
+    new BTBuildingData(BUILDING_ANCIENT_PROTECTOR     , 0   , 1600, genList(UNIT_ANCIENT_PROTECTOR     , 4  ))
+    new BTBuildingData(BUILDING_MOUNTAIN_GIANT        , 300 , 0   , genList(UNIT_MOUNTAIN_GIANT        , 1  ))
+    new BTBuildingData(BUILDING_NE_RANGER             , 0   , 1800, genList(UNIT_NE_RANGER             , 6  ))
+    new BTBuildingData(BUILDING_SENTRY                , 150 , 0   , genList(UNIT_SENTRY                , 10 ))
+    new BTBuildingData(BUILDING_SPECTRE               , 0   , 800 , genList(UNIT_SPECTRE               , 10 ))
+    new BTBuildingData(BUILDING_WARDEN                , 0   , 1500, genList(UNIT_WARDEN                , 3  ))
+    new BTBuildingData(BUILDING_AVATAR_OF_VENGEANCE   , 0   , 2100, genList(UNIT_AVATAR_OF_VENGEANCE   , 3  ))
+    new BTBuildingData(BUILDING_BALLISTA              , 0   , 3000, genList(UNIT_BALLISTA              , 2  ))
+    new BTBuildingData(BUILDING_DAEMON_HUNTER         , 0   , 3000, genList(UNIT_DAEMON_HUNTER         , 3  ))
+    new BTBuildingData(BUILDING_PRIESTESS_OF_THE_MOON , 0   , 3000, genList(UNIT_PRIESTESS_OF_THE_MOON , 3  ))
+
+    new BTBuildingData(BUILDING_GNOLL         , 0, 0, asList (UNIT_GNOLL          , UNIT_RAZORMAN, UNIT_WOLF, UNIT_FURBOLG, UNIT_SASQUATCH                                ))
+    new BTBuildingData(BUILDING_GNOLL_UPGRADE , 0, 0, asList (UNIT_GNOLL_UPGRADE  , UNIT_RAZORMAN_UPGRADE, UNIT_WOLF_UPGRADE, UNIT_FURBOLG_UPGRADE, UNIT_SASQUATCH_UPGRADE))
+    new BTBuildingData(BUILDING_TAUREN        , 0, 0, genList(UNIT_TAUREN         , 5                                                                                     ))
+    new BTBuildingData(BUILDING_THUNDER_LIZARD, 0, 0, genList(UNIT_THUNDER_LIZARD , 4                                                                                     ))
+    new BTBuildingData(BUILDING_CENTAUR       , 0, 0, genList(UNIT_CENTAUR        , 10                                                                                    ))
+    new BTBuildingData(BUILDING_HYDRA         , 0, 0, genList(UNIT_HYDRA          , 3                                                                                     ))
+    new BTBuildingData(BUILDING_REXXAR        , 0, 0, genList(UNIT_REXXAR         , 1                                                                                     ))
+    new BTBuildingData(BUILDING_CHEN          , 0, 0, genList(UNIT_CHEN           , 1                                                                                     ))
 
 
 // Distance between units positioned in formation mode
@@ -218,7 +233,7 @@ public class ArmySpawner
             // Get list of unit mapped to the building
             let building = buildingList.get(buildingIdx)
             Log.info("Spawning " + building.getName())
-            squadIds.addAll(armyMap.get(building.getTypeId()).unitToSpawn)
+            squadIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
 
             executeItemBonus(building.getInventory())
 
@@ -271,7 +286,7 @@ public class ArmySpawner
     private function spawnReinforcement()
         if squadIds.isEmpty()
             let building = buildingList.get(buildingIdx)
-            squadIds.addAll(armyMap.get(building.getTypeId()).unitToSpawn)
+            squadIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
             executeItemBonus(building.getInventory())
 
         let unitId = squadIds.get(squadIdx)
@@ -298,5 +313,6 @@ public class ArmySpawner
 
 // TODO: replace with gamestate functional interface just like in ITTs
 public function initArmySpawner()
+    setupBuildingData()
     for i = 0 to 7
         playerToArmySpawner.put(players[i], new ArmySpawner(players[i]))

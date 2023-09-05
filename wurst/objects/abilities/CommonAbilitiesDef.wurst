@@ -151,6 +151,21 @@ function createMagicResistance(int abilId, real value) returns AbilityDefinition
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
     return abilDef
 
+function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraWarDrumsKodobeast
+    let tgen = new BTAbilityTooltipGenerator(
+        "Adds a damage increase to the attacks of nearby friendly units.")
+    let abilDef = new AbilityDefinitionAuraWarDrumsKodobeast(abilId)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..setAttackDamageIncrease(1, value)
+        ..tooltipStartListen()
+        ..presetAreaofEffect(_ -> 900)
+        ..setName("Damage Bonus " + value.toPercent())
+        ..tooltipStopListen()
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
+
 @compiletime function createCleaveAbilities()
     createCleave(ABIL_CLEAVE_10, 0.10, 150.)
     createCleave(ABIL_CLEAVE_20, 0.20, 150.)
@@ -160,6 +175,9 @@ function createMagicResistance(int abilId, real value) returns AbilityDefinition
     createCriticalStrike(ABIL_CRITICAL_STRIKE_10, 0.10, 2.)
     createCriticalStrike(ABIL_CRITICAL_STRIKE_20, 0.20, 2.)
     createCriticalStrike(ABIL_CRITICAL_STRIKE_30, 0.30, 2.)
+    createCriticalStrike(ABIL_CRITICAL_STRIKE_40, 0.40, 2.)
+    createCriticalStrike(ABIL_CRITICAL_STRIKE_50, 0.50, 2.)
+    createCriticalStrike(ABIL_CRITICAL_STRIKE_60, 0.60, 2.)
 
 @compiletime function createEvasionAbilities()
     createEvasion(ABIL_EVASION_10, 0.10)
@@ -197,6 +215,9 @@ function createMagicResistance(int abilId, real value) returns AbilityDefinition
     createMagicResistance(ABIL_MAGIC_ARMOR_30, 0.3)
     createMagicResistance(ABIL_MAGIC_ARMOR_50, 0.5)
 
+@compiletime function createDamageAuraAbilities()
+    createDamageAura(ABIL_DAMAGE_AURA_25, 0.25)
+
 @compiletime function createArrowAbilites()
     var tgen = new BTAbilityTooltipGenerator("Add Spell damage.")
     new AbilityDefinitionSearingArrowscreep(ABIL_FIRE_ARROW)
@@ -227,11 +248,11 @@ function createMagicResistance(int abilId, real value) returns AbilityDefinition
 
 @compiletime function createManashield()
     let tgen = new BTAbilityTooltipGenerator(
-        "Activates a shield that absorbs 3 damage per point of mana."
+        "Activates a shield that absorbs 0.5 damage per point of mana."
     )
     new AbilityDefinitionManaShieldCreep(ABIL_MANA_SHIELD)
         ..registerTooltipGenerator(tgen)
-        ..setManaperHitPoint(1, 3)
+        ..setManaperHitPoint(1, 0.5)
         ..presetManaCost(_ -> 0)
         ..setLevels(1)
         ..tooltipStartListen()

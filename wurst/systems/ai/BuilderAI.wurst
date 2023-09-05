@@ -79,9 +79,9 @@ let UPGRADE_OPTIONS = new HashMap<int, LinkedList<int>>
     ..put(BUILDING_SORCERESS, asList(
         ITEM_FIRE_MAGE, ITEM_ICE_MAGE, ITEM_DARK_MAGE, ITEM_COURT_ENCHANTRESS))
 
-    ..put(BUILDING_GRUNT, asList(ITEM_BERSERKER))
-    ..put(BUILDING_HEADHUNTER, asList(BUILDING_HEADHUNTER_BERSERKER, BUILDING_TRAPPER))
-    ..put(BUILDING_WITCH_DOCTOR, asList(ITEM_HEALING_WAVE))
+    ..put(BUILDING_GRUNT, asList(ITEM_BERSERKER, ITEM_KODO))
+    ..put(BUILDING_HEADHUNTER, asList(BUILDING_TRAPPER))
+    ..put(BUILDING_WITCH_DOCTOR, asList(ITEM_HEALING_WAVE, ITEM_DRUNKEN_HAZE))
     ..put(BUILDING_SHAMAN, asList(ITEM_SPIRIT_WOLF1))
     ..put(BUILDING_RAIDER, asList(ITEM_PACK_LEADER))
     ..put(BUILDING_OGRE, asList(ITEM_OGRE_ARMORED))
@@ -123,7 +123,7 @@ class BuilderAI
 
         cb = doPeriodically(2) (CallbackPeriodic cb) ->
             // Try to upgrade existing units
-            if pData._p.getLumber() > 100
+            if pData._p.getLumber() > 50
                 let buildingList = pData.buildingList.copy()
                 let upgradeOptions = buildingList
                     .lodashFilter(building -> UPGRADE_OPTIONS.has(building.getTypeId()))
@@ -136,7 +136,7 @@ class BuilderAI
                     // else
                     //     let itm = unitToUpgrade.addItemById(upgradeChoice)
 
-            if pData.builder != null
+            if pData.builder != null and pData._p.getGold() >= 100
                 let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()
                 var pos = pData.buildingRect.randomPoint()
                 while pos.isTerrainPathable(PATHING_TYPE_BUILDABILITY)

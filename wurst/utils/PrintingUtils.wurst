@@ -1,0 +1,28 @@
+package PrintingUtils
+
+
+class LogFor extends Log
+    /** Prints a trace logmessage */
+    static function trace(string msg, player p)
+        if p == localPlayer
+            printLog(localPlayer, Loglevel.TRACE, msg)
+
+    /** Prints a debug logmessage */
+    static function debug(string msg, player p)
+        if p == localPlayer
+            printLog(localPlayer, Loglevel.DEBUG, msg)
+
+    /** Prints a info logmessage*/
+    static function info(string msg, player p)
+        if p == localPlayer
+            printLog(localPlayer, Loglevel.INFO, msg)
+
+    /** Prints a warning logmessage */
+    static function warn(string msg, player p)
+        if p == localPlayer
+            printLog(localPlayer, Loglevel.WARNING, msg)
+
+    /** Prints a warning logmessage */
+    static function error(string msg, player p)
+        if p == localPlayer
+            printLog(localPlayer, Loglevel.ERROR, msg)

@@ -7,22 +7,8 @@ import LinkedList
 
 import PlayerData
 import GameConstants
-import Texttag
 import GameStates
 import ArmySpawner
-
-import PrintingUtils
-import LinkedListModule
-
-class Ttag
-    use LinkedListModule
-    texttag tag
-
-    construct(texttag tag)
-        this.tag = tag
-
-    ondestroy
-        this.tag.destr()
 
 
 init
@@ -72,12 +58,5 @@ init
 
                 if not buildingList.has(u)
                     buildingList.push(u)
-
-                if u.getOwner() == players[0] and not isProdBuild
-                    for tag in Ttag
-                        destroy tag
-
-                    for building in buildingList
-                        new Ttag(createTTEx(building.getPos().withZ(175), buildingList.indexOf(building).toString(), 10))
 
                 pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(u.getTypeId()).buildingPointValue)

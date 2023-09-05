@@ -367,7 +367,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 
         ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(80)
-        ..setMana(400)
+        ..setMana(300)
 
         ..setSpeedBase(270)
 

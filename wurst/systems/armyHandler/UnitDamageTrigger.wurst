@@ -17,4 +17,10 @@ init
                     doAfter(0.9) ->
                         BlzQueueImmediateOrderById(target, OrderIds.fanofknives)
 
-        // switch src.getTypeId()
+        switch src.getTypeId()
+            case UNIT_SHAMAN
+                if src.getAbilityCooldownRemaining(ABIL_SUMMON_SPIRIT_WOLF1) <= 0
+                    src.issueImmediateOrderById(OrderIds.spiritwolf)
+            case UNIT_FARSEER
+                if src.getAbilityCooldownRemaining(ABIL_SUMMON_SPIRIT_WOLF2) <= 0
+                    src.issueImmediateOrderById(OrderIds.spiritwolf)

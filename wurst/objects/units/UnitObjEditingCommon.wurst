@@ -129,7 +129,7 @@ public class BTUnitDefinition extends UnitDefinition
         super(newId, origId)
         buildingDef = createBuildingUnit(buildingId)
             ..setUnitsTrained(commaList(newId))
-        buildingData = armyMap.get(buildingId)
+        buildingData = BTBuildingData.unitIdToDataMap.get(buildingId)
         spawnCount = buildingData.unitToSpawn.size()
 
     function registerItemDef(ItemDefinition itemDef, ItemModifierType modifierType)
@@ -278,6 +278,7 @@ public class BTUnitDefinition extends UnitDefinition
     function setAutoPointValue()
         if this.buildingDef != null
             setPointValue(buildingData.unitPointValue)
+            addTooltipProperty("Building BP", buildingData.buildingPointValue)
 
     function setPointValue(int gold, int lumber, int count)
         setPointValue(getUnitPointValue(gold, lumber, count))

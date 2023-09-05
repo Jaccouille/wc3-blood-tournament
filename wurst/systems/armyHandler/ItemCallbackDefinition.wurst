@@ -40,6 +40,7 @@ function replaceUnit(LinkedList<int> unitToSpawn, int oldUnit, int newUnit)
 
 init
 
+    // ========================= HUMANS =========================
     let defendAction = new ItemModifyUnit()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_DEFEND)
@@ -145,12 +146,23 @@ init
     itemAddUnitMap.put(ITEM_COURT_ENCHANTRESS, courtEnchantressAction)
 
 
-    let spiritWolfAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
-        for i = 0 to count
-            unitToSpawn.push(UNIT_SPIRIT_WOLF1)
-    itemAddUnitMap.put(ITEM_SPIRIT_WOLF1, spiritWolfAction)
+    // ========================= ORC =========================
+    let spiritWolfAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_SUMMON_SPIRIT_WOLF1)
+    itemModifyUnitMap.put(ITEM_SPIRIT_WOLF1, spiritWolfAction)
 
+    let orbLightningAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_ORB_LIGHTNING)
+    itemModifyUnitMap.put(ITEM_ORB_LIGHTNING, orbLightningAction)
+
+    let farseerAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitTospawn, int count) ->
+        for i = 1 to count
+            unitTospawn.push(UNIT_FARSEER)
+
+    itemAddUnitMap.put(ITEM_FARSEER, farseerAction)
 
     let healingWaveAction = new ItemModifyUnit()
         ..addAction() (unit u) ->
@@ -159,6 +171,14 @@ init
         u.issueImmediateOrderById(OrderIds.innerfireon)
 
     itemModifyUnitMap.put(ITEM_HEALING_WAVE, healingWaveAction)
+
+    let drunkenHazeAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_DRUNKEN_HAZE)
+        u.addAbility(ABIL_AUTOCAST_DRUNKEN_HAZE)
+        u.issueImmediateOrderById(OrderIds.curseon)
+
+    itemModifyUnitMap.put(ITEM_DRUNKEN_HAZE, drunkenHazeAction)
 
     let berserkerAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
@@ -172,6 +192,12 @@ init
             unitToSpawn.push(UNIT_PACK_LEADER)
     itemAddUnitMap.put(ITEM_PACK_LEADER, packLeaderAction)
 
+    let kodoAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            unitToSpawn.push(UNIT_KODO)
+    itemAddUnitMap.put(ITEM_KODO, kodoAction)
+
     let armoredOgreAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
@@ -179,6 +205,7 @@ init
     itemAddUnitMap.put(ITEM_OGRE_ARMORED, armoredOgreAction)
 
 
+    // ========================= UNDEAD =========================
     let fireArrowAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
@@ -227,6 +254,8 @@ init
             unitToSpawn.push(UNIT_VAMPIRE_LORD)
     itemAddUnitMap.put(ITEM_VAMPIRE_LORD, vampireLordAction)
 
+
+    // ========================= NIGHTT ELF =========================
     let priestOfTheMoonAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count

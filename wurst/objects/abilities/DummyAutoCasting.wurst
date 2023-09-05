@@ -24,6 +24,9 @@ init
     dummyToRealCastMapTarget
         ..put(ABIL_AUTOCAST_FIRE_SHIELD, new BuffTuple(0, -1))
         ..put(ABIL_AUTOCAST_HEALING_WAVE, new BuffTuple(OrderIds.healingwave, -1))
+        ..put(ABIL_AUTOCAST_ACID_BOMB, new BuffTuple(OrderIds.acidbomb, -1))
+        ..put(ABIL_AUTOCAST_CHAIN_LIGHTNING, new BuffTuple(OrderIds.chainlightning, -1))
+        ..put(ABIL_AUTOCAST_DRUNKEN_HAZE, new BuffTuple(OrderIds.drunkenhaze, -1))
         ..put(ABIL_AUTOCAST_BLIZZARD, new BuffTuple(OrderIds.blizzard, -1))
         ..put(ABIL_AUTOCAST_UNHOLY_FRENZY,
             new BuffTuple(OrderIds.unholyfrenzy, BuffIds.unholyFrenzy)
@@ -57,9 +60,7 @@ init
                 caster.startAbilityCooldown(abilId)
                 caster.issueTargetOrderById(orderId, target)
             else
-                Log.info(caster.getName())
                 caster.issuePointOrder("attack", CENTER)
-                Log.info(caster.getAbilityCooldownRemaining(abilId).toString())
                 // caster.resetAbilityCooldown(abilId)
 
             // TODO: refactor into previous if condition
