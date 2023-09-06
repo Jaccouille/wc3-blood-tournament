@@ -60,6 +60,8 @@ import LinkedList
         ..setNameEnhance("Z", "Berserker")
         ..tooltipStopListen(true, itm)
 
+        ..setArtSpecial(Objects.orcLargeDeathExplode)
+
         ..setModelFileExt(Units.hellscream1)
         ..setIconGameInterfaceExt(Icons.bTNHellScream)
         ..setUnitSoundSetExt(Soundsets.hellscream)
@@ -155,7 +157,7 @@ import LinkedList
         ..setAttack1Data(AttackType.Normal, 41, 5, 4, 1.8)
 
         ..setArmorData(ArmorType.Small, 2)
-        ..setHitPointsMaximumBase(500)
+        ..setHitPointsMaximumBase(700)
 
         ..setSpeedBase(350)
 
@@ -438,6 +440,7 @@ import LinkedList
         ..setNameEnhance("C", "Farseer")
         ..tooltipStopListen(true, itm)
 
+        ..setArtSpecial(Objects.orcLargeDeathExplode)
         ..setModelFileExt(Units.heroFarSeer)
         ..setIconGameInterfaceExt(Icons.bTNHeroFarseer)
         ..setUnitSoundSetExt(Soundsets.heroFarseer)
@@ -463,6 +466,7 @@ import LinkedList
 
         ..setSizeLarge()
         ..setAutoPointValue()
+        ..setAutoBuildingCost()
 
         ..setNameEnhance("A", "Ogre")
         ..tooltipStopListen(true)

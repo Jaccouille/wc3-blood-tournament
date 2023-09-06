@@ -325,8 +325,10 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setHitPointsRegenerationRate(-15)
 
         ..setSpeedBase(300)
-        ..setPointValue(0, 1000, 3)
+        ..setPointValue(0, 900, 3)
         ..tooltipStopListen(true)
+
+        ..setArtSpecial(Objects.humanLargeDeathExplode)
         ..setAttack1Range(120)
         ..setSizeSmall()
         ..setPriority(5)
@@ -424,6 +426,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setNameEnhance("A", "Court Enchantress")
         ..tooltipStopListen(true, itm)
 
+        ..setArtSpecial(Objects.humanLargeDeathExplode)
         ..setIconGameInterfaceExt(Icons.bTNJaina)
 
 @compiletime function createMage()

@@ -225,10 +225,10 @@ function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraW
         ..setLevels(1)
         ..tooltipStartListen()
         ..presetDamageBonus(_ -> 25)
+        ..setNameEnhance("Z", "Fire Arrow")
         ..tooltipStopListen(true)
         ..presetManaCost(_ -> 0)
         ..presetCastRange(_ -> 700)
-        ..setNameEnhance("Z", "Fire Arrow")
     abilTooltipMap.put(ABIL_FIRE_ARROW, tgen.generateFullTooltip())
 
     tgen = new BTAbilityTooltipGenerator("Slow target movement and attack speed.")
@@ -239,10 +239,10 @@ function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraW
         ..presetAttackSpeedFactor(_ -> 0.35)
         ..presetMovementSpeedFactor(_ -> 0.35)
         ..presetDurationNormal(_ -> 3)
+        ..setNameEnhance("Z", "Frost Arrow")
         ..tooltipStopListen(true)
         ..presetManaCost(_ -> 0)
         ..presetCastRange(_ -> 700)
-        ..setNameEnhance("Z", "Frost Arrow")
     abilTooltipMap.put(ABIL_FROST_ARROW, tgen.generateFullTooltip())
 
 

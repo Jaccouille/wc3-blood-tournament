@@ -179,6 +179,7 @@ import NightElfAbilitiesDef
         ..tooltipStopListen(true, itm)
         ..setNameEnhance("Z", "Keeper of the Grove")
 
+        ..setArtSpecial(Objects.nightElfLargeDeathExplode)
         .setIconGameInterfaceExt(Icons.bTNKeeperOfTheGrove)
 
 @compiletime function createHuntress()
@@ -236,6 +237,8 @@ import NightElfAbilitiesDef
         ..tooltipStopListen()
         ..setBuildingItemsMade(commaList(ITEM_PRIESTESS_OF_THE_MOON))
 
+
+        ..setArtSpecial(Objects.nightElfLargeDeathExplode)
         ..setModelFileExt(Units.huntress)
         ..setIconGameInterfaceExt(Icons.bTNHuntress)
         ..setUnitSoundSetExt(Soundsets.huntress)
@@ -579,6 +582,9 @@ import NightElfAbilitiesDef
         ..tooltipStopListen(true, itm)
 
         ..setNameEnhance("C", "Archdruid")
+
+        ..setArtSpecial(Objects.nightElfLargeDeathExplode)
+
         ..setIconGameInterfaceExt(Icons.bTNFurion)
         ..setModelFile(Units.furion1)
 

@@ -572,6 +572,8 @@ function createSkeletalArcher(int skeletalArcherId) returns BTUnitDefinition
         ..tooltipStopListen(true)
         ..setManaRegeneration(1)
 
+        ..setArtSpecial(Objects.undeadLargeDeathExplode)
+
         ..setModelFileExt(Units.heroDeathKnight)
         ..setIconGameInterfaceExt(Icons.bTNHeroDeathKnight)
         ..setUnitSoundSetExt(Soundsets.heroDeathKnight)

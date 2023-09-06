@@ -8,6 +8,7 @@ import ItemObjEditingCommon
 import UnitObjEditingCommon
 
 import LocalObjectIDs
+import TooltipsUtils
 
 
 @compiletime function createUndeadAbilities()
@@ -148,9 +149,12 @@ import LocalObjectIDs
     new AbilityDefinitionCripplecreep(ABIL_CRIPPLE)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..presetAttackSpeedReduction(_ -> 0.3)
-        ..presetMovementSpeedReduction(_ -> 0.20)
-        ..presetDamageReduction(_ -> 0.40)
+        ..setAttackSpeedReduction(1, 0.3)
+        ..addTooltipProperty("Attack Speed Reduction", _ -> 0.3.toPercent())
+        ..setMovementSpeedReduction(1, 0.20)
+        ..addTooltipProperty("Movement Speed Reduction", _ -> 0.20.toPercent())
+        ..setDamageReduction(1, 0.40)
+        ..addTooltipProperty("Damage Reduction", _ -> 0.40.toPercent())
         ..presetDurationNormal(_ -> 5)
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Cripple")
