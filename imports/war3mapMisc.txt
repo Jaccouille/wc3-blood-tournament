@@ -8,3 +8,4 @@ DamageBonusSpells=1.00,1.00,1.00,1.00,1.00,0.75,1.00,1.00
 MaxUnitSpeed=522.0
 UpgradeRefundRate=1.0
 ItemStackingEnabled=1
+DefendDeflection=1
