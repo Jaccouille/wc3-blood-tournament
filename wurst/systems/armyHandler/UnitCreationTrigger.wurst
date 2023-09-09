@@ -9,6 +9,7 @@ import PlayerData
 import GameConstants
 import GameStates
 import ArmySpawner
+import ItemStockHandler
 
 
 init
@@ -32,6 +33,7 @@ init
 
             BlzShowUnitTeamGlow(u, false)
 
+            // Check if is a building
             if BTBuildingData.unitIdToDataMap.has(u.getTypeId())
                 // Not need to find insertion index if list is empty
                 if buildingList.size() == 0
@@ -58,5 +60,13 @@ init
 
                 if not buildingList.has(u)
                     buildingList.push(u)
+
+                if unitItemSold.has(u.getTypeId())
+                    let itemStockHandler = new ItemStockHandler(u)
+                    unitItemSold.get(u.getTypeId()).forEach() (integer t) ->
+                        let itm = createItem(t, vec2(0, 0))
+                        AddItemToStock(u, t, itm.getLevel(), itm.getLevel())
+                        itemStockHandler.addItem(itm.getTypeId(), itm.getLevel())
+                        itm.remove()
 
                 pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(u.getTypeId()).buildingPointValue)

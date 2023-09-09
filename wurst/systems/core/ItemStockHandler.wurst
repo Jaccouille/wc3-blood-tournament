@@ -1,0 +1,79 @@
+package ItemStockHandler
+
+import LinkedList
+import HashMap
+import ClosureEvents
+import LocalObjectIDs
+import ClosuresForItems
+import ClosureTimers
+
+
+public HashMap<int, LinkedList<int>> unitItemSold = new HashMap<int, LinkedList<int>>
+
+public HashMap<int, LinkedList<int>> shareStocksMap = new HashMap<int, LinkedList<int>>
+
+public class ItemStockHandler
+    static HashMap<unit, ItemStockHandler> unitToItemStockMap = new HashMap<unit, ItemStockHandler>
+    unit building
+    HashMap<int, int> itemStock = new HashMap<int, int>
+
+    construct(unit building)
+        this.building = building
+        unitToItemStockMap.put(building, this)
+
+    function addItem(int itemId, int stock)
+        itemStock.put(itemId, stock)
+
+    function hasItem(int itemId) returns boolean
+        return itemStock.has(itemId)
+
+    function reduceStock(int itemId, int value)
+        if hasItem(itemId)
+            let currentStock = itemStock.get(itemId) - value
+            if shareStocksMap.has(building.getTypeId())
+                let sharedStock = shareStocksMap.get(building.getTypeId())
+
+                sharedStock.forEach() (integer t) ->
+                    if t != itemId
+                        building.addItemToStock(t, currentStock, currentStock)
+                        itemStock.put(t, currentStock)
+            else
+                building.addItemToStock(itemId, currentStock, currentStock)
+            itemStock.put(itemId, currentStock)
+
+
+function initItemStockData()
+    unitItemSold.put(BUILDING_FOOTMAN  , asList(ITEM_CAPTAIN          , ITEM_DEFEND                                  ))
+    unitItemSold.put(BUILDING_RIFLEMAN , asList(ITEM_MORTAR           , ITEM_SNIPER, ITEM_EXPLOSIVE_AMMO             ))
+    unitItemSold.put(BUILDING_PRIEST   , asList(ITEM_SPELL_BREAKER    , ITEM_ARMOR_BLESSING, ITEM_WEAPON_BLESSING    ))
+    unitItemSold.put(BUILDING_KNIGHT   , asList(ITEM_CRUSADER                                                        ))
+    unitItemSold.put(BUILDING_SORCERESS, asList(ITEM_COURT_ENCHANTRESS, ITEM_DARK_MAGE, ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
+
+    shareStocksMap.put(BUILDING_PRIEST ,asList(ITEM_ARMOR_BLESSING, ITEM_WEAPON_BLESSING))
+    shareStocksMap.put(BUILDING_SORCERESS ,asList(ITEM_DARK_MAGE, ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
+
+
+init
+    initItemStockData()
+    EventListener.add(EVENT_PLAYER_UNIT_ISSUED_ORDER) ->
+        let building = EventData.getTriggerUnit()
+
+        if ItemStockHandler.unitToItemStockMap.has(building)
+            let itemId = EventData.getIssuedOrderId()
+            ItemStockHandler.unitToItemStockMap.get(building).reduceStock(itemId, 1)
+            building.addItemById(itemId)
+            let pos = building.getPos()
+            let range = 500
+            let search = Rect(pos.x - range, pos.y - range, pos.x + range, pos.y + range)
+            nullTimer() ->
+                forItemsInRect(search) (item i) ->
+                    i.remove()
+
+
+    EventListener.add(EVENT_PLAYER_UNIT_SELL_ITEM) ->
+        let building = EventData.getTriggerUnit()
+        let itemSold = EventData.getSoldItem()
+        building.addItemById(itemSold.getTypeId())
+        if ItemStockHandler.unitToItemStockMap.has(building)
+            ItemStockHandler.unitToItemStockMap.get(building).reduceStock(itemSold.getTypeId(), 1)
+        itemSold.remove()

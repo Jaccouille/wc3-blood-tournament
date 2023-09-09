@@ -33,7 +33,6 @@ import BTAbilities
 
         ..setNameEnhance("Q", "Footman")
         ..setSizeSmall()
-        ..setBuildingItemsMade(commaList(ITEM_CAPTAIN, ITEM_DEFEND))
 
         ..setModelFileExt(Units.footman1)
         ..setIconGameInterfaceExt(Icons.bTNFootman)
@@ -87,11 +86,7 @@ import BTAbilities
 
         ..setSizeSmall()
         ..setNameEnhance("W", "Rifleman")
-        ..setBuildingItemsMade(commaList(
-            ITEM_MORTAR,
-            ITEM_SNIPER,
-            ITEM_EXPLOSIVE_AMMO
-            ))
+
 
         ..setModelFileExt(Units.rifleman1)
         ..setIconGameInterfaceExt(Icons.bTNRifleman)
@@ -175,11 +170,6 @@ import BTAbilities
         ..setNameEnhance("A", "Priest")
 
         ..tooltipStopListen(true)
-        ..setBuildingItemsMade(commaList(
-            ITEM_SPELL_BREAKER,
-            ITEM_ARMOR_BLESSING,
-            ITEM_WEAPON_BLESSING
-            ))
 
         ..setModelFileExt(Units.priest1)
         ..setIconGameInterfaceExt(Icons.bTNPriest)
@@ -237,7 +227,6 @@ import BTAbilities
         ..setAutoBuildingCost()
 
         ..setNameEnhance("E", "Knight")
-        ..setBuildingItemsMade(commaList(ITEM_CRUSADER))
         ..tooltipStopListen(true)
 
         ..setModelFileExt(Units.knight1)
@@ -378,12 +367,6 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 
         ..tooltipStopListen(true)
         ..setBuildingUnitsTrained(commaList(UNIT_SORCERESS, UNIT_GHOST))
-        ..setBuildingItemsMade(commaList(
-            ITEM_COURT_ENCHANTRESS,
-            ITEM_DARK_MAGE,
-            ITEM_FIRE_MAGE,
-            ITEM_ICE_MAGE
-            ))
 
         ..setSizeSmall()
         ..setNameEnhance("S", "Sorceress")
@@ -449,7 +432,6 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..tooltipStopListen(true)
         ..setBuildingGoldCost(300)
         ..setBuildingUnitsTrained(commaList(UNIT_MAGE, UNIT_GHOST))
-        ..setBuildingItemsMade(commaList(ITEM_DARK_MAGE, ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
 
         ..setSizeSmall()
         ..setPriority(10)
@@ -606,7 +588,6 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setBuildingGoldCost(150)
-        ..setBuildingItemsMade(commaList(ITEM_RANGER))
 
         ..setSizeSmall()
         ..setPriority(3)

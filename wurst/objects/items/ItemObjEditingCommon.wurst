@@ -29,9 +29,12 @@ function createBasicItem(int newId, int oldId) returns ItemDefinition
         ..setLevel(0)
         ..setHitPoints(75)
         ..setClassification("Charged")
-        ..setMaxStack(0)
+        ..setMaxStack(1)
+        ..setLevel(1)
         ..setAbilities("")
         ..setStockReplenishInterval(99999)
+        ..setCanBeDropped(false)
+        ..setCanBeSoldToMerchants(false)
 
 public function ItemDefinition.setItemCost(int gold, int lumber, int charges, int maxStack, int maxStock)
     this.setGoldCost(gold)
@@ -39,10 +42,4 @@ public function ItemDefinition.setItemCost(int gold, int lumber, int charges, in
     this.setNumberofCharges(charges)
     this.setMaxStack(maxStack)
     this.setStockMaximum(maxStock)
-
-init
-    EventListener.add(EVENT_PLAYER_UNIT_SELL_ITEM) ->
-        let building = EventData.getTriggerUnit()
-        let itemSold = EventData.getSoldItem()
-        building.addItemById(itemSold.getTypeId())
-        itemSold.remove()
+    this.setLevel(maxStock)
