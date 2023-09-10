@@ -248,11 +248,11 @@ function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraW
 
 @compiletime function createManashield()
     let tgen = new BTAbilityTooltipGenerator(
-        "Activates a shield that absorbs 0.5 damage per point of mana."
+        "Activates a shield that absorbs 2 damage per point of mana."
     )
     new AbilityDefinitionManaShieldCreep(ABIL_MANA_SHIELD)
         ..registerTooltipGenerator(tgen)
-        ..setManaperHitPoint(1, 0.5)
+        ..setManaperHitPoint(1, 2)
         ..presetManaCost(_ -> 0)
         ..setLevels(1)
         ..tooltipStartListen()

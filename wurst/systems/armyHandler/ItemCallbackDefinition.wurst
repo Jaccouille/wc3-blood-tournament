@@ -145,6 +145,12 @@ init
 
     itemAddUnitMap.put(ITEM_COURT_ENCHANTRESS, courtEnchantressAction)
 
+    let courtEnchantressActionBlizzard = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.issueImmediateOrderById(OrderIds.curseon)
+
+    itemModifyUnitMap.put(ITEM_COURT_ENCHANTRESS, courtEnchantressActionBlizzard)
+
 
     // ========================= ORC =========================
     let spiritWolfAction = new ItemModifyUnit()

@@ -118,7 +118,7 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_ARCHIMONDE     , 0   , 3000, genList(UNIT_ARCHIMONDE      , 1  ))
 
     new BTBuildingData(BUILDING_TREANT                , 100 , 0   , genList(UNIT_TREANT                , 10 ))
-    new BTBuildingData(BUILDING_ARCHER                , 100 , 0   , genList(UNIT_ARCHER                , 5  ))
+    new BTBuildingData(BUILDING_ARCHER                , 100 , 0   , genList(UNIT_ARCHER                , 10  ))
     new BTBuildingData(BUILDING_ARCHER, BUILDING_NE_RANGER             , 0   , 1800, genList(UNIT_NE_RANGER             , 6  ))
     new BTBuildingData(BUILDING_HUNTRESS              , 200 , 0   , genList(UNIT_HUNTRESS              , 5  ))
     new BTBuildingData(BUILDING_DRUID_TALON           , 200 , 0   , genList(UNIT_DRUID_TALON           , 4  ))
@@ -232,7 +232,7 @@ public class ArmySpawner
         while buildingIdx < buildingList.size() and pData.spawnedUnits.size() < spawnZone.unitLimit
             // Get list of unit mapped to the building
             let building = buildingList.get(buildingIdx)
-            Log.info("Spawning " + building.getName())
+            // Log.info("Spawning " + building.getName())
             squadIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
 
             executeItemBonus(building.getInventory())

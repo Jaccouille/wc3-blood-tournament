@@ -348,8 +348,8 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     ).joinBy("\n\n"))
 
     createSpawnedUnit(UNIT_SORCERESS, UnitIds.sorceress, BUILDING_SORCERESS)
-        ..setNormalAbilities(commaList(ABIL_MANA_SHIELD))
-        ..setDefaultActiveAbility(commaList(ABIL_MANA_SHIELD))
+        ..setNormalAbilities(commaList(""))
+        ..setDefaultActiveAbility(commaList(""))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 

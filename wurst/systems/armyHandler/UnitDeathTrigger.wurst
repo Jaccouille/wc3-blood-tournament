@@ -70,7 +70,7 @@ function checkIfPlayerDefeated(PlayerData pData)
     if pData.spawnedUnits.isEmpty()
         roundController.currentRound.roundParticipant.remove(pData._p)
 
-        Log.info(pData._p.getName() + " has been eliminated")
+        // Log.info(pData._p.getName() + " has been eliminated")
 
         if roundController.currentRound.roundParticipant.size() == 1
             onLastArmyRemaining.execute()
@@ -83,7 +83,7 @@ public function initUnitDeathTrigger()
         pDatas.forEach() (player key, PlayerData pData) ->
             if pData.buildingList.size() <= 0
                 roundController.currentRound.roundParticipant.remove(pData._p)
-                Log.info(pData._p.getName() + " has been eliminated")
+                // Log.info(pData._p.getName() + " has been eliminated")
 
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)

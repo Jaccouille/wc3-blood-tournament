@@ -489,7 +489,9 @@ import NightElfAbilitiesDef
         ..tooltipStopListen(true)
         ..setScalingValue(0.85)
 
+        ..setModelFileExt(Units.spiritOfVengeance)
         ..setIconGameInterfaceExt(Icons.bTNSpiritOfVengeance)
+        ..setUnitSoundSetExt(Soundsets.spiritOfVengeance)
 
 @compiletime function createDaemonHunter()
     let tooltip = new UnitTooltipGenerator("Daemon Hunter Desc")

@@ -275,7 +275,7 @@ import BuffObjEditing
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 3)
-        ..presetManaCost(_ -> 40)
+        ..presetManaCost(_ -> 100)
         ..presetCastRange(_ -> 700)
         ..setNameEnhance("Z", "Spell Steal")
         ..tooltipStopListen(true)

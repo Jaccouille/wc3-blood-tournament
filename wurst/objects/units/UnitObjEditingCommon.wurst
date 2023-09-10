@@ -26,8 +26,8 @@ function BTUnitDefinition.setCommonAttr()
     this.setAcquisitionRange(2000)
     this.setRequirements("")
     this.setUpgradesUsed("")
-    this.setGoldCost(0)
-    this.setFoodCost(30)
+    this.setGoldCost(9999999)
+    this.setFoodCost(0)
     this.setButtonPositionX(0)
     this.setButtonPositionY(2)
     this.setNormalAbilities("")
@@ -68,14 +68,6 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
 
     new AbilityDefinition(ABIL_SHOP_PURCHASE, AbilityIds.shopPurchaseItem)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.self))
-
-    new AbilityDefinitionNeutralBuilding(ABIL_SELECT_HERO)
-        ..setShowSelectUnitButton(1, false)
-        ..setShowUnitIndicator(1, false)
-        ..setCastRange(1, 2000)
-        ..setArtCaster("")
-        ..setArtTarget("")
-
 
 @compiletime function createSellBuilderAbility()
     new AbilityDefinitionAlchemistTransmute(ABIL_SELL_BUILDING)
@@ -282,6 +274,7 @@ public class BTUnitDefinition extends UnitDefinition
         itemDef.setGoldCost(gold)
         itemDef.setLumberCost(lumber)
         itemDef.setNumberofCharges(charges)
+        itemDef.setLevel(maxStock)
         this.charges = charges
         setPointValue(gold, lumber, charges)
 
