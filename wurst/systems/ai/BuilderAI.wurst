@@ -14,6 +14,7 @@ import Players
 import Round
 import Toolkit
 import TerrainUtils
+import ItemStockHandler
 
 let playerToBuilderAI = new HashMap<player, BuilderAI>
 
@@ -72,32 +73,10 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
     ))
 
 let UPGRADE_OPTIONS = new HashMap<int, LinkedList<int>>
-    ..put(BUILDING_FOOTMAN, asList(ITEM_CAPTAIN))
-    ..put(BUILDING_RIFLEMAN, asList(ITEM_MORTAR, ITEM_EXPLOSIVE_AMMO, ITEM_SNIPER))
-    ..put(BUILDING_KNIGHT, asList(ITEM_CRUSADER))
-    ..put(BUILDING_PRIEST, asList(ITEM_SPELL_BREAKER, ITEM_ARMOR_BLESSING, ITEM_WEAPON_BLESSING))
-    ..put(BUILDING_SORCERESS, asList(
-        ITEM_FIRE_MAGE, ITEM_ICE_MAGE, ITEM_DARK_MAGE, ITEM_COURT_ENCHANTRESS))
-
-    ..put(BUILDING_GRUNT, asList(ITEM_BERSERKER, ITEM_KODO))
     ..put(BUILDING_HEADHUNTER, asList(BUILDING_TRAPPER))
-    ..put(BUILDING_WITCH_DOCTOR, asList(ITEM_HEALING_WAVE, ITEM_DRUNKEN_HAZE))
-    ..put(BUILDING_SHAMAN, asList(ITEM_SPIRIT_WOLF1))
-    ..put(BUILDING_RAIDER, asList(ITEM_PACK_LEADER))
-    ..put(BUILDING_OGRE, asList(ITEM_OGRE_ARMORED))
-
     ..put(BUILDING_ZOMBIE, asList(BUILDING_GHOUL))
     ..put(BUILDING_CRYPT_FIEND, asList(BUILDING_NERUBIAN))
-    ..put(BUILDING_SKELETAL_ARCHER, asList(ITEM_FIRE_ARROW, ITEM_FROST_ARROW))
-    ..put(BUILDING_NECROMANCER, asList(ITEM_LICH, ITEM_CRIPPLE, ITEM_RAISE_SKELETON_MAGE))
-    ..put(BUILDING_BANSHEE, asList(ITEM_UNHOLY_FRENZY))
-    ..put(BUILDING_VAMPIRE, asList(ITEM_VAMPIRE_LORD))
-
-    ..put(BUILDING_DRYAD, asList(ITEM_KEEPER_OF_THE_GROVE))
-    ..put(BUILDING_HUNTRESS, asList(ITEM_PRIESTESS_OF_THE_MOON))
     ..put(BUILDING_ARCHER, asList(BUILDING_NE_RANGER))
-    ..put(BUILDING_DRUID_CLAW, asList(ITEM_BEAR, ITEM_OWLBEAR))
-    ..put(BUILDING_DRUID_TALON, asList(ITEM_ARCHDRUID, ITEM_WAND_OF_ILLUSION))
 
 class BuilderAI
     use LinkedListModule
@@ -123,18 +102,34 @@ class BuilderAI
 
         cb = doPeriodically(2) (CallbackPeriodic cb) ->
             // Try to upgrade existing units
-            if pData._p.getLumber() > 50
-                let buildingList = pData.buildingList.copy()
-                let upgradeOptions = buildingList
+            if pData._p.getLumber() > 50 and pData.buildingList.size() > 0
+                var buildingList = pData.buildingList.copy()
+
+                // Get existing building that can be upgraded
+                let upgradableBuildings = buildingList
                     .lodashFilter(building -> UPGRADE_OPTIONS.has(building.getTypeId()))
-                if upgradeOptions.size() > 0
-                    let unitToUpgrade = upgradeOptions.getRandomElement()
+
+                if upgradableBuildings.size() > 0
+                    let unitToUpgrade = upgradableBuildings.getRandomElement()
                     let upgradeChoice = UPGRADE_OPTIONS.get(unitToUpgrade.getTypeId()).getRandomElement()
+
                     if OrderId2StringBJ(upgradeChoice)  != ""
                         unitToUpgrade.issueImmediateOrder(OrderId2StringBJ(upgradeChoice))
-                    // Item behavior
-                    // else
-                    //     let itm = unitToUpgrade.addItemById(upgradeChoice)
+                // Item behavior
+                else
+                    buildingList = pData.buildingList.copy()
+                    let upgradableBuildings2 = buildingList
+                        .lodashFilter(building -> ItemStockHandler.unitToItemStockMap.has(building))
+                    if upgradableBuildings2.size() > 0
+                        let randomBuilding = upgradableBuildings2.getRandomElement()
+                        let stockHandler = ItemStockHandler.unitToItemStockMap.get(randomBuilding)
+                        var choseUpgrade = false
+                        while not choseUpgrade
+                            // TODO: Fix item purchase
+                            let randomItem = unitItemSold.get(randomBuilding.getTypeId()).getRandomElement()
+                            if stockHandler.hasItem(randomItem)
+                                randomBuilding.issueImmediateOrderById(randomItem)
+                                choseUpgrade = true
 
             if pData.builder != null and pData._p.getGold() >= 100
                 let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()

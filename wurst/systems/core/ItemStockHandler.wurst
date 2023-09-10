@@ -17,6 +17,9 @@ public class ItemStockHandler
     unit building
     HashMap<int, int> itemStock = new HashMap<int, int>
 
+    static function hasUnit(unit u) returns boolean
+        return unitToItemStockMap.has(u)
+
     construct(unit building)
         this.building = building
         unitToItemStockMap.put(building, this)
@@ -30,16 +33,31 @@ public class ItemStockHandler
     function reduceStock(int itemId, int value)
         if hasItem(itemId)
             let currentStock = itemStock.get(itemId) - value
+
+            // Reduce shared stock
             if shareStocksMap.has(building.getTypeId())
                 let sharedStock = shareStocksMap.get(building.getTypeId())
-
                 sharedStock.forEach() (integer t) ->
                     if t != itemId
                         building.addItemToStock(t, currentStock, currentStock)
                         itemStock.put(t, currentStock)
+                        if currentStock == 0
+                            itemStock.remove(t)
             else
                 building.addItemToStock(itemId, currentStock, currentStock)
+
+            // Update triggered item stock
             itemStock.put(itemId, currentStock)
+
+            // If stock has been exhausted, it is no longer "handled"
+            if currentStock == 0
+                itemStock.remove(itemId)
+
+            // Once all stock have been exhausted, remove this instance
+            // to save memory and ease up builder AI decision
+            if itemStock.size() == 0
+                unitToItemStockMap.remove(building)
+                destroy this
 
 
 function initItemStockData()
