@@ -4,7 +4,6 @@ import ErrorHandling
 
 import ItemObjEditing
 import ItemIds
-import ClosureEvents
 
 // Local imports:
 import GridHotkeyPosition
@@ -27,7 +26,7 @@ function createBasicItem(int newId, int oldId) returns ItemDefinition
         ..setDroppedWhenCarrierDies(false)
         ..setHotkey("")
         ..setLevel(0)
-        ..setHitPoints(75)
+        ..setHitPoints(0)
         ..setClassification("Charged")
         ..setMaxStack(1)
         ..setLevel(1)
@@ -38,8 +37,8 @@ function createBasicItem(int newId, int oldId) returns ItemDefinition
 
 public function ItemDefinition.setItemCost(int gold, int lumber, int charges, int maxStack, int maxStock)
     this.setGoldCost(gold)
-    this.setLumberCost(lumber)
-    this.setNumberofCharges(charges)
-    this.setMaxStack(maxStack)
-    this.setStockMaximum(maxStock)
     this.setLevel(maxStock)
+    this.setLumberCost(lumber)
+    this.setMaxStack(maxStack)
+    this.setNumberofCharges(charges)
+    this.setStockMaximum(maxStock)

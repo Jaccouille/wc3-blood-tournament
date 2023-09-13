@@ -24,3 +24,5 @@ init
             case UNIT_FARSEER
                 if src.getAbilityCooldownRemaining(ABIL_SUMMON_SPIRIT_WOLF2) <= 0
                     src.issueImmediateOrderById(OrderIds.spiritwolf)
+            case UNIT_COURT_ENCHANTRESS
+                src.issueImmediateOrderById(OrderIds.curseon)

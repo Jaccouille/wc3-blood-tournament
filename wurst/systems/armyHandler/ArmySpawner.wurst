@@ -29,8 +29,11 @@ public function getUnitPointValue(int goldCost, int lumberCost, int unitCount) r
 public class BTBuildingData
     static let unitIdToDataMap = new HashMap<int, BTBuildingData>
 
+    static function getUnitCount(int unitId) returns int
+        return unitIdToDataMap.get(unitId).unitToSpawn.size()
+
     LinkedList<int> unitToSpawn
-    int buildingPointValue = 0
+    int buildingArmyPoints = 0
     int unitPointValue = 0
     int goldCost = 0
     int lumberCost = 0
@@ -41,7 +44,7 @@ public class BTBuildingData
         this.goldCost = goldCost
         this.lumberCost = lumberCost
         unitPointValue = getUnitPointValue(goldCost, lumberCost, unitToSpawn.size())
-        buildingPointValue += unitPointValue * unitToSpawn.size()
+        buildingArmyPoints += unitPointValue * unitToSpawn.size()
 
     construct(int upgradeFrom, int buildingId, int goldCost, int lumberCost, LinkedList<int> unitToSpawn)
         unitIdToDataMap.put(buildingId, this)
@@ -49,10 +52,10 @@ public class BTBuildingData
         this.goldCost = goldCost
         this.lumberCost = lumberCost
         unitPointValue = getUnitPointValue(goldCost, lumberCost, unitToSpawn.size())
-        buildingPointValue += unitPointValue * unitToSpawn.size()
+        buildingArmyPoints += unitPointValue * unitToSpawn.size()
         if unitIdToDataMap.get(upgradeFrom) != null
             unitPointValue += unitIdToDataMap.get(upgradeFrom).unitPointValue
-            buildingPointValue += unitIdToDataMap.get(upgradeFrom).buildingPointValue
+            buildingArmyPoints += unitIdToDataMap.get(upgradeFrom).buildingArmyPoints
         else
             printLog(Loglevel.ERROR, "Unknown upgrade from id")
 
@@ -65,9 +68,9 @@ function genList(int unitId, int count) returns LinkedList<int>
 
 @compiletime function setupBuildingData()
 // TODO: refactor, spawn count should be located in the unit definition files
-    new BTBuildingData(BUILDING_FOOTMAN      , 100, 0   , genList(UNIT_FOOTMAN         , 10))
-    new BTBuildingData(BUILDING_ROYAL_GUARD  , 0  , 500 , genList(UNIT_ROYAL_GUARD     , 10))
-    new BTBuildingData(BUILDING_RIFLEMAN     , 150, 0   , genList(UNIT_RIFLEMAN        , 5))
+    new BTBuildingData(BUILDING_FOOTMAN      , 50, 0   , genList(UNIT_FOOTMAN         , 5))
+    new BTBuildingData(BUILDING_CAPTAIN  , 0  , 500 , genList(UNIT_CAPTAIN     , 10))
+    new BTBuildingData(BUILDING_RIFLEMAN     , 100, 0   , genList(UNIT_RIFLEMAN        , 5))
     new BTBuildingData(BUILDING_ELVEN_ARCHER , 150, 0   , genList(UNIT_ELVEN_ARCHER    , 10))
     new BTBuildingData(BUILDING_RANGER       , 0  , 700 , genList(UNIT_RANGER          , 5))
     new BTBuildingData(BUILDING_KNIGHT       , 200, 0   , genList(UNIT_KNIGHT          , 5))

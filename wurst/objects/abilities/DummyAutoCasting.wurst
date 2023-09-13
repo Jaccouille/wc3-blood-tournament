@@ -45,6 +45,7 @@ init
         ..put(ABIL_AUTOCAST_TAUNT, OrderIds.taunt)
         ..put(ABIL_AUTOCAST_SUMMON_WISP, OrderIds.waterelemental)
         ..put(ABIL_AUTOCAST_HOWL_OF_TERROR, OrderIds.howlofterror)
+        ..put(ABIL_AUTOCAST_INSPIRE, OrderIds.roar)
 
     registerPlayerUnitEvent(EVENT_PLAYER_UNIT_SPELL_CAST) ->
         let abilId = EventData.getSpellAbilityId()

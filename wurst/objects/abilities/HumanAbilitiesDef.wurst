@@ -11,6 +11,7 @@ import HashMap
 import TooltipsUtils
 import BTAbilities
 import BuffObjEditing
+import ArmySpawner
 
 
 @compiletime function createHumanAbilities()
@@ -65,6 +66,9 @@ import BuffObjEditing
         ..setArtSpecial(1,"")
         ..setTooltipNormal(1, "Weapon Blessing")
         ..setTooltipNormalExtended(1, "Gains additional damage")
+        ..setArtTarget(1, Abilities.faerieDragonMissile)
+        ..setTargetAttachmentPoint0("weapon")
+        ..setTargetAttachments(1)
 
     itm = createBasicItem(ITEM_WEAPON_BLESSING)
         ..setItemCost(0, 50, 1, 5, 5)
@@ -244,7 +248,7 @@ import BuffObjEditing
     )
 
     itm = createBasicItem(ITEM_DEFEND)
-        ..setItemCost(0, 500, 11, 1, 1)
+        ..setItemCost(0, 500, BTBuildingData.getUnitCount(BUILDING_FOOTMAN) + 1, 1, 1)
         ..setNameEnhance("X", "Add Defend ability")
         ..setInterfaceIcon(Icons.bTNDefend)
 
@@ -371,3 +375,43 @@ import BuffObjEditing
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_WATER_ELEMENTAL, tgen.generateFullTooltip())
+
+
+    let BUFF_INSPIRE_ID = BUFF_ID_GEN.next()
+    new BuffDefinition(BUFF_INSPIRE_ID, BuffIds.roar)
+        ..setIcon(Icons.bTNPriestMaster)
+        ..setTooltipNormal(1, "Inspire")
+        ..setTooltipNormalExtended(1, "This unit is inspired; regains hit point at high rate.")
+        ..setTargetAttachments(1, 1)
+        ..setTargetAttachmentPoint0(1, "chest")
+        ..setArtTarget(1, Abilities.staff_Sanctuary_Target)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Inspire nearby troops, regenerating their hit points."
+    )
+    new AbilityDefinitionRoar(ABIL_INSPIRE)
+        ..setHeroAbility(false)
+        ..setLevels(1)
+        ..setDamageIncrease(1, 0)
+        ..setDefenseIncrease(1, 0)
+        ..setArtCaster(Abilities.resurrectcaster)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetLifeRegenerationRate(_ -> 35)
+        ..presetAreaofEffect(_ -> 500)
+        ..presetManaCost(_ -> 100)
+        ..presetDurationNormal(_ -> 10)
+        ..presetCooldown(_ -> 0)
+        ..setBuffs(1, BUFF_INSPIRE_ID.toRawCode())
+        ..setNameEnhance("Z", "Inspire")
+        ..tooltipStopListen(false)
+
+    createAutoCastedEnemyAbility(ABIL_AUTOCAST_INSPIRE)
+        ..registerTooltipGenerator(tgen)
+        ..presetCastRange(_ -> 125)
+        ..presetManaCost(_ -> 100)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 20)
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_INSPIRE, tgen.generateFullTooltip())

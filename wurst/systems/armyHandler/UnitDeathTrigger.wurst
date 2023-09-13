@@ -9,6 +9,7 @@ import ClosureTimers
 import LocalObjectIDs
 import Assets
 import OrderIds
+import ItemStockHandler
 
 function customAction(unit killer, unit dyingUnit, PlayerData pData)
 
@@ -96,8 +97,10 @@ public function initUnitDeathTrigger()
 
         // Is a building
         if BTBuildingData.unitIdToDataMap.has(dyingUnit.getTypeId())
-            pData.subArmyPoints(BTBuildingData.unitIdToDataMap.get(dyingUnit.getTypeId()).buildingPointValue)
+            pData.subArmyPoints(BTBuildingData.unitIdToDataMap.get(dyingUnit.getTypeId()).buildingArmyPoints)
             pData.buildingList.remove(dyingUnit)
+            if ItemStockHandler.hasUnit(dyingUnit)
+                destroy ItemStockHandler.unitToItemStockMap.get(dyingUnit)
         else
 
             // Add blood points bounty
@@ -105,6 +108,8 @@ public function initUnitDeathTrigger()
                 and roundController.currentRound instanceof NormalRound
                 and killerOwner != dyingUnit.getOwner()
                 if dyingUnit.getPointValue() > 0
+                    if dyingUnit.getTypeId() == UNIT_SPECTRE
+                        Log.info("Spectre died to : " + killerOwner.getName())
                     pDatas.get(killerOwner).addBounty(getBounty(dyingUnit))
                     createBountyTag(dyingUnit, killerOwner)
                     if dyingUnit.getTypeId() == UNIT_GHOST_PALADIN

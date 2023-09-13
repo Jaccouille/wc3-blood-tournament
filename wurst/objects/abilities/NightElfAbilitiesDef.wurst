@@ -359,7 +359,7 @@ import LocalObjectIDs
         ..tooltipStartListen()
         ..presetAttackSpeedIncrease(_ -> 0.4)
         ..presetMovementSpeedIncrease(_ -> 0.3)
-        ..presetDurationNormal(_ -> 4)
+        ..presetDurationNormal(_ -> 6)
         ..presetCooldown(_ -> 20)
         ..setNameEnhance("Z", "Frenzy")
         ..tooltipStopListen(true)
@@ -386,7 +386,7 @@ import LocalObjectIDs
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 125)
         ..tooltipStartListen()
-        ..presetManaCost(_ -> 75)
+        ..presetManaCost(_ -> 0)
         ..presetCooldown(_ -> 10)
         ..tooltipStopListen(true)
 

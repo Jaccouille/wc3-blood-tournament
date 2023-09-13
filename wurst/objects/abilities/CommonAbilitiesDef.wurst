@@ -133,6 +133,23 @@ function createMeleeAura(int abilId, real value) returns AbilityDefinitionAuraCo
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
     return abilDef
 
+function createRangedAura(int abilId, real value) returns AbilityDefinitionAuraCommandCreep
+    let tgen = new BTAbilityTooltipGenerator(
+        "Gives extra damage to the attacks of nearby ranged friendly units.")
+    let abilDef = new AbilityDefinitionAuraCommandCreep(abilId)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..presetRangedBonus(_ -> true)
+        ..presetFlatBonus(_ -> false)
+        ..tooltipStartListen()
+        ..presetAttackDamageIncrease(_ -> value)
+        ..presetAreaofEffect(_ -> 900)
+        ..setName("Ranged Aura " + value.toString(0))
+        ..tooltipStopListen()
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
+
 function createMagicResistance(int abilId, real value) returns AbilityDefinitionElunesGrace
     let tgen = new BTAbilityTooltipGenerator(
         "Reduces the damage taken from Spells and Magic attacks.")
@@ -217,6 +234,10 @@ function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraW
 
 @compiletime function createDamageAuraAbilities()
     createDamageAura(ABIL_DAMAGE_AURA_25, 0.25)
+
+@compiletime function createRangedAuraAbilities()
+    createDamageAura(ABIL_RANGED_AURA_15, 0.15)
+    createDamageAura(ABIL_RANGED_AURA_25, 0.25)
 
 @compiletime function createArrowAbilites()
     var tgen = new BTAbilityTooltipGenerator("Add Spell damage.")

@@ -51,7 +51,7 @@ init
     let captainAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitTospawn, int count) ->
         for i = 1 to count
-            unitTospawn.push(UNIT_ROYAL_GUARD)
+            unitTospawn.push(UNIT_CAPTAIN)
     itemAddUnitMap.put(ITEM_CAPTAIN, captainAction)
 
 
@@ -83,6 +83,13 @@ init
             replaceUnit(unitToSpawn, UNIT_KNIGHT, UNIT_CRUSADER)
 
     itemAddUnitMap.put(ITEM_CRUSADER, crusaderAction)
+
+
+    let marshallAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitTospawn, int count) ->
+        for i = 1 to count
+            unitTospawn.push(UNIT_MARSHALL)
+    itemAddUnitMap.put(ITEM_MARSHALL, marshallAction)
 
 
     let rangerAction = new ItemAddUnit()
@@ -144,12 +151,6 @@ init
             unitTospawn.push(UNIT_COURT_ENCHANTRESS)
 
     itemAddUnitMap.put(ITEM_COURT_ENCHANTRESS, courtEnchantressAction)
-
-    let courtEnchantressActionBlizzard = new ItemModifyUnit()
-        ..addAction() (unit u) ->
-        u.issueImmediateOrderById(OrderIds.curseon)
-
-    itemModifyUnitMap.put(ITEM_COURT_ENCHANTRESS, courtEnchantressActionBlizzard)
 
 
     // ========================= ORC =========================

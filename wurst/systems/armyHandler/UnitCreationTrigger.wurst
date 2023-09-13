@@ -32,6 +32,7 @@ init
             let buildingList = pData.buildingList
 
             BlzShowUnitTeamGlow(u, false)
+            pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(u.getTypeId()).buildingArmyPoints)
 
             // Check if is a building
             if BTBuildingData.unitIdToDataMap.has(u.getTypeId())
@@ -65,8 +66,7 @@ init
                     let itemStockHandler = new ItemStockHandler(u)
                     unitItemSold.get(u.getTypeId()).forEach() (integer t) ->
                         let itm = createItem(t, vec2(0, 0))
-                        AddItemToStock(u, t, itm.getLevel(), itm.getLevel())
-                        itemStockHandler.addItem(itm.getTypeId(), itm.getLevel())
+                        let maxStock = itm.getLevel()
+                        AddItemToStock(u, t, maxStock, maxStock)
+                        itemStockHandler.addItem(itm.getTypeId(), maxStock)
                         itm.remove()
-
-                pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(u.getTypeId()).buildingPointValue)
