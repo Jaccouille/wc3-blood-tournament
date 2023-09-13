@@ -142,7 +142,6 @@ import NightElfAbilitiesDef
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..setNameEnhance("E", "Dryad")
-        ..setBuildingItemsMade(commaList(ITEM_KEEPER_OF_THE_GROVE))
         ..tooltipStopListen()
 
         ..setModelFileExt(Units.dryad1)
@@ -235,7 +234,6 @@ import NightElfAbilitiesDef
         ..setSizeSmall()
         ..setNameEnhance("W", "Huntress")
         ..tooltipStopListen()
-        ..setBuildingItemsMade(commaList(ITEM_PRIESTESS_OF_THE_MOON))
 
 
         ..setArtSpecial(Objects.nightElfLargeDeathExplode)
@@ -252,7 +250,8 @@ import NightElfAbilitiesDef
         ..setAttack1Range(300)
 
         ..setArmorData(ArmorType.Divine, 2)
-        ..setHitPointsMaximumBase(300)
+        ..setHitPointsMaximumBase(20)
+        ..setHitPointsRegenerationRate(-10)
 
         ..setSpeedBase(270)
 
@@ -290,7 +289,6 @@ import NightElfAbilitiesDef
         ..setAutoBuildingCost()
 
         ..setNameEnhance("A", "Druid of the Talon")
-        ..setBuildingItemsMade(commaList(ITEM_ARCHDRUID, ITEM_WAND_OF_ILLUSION, ITEM_ENTANGLING_ROOT))
 
         ..tooltipStopListen()
 
@@ -312,7 +310,7 @@ import NightElfAbilitiesDef
 
         ..setAttack1Data(AttackType.Normal, 39, 3, 13, 1.5)
 
-        ..setArmorData(ArmorType.Unarmored, 4)
+        ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(400)
 
         ..setSpeedBase(270)
@@ -324,7 +322,6 @@ import NightElfAbilitiesDef
 
         ..setSizeSmall()
         ..setMana(0)
-        ..setBuildingItemsMade(commaList(ITEM_BEAR, ITEM_OWLBEAR))
 
         ..setModelFileExt(Units.druidoftheClaw)
         ..setIconGameInterfaceExt(Icons.bTNDruidOfTheClaw)
@@ -345,7 +342,7 @@ import NightElfAbilitiesDef
 
         ..setAttack1Data(AttackType.Normal, 67, 5, 13, 1.5)
 
-        ..setArmorData(ArmorType.Unarmored, 6)
+        ..setArmorData(ArmorType.Large, 6)
         ..setHitPointsMaximumBase(800)
 
         ..setSpeedBase(270)
@@ -521,14 +518,14 @@ import NightElfAbilitiesDef
 
 @compiletime function createPriestessOfTheMoon()
     let tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_MULTISHOT_5),
-        abilTooltipMap.get(ABIL_STARFALL)
+        abilTooltipMap.get(ABIL_STARFALL),
+        abilTooltipMap.get(ABIL_RANGED_AURA_15)
         ).joinBy("\n\n"))
     let itm = createBasicItem(ITEM_PRIESTESS_OF_THE_MOON)
     createSpawnedUnit(UNIT_PRIESTESS_OF_THE_MOON, UnitIds.priestessofthemoon, BUILDING_PRIESTESS_OF_THE_MOON)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..setNormalAbilities(commaList(
-            ABIL_MULTISHOT_5,
+            ABIL_RANGED_AURA_15,
             ABIL_AUTOCAST_STARFALL,
             ABIL_STARFALL
         ))
@@ -540,7 +537,7 @@ import NightElfAbilitiesDef
         ..setAttack1Range(600)
 
         ..setArmorData(ArmorType.Medium, 6)
-        ..setHitPointsMaximumBase(1200)
+        ..setHitPointsMaximumBase(800)
         ..setMana(300)
 
         ..setSpeedBase(300)
@@ -558,12 +555,13 @@ import NightElfAbilitiesDef
 
 @compiletime function createArchdruid()
     var tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_SUMMON_WISP)
+        abilTooltipMap.get(ABIL_SUMMON_WISP),
+        abilTooltipMap.get(ABIL_BRILLANCE_AURA_2)
         ).joinBy("\n\n"))
 
     let itm = createBasicItem(ITEM_ARCHDRUID)
     createSpawnedUnit(UNIT_ARCHDRUID, UnitIds.furion)
-        ..setNormalAbilities(commaList(ABIL_SUMMON_WISP, ABIL_AUTOCAST_SUMMON_WISP))
+        ..setNormalAbilities(commaList(ABIL_SUMMON_WISP, ABIL_AUTOCAST_SUMMON_WISP, ABIL_BRILLANCE_AURA_2))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_SUMMON_WISP))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)

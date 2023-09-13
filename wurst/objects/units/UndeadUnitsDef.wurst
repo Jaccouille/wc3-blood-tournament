@@ -123,7 +123,6 @@ function createSkeletalArcher(int skeletalArcherId) returns BTUnitDefinition
         ..setGoldCost(150)
         ..setModelFile(Units.skeletonArcher1)
         ..setIconGameInterface(Icons.bTNSkeletonArcher)
-        ..setItemsMade(commaList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER))
         ..setUnitSoundSet(Soundsets.skeleton)
     unitDef.tooltipGen.applyToDef(buildingDef)
 
@@ -247,11 +246,7 @@ function createSkeletalArcher(int skeletalArcherId) returns BTUnitDefinition
             UNIT_SKELETON_MAGE,
             UNIT_REVENANT
             ))
-        ..setBuildingItemsMade(commaList(
-            ITEM_CRIPPLE,
-            ITEM_RAISE_SKELETON_MAGE,
-            ITEM_LICH
-            ))
+
 
         ..setModelFileExt(Units.necromancer1)
         ..setIconGameInterfaceExt(Icons.bTNNecromancer)
@@ -372,7 +367,6 @@ function createSkeletalArcher(int skeletalArcherId) returns BTUnitDefinition
         ..setNameEnhance("A", "Banshee")
         ..tooltipStopListen(true)
         ..setUpgradeTo(commaList(""))
-        ..setBuildingItemsMade(commaList(ITEM_UNHOLY_FRENZY))
 
         ..setModelFileExt(Units.banshee1)
         ..setIconGameInterfaceExt(Icons.bTNBanshee)
@@ -395,7 +389,7 @@ function createSkeletalArcher(int skeletalArcherId) returns BTUnitDefinition
         ..setAutoBuildingCost()
 
         ..setSizeSmall()
-        ..setNameEnhance("Z", "Dark_ranger")
+        ..setNameEnhance("Z", "Dark Ranger")
         ..tooltipStopListen(true)
 
         ..setModelFileExt(Units.bansheeRanger1)
@@ -477,9 +471,7 @@ function createSkeletalArcher(int skeletalArcherId) returns BTUnitDefinition
         ..setAutoBuildingCost()
 
         ..setNameEnhance("D", "Vampire")
-        ..setBuildingItemsMade(commaList(
-            ITEM_VAMPIRE_LORD
-            ))
+
         ..tooltipStopListen(true)
 
         ..setModelFileExt(Units.heroDreadLord)

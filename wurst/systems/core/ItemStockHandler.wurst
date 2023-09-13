@@ -6,11 +6,14 @@ import ClosureEvents
 import LocalObjectIDs
 import ClosuresForItems
 import ClosureTimers
-
+import PlayerExtension
+import ScoreBoard
+import OrderIds
+import AbilityIds
 
 public HashMap<int, LinkedList<int>> unitItemSold = new HashMap<int, LinkedList<int>>
 
-public HashMap<int, LinkedList<int>> shareStocksMap = new HashMap<int, LinkedList<int>>
+public HashMap<int, LinkedList<int>> sharedStocksMap = new HashMap<int, LinkedList<int>>
 
 public class ItemStockHandler
     static HashMap<unit, ItemStockHandler> unitToItemStockMap = new HashMap<unit, ItemStockHandler>
@@ -32,43 +35,73 @@ public class ItemStockHandler
 
     function reduceStock(int itemId, int value)
         if hasItem(itemId)
-            let currentStock = itemStock.get(itemId) - value
+            var currentStock = itemStock.get(itemId) - value
+            if currentStock == 0
+                currentStock = -1
+                building.addItemToStock(itemId, currentStock, currentStock)
 
             // Reduce shared stock
-            if shareStocksMap.has(building.getTypeId())
-                let sharedStock = shareStocksMap.get(building.getTypeId())
+            if sharedStocksMap.has(building.getTypeId())
+                and sharedStocksMap.get(building.getTypeId()).has(itemId)
+                let sharedStock = sharedStocksMap.get(building.getTypeId())
                 sharedStock.forEach() (integer t) ->
                     if t != itemId
                         building.addItemToStock(t, currentStock, currentStock)
                         itemStock.put(t, currentStock)
                         if currentStock == 0
                             itemStock.remove(t)
-            else
-                building.addItemToStock(itemId, currentStock, currentStock)
 
             // Update triggered item stock
             itemStock.put(itemId, currentStock)
 
             // If stock has been exhausted, it is no longer "handled"
-            if currentStock == 0
+            if currentStock <= 0
                 itemStock.remove(itemId)
 
             // Once all stock have been exhausted, remove this instance
             // to save memory and ease up builder AI decision
-            if itemStock.size() == 0
-                unitToItemStockMap.remove(building)
+            if itemStock.size() <= 0
                 destroy this
+
+    ondestroy
+        itemStock.flush()
+        destroy itemStock
+        unitToItemStockMap.remove(building)
 
 
 function initItemStockData()
+    // ================ HUMAN =============
     unitItemSold.put(BUILDING_FOOTMAN  , asList(ITEM_CAPTAIN          , ITEM_DEFEND                                  ))
     unitItemSold.put(BUILDING_RIFLEMAN , asList(ITEM_MORTAR           , ITEM_SNIPER, ITEM_EXPLOSIVE_AMMO             ))
     unitItemSold.put(BUILDING_PRIEST   , asList(ITEM_SPELL_BREAKER    , ITEM_ARMOR_BLESSING, ITEM_WEAPON_BLESSING    ))
-    unitItemSold.put(BUILDING_KNIGHT   , asList(ITEM_CRUSADER                                                        ))
+    unitItemSold.put(BUILDING_KNIGHT   , asList(ITEM_CRUSADER, ITEM_MARSHALL                                  ))
     unitItemSold.put(BUILDING_SORCERESS, asList(ITEM_COURT_ENCHANTRESS, ITEM_DARK_MAGE, ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
+    sharedStocksMap.put(BUILDING_PRIEST ,asList(ITEM_ARMOR_BLESSING, ITEM_WEAPON_BLESSING))
+    sharedStocksMap.put(BUILDING_RIFLEMAN ,asList(ITEM_SNIPER, ITEM_EXPLOSIVE_AMMO))
+    sharedStocksMap.put(BUILDING_SORCERESS ,asList(ITEM_DARK_MAGE, ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
 
-    shareStocksMap.put(BUILDING_PRIEST ,asList(ITEM_ARMOR_BLESSING, ITEM_WEAPON_BLESSING))
-    shareStocksMap.put(BUILDING_SORCERESS ,asList(ITEM_DARK_MAGE, ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
+    // ================ ORC =============
+    unitItemSold.put(BUILDING_GRUNT, asList(ITEM_BERSERKER, ITEM_KODO))
+    unitItemSold.put(BUILDING_RAIDER, asList(ITEM_PACK_LEADER))
+    unitItemSold.put(BUILDING_OGRE, asList(ITEM_OGRE_ARMORED))
+    unitItemSold.put(BUILDING_WITCH_DOCTOR, asList(ITEM_DRUNKEN_HAZE, ITEM_HEALING_WAVE))
+    unitItemSold.put(BUILDING_SHAMAN, asList(ITEM_SPIRIT_WOLF1, ITEM_ORB_LIGHTNING, ITEM_FARSEER))
+    sharedStocksMap.put(BUILDING_WITCH_DOCTOR, asList(ITEM_DRUNKEN_HAZE, ITEM_HEALING_WAVE))
+
+    // ================ UNDEAD =============
+    unitItemSold.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER))
+    unitItemSold.put(BUILDING_NECROMANCER, asList(ITEM_CRIPPLE, ITEM_RAISE_SKELETON_MAGE, ITEM_LICH))
+    unitItemSold.put(BUILDING_BANSHEE, asList(ITEM_UNHOLY_FRENZY))
+    unitItemSold.put(BUILDING_VAMPIRE, asList(ITEM_VAMPIRE_LORD))
+    sharedStocksMap.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER))
+
+    // ================ NIGHT ELF =============
+    unitItemSold.put(BUILDING_DRYAD, asList(ITEM_KEEPER_OF_THE_GROVE))
+    unitItemSold.put(BUILDING_HUNTRESS, asList(ITEM_PRIESTESS_OF_THE_MOON))
+    unitItemSold.put(BUILDING_DRUID_TALON, asList(ITEM_ARCHDRUID, ITEM_WAND_OF_ILLUSION, ITEM_ENTANGLING_ROOT))
+    unitItemSold.put(BUILDING_DRUID_CLAW, asList(ITEM_BEAR, ITEM_OWLBEAR))
+    sharedStocksMap.put(BUILDING_DRUID_TALON, asList(ITEM_WAND_OF_ILLUSION, ITEM_ENTANGLING_ROOT))
+    sharedStocksMap.put(BUILDING_DRUID_CLAW, asList(ITEM_BEAR, ITEM_OWLBEAR))
 
 
 init
@@ -77,6 +110,7 @@ init
         let building = EventData.getTriggerUnit()
 
         if ItemStockHandler.unitToItemStockMap.has(building)
+            and EventData.getIssuedOrderId() != OrderIds.undefend
             let itemId = EventData.getIssuedOrderId()
             ItemStockHandler.unitToItemStockMap.get(building).reduceStock(itemId, 1)
             building.addItemById(itemId)
@@ -85,13 +119,11 @@ init
             let search = Rect(pos.x - range, pos.y - range, pos.x + range, pos.y + range)
             nullTimer() ->
                 forItemsInRect(search) (item i) ->
+                    let bloodPoint = i.getLife().toInt()
+                    // Non ancient
+                    building.addType(ConvertUnitType(19))
+                    building.getOwner().getPlayerData().addArmyPoints(bloodPoint)
+                    scoreBoardEntries.get("ArmyPoints")
+                        .addValue(building.getOwner(), bloodPoint)
+
                     i.remove()
-
-
-    EventListener.add(EVENT_PLAYER_UNIT_SELL_ITEM) ->
-        let building = EventData.getTriggerUnit()
-        let itemSold = EventData.getSoldItem()
-        building.addItemById(itemSold.getTypeId())
-        if ItemStockHandler.unitToItemStockMap.has(building)
-            ItemStockHandler.unitToItemStockMap.get(building).reduceStock(itemSold.getTypeId(), 1)
-        itemSold.remove()

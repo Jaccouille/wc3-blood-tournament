@@ -32,7 +32,6 @@ import LinkedList
 
         ..setNameEnhance("Q", "Grunt")
         ..tooltipStopListen(true)
-        ..setBuildingItemsMade(commaList(ITEM_BERSERKER, ITEM_KODO))
 
         ..setModelFileExt(Units.grunt1)
         ..setIconGameInterfaceExt(Icons.bTNGrunt)
@@ -167,7 +166,6 @@ import LinkedList
 
         ..setNameEnhance("E", "Raider")
         ..tooltipStopListen(true)
-        ..setBuildingItemsMade(commaList(ITEM_PACK_LEADER))
 
         ..setModelFileExt(Units.wolfrider1)
         ..setIconGameInterfaceExt(Icons.bTNRaider)
@@ -311,7 +309,6 @@ import LinkedList
 
         ..setNameEnhance("A", "Witch Doctor")
         ..tooltipStopListen(true)
-        ..setBuildingItemsMade(commaList(ITEM_DRUNKEN_HAZE, ITEM_HEALING_WAVE))
 
         ..setModelFileExt(Units.witchDoctor1)
         ..setIconGameInterfaceExt(Icons.bTNWitchDoctor)
@@ -347,8 +344,6 @@ import LinkedList
             UNIT_FARSEER,
             UNIT_SPIRIT_WOLF2
             ))
-        ..setBuildingItemsMade(
-            commaList(ITEM_SPIRIT_WOLF1, ITEM_ORB_LIGHTNING, ITEM_FARSEER))
 
         ..setModelFileExt(Units.shaman1)
         ..setIconGameInterfaceExt(Icons.bTNShaman)
@@ -473,7 +468,6 @@ import LinkedList
 
         ..setAttack1Range(120)
         ..setScalingValue(1.4)
-        ..setBuildingItemsMade(commaList(ITEM_OGRE_ARMORED))
 
         ..setModelFileExt(Units.ogre1)
         ..setIconGameInterfaceExt(Icons.bTNOgre)

@@ -16,6 +16,7 @@ import GridHotkeyPosition
 import LocalObjectIDs
 import TooltipsUtils
 import UnitTooltipGenerator
+import ItemObjEditingCommon
 
 function BTUnitDefinition.setCommonAttr()
     this.setBuildTime(1)
@@ -32,6 +33,7 @@ function BTUnitDefinition.setCommonAttr()
     this.setButtonPositionY(2)
     this.setNormalAbilities("")
     this.setHitPointsRegenerationType("always")
+    this.setDeathType(3)
 
 public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinition
     return new BTUnitDefinition(newId, origId)
@@ -76,10 +78,12 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
         ..setGoldCostFactor(1, 1)
         ..setLumberCostFactor(1, 1)
         ..setHeroAbility(false)
+        ..setMaxCreepLevel(1, 1)
         ..setTargetsAllowed(1, commaList(
             TargetsAllowed.player_t,
             TargetsAllowed.structure,
-            TargetsAllowed.invulnerable
+            TargetsAllowed.invulnerable,
+            TargetsAllowed.nonancient
         ))
         ..setTooltipNormal(1, "Sell unit")
         ..setTooltipNormalExtended(1, "Sell the unit and get 100% of its cost back")
@@ -205,7 +209,11 @@ public class BTUnitDefinition extends UnitDefinition
 
     override function setHitPointsMaximumBase(int data)
         def.setInt("uhpm", data)
-        addTooltipProperty("Health Point", data)
+        addTooltipProperty("Hit Point", data)
+
+    override function setHitPointsRegenerationRate(real data)
+        def.setUnreal("uhpr", data)
+        addTooltipProperty("Hit Point Regeneration", data)
 
     function setArmorData(ArmorType data, int defenseAmount)
         var dataStr = data.toObjectString()
@@ -235,6 +243,7 @@ public class BTUnitDefinition extends UnitDefinition
     function setMana(int data)
         def.setInt("umpm", data)
         def.setInt("umpi", data)
+        def.setInt("umpr", 1)
         addTooltipProperty("Mana", data)
 
     function setBuildingScalingValue(real data)
@@ -269,19 +278,26 @@ public class BTUnitDefinition extends UnitDefinition
         setItemCost(gold, lumber, charges, charges, charges)
 
     function setItemCost(int gold, int lumber, int charges, int maxStock, int maxStack)
-        itemDef.setStockMaximum(maxStock)
-        itemDef.setMaxStack(maxStack)
-        itemDef.setGoldCost(gold)
-        itemDef.setLumberCost(lumber)
-        itemDef.setNumberofCharges(charges)
-        itemDef.setLevel(maxStock)
-        this.charges = charges
+        itemDef.setItemCost(gold, lumber, charges, maxStack, maxStock)
         setPointValue(gold, lumber, charges)
+        this.charges = charges
 
+    function setItemCostUnit(int gold, int lumber, int charges)
+        setItemCostUnit(gold, lumber, charges, charges, charges)
+
+    function setItemCostUnit(int gold, int lumber, int charges, int maxStock, int maxStack)
+        let armyPoints = getUnitPointValue(gold, lumber, charges) * charges
+        addTooltipProperty("Army points", armyPoints)
+        itemDef.setHitPoints(armyPoints)
+        itemDef.setItemCost(gold, lumber, charges, maxStack, maxStock)
+        setPointValue(gold, lumber, charges)
+        this.charges = charges
+
+    /** Use for unit linked to a building (not items one) **/
     function setAutoPointValue()
         if this.buildingDef != null
             setPointValue(buildingData.unitPointValue)
-            addTooltipProperty("Building BP", buildingData.buildingPointValue)
+            addTooltipProperty("Army points", buildingData.buildingArmyPoints)
 
     function setPointValue(int gold, int lumber, int count)
         setPointValue(getUnitPointValue(gold, lumber, count))
