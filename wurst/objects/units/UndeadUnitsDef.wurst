@@ -13,6 +13,7 @@ import BTAbilities
 import LinkedList
 import UndeadAbilitiesDef
 import ColorUtils
+import ArmySpawner
 
 @compiletime function createZombie()
     var tooltip = new UnitTooltipGenerator("Cheap meat shield")
@@ -66,65 +67,77 @@ import ColorUtils
         ..setUnitSoundSetExt(Soundsets.ghoul)
 
 
-function createSkeletalArcher(int skeletalArcherId) returns BTUnitDefinition
-    let tooltip = new UnitTooltipGenerator("Skeletal Archer Desc")
-    return createSpawnedUnit(skeletalArcherId, UnitIds.skeletalarcher)
+@compiletime function createSkeletalArcher()
+    let unitCount = BTBuildingData.getUnitCount(BUILDING_SKELETAL_ARCHER)
+    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_BURNING_ARROW))
+    let itmBurning = createBasicItem(ITEM_BURNING_ARCHER)
+    createSpawnedUnit(UNIT_BURNING_ARCHER, UnitIds.burningarcher)
+        ..registerItemDef(itmBurning, ItemModifierType.Replace)
+        ..setNormalAbilities(commaList(ABIL_BURNING_ARROW))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Pierce, 26, 4, 4, 1.3)
+        ..setAttack1Range(600)
+
+        ..setArmorData(ArmorType.Medium, 2)
+        ..setHitPointsMaximumBase(140)
+
+        ..setSpeedBase(270)
+        ..setSizeSmall()
+        ..setItemCostReplacement(0, 100, 1, unitCount, unitCount, BUILDING_SKELETAL_ARCHER)
+
+        ..setNameEnhance("Z", "Burning Archer")
+        ..tooltipStopListen(true, itmBurning)
+        ..setMana(0)
+        ..setIconGameInterfaceExt(Icons.bTNFlamingArrows)
+
+    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_FROST_ARROW))
+    let itmFrost = createBasicItem(ITEM_FROST_ARCHER)
+    createSpawnedUnit(UNIT_FROST_ARCHER, UnitIds.skeletalmarksman)
+        ..registerItemDef(itmFrost, ItemModifierType.Replace)
+        ..setDefaultActiveAbility(commaList(ABIL_FROST_ARROW))
+        ..setNormalAbilities(commaList(ABIL_FROST_ARROW))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Pierce, 26, 4, 4, 1.3)
+        ..setAttack1Range(600)
+
+        ..setArmorData(ArmorType.Medium, 2)
+        ..setHitPointsMaximumBase(140)
+
+        ..setSpeedBase(270)
+        ..setSizeSmall()
+        ..setItemCostReplacement(0, 100, 1, unitCount, unitCount, BUILDING_SKELETAL_ARCHER)
+
+        ..setNameEnhance("X", "Frost Archer")
+        ..tooltipStopListen(true, itmFrost)
+        ..setMana(0)
+        ..setIconGameInterfaceExt(Icons.bTNColdArrows)
+
+    tooltip = new UnitTooltipGenerator("Basic ranged unit.")
+    createSpawnedUnit(UNIT_SKELETAL_ARCHER, UnitIds.skeletalarcher, BUILDING_SKELETAL_ARCHER)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Pierce, 18, 2, 2, 1.5)
-        ..setAttack1Range(550)
+        ..setAttack1Range(500)
 
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(100)
 
         ..setSpeedBase(270)
-        ..setPointValue(150, 0, 10)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
 
         ..setSizeSmall()
         ..setNameEnhance("W", "Skeletal Archer")
-        ..setAutoPointValue()
         ..tooltipStopListen(true)
 
-@compiletime function createSkeletalArcher()
-    createBasicItem(ITEM_BURNING_ARCHER)
-        ..setItemCost(0, 100, 1, 5, 5)
-        ..setNameEnhance("Z", "Upgrade 1 Burning Archer")
-        ..setInterfaceIcon(Icons.bTNSearingArrows)
-        ..setTooltipExtended(abilTooltipMap.get(ABIL_FIRE_ARROW))
-
-    createBasicItem(ITEM_FROST_ARCHER)
-        ..setItemCost(0, 100, 1, 5, 5)
-        ..setNameEnhance("X", "Upgrade 1 Frost Archer")
-        ..setInterfaceIcon(Icons.bTNColdArrows)
-        ..setTooltipExtended(abilTooltipMap.get(ABIL_FROST_ARROW))
-
-    let unitDef = createSkeletalArcher(UNIT_SKELETAL_ARCHER)
-
-    createSkeletalArcher(UNIT_BURNING_ARCHER)
-        ..setDefaultActiveAbility(commaList(ABIL_FIRE_ARROW))
-        ..setNameEnhance("W", "Burning Archer")
-        ..setNormalAbilities(commaList(ABIL_FIRE_ARROW))
-        ..setTintingColorRed(255)
-        ..setTintingColorGreen(100)
-        ..setTintingColorBlue(150)
-
-    createSkeletalArcher(UNIT_FROST_ARCHER)
-        ..setDefaultActiveAbility(commaList(ABIL_FROST_ARROW))
-        ..setNormalAbilities(commaList(ABIL_FROST_ARROW))
-        ..setNameEnhance("W", "Frost Archer")
-        ..setTintingColorRed(100)
-        ..setTintingColorGreen(150)
-        ..setTintingColorBlue(255)
-
-    let buildingDef = createBuildingUnit(BUILDING_SKELETAL_ARCHER)
-        ..setNameEnhance("W", "Skeletal Archer 10x")
-        ..setUnitsTrained(commaList(UNIT_SKELETAL_ARCHER))
-        ..setGoldCost(150)
-        ..setModelFile(Units.skeletonArcher1)
-        ..setIconGameInterface(Icons.bTNSkeletonArcher)
-        ..setUnitSoundSet(Soundsets.skeleton)
-    unitDef.tooltipGen.applyToDef(buildingDef)
+        ..setModelFileExt(Units.skeletonArcher1)
+        ..setIconGameInterfaceExt(Icons.bTNSkeletonArcher)
+        ..setUnitSoundSetExt(Soundsets.skeleton)
 
 
 @compiletime function createCryptFiend()
@@ -227,7 +240,7 @@ function createSkeletalArcher(int skeletalArcherId) returns BTUnitDefinition
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Magic, 27, 5, 3, 1.75)
-        ..setAttack1Range(650)
+        ..setAttack1Range(700)
 
         ..setArmorData(ArmorType.Unarmored, 2)
         ..setHitPointsMaximumBase(50)
@@ -327,7 +340,7 @@ function createSkeletalArcher(int skeletalArcherId) returns BTUnitDefinition
         ..setDefaultActiveAbility(commaList(ABIL_RAISE_REVENANT))
 
         ..setAttack1Data(AttackType.Magic, 115, 4, 9, 1.75)
-        ..setAttack1Range(550)
+        ..setAttack1Range(700)
 
         ..setArmorData(ArmorType.Divine, 4)
         ..setHitPointsMaximumBase(260)
@@ -353,10 +366,10 @@ function createSkeletalArcher(int skeletalArcherId) returns BTUnitDefinition
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Magic, 20, 4, 6, 1.75)
-        ..setAttack1Range(550)
+        ..setAttack1Range(400)
 
         ..setArmorData(ArmorType.Divine, 2)
-        ..setHitPointsMaximumBase(50)
+        ..setHitPointsMaximumBase(65)
         ..setMana(200)
 
         ..setSpeedBase(270)

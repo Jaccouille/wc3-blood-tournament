@@ -5,6 +5,7 @@ import AbilityTooltipGenerator
 import AbilityObjEditingCommons
 import BTAbilities
 import TooltipsUtils
+import Assets
 
 function createCleave(int abilId, real distributedDamage, real aoe) returns AbilityDefinitionPitLordCleavingAttack
     let tgen = new BTAbilityTooltipGenerator(
@@ -265,6 +266,21 @@ function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraW
         ..presetManaCost(_ -> 0)
         ..presetCastRange(_ -> 700)
     abilTooltipMap.put(ABIL_FROST_ARROW, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator("" +
+        "Reduces the effectiveness of healing and regeneration on enemy units.")
+    new AbilityDefinitionHealReductionBonus(ABIL_BURNING_ARROW)
+        ..registerTooltipGenerator(tgen)
+        ..setArtTarget(Abilities.flameStrikeEmbers)
+        ..setMissileArt(Abilities.flamingArrowMissile)
+        ..tooltipStartListen()
+        ..setHealingMultiplier(1, 0.5)
+        ..addTooltipProperty("Heal Reduction", _ -> 0.5.toPercent())
+        ..presetDurationNormal(_ -> 4)
+        ..setNameEnhance("Z", "Burning Arrow")
+        ..tooltipStopListen(true)
+        ..presetManaCost(_ -> 0)
+    abilTooltipMap.put(ABIL_BURNING_ARROW, tgen.generateFullTooltip())
 
 
 @compiletime function createManashield()

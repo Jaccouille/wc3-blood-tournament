@@ -347,7 +347,7 @@ import NightElfAbilitiesDef
 
         ..setSpeedBase(270)
 
-        ..setItemCost(0, 500, 1, 5, 5)
+        ..setItemCostReplacement(0, 500, 1, 5, 5, BUILDING_DRUID_CLAW)
         ..tooltipStopListen()
         ..setNameEnhance("Z", "Bear Form")
 
@@ -384,7 +384,7 @@ import NightElfAbilitiesDef
 
         ..setSpeedBase(270)
 
-        ..setItemCost(0, 500, 1, 5, 5)
+        ..setItemCostReplacement(0, 500, 1, 5, 5, BUILDING_DRUID_CLAW)
         ..setNameEnhance("X", "Owlbear Form")
 
 
@@ -596,7 +596,6 @@ import NightElfAbilitiesDef
         ..setNormalAbilities(commaList(ABIL_WISP_EXPLODE))
         ..setDefaultActiveAbility(commaList(ABIL_WISP_EXPLODE))
         ..registerTooltipGenerator(tooltip)
-        ..setAttacksEnabled(AttacksEnabled.AttackOneOnly.toObjectInt())
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Magic, 1, 1, 1, 2)

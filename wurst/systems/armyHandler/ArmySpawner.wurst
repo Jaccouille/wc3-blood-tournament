@@ -20,7 +20,7 @@ import ItemCallbackDefinition
 
 
 
-public function getUnitPointValue(int goldCost, int lumberCost, int unitCount) returns int
+public function computeUnitPointValue(int goldCost, int lumberCost, int unitCount) returns int
     var pointValue = 0
     pointValue += (goldCost / unitCount).toInt()
     pointValue += (lumberCost / unitCount / 10).toInt()
@@ -31,6 +31,9 @@ public class BTBuildingData
 
     static function getUnitCount(int unitId) returns int
         return unitIdToDataMap.get(unitId).unitToSpawn.size()
+
+    static function getUnitPointValue(int unitId) returns int
+        return unitIdToDataMap.get(unitId).unitPointValue
 
     LinkedList<int> unitToSpawn
     int buildingArmyPoints = 0
@@ -43,7 +46,7 @@ public class BTBuildingData
         this.unitToSpawn = unitToSpawn
         this.goldCost = goldCost
         this.lumberCost = lumberCost
-        unitPointValue = getUnitPointValue(goldCost, lumberCost, unitToSpawn.size())
+        unitPointValue = computeUnitPointValue(goldCost, lumberCost, unitToSpawn.size())
         buildingArmyPoints += unitPointValue * unitToSpawn.size()
 
     construct(int upgradeFrom, int buildingId, int goldCost, int lumberCost, LinkedList<int> unitToSpawn)
@@ -51,7 +54,7 @@ public class BTBuildingData
         this.unitToSpawn = unitToSpawn
         this.goldCost = goldCost
         this.lumberCost = lumberCost
-        unitPointValue = getUnitPointValue(goldCost, lumberCost, unitToSpawn.size())
+        unitPointValue = computeUnitPointValue(goldCost, lumberCost, unitToSpawn.size())
         buildingArmyPoints += unitPointValue * unitToSpawn.size()
         if unitIdToDataMap.get(upgradeFrom) != null
             unitPointValue += unitIdToDataMap.get(upgradeFrom).unitPointValue
@@ -210,7 +213,7 @@ public class ArmySpawner
                 destroy unitModifierList.dequeue()
 
         BlzShowUnitTeamGlow(newUnit, false)
-        if newUnit.getName() == ""
+        if newUnit.getName().length() == 0
             Log.info("Unknown unit spawned")
             newUnit.kill()
         else

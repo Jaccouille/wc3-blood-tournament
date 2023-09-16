@@ -34,6 +34,8 @@ function BTUnitDefinition.setCommonAttr()
     this.setNormalAbilities("")
     this.setHitPointsRegenerationType("always")
     this.setDeathType(3)
+    this.setLevel(1)
+    this.setAttacksEnabled(AttacksEnabled.AttackOneOnly.toObjectInt())
 
 public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinition
     return new BTUnitDefinition(newId, origId)
@@ -282,15 +284,35 @@ public class BTUnitDefinition extends UnitDefinition
         setPointValue(gold, lumber, charges)
         this.charges = charges
 
+    /** Used to define unit addition, it adds army points on spawn */
     function setItemCostUnit(int gold, int lumber, int charges)
         setItemCostUnit(gold, lumber, charges, charges, charges)
 
+    /** Used to define unit addition, it adds army points on spawn */
     function setItemCostUnit(int gold, int lumber, int charges, int maxStock, int maxStack)
-        let armyPoints = getUnitPointValue(gold, lumber, charges) * charges
+        let armyPoints = computeUnitPointValue(gold, lumber, charges) * charges
         addTooltipProperty("Army points", armyPoints)
+
+        // Used on item purchase to increase army points
         itemDef.setHitPoints(armyPoints)
         itemDef.setItemCost(gold, lumber, charges, maxStack, maxStock)
         setPointValue(gold, lumber, charges)
+        this.charges = charges
+
+    /** Used to define unit replacement, it adds army points on spawn
+        srcUnitId being the id of the unit that is being replaced
+    */
+    function setItemCostReplacement(int gold, int lumber, int charges, int maxStock, int maxStack, int srcUnitId)
+        let armyPoints = computeUnitPointValue(gold, lumber, charges) * charges
+        addTooltipProperty("Army points", armyPoints)
+
+        // Used on item purchase to increase army points
+        itemDef.setHitPoints(armyPoints)
+        itemDef.setItemCost(gold, lumber, charges, maxStack, maxStock)
+
+        let newPointValue = computeUnitPointValue(gold, lumber, charges)
+            + BTBuildingData.getUnitPointValue(srcUnitId)
+        setPointValue(newPointValue)
         this.charges = charges
 
     /** Use for unit linked to a building (not items one) **/
@@ -300,7 +322,7 @@ public class BTUnitDefinition extends UnitDefinition
             addTooltipProperty("Army points", buildingData.buildingArmyPoints)
 
     function setPointValue(int gold, int lumber, int count)
-        setPointValue(getUnitPointValue(gold, lumber, count))
+        setPointValue(computeUnitPointValue(gold, lumber, count))
 
     override function setPointValue(int data)
         def.setInt("upoi", data)
