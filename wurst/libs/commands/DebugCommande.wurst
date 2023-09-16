@@ -6,15 +6,18 @@ import ObjectIds
 // Local imports:
 import ArmySpawner
 import RoundController
+import ClosureForGroups
+import ClosureTimers
+import OrderBlocker
 import Toolkit
 
 init
     registerToolkitCommand("su") (player triggerPlayer, LinkedList<string> arguments) ->
-        pDatas.forEach() (player key, PlayerData value) ->
-            Log.info("SpawnedUnits size : " + value.spawnedUnits.size().toString() + " for " + key.getNameColored(true))
+        pDatas.forEach() (player key, PlayerData pData) ->
+            Log.info("SpawnedUnits size : " + pData.spawnedUnits.size().toString() + " for " + key.getNameColored(true))
 
     registerToolkitCommand("show-indexes") (player triggerPlayer, LinkedList<string> arguments) ->
-        pDatas.forEach() (player key, PlayerData value) ->
+        pDatas.forEach() (player key, PlayerData pData) ->
             let idx = playerToArmySpawner.get(key).buildingIdx
             let nestedIdx = playerToArmySpawner.get(key).squadIdx
             let spawnFinished = playerToArmySpawner.get(key).spawnFinished
@@ -34,4 +37,21 @@ init
             pDatas.get(players[playerIdx]).spawnedUnits.forEach() (unit u) ->
                 Log.info("Unit : " + u.getName() +
                          " at pos :" + u.getPos().toString() +
-                         " " + u.getTypeId().toRawCode())
+                         " " + u.getTypeId().toRawCode() +
+                         " length: " + u.getName().length().toString()
+                         )
+
+    registerToolkitCommand("clean") (player triggerPlayer, LinkedList<string> arguments) ->
+        pDatas.forEach() (player key, PlayerData pData) ->
+            pData.spawnedUnits.forEach() (unit t) ->
+                if t.getName().length() <= 0
+                    t.kill()
+
+    registerToolkitCommand("rr") (player triggerPlayer, LinkedList<string> arguments) ->
+        forUnitsAll() (unit u) ->
+            if u.getMoveSpeed() > 1 and not u.isType(UNIT_TYPE_PEON)
+                u.unpause()
+                u.issuePointOrder("attack", CENTER)
+        nullTimer() ->
+            preventOrder = true
+            orderBlocker.enable()

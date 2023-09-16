@@ -79,11 +79,9 @@ public abstract class Round
         this.roundParticipant.add(players[matchUp.a], players[matchUp.b])
 
     function start()
-        // Round stq
+        // Round start
         OnRoundStart.execute(this)
         Log.info(this.roundName + " start")
-        pDatas.forEach() (player key, PlayerData value) ->
-            pDatas.get(key).armyPoints = 0
         doBeforeSpawn()
         spawnArmies()
         doAfterSpawn()
@@ -96,8 +94,11 @@ public abstract class Round
 
     function doAfterSpawn()
         doAfter(2) ->
+            // TODO: Crash at round 3
             forUnitsAll() (unit u) ->
-                if u.getMoveSpeed() > 1 and not u.isType(UNIT_TYPE_PEON)
+                if not u.isType(UNIT_TYPE_STRUCTURE)
+                    and not u.isType(UNIT_TYPE_PEON)
+                    and u.getOwner() != ALTAR_PLAYER
                     u.unpause()
                     u.issuePointOrder("attack", CENTER)
             nullTimer() ->

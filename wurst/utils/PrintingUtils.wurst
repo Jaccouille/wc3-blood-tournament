@@ -1,7 +1,7 @@
 package PrintingUtils
 
 
-class LogFor extends Log
+public class LogFor extends Log
     /** Prints a trace logmessage */
     static function trace(string msg, player p)
         if p == localPlayer

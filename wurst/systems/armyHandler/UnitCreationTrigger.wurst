@@ -62,6 +62,7 @@ init
                 if not buildingList.has(u)
                     buildingList.push(u)
 
+                // Add stock items
                 if unitItemSold.has(u.getTypeId())
                     let itemStockHandler = new ItemStockHandler(u)
                     unitItemSold.get(u.getTypeId()).forEach() (integer t) ->
