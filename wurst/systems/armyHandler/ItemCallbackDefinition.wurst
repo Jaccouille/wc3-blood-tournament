@@ -58,6 +58,7 @@ init
     let explosiveAmmoAction = new ItemModifyUnit()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_EXPLOSIVE_AMMO)
+        u.addAbility(ABIL_EXPLOSIVE_AMMO_VISUAL)
         u.issueImmediateOrderById(OrderIds.flamingattack)
     itemModifyUnitMap.put(ITEM_EXPLOSIVE_AMMO, explosiveAmmoAction)
 
@@ -186,6 +187,12 @@ init
         u.issueImmediateOrderById(OrderIds.curseon)
 
     itemModifyUnitMap.put(ITEM_DRUNKEN_HAZE, drunkenHazeAction)
+
+    let burningBladeAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_BURNING_BLADE_75)
+
+    itemModifyUnitMap.put(ITEM_BURNING_BLADE, burningBladeAction)
 
     let berserkerAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->

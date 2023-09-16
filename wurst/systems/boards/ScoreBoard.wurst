@@ -76,22 +76,6 @@ public class ScoreBoardColumnEntries
         for boardColumn in boardColumns
             scoreBoardEntries.put(boardColumn.text, new ScoreBoardColumnEntries(ALL_PLAYERS))
 
-    static function orderRowsForNextRound(LinkedList<player> playerList)
-        var row = 1
-
-        if scoreBoard == null
-            loadRoundLayout(playerList)
-        else
-            playerList.forEach() (player _p) ->
-                let currentRow = scoreBoard.getPlayerPos(_p.getName(true))
-                if currentRow != row
-                    scoreBoard.swapRow(row, currentRow)
-                scoreBoard.board.setItemValueColor(row, 0, _p.getColor().toColor().withAlpha(0))
-                row += 2
-            let expectedRow = playerList.size() * 2
-            if scoreBoard.board.getRowCount() > expectedRow
-                scoreBoard.board.setRowCount(expectedRow)
-
     static function loadRoundLayout(LinkedList<player> playerList)
         column = 0
         // TODO: Handle dynamic player
@@ -108,6 +92,23 @@ public class ScoreBoardColumnEntries
         else
             ScoreBoardColumnEntries.orderRowsForNextRound(playerList)
 
+    static function orderRowsForNextRound(LinkedList<player> playerList)
+        int row = 1
+
+        if scoreBoard == null
+            loadRoundLayout(playerList)
+        else
+            for _p in playerList
+                let currentRow = scoreBoard.getPlayerPos(_p.getName(true))
+                Log.info("Current row " + currentRow.toString() + " row " + row.toString() + " for " + _p.getName())
+                if currentRow != row
+                    scoreBoard.swapRow(row, currentRow)
+                scoreBoard.board.setItemValueColor(row, 0, _p.getColor().toColor().withAlpha(0))
+                row += 2
+            let expectedRow = playerList.size() * 2
+            if scoreBoard.board.getRowCount() > expectedRow
+                scoreBoard.board.setRowCount(expectedRow)
+
 
     construct(LinkedList<player> playerList)
         this.boardColumn = boardColumns.get(column)
@@ -115,11 +116,10 @@ public class ScoreBoardColumnEntries
         initRow(0, boardColumn.text, boardColumn.icon)
 
         var value = "0"
-        string icon = null
         if boardColumn.text == "PlayerName"
             value = "PlayerName"
 
-        initForPlayer(value, icon, playerList)
+        initForPlayer(value, null, playerList)
         column++
 
     function initForPlayer(string value, string icon, LinkedList<player> playerList)

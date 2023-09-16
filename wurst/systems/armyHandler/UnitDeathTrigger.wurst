@@ -10,6 +10,7 @@ import LocalObjectIDs
 import Assets
 import OrderIds
 import ItemStockHandler
+import ClosureForGroups
 
 function customAction(unit killer, unit dyingUnit, PlayerData pData)
 
@@ -67,8 +68,13 @@ function createBountyTag(unit dyingUnit, player killerOwner)
     ..setLifespan(2.0)
     ..setPermanent(false)
 
-function checkIfPlayerDefeated(PlayerData pData)
+public function checkIfPlayerDefeated(PlayerData pData)
     if pData.spawnedUnits.isEmpty()
+        let matchUpWinner = roundController.currentRound.getOpponent(pData._p)
+        if matchUpWinner != null
+            forUnitsOfPlayer(matchUpWinner) (unit u) ->
+                u.issuePointOrder("attack", CENTER)
+
         roundController.currentRound.roundParticipant.remove(pData._p)
 
         // Log.info(pData._p.getName() + " has been eliminated")
@@ -108,14 +114,11 @@ public function initUnitDeathTrigger()
                 and roundController.currentRound instanceof NormalRound
                 and killerOwner != dyingUnit.getOwner()
                 if dyingUnit.getPointValue() > 0
-                    if dyingUnit.getTypeId() == UNIT_SPECTRE
-                        Log.info("Spectre died to : " + killerOwner.getName())
-                    pDatas.get(killerOwner).addBounty(getBounty(dyingUnit))
-                    createBountyTag(dyingUnit, killerOwner)
-                    if dyingUnit.getTypeId() == UNIT_GHOST_PALADIN
-                        Log.debug(killerOwner.getName())
+                    if dyingUnit.getOwner() != killerOwner and killer != null
+                        pDatas.get(killerOwner).addBounty(getBounty(dyingUnit))
+                        createBountyTag(dyingUnit, killerOwner)
 
-            if pData.spawnedUnits.has(dyingUnit) == true
+            if pData.spawnedUnits.has(dyingUnit)
                 pData.spawnedUnits.remove(dyingUnit)
                 checkIfPlayerDefeated(pData)
 

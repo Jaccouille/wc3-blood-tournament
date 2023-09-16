@@ -70,7 +70,6 @@ class RoundController
         if currentRound instanceof NormalRound
             BOARD_TITLE_PREFIX += "/" + gameConfig.getRoundCount().toString()
 
-        // TODO: refactor implementation, this doesn't look really right to me...
         if currentRound instanceof FinalRound
             Log.debug("Debug " + currentRound.roundName)
             if currentRound.roundName == "Quarter Final" and not hasQuarterStarted
@@ -99,20 +98,23 @@ class RoundController
                 disableOrderBlocker()
                 interludeTime = 120.
                 hasFinalStarted = true
-                pDatas.forEach() (player key, PlayerData value) ->
-                    SetPlayerTechResearched(key, UPGD_ELIMINATION, 1)
+                // pDatas.forEach() (player key, PlayerData value) ->
+                //     SetPlayerTechResearched(key, UPGD_ELIMINATION, 1)
         else
             // Allow builder to construct
             disableOrderBlocker()
             interludeTime = gameConfig.getRoundInterludeTime()
 
         tdialog.setRealTimeRemaining(interludeTime)
+        Log.info("Setting interlude time to " + interludeTime.toString())
         tim.doAfter(interludeTime) ->
             startRound()
 
     function startRound()
         hasRoundStarted = true
+        Log.info("Round start")
         currentRound.start()
+        Log.info("Gotta destroy dialog")
         tdialog.destr()
         if tim != null
             tim.destr()
@@ -213,13 +215,13 @@ public function initRoundController()
         roundController.preRoundPhaseStart()
 
     onLastArmyRemaining = () ->
-        Log.info("Clean up phase")
+        // Log.info("Clean up phase")
         altarEntity.getOrbUnit().unpause()
         altarEntity.getArenaMaster().setAnimation("Spell Channel")
         altarEntity.showCounter()
 
     onAllUnitDead = (player winner) ->
-        Log.info("All unit dead")
+        // Log.info("All unit dead")
         roundController.checkIfCurrentroundDone(winner)
 
     OnRoundFinish.add() (Round round) ->

@@ -91,6 +91,7 @@ import ArmySpawner
         ..tooltipStopListen(true, itmBurning)
         ..setMana(0)
         ..setIconGameInterfaceExt(Icons.bTNFlamingArrows)
+        ..setGhostDeath()
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_FROST_ARROW))
     let itmFrost = createBasicItem(ITEM_FROST_ARCHER)
@@ -115,13 +116,14 @@ import ArmySpawner
         ..tooltipStopListen(true, itmFrost)
         ..setMana(0)
         ..setIconGameInterfaceExt(Icons.bTNColdArrows)
+        ..setGhostDeath()
 
     tooltip = new UnitTooltipGenerator("Basic ranged unit.")
     createSpawnedUnit(UNIT_SKELETAL_ARCHER, UnitIds.skeletalarcher, BUILDING_SKELETAL_ARCHER)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 18, 2, 2, 1.5)
+        ..setAttack1Data(AttackType.Pierce, 14, 2, 2, 1.5)
         ..setAttack1Range(500)
 
         ..setArmorData(ArmorType.Medium, 2)
@@ -138,6 +140,7 @@ import ArmySpawner
         ..setModelFileExt(Units.skeletonArcher1)
         ..setIconGameInterfaceExt(Icons.bTNSkeletonArcher)
         ..setUnitSoundSetExt(Soundsets.skeleton)
+        ..setGhostDeath()
 
 
 @compiletime function createCryptFiend()
@@ -278,6 +281,7 @@ import ArmySpawner
 
         ..setSpeedBase(270)
         ..setPointValue(5)
+        ..setSummonedUnit()
 
         ..setSizeSmall()
         ..setNameEnhance("Q", "Skeleton Warrior")
@@ -298,6 +302,7 @@ import ArmySpawner
 
         ..setSpeedBase(270)
         ..setPointValue(5)
+        ..setSummonedUnit()
 
         ..setSizeSmall()
         ..setNameEnhance("Q", "Skeletal Mage")
@@ -316,15 +321,20 @@ import ArmySpawner
 
         ..setSpeedBase(270)
         ..setPointValue(20)
+        ..setSummonedUnit()
 
         ..setSizeSmall()
         ..setNameEnhance("X", "Revenant")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setAttack1Range(120)
+        ..setTintingColorBlue(255)
+        ..setTintingColorRed(255)
+        ..setTintingColorGreen(255)
         ..setMana(0)
-        ..setAttack1WeaponType(WeaponType.None)
+        ..setAttack1WeaponType(WeaponType.Normal)
         ..setAttack1WeaponSound(WeaponSound.MetalMediumBash)
+        ..setGhostDeath()
 
     tooltip = new UnitTooltipGenerator(asList(
         abilTooltipMap.get(ABIL_RAISE_REVENANT),
@@ -352,6 +362,7 @@ import ArmySpawner
         ..setItemCost(0, 800, 1, 1, 1)
         ..setNameEnhance("Z", "Lich")
         ..tooltipStopListen(true, itm)
+        ..setGhostDeath()
 
         ..setModelFileExt(Units.heroLich1)
         ..setIconGameInterfaceExt(Icons.bTNHeroLich)
@@ -384,6 +395,7 @@ import ArmySpawner
         ..setModelFileExt(Units.banshee1)
         ..setIconGameInterfaceExt(Icons.bTNBanshee)
         ..setUnitSoundSetExt(Soundsets.banshee)
+        ..setGhostDeath()
 
     tooltip = new UnitTooltipGenerator("Dark Ranger Desc")
     createSpawnedUnit(UNIT_DARK_RANGER, UnitIds.darkranger, BUILDING_DARK_RANGER)
@@ -424,17 +436,16 @@ import ArmySpawner
         ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
+        ..setSizeLarge()
 
-        ..setScalingValue(1.1)
-        ..setCollisionSize(22.0)
         ..setNameEnhance("S", "Abomination")
-        ..setAutoPointValue()
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(""))
+        ..setScalingValue(1.1)
 
         ..setModelFileExt(Units.abomination1)
         ..setIconGameInterfaceExt(Icons.bTNAbomination)
         ..setUnitSoundSetExt(Soundsets.abomination)
+        ..setBuildingScalingValue(0.8)
 
     tooltip = new UnitTooltipGenerator("Flesh Golem Desc")
     createSpawnedUnit(UNIT_FLESH_GOLEM, UnitIds.fleshgolem, BUILDING_FLESH_GOLEM)
@@ -486,6 +497,7 @@ import ArmySpawner
         ..setNameEnhance("D", "Vampire")
 
         ..tooltipStopListen(true)
+        ..setGhostDeath()
 
         ..setModelFileExt(Units.heroDreadLord)
         ..setIconGameInterfaceExt(Icons.bTNHeroDreadLord)
@@ -516,6 +528,7 @@ import ArmySpawner
         ..setSizeSmall()
         ..setNameEnhance("Z", "Vampire Lord")
         ..tooltipStopListen(true, itm)
+        ..setGhostDeath()
 
         ..setModelFileExt(Units.tichondrius1)
         ..setIconGameInterfaceExt(Icons.bTNTichondrius)

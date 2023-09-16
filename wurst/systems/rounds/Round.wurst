@@ -78,13 +78,26 @@ public abstract class Round
         this.matchUp.add(matchUp)
         this.roundParticipant.add(players[matchUp.a], players[matchUp.b])
 
+    function getOpponent(player _p) returns player
+        player opponent = null
+        for pair in matchUp
+            if players[pair.a] == _p
+                opponent = players[pair.b]
+            else if players[pair.b] == _p
+                opponent = players[pair.a]
+        return opponent
+
     function start()
         // Round start
+        Log.info("exec round callback")
         OnRoundStart.execute(this)
         Log.info(this.roundName + " start")
         doBeforeSpawn()
+        Log.info(this.roundName + " doBeforeSpawn")
         spawnArmies()
+        Log.info(this.roundName + " spawnArmies")
         doAfterSpawn()
+        Log.info(this.roundName + " doAfterSpawn")
 
     function doBeforeSpawn()
         forUnitsAll() (unit u) ->
@@ -120,6 +133,11 @@ public abstract class Round
     function spawnArmy(SpawnZone spawnZone, LinkedList<unit> buidingList, player _p)
         if roundParticipant.has(_p) == false
             roundParticipant.add(_p)
+
+        PanCameraToTimedForPlayer(_p ,
+            spawnZone.spawnRect.getCenterX(),
+            spawnZone.spawnRect.getCenterY() ,
+            0.0)
 
         playerToArmySpawner.get(_p)
             ..setSpawnZone(spawnZone)

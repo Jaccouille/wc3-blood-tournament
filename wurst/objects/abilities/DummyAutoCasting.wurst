@@ -75,4 +75,5 @@ init
     registerPlayerUnitEvent(EVENT_PLAYER_UNIT_SPELL_FINISH) ->
         let caster = EventData.getSpellAbilityUnit()
         if not dummyToRealCastMapTarget.has(EventData.getSpellAbilityId())
+            and not caster.isType(UNIT_TYPE_PEON)
             caster.issuePointOrder("attack", CENTER)

@@ -110,7 +110,7 @@ import LocalObjectIDs
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 250)
         ..tooltipStartListen()
-        ..presetCooldown(_ -> 5)
+        ..presetCooldown(_ -> 10)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_TAUNT, tgen.generateFullTooltip())

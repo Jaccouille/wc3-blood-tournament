@@ -250,16 +250,18 @@ import NightElfAbilitiesDef
         ..setAttack1Range(300)
 
         ..setArmorData(ArmorType.Divine, 2)
-        ..setHitPointsMaximumBase(20)
+        ..setHitPointsMaximumBase(200)
         ..setHitPointsRegenerationRate(-10)
 
         ..setSpeedBase(270)
+        ..setSummonedUnit()
 
         ..setSizeSmall()
         ..setNameEnhance("X", "Spectre")
         ..setPointValue(25)
 
         ..tooltipStopListen()
+        ..setGhostDeath()
 
         ..setModelFileExt(Units.vengeance)
         ..setIconGameInterfaceExt(Icons.bTNAvengingWatcher)
@@ -300,10 +302,13 @@ import NightElfAbilitiesDef
 @compiletime function createDruidClaw()
     var tooltip = new UnitTooltipGenerator(asList(
         abilTooltipMap.get(ABIL_DRUID_FRENZY),
+        abilTooltipMap.get(ABIL_CLEAVE_10),
         abilTooltipMap.get(ABIL_HARDENED_SKIN_5)
         ).joinBy("\n\n"))
     createSpawnedUnit(UNIT_DRUID_CLAW, UnitIds.druidoftheclaw, BUILDING_DRUID_CLAW)
-        ..setNormalAbilities(commaList(ABIL_DRUID_FRENZY, ABIL_HARDENED_SKIN_5))
+        ..setAnimationCastBackswing(0)
+        ..setAnimationCastPoint(0)
+        ..setNormalAbilities(commaList(ABIL_DRUID_FRENZY, ABIL_HARDENED_SKIN_5, ABIL_CLEAVE_10))
         ..setDefaultActiveAbility(commaList(ABIL_DRUID_FRENZY))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -311,7 +316,7 @@ import NightElfAbilitiesDef
         ..setAttack1Data(AttackType.Normal, 39, 3, 13, 1.5)
 
         ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(400)
+        ..setHitPointsMaximumBase(550)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -343,16 +348,16 @@ import NightElfAbilitiesDef
         ..setAttack1Data(AttackType.Normal, 67, 5, 13, 1.5)
 
         ..setArmorData(ArmorType.Large, 6)
-        ..setHitPointsMaximumBase(800)
+        ..setHitPointsMaximumBase(900)
 
         ..setSpeedBase(270)
-
         ..setItemCostReplacement(0, 500, 1, 5, 5, BUILDING_DRUID_CLAW)
+        ..setSizeLarge()
+
         ..tooltipStopListen()
         ..setNameEnhance("Z", "Bear Form")
 
         ..tooltipStopListen(true, itm)
-        ..setSizeLarge()
         ..setMana(0)
         ..setScalingValue(1.15)
 
@@ -379,17 +384,16 @@ import NightElfAbilitiesDef
         ..setAttack1Data(AttackType.Siege, 75, 3, 17, 1.2)
 
         ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(900)
+        ..setHitPointsMaximumBase(700)
         ..setMana(200)
 
         ..setSpeedBase(270)
 
         ..setItemCostReplacement(0, 500, 1, 5, 5, BUILDING_DRUID_CLAW)
+        ..setSizeLarge()
         ..setNameEnhance("X", "Owlbear Form")
 
-
         ..tooltipStopListen(true, itm)
-        ..setSizeLarge()
 
         ..setModelFileExt(Units.owlbear)
         ..setIconGameInterfaceExt(Icons.bTNOwlBear)
@@ -411,13 +415,14 @@ import NightElfAbilitiesDef
         ..setAttack1Data(AttackType.Siege, 113, 10, 7, 2)
 
         ..setArmorData(ArmorType.Fortified, 6)
-        ..setHitPointsMaximumBase(2600)
+        ..setHitPointsMaximumBase(1000)
 
         ..setSpeedBase(240)
 
-        ..setSizeSmall()
         ..setAutoPointValue()
         ..setAutoBuildingCost()
+        ..setSizeLarge()
+        ..setGhostDeath()
 
         ..tooltipStopListen()
 
@@ -481,10 +486,13 @@ import NightElfAbilitiesDef
         ..setSizeSmall()
         ..setAutoPointValue()
         ..setAutoBuildingCost()
+        ..setSummonedUnit()
 
         ..setNameEnhance("R", "Avatar Of Vengeance")
         ..tooltipStopListen(true)
         ..setScalingValue(0.85)
+        ..setBuildingScalingValue(0.8)
+        ..setGhostDeath()
 
         ..setModelFileExt(Units.spiritOfVengeance)
         ..setIconGameInterfaceExt(Icons.bTNSpiritOfVengeance)
@@ -649,7 +657,7 @@ import NightElfAbilitiesDef
             BUILDING_DRYAD,
             BUILDING_DRUID_TALON,
             BUILDING_DRUID_CLAW,
-            // BUILDING_MOUNTAIN_GIANT,
+            BUILDING_MOUNTAIN_GIANT,
             BUILDING_AVATAR_OF_VENGEANCE,
             BUILDING_DAEMON_HUNTER,
             BUILDING_BALLISTA

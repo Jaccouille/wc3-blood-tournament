@@ -12,6 +12,7 @@ import BTAbilities
 import BuffObjEditing
 import Assets
 import TooltipsUtils
+import ArmySpawner
 
 public constant TOOLTIP_BLOODLUST = "Bloodlust".color(SPECIAL_COLOR)
 public constant TOOLTIP_EXT_BLOODLUST = ("" +
@@ -135,19 +136,26 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
 
     abilTooltipMap.put(ABIL_BURNING_BLADE_50, tgen.generateFullTooltip())
 
+
+    itm = createBasicItem(ITEM_BURNING_BLADE)
+        ..setItemCost(0, 50, 1, BTBuildingData.getUnitCount(BUILDING_RAIDER), BTBuildingData.getUnitCount(BUILDING_RAIDER))
+        ..setNameEnhance("X", "Add 1 Burning Blade")
+        ..setInterfaceIcon(Icons.bTNArcaniteMelee)
+
     tgen = new BTAbilityTooltipGenerator(
         "Reduces the effectiveness of healing and regeneration on enemy units.")
     new AbilityDefinitionHealReductionBonus(ABIL_BURNING_BLADE_75)
         ..setCheckDependencies(false)
-        ..setArtTarget(Abilities.flameStrikeEmbers)
+        ..setArtTarget("Environment\\SmallBuildingFire\\SmallBuildingFire2.mdl")
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..setHealingMultiplier(1, 0.8)
-        ..addTooltipProperty("Heal Reduction", _ -> 0.8.toPercent())
+        ..setHealingMultiplier(1, 0.75)
+        ..addTooltipProperty("Heal Reduction", _ -> 0.75.toPercent())
         ..presetDurationNormal(_ -> 4)
-        ..setNameEnhance("Z", "Chaos Burning Blade")
+        ..setNameEnhance("Z", "Burning Blade")
         ..tooltipStopListen(true)
 
+    tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_BURNING_BLADE_75, tgen.generateFullTooltip())
 
 
@@ -216,7 +224,7 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
         ..setInterfaceIcon(Icons.bTNOrbOfLightning)
 
     tgen = new BTAbilityTooltipGenerator(
-        "Removes all buffs from a target unit, and slows its movement speed." +
+        "Removes all buffs from a target unit, and slows its movement speed. " +
         "Deals damage to summoned units."
         )
     let abilId = ABIL_ID_GEN.next()
@@ -320,7 +328,8 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
     tgen = new BTAbilityTooltipGenerator(
         "The Ogre tosses a unit with its club, " +
         "deals damage to unit on landing zone and reduces " +
-        "their attack and movement speed."
+        "their attack and movement speed. " +
+        "Cannot toss big unit."
         )
 
     new AbilityDefinitionMountainKingThunderClap(ABIL_OGRE_SWING_SLAM)
@@ -350,7 +359,8 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
         ..tooltipStopListen(true)
         ..setTargetsAllowed(1, commaList(
             TargetsAllowed.enemies,
-            TargetsAllowed.ground
+            TargetsAllowed.ground,
+            TargetsAllowed.nonancient
             ))
 
     abilTooltipMap.put(ABIL_OGRE_SWING, tgen.generateFullTooltip())

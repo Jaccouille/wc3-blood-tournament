@@ -10,6 +10,7 @@ import ClosureForGroups
 import ClosureTimers
 import OrderBlocker
 import Toolkit
+import UnitDeathTrigger
 
 init
     registerToolkitCommand("su") (player triggerPlayer, LinkedList<string> arguments) ->
@@ -21,9 +22,9 @@ init
             let idx = playerToArmySpawner.get(key).buildingIdx
             let nestedIdx = playerToArmySpawner.get(key).squadIdx
             let spawnFinished = playerToArmySpawner.get(key).spawnFinished
-            Log.info("si : " + idx.toString() +
-                     " sni : " + nestedIdx.toString() +
-                     " sf : " + spawnFinished.toString() +
+            Log.info("spawnidx : " + idx.toString() +
+                     " spawninestedIdx : " + nestedIdx.toString() +
+                     " spawnFinished : " + spawnFinished.toString() +
                      " for " + key.getNameColored(true))
 
     registerToolkitCommand("al") (player triggerPlayer, LinkedList<string> arguments) ->
@@ -40,12 +41,16 @@ init
                          " " + u.getTypeId().toRawCode() +
                          " length: " + u.getName().length().toString()
                          )
+                if u.getName() == null
+                    Log.info("null")
 
     registerToolkitCommand("clean") (player triggerPlayer, LinkedList<string> arguments) ->
         pDatas.forEach() (player key, PlayerData pData) ->
             pData.spawnedUnits.forEach() (unit t) ->
-                if t.getName().length() <= 0
-                    t.kill()
+                if t.getName() == null
+                    pData.spawnedUnits.remove(t)
+                    t.remove()
+                    checkIfPlayerDefeated(pData)
 
     registerToolkitCommand("rr") (player triggerPlayer, LinkedList<string> arguments) ->
         forUnitsAll() (unit u) ->

@@ -288,11 +288,11 @@ import BTAbilities
 
         ..setSpeedBase(330)
         ..setAutoPointValue()
+        ..setSizeLarge()
         ..tooltipStopListen(true, itm)
 
         ..setItemCostUnit(0, 1500, 1)
         ..setNameEnhance("X", "Marhsall")
-        ..setSizeLarge()
         ..setScalingValue(1.15)
 
         ..setIconGameInterfaceExt(Icons.bTNGarithos)
@@ -325,11 +325,11 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 
             ..setAttack1Range(120)
             ..setIconGameInterface(Icons.bTNHeroPaladin)
-            ..setNameEnhance("Q", "Paladingue")
+            ..setNameEnhance("Q", "Paladin")
 
 
 @compiletime function createPaladinSquad()
-    let tooltip = new UnitTooltipGenerator("Paladin Ghost Desc")
+    let tooltip = new UnitTooltipGenerator("Spawn upon paladin death.")
     createSpawnedUnit(UNIT_GHOST_PALADIN, UnitIds.paladin)
         ..registerTooltipGenerator(tooltip)
         ..setNormalAbilities(commaList(""))
@@ -340,6 +340,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setArmorData(ArmorType.Divine, 4)
         ..setHitPointsMaximumBase(600)
         ..setHitPointsRegenerationRate(-15)
+        ..setSummonedUnit()
 
         ..setSpeedBase(300)
         ..setPointValue(0, 900, 3)
@@ -473,7 +474,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setIconGameInterfaceExt(Icons.bTNBanditMage)
         ..setUnitSoundSetExt(Soundsets.heroArchMage)
 
-    tooltip = new UnitTooltipGenerator("Ghost Desc")
+    tooltip = new UnitTooltipGenerator("Spawn upon unit death.")
     createSpawnedUnit(UNIT_GHOST, UnitIds.lesservoidwalker)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -485,12 +486,14 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setArmorData(ArmorType.Divine, 2)
         ..setHitPointsMaximumBase(80)
         ..setHitPointsRegenerationRate(-5)
+        ..setSummonedUnit()
 
         ..setManaMaximum(0)
         ..setSpeedBase(270)
         ..setPointValue(5)
         ..tooltipStopListen(true)
         ..setNameEnhance("W", "Ghost")
+        ..setGhostDeath()
 
     tooltip = new UnitTooltipGenerator("Water Elemental Desc")
     createSpawnedUnit(UNIT_WATER_ELEMENTAL, UnitIds.waterelemental3)

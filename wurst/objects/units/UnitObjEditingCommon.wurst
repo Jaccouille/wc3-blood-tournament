@@ -383,11 +383,23 @@ public function UnitDefinition.setName(string name)
 /**
     Set to lowest collision size possible (15)
 **/
-public function UnitDefinition.setSizeSmall()
+public function BTUnitDefinition.setSizeSmall()
     this.setCollisionSize(15)
 
-public function UnitDefinition.setSizeLarge()
+public function BTUnitDefinition.setSizeLarge()
     this.setCollisionSize(32)
+    this.setGiant()
+
+public function BTUnitDefinition.setGhostDeath()
+    this.setDeathType(2)
+
+public function BTUnitDefinition.setSummonedUnit()
+    this.addTooltipProperty("Type", "Summoned")
+    this.setUnitClassification("summoned")
+
+public function BTUnitDefinition.setGiant()
+    this.addTooltipProperty("Type", "Giant")
+    this.setUnitClassification("ancient")
 
 public function BTUnitDefinition.setSmallSplash()
     this.setAttack1AreaofEffectFullDamage(25)

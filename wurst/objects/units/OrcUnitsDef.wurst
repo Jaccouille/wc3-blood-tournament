@@ -127,7 +127,7 @@ import LinkedList
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 40, 2, 4, 1.4)
+        ..setAttack1Data(AttackType.Pierce, 40, 2, 4, 1.4)
         ..setAttack1Range(350)
 
         ..setArmorData(ArmorType.Medium, 4)
@@ -155,8 +155,8 @@ import LinkedList
 
         ..setAttack1Data(AttackType.Normal, 41, 5, 4, 1.8)
 
-        ..setArmorData(ArmorType.Small, 2)
-        ..setHitPointsMaximumBase(700)
+        ..setArmorData(ArmorType.Large, 2)
+        ..setHitPointsMaximumBase(600)
 
         ..setSpeedBase(350)
 
@@ -202,10 +202,10 @@ import LinkedList
         ..setUnitSoundSetExt(Soundsets.thrall)
 
 @compiletime function createKodo()
-    var tooltip = new UnitTooltipGenerator(asList(
+    let tooltip = new UnitTooltipGenerator(asList(
         abilTooltipMap.get(ABIL_DAMAGE_AURA_25)
         ).joinBy("\n\n"))
-    var itm = createBasicItem(ITEM_KODO)
+    let itm = createBasicItem(ITEM_KODO)
     createSpawnedUnit(UNIT_KODO, UnitIds.kotobeast)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..setNormalAbilities(commaList(ABIL_DAMAGE_AURA_25))
@@ -220,13 +220,13 @@ import LinkedList
         ..setHitPointsMaximumBase(1000)
 
         ..setSpeedBase(270)
-
         ..setItemCost(0, 750, 1, 1, 1)
+        ..setSizeLarge()
+
         ..tooltipStopListen()
         ..setNameEnhance("D", "Kodo Beast")
 
         ..tooltipStopListen(true, itm)
-        ..setSizeLarge()
         ..setMana(0)
 
         ..setIconGameInterfaceExt(Icons.bTNKotoBeast)
@@ -368,6 +368,7 @@ import LinkedList
 
         ..setSpeedBase(350)
         ..setPointValue(30)
+        ..setSummonedUnit()
 
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Spirit Wolf")
@@ -393,12 +394,13 @@ import LinkedList
 
         ..setSpeedBase(350)
         ..setPointValue(60)
+        ..setSummonedUnit()
 
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Dire Spirit Wolf")
 
         ..setIconGameInterfaceExt(Icons.bTNSpiritWolf)
-        ..setScalingValue(1.2)
+        ..setScalingValue(1.3)
 
     tooltip = new UnitTooltipGenerator(asList(
         abilTooltipMap.get(ABIL_CHAIN_LIGHTNING),
@@ -459,15 +461,15 @@ import LinkedList
 
         ..setSpeedBase(240)
 
-        ..setSizeLarge()
         ..setAutoPointValue()
         ..setAutoBuildingCost()
+        ..setSizeLarge()
 
         ..setNameEnhance("A", "Ogre")
         ..tooltipStopListen(true)
 
         ..setAttack1Range(120)
-        ..setScalingValue(1.4)
+        ..setScalingValue(1.6)
 
         ..setModelFileExt(Units.ogre1)
         ..setIconGameInterfaceExt(Icons.bTNOgre)
@@ -495,13 +497,13 @@ import LinkedList
         ..setHitPointsMaximumBase(1700)
 
         ..setSpeedBase(240)
-        ..setSizeSmall()
         ..setItemCostReplacement(0, 200, 1, 3, 3, BUILDING_OGRE)
+        ..setSizeLarge()
 
         ..setNameEnhance("Z", "Armored Ogre")
         ..tooltipStopListen(true, itm)
         ..setAttack1Range(120)
-        ..setScalingValue(1.4)
+        ..setScalingValue(1.6)
 
         ..setModelFileExt(Units.ogreLord1)
         ..setIconGameInterfaceExt(Icons.bTNOgreLord)
