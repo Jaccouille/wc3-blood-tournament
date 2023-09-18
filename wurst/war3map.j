@@ -20,18 +20,10 @@ globals
     rect                    gg_rct_Frontrank_NE        = null
     rect                    gg_rct_Frontrank_ES        = null
     rect                    gg_rct_Frontrank_WN        = null
-    rect                    gg_rct_Reinforcements_SW   = null
-    rect                    gg_rct_Reinforcements_ES   = null
-    rect                    gg_rct_Reinforcements_NE   = null
-    rect                    gg_rct_Reinforcements_WN   = null
     rect                    gg_rct_Frontrank_SE        = null
     rect                    gg_rct_Frontrank_EN        = null
     rect                    gg_rct_Frontrank_NW        = null
     rect                    gg_rct_Frontrank_WS        = null
-    rect                    gg_rct_Reinforcements_SE   = null
-    rect                    gg_rct_Reinforcements_EN   = null
-    rect                    gg_rct_Reinforcements_NW   = null
-    rect                    gg_rct_Reinforcements_WS   = null
     rect                    gg_rct_Red                 = null
     rect                    gg_rct_Blue                = null
     rect                    gg_rct_Teal                = null
@@ -68,7 +60,7 @@ function CreateBuildingsForPlayer0 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', 5440.0, 3008.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', 4224.0, 6272.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -79,7 +71,7 @@ function CreateBuildingsForPlayer1 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', 6848.0, 2240.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', 5760.0, 5248.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -90,7 +82,7 @@ function CreateBuildingsForPlayer2 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', 6848.0, -4160.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', 5248.0, -2560.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -101,7 +93,7 @@ function CreateBuildingsForPlayer3 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', 5440.0, -4928.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', 4224.0, -4096.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -112,7 +104,7 @@ function CreateBuildingsForPlayer4 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', -320.0, -4928.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', -4224.0, -4096.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -123,7 +115,7 @@ function CreateBuildingsForPlayer5 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', -1728.0, -4160.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', -5248.0, -2560.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -134,7 +126,7 @@ function CreateBuildingsForPlayer6 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', -1728.0, 2240.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', -5760.0, 5248.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -145,7 +137,7 @@ function CreateBuildingsForPlayer7 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', -320.0, 3008.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', -4224.0, 6272.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -156,7 +148,7 @@ function CreateNeutralHostile takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h009', 2566.1, -1425.5, 283.057, 'h009' )
+    set u = BlzCreateUnitWithSkin( p, 'h009', -3453.3, 3957.3, -52.391, 'h009' )
 endfunction
 
 //===========================================================================
@@ -191,32 +183,24 @@ endfunction
 function CreateRegions takes nothing returns nothing
     local weathereffect we
 
-    set gg_rct_Frontrank_SW = Rect( 1408.0, -6176.0, 2176.0, -4992.0 )
-    set gg_rct_Frontrank_NE = Rect( 2944.0, 2048.0, 3712.0, 3200.0 )
-    set gg_rct_Frontrank_ES = Rect( 6144.0, -2688.0, 7296.0, -1920.0 )
-    set gg_rct_Frontrank_WN = Rect( -2176.0, -1024.0, -1024.0, -256.0 )
-    set gg_rct_Reinforcements_SW = Rect( 1376.0, -5664.0, 1568.0, -5472.0 )
-    set gg_rct_Reinforcements_ES = Rect( 6688.0, -2720.0, 6880.0, -2528.0 )
-    set gg_rct_Reinforcements_NE = Rect( 3648.0, 2560.0, 3840.0, 2720.0 )
-    set gg_rct_Reinforcements_WN = Rect( -1760.0, -288.0, -1568.0, -96.0 )
-    set gg_rct_Frontrank_SE = Rect( 2944.0, -6176.0, 3712.0, -4992.0 )
-    set gg_rct_Frontrank_EN = Rect( 6144.0, -1024.0, 7296.0, -256.0 )
-    set gg_rct_Frontrank_NW = Rect( 1536.0, 2048.0, 2304.0, 3200.0 )
-    set gg_rct_Frontrank_WS = Rect( -2176.0, -2688.0, -1024.0, -1920.0 )
-    set gg_rct_Reinforcements_SE = Rect( 3552.0, -5664.0, 3744.0, -5472.0 )
-    set gg_rct_Reinforcements_EN = Rect( 6688.0, -288.0, 6880.0, -96.0 )
-    set gg_rct_Reinforcements_NW = Rect( 1376.0, 2560.0, 1568.0, 2752.0 )
-    set gg_rct_Reinforcements_WS = Rect( -1760.0, -2848.0, -1568.0, -2656.0 )
-    set gg_rct_Red = Rect( 4832.0, 2240.0, 6112.0, 2912.0 )
-    set gg_rct_Blue = Rect( 6144.0, 1504.0, 7584.0, 2144.0 )
-    set gg_rct_Teal = Rect( 6112.0, -4896.0, 7584.0, -4000.0 )
-    set gg_rct_Purple = Rect( 4672.0, -5664.0, 6176.0, -5024.0 )
-    set gg_rct_Yellow = Rect( -928.0, -5664.0, 416.0, -5024.0 )
-    set gg_rct_Orange = Rect( -2336.0, -4928.0, -992.0, -4256.0 )
-    set gg_rct_Green = Rect( -2336.0, 1504.0, -992.0, 2400.0 )
-    set gg_rct_Pink = Rect( -1056.0, 2272.0, 416.0, 2912.0 )
-    set gg_rct_Final_Round_West = Rect( 1280.0, -2432.0, 2176.0, -384.0 )
-    set gg_rct_Final_Round_East = Rect( 2944.0, -2432.0, 3968.0, -384.0 )
+    set gg_rct_Frontrank_SW = Rect( -1280.0, -4768.0, -512.0, -3584.0 )
+    set gg_rct_Frontrank_NE = Rect( 512.0, 5632.0, 1280.0, 6784.0 )
+    set gg_rct_Frontrank_ES = Rect( 4608.0, -256.0, 5760.0, 512.0 )
+    set gg_rct_Frontrank_WN = Rect( -5760.0, 1536.0, -4608.0, 2304.0 )
+    set gg_rct_Frontrank_SE = Rect( 512.0, -4768.0, 1280.0, -3584.0 )
+    set gg_rct_Frontrank_EN = Rect( 4608.0, 1504.0, 5760.0, 2272.0 )
+    set gg_rct_Frontrank_NW = Rect( -1280.0, 5632.0, -512.0, 6784.0 )
+    set gg_rct_Frontrank_WS = Rect( -5760.0, -256.0, -4608.0, 512.0 )
+    set gg_rct_Red = Rect( 3680.0, 5568.0, 4768.0, 6176.0 )
+    set gg_rct_Blue = Rect( 5216.0, 4544.0, 6336.0, 5152.0 )
+    set gg_rct_Teal = Rect( 4672.0, -3232.0, 5792.0, -2656.0 )
+    set gg_rct_Purple = Rect( 3680.0, -4768.0, 4800.0, -4192.0 )
+    set gg_rct_Yellow = Rect( -4768.0, -4768.0, -3680.0, -4192.0 )
+    set gg_rct_Orange = Rect( -5792.0, -3232.0, -4704.0, -2656.0 )
+    set gg_rct_Green = Rect( -6304.0, 4576.0, -5216.0, 5152.0 )
+    set gg_rct_Pink = Rect( -4768.0, 5600.0, -3680.0, 6176.0 )
+    set gg_rct_Final_Round_West = Rect( -1536.0, 0.0, -512.0, 2048.0 )
+    set gg_rct_Final_Round_East = Rect( 512.0, 0.0, 1536.0, 2048.0 )
     set gg_rct_backupSpawn = Rect( -2816.0, -7040.0, -2592.0, -6816.0 )
 endfunction
 
@@ -230,17 +214,108 @@ function InitCustomPlayerSlots takes nothing returns nothing
 
     // Player 0
     call SetPlayerStartLocation( Player(0), 0 )
+    call ForcePlayerStartLocation( Player(0), 0 )
     call SetPlayerColor( Player(0), ConvertPlayerColor(0) )
     call SetPlayerRacePreference( Player(0), RACE_PREF_HUMAN )
     call SetPlayerRaceSelectable( Player(0), true )
     call SetPlayerController( Player(0), MAP_CONTROL_USER )
+
+    // Player 1
+    call SetPlayerStartLocation( Player(1), 1 )
+    call ForcePlayerStartLocation( Player(1), 1 )
+    call SetPlayerColor( Player(1), ConvertPlayerColor(1) )
+    call SetPlayerRacePreference( Player(1), RACE_PREF_ORC )
+    call SetPlayerRaceSelectable( Player(1), true )
+    call SetPlayerController( Player(1), MAP_CONTROL_USER )
+
+    // Player 2
+    call SetPlayerStartLocation( Player(2), 2 )
+    call ForcePlayerStartLocation( Player(2), 2 )
+    call SetPlayerColor( Player(2), ConvertPlayerColor(2) )
+    call SetPlayerRacePreference( Player(2), RACE_PREF_UNDEAD )
+    call SetPlayerRaceSelectable( Player(2), true )
+    call SetPlayerController( Player(2), MAP_CONTROL_USER )
+
+    // Player 3
+    call SetPlayerStartLocation( Player(3), 3 )
+    call ForcePlayerStartLocation( Player(3), 3 )
+    call SetPlayerColor( Player(3), ConvertPlayerColor(3) )
+    call SetPlayerRacePreference( Player(3), RACE_PREF_NIGHTELF )
+    call SetPlayerRaceSelectable( Player(3), true )
+    call SetPlayerController( Player(3), MAP_CONTROL_USER )
+
+    // Player 4
+    call SetPlayerStartLocation( Player(4), 4 )
+    call ForcePlayerStartLocation( Player(4), 4 )
+    call SetPlayerColor( Player(4), ConvertPlayerColor(4) )
+    call SetPlayerRacePreference( Player(4), RACE_PREF_HUMAN )
+    call SetPlayerRaceSelectable( Player(4), true )
+    call SetPlayerController( Player(4), MAP_CONTROL_USER )
+
+    // Player 5
+    call SetPlayerStartLocation( Player(5), 5 )
+    call ForcePlayerStartLocation( Player(5), 5 )
+    call SetPlayerColor( Player(5), ConvertPlayerColor(5) )
+    call SetPlayerRacePreference( Player(5), RACE_PREF_ORC )
+    call SetPlayerRaceSelectable( Player(5), true )
+    call SetPlayerController( Player(5), MAP_CONTROL_USER )
+
+    // Player 6
+    call SetPlayerStartLocation( Player(6), 6 )
+    call ForcePlayerStartLocation( Player(6), 6 )
+    call SetPlayerColor( Player(6), ConvertPlayerColor(6) )
+    call SetPlayerRacePreference( Player(6), RACE_PREF_UNDEAD )
+    call SetPlayerRaceSelectable( Player(6), true )
+    call SetPlayerController( Player(6), MAP_CONTROL_USER )
+
+    // Player 7
+    call SetPlayerStartLocation( Player(7), 7 )
+    call ForcePlayerStartLocation( Player(7), 7 )
+    call SetPlayerColor( Player(7), ConvertPlayerColor(7) )
+    call SetPlayerRacePreference( Player(7), RACE_PREF_NIGHTELF )
+    call SetPlayerRaceSelectable( Player(7), true )
+    call SetPlayerController( Player(7), MAP_CONTROL_USER )
 
 endfunction
 
 function InitCustomTeams takes nothing returns nothing
     // Force: TRIGSTR_002
     call SetPlayerTeam( Player(0), 0 )
+    call SetPlayerTeam( Player(1), 0 )
+    call SetPlayerTeam( Player(2), 0 )
+    call SetPlayerTeam( Player(3), 0 )
+    call SetPlayerTeam( Player(4), 0 )
+    call SetPlayerTeam( Player(5), 0 )
+    call SetPlayerTeam( Player(6), 0 )
+    call SetPlayerTeam( Player(7), 0 )
 
+endfunction
+
+function InitAllyPriorities takes nothing returns nothing
+
+    call SetStartLocPrioCount( 0, 1 )
+    call SetStartLocPrio( 0, 0, 1, MAP_LOC_PRIO_HIGH )
+
+    call SetStartLocPrioCount( 1, 1 )
+    call SetStartLocPrio( 1, 0, 0, MAP_LOC_PRIO_HIGH )
+
+    call SetStartLocPrioCount( 2, 1 )
+    call SetStartLocPrio( 2, 0, 3, MAP_LOC_PRIO_HIGH )
+
+    call SetStartLocPrioCount( 3, 1 )
+    call SetStartLocPrio( 3, 0, 2, MAP_LOC_PRIO_HIGH )
+
+    call SetStartLocPrioCount( 4, 1 )
+    call SetStartLocPrio( 4, 0, 5, MAP_LOC_PRIO_HIGH )
+
+    call SetStartLocPrioCount( 5, 1 )
+    call SetStartLocPrio( 5, 0, 4, MAP_LOC_PRIO_HIGH )
+
+    call SetStartLocPrioCount( 6, 1 )
+    call SetStartLocPrio( 6, 0, 7, MAP_LOC_PRIO_HIGH )
+
+    call SetStartLocPrioCount( 7, 1 )
+    call SetStartLocPrio( 7, 0, 6, MAP_LOC_PRIO_HIGH )
 endfunction
 
 //***************************************************************************
@@ -251,7 +326,7 @@ endfunction
 
 //===========================================================================
 function main takes nothing returns nothing
-    call SetCameraBounds( -2816.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -7168.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 7936.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 3584.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -2816.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 3584.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 7936.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -7168.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM) )
+    call SetCameraBounds( -6912.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -7168.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 7936.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 7680.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -6912.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 7680.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 7936.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -7168.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM) )
     call SetDayNightModels( "Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl", "Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl" )
     call NewSoundEnvironment( "Default" )
     call SetAmbientDaySound( "BlackCitadelDay" )
@@ -273,15 +348,30 @@ endfunction
 function config takes nothing returns nothing
     call SetMapName( "TRIGSTR_008" )
     call SetMapDescription( "" )
-    call SetPlayers( 1 )
-    call SetTeams( 1 )
-    call SetGamePlacement( MAP_PLACEMENT_USE_MAP_SETTINGS )
+    call SetPlayers( 8 )
+    call SetTeams( 8 )
+    call SetGamePlacement( MAP_PLACEMENT_TEAMS_TOGETHER )
 
-    call DefineStartLocation( 0, 5440.0, 3200.0 )
+    call DefineStartLocation( 0, 4224.0, 6208.0 )
+    call DefineStartLocation( 1, 5760.0, 5248.0 )
+    call DefineStartLocation( 2, 5248.0, -2560.0 )
+    call DefineStartLocation( 3, 4224.0, -4096.0 )
+    call DefineStartLocation( 4, -4224.0, -4096.0 )
+    call DefineStartLocation( 5, -5248.0, -2560.0 )
+    call DefineStartLocation( 6, -5760.0, 5248.0 )
+    call DefineStartLocation( 7, -4224.0, 6272.0 )
 
     // Player setup
     call InitCustomPlayerSlots(  )
     call SetPlayerSlotAvailable( Player(0), MAP_CONTROL_USER )
+    call SetPlayerSlotAvailable( Player(1), MAP_CONTROL_USER )
+    call SetPlayerSlotAvailable( Player(2), MAP_CONTROL_USER )
+    call SetPlayerSlotAvailable( Player(3), MAP_CONTROL_USER )
+    call SetPlayerSlotAvailable( Player(4), MAP_CONTROL_USER )
+    call SetPlayerSlotAvailable( Player(5), MAP_CONTROL_USER )
+    call SetPlayerSlotAvailable( Player(6), MAP_CONTROL_USER )
+    call SetPlayerSlotAvailable( Player(7), MAP_CONTROL_USER )
     call InitGenericPlayerSlots(  )
+    call InitAllyPriorities(  )
 endfunction
 
