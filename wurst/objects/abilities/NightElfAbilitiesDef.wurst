@@ -124,6 +124,7 @@ import LocalObjectIDs
         "each wave deals damage to units in an area.")
     new AbilityDefinitionArchMageBlizzard(ABIL_STARFALL)
         ..setHeroAbility(false)
+        ..setBuffs(1, "")
         ..setAnimationNames("spell")
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)

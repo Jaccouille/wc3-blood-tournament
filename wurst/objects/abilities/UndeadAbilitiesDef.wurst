@@ -216,7 +216,7 @@ import TooltipsUtils
         ..presetDamageBonusDice(_ -> 0)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..presetArmorPenalty(_ -> 8)
+        ..presetArmorPenalty(_ -> 10)
         ..presetDurationNormal(_ -> 5)
         ..setNameEnhance("Z", "Orb of Corruption")
         ..tooltipStopListen(true)

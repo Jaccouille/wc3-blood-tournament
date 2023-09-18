@@ -134,15 +134,22 @@ public abstract class Round
         if roundParticipant.has(_p) == false
             roundParticipant.add(_p)
 
-        PanCameraToTimedForPlayer(_p ,
-            spawnZone.spawnRect.getCenterX(),
-            spawnZone.spawnRect.getCenterY() ,
-            0.0)
-
         playerToArmySpawner.get(_p)
             ..setSpawnZone(spawnZone)
             ..setBuildingList(buidingList)
             ..spawnArmy()
+
+    function computeCameraPos(SpawnZone spawnZone1, SpawnZone spawnZone2) returns vec2
+        let center1 =  spawnZone1.spawnRect.getCenter()
+        let center2 =  spawnZone2.spawnRect.getCenter()
+        let direction =  center1.angleTo(center2)
+        let dist = center1.distanceTo(center2) / 2
+        return center1.polarOffset(direction, dist)
+
+    function setupCamera(SpawnZone spawnZone1, SpawnZone spawnZone2, player p1, player p2)
+        p1.panCameraToTimed(computeCameraPos(spawnZone1, spawnZone2), 0)
+        p2.panCameraToTimed(computeCameraPos(spawnZone1, spawnZone2), 0)
+
 
 public class NormalRound extends Round
     static int counter = 0
@@ -160,6 +167,7 @@ public class NormalRound extends Round
             scoreBoardEntries.get("BloodPoints").setEntry(p1, "0", "")
             scoreBoardEntries.get("BloodPoints").setEntry(p2, "0", "")
 
+            setupCamera(spawnZones.get(zoneIdx), spawnZones.get(zoneIdx + 1), p1, p2)
             spawnArmy(spawnZones.get(zoneIdx), pDatas.get(p1).buildingList, p1)
             spawnArmy(spawnZones.get(zoneIdx + 1), pDatas.get(p2).buildingList, p2)
             zoneIdx += 2

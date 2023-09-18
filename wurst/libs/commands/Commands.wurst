@@ -1,0 +1,10 @@
+package Commands
+
+
+// Local imports:
+import ChatCommands
+
+init
+    registerCommandAll("clear") (triggerPlayer, args) ->
+        if localPlayer == triggerPlayer
+            ClearTextMessages()

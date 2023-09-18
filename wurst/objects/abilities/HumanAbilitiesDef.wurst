@@ -221,7 +221,8 @@ import ArmySpawner
 
     new AbilityDefinitionArchMageBlizzard(ABIL_BLIZZARD)
         ..registerTooltipGenerator(tgen)
-        ..setAnimationNames("Stand,Victory")
+        ..setBuffs(1, "")
+        ..setAnimationNames("victory")
         ..presetNumberofShards(_ -> 8)
         ..presetAreaofEffect(_ -> 300)
         ..presetCooldown(_ -> 0)

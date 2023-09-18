@@ -444,12 +444,11 @@ import LinkedList
 
 @compiletime function createOgre()
     var tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_OGRE_SWING),
-        abilTooltipMap.get(ABIL_CLEAVE_30)
+        abilTooltipMap.get(ABIL_OGRE_SWING)
         ).joinBy("\n\n")
     )
     createSpawnedUnit(UNIT_OGRE, UnitIds.ogre1, BUILDING_OGRE)
-        ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING, ABIL_CLEAVE_30))
+        ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
         ..setNormalAbilities(commaList(ABIL_OGRE_SWING))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -477,16 +476,15 @@ import LinkedList
 
     tooltip = new UnitTooltipGenerator(asList(
         abilTooltipMap.get(ABIL_OGRE_SWING),
-        abilTooltipMap.get(ABIL_CLEAVE_30),
         abilTooltipMap.get(ABIL_HARDENED_SKIN_10)
         ).joinBy("\n\n")
     )
     let itm = createBasicItem(ITEM_OGRE_ARMORED)
     createSpawnedUnit(UNIT_OGRE_ARMORED, UnitIds.ogre1, BUILDING_OGRE_ARMORED)
         ..setDefaultActiveAbility(commaList(
-            ABIL_OGRE_SWING, ABIL_CLEAVE_30, ABIL_HARDENED_SKIN_10
+            ABIL_OGRE_SWING
             ))
-        ..setNormalAbilities(commaList(ABIL_OGRE_SWING))
+        ..setNormalAbilities(commaList(ABIL_OGRE_SWING, ABIL_HARDENED_SKIN_10))
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()

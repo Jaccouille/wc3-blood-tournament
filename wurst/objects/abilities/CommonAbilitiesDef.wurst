@@ -134,10 +134,10 @@ function createMeleeAura(int abilId, real value) returns AbilityDefinitionAuraCo
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
     return abilDef
 
-function createRangedAura(int abilId, real value) returns AbilityDefinitionAuraCommandCreep
+function createRangedAura(int abilId, real value) returns AbilityDefinitionAuraTrueshotCreep
     let tgen = new BTAbilityTooltipGenerator(
         "Gives extra damage to the attacks of nearby ranged friendly units.")
-    let abilDef = new AbilityDefinitionAuraCommandCreep(abilId)
+    let abilDef = new AbilityDefinitionAuraTrueshotCreep(abilId)
         ..setLevels(1)
         ..setHeroAbility(false)
         ..setArtTarget(Abilities.trueshotAura)
@@ -146,10 +146,11 @@ function createRangedAura(int abilId, real value) returns AbilityDefinitionAuraC
         ..presetRangedBonus(_ -> true)
         ..presetFlatBonus(_ -> false)
         ..tooltipStartListen()
-        ..presetAttackDamageIncrease(_ -> value)
+        ..presetDamageBonus(_ -> value)
         ..presetAreaofEffect(_ -> 900)
         ..setName("Ranged Aura " + value.toString(0))
         ..tooltipStopListen()
+
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
     return abilDef
 
