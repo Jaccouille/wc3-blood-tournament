@@ -1,6 +1,24 @@
 ---
 projectName: .
 dependencies:
-- https://github.com/wurstscript/wurstStdlib2
-- https://github.com/theQuazz/wurst-lodash
-buildMapData: {}
+  - https://github.com/wurstscript/wurstStdlib2
+  - https://github.com/theQuazz/wurst-lodash
+  - https://github.com/Cokemonkey11/wurst-debugging-tools
+buildMapData:
+  name: Blood Tournament 2024
+  fileName: blood-tourny-2024
+  author: Jaccouille
+  scenarioData:
+    description: Just another blood tournament map
+    suggestedPlayers: "8"
+    loadingScreen:
+      background: Generic
+      title: Blood tournament 2024
+      subTitle: ""
+      text: ""
+  players:
+    - id: 0
+      name: DefaultPlayer1
+      race: HUMAN
+      controller: USER
+      fixedStartLoc: false
