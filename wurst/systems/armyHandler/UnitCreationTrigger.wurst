@@ -10,6 +10,7 @@ import GameConstants
 import GameStates
 import ArmySpawner
 import ItemStockHandler
+import PlayerExtension
 
 
 init
@@ -17,8 +18,12 @@ init
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SUMMON)
     ..addCondition(Condition(() -> GetSummonedUnit().getPointValue() > 0))
     ..addAction() ->
-        pDatas.get(GetSummonedUnit().getOwner()).spawnedUnits.push(GetSummonedUnit())
-        GetSummonedUnit().issuePointOrder("attack", CENTER)
+        let summonedUnit = GetSummonedUnit()
+        if summonedUnit == null
+            Log.info("Unknown unit spawned for " + EventData.getTriggerPlayer().getName())
+        else
+            pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).spawnedUnits.push(summonedUnit)
+            summonedUnit.issuePointOrder("attack", CENTER)
 
     GameStates.gameplay.onEnter() state ->
 

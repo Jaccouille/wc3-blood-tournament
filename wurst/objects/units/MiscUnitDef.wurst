@@ -16,7 +16,7 @@ import UnitObjEditingCommon
         ..setGraphicDelay(1, 0.01)
         ..setArtSpecial("")
         ..setArtTarget(Abilities.demonBoltImpact)
-        ..setMissileSpeed(9999)
+        ..setMissileSpeed(20000)
         ..setGraphicDelay(1, 0)
         ..setMissileArt("")
 
@@ -40,14 +40,14 @@ import UnitObjEditingCommon
         ..setAttack1AnimationBackswingPoint(0)
         ..setAttack1AnimationDamagePoint(0)
         ..setAttack1DamageFactorMedium(1)
-        ..setAttack1AreaofEffectFullDamage(100)
+        ..setAttack1AreaofEffectFullDamage(200)
         ..setAttack1AttackType(AttackType.Chaos)
         ..setAttack1CooldownTime(0.1)
         ..setAttack1DamageBase(5000)
         ..setAttack1DamageSidesperDie(1)
         ..setAttack1MaximumNumberofTargets(1)
         ..setAttack1ProjectileArt("")
-        ..setAttack1ProjectileSpeed(10000)
+        ..setAttack1ProjectileSpeed(20000)
         ..setAttack1Range(20000)
         ..setAttack1TargetsAllowed(commaList(
             TargetsAllowed.air,

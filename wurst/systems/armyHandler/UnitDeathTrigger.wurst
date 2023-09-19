@@ -23,7 +23,10 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
             let u = createUnit(dyingUnit.getOwner(), UNIT_GHOST_PALADIN,
                 dyingUnit.getPos(), dyingUnit.getFacingAngle())
             ..issuePointOrder("attack", CENTER)
-            pData.spawnedUnits.add(u)
+            if u == null
+                Log.info("Unknown unit spawned for" + dyingUnit.getOwner().getName())
+            else
+                pData.spawnedUnits.push(u)
 
     else if dyingUnit.getTypeId() == UNIT_GHOST_PALADIN
         flashEffect(Abilities.holyBoltSpecialArt, dyingUnit.getPos())
@@ -51,6 +54,10 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
     else if killer.getTypeId() == UNIT_TRAPPER
         and killer.getAbilityCooldownRemaining(ABIL_BERSERK) <= 0
         killer.issueImmediateOrderById(OrderIds.berserk)
+
+    else if dyingUnit.getTypeId() == UNIT_MOUNTAIN_GIANT
+        forUnitsInRange(dyingUnit.getPos(), 600) (unit u) ->
+            u.issuePointOrder("attack", CENTER)
 
 function getBounty(unit dyingUnit) returns int
     return (dyingUnit.getPointValue() * gameConfig.getBountyMultiplier()).toInt()
@@ -107,7 +114,7 @@ public function initUnitDeathTrigger()
             pData.buildingList.remove(dyingUnit)
             if ItemStockHandler.hasUnit(dyingUnit)
                 destroy ItemStockHandler.unitToItemStockMap.get(dyingUnit)
-        else
+        else if dyingUnit.getPointValue() > 0
 
             // Add blood points bounty
             if killerOwner != ALTAR_PLAYER
@@ -121,6 +128,8 @@ public function initUnitDeathTrigger()
             if pData.spawnedUnits.has(dyingUnit)
                 pData.spawnedUnits.remove(dyingUnit)
                 checkIfPlayerDefeated(pData)
+            else
+                Log.info("Cannot remove " + dyingUnit.getName())
 
             // Custom Action affecting killer unit
             customAction(killer, dyingUnit, pData)

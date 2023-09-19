@@ -44,8 +44,8 @@ public class PlayerData
         dummyPlayer.setName(_p.getName() + " " + dummyPlayers.size().toString())
 
     function getDummyPlayer(int idx) returns player
-        return this._p
-        // return dummyPlayers.get(idx)
+        // return this._p
+        return dummyPlayers.get(idx)
 
     function addBounty(int value)
         roundBountySum += value

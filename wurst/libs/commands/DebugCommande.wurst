@@ -52,7 +52,7 @@ init
                     t.remove()
                     checkIfPlayerDefeated(pData)
 
-    registerToolkitCommand("rr") (player triggerPlayer, LinkedList<string> arguments) ->
+    registerToolkitCommand("attack") (player triggerPlayer, LinkedList<string> arguments) ->
         forUnitsAll() (unit u) ->
             if u.getMoveSpeed() > 1 and not u.isType(UNIT_TYPE_PEON)
                 u.unpause()
