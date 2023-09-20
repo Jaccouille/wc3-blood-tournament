@@ -11,6 +11,7 @@ import ClosureTimers
 import OrderBlocker
 import Toolkit
 import UnitDeathTrigger
+import ClosuresForItems
 
 init
     registerToolkitCommand("su") (player triggerPlayer, LinkedList<string> arguments) ->
@@ -60,3 +61,9 @@ init
         nullTimer() ->
             preventOrder = true
             orderBlocker.enable()
+
+    registerToolkitCommand("ci") (player triggerPlayer, LinkedList<string> arguments) ->
+        int count = 0
+        forItemsInMap() (item i) ->
+            count += 1
+        Log.info("Item count: " + count.toString())

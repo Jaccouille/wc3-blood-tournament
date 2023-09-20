@@ -26,7 +26,7 @@ function createBasicItem(int newId, int oldId) returns ItemDefinition
         ..setDroppedWhenCarrierDies(false)
         ..setHotkey("")
         ..setLevel(0)
-        ..setHitPoints(0)
+        ..setHitPoints(1)
         ..setClassification("Charged")
         ..setMaxStack(1)
         ..setLevel(1)
@@ -34,6 +34,7 @@ function createBasicItem(int newId, int oldId) returns ItemDefinition
         ..setStockReplenishInterval(99999)
         ..setCanBeDropped(false)
         ..setCanBeSoldToMerchants(false)
+        ..setModelUsed("")
 
 public function ItemDefinition.setItemCost(int gold, int lumber, int charges, int maxStack, int maxStock)
     this.setGoldCost(gold)
