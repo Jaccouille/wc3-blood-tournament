@@ -2,6 +2,8 @@ package MiscAbilitiesDef
 
 // Standard libs imports:
 import ChannelAbilityPreset
+import ClosureEvents
+import Assets
 
 // Local imports:
 import AbilityObjEditingCommons
@@ -36,3 +38,57 @@ import TooltipsUtils
         ..setIconTurnOff(Icons.bTNPatrol)
         ..setRequirements(UPGD_RACE_PICK.toRawCode())
         ..setCheckDependencies(true)
+
+
+@compiletime function createShopSharingAbility()
+    new AbilityDefinitionShopSharing(ABIL_SHOP_SHARING)
+        ..setShowUnitIndicator(1, false)
+        ..setShowSelectUnitButton(1, false)
+        ..setButtonPositionNormalX(0)
+        ..setButtonPositionNormalY(-11)
+        ..setCastRange(1, 9000)
+        ..setActivationRadius(1, 9000)
+
+    new AbilityDefinition(ABIL_SHOP_PURCHASE, AbilityIds.shopPurchaseItem)
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.self))
+
+@compiletime function createSellBuilderAbility()
+    new AbilityDefinitionAlchemistTransmute(ABIL_SELL_BUILDING)
+        ..setManaCost(1, 0)
+        ..setCooldown(1, 0)
+        ..setGoldCostFactor(1, 1)
+        ..setLumberCostFactor(1, 1)
+        ..setHeroAbility(false)
+        ..setMaxCreepLevel(1, 1)
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.player_t,
+            TargetsAllowed.structure,
+            TargetsAllowed.invulnerable,
+            TargetsAllowed.nonancient
+        ))
+        ..setName("Sell unit")
+        ..presetTooltipNormal(lvl -> makeToolTipNorm("V", "Sell unit"))
+        ..presetTooltipNormalExtended(lvl -> "Sell the unit and get 100% of its cost back")
+
+
+@compiletime function createMoveBuildingAbility()
+    new AbilityDefinitionBuildTinyScoutTower(ABIL_MOVE_BUILDING)
+        ..setManaCost(1, 0)
+        ..setCooldown(1, 0)
+        ..setCastingTime(1, 0)
+        ..setItemAbility(false)
+        ..setCastRange(1, 9999)
+        ..setUnitCreatedperplayerrace(1, BUILDING_FOOTMAN.toRawCode())
+        ..setDurationNormal(1, 1000)
+        ..setHotkeyEnhance("V")
+        ..setIconNormal(Icons.bTNUproot)
+        ..setName("Move building")
+        ..presetTooltipNormal(lvl -> makeToolTipNorm("V", "Move building"))
+        ..presetTooltipNormalExtended(lvl -> "Move this building to the target location")
+
+
+init
+    EventListener.onPointCast(ABIL_MOVE_BUILDING) (unit caster, vec2 target) ->
+        flashEffect(Abilities.polyMorphTarget, caster.getPos())
+        caster.setPos(target)
+        flashEffect(Abilities.polyMorphTarget, caster.getPos())

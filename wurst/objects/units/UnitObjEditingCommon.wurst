@@ -53,7 +53,13 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
         ..setPointValue(0)
         ..setLumberCost(0)
         // ..setNormalAbilities(commaList(AbilityIds.invulnerable, AbilityIds.inventory, ABIL_SHOP_PURCHASE, ABIL_SHOP_SHARING, AbilityIds.sellItems))
-        ..setNormalAbilities(commaList(AbilityIds.invulnerable, AbilityIds.inventory, ABIL_SHOP_SHARING, AbilityIds.sellItems))
+        ..setNormalAbilities(commaList(
+            AbilityIds.invulnerable,
+            AbilityIds.inventory,
+            ABIL_SHOP_SHARING,
+            AbilityIds.sellItems,
+            ABIL_MOVE_BUILDING
+        ))
         ..setBuildTime(1)
         ..setFoodProduced(0)
         ..setPathingMap("PathTextures\\2x2Default.tga")
@@ -62,33 +68,6 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
         ..setRequirements("")
         ..setSelectionScale(1.0)
         ..setShadowTextureBuilding("ShadowCrates")
-
-@compiletime function createShopSharingAbility()
-    new AbilityDefinitionShopSharing(ABIL_SHOP_SHARING)
-        ..setShowUnitIndicator(1, false)
-        ..setShowSelectUnitButton(1, true)
-        ..setCastRange(1, 9000)
-        ..setActivationRadius(1, 9000)
-
-    new AbilityDefinition(ABIL_SHOP_PURCHASE, AbilityIds.shopPurchaseItem)
-        ..setTargetsAllowed(1, commaList(TargetsAllowed.self))
-
-@compiletime function createSellBuilderAbility()
-    new AbilityDefinitionAlchemistTransmute(ABIL_SELL_BUILDING)
-        ..setManaCost(1, 0)
-        ..setCooldown(1, 0)
-        ..setGoldCostFactor(1, 1)
-        ..setLumberCostFactor(1, 1)
-        ..setHeroAbility(false)
-        ..setMaxCreepLevel(1, 1)
-        ..setTargetsAllowed(1, commaList(
-            TargetsAllowed.player_t,
-            TargetsAllowed.structure,
-            TargetsAllowed.invulnerable,
-            TargetsAllowed.nonancient
-        ))
-        ..setTooltipNormal(1, "Sell unit")
-        ..setTooltipNormalExtended(1, "Sell the unit and get 100% of its cost back")
 
 
 public function createBuilder(int newId, int origId) returns UnitDefinition

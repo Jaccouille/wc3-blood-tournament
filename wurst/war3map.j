@@ -148,7 +148,7 @@ function CreateNeutralHostile takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h009', -3453.3, 3957.3, -52.391, 'h009' )
+    set u = BlzCreateUnitWithSkin( p, 'h009', -3453.3, 3957.3, 307.609, 'h009' )
 endfunction
 
 //===========================================================================
@@ -326,7 +326,7 @@ endfunction
 
 //===========================================================================
 function main takes nothing returns nothing
-    call SetCameraBounds( -6912.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -7168.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 7936.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 7680.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -6912.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 7680.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 7936.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -7168.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM) )
+    call SetCameraBounds( -7424.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -6656.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 7424.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 8192.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -7424.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 8192.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 7424.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -6656.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM) )
     call SetDayNightModels( "Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl", "Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl" )
     call NewSoundEnvironment( "Default" )
     call SetAmbientDaySound( "BlackCitadelDay" )
