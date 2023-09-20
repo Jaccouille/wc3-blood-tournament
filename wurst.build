@@ -18,7 +18,42 @@ buildMapData:
       text: ""
   players:
     - id: 0
-      name: DefaultPlayer1
+      name: Player 1
       race: HUMAN
       controller: USER
-      fixedStartLoc: false
+      fixedStartLoc: true
+    - id: 1
+      name: Player 2
+      race: HUMAN
+      controller: USER
+      fixedStartLoc: true
+    - id: 2
+      name: Player 3
+      race: HUMAN
+      controller: USER
+      fixedStartLoc: true
+    - id: 3
+      name: Player 4
+      race: HUMAN
+      controller: USER
+      fixedStartLoc: true
+    - id: 4
+      name: Player 5
+      race: HUMAN
+      controller: USER
+      fixedStartLoc: true
+    - id: 5
+      name: Player 6
+      race: HUMAN
+      controller: USER
+      fixedStartLoc: true
+    - id: 6
+      name: Player 7
+      race: HUMAN
+      controller: USER
+      fixedStartLoc: true
+    - id: 7
+      name: Player 8
+      race: HUMAN
+      controller: USER
+      fixedStartLoc: true
