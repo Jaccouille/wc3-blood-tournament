@@ -1,3 +1,9 @@
+"""
+Author: Jaccouille
+Description: This script is used to generate a LocalAssets.wurst file based on
+    the content of /imports directory.
+"""
+
 import os
 import re
 from pprint import pprint

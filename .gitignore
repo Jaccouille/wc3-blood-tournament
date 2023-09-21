@@ -2,3 +2,5 @@
 wurst.dependencies
 /.vscode
 /ogSrc
+*/venv
+/temp

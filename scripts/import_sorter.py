@@ -1,3 +1,14 @@
+"""
+Author: Jaccouille
+Description: This script is used to alphabetically sort Wurst file import.
+    // Standard libs imports:
+        standardLibPackage
+    // Third party imports:
+        a package from a dependency for example
+    // Local imports:
+        your wurst project package
+"""
+
 import os
 from pathlib import Path
 from pprint import pprint
@@ -18,18 +29,20 @@ third_party_list = []
 
 root_path = "./"
 
+
 def add_import_line(import_files, import_lines, header):
     pkg_list = [import_file.split(".")[0] for import_file in import_files]
-    import_match = [f for f in import_lines if f.split(' ')[-1] in pkg_list]
+    import_match = [f for f in import_lines if f.split(" ")[-1] in pkg_list]
     # [
     #     imp_filename
     #     for pkg in pkg_list
     #     for imp_filename in import_lines
     #     if pkg in imp_filename
     # ]
-    if (len(import_match) == 0):
+    if len(import_match) == 0:
         return ""
     return header + "\n".join(sorted(import_match)) + "\n"
+
 
 def get_wurst_files(directory):
     file_list = []
@@ -38,6 +51,7 @@ def get_wurst_files(directory):
             if file.endswith(".wurst"):
                 file_list.append(os.path.join(root, file))
     return file_list
+
 
 def register_project_package():
     # Iterate over every wurst files in the dependencies directory
@@ -59,9 +73,9 @@ def register_project_package():
             else:
                 local_list.append(package_name)
 
+
 def main():
-    """A simple script to re-order package import of wurst files.
-    """
+    """A simple script to re-order package import of wurst files."""
     start_time = time.time()
 
     # Get list of wurst files in current project
