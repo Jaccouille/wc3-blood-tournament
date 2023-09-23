@@ -13,11 +13,6 @@ import GameMode
 import GameStates
 import Toolkit
 
-// Standard library imports:
-
-// Third-party imports:
-
-
 
 init
     new GameMode("test-mode", "tm", "Testing", "Enables test commands") (mode, args) ->
@@ -72,7 +67,7 @@ init
             gameConfig.setStartingLumber(startingLumber)
 
     new GameMode("interlude-time", "it", "Time between each round (seconds) default : " +
-        gameConfig.roundInterludeTime.toString(0) + ", max : 180, min : 10") (mode, args) ->
+        gameConfig.getRoundInterludeTime().toString(0) + ", max : 180, min : 10") (mode, args) ->
         if (args.size() > 1)
             let interludeTime = min(max(args.get(1).toInt(), 10), 180)
             mode.message("Interlude time set to " + interludeTime.toString().color(GOLD_COLOR))
@@ -86,24 +81,31 @@ init
             gameConfig.setSpawnCap(spawnCap)
 
     new GameMode("bounty-multiplier", "bm", "Set blood points bounty multiplier, default : " +
-        gameConfig.getBountyMultiplier().toString(1) + ", max : 10.0") (mode, args) ->
+        gameConfig.getBountyMultiplier().toString(1) + ", max : 10.0, min : 0") (mode, args) ->
         if (args.size() > 1)
             let bountyMultiplier = min(max(args.get(1).toReal(), 0.0), 10.0)
-            mode.message("Bounty multiplier set to " + bountyMultiplier.toString(2).color(GOLD_COLOR))
+            mode.message("Bounty multiplier set to x" + bountyMultiplier.toString(2).color(GOLD_COLOR))
             gameConfig.setBountyMultiplier(bountyMultiplier)
+
+    new GameMode("army-points-multiplier", "apm", "Set army points multiplier, default : " +
+        gameConfig.getArmyPointsMultiplier().toString(1) + ", max : 10.0, min : 0") (mode, args) ->
+        if (args.size() > 1)
+            let armyPointMultiplier = min(max(args.get(1).toReal(), 0.0), 10.0)
+            mode.message("Army points multiplier set to x" + armyPointMultiplier.toString(2).color(GOLD_COLOR))
+            gameConfig.setArmyPointsMultiplier(armyPointMultiplier)
 
     new GameMode("damage-multiplier", "dm", "Set unit damage multiplier, default : " +
         gameConfig.getDamageMultiplier().toString(1) + ", max : 2.0, min : 0.5") (mode, args) ->
         if (args.size() > 1)
             let damageMultiplier = min(max(args.get(1).toReal(), 0.5), 2.0)
-            mode.message("Damage multiplier set to " + damageMultiplier.toString(2).color(GOLD_COLOR))
+            mode.message("Damage multiplier set to x" + damageMultiplier.toString(2).color(GOLD_COLOR))
             gameConfig.setDamageMultiplier(damageMultiplier)
 
     new GameMode("health-multiplier", "hm", "Set blood points health multiplier, default : " +
         gameConfig.getHealthMultiplier().toString(1) + ", max : 2.0, min : 0.5") (mode, args) ->
         if (args.size() > 1)
             let healthMultiplier = min(max(args.get(1).toReal(), 0.5), 2.0)
-            mode.message("Health multiplier set to " + healthMultiplier.toString(2).color(GOLD_COLOR))
+            mode.message("Health multiplier set to x" + healthMultiplier.toString(2).color(GOLD_COLOR))
             gameConfig.setHealthMultiplier(healthMultiplier)
 
     new GameMode("multiple-builder", "mb", "Disable builder limit") (mode, args) ->

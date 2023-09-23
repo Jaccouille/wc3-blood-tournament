@@ -15,6 +15,7 @@ import GameConstants
 import PlayerExtension
 import Players
 import public PlayerData
+import GameConfig
 
 let KILL_COLUMN_WIDTH = 0.055
 let STAT_LABEL_WIDTH = 0.1
@@ -199,8 +200,9 @@ public function initScoreBoard()
         if owner != ALTAR_PLAYER
             // Is a building
             if BTBuildingData.unitIdToDataMap.has(dyingUnit.getTypeId())
+                let buildingPoint = BTBuildingData.getBuildingArmyPoints(dyingUnit.getTypeId())
                 scoreBoardEntries.get("ArmyPoints")
-                    .addValue(pData._p, -BTBuildingData.unitIdToDataMap.get(dyingUnit.getTypeId()).buildingArmyPoints)
+                    .addValue(pData._p, -(buildingPoint * gameConfig.getArmyPointsMultiplier()).toInt())
             else
                 scoreBoardEntries.get("BloodPoints")
                     .addValue(owner.getTruePlayerFromDummy(), dyingUnit.getPointValue())
@@ -210,5 +212,6 @@ public function initScoreBoard()
         let pData = pDatas.get(u.getOwner())
 
         if BTBuildingData.unitIdToDataMap.has(u.getTypeId())
+            let buildingPoint = BTBuildingData.getBuildingArmyPoints(u.getTypeId())
             scoreBoardEntries.get("ArmyPoints")
-                .addValue(pData._p, BTBuildingData.unitIdToDataMap.get(u.getTypeId()).buildingArmyPoints)
+                .addValue(pData._p, (buildingPoint * gameConfig.getArmyPointsMultiplier()).toInt())

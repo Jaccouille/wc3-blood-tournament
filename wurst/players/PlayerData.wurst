@@ -52,10 +52,10 @@ public class PlayerData
         _p.addLumber(value)
 
     function addArmyPoints(int value)
-        armyPoints += value
+        armyPoints += (value * gameConfig.getArmyPointsMultiplier()).toInt()
 
     function subArmyPoints(int value)
-        armyPoints -= value
+        armyPoints -= (value * gameConfig.getArmyPointsMultiplier()).toInt()
 
     function giveReward()
         let msg = "You acquired " +

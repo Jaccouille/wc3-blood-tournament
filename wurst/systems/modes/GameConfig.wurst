@@ -4,19 +4,20 @@ package GameConfig
 import LinkedList
 
 class GameConfig
-    var testMode = false
-    var botAI = false
-    var startingGold = 600
-    var startingLumber = 0
-    let roundGoldIncome = asList(600)
-    var roundCount = 7
-    var roundInterludeTime = 60.
-    var spawnCap = 80
-    var bountyMultiplier = 1.
-    var damageMultiplier = 1.
-    var healthMultiplier = 1.
-    var multipleBuilder = false
-    var allRandom = false
+    private var testMode = false
+    private var botAI = false
+    private var startingGold = 600
+    private var startingLumber = 0
+    private let roundGoldIncome = asList(600)
+    private var roundCount = 7
+    private var roundInterludeTime = 60.
+    private var spawnCap = 80
+    private var bountyMultiplier = 1.
+    private var armyPointsMultiplier = 1.
+    private var damageMultiplier = 1.
+    private var healthMultiplier = 1.
+    private var multipleBuilder = false
+    private var allRandom = false
 
     function setTestMode(boolean value)
         testMode = value
@@ -72,6 +73,12 @@ class GameConfig
 
     function getBountyMultiplier() returns real
         return bountyMultiplier
+
+    function setArmyPointsMultiplier(real value)
+        armyPointsMultiplier = value
+
+    function getArmyPointsMultiplier() returns real
+        return armyPointsMultiplier
 
     function setDamageMultiplier(real value)
         damageMultiplier = value
