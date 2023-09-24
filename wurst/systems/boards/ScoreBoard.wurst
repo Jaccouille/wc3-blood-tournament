@@ -16,6 +16,7 @@ import PlayerExtension
 import Players
 import public PlayerData
 import GameConfig
+import GameStates
 
 let KILL_COLUMN_WIDTH = 0.055
 let STAT_LABEL_WIDTH = 0.1
@@ -147,7 +148,9 @@ public class ScoreBoardColumnEntries
         initRow(row, column == 0 ? "          VS" : "", null)
 
     function initEmptyRow(int row)
-        initRow(row, "", null)
+        initRow(row, null, null)
+        // Necessary to remove default grey eye icon
+        scoreBoard.board.getItem(row, 0).setStyle(false, false)
 
     function initRow(int row, string value, string icon)
         scoreBoard.getItem(row, entryColumn)
@@ -187,11 +190,10 @@ public function setBoardTitle(string title)
     scoreBoard.board.setTitle(title)
 
 public function initScoreBoard()
-    scoreBoard.board.setTitle("Game init")
-
     // Scoreboard timer refresh
-    doPeriodically(1) (CallbackPeriodic cb) ->
-        scoreBoard.board.setTitle(BOARD_TITLE_PREFIX)
+    GameStates.modesSelection.onExit() (state) ->
+        doPeriodically(1) (CallbackPeriodic cb) ->
+            scoreBoard.board.setTitle(BOARD_TITLE_PREFIX)
 
     EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
         let owner = EventData.getKillingUnit().getOwner()

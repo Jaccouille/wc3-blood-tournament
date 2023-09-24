@@ -89,11 +89,10 @@ import BTAbilities
         ..setIconGameInterfaceExt(Icons.bTNRifleman)
         ..setUnitSoundSetExt(Soundsets.rifleman)
 
-    tooltip = new UnitTooltipGenerator(asList(
-        "High range unit.",
+    tooltip = new UnitTooltipGenerator(
+        "High range unit.\n\n" +
         abilTooltipMap.get(ABIL_CRITICAL_STRIKE_20)
-        ).joinBy("\n\n")
-        )
+    )
     var itm = createBasicItem(ITEM_SNIPER)
     createSpawnedUnit(UNIT_SNIPER, UnitIds.rifleman)
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_20))
@@ -142,9 +141,9 @@ import BTAbilities
         ..setIconGameInterfaceExt(Icons.bTNMortarTeam)
 
 @compiletime function createPriest()
-    var tooltip = new UnitTooltipGenerator(asList(
+    var tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_HEAL)
-    ).joinBy("\n\n"))
+    )
 
     createSpawnedUnit(UNIT_PRIEST, UnitIds.priest, BUILDING_PRIEST)
         ..setNormalAbilities(commaList(ABIL_HEAL))
@@ -171,10 +170,10 @@ import BTAbilities
         ..setIconGameInterfaceExt(Icons.bTNPriest)
         ..setUnitSoundSetExt(Soundsets.priest)
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_SPELL_STEAL),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_SPELL_STEAL) + "\n\n" +
         abilTooltipMap.get(ABIL_MAGIC_ARMOR_30)
-    ).joinBy("\n\n"))
+        )
     let itm = createBasicItem(ITEM_SPELL_BREAKER)
     createSpawnedUnit(UNIT_SPELL_BREAKER, UnitIds.spellbreaker)
         ..setNormalAbilities(commaList(ABIL_SPELL_STEAL, ABIL_MAGIC_ARMOR_30))
@@ -202,9 +201,9 @@ import BTAbilities
         ..setIconGameInterfaceExt(Icons.bTNSpellBreaker)
 
 @compiletime function createKnight()
-    var tooltip = new UnitTooltipGenerator(asList(
+    var tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_MAGIC_ARMOR_30)
-    ).joinBy("\n\n"))
+    )
 
     createSpawnedUnit(UNIT_KNIGHT, UnitIds.knight, BUILDING_KNIGHT)
         ..setNormalAbilities(commaList(ABIL_MAGIC_ARMOR_30))
@@ -229,10 +228,10 @@ import BTAbilities
         ..setIconGameInterfaceExt(Icons.bTNKnight)
         ..setUnitSoundSetExt(Soundsets.knight)
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_MAGIC_ARMOR_50),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_MAGIC_ARMOR_50) + "\n\n" +
         abilTooltipMap.get(ABIL_HOLY_BLADE)
-    ).joinBy("\n\n"))
+    )
     var itm = createBasicItem(ITEM_CRUSADER)
     createSpawnedUnit(UNIT_CRUSADER, UnitIds.knight, BUILDING_CRUSADER)
         ..setNormalAbilities(commaList(
@@ -267,10 +266,10 @@ import BTAbilities
         ..setUnitSoundSetExt(Soundsets.knight)
 
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_INSPIRE),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_INSPIRE) + "\n\n" +
         abilTooltipMap.get(ABIL_CLEAVE_30)
-    ).joinBy("\n\n"))
+    )
 
     itm = createBasicItem(ITEM_MARSHALL)
     createSpawnedUnit(UNIT_MARSHALL, UnitIds.lordgarithos)
@@ -300,12 +299,10 @@ import BTAbilities
 
 function createPaladin(int paladinId) returns BTUnitDefinition
     let tooltip = new UnitTooltipGenerator(
-        asList(
-        abilTooltipMap.get(ABIL_BASH_20),
-        abilTooltipMap.get(ABIL_DEVOTION_AURA_2),
+        abilTooltipMap.get(ABIL_BASH_20) + "\n\n" +
+        abilTooltipMap.get(ABIL_DEVOTION_AURA_2) + "\n\n" +
         "Eternal Vanguard\n".color(SPECIAL_COLOR) +
         "Upon dying, the paladin becomes a ghost."
-    ).joinBy("\n\n")
     )
     return createSpawnedUnit(paladinId, UnitIds.paladin)
             ..registerTooltipGenerator(tooltip)
@@ -372,9 +369,9 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 
 
 @compiletime function createSorceress()
-    var tooltip = new UnitTooltipGenerator(asList(
+    var tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_MANA_SHIELD)
-    ).joinBy("\n\n"))
+    )
 
     createSpawnedUnit(UNIT_SORCERESS, UnitIds.sorceress, BUILDING_SORCERESS)
         ..setNormalAbilities(commaList(""))
@@ -405,11 +402,11 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setUnitSoundSetExt(Soundsets.sorceress)
 
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_BLIZZARD),
-        abilTooltipMap.get(ABIL_BRILLANCE_AURA_2),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_BLIZZARD) + "\n\n" +
+        abilTooltipMap.get(ABIL_BRILLANCE_AURA_2) + "\n\n" +
         abilTooltipMap.get(ABIL_MANA_SHIELD)
-    ).joinBy("\n\n"))
+    )
     let itm = createBasicItem(ITEM_COURT_ENCHANTRESS)
     createSpawnedUnit(UNIT_COURT_ENCHANTRESS, UnitIds.jaina)
         ..registerItemDef(itm, ItemModifierType.Addition)
@@ -513,10 +510,10 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..tooltipStopListen(true)
         ..setNameEnhance("W", "Water Elemental")
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_BLIZZARD),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_BLIZZARD) + "\n\n" +
         abilTooltipMap.get(ABIL_BRILLANCE_AURA_2)
-    ).joinBy("\n\n"))
+    )
     let itm = createBasicItem(ITEM_ARCHMAGE)
     createSpawnedUnit(UNIT_ARCHMAGE, UnitIds.archmage, BUILDING_ARCHMAGE)
         ..registerItemDef(itm, ItemModifierType.Addition)

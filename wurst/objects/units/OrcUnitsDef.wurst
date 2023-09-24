@@ -116,10 +116,9 @@ import LinkedList
         ..setIconGameInterfaceExt(Icons.bTNHeadHunterBerserker)
         ..setUnitSoundSetExt(Soundsets.headHunter)
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_ENSNARE),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_ENSNARE) + "\n\n" +
         abilTooltipMap.get(ABIL_BERSERK)
-        ).joinBy("\n\n")
     )
     createSpawnedUnit(UNIT_TRAPPER, UnitIds.foresttrolltrapper, BUILDING_TRAPPER)
         ..setNormalAbilities(commaList(ABIL_BERSERK, ABIL_ENSNARE))
@@ -171,11 +170,10 @@ import LinkedList
         ..setIconGameInterfaceExt(Icons.bTNRaider)
         ..setUnitSoundSetExt(Soundsets.wolfrider)
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_MELEE_AURA_FLAT_20),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_MELEE_AURA_FLAT_20) + "\n\n" +
         abilTooltipMap.get(ABIL_BASH_30)
-        ).joinBy("\n\n")
-    )
+        )
     let itm = createBasicItem(ITEM_PACK_LEADER)
     createSpawnedUnit(UNIT_PACK_LEADER, UnitIds.thrall, BUILDING_PACK_LEADER)
         ..setNormalAbilities(commaList(ABIL_MELEE_AURA_FLAT_20, ABIL_BASH_30))
@@ -202,9 +200,9 @@ import LinkedList
         ..setUnitSoundSetExt(Soundsets.thrall)
 
 @compiletime function createKodo()
-    let tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_DAMAGE_AURA_25)
-        ).joinBy("\n\n"))
+    let tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_DAMAGE_AURA_25) + "\n\n"
+        )
     let itm = createBasicItem(ITEM_KODO)
     createSpawnedUnit(UNIT_KODO, UnitIds.kotobeast)
         ..registerItemDef(itm, ItemModifierType.Addition)
@@ -284,10 +282,9 @@ import LinkedList
         ..setUnitSoundSetExt(Soundsets.orcWarlock)
 
 @compiletime function creatWitchDoctor()
-    let tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_ACID_BOMB)
-        ).joinBy("\n\n")
-    )
+    let tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_ACID_BOMB) + "\n\n"
+        )
     createSpawnedUnit(UNIT_WITCH_DOCTOR, UnitIds.witchdoctor, BUILDING_WITCH_DOCTOR)
         ..setNormalAbilities(commaList(ABIL_ACID_BOMB, ABIL_AUTOCAST_ACID_BOMB))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_ACID_BOMB))
@@ -350,10 +347,9 @@ import LinkedList
         ..setUnitSoundSetExt(Soundsets.shaman)
 
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_CRITICAL_STRIKE_30),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_CRITICAL_STRIKE_30) + "\n\n" +
         abilTooltipMap.get(ABIL_EVASION_20)
-        ).joinBy("\n\n")
     )
     createSpawnedUnit(UNIT_SPIRIT_WOLF1, UnitIds.spiritwolf2)
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_30, ABIL_EVASION_20))
@@ -376,11 +372,10 @@ import LinkedList
         ..setIconGameInterfaceExt(Icons.bTNSpiritWolf)
 
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_CRITICAL_STRIKE_50),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_CRITICAL_STRIKE_50) + "\n\n" +
         abilTooltipMap.get(ABIL_EVASION_30)
-        ).joinBy("\n\n")
-    )
+        )
     createSpawnedUnit(UNIT_SPIRIT_WOLF2, UnitIds.spiritwolf2)
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_50, ABIL_EVASION_30))
         ..registerTooltipGenerator(tooltip)
@@ -402,11 +397,10 @@ import LinkedList
         ..setIconGameInterfaceExt(Icons.bTNSpiritWolf)
         ..setScalingValue(1.3)
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_CHAIN_LIGHTNING),
-        abilTooltipMap.get(ABIL_SUMMON_SPIRIT_WOLF2),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_CHAIN_LIGHTNING) + "\n\n" +
+        abilTooltipMap.get(ABIL_SUMMON_SPIRIT_WOLF2) + "\n\n" +
         abilTooltipMap.get(ABIL_BRILLANCE_AURA_1)
-        ).joinBy("\n\n")
     )
     let itm = createBasicItem(ITEM_FARSEER)
     createSpawnedUnit(UNIT_FARSEER, UnitIds.farseer, BUILDING_FARSEER)
@@ -443,9 +437,8 @@ import LinkedList
         ..setUnitSoundSetExt(Soundsets.heroFarseer)
 
 @compiletime function createOgre()
-    var tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_OGRE_SWING)
-        ).joinBy("\n\n")
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_OGRE_SWING) + "\n\n"
     )
     createSpawnedUnit(UNIT_OGRE, UnitIds.ogre1, BUILDING_OGRE)
         ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
@@ -474,10 +467,9 @@ import LinkedList
         ..setIconGameInterfaceExt(Icons.bTNOgre)
         ..setUnitSoundSetExt(Soundsets.ogre)
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_OGRE_SWING),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_OGRE_SWING) + "\n\n" +
         abilTooltipMap.get(ABIL_HARDENED_SKIN_10)
-        ).joinBy("\n\n")
     )
     let itm = createBasicItem(ITEM_OGRE_ARMORED)
     createSpawnedUnit(UNIT_OGRE_ARMORED, UnitIds.ogre1, BUILDING_OGRE_ARMORED)

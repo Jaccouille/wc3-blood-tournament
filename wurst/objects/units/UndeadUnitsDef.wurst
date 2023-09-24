@@ -335,10 +335,9 @@ import ArmySpawner
         ..setAttack1WeaponSound(WeaponSound.MetalMediumBash)
         ..setGhostDeath()
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_RAISE_REVENANT),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_RAISE_REVENANT) + "\n\n" +
         abilTooltipMap.get(ABIL_ORB_CORRUPTION)
-        ).joinBy("\n\n")
     )
     let itm = createBasicItem(ITEM_LICH)
     createSpawnedUnit(UNIT_LICH, UnitIds.lich, BUILDING_LICH)
@@ -472,12 +471,11 @@ import ArmySpawner
         ..setUnitSoundSetExt(Soundsets.abomination)
 
 @compiletime function createVampire()
-    var tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_LIFESTEAL_50),
-        abilTooltipMap.get(ABIL_EVASION_10),
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_LIFESTEAL_50) + "\n\n" +
+        abilTooltipMap.get(ABIL_EVASION_10) + "\n\n" +
         "Absord Life Essence\n".color(SPECIAL_COLOR) +
         "Permanently gain 10% of enemy max health point as health point upon kill."
-        ).joinBy("\n\n")
     )
     createSpawnedUnit(UNIT_VAMPIRE, UnitIds.dreadlord, BUILDING_VAMPIRE)
         ..setNormalAbilities(commaList(ABIL_LIFESTEAL_50))
@@ -502,12 +500,11 @@ import ArmySpawner
         ..setIconGameInterfaceExt(Icons.bTNHeroDreadLord)
         ..setUnitSoundSetExt(Soundsets.heroDreadLord)
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_LIFESTEAL_75),
-        abilTooltipMap.get(ABIL_EVASION_30),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_LIFESTEAL_75) + "\n\n" +
+        abilTooltipMap.get(ABIL_EVASION_30) + "\n\n" +
         "Absord Life Essence\n".color(SPECIAL_COLOR) +
         "Permanently gain 20% of enemy max health point as health point upon kill."
-        ).joinBy("\n\n")
     )
     let itm = createBasicItem(ITEM_VAMPIRE_LORD)
     createSpawnedUnit(UNIT_VAMPIRE_LORD, UnitIds.dreadlord, BUILDING_VAMPIRE_LORD)
@@ -558,12 +555,12 @@ import ArmySpawner
         ..setUnitSoundSetExt(Soundsets.heroCryptLord)
 
 @compiletime function createDeathKnight()
-    var tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_DEATH_COIL),
-        abilTooltipMap.get(ABIL_UNHOLY_AURA),
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_DEATH_COIL) + "\n\n" +
+        abilTooltipMap.get(ABIL_UNHOLY_AURA) + "\n\n" +
         "Dark Ritual\n".color(SPECIAL_COLOR) +
         "Replenish 10% of target maximum health as mana on kill."
-        ).joinBy("\n\n"))
+    )
     createSpawnedUnit(UNIT_DEATH_KNIGHT, UnitIds.deathknight, BUILDING_DEATH_KNIGHT)
         ..setNormalAbilities(commaList(
             ABIL_UNHOLY_AURA,

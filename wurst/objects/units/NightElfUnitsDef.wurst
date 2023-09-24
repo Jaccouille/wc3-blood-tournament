@@ -113,10 +113,10 @@ import ColorUtils
         ..setUnitSoundSetExt(Soundsets.shandris)
 
 @compiletime function createDryad()
-    var tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_REJUVENATION),
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_REJUVENATION) + "\n\n" +
         abilTooltipMap.get(ABIL_POISON_SPEAR)
-        ).joinBy("\n\n"))
+        )
     createSpawnedUnit(UNIT_DRYAD, UnitIds.dryad, BUILDING_DRYAD)
         ..registerTooltipGenerator(tooltip)
         ..setNormalAbilities(commaList(
@@ -147,10 +147,10 @@ import ColorUtils
         ..setIconGameInterfaceExt(Icons.bTNDryad)
         ..setUnitSoundSetExt(Soundsets.dryad)
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_PARASITE_SEED),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_PARASITE_SEED) + "\n\n" +
         abilTooltipMap.get(ABIL_THORN_AURA)
-        ).joinBy("\n\n"))
+        )
     let itm = createBasicItem(ITEM_KEEPER_OF_THE_GROVE)
     createSpawnedUnit(UNIT_KEEPER_OF_THE_GROVE, UnitIds.keeperofthegrove)
         ..registerItemDef(itm, ItemModifierType.Addition)
@@ -267,9 +267,9 @@ import ColorUtils
         ..setUnitSoundSetExt(Soundsets.vengeance)
 
 @compiletime function createDruidTalon()
-    let tooltip = new UnitTooltipGenerator(asList(
+    let tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_FAERIE_FIRE)
-    ).joinBy("\n\n"))
+    )
     createSpawnedUnit(UNIT_DRUID_TALON, UnitIds.druidofthetalon, BUILDING_DRUID_TALON)
         ..registerTooltipGenerator(tooltip)
         ..setNormalAbilities(commaList(ABIL_FAERIE_FIRE))
@@ -299,11 +299,11 @@ import ColorUtils
 
 
 @compiletime function createDruidClaw()
-    var tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_DRUID_FRENZY),
-        abilTooltipMap.get(ABIL_CLEAVE_10),
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_DRUID_FRENZY) + "\n\n" +
+        abilTooltipMap.get(ABIL_CLEAVE_10) + "\n\n" +
         abilTooltipMap.get(ABIL_HARDENED_SKIN_5)
-        ).joinBy("\n\n"))
+        )
     createSpawnedUnit(UNIT_DRUID_CLAW, UnitIds.druidoftheclaw, BUILDING_DRUID_CLAW)
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
@@ -331,10 +331,10 @@ import ColorUtils
         ..setIconGameInterfaceExt(Icons.bTNDruidOfTheClaw)
         ..setUnitSoundSetExt(Soundsets.druidOfTheClaw)
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_BASH_20),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_BASH_20) + "\n\n" +
         abilTooltipMap.get(ABIL_HARDENED_SKIN_15)
-        ).joinBy("\n\n"))
+        )
     var itm = createBasicItem(ITEM_BEAR)
     createSpawnedUnit(UNIT_BEAR, UnitIds.druidoftheclawmorphed)
         ..registerItemDef(itm, ItemModifierType.Replace)
@@ -362,11 +362,11 @@ import ColorUtils
 
         ..setIconGameInterfaceExt(Icons.bTNBearForm)
 
-    tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_HOWL_OF_TERROR),
-        abilTooltipMap.get(ABIL_CLEAVE_30),
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_HOWL_OF_TERROR) + "\n\n" +
+        abilTooltipMap.get(ABIL_CLEAVE_30) + "\n\n" +
         abilTooltipMap.get(ABIL_HARDENED_SKIN_10)
-        ).joinBy("\n\n"))
+        )
     itm = createBasicItem(ITEM_OWLBEAR)
     createSpawnedUnit(UNIT_OWLBEAR, UnitIds.owlbear, BUILDING_OWLBEAR)
         ..registerItemDef(itm, ItemModifierType.Replace)
@@ -399,9 +399,9 @@ import ColorUtils
         ..setUnitSoundSetExt(Soundsets.owlbear)
 
 @compiletime function createMountainGiant()
-    let tooltip = new UnitTooltipGenerator(asList(
+    let tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_TAUNT)
-        ).joinBy("\n\n"))
+        )
     createSpawnedUnit(UNIT_MOUNTAIN_GIANT, UnitIds.mountaingiant, BUILDING_MOUNTAIN_GIANT)
         ..setNormalAbilities(commaList(
             ABIL_TAUNT,
@@ -433,11 +433,11 @@ import ColorUtils
         ..setBuildingScalingValue(0.65)
 
 @compiletime function createWarden()
-    var tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_BLINK),
-        abilTooltipMap.get(ABIL_FAN_OF_KNIVES),
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_BLINK)  + "\n\n" +
+        abilTooltipMap.get(ABIL_FAN_OF_KNIVES)  + "\n\n" +
         abilTooltipMap.get(ABIL_FEEDBACK)
-    ).joinBy("\n\n"))
+    )
     createSpawnedUnit(UNIT_WARDEN, UnitIds.warden, BUILDING_WARDEN)
         ..setNormalAbilities(commaList(
             ABIL_BLINK,
@@ -524,10 +524,10 @@ import ColorUtils
         ..setUnitSoundSetExt(Soundsets.heroDemonHunter)
 
 @compiletime function createPriestessOfTheMoon()
-    let tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_STARFALL),
+    let tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_STARFALL)  + "\n\n" +
         abilTooltipMap.get(ABIL_RANGED_AURA_15)
-        ).joinBy("\n\n"))
+        )
     let itm = createBasicItem(ITEM_PRIESTESS_OF_THE_MOON)
     createSpawnedUnit(UNIT_PRIESTESS_OF_THE_MOON, UnitIds.priestessofthemoon, BUILDING_PRIESTESS_OF_THE_MOON)
         ..registerItemDef(itm, ItemModifierType.Addition)
@@ -561,10 +561,10 @@ import ColorUtils
         ..setUnitSoundSetExt(Soundsets.heroMoonPriestess)
 
 @compiletime function createArchdruid()
-    var tooltip = new UnitTooltipGenerator(asList(
-        abilTooltipMap.get(ABIL_SUMMON_WISP),
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_SUMMON_WISP)  + "\n\n" +
         abilTooltipMap.get(ABIL_BRILLANCE_AURA_2)
-        ).joinBy("\n\n"))
+        )
 
     let itm = createBasicItem(ITEM_ARCHDRUID)
     createSpawnedUnit(UNIT_ARCHDRUID, UnitIds.furion)
@@ -595,9 +595,9 @@ import ColorUtils
         ..setIconGameInterfaceExt(Icons.bTNFurion)
         ..setModelFile(Units.furion1)
 
-    tooltip = new UnitTooltipGenerator(asList(
+    tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_WISP_EXPLODE)
-        ).joinBy("\n\n"))
+        )
 
     createSpawnedUnit(UNIT_WISP, UnitIds.wisp)
         ..setNormalAbilities(commaList(ABIL_WISP_EXPLODE))

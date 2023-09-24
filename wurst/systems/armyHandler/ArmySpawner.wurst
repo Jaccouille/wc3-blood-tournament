@@ -18,7 +18,6 @@ import UnitExtensions
 import ItemCallbackDefinition
 
 
-
 public function computeUnitPointValue(int goldCost, int lumberCost, int unitCount) returns int
     var pointValue = 0
     pointValue += (goldCost / unitCount).toInt()
@@ -198,7 +197,12 @@ public class ArmySpawner
 
     function setSpawnZone(SpawnZone spawnZone)
         this.spawnZone = spawnZone
-        this.spawnDirection = (spawnZone.angle.cos() == 0 ? 0 : 90).asAngleDegrees()
+
+        // TODO: uber retarded way to properly get the angle I wanted with both jass and LUA
+        // 1 < 1.00 in LUA -> true, false in JASS
+        this.spawnDirection = (spawnZone.angle.cos().abs() < 0.99 ? 0 : 90).asAngleDegrees()
+        // Log.info((spawnZone.angle.cos().abs() < 0.99).toString() + " " +
+        //  (spawnZone.angle.cos().abs().toString()) + " " + this.spawnDirection.degrees().toString())
         this.pos = spawnZone.initialPos
 
     function spawnUnit(int unitId, vec2 spawnPos) returns unit
@@ -264,6 +268,8 @@ public class ArmySpawner
                 // Log.info("Passed the spawn id: " + squadIdx.toString())
 
                 // Update position for next unit
+                // if spawnZone.spawnRect == gg_rct_Frontrank_EN
+                //     Log.info(pos.toString() + " " + spawnDirection.degrees().toString() + " " +  (pData.spawnedUnits.size() % unitPerLine).toString())
                 pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
 
                 // Move to next line
