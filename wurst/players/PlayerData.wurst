@@ -2,14 +2,13 @@ package PlayerData
 
 // Standard libs imports:
 import HashMap
-import LinkedList
 
 // Local imports:
 import GameConfig
 import GameStates
+import Players
 
 public constant pDatas = new IterableMap<player, PlayerData>
-
 
 public class PlayerData
     // let army = new LinkedList<LinkedList<int>>
@@ -69,58 +68,15 @@ public class PlayerData
 
 
 public function initPlayers()
-    let botNames = new LinkedList<string>
-        ..add("Carbonara Sorcerer")
-        ..add("Hummus Heroic Diviner")
-        ..add("Mashed Potato Messiah")
-        ..add("The Falafel Fighter")
-        ..add("Bagel Baron")
-        ..add("Macaroni Fencer")
-        ..add("Shawarma Shogun")
-        ..add("Biscuit Bandit")
-        ..add("Croissant Conqueror")
-        ..add("Donut Despot")
-        ..add("Teriyaki Titan")
-        ..add("Beef Noodle Bodyguard")
-        ..add("Noodle Alchemist")
-        ..add("Sashimi Sect Master")
-        ..add("Immortal Paella Cultivator")
-        ..add("Cantonese Cuisine Crusader")
-        ..add("Soy Sauce Summoner")
-        ..add("Meatball Emperor")
-        ..add("Wasabi Warlock")
-        ..add("Nacho Ninja")
-        ..add("Pad Thai Prodigy")
-        ..add("Fried Chicken Fanatic")
-        ..add("Popcorn Prophet")
-        ..add("Milkshake Mastermind")
-        ..add("Fruit Frenzy Fighter")
-        ..add("Pasta Punisher")
-        ..add("Cabbage Rascal")
-        ..add("Ice Cream Illusionist")
-        ..add("Jellybean Juggernaut")
-        ..add("Pickle Paladin")
-        ..add("Ravioli Peacemaker")
-        ..add("Curry Sovereign")
-    botNames.shuffle()
-
     // TODO: refactor for release
     new PlayerData(players[0], gg_rct_Red)
-    players[1].setName(botNames.pop())
     new PlayerData(players[1], gg_rct_Blue)
-    players[2].setName(botNames.pop())
     new PlayerData(players[2], gg_rct_Teal)
-    players[3].setName(botNames.pop())
     new PlayerData(players[3], gg_rct_Purple)
-    players[4].setName(botNames.pop())
     new PlayerData(players[4], gg_rct_Yellow)
-    players[5].setName(botNames.pop())
     new PlayerData(players[5], gg_rct_Orange)
-    players[6].setName(botNames.pop())
     new PlayerData(players[6], gg_rct_Green)
-    players[7].setName(botNames.pop())
     new PlayerData(players[7], gg_rct_Pink)
-
 
     GameStates.gameplay.onEnter() state ->
         pDatas.forEach() (player _p, PlayerData _) ->

@@ -17,13 +17,54 @@ OnPlayerLeave onLeaveListener
 public function onPlayerLeave(OnPlayerLeave onLeave)
     onLeaveListener = onLeave
 
+let botNames = new LinkedList<string>
+    ..add("Carbonara Sorcerer")
+    ..add("Hummus Heroic Diviner")
+    ..add("Mashed Potato Messiah")
+    ..add("The Falafel Fighter")
+    ..add("Bagel Baron")
+    ..add("Macaroni Fencer")
+    ..add("Shawarma Shogun")
+    ..add("Biscuit Bandit")
+    ..add("Croissant Conqueror")
+    ..add("Donut Despot")
+    ..add("Teriyaki Titan")
+    ..add("Beef Noodle Bodyguard")
+    ..add("Noodle Alchemist")
+    ..add("Sashimi Sect Master")
+    ..add("Immortal Paella Cultivator")
+    ..add("Cantonese Cuisine Crusader")
+    ..add("Soy Sauce Summoner")
+    ..add("Meatball Emperor")
+    ..add("Wasabi Warlock")
+    ..add("Nacho Ninja")
+    ..add("Pad Thai Prodigy")
+    ..add("Fried Chicken Fanatic")
+    ..add("Popcorn Prophet")
+    ..add("Milkshake Mastermind")
+    ..add("Fruit Frenzy Fighter")
+    ..add("Pasta Punisher")
+    ..add("Cabbage Rascal")
+    ..add("Ice Cream Illusionist")
+    ..add("Jellybean Juggernaut")
+    ..add("Pickle Paladin")
+    ..add("Ravioli Peacemaker")
+    ..add("Curry Sovereign")
+
+
 init
     nullTimer() ->
+        botNames.shuffle()
         // TODO: re implement after debug
         // for i = 0 to bj_MAX_PLAYER_SLOTS - 1
         for i = 0 to 7
-            // if players[i].isIngame()
-            ALL_PLAYERS.add(players[i])
+            let _p = players[i]
+            ALL_PLAYERS.add(_p)
+            // Replace player name if computer
+            if _p.getController() != MAP_CONTROL_USER
+                or _p.getSlotState() != PLAYER_SLOT_STATE_PLAYING
+                _p.setName(botNames.pop())
+
 
         EventListener.add(EVENT_PLAYER_LEAVE) ->
             ALL_PLAYERS.remove(GetTriggerPlayer())
