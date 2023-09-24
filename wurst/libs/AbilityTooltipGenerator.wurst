@@ -70,7 +70,7 @@ public class AbilityTooltipGenerator implements TooltipGenerator
         else
             return buildActiveTooltip(name)
 
-    function generateTooltipExtended(boolean learn) returns string
+    function generateTooltipExtended(boolean _learn) returns string
         var s = ""
 
         for key in propMap

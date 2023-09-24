@@ -63,7 +63,7 @@ init
             orderBlocker.enable()
 
     registerToolkitCommand("ci") (player triggerPlayer, LinkedList<string> arguments) ->
-        int count = 0
+        int _count = 0
         forItemsInMap() (item i) ->
-            count += 1
-        Log.info("Item count: " + count.toString())
+            _count += 1
+        Log.info("Item count: " + _count.toString())

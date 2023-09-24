@@ -12,7 +12,6 @@ import UnitTooltipGenerator
 import BTAbilities
 import LinkedList
 import ColorUtils
-import NightElfAbilitiesDef
 
 
 @compiletime function createTreant()

@@ -9,7 +9,6 @@ import Lodash
 
 // Local imports:
 import GameConstants
-import GameStates
 import LocalObjectIDs
 import PlayerData
 import PlayerExtension
@@ -163,6 +162,8 @@ public let playerToArmySpawner = new HashMap<player, ArmySpawner>
 
 
 public class ArmySpawner
+// TODO: remove once debug done
+    static int count = 0
     SpawnZone spawnZone
     player _p
     angle spawnDirection
@@ -187,11 +188,13 @@ public class ArmySpawner
         this.buildingList = buildingList
 
     function executeItemBonus(LinkedList<item> inv)
-        inv.forEach() (item itm) ->
+        for itm in inv
+            // Log.info("AitemModifyUnit :" + unitModifierList.size().toString())
             if itemAddUnitMap.has(itm.getTypeId())
                 itemAddUnitMap.get(itm.getTypeId()).execute(squadIds, itm.getCharges())
             if itemModifyUnitMap.has(itm.getTypeId())
                 unitModifierList.push(new Pair(itemModifyUnitMap.get(itm.getTypeId()), itm.getCharges()))
+            // Log.info("BitemModifyUnit :" + unitModifierList.size().toString())
 
     function setSpawnZone(SpawnZone spawnZone)
         this.spawnZone = spawnZone
@@ -199,10 +202,15 @@ public class ArmySpawner
         this.pos = spawnZone.initialPos
 
     function spawnUnit(int unitId, vec2 spawnPos) returns unit
-        let spawnedUnits = pDatas.get(_p).spawnedUnits
-        let dummyPlayerIdx = spawnedUnits.size() div MAX_UNIT_PER_PLAYER mod pDatas.get(_p).dummyPlayers.size()
+        let armySize = pDatas.get(_p).spawnedUnits.size()
+        // Log.info("Army size : " + armySize.toString())
+        let dummyPlayerIdx = armySize div MAX_UNIT_PER_PLAYER mod pDatas.get(_p).dummyPlayers.size()
 
+        // Log.info("pre spawn")
         let newUnit = createUnit(_p.getDummyPlayer(dummyPlayerIdx), unitId, spawnPos, spawnZone.angle)
+        count += 1
+        // Log.info("Unit spawned " +  count.toString())
+        // newUnit.setMoveSpeed(522)
         if gameConfig.getHealthMultiplier() != 1.
             newUnit.setHP(newUnit.getHP() * gameConfig.getHealthMultiplier())
         if gameConfig.getDamageMultiplier() != 1.
@@ -217,10 +225,9 @@ public class ArmySpawner
 
         BlzShowUnitTeamGlow(newUnit, false)
         if newUnit.getName() == null
-            Log.info("Unknown unit spawned")
-            newUnit.kill()
+            Log.info("Unknown unit spawned for " + _p.getDummyPlayer(dummyPlayerIdx).getName())
         else
-            pData.spawnedUnits.add(newUnit)
+            pData.spawnedUnits.push(newUnit)
         return newUnit
 
     function spawnArmy()
@@ -243,14 +250,18 @@ public class ArmySpawner
             let building = buildingList.get(buildingIdx)
             // Log.info("Spawning " + building.getName())
             squadIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
+            // Log.info("passed AddAll " + building.getName())
 
             executeItemBonus(building.getInventory())
+            // Log.info("passed executeItemBonus " + building.getName())
 
             // Spawn while there's something to spawn and unitLimit isn't reached
             while squadIdx < squadIds.size() and pData.spawnedUnits.size() < spawnZone.unitLimit
+                // Log.info("Spawn start of idx: " + squadIdx.toString())
                 spawnUnit(squadIds.get(squadIdx), pos)
                 // Pause unit until battle start
                 ..pause()
+                // Log.info("Passed the spawn id: " + squadIdx.toString())
 
                 // Update position for next unit
                 pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)

@@ -3,9 +3,7 @@ package ItemCallbackDefinition
 import HashMap
 import LinkedList
 import LocalObjectIDs
-import Assets
 import OrderIds
-import ClosureTimers
 
 public let itemAddUnitMap = new HashMap<int, ItemAddUnit>
 public let itemModifyUnitMap = new HashMap<int, ItemModifyUnit>
