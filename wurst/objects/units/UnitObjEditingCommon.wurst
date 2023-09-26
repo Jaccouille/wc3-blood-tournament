@@ -72,7 +72,7 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
 
 public function createBuilder(int newId, int origId) returns UnitDefinition
     return new UnitDefinition(newId, origId)
-        ..setNormalAbilities(commaList(AbilityIds.invulnerable, ABIL_SELL_BUILDING, AbilityIds.inventory))
+        ..setNormalAbilities(commaList(AbilityIds.invulnerable, ABIL_ORDER_UNIT, ABIL_SELL_BUILDING, AbilityIds.inventory))
         ..setAttacksEnabled(AttacksEnabled.None.toObjectInt())
         ..setSpeedBase(522)
         ..setMovementType(MovementType.Fly)

@@ -205,6 +205,7 @@ public let ABIL_REPICK          = compiletime(ABIL_ID_GEN.next())
 public let ABIL_SHOP_SHARING    = compiletime(ABIL_ID_GEN.next())
 public let ABIL_SHOP_PURCHASE   = compiletime(ABIL_ID_GEN.next())
 public let ABIL_MOVE_BUILDING   = compiletime(ABIL_ID_GEN.next())
+public let ABIL_ORDER_UNIT      = compiletime(ABIL_ID_GEN.next())
 
 public let ABIL_CLEAVE_10          = compiletime(ABIL_ID_GEN.next())
 public let ABIL_CLEAVE_20          = compiletime(ABIL_ID_GEN.next())

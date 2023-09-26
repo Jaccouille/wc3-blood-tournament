@@ -4,11 +4,13 @@ package MiscAbilitiesDef
 import ChannelAbilityPreset
 import ClosureEvents
 import Assets
+import ClosureForGroups
 
 // Local imports:
 import AbilityObjEditingCommons
 import LocalObjectIDs
 import TooltipsUtils
+import GameConstants
 
 @compiletime function createRacePickingMiscAbilities()
     new ChannelAbilityPreset(ABIL_RANDOM_RACE, 1, true)
@@ -87,8 +89,35 @@ import TooltipsUtils
         ..presetTooltipNormalExtended(lvl -> "Move this building to the target location")
 
 
+@compiletime function createMoveUnitAbility()
+    new ChannelAbilityPreset(ABIL_ORDER_UNIT, 1, true)
+            ..presetManaCost(lvl -> 0)
+            ..presetCooldown(lvl -> 2)
+            ..presetCastRange(_ -> 99999)
+            ..setHeroAbility(false)
+            ..setItemAbility(false)
+            ..presetTargetTypes(Targettype.POINT)
+            ..presetTargetsAllowed(lvl -> TargetsAllowed.ground)
+            ..setHotkeyEnhance("X")
+            ..setName("Move unit")
+            ..presetTooltipNormal(lvl -> makeToolTipNorm("X", "Move unit"))
+            ..presetTooltipNormalExtended(lvl -> "Use this to unstuck units (works in round phase).")
+            ..setIconNormal(Icons.bTNNagaUnBurrow)
+            ..setIconResearch(Icons.bTNNagaUnBurrow)
+            ..setIconTurnOff(Icons.bTNNagaUnBurrow)
+            ..presetOption(Option.TARGETIMAGE, true)
+            ..setAreaofEffect(1, 200)
+            ..setOrderStringActivate("blizzard")
+            ..setBaseOrderID(1, "blizzard")
+
+
 init
     EventListener.onPointCast(ABIL_MOVE_BUILDING) (unit caster, vec2 target) ->
         flashEffect(Abilities.polyMorphTarget, caster.getPos())
         caster.setPos(target)
         flashEffect(Abilities.polyMorphTarget, caster.getPos())
+
+    EventListener.onPointCast(ABIL_ORDER_UNIT) (unit caster, vec2 target) ->
+        forUnitsInRange(target, 200) (unit u) ->
+            if u.getCurrentOrder() == 0
+                u.issuePointOrder("attack", CENTER)
