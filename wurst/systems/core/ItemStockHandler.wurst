@@ -9,7 +9,6 @@ import ClosureTimers
 import PlayerExtension
 import ScoreBoard
 import OrderIds
-import AbilityIds
 
 public HashMap<int, LinkedList<int>> unitItemSold = new HashMap<int, LinkedList<int>>
 
@@ -113,17 +112,26 @@ init
         if ItemStockHandler.unitToItemStockMap.has(building)
             and EventData.getIssuedOrderId() != OrderIds.undefend
             let itemId = EventData.getIssuedOrderId()
-            building.addItemById(itemId)
-            ItemStockHandler.unitToItemStockMap.get(building). reduceStock(itemId, 1)
-            let pos = building.getPos()
-            let range = 500
-            let search = Rect(pos.x - range, pos.y - range, pos.x + range, pos.y + range)
-            nullTimer() ->
-                forItemsInRect(search) (item i) ->
-                    let bloodPoint = i.getLife().toInt()
+            let i = createItem(itemId, building.getPos())
+
+            // To avoid case when building is casting move ability
+            if i != null
+                building.addItemById(itemId)
+                ItemStockHandler.unitToItemStockMap.get(building). reduceStock(itemId, 1)
+
+                i.remove()
+                let bloodPoint = i.getLife().toInt()
+                if not building.isType(UNIT_TYPE_ANCIENT)
                     building.addType(UNIT_TYPE_ANCIENT)
+
+                if bloodPoint > 0
                     building.getOwner().getPlayerData().addArmyPoints(bloodPoint)
                     scoreBoardEntries.get("ArmyPoints")
                         .addValue(building.getOwner(), bloodPoint)
-                    i.remove()
-                    // Log.info(building.getName() + " " + i.getName() + " " + GetItemPlayer(i).getName())
+
+    // When an item is bought, it doesn't go in the building inventory, it
+    // spawns on the ground
+    // Therefore we manually add it to the building and remove the spawned one
+    doPeriodically(10) (CallbackPeriodic cb) ->
+        forItemsInMap() (item i) ->
+            i.remove()
