@@ -303,8 +303,10 @@ public class ArmySpawner
 
     private function getRandomReinforcementPos() returns vec2
         let spawnRect = spawnZone.spawnRect
-        let offset = (spawnZone.angle.cos() == 0 ? spawnRect.height() / 2 : spawnRect.width() / 2)
-        if spawnZone.angle.cos() == 0
+        // TODO: uber retarded way to properly get the angle I wanted with both jass and LUA
+        // 1 < 1.00 in LUA -> true, false in JASS
+        let offset = (spawnZone.angle.cos().abs() < 0.99 ? spawnRect.height() / 2 : spawnRect.width() / 2)
+        if spawnZone.angle.cos().abs() < 0.99
             return pos + vec2(GetRandomReal(-offset, offset), 0)
         else
             return pos + vec2(0, GetRandomReal(-offset, offset))
