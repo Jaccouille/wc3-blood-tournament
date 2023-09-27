@@ -25,6 +25,20 @@ public function AbilityDefinition.setHotkeyEnhance(string hotkey)
     this.setHotkeyNormal(hotkey)
     this.presetButtonPosNormal(hotKeyMapping.get(hotkey).x, hotKeyMapping.get(hotkey).y)
 
+/** Apparently parasite will prioritize farhest target */
+public function createAutoCastedLongRangeEnemyAbility(int abilId) returns AbilityDefinitionParasite
+    return new AbilityDefinitionParasite(abilId)
+        ..presetAttackSpeedFactor(_ -> 0)
+        ..presetDamageperSecond(_ -> 0)
+        ..presetSummonedUnitCount(_ -> 0)
+        ..presetUnitType(_ -> "")
+        ..presetManaCost(_ -> 0)
+        ..presetDurationNormal(_ -> 0.01)
+        ..presetBuffs(_ -> "")
+        ..setArtTarget("")
+        ..setLevels(1)
+        ..setCheckDependencies(false)
+
 public function createAutoCastedEnemyAbility(int abilId) returns AbilityDefinitionCursecreep
     return new AbilityDefinitionCursecreep(abilId)
         ..presetManaCost(_ -> 0)

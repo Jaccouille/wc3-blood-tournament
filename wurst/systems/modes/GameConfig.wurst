@@ -6,7 +6,7 @@ import LinkedList
 class GameConfig
     private var testMode = false
     private var botAI = false
-    private var startingGold = 600
+    private var startingGold = 1000
     private var startingLumber = 0
     private let roundGoldIncome = asList(600)
     private var roundCount = 7

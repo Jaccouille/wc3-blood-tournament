@@ -8,8 +8,15 @@ import ItemObjEditingCommon
 import UnitObjEditingCommon
 import BuffObjEditing
 import TooltipsUtils
+import ClosureEvents
+import InstantDummyCaster
+import OrderIds
+import ClosureForGroups
 
 import LocalObjectIDs
+
+let FAERIE_FIRE_AOE = 150.
+let FAERIE_FIRE_TARGET_COUNT = 3
 
 @compiletime function createNightElfAbilities()
 
@@ -142,7 +149,7 @@ import LocalObjectIDs
         ..setEffects(1, commaList(STARFALL_EFFECT))
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_STARFALL)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_STARFALL)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetCastRange(_ -> 800)
@@ -152,16 +159,24 @@ import LocalObjectIDs
     abilTooltipMap.put(ABIL_STARFALL, tgen.generateFullTooltip())
 
     tgen = new BTAbilityTooltipGenerator(
-        "Reduces a target enemy unit's armor."
+        "Reduces a target enemy unit's armor. Applies to multiple targets."
     )
-    new AbilityDefinitionFaerieFire(ABIL_FAERIE_FIRE)
-        ..setLevels(1)
-        ..registerTooltipGenerator(tgen)
-        ..tooltipStartListen()
+    new AbilityDefinitionFaerieFire(ABIL_DUMMY_CAST_FAERIE_FIRE)
         ..presetDefenseReduction(_ -> 4)
         ..presetDurationNormal(_ -> 40)
-        ..presetManaCost(_ -> 40)
-        ..presetCooldown(_ -> 1)
+        ..setDummyAbility()
+        ..setNameEnhance("Z", "Faerie Fire Dummy")
+
+    new AbilityDefinitionFaerieFire(ABIL_FAERIE_FIRE)
+        ..setLevels(1)
+        ..tooltipStartListen()
+        ..registerTooltipGenerator(tgen)
+        ..presetDefenseReduction(_ -> 4)
+        ..presetDurationNormal(_ -> 40)
+        ..addTooltipProperty("Target limit", _ -> FAERIE_FIRE_TARGET_COUNT.toString())
+        ..presetAreaofEffect(_ -> FAERIE_FIRE_AOE)
+        ..presetManaCost(_ -> 60)
+        ..presetCooldown(_ -> 4)
         ..presetCastRange(_ -> 700)
         ..setNameEnhance("Z", "Faerie Fire")
         ..tooltipStopListen(true)
@@ -412,3 +427,16 @@ import LocalObjectIDs
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_SPIRIT_OF_VENGEANCE, tgen.generateFullTooltip())
+
+
+init
+    EventListener.onTargetCast(ABIL_FAERIE_FIRE) (unit caster, unit target) ->
+        int _count = 0
+        forUnitsInRange(target.getPos(), FAERIE_FIRE_AOE) (unit u) ->
+            if _count < FAERIE_FIRE_TARGET_COUNT
+                and u.isEnemyOf(caster)
+                and not u.hasAbility(BuffIds.faerieFire)
+                InstantDummyCaster.castTarget(
+                    caster.getOwner(),
+                    ABIL_DUMMY_CAST_FAERIE_FIRE, 1, OrderIds.faeriefire, u)
+                _count++

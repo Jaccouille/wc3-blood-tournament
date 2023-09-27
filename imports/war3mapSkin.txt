@@ -1,6 +1,9 @@
 [CustomSkin]
 InfoPanelIconArmorDivine=UI\Widgets\Console\Human\infocard-armor-spectral.dds
 
+[Errors]
+Notancient=Cannot sell building with items/upgrades
+
 [FrameDef]
 ARMORTIP_SMALL=Damage received from:|n|cff00FF00Pierce: 200%|r|n|cffFFFFFFMagic: 100%|r|n|cffFFFFFFSiege: 100%|r|n|cffFF0000Normal: 75%|r
 ARMORTIP_MEDIUM=Damage received from:|n|cff00FF00Normal: 175%|r|n|cff00FF00Siege: 150%|r|n|cffFF0000Magic: 75%|r|n|cffFF0000Pierce: 75%|r

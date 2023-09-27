@@ -5,12 +5,14 @@ import ChannelAbilityPreset
 import ClosureEvents
 import Assets
 import ClosureForGroups
+import SimError
 
 // Local imports:
 import AbilityObjEditingCommons
 import LocalObjectIDs
 import TooltipsUtils
 import GameConstants
+import PlayerData
 
 @compiletime function createRacePickingMiscAbilities()
     new ChannelAbilityPreset(ABIL_RANDOM_RACE, 1, true)
@@ -34,7 +36,7 @@ import GameConstants
         ..setHotkeyEnhance("X")
         ..setName("Repick builder")
         ..presetTooltipNormal(lvl -> makeToolTipNorm("X", "Repick builder"))
-        ..presetTooltipNormalExtended(lvl -> "Repick builder")
+        ..presetTooltipNormalExtended(lvl -> "Repick builder, cannot repick with existing building")
         ..setIconNormal(Icons.bTNPatrol)
         ..setIconResearch(Icons.bTNPatrol)
         ..setIconTurnOff(Icons.bTNPatrol)
@@ -113,9 +115,13 @@ import GameConstants
 
 init
     EventListener.onPointCast(ABIL_MOVE_BUILDING) (unit caster, vec2 target) ->
-        flashEffect(Abilities.polyMorphTarget, caster.getPos())
-        caster.setPos(target)
-        flashEffect(Abilities.polyMorphTarget, caster.getPos())
+        caster.abortOrder()
+        if target.isInRect(pDatas.get(caster.getOwner()).buildingRect)
+            flashEffect(Abilities.polyMorphTarget, caster.getPos())
+            caster.setPos(target)
+            flashEffect(Abilities.polyMorphTarget, caster.getPos())
+        else
+            simError(caster.getOwner(), "Cannot move building outside of your building zone")
 
     EventListener.onPointCast(ABIL_ORDER_UNIT) (unit caster, vec2 target) ->
         forUnitsInRange(target, 200) (unit u) ->

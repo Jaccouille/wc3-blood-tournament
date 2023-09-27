@@ -23,14 +23,20 @@ init
     EventListener.onCast(ABIL_REPICK) (unit caster) ->
         let owner = caster.getOwner()
         let pData = pDatas.get(owner)
-        if not roundController.hasRoundStarted
-            if pData.builder != null
-                SetPlayerTechMaxAllowed(owner, pData.builder.getTypeId(), 1)
-                pData.builder.remove()
-            else
-                printTimedToPlayer("No builder to repick".color(SPECIAL_COLOR), 5, owner)
-        else
+
+        let grp = GetUnitsInRectMatching(
+            pDatas.get(owner).buildingRect,
+            Filter( -> GetFilterUnit().isType(UNIT_TYPE_STRUCTURE)))
+        if grp.size() > 0
+            printTimedToPlayer("Cannot repick with existing building".color(SPECIAL_COLOR), 5, owner)
+        else if roundController.hasRoundStarted
             printTimedToPlayer("Cannot repick after first round".color(SPECIAL_COLOR), 5, owner)
+        else if pData.builder == null
+            printTimedToPlayer("No builder to repick".color(SPECIAL_COLOR), 5, owner)
+        else
+            SetPlayerTechMaxAllowed(owner, pData.builder.getTypeId(), 1)
+            pData.builder.remove()
+        grp.close()
 
     EventListener.add(EVENT_PLAYER_UNIT_TRAIN_FINISH) ->
         let u = EventData.getTrainedUnit()

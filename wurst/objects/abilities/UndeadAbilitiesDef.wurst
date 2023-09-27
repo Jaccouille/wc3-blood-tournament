@@ -77,6 +77,28 @@ import TooltipsUtils
 
     abilTooltipMap.put(ABIL_ANTI_MAGIC_SHELL, tgen.generateFullTooltip())
 
+    itm = createBasicItem(ITEM_FROST_ARMOR)
+        ..setItemCost(0, 50, 1, 3, 3)
+        ..setNameEnhance("X", "Add 1 Frost Armor")
+        ..setInterfaceIcon(Icons.bTNFrostArmor)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Creates a shield of frost around a target friendly unit." +
+        " The shield adds armor and slows melee units that attack it"
+    )
+    new AbilityDefinitionLichFrostArmorAutocast(ABIL_FROST_ARMOR)
+        ..setLevels(1)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetArmorBonus(_ -> 4)
+        ..presetCooldown(_ -> 4)
+        ..presetManaCost(_ -> 50)
+        ..presetDurationNormal(_ -> 30)
+        ..setNameEnhance("X", "Frost Armor")
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_FROST_ARMOR, tgen.generateFullTooltip())
 
     tgen = new BTAbilityTooltipGenerator("Raises skeletons from a corpse.")
     new AbilityDefinitionRaiseDeadCreep(ABIL_RAISE_SKELETON)
@@ -84,7 +106,7 @@ import TooltipsUtils
         ..presetUnitTypeOne(_ -> commaList(UNIT_SKELETON))
         ..presetUnitTypeForLimitCheck(_ -> commaList(UNIT_SKELETON))
         ..tooltipStartListen()
-        ..presetUnitsSummonedTypeOne(_ -> 2)
+        ..presetUnitsSummonedTypeOne(_ -> 1)
         ..presetManaCost(_ -> 75)
         ..presetCastRange(_ -> 650)
         ..presetCooldown(_ -> 12)
@@ -104,7 +126,7 @@ import TooltipsUtils
         ..presetUnitTypeOne(_ -> commaList(UNIT_SKELETON_MAGE))
         ..presetUnitTypeForLimitCheck(_ -> commaList(UNIT_SKELETON_MAGE))
         ..tooltipStartListen()
-        ..presetUnitsSummonedTypeOne(_ -> 2)
+        ..presetUnitsSummonedTypeOne(_ -> 1)
         ..presetManaCost(_ -> 75)
         ..presetCastRange(_ -> 650)
         ..presetCooldown(_ -> 12)

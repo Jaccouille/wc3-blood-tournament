@@ -273,10 +273,10 @@ import ArmySpawner
         ..tooltipStartListen()
         ..setNormalAbilities("")
 
-        ..setAttack1Data(AttackType.Normal, 14, 2, 2, 1.6)
+        ..setAttack1Data(AttackType.Normal, 20, 2, 2, 1.6)
 
         ..setArmorData(ArmorType.Large, 2)
-        ..setHitPointsMaximumBase(75)
+        ..setHitPointsMaximumBase(150)
 
         ..setSpeedBase(270)
         ..setPointValue(5)
@@ -293,11 +293,11 @@ import ArmySpawner
         ..tooltipStartListen()
         ..setNormalAbilities("")
 
-        ..setAttack1Data(AttackType.Magic, 14, 2, 6, 1.6)
+        ..setAttack1Data(AttackType.Magic, 22, 2, 6, 1.6)
         ..setAttack1Range(450)
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(75)
+        ..setHitPointsMaximumBase(150)
 
         ..setSpeedBase(270)
         ..setPointValue(5)
@@ -313,7 +313,7 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Siege, 52, 8, 3, 1.3)
+        ..setAttack1Data(AttackType.Magic, 52, 8, 3, 1.3)
 
         ..setArmorData(ArmorType.Divine, 4)
         ..setHitPointsMaximumBase(180)
@@ -337,14 +337,15 @@ import ArmySpawner
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_RAISE_REVENANT) + "\n\n" +
-        abilTooltipMap.get(ABIL_ORB_CORRUPTION)
+        abilTooltipMap.get(ABIL_ORB_CORRUPTION) + "\n\n" +
+        abilTooltipMap.get(ABIL_BRILLANCE_AURA_1)
     )
     let itm = createBasicItem(ITEM_LICH)
     createSpawnedUnit(UNIT_LICH, UnitIds.lich, BUILDING_LICH)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setNormalAbilities(commaList(ABIL_RAISE_REVENANT, ABIL_ORB_CORRUPTION))
+        ..setNormalAbilities(commaList(ABIL_RAISE_REVENANT, ABIL_ORB_CORRUPTION, ABIL_BRILLANCE_AURA_1))
         ..setDefaultActiveAbility(commaList(ABIL_RAISE_REVENANT))
 
         ..setAttack1Data(AttackType.Magic, 115, 4, 9, 1.75)

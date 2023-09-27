@@ -313,10 +313,12 @@ import LinkedList
 
 
 @compiletime function createShaman()
-    let abilTooltips = TOOLTIP_BLOODLUST + "\n" + TOOLTIP_EXT_BLOODLUST
+    let abilTooltips = TOOLTIP_BLOODLUST + "\n"
+        + TOOLTIP_EXT_BLOODLUST + "\n\n"
+        + abilTooltipMap.get(ABIL_SUMMON_SPIRIT_WOLF1)
     var tooltip = new UnitTooltipGenerator(abilTooltips)
     createSpawnedUnit(UNIT_SHAMAN, UnitIds.shaman, BUILDING_SHAMAN)
-        ..setNormalAbilities(commaList(ABIL_BLOODLUST))
+        ..setNormalAbilities(commaList(ABIL_BLOODLUST, ABIL_SUMMON_SPIRIT_WOLF1))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -338,8 +340,7 @@ import LinkedList
         ..setBuildingUnitsTrained(commaList(
             UNIT_SHAMAN,
             UNIT_SPIRIT_WOLF1,
-            UNIT_FARSEER,
-            UNIT_SPIRIT_WOLF2
+            UNIT_FARSEER
             ))
 
         ..setModelFileExt(Units.shaman1)
@@ -357,13 +358,13 @@ import LinkedList
         ..tooltipStartListen()
         ..setNormalAbilities("")
 
-        ..setAttack1Data(AttackType.Normal, 33, 4, 3, 1.1)
+        ..setAttack1Data(AttackType.Normal, 15, 4, 3, 1.1)
 
         ..setArmorData(ArmorType.Divine, 2)
         ..setHitPointsMaximumBase(200)
 
         ..setSpeedBase(350)
-        ..setPointValue(30)
+        ..setPointValue(20)
         ..setSummonedUnit()
 
         ..tooltipStopListen(true)
@@ -419,7 +420,7 @@ import LinkedList
         ..setAttack1Range(600)
 
         ..setArmorData(ArmorType.Small, 4)
-        ..setHitPointsMaximumBase(220)
+        ..setHitPointsMaximumBase(440)
         ..setMana(400)
 
         ..setSpeedBase(300)

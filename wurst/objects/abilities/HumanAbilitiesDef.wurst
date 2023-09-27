@@ -11,8 +11,14 @@ import HashMap
 import TooltipsUtils
 import BTAbilities
 import BuffObjEditing
+import ClosureForGroups
+import ClosureEvents
 import ArmySpawner
+import InstantDummyCaster
+import OrderIds
 
+let SLOW_AOE = 150.
+let SLOW_TARGET_COUNT = 2
 
 @compiletime function createHumanAbilities()
     var tgen = new BTAbilityTooltipGenerator("Heals 1 friendly unit.")
@@ -93,6 +99,33 @@ import ArmySpawner
 
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_WEAPON_BLESSING, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Slows a target enemy unit's attack rate and movement speed." +
+        " Applies to multiple targets."
+    )
+    new AbilityDefinitionSlow(ABIL_DUMMY_CAST_SLOW)
+        ..presetDurationNormal(_ -> 40)
+        ..setDummyAbility()
+        ..setNameEnhance("Z", "Slow Dummy")
+
+    new AbilityDefinitionSlow(ABIL_SLOW)
+        ..setLevels(1)
+        ..tooltipStartListen()
+        ..registerTooltipGenerator(tgen)
+        ..presetAttackSpeedFactor(_ -> 0.25)
+        ..presetMovementSpeedFactor(_ -> 0.4)
+        ..presetDurationNormal(_ -> 40)
+        ..addTooltipProperty("Target limit", _ -> SLOW_TARGET_COUNT.toString())
+        ..presetAreaofEffect(_ -> SLOW_AOE)
+        ..presetManaCost(_ -> 90)
+        ..presetCooldown(_ -> 4)
+        ..presetCastRange(_ -> 700)
+        ..setNameEnhance("Z", "Slow")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_SLOW, tgen.generateFullTooltip())
 
 
     itm = createBasicItem(ITEM_DARK_MAGE)
@@ -197,18 +230,29 @@ import ArmySpawner
     tooltip = tgen.generateFullTooltip()
 
     tgen = new BTAbilityTooltipGenerator(
-        "Creates a shield of frost around a target friendly unit." +
-        " The shield adds armor and slows melee units that attack it"
+    "Blasts enemy units around a target enemy unit with a " +
+    "wave of damaging frost that slows movement by 50% and attack rate by 25%."
     )
-    new AbilityDefinitionLichFrostArmorAutocast(ABIL_FROST_ARMOR)
+    new AbilityDefinitionFrostNovacreep(ABIL_FROST_NOVA)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
+        ..presetCooldown(_ -> 0)
         ..tooltipStartListen()
-        ..presetArmorBonus(_ -> 4)
-        ..presetCooldown(_ -> 4)
-        ..presetManaCost(_ -> 50)
-        ..presetDurationNormal(_ -> 30)
-        ..setNameEnhance("X", "Frost Armor")
+        ..presetAreaofEffectDamage(_ -> 50)
+        ..presetSpecificTargetDamage(_ -> 100)
+        ..presetAreaofEffect(_ -> 150)
+        ..presetManaCost(_ -> 180)
+        ..presetDurationNormal(_ -> 3)
+        ..presetCastRange(_ -> 600)
+        ..setNameEnhance("X", "Frost Nova")
+        ..tooltipStopListen(false)
+
+    createAutoCastedEnemyAbility(ABIL_AUTOCAST_FROST_NOVA)
+        ..registerTooltipGenerator(tgen)
+        ..presetCastRange(_ -> 600)
+        ..presetManaCost(_ -> 100)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 5)
         ..tooltipStopListen(true)
 
     tooltip += "\n\n" + tgen.generateFullTooltip()
@@ -236,7 +280,7 @@ import ArmySpawner
         ..tooltipStopListen(false)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_BLIZZARD)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_BLIZZARD)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 800)
         ..tooltipStartListen()
@@ -423,3 +467,15 @@ import ArmySpawner
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_INSPIRE, tgen.generateFullTooltip())
+
+init
+    EventListener.onTargetCast(ABIL_SLOW) (unit caster, unit target) ->
+        int _count = 0
+        forUnitsInRange(target.getPos(), SLOW_AOE) (unit u) ->
+            if _count < SLOW_TARGET_COUNT
+                and u.isEnemyOf(caster)
+                and not u.hasAbility(BuffIds.slow)
+                InstantDummyCaster.castTarget(
+                    caster.getOwner(),
+                    ABIL_DUMMY_CAST_SLOW, 1, OrderIds.slow, u)
+                _count++

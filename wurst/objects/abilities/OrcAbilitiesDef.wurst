@@ -230,8 +230,8 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
     let abilId = ABIL_ID_GEN.next()
     new AbilityDefinitionOrbofLightning(ABIL_ORB_LIGHTNING)
         ..setEnabledAttackIndex(1, 0)
-        ..presetChanceToHitUnits(_ -> 0.3)
-        ..presetChanceToHitSummons(_ -> 0.6)
+        ..presetChanceToHitUnits(_ -> 30)
+        ..presetChanceToHitSummons(_ -> 60)
         ..setEffectAbility(1, abilId.toRawCode())
         ..setDamageBonus(1, 30)
 
@@ -279,16 +279,16 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
 
 
     tgen = new BTAbilityTooltipGenerator(
-        "Summon a Dire Spirit Wolf."
+        "Summon 3 Spirit Wolf."
     )
     new AbilityDefinitionSpiritWolfcreep(ABIL_SUMMON_SPIRIT_WOLF2)
         ..setHeroAbility(false)
         ..setLevels(1)
         ..setAreaofEffect(1, 100)
         ..registerTooltipGenerator(tgen)
-        ..setSummonedUnit(1, commaList(UNIT_SPIRIT_WOLF2))
+        ..setSummonedUnit(1, commaList(UNIT_SPIRIT_WOLF1))
         ..tooltipStartListen()
-        ..setNumberofSummonedUnits(1, 1)
+        ..setNumberofSummonedUnits(1, 3)
         ..presetManaCost(_ -> 0)
         ..presetDurationNormal(_ -> 30)
         ..presetCooldown(_ -> 15)

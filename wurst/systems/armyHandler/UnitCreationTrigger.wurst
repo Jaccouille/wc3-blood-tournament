@@ -29,6 +29,7 @@ init
 
         EventListener.add(EVENT_PLAYER_UNIT_UPGRADE_FINISH) ->
             let u = EventData.getTriggerUnit()
+            u.addType(UNIT_TYPE_ANCIENT)
             BlzShowUnitTeamGlow(u, false)
 
         EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->

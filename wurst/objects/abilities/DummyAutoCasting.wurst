@@ -40,6 +40,7 @@ init
              BuffIds.entanglingRoots))
         ..put(ABIL_AUTOCAST_WAND_OF_ILLUSION, new BuffTuple(OrderIds.wandOfIllusion, -1))
         ..put(ABIL_AUTOCAST_REJUVENATION, new BuffTuple(OrderIds.rejuvination, BuffIds.rejuvenation))
+        ..put(ABIL_AUTOCAST_FROST_NOVA, new BuffTuple(OrderIds.frostnova, -1))
 
     dummyToRealImmediateCastMap
         ..put(ABIL_AUTOCAST_TAUNT, OrderIds.taunt)

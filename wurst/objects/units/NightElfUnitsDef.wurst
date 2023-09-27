@@ -10,7 +10,6 @@ import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
 import BTAbilities
-import LinkedList
 import ColorUtils
 
 
@@ -68,10 +67,10 @@ import ColorUtils
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 14, 4, 4, 1.8)
+        ..setAttack1Data(AttackType.Pierce, 14, 2, 4, 1.8)
         ..setAttack1Range(650)
 
-        ..setArmorData(ArmorType.Medium, 0)
+        ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(140)
 
         ..setSpeedBase(270)
@@ -94,10 +93,10 @@ import ColorUtils
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 44, 3, 4, 1.4)
+        ..setAttack1Data(AttackType.Pierce, 44, 3, 4, 1.6)
         ..setAttack1Range(750)
 
-        ..setArmorData(ArmorType.Medium, 0)
+        ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(240)
 
         ..setSpeedBase(300)

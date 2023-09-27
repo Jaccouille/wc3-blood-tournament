@@ -370,16 +370,16 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 
 @compiletime function createSorceress()
     var tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_MANA_SHIELD)
+        abilTooltipMap.get(ABIL_SLOW)
     )
 
     createSpawnedUnit(UNIT_SORCERESS, UnitIds.sorceress, BUILDING_SORCERESS)
-        ..setNormalAbilities(commaList(""))
-        ..setDefaultActiveAbility(commaList(""))
+        ..setNormalAbilities(commaList(ABIL_SLOW))
+        ..setDefaultActiveAbility(commaList(ABIL_SLOW))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 66, 3, 7, 1.9)
+        ..setAttack1Data(AttackType.Magic, 34, 3, 7, 1.9)
         ..setAttack1Range(550)
 
         ..setArmorData(ArmorType.Unarmored, 0)

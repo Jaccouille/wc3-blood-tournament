@@ -138,8 +138,9 @@ init
     let iceMageAction = new ItemModifyUnit()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ORB_FROST)
-        u.addAbility(ABIL_FROST_ARMOR)
-        u.issueImmediateOrderById(OrderIds.frostarmoron)
+        u.addAbility(ABIL_AUTOCAST_FROST_NOVA)
+        u.addAbility(ABIL_FROST_NOVA)
+        u.issueImmediateOrderById(OrderIds.curseon)
 
     itemModifyUnitMap.put(ITEM_ICE_MAGE, iceMageAction)
 
@@ -239,6 +240,15 @@ init
         u.issueImmediateOrderById(OrderIds.innerfireon)
 
     itemModifyUnitMap.put(ITEM_UNHOLY_FRENZY, unholyFrenzyAction)
+
+    let frostArmorAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.removeAbility(ABIL_AUTOCAST_ANTI_MAGIC_SHELL)
+        u.removeAbility(ABIL_ANTI_MAGIC_SHELL)
+        u.addAbility(ABIL_FROST_ARMOR)
+        u.issueImmediateOrderById(OrderIds.frostarmoron)
+
+    itemModifyUnitMap.put(ITEM_UNHOLY_FRENZY, frostArmorAction)
 
     let raiseSkeletonMageAction = new ItemModifyUnit()
         ..addAction() (unit u) ->

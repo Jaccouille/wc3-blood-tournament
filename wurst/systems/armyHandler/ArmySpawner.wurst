@@ -72,7 +72,7 @@ function genList(int unitId, int count) returns LinkedList<int>
 
 @compiletime function setupBuildingData()
 // TODO: refactor, spawn count should be located in the unit definition files
-    new BTBuildingData(BUILDING_FOOTMAN      , 50, 0   , genList(UNIT_FOOTMAN         , 5))
+    new BTBuildingData(BUILDING_FOOTMAN      , 100, 0   , genList(UNIT_FOOTMAN         , 10))
     new BTBuildingData(BUILDING_CAPTAIN  , 0  , 500 , genList(UNIT_CAPTAIN     , 10))
     new BTBuildingData(BUILDING_RIFLEMAN     , 100, 0   , genList(UNIT_RIFLEMAN        , 5))
     new BTBuildingData(BUILDING_ELVEN_ARCHER , 150, 0   , genList(UNIT_ELVEN_ARCHER    , 10))
