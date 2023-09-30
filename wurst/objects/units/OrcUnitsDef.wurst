@@ -11,7 +11,7 @@ import UnitTooltipGenerator
 import AbilityTooltipGenerator
 import ItemObjEditingCommon
 import BTAbilities
-import LinkedList
+import ArmySpawner
 
 @compiletime function createGrunt()
     var tooltip = new UnitTooltipGenerator("Basic melee unit.")
@@ -39,6 +39,7 @@ import LinkedList
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_CRITICAL_STRIKE_40))
     let itm = createBasicItem(ITEM_BERSERKER)
+    let gruntCount = BTBuildingData.getUnitCount(BUILDING_GRUNT)
     createSpawnedUnit(UNIT_BERSERKER, UnitIds.gromhellscream, BUILDING_BERSERKER)
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_40))
         ..registerItemDef(itm, ItemModifierType.Replace)
@@ -52,7 +53,7 @@ import LinkedList
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
-        ..setItemCostReplacement(0, 100, 1, 4, 4, BUILDING_GRUNT)
+        ..setItemCostReplacement(0, 100, 1, gruntCount, gruntCount, BUILDING_GRUNT)
 
         ..setSizeSmall()
 
@@ -474,6 +475,7 @@ import LinkedList
         abilTooltipMap.get(ABIL_OGRE_SWING) + "\n\n" +
         abilTooltipMap.get(ABIL_HARDENED_SKIN_10)
     )
+    let ogreCount = BTBuildingData.getUnitCount(BUILDING_OGRE)
     let itm = createBasicItem(ITEM_OGRE_ARMORED)
     createSpawnedUnit(UNIT_OGRE_ARMORED, UnitIds.ogre1, BUILDING_OGRE_ARMORED)
         ..setDefaultActiveAbility(commaList(
@@ -490,7 +492,7 @@ import LinkedList
         ..setHitPointsMaximumBase(1700)
 
         ..setSpeedBase(240)
-        ..setItemCostReplacement(0, 200, 1, 3, 3, BUILDING_OGRE)
+        ..setItemCostReplacement(0, 200, 1, ogreCount, ogreCount, BUILDING_OGRE)
         ..setSizeLarge()
 
         ..setNameEnhance("Z", "Armored Ogre")

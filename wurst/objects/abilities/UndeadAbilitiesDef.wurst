@@ -9,11 +9,13 @@ import UnitObjEditingCommon
 
 import LocalObjectIDs
 import TooltipsUtils
+import ArmySpawner
 
 
 @compiletime function createUndeadAbilities()
+    let bansheeCount = BTBuildingData.getUnitCount(BUILDING_BANSHEE)
     var itm = createBasicItem(ITEM_UNHOLY_FRENZY)
-        ..setItemCost(0, 100, 1, 3, 3)
+        ..setItemCost(0, 100, 1, bansheeCount, bansheeCount)
         ..setNameEnhance("Z", "Add 1 Unholy Frenzy")
         ..setInterfaceIcon(Icons.bTNUnholyFrenzy)
 
@@ -78,7 +80,7 @@ import TooltipsUtils
     abilTooltipMap.put(ABIL_ANTI_MAGIC_SHELL, tgen.generateFullTooltip())
 
     itm = createBasicItem(ITEM_FROST_ARMOR)
-        ..setItemCost(0, 50, 1, 3, 3)
+        ..setItemCost(0, 50, 1, bansheeCount, bansheeCount)
         ..setNameEnhance("X", "Add 1 Frost Armor")
         ..setInterfaceIcon(Icons.bTNFrostArmor)
 
@@ -115,8 +117,9 @@ import TooltipsUtils
         ..tooltipStopListen(true)
     abilTooltipMap.put(ABIL_RAISE_SKELETON, tgen.generateFullTooltip())
 
+    let necromancerCount = BTBuildingData.getUnitCount(BUILDING_NECROMANCER)
     itm = createBasicItem(ITEM_RAISE_SKELETON_MAGE)
-        ..setItemCost(0, 200, 1, 3, 3)
+        ..setItemCost(0, 200, 1, necromancerCount, necromancerCount)
         ..setNameEnhance("Z", "Replace Skeleton Warrior by Skeletal Mage")
         ..setInterfaceIcon(Icons.bTNSkeletonMage)
 
@@ -162,8 +165,8 @@ import TooltipsUtils
         ..presetEffectAbility(_ -> commaList(ABIL_CRIPPLE))
 
     itm = createBasicItem(ITEM_CRIPPLE)
-        ..setItemCost(0, 100, 1, 3, 3)
-        ..setNameEnhance("X", "Add 3 Cripple")
+        ..setItemCost(0, 100, 1, necromancerCount, necromancerCount)
+        ..setNameEnhance("X", "Add 1 Cripple")
         ..setInterfaceIcon(Icons.bTNCripple)
 
     new AbilityDefinitionCripplecreep(ABIL_CRIPPLE)

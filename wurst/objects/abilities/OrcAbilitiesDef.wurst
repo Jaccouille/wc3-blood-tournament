@@ -31,8 +31,9 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
         ..setTooltipNormal(1, TOOLTIP_BLOODLUST)
         ..setTooltipNormalExtended(1, TOOLTIP_EXT_BLOODLUST)
 
+    let witchDoctorCount = BTBuildingData.getUnitCount(BUILDING_WITCH_DOCTOR)
     var itm = createBasicItem(ITEM_HEALING_WAVE)
-        ..setItemCost(0, 400, 4, 1, 1)
+        ..setItemCost(0, 100, 1, witchDoctorCount, witchDoctorCount)
         ..setNameEnhance("X", "Add Healing Wave")
         ..setInterfaceIcon(Icons.bTNHealingWave)
 
@@ -136,9 +137,9 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
 
     abilTooltipMap.put(ABIL_BURNING_BLADE_50, tgen.generateFullTooltip())
 
-
+    let raiderCount = BTBuildingData.getUnitCount(BUILDING_RAIDER)
     itm = createBasicItem(ITEM_BURNING_BLADE)
-        ..setItemCost(0, 50, 1, BTBuildingData.getUnitCount(BUILDING_RAIDER), BTBuildingData.getUnitCount(BUILDING_RAIDER))
+        ..setItemCost(0, 50, 1, raiderCount, raiderCount)
         ..setNameEnhance("X", "Add 1 Burning Blade")
         ..setInterfaceIcon(Icons.bTNArcaniteMelee)
 
@@ -188,7 +189,7 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
 
 
     itm = createBasicItem(ITEM_DRUNKEN_HAZE)
-        ..setItemCost(0, 125, 1, 3, 3)
+        ..setItemCost(0, 125, 1, witchDoctorCount, witchDoctorCount)
         ..setNameEnhance("Z", "Add Drunken Haze ability")
         ..setInterfaceIcon(Icons.bTNStrongDrink)
 
@@ -220,8 +221,9 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
     abilTooltipMap.put(ABIL_DRUNKEN_HAZE, tgen.generateFullTooltip())
 
 
+    var shamanCount = BTBuildingData.getUnitCount(BUILDING_SHAMAN)
     itm = createBasicItem(ITEM_ORB_LIGHTNING)
-        ..setItemCost(0, 50, 1, 3, 3)
+        ..setItemCost(0, 50, 1, shamanCount, shamanCount)
         ..setNameEnhance("X", "Add 1 Lightning Orb")
         ..setInterfaceIcon(Icons.bTNOrbOfLightning)
 
@@ -255,7 +257,7 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
 
 
     itm = createBasicItem(ITEM_SPIRIT_WOLF1)
-        ..setItemCost(0, 50, 1, 3, 3)
+        ..setItemCost(0, 50, 1, shamanCount, shamanCount)
         ..setNameEnhance("Z", "Add 1 Summon Spirit Wolf")
         ..setInterfaceIcon(Icons.bTNSpiritWolf)
 

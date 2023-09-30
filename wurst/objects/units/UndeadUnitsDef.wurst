@@ -67,7 +67,7 @@ import ArmySpawner
 
 
 @compiletime function createSkeletalArcher()
-    let unitCount = BTBuildingData.getUnitCount(BUILDING_SKELETAL_ARCHER)
+    let skeletalArcherCount = BTBuildingData.getUnitCount(BUILDING_SKELETAL_ARCHER)
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_BURNING_ARROW))
     let itmBurning = createBasicItem(ITEM_BURNING_ARCHER)
     createSpawnedUnit(UNIT_BURNING_ARCHER, UnitIds.burningarcher)
@@ -84,7 +84,7 @@ import ArmySpawner
 
         ..setSpeedBase(270)
         ..setSizeSmall()
-        ..setItemCostReplacement(0, 100, 1, unitCount, unitCount, BUILDING_SKELETAL_ARCHER)
+        ..setItemCostReplacement(0, 100, 1, skeletalArcherCount, skeletalArcherCount, BUILDING_SKELETAL_ARCHER)
 
         ..setNameEnhance("Z", "Burning Archer")
         ..tooltipStopListen(true, itmBurning)
@@ -109,7 +109,7 @@ import ArmySpawner
 
         ..setSpeedBase(270)
         ..setSizeSmall()
-        ..setItemCostReplacement(0, 100, 1, unitCount, unitCount, BUILDING_SKELETAL_ARCHER)
+        ..setItemCostReplacement(0, 100, 1, skeletalArcherCount, skeletalArcherCount, BUILDING_SKELETAL_ARCHER)
 
         ..setNameEnhance("X", "Frost Archer")
         ..tooltipStopListen(true, itmFrost)

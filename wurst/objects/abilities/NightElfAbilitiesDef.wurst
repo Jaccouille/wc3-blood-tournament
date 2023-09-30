@@ -12,6 +12,7 @@ import ClosureEvents
 import InstantDummyCaster
 import OrderIds
 import ClosureForGroups
+import ArmySpawner
 
 import LocalObjectIDs
 
@@ -183,8 +184,9 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
     abilTooltipMap.put(ABIL_FAERIE_FIRE, tgen.generateFullTooltip())
 
+    let druidTalonCount = BTBuildingData.getUnitCount(BUILDING_DRUID_TALON)
     var itm = createBasicItem(ITEM_ENTANGLING_ROOT)
-        ..setItemCost(0, 100, 1, 4, 4)
+        ..setItemCost(0, 100, 1, druidTalonCount, druidTalonCount)
         ..setNameEnhance("Z", "Add 1 Entangling Root")
         ..setInterfaceIcon(Icons.bTNEntanglingRoots)
 
@@ -218,7 +220,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_ENTANGLING_ROOT, tgen.generateFullTooltip())
 
     itm = createBasicItem(ITEM_WAND_OF_ILLUSION)
-        ..setItemCost(0, 100, 1, 4, 4)
+        ..setItemCost(0, 100, 1, druidTalonCount, druidTalonCount)
         ..setNameEnhance("Z", "Add 1 Wand of Illusion")
         ..setInterfaceIcon(Icons.bTNWand)
 

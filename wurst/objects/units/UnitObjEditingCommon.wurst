@@ -267,6 +267,12 @@ public class BTUnitDefinition extends UnitDefinition
     function setItemCostUnit(int gold, int lumber, int charges)
         setItemCostUnit(gold, lumber, charges, charges, charges)
 
+    /** Used to define unit addition, it adds army points on spawn
+        Assume max charges/stock is the spawnCount
+    */
+    function setItemCostUnit(int gold, int lumber)
+        setItemCostUnit(gold, lumber, 1, this.spawnCount, this.spawnCount)
+
     /** Used to define unit addition, it adds army points on spawn */
     function setItemCostUnit(int gold, int lumber, int charges, int maxStock, int maxStack)
         let armyPoints = computeUnitPointValue(gold, lumber, charges) * charges

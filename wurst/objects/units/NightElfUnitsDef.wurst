@@ -11,6 +11,7 @@ import UnitObjEditingCommon
 import UnitTooltipGenerator
 import BTAbilities
 import ColorUtils
+import ArmySpawner
 
 
 @compiletime function createTreant()
@@ -334,6 +335,8 @@ import ColorUtils
         abilTooltipMap.get(ABIL_BASH_20) + "\n\n" +
         abilTooltipMap.get(ABIL_HARDENED_SKIN_15)
         )
+
+    let druidClawCount = BTBuildingData.getUnitCount(BUILDING_DRUID_CLAW)
     var itm = createBasicItem(ITEM_BEAR)
     createSpawnedUnit(UNIT_BEAR, UnitIds.druidoftheclawmorphed)
         ..registerItemDef(itm, ItemModifierType.Replace)
@@ -349,7 +352,7 @@ import ColorUtils
         ..setHitPointsMaximumBase(900)
 
         ..setSpeedBase(270)
-        ..setItemCostReplacement(0, 500, 1, 5, 5, BUILDING_DRUID_CLAW)
+        ..setItemCostReplacement(0, 500, 1, druidClawCount, druidClawCount, BUILDING_DRUID_CLAW)
         ..setSizeLarge()
 
         ..tooltipStopListen()
@@ -387,7 +390,7 @@ import ColorUtils
 
         ..setSpeedBase(270)
 
-        ..setItemCostReplacement(0, 500, 1, 5, 5, BUILDING_DRUID_CLAW)
+        ..setItemCostReplacement(0, 500, 1, druidClawCount, druidClawCount, BUILDING_DRUID_CLAW)
         ..setSizeLarge()
         ..setNameEnhance("X", "Owlbear Form")
 

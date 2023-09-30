@@ -106,7 +106,7 @@ import BTAbilities
         ..setHitPointsMaximumBase(220)
 
         ..setSpeedBase(240)
-        ..setItemCostUnit(0, 100, 1, 5, 5)
+        ..setItemCostUnit(0, 100, 1)
 
         ..setSizeSmall()
         ..setNameEnhance("C", "Sniper")
