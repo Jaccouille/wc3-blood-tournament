@@ -13,6 +13,16 @@ import OrderIds
 public HashMap<int, LinkedList<int>> unitItemSold = new HashMap<int, LinkedList<int>>
 
 public HashMap<int, LinkedList<int>> sharedStocksMap = new HashMap<int, LinkedList<int>>
+public constant itemGoldCost = compiletime(InitHashtable())
+public constant itemLumberCost = compiletime(InitHashtable())
+
+public class ItemCost
+    int gold
+    int lumber
+
+    construct(int gold, int lumber)
+        this.gold = gold
+        this.lumber = lumber
 
 public class ItemStockHandler
     static HashMap<unit, ItemStockHandler> unitToItemStockMap = new HashMap<unit, ItemStockHandler>
@@ -103,6 +113,11 @@ function initItemStockData()
     sharedStocksMap.put(BUILDING_DRUID_TALON, asList(ITEM_WAND_OF_ILLUSION     , ITEM_ENTANGLING_ROOT                       ))
     sharedStocksMap.put(BUILDING_DRUID_CLAW , asList(ITEM_BEAR                 , ITEM_OWLBEAR                               ))
 
+function canBuy(int itemId, player _p) returns boolean
+    let goldCost = itemGoldCost.loadInt(itemId, itemId)
+    let lumberCost = itemLumberCost.loadInt(itemId, itemId)
+    return _p.getGold() >= goldCost and _p.getLumber() >= lumberCost
+
 
 init
     initItemStockData()
@@ -111,23 +126,27 @@ init
 
         if ItemStockHandler.unitToItemStockMap.has(building)
             and EventData.getIssuedOrderId() != OrderIds.undefend
+
             let itemId = EventData.getIssuedOrderId()
             let i = createItem(itemId, building.getPos())
 
             // To avoid case when building is casting move ability
-            if i != null
+            // TODO: Should find another way to check if building is casting
+            // move ability in this context
+            if i != null and canBuy(itemId, building.getOwner())
                 building.addItemById(itemId)
                 ItemStockHandler.unitToItemStockMap.get(building). reduceStock(itemId, 1)
 
-                i.remove()
-                let bloodPoint = i.getLife().toInt()
                 if not building.isType(UNIT_TYPE_ANCIENT)
                     building.addType(UNIT_TYPE_ANCIENT)
 
-                if bloodPoint > 0
+                // Item who doesn't give any blood point got 1 hp
+                let bloodPoint = i.getLife().toInt()
+                if bloodPoint > 1
                     building.getOwner().getPlayerData().addArmyPoints(bloodPoint)
                     scoreBoardEntries.get("ArmyPoints")
                         .addValue(building.getOwner(), bloodPoint)
+            i.remove()
 
     // When an item is bought, it doesn't go in the building inventory, it
     // spawns on the ground

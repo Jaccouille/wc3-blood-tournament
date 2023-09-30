@@ -83,6 +83,7 @@ public function checkIfPlayerDefeated(PlayerData pData)
                 u.issuePointOrder("attack", CENTER)
 
         roundController.currentRound.roundParticipant.remove(pData._p)
+        roundController.currentRound.loosers.add(pData._p)
 
         // Log.info(pData._p.getName() + " has been eliminated")
 

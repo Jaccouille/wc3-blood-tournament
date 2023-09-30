@@ -13,6 +13,7 @@ import LocalObjectIDs
 import TooltipsUtils
 import GameConstants
 import PlayerData
+import UnitCreationTrigger
 
 @compiletime function createRacePickingMiscAbilities()
     new ChannelAbilityPreset(ABIL_RANDOM_RACE, 1, true)
@@ -114,11 +115,21 @@ import PlayerData
 
 
 init
+    EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_START) ->
+        let u = EventData.getConstructingStructure()
+        // When move ability is casted, it creates a unit in middle map
+        // Following lines remove it
+        if not u.getPos().isInRect(pDatas.get(u.getOwner()).buildingRect)
+            u.remove()
+
     EventListener.onPointCast(ABIL_MOVE_BUILDING) (unit caster, vec2 target) ->
+        // I believe it's necessary to prevent construction on target pos
+        // But I am not sure
         caster.abortOrder()
         if target.isInRect(pDatas.get(caster.getOwner()).buildingRect)
             flashEffect(Abilities.polyMorphTarget, caster.getPos())
             caster.setPos(target)
+            insertBuilding(pDatas.get(caster.getOwner()).buildingList, caster)
             flashEffect(Abilities.polyMorphTarget, caster.getPos())
         else
             simError(caster.getOwner(), "Cannot move building outside of your building zone")

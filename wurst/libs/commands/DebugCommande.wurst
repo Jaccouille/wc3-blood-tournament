@@ -62,6 +62,16 @@ init
             preventOrder = true
             orderBlocker.enable()
 
+    registerToolkitCommand("order") (player triggerPlayer, LinkedList<string> arguments) ->
+        forUnitsSelected(triggerPlayer) (unit target) ->
+            let orderId = target.getCurrentOrder()
+            // Print the basic information for this order.
+            print("{0} was issued order {1}: {2}.".format(
+                target.getName(),
+                orderId.toString(),
+                OrderId2StringBJ(orderId))
+            )
+
     registerToolkitCommand("ci") (player triggerPlayer, LinkedList<string> arguments) ->
         int _count = 0
         forItemsInMap() (item i) ->

@@ -64,6 +64,7 @@ public abstract class OnRoundStart
 
 public abstract class Round
     LinkedList<player> roundParticipant = new LinkedList<player>
+    LinkedList<player> loosers = new LinkedList<player>
     int goldReward = 0
     int bloodPointReward = 0
     constant matchUp = new LinkedList<Pair<int, int>>
@@ -89,15 +90,15 @@ public abstract class Round
 
     function start()
         // Round start
-        Log.info("exec round callback")
+        // Log.info("exec round callback")
         OnRoundStart.execute(this)
-        Log.info(this.roundName + " start")
+        // Log.info(this.roundName + " start")
         doBeforeSpawn()
-        Log.info(this.roundName + " doBeforeSpawn")
+        // Log.info(this.roundName + " doBeforeSpawn")
         spawnArmies()
-        Log.info(this.roundName + " spawnArmies")
+        // Log.info(this.roundName + " spawnArmies")
         doAfterSpawn()
-        Log.info(this.roundName + " doAfterSpawn")
+        // Log.info(this.roundName + " doAfterSpawn")
 
     function doBeforeSpawn()
         forUnitsAll() (unit u) ->

@@ -12,6 +12,38 @@ import ArmySpawner
 import ItemStockHandler
 import PlayerExtension
 
+public function insertBuilding(LinkedList<unit> buildingList, unit newBuilding)
+    // Remove the building so we can re insert it in the list
+    if buildingList.has(newBuilding)
+        buildingList.remove(newBuilding)
+
+    // Not need to find insertion index if list is empty
+    if buildingList.size() == 0
+        buildingList.add(newBuilding)
+        return
+
+    // Insert new building so the list is sorted by top left position
+    // Descending
+    for building in buildingList
+
+        // TODO: refactor? Code seems a bit ugly
+        // LogFor.info("u: " + u.getPos().x.toString() + " b : " + building.getPos().x.toString(), u.getOwner())
+        if newBuilding.getPos().x > building.getPos().x
+            if buildingList.indexOf(building) == 0
+                buildingList.addtoStart(newBuilding)
+            else
+                // LogFor.info("Inserted (x) at " + (buildingList.indexOf(building) - 1).toString(), u.getOwner())
+                buildingList.addAt(newBuilding, buildingList.indexOf(building))
+            break
+        else if newBuilding.getPos().x == building.getPos().x
+            if newBuilding.getPos().y > building.getPos().y
+                // LogFor.info("Inserted (y) at " + (buildingList.indexOf(building) - 1).toString(), u.getOwner())
+                buildingList.addAt(newBuilding, buildingList.indexOf(building))
+                break
+
+    if not buildingList.has(newBuilding)
+        buildingList.push(newBuilding)
+
 
 init
     CreateTrigger()
@@ -33,47 +65,23 @@ init
             BlzShowUnitTeamGlow(u, false)
 
         EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
-            let u = EventData.getTriggerUnit()
-            let pData = pDatas.get(u.getOwner())
+            let newBuilding = EventData.getTriggerUnit()
+            let pData = pDatas.get(newBuilding.getOwner())
             let buildingList = pData.buildingList
 
-            BlzShowUnitTeamGlow(u, false)
-            pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(u.getTypeId()).buildingArmyPoints)
+            BlzShowUnitTeamGlow(newBuilding, false)
+            pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(newBuilding.getTypeId()).buildingArmyPoints)
 
             // Check if is a building
-            if BTBuildingData.unitIdToDataMap.has(u.getTypeId())
-                // Not need to find insertion index if list is empty
-                if buildingList.size() == 0
-                    buildingList.add(u)
-
-                // Insert new building so the list is sorted by top left position
-                // Descending
-                for building in buildingList
-
-                    // TODO: refactor? Code seems a bit ugly
-                    // LogFor.info("u: " + u.getPos().x.toString() + " b : " + building.getPos().x.toString(), u.getOwner())
-                    if u.getPos().x > building.getPos().x
-                        if buildingList.indexOf(building) == 0
-                            buildingList.addtoStart(u)
-                        else
-                            // LogFor.info("Inserted (x) at " + (buildingList.indexOf(building) - 1).toString(), u.getOwner())
-                            buildingList.addAt(u, buildingList.indexOf(building))
-                        break
-                    else if u.getPos().x == building.getPos().x
-                        if u.getPos().y > building.getPos().y
-                            // LogFor.info("Inserted (y) at " + (buildingList.indexOf(building) - 1).toString(), u.getOwner())
-                            buildingList.addAt(u, buildingList.indexOf(building))
-                            break
-
-                if not buildingList.has(u)
-                    buildingList.push(u)
+            if BTBuildingData.unitIdToDataMap.has(newBuilding.getTypeId())
+                insertBuilding(buildingList, newBuilding)
 
                 // Add stock items
-                if unitItemSold.has(u.getTypeId())
-                    let itemStockHandler = new ItemStockHandler(u)
-                    unitItemSold.get(u.getTypeId()).forEach() (integer t) ->
+                if unitItemSold.has(newBuilding.getTypeId())
+                    let itemStockHandler = new ItemStockHandler(newBuilding)
+                    unitItemSold.get(newBuilding.getTypeId()).forEach() (integer t) ->
                         let itm = createItem(t, vec2(0, 0))
                         let maxStock = itm.getLevel()
-                        AddItemToStock(u, t, maxStock, maxStock)
+                        AddItemToStock(newBuilding, t, maxStock, maxStock)
                         itemStockHandler.addItem(itm.getTypeId(), maxStock)
                         itm.remove()

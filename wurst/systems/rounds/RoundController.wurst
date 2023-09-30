@@ -12,7 +12,7 @@ import GameStates
 import OrderBlocker
 import ScoreBoard
 import public Round
-import LocalObjectIDs
+import ColorUtils
 
 public constant roundController = new RoundController()
 
@@ -31,7 +31,7 @@ class RoundController
     constant rounds = new LinkedList<Round>
     player previousRoundWinner = null
     timerdialog tdialog
-    timer tim
+    timer roundInterludeTimer
 
     Round currentRound = null
 
@@ -84,15 +84,15 @@ class RoundController
         else
             ScoreBoardColumnEntries.loadRoundLayout(currentRound.roundParticipant)
 
-        tim = getTimer()
-        tdialog = tim.createTimerDialog()
+        roundInterludeTimer = getTimer()
+        tdialog = roundInterludeTimer.createTimerDialog()
             ..setTitle(currentRound.roundName + " begins in :")
             ..display(true)
 
         real interludeTime
         if currentRound instanceof FinalRound
             if hasFinalStarted
-                interludeTime = 3.
+                interludeTime = 5.
             else
                 // Allow builder to construct
                 disableOrderBlocker()
@@ -106,18 +106,18 @@ class RoundController
             interludeTime = gameConfig.getRoundInterludeTime()
 
         tdialog.setRealTimeRemaining(interludeTime)
-        Log.info("Setting interlude time to " + interludeTime.toString())
-        tim.doAfter(interludeTime) ->
+        roundInterludeTimer.doAfter(interludeTime) ->
             startRound()
 
+    function stopRoundTimer()
+        roundInterludeTimer.destr()
+
     function startRound()
-        hasRoundStarted = true
-        Log.info("Round start")
-        currentRound.start()
-        Log.info("Gotta destroy dialog")
         tdialog.destr()
-        if tim != null
-            tim.destr()
+        hasRoundStarted = true
+        if not currentRound.hasStarted
+            Log.info("Round start")
+            currentRound.start()
 
     function checkIfCurrentroundDone(player winner)
         if currentRound != null
@@ -200,7 +200,7 @@ function generateRounds()
 
 function generateFinalRounds()
     let matches = generateMatchups().getRandomElement()
-    Log.info("matches " + matches.size().toString())
+    // Log.info("matches " + matches.size().toString())
     for matchUp in matches
         roundController.addRounds(asList<Round>(
             new FinalRound()
@@ -231,8 +231,9 @@ public function initRoundController()
 
         if roundController.currentRound instanceof FinalRound
             roundController.buildFinalRoundMatchup(round.winner)
-            let loser = round.roundParticipant.find(Predicate.owned<player>(_p -> _p != (round.winner)))
+            let loser = round.loosers.get(0)
             printTimed(round.winner.getName() + " has eliminated " + loser.getName() , 3)
+            scoreBoardEntries.get("PlayerName").setEntryColor(loser, COLOR_GRAY)
         else
             doAfter(3) ->
                 altarEntity.hideCounter()

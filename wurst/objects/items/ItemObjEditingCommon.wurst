@@ -4,6 +4,7 @@ import ErrorHandling
 
 import ItemObjEditing
 import ItemIds
+import ItemStockHandler
 
 // Local imports:
 import GridHotkeyPosition
@@ -43,3 +44,5 @@ public function ItemDefinition.setItemCost(int gold, int lumber, int charges, in
     this.setMaxStack(maxStack)
     this.setNumberofCharges(charges)
     this.setStockMaximum(maxStock)
+    itemGoldCost.saveInt(this.getNewId(), this.getNewId(), gold)
+    itemLumberCost.saveInt(this.getNewId(), this.getNewId(), lumber)
