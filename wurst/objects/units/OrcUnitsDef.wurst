@@ -366,6 +366,7 @@ import LinkedList
         ..setSpeedBase(350)
         ..setPointValue(20)
         ..setSummonedUnit()
+        ..setSizeSmall()
 
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Spirit Wolf")
@@ -391,6 +392,7 @@ import LinkedList
         ..setSpeedBase(350)
         ..setPointValue(60)
         ..setSummonedUnit()
+        ..setSizeSmall()
 
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Dire Spirit Wolf")

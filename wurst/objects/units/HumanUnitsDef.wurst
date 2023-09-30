@@ -291,7 +291,7 @@ import BTAbilities
         ..tooltipStopListen(true, itm)
 
         ..setItemCostUnit(0, 1500, 1)
-        ..setNameEnhance("X", "Marhsall")
+        ..setNameEnhance("X", "Marshall")
         ..setScalingValue(1.15)
 
         ..setIconGameInterfaceExt(Icons.bTNGarithos)

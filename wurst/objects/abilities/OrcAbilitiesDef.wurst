@@ -168,6 +168,8 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetArmorPenalty(_ -> 4)
+        ..presetPrimaryDamage(_ -> 15)
+        ..presetSecondaryDamage(_ -> 10)
         ..presetDurationNormal(_ -> 6)
         ..presetManaCost(_ -> 100)
         ..presetAreaofEffect(_ -> 100)
