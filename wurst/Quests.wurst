@@ -1,0 +1,75 @@
+package Quests
+
+
+// Standard library imports:
+import LinkedList
+
+// Local imports:
+import ColorUtils
+import Quest
+import Icons
+
+
+let about = asList(
+    "Fight against other players during 7 rounds, then eliminate them in the elimination phase",
+    "Choose a builder and construct building. A building spawn a squad",
+    "Example: \"Footman x10\" spawns a squad of 10 footmen.",
+    "A buidling can be upgraded or buy items which can apply the following effect:",
+    "- Add a unit to the squad",
+    "- Replace a unit of the squad",
+    "- Add/replace an ability to a unit of the squad",
+    "Find the right combination of units to overcome your opponents"
+).joinBy("\n")
+
+let bloodpoints = asList(
+    "Blood points is acquired by building and killings",
+    "You can spend it to upgrade your buildings"
+).joinBy("\n")
+
+let credits = asList(
+    "Authors:|r".color(ENERGY_COLOR) + " Jaccouille|r".color(GENERAL_COLOR),
+    "Farsight:|r For witnessing the development of this map".color(GENERAL_COLOR),
+    "Billy-Jack/Baal:|r For making Star Wars Blood tournament which inspired Jacc to make this map".color(GENERAL_COLOR),
+    "Quazz:|r For introducing Jacc to Warcraft 3 modding".color(GENERAL_COLOR),
+    "Frotty, Wurst community:|r For making Wurstscript and answering Jacc dumb questions".color(GENERAL_COLOR),
+    "Hiveworkshop.com:|r".color(GENERAL_COLOR) + " for hosting a massive amount of information on modding"
+).joinBy("\n")
+
+let community = asList(
+    "You can give your feedback/suggestion to Jaccouille, reachable on :",
+    "Blood tournament Discord: ".color(HIGHLIGHT_COLOR) + "https://discord.gg/xhQQzMWnPG",
+    "GitHub: ".color(HIGHLIGHT_COLOR) + "https://github.com/Jaccouille/wc3-blood-tournament/tree/vanilla"
+).joinBy("\n")
+
+let programming = asList(
+    "This map was fully created using Wurstscript",
+    "It re-use Wurst code made by :",
+    "Frotty, Overkane, Quazz, Master-Troll"
+).joinBy("\n")
+
+init
+  new Quest(true)
+  ..setIcon(Icons.bTNSelectHeroOn)
+  ..setTitle("About")
+  ..setDescription(about)
+
+  new Quest(true)
+  ..setIcon(Icons.bTNCorpseExplode)
+  ..setTitle("Blood Points")
+  ..setDescription(bloodpoints)
+
+  new Quest(true)
+  ..setIcon(Icons.bTNDevotion)
+  ..setTitle("Community")
+  ..setDescription(community)
+
+  new Quest(true)
+  ..setIcon(Icons.bTNBattleRoar)
+  ..setTitle("Credits")
+  ..setDescription(credits)
+  ..setDescription(community)
+
+  new Quest(true)
+  ..setIcon(Icons.bTNTemp)
+  ..setTitle("Programming")
+  ..setDescription(programming)
