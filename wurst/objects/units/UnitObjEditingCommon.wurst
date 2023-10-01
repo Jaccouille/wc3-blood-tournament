@@ -187,6 +187,9 @@ public class BTUnitDefinition extends UnitDefinition
              " | " + min.toString() + " - " + max.toString() +
              " | " + attackCooldown.toString()
         addTooltipProperty("Damage", tooltip)
+        // TODO: find a better formula, doesn't take the dice into acccount?
+        let dps = (min + max / 2) / attackCooldown
+        addTooltipProperty("DPS", dps.toString(2))
 
     override function setHitPointsMaximumBase(int data)
         def.setInt("uhpm", data)
@@ -202,7 +205,11 @@ public class BTUnitDefinition extends UnitDefinition
         def.setInt("udef", defenseAmount)
         if dataStr == "divine"
             dataStr = "spectral"
-        addTooltipProperty("Armor", dataStr.firstUpper() + " | " + defenseAmount.toString())
+        // 0.06 being a map constant
+        let reductionPercent = ((defenseAmount * 0.06) / (1 + 0.06 * defenseAmount) * 100).toInt()
+        addTooltipProperty("Armor",
+        dataStr.firstUpper() + " | " + defenseAmount.toString() +
+        " | " + reductionPercent.toString() + "%" )
 
     override function setDefenseBase(int data)
         def.setInt("udef", data)
