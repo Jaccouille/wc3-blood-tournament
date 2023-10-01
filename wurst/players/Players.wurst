@@ -53,22 +53,21 @@ let botNames = new LinkedList<string>
 
 
 init
-    nullTimer() ->
-        botNames.shuffle()
-        // TODO: re implement after debug
-        // for i = 0 to bj_MAX_PLAYER_SLOTS - 1
-        for i = 0 to 7
-            let _p = players[i]
-            ALL_PLAYERS.add(_p)
-            // Replace player name if computer
-            if _p.getController() != MAP_CONTROL_USER
-                or _p.getSlotState() != PLAYER_SLOT_STATE_PLAYING
-                _p.setName(botNames.pop())
+    botNames.shuffle()
+    // TODO: re implement after debug
+    // for i = 0 to bj_MAX_PLAYER_SLOTS - 1
+    for i = 0 to 7
+        let _p = players[i]
+        ALL_PLAYERS.add(_p)
+        // Replace player name if computer
+        if _p.getController() != MAP_CONTROL_USER
+            or _p.getSlotState() != PLAYER_SLOT_STATE_PLAYING
+            _p.setName(botNames.pop())
 
 
-        EventListener.add(EVENT_PLAYER_LEAVE) ->
-            ALL_PLAYERS.remove(GetTriggerPlayer())
-            onLeaveListener.onLeave(GetTriggerPlayer())
+    EventListener.add(EVENT_PLAYER_LEAVE) ->
+        ALL_PLAYERS.remove(GetTriggerPlayer())
+        onLeaveListener.onLeave(GetTriggerPlayer())
 
-        onPlayerLeave() p ->
-            printTimed(p.getNameColored() + " has left the game", 15.)
+    onPlayerLeave() p ->
+        printTimed(p.getNameColored() + " has left the game", 15.)

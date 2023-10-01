@@ -15,10 +15,6 @@ import ChatCommands
 import ColorUtils
 import GameStates
 
-// Standard library imports:
-
-// Third-party imports:
-
 
 // The interval, in seconds, during which modes can be selected.
 let MODES_TIME_LIMIT = 60.0
@@ -51,7 +47,7 @@ public class GameMode
                 break
 
         // Notify players of the selection.
-        print(modePlayer.getNameColored() + " can choose game modes.".color(GENERAL_COLOR))
+        print("Wait for " + modePlayer.getNameColored() + " to choose game modes.".color(GENERAL_COLOR))
         printTimedToPlayer("You can select modes.".color(GENERAL_COLOR), 10, modePlayer)
 
         createModeBoard()
@@ -229,5 +225,4 @@ public class GameMode
 
 init
     GameStates.modesSelection.onEnter() states ->
-        Log.info("Mode selection")
         GameMode.initialize()

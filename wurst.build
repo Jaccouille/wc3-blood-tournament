@@ -1,12 +1,11 @@
----
-projectName: .
+projectName: Blood Tournamenet DE
 dependencies:
   - https://github.com/wurstscript/wurstStdlib2
   - https://github.com/theQuazz/wurst-lodash
   - https://github.com/Cokemonkey11/wurst-debugging-tools
 buildMapData:
-  name: Blood Tournament 2024
-  fileName: blood-tourny-2024
+  name: Blood Tournament DE v0.1e
+  fileName: Blood.Tournament.DE.v0.1e
   author: Jaccouille
   scenarioData:
     description: Just another blood tournament map
@@ -57,3 +56,20 @@ buildMapData:
       race: HUMAN
       controller: USER
       fixedStartLoc: true
+  forces:
+    - name: DefaultForce
+      playerIds:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+      flags:
+        allied: false
+        alliedVictory: false
+        sharedVision: false
+        sharedControl: false
+        sharedControlAdvanced: false

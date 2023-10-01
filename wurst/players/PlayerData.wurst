@@ -42,6 +42,10 @@ public class PlayerData
         dummyPlayers.push(dummyPlayer)
         dummyPlayer.setName(_p.getName() + " " + dummyPlayers.size().toString())
 
+    function renameDummyPlayer()
+        for dummyPlayer in dummyPlayers
+            dummyPlayer.setName(_p.getName() + " " + dummyPlayers.indexOf(dummyPlayer).toString())
+
     function getDummyPlayer(int idx) returns player
         // return this._p
         return dummyPlayers.get(idx)
