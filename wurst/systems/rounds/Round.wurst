@@ -64,7 +64,6 @@ public abstract class OnRoundStart
 
 public abstract class Round
     LinkedList<player> roundParticipant = new LinkedList<player>
-    LinkedList<player> loosers = new LinkedList<player>
     int goldReward = 0
     int bloodPointReward = 0
     constant matchUp = new LinkedList<Pair<int, int>>
@@ -178,6 +177,7 @@ constant FINAL_ROUND_EAST_ZONE_IDX = 9
 
 public class FinalRound extends Round
     static int counter = 0
+    player looser = null
 
     construct()
         counter++

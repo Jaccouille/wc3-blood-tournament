@@ -13,6 +13,7 @@ import LocalObjectIDs
 import TooltipsUtils
 import GameConstants
 import PlayerData
+import BuffObjEditing
 import UnitCreationTrigger
 
 @compiletime function createRacePickingMiscAbilities()
@@ -90,6 +91,26 @@ import UnitCreationTrigger
         ..setName("Move building")
         ..presetTooltipNormal(lvl -> makeToolTipNorm("V", "Move building"))
         ..presetTooltipNormalExtended(lvl -> "Move this building to the target location")
+
+@compiletime function createSpeedBoostAbility()
+    let BUFF_ID = compiletime(BUFF_ID_GEN.next())
+
+    new BuffDefinition(BUFF_ID, BuffIds.speedBonus)
+        ..setArtSpecial(1,"")
+        ..setTooltipNormal(1, "Speed boost")
+        ..setTooltipNormalExtended(1, "Speed boost to reach middle faster")
+        ..setName("Speed boost")
+
+    new AbilityDefinitionAuraEnduranceCreep(ABIL_SPEED_BOOST)
+        ..setIconNormal(Icons.bTNAnimalWarTraining)
+        ..setBuffs(1, BUFF_ID.toRawCode())
+        ..setName("Speed Boost")
+        ..presetTooltipNormal(lvl -> makeToolTipNorm("V", "Speed Boost"))
+        ..presetTooltipNormalExtended(lvl -> "Move this building to the target location")
+        ..setAttackSpeedIncrease(1, 0)
+        ..setMovementSpeedIncrease(1, 400)
+        ..setAreaofEffect(1, 2000)
+        ..presetTargetsAllowed(_ -> TargetsAllowed.ground)
 
 
 @compiletime function createMoveUnitAbility()

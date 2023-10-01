@@ -51,7 +51,7 @@ init
                 if t.getName() == null
                     pData.spawnedUnits.remove(t)
                     t.remove()
-                    checkIfPlayerDefeated(pData)
+                    checkIfPlayerDefeated(pData, null)
 
     registerToolkitCommand("attack") (player triggerPlayer, LinkedList<string> arguments) ->
         forUnitsAll() (unit u) ->

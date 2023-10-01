@@ -5,7 +5,9 @@ import ChatCommands
 import HashMap
 import RoundController
 import GameStates
-
+import GameConfig
+import MapBounds
+import LocalObjectIDs
 
 
 init
@@ -17,6 +19,9 @@ init
                 let voteInstance = new Vote("Skip Round", 60., 1)
                 voteInstance.addAction() () ->
                     if not roundController.currentRound.hasStarted
+                        if gameConfig.isDisplayPortalEnabled()
+                            SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "show", false)
+                            SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "birth", false)
                         roundController.startRound()
                     else
                         printTimed("Vote failed! Round already started!", 3)

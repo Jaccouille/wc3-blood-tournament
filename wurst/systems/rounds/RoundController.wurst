@@ -113,15 +113,18 @@ class RoundController
             // Allow builder to construct
             disableOrderBlocker()
             interludeTime = gameConfig.getRoundInterludeTime()
-            doAfter(interludeTime - 10.) ->
-                if gameConfig.isDisplayPortalEnabled()
-                    SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "show", false)
-                    SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "birth", false)
-                forUnitsAll() (unit u) ->
-                    if u.isType(UNIT_TYPE_STRUCTURE)
-                        u.setAnimation("Stand Victory")
 
-        Log.info(interludeTime.toString())
+            // Visual effect before round start
+            doAfter(interludeTime - 10.) ->
+                if not currentRound.hasStarted
+                    if gameConfig.isDisplayPortalEnabled()
+                        SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "show", false)
+                        SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "birth", false)
+                    forUnitsAll() (unit u) ->
+                        if u.isType(UNIT_TYPE_STRUCTURE)
+                            u.setAnimation("Stand Victory")
+
+        // Log.info(interludeTime.toString())
         tdialog.setRealTimeRemaining(interludeTime)
         roundInterludeTimer.doAfter(interludeTime) ->
             startRound()
@@ -136,7 +139,7 @@ class RoundController
             Log.info("Round start")
             forUnitsAll() (unit u) ->
                 if u.isType(UNIT_TYPE_STRUCTURE)
-                    u.setAnimation("Stand")
+                    u.setAnimation("stand")
             currentRound.start()
 
     function checkIfCurrentroundDone(player winner)
@@ -237,7 +240,7 @@ public function initRoundController()
     onLastArmyRemaining = () ->
         // Log.info("Clean up phase")
         altarEntity.getOrbUnit().unpause()
-        altarEntity.getArenaMaster().setAnimation("Spell Channel")
+        altarEntity.getArenaMaster().setAnimation("Stand Second")
         altarEntity.showCounter()
 
     onAllUnitDead = (player winner) ->
@@ -249,11 +252,16 @@ public function initRoundController()
         altarEntity.getOrbUnit().pause()
         altarEntity.getArenaMaster().setAnimation("Stand")
 
+        // Remove speed boost banner
+        forUnitsAll() (unit u) ->
+            if u.getTypeId() == UNIT_SPEED_BANNER
+                u.remove()
+
         if roundController.currentRound instanceof FinalRound
             roundController.buildFinalRoundMatchup(round.winner)
-            let loser = round.loosers.get(0)
-            printTimed(round.winner.getName() + " has eliminated " + loser.getName() , 3)
-            scoreBoardEntries.get("PlayerName").setEntryColor(loser, COLOR_GRAY)
+            let looser = (round castTo FinalRound).looser
+            printTimed(round.winner.getName() + " has eliminated " + looser.getName() , 3)
+            scoreBoardEntries.get("PlayerName").setEntryColor(looser, COLOR_GRAY)
         else
             doAfter(3) ->
                 altarEntity.hideCounter()

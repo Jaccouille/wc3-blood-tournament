@@ -59,13 +59,13 @@ import UnitObjEditingCommon
         )
         ..setAttack1WeaponSound(WeaponSound.Nothing)
         ..setAttack1WeaponType(WeaponType.Artillery)
-        ..setName("Ord Of Blood")
+        ..setName("Orb Of Blood")
 
     new HeroDefinition(UNIT_ARENA_MASTER, UnitIds.gryphonrider)
         ..setAttacksEnabled(0)
-        ..setNormalAbilities(commaList(ABIL_ALTAR_LIGHTNING, AbilityIds.invulnerable, AbilityIds.magicSentry, AbilityIds.locust))
+        ..setNormalAbilities(commaList(ABIL_ALTAR_LIGHTNING, AbilityIds.invulnerable, AbilityIds.magicSentry))
         ..setLevel(10)
-        ..setModelFile(LocalUnits.arenaMaster)
+        ..setModelFile(Units.medivh1)
         ..setMovementHeight(465)
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
@@ -95,8 +95,28 @@ import UnitObjEditingCommon
         )
         ..setAttack1WeaponSound(WeaponSound.Nothing)
         ..setAttack1WeaponType(WeaponType.Artillery)
-        ..setName("Lord Of Slaughter")
-        ..setProperNames("Bhaal")
+        ..setName("Tournament Manager")
+        ..setProperNames("Need a name")
+
+function createSpeedBanner(int newId) returns BuildingDefinition
+    return new BuildingDefinition(newId, UnitIds.farm)
+        ..setNormalAbilities(commaList(AbilityIds.invulnerable, ABIL_SPEED_BOOST))
+        ..setBuildTime(1)
+        ..setFoodProduced(0)
+        ..setLumberCost(0)
+        ..setGoldCost(0)
+        ..setName("Banner")
+        ..setUpgradesUsed("")
+        ..setPathingMap("")
+        ..setGroundTexture("")
+        ..setAttacksEnabled(0)
+
+@compiletime function createSpeedBannerUnits()
+    createSpeedBanner(UNIT_SPEED_BANNER)
+        ..setName("Speed Banner")
+        ..setModelFile(Objects.battleStandard)
+        ..setScalingValue(2)
+
 
 @compiletime function createRacePickerUnit() returns BuildingDefinition
     return new BuildingDefinition(UNIT_RACE_PICKER, UnitIds.altarofkings)

@@ -196,7 +196,11 @@ public let UNIT_HUMAN_BUILDER     = compiletime(UNIT_ID_GEN.next())
 public let UNIT_ORC_BUILDER       = compiletime(UNIT_ID_GEN.next())
 public let UNIT_UNDEAD_BUILDER    = compiletime(UNIT_ID_GEN.next())
 public let UNIT_NIGHT_ELF_BUILDER = compiletime(UNIT_ID_GEN.next())
+
 public let UNIT_BEAST_BUILDER     = compiletime(UNIT_ID_GEN.next())
+
+// Speed boost banner
+public let UNIT_SPEED_BANNER     = compiletime(UNIT_ID_GEN.next())
 
 public let ABIL_ALTAR_LIGHTNING = compiletime(ABIL_ID_GEN.next())
 public let ABIL_SELL_BUILDING   = compiletime(ABIL_ID_GEN.next())
@@ -206,6 +210,7 @@ public let ABIL_SHOP_SHARING    = compiletime(ABIL_ID_GEN.next())
 public let ABIL_SHOP_PURCHASE   = compiletime(ABIL_ID_GEN.next())
 public let ABIL_MOVE_BUILDING   = compiletime(ABIL_ID_GEN.next())
 public let ABIL_ORDER_UNIT      = compiletime(ABIL_ID_GEN.next())
+public let ABIL_SPEED_BOOST     = compiletime(ABIL_ID_GEN.next())
 
 public let ABIL_CLEAVE_10          = compiletime(ABIL_ID_GEN.next())
 public let ABIL_CLEAVE_20          = compiletime(ABIL_ID_GEN.next())
