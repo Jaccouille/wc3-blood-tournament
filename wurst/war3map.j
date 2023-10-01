@@ -148,7 +148,7 @@ function CreateNeutralHostile takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h009', -3453.3, 3957.3, 307.609, 'h009' )
+    set u = BlzCreateUnitWithSkin( p, 'h009', -3445.3, 3925.3, 307.609, 'h009' )
 endfunction
 
 //===========================================================================
@@ -183,24 +183,24 @@ endfunction
 function CreateRegions takes nothing returns nothing
     local weathereffect we
 
-    set gg_rct_Frontrank_SW = Rect( -1280.0, -4768.0, -512.0, -3584.0 )
-    set gg_rct_Frontrank_NE = Rect( 512.0, 5632.0, 1280.0, 6784.0 )
-    set gg_rct_Frontrank_ES = Rect( 4608.0, -256.0, 5760.0, 512.0 )
-    set gg_rct_Frontrank_WN = Rect( -5760.0, 1536.0, -4608.0, 2304.0 )
-    set gg_rct_Frontrank_SE = Rect( 512.0, -4768.0, 1280.0, -3584.0 )
-    set gg_rct_Frontrank_EN = Rect( 4608.0, 1504.0, 5760.0, 2272.0 )
-    set gg_rct_Frontrank_NW = Rect( -1280.0, 5632.0, -512.0, 6784.0 )
-    set gg_rct_Frontrank_WS = Rect( -5760.0, -256.0, -4608.0, 512.0 )
-    set gg_rct_Red = Rect( 3680.0, 5568.0, 4768.0, 6176.0 )
-    set gg_rct_Blue = Rect( 5216.0, 4544.0, 6336.0, 5152.0 )
-    set gg_rct_Teal = Rect( 4672.0, -3232.0, 5792.0, -2656.0 )
-    set gg_rct_Purple = Rect( 3680.0, -4768.0, 4800.0, -4192.0 )
-    set gg_rct_Yellow = Rect( -4768.0, -4768.0, -3680.0, -4192.0 )
-    set gg_rct_Orange = Rect( -5792.0, -3232.0, -4704.0, -2656.0 )
-    set gg_rct_Green = Rect( -6304.0, 4576.0, -5216.0, 5152.0 )
-    set gg_rct_Pink = Rect( -4768.0, 5600.0, -3680.0, 6176.0 )
-    set gg_rct_Final_Round_West = Rect( -1536.0, 0.0, -512.0, 2048.0 )
-    set gg_rct_Final_Round_East = Rect( 512.0, 0.0, 1536.0, 2048.0 )
+    set gg_rct_Frontrank_SW = Rect( -1792.0, -4736.0, -512.0, -3584.0 )
+    set gg_rct_Frontrank_NE = Rect( 512.0, 5632.0, 1792.0, 6784.0 )
+    set gg_rct_Frontrank_ES = Rect( 4608.0, -768.0, 5760.0, 512.0 )
+    set gg_rct_Frontrank_WN = Rect( -5760.0, 1536.0, -4608.0, 2816.0 )
+    set gg_rct_Frontrank_SE = Rect( 512.0, -4736.0, 1792.0, -3584.0 )
+    set gg_rct_Frontrank_EN = Rect( 4608.0, 1504.0, 5760.0, 2816.0 )
+    set gg_rct_Frontrank_NW = Rect( -1792.0, 5632.0, -512.0, 6784.0 )
+    set gg_rct_Frontrank_WS = Rect( -5760.0, -768.0, -4608.0, 512.0 )
+    set gg_rct_Red = Rect( 3680.0, 5472.0, 5408.0, 6496.0 )
+    set gg_rct_Blue = Rect( 5152.0, 4224.0, 7136.0, 5920.0 )
+    set gg_rct_Teal = Rect( 4672.0, -3232.0, 5952.0, -2656.0 )
+    set gg_rct_Purple = Rect( 3680.0, -4768.0, 4896.0, -4192.0 )
+    set gg_rct_Yellow = Rect( -4768.0, -4768.0, -3552.0, -4192.0 )
+    set gg_rct_Orange = Rect( -5792.0, -3232.0, -4576.0, -2656.0 )
+    set gg_rct_Green = Rect( -6304.0, 4576.0, -5088.0, 5152.0 )
+    set gg_rct_Pink = Rect( -4768.0, 5600.0, -3552.0, 6176.0 )
+    set gg_rct_Final_Round_West = Rect( -1536.0, 0.0, -512.0, 2176.0 )
+    set gg_rct_Final_Round_East = Rect( 512.0, 0.0, 1536.0, 2176.0 )
     set gg_rct_backupSpawn = Rect( -2816.0, -7040.0, -2592.0, -6816.0 )
 endfunction
 

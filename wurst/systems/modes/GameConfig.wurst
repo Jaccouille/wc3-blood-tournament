@@ -18,6 +18,7 @@ class GameConfig
     private var healthMultiplier = 1.
     private var multipleBuilder = false
     private var allRandom = false
+    private var displayPortal = true
 
     function setTestMode(boolean value)
         testMode = value
@@ -103,5 +104,11 @@ class GameConfig
 
     function isAllRandomEnabled() returns boolean
         return allRandom
+
+    function setDisplayPortal(boolean value)
+        displayPortal = value
+
+    function isDisplayPortalEnabled() returns boolean
+        return displayPortal
 
 public constant gameConfig = new GameConfig()

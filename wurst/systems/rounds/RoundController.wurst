@@ -13,6 +13,9 @@ import OrderBlocker
 import ScoreBoard
 import public Round
 import ColorUtils
+import LocalObjectIDs
+import ClosureForGroups
+import MapBounds
 
 public constant roundController = new RoundController()
 
@@ -98,13 +101,27 @@ class RoundController
                 disableOrderBlocker()
                 interludeTime = 120.
                 hasFinalStarted = true
+                doAfter(interludeTime - 10.) ->
+                    if gameConfig.isDisplayPortalEnabled()
+                        SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "show", false)
+                        SetDoodadAnimationRect(boundRect, DOODAD_ELIM_PORTAL, "birth", false)
+                forDestructablesInRect(boundRect) (destructable d) ->
+                    d.kill()
                 // pDatas.forEach() (player key, PlayerData value) ->
                 //     SetPlayerTechResearched(key, UPGD_ELIMINATION, 1)
         else
             // Allow builder to construct
             disableOrderBlocker()
             interludeTime = gameConfig.getRoundInterludeTime()
+            doAfter(interludeTime - 10.) ->
+                if gameConfig.isDisplayPortalEnabled()
+                    SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "show", false)
+                    SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "birth", false)
+                forUnitsAll() (unit u) ->
+                    if u.isType(UNIT_TYPE_STRUCTURE)
+                        u.setAnimation("Stand Victory")
 
+        Log.info(interludeTime.toString())
         tdialog.setRealTimeRemaining(interludeTime)
         roundInterludeTimer.doAfter(interludeTime) ->
             startRound()
@@ -117,6 +134,9 @@ class RoundController
         hasRoundStarted = true
         if not currentRound.hasStarted
             Log.info("Round start")
+            forUnitsAll() (unit u) ->
+                if u.isType(UNIT_TYPE_STRUCTURE)
+                    u.setAnimation("Stand")
             currentRound.start()
 
     function checkIfCurrentroundDone(player winner)

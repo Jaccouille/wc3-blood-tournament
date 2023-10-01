@@ -16,6 +16,7 @@ import SpawnZone
 import GameConfig
 import UnitExtensions
 import ItemCallbackDefinition
+import Assets
 
 
 public function computeUnitPointValue(int goldCost, int lumberCost, int unitCount) returns int
@@ -71,7 +72,8 @@ function genList(int unitId, int count) returns LinkedList<int>
     return unitList
 
 @compiletime function setupBuildingData()
-// TODO: refactor, spawn count should be located in the unit definition files
+    // TODO: refactor, spawn count should be located in the unit definition files
+    // Issue: Can't map an int to a linked list at compile time
     new BTBuildingData(BUILDING_FOOTMAN      , 100, 0   , genList(UNIT_FOOTMAN         , 10))
     new BTBuildingData(BUILDING_CAPTAIN  , 0  , 500 , genList(UNIT_CAPTAIN     , 10))
     new BTBuildingData(BUILDING_RIFLEMAN     , 100, 0   , genList(UNIT_RIFLEMAN        , 5))
@@ -221,9 +223,13 @@ public class ArmySpawner
             newUnit.setBaseDamage(
                 (newUnit.getBaseDamage(0) * gameConfig.getDamageMultiplier()).toInt() , 0)
 
+        // Apply Item modifier
         if not unitModifierList.isEmpty()
+            // Log.info("Execute for : " + newUnit.getName() + " " + unitModifierList.size().toString())
             unitModifierList.get(0).a.execute(newUnit)
+            // b being the item charges
             unitModifierList.get(0).b -= 1
+            // Clean up the pair obj once it has been used
             if unitModifierList.get(0).b <= 0
                 destroy unitModifierList.dequeue()
 
@@ -283,6 +289,9 @@ public class ArmySpawner
             buildingIdx++
         if isBuildingSpawnOver() and isSquadSpawnOver()
             spawnFinished = true
+            if gameConfig.isDisplayPortalEnabled()
+                SetDoodadAnimationRect(this.pData.buildingRect, DOODAD_PORTAL, "death", false)
+                spawnZone.closePortal()
 
         // Set position to the reinforcement spawn point
         // 400 is kind of a random value
@@ -318,8 +327,9 @@ public class ArmySpawner
             executeItemBonus(building.getInventory())
 
         let unitId = squadIds.get(squadIdx)
-        spawnUnit(unitId, getRandomReinforcementPos())
-            ..issuePointOrder("attack", CENTER)
+        let u = spawnUnit(unitId, getRandomReinforcementPos())
+        u.issuePointOrder("attack", CENTER)
+        flashEffect(Abilities.blinkTarget, u.getPos())
 
         squadIdx++
         if isSquadSpawnOver()
@@ -328,6 +338,9 @@ public class ArmySpawner
             squadIds.clear()
             if isBuildingSpawnOver()
                 spawnFinished = true
+                if gameConfig.isDisplayPortalEnabled()
+                    SetDoodadAnimationRect(this.pData.buildingRect, DOODAD_PORTAL, "death", false)
+                    spawnZone.closePortal()
 
     private function initReinforcementListener()
         reinforcementListener = EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->

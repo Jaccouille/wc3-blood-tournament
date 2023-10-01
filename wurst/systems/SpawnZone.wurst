@@ -2,10 +2,12 @@ package SpawnZone
 
 // Standard libs imports:
 import LinkedList
+import MapBounds
 
 // Local imports:
 import GameConfig
 import GameStates
+import LocalObjectIDs
 
 constant FINAL_ROUND_SPAWN_LIMIT = 200
 
@@ -24,10 +26,25 @@ public class SpawnZone
         this.width = spawnRect.width()
         this.height = spawnRect.height()
         this.unitLimit = unitLimit
+        closePortal()
+
+    function openPortal()
+        SetDoodadAnimationRect(this.spawnRect, DOODAD_PORTAL, "show", false)
+        SetDoodadAnimationRect(this.spawnRect, DOODAD_PORTAL, "birth", false)
+        SetDoodadAnimationRect(this.spawnRect, DOODAD_ELIM_PORTAL, "birth", false)
+
+    function closePortal()
+        SetDoodadAnimationRect(this.spawnRect, DOODAD_PORTAL, "death", false)
+        SetDoodadAnimationRect(this.spawnRect, DOODAD_ELIM_PORTAL, "death", false)
 
 public let spawnZones = new LinkedList<SpawnZone>()
 
 init
+    // Hiding the doodads otherwise there are visible at start of the game
+    // If I play death animation, player can still see a bit of the portal
+    SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "hide", false)
+    SetDoodadAnimationRect(boundRect, DOODAD_ELIM_PORTAL, "hide", false)
+
     GameStates.gameplay.onEnter() state ->
         spawnZones
             ..add(new SpawnZone(gg_rct_Frontrank_SW, gg_rct_Frontrank_SW.getRightBot(), 0..asAngleDegrees(), gameConfig.getSpawnCap()))
