@@ -210,6 +210,8 @@ public class ArmySpawner
     function spawnUnit(int unitId, vec2 spawnPos) returns unit
         let armySize = pDatas.get(_p).spawnedUnits.size()
         // Log.info("Army size : " + armySize.toString())
+        // Need to spread unit owner over 2 dummy player, once it reaches MAX_UNIT_PER_PLAYER
+        // change the idx to next dummy player
         let dummyPlayerIdx = armySize div MAX_UNIT_PER_PLAYER mod pDatas.get(_p).dummyPlayers.size()
 
         // Log.info("pre spawn")
