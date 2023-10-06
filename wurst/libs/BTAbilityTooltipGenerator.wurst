@@ -1,4 +1,4 @@
-package AbilityTooltipGenerator
+package BTAbilityTooltipGenerator
 
 import public ChannelAbilityPreset
 import ItemObjEditing
@@ -25,7 +25,7 @@ import ColorUtils
     Copied and reworked from https://github.com/Frotty/Ability-Tooltip-Generator/blob/master/wurst/AbilityTooltipGenerator.wurst
     Credits to Frotty
 ***/
-public class AbilityTooltipGenerator implements TooltipGenerator
+public class BTAbilityTooltipGenerator implements TooltipGenerator
     private constant propMap = new IterableMap<string, StringLevelClosure>
     private var description = ""
 
@@ -131,16 +131,6 @@ public class AbilityTooltipGenerator implements TooltipGenerator
         else
             _newString = oldString.substring(0, charPos[lvl-2] + 1) + oldString.substring(charPos[lvl-2] + 1, charPos[lvl-1]) + "|r" + oldString.substring(charPos[lvl-1], oldLen)
         return _newString
-
-public class BTAbilityTooltipGenerator extends AbilityTooltipGenerator
-    construct(Targettype ttype, string description)
-        super(ttype, description)
-
-    construct(string description)
-        super(description)
-
-    construct()
-        super()
 
     function generateFullTooltip() returns string
         let name = generateTooltipNormal()

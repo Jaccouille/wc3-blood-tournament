@@ -1,7 +1,7 @@
 package NightElfAbilitiesDef
 
 import BTAbilities
-import AbilityTooltipGenerator
+import BTAbilityTooltipGenerator
 import AbilityObjEditingCommons
 import Assets
 import ItemObjEditingCommon

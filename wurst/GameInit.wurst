@@ -13,9 +13,28 @@ import LocalObjectIDs
 import RoundController
 import ScoreBoard
 import UnitDeathTrigger
+import Sounds
+import GameStates
 
 // A timer for the core gameplay.
 public constant GAME_TIMER = CreateTimer()
+
+public function playGameInitSound()
+    // Create, play, and kill the sound.
+    KillSoundWhenDone(
+        CreateSound(
+            Sounds.bloodElfMagePissed6,
+            false,
+            false,
+            false,
+            10,
+            10,
+            ""
+        )
+            ..setPitch(1.)
+            ..setVolume(127)
+            ..play()
+    )
 
 function preload()
     let abils = new IdGenerator('AM00')
@@ -62,3 +81,5 @@ init
                 true,
                 false
             ).start()
+    GameStates.modesSelection.onExit() (state) ->
+        playGameInitSound()

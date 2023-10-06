@@ -103,7 +103,7 @@ class RoundController
                 hasFinalStarted = true
                 doAfter(interludeTime - 10.) ->
                     if gameConfig.isDisplayPortalEnabled()
-                        SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "show", false)
+                        SetDoodadAnimationRect(boundRect, DOODAD_ELIM_PORTAL, "show", false)
                         SetDoodadAnimationRect(boundRect, DOODAD_ELIM_PORTAL, "birth", false)
                 forDestructablesInRect(boundRect) (destructable d) ->
                     d.kill()

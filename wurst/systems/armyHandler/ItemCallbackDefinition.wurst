@@ -53,12 +53,12 @@ init
     itemAddUnitMap.put(ITEM_CAPTAIN, captainAction)
 
 
-    let explosiveAmmoAction = new ItemModifyUnit()
-        ..addAction() (unit u) ->
-        u.addAbility(ABIL_EXPLOSIVE_AMMO)
-        u.addAbility(ABIL_EXPLOSIVE_AMMO_VISUAL)
-        u.issueImmediateOrderById(OrderIds.flamingattack)
-    itemModifyUnitMap.put(ITEM_EXPLOSIVE_AMMO, explosiveAmmoAction)
+    let explosiveAmmoAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            replaceUnit(unitToSpawn, UNIT_RIFLEMAN, UNIT_RIFLEMAN_EXPLOSIVE_AMMO)
+
+    itemAddUnitMap.put(ITEM_EXPLOSIVE_AMMO, explosiveAmmoAction)
 
 
     let sniperAction = new ItemAddUnit()
@@ -178,6 +178,14 @@ init
         u.issueImmediateOrderById(OrderIds.innerfireon)
 
     itemModifyUnitMap.put(ITEM_HEALING_WAVE, healingWaveAction)
+
+    let manaWardAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_MANA_WARD)
+        u.addAbility(ABIL_AUTOCAST_MANA_WARD)
+        u.issueImmediateOrderById(OrderIds.innerfireon)
+
+    itemModifyUnitMap.put(ITEM_MANA_WARD, manaWardAction)
 
     let drunkenHazeAction = new ItemModifyUnit()
         ..addAction() (unit u) ->

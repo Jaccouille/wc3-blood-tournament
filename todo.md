@@ -1,100 +1,48 @@
 # TODO
+- Item healing reduc attack index
 
-- improved scoreboard
-  - Added pretty pretty race icon next to the player (Joli drapeau)
-    - Update board title to indicate round
--
-- AI?
-- Debug load out (pre placed units)
-- Add game mode handling
-- generate description for abilities
-- Pan camera
-- Remove rally point from building
+- start camera player
+- Add dispell to all race
+- tooltip * percent
+- Add loading screen
+- Item stock share mana ward
+- Test auto cast to mana target
+- Add red fog
+- Can't random with existing building
+- Display different error message for builder after round start
+- Reduce Heroes Scaling value
+- Periodcally check for stuck unit
+- Reduce vampire collision
+- Elimination phase portal
+- Wrong looser in elim
 
 ## Not important
-
-- Add kill count to each unit
-- Create a system to spread units control among 2 players
-- setup a pipeline to handle external 3d assets in mdl
+- Fix grom soundset
+- suffix player name with bot when AI on
 - Speed boost after winning
 - Add some handicap/bonus point for weaker player
+- remove aura art
+- Siege tank for human
+- Improve builder AI
+- Custom ui to display unit stats
+- setup a pipeline to handle external 3d assets in mdl
 - Generate a custom UI tech tree
-- Added a feature to buy items for units
+- Handle team game
+- Add kill count to each unit
+- Add ui to credit modeller
+- Change statut UI (see ITT)
+- Test parseTag native
 
 
 
 ## Faction
-### Human
-#### Units
--   Footman
--   Knight
--   Rifleman
--   Priest
--   Sorceress
--   Archmage
--   Paladin
--   Mortar
-#### Cool upgrades
-- Path of Sorcery
-- Path of Chivalry
-- Path of Gunpowder/industrialization
-### Orc
-#### Units
-- Grunt
-- HeadHunter
-- Shaman/Warlock
-- Raider
-- Ogre
-- Witch Doctors
-- Demolisher
-- Farseer
-- Gromm hellscream
-- shadowhunter
-#### Cool upgrades
-- Path of Ruins -> Chaos boyyyyy
-- Path of Spirit -> shaman stuff
-- Path of ... iron? -> iron horde
-### Undead
-#### Units
-- Ghoul
-- Crypt fiend
-- necro
-- banshee
-- abom
-- meatwagon
-- Dreadlord
-- lich
-- dark ranger
-#### Cool upgrades
-- For the burning legion
-- For the Lich King
-- For the Forsaken
-### NE
-#### Units
-- Messenger
-- Archer
-- Huntress
-- Druid talon
-- Druid claw
-- Archruid
-- Some Ents
-- balista
-- POTM
-- Warden
-- KOTG
-#### Cool upgrades
-- Way of the Nature
-- Way of the Bad girls
-- Way of the warden/Highborn dude power hungry dude (toss illidan in there)
 ### Beast Kingdom
 #### Units
-- Tauren
-- Centaur
+- Gnoll, Pigs, Wolf, Furbolg, Sasquatch
+- Tauren -> Cairne
+- Lizard -> Thunder/Fire Salamander
+- Centaur -> Centar Axe thrower
 - Hydra
-- Harpy?
-- Barbarian
-- Satyr
-- Sasquatch
-#### Cool upgrades
-###
-###
+
+- Chen
+- Beastmaster

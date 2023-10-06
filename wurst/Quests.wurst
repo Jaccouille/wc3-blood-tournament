@@ -67,7 +67,6 @@ init
   ..setIcon(Icons.bTNBattleRoar)
   ..setTitle("Credits")
   ..setDescription(credits)
-  ..setDescription(community)
 
   new Quest(true)
   ..setIcon(Icons.bTNTemp)

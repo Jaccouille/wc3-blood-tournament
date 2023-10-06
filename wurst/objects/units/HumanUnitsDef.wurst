@@ -5,13 +5,14 @@ import Assets
 
 // Local imports:
 import ItemObjEditingCommon
-import AbilityTooltipGenerator
+import BTAbilityTooltipGenerator
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
 import ColorUtils
 import LocalAssets
 import BTAbilities
+import ArmySpawner
 
 @compiletime function createFootman()
     var tooltip = new UnitTooltipGenerator("Basic melee unit")
@@ -46,17 +47,17 @@ import BTAbilities
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 34, 2, 4, 1.3)
+        ..setAttack1Data(AttackType.Normal, 44, 2, 4, 1.3)
 
         ..setArmorData(ArmorType.Large, 7)
-        ..setHitPointsMaximumBase(500)
+        ..setHitPointsMaximumBase(750)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
         ..tooltipStopListen(true, itm)
 
         ..setItemCostUnit(0, 500, 1)
-        ..setNameEnhance("Z", "Royal Guard")
+        ..setNameEnhance("Z", "Captain")
         ..setSizeSmall()
 
         ..setIconGameInterfaceExt(Icons.bTNTheCaptain)
@@ -65,7 +66,6 @@ import BTAbilities
     var tooltip = new UnitTooltipGenerator("Basic ranged unit.")
 
     createSpawnedUnit(UNIT_RIFLEMAN, UnitIds.rifleman, BUILDING_RIFLEMAN)
-        ..setAttack1WeaponType(WeaponType.MissileSplash)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setAttack1Data(AttackType.Pierce, 24, 4, 3, 1.7)
@@ -88,24 +88,54 @@ import BTAbilities
         ..setIconGameInterfaceExt(Icons.bTNRifleman)
         ..setUnitSoundSetExt(Soundsets.rifleman)
 
+    let riflemanCount = BTBuildingData.getUnitCount(BUILDING_RIFLEMAN)
+    tooltip = new UnitTooltipGenerator(
+        "Decent ranged pierce unit, has small splash."
+    )
+    var itm = createBasicItem(ITEM_EXPLOSIVE_AMMO)
+    createSpawnedUnit(UNIT_RIFLEMAN_EXPLOSIVE_AMMO, UnitIds.rifleman)
+        ..setAttack1WeaponType(WeaponType.MissileSplash)
+        ..setAttack1ProjectileArt(Abilities.cannonTowerMissile)
+        ..setAttack1ProjectileSpeed(1200)
+        ..setNormalAbilities(commaList(ABIL_EXPLOSIVE_AMMO_VISUAL))
+        ..registerItemDef(itm, ItemModifierType.Replace)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1Data(AttackType.Pierce, 30, 3, 4, 1.7)
+        ..setAttack1Range(450)
+        ..setSmallSplash()
+
+        ..setArmorData(ArmorType.Medium, 2)
+        ..setHitPointsMaximumBase(220)
+
+        ..setSpeedBase(240)
+        ..setItemCostUnit(0, 100, 1, riflemanCount, riflemanCount)
+
+        ..setSizeSmall()
+        ..setNameEnhance("C", "Rifleman Explosive Ammo")
+        ..tooltipStopListen(true, itm)
+
+        ..setIconGameInterfaceExt(Icons.bTNHumanMissileUpThree)
+
+
     tooltip = new UnitTooltipGenerator(
         "High range unit.\n\n" +
         abilTooltipMap.get(ABIL_CRITICAL_STRIKE_20)
     )
-    var itm = createBasicItem(ITEM_SNIPER)
+    itm = createBasicItem(ITEM_SNIPER)
     createSpawnedUnit(UNIT_SNIPER, UnitIds.rifleman)
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_20))
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setAttack1Data(AttackType.Pierce, 45, 4, 6, 1.7)
-        ..setAttack1Range(750)
+        ..setAttack1Range(900)
 
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(220)
 
         ..setSpeedBase(240)
-        ..setItemCostUnit(0, 100, 1)
+        ..setItemCostUnit(0, 50, 1, riflemanCount, riflemanCount)
 
         ..setSizeSmall()
         ..setNameEnhance("C", "Sniper")
@@ -123,7 +153,7 @@ import BTAbilities
 
         ..setAttack1Data(AttackType.Siege, 66, 6, 7, 2.5)
         ..setSmallSplash()
-        ..setAttack1Range(900)
+        ..setAttack1Range(1000)
 
         ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(150)
@@ -201,11 +231,11 @@ import BTAbilities
 
 @compiletime function createKnight()
     var tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_MAGIC_ARMOR_30)
+        abilTooltipMap.get(ABIL_BASH_20)
     )
 
     createSpawnedUnit(UNIT_KNIGHT, UnitIds.knight, BUILDING_KNIGHT)
-        ..setNormalAbilities(commaList(ABIL_MAGIC_ARMOR_30))
+        ..setNormalAbilities(commaList(ABIL_BASH_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -222,6 +252,7 @@ import BTAbilities
 
         ..setNameEnhance("E", "Knight")
         ..tooltipStopListen(true)
+        ..setUpgradeTo(commaList(BUILDING_CRUSADER))
 
         ..setModelFileExt(Units.knight1)
         ..setIconGameInterfaceExt(Icons.bTNKnight)
@@ -229,9 +260,10 @@ import BTAbilities
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_MAGIC_ARMOR_50) + "\n\n" +
+        abilTooltipMap.get(ABIL_BASH_30) + "\n\n" +
         abilTooltipMap.get(ABIL_HOLY_BLADE)
     )
-    var itm = createBasicItem(ITEM_CRUSADER)
+    // var itm = createBasicItem(ITEM_CRUSADER)
     createSpawnedUnit(UNIT_CRUSADER, UnitIds.knight, BUILDING_CRUSADER)
         ..setNormalAbilities(commaList(
             ABIL_MAGIC_ARMOR_50,
@@ -239,7 +271,7 @@ import BTAbilities
             ABIL_HOLY_BLADE_VISUAL
             ))
         ..setDefaultActiveAbility(commaList(ABIL_HOLY_BLADE))
-        ..registerItemDef(itm, ItemModifierType.Replace)
+        // ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -252,9 +284,10 @@ import BTAbilities
 
         ..setSizeSmall()
         ..setAutoPointValue()
+        ..setAutoBuildingCost()
 
-        ..setItemCostReplacement(0, 200, 1, 5, 5, BUILDING_KNIGHT)
-        ..tooltipStopListen(true, itm)
+        // ..setItemCostReplacement(0, 200, 1, 5, 5, BUILDING_KNIGHT)
+        ..tooltipStopListen(true)
 
         ..setAttack1Range(120)
         ..setScalingValue(1.05)
@@ -270,7 +303,7 @@ import BTAbilities
         abilTooltipMap.get(ABIL_CLEAVE_30)
     )
 
-    itm = createBasicItem(ITEM_MARSHALL)
+    let itm = createBasicItem(ITEM_MARSHALL)
     createSpawnedUnit(UNIT_MARSHALL, UnitIds.lordgarithos)
         ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_INSPIRE, ABIL_AUTOCAST_INSPIRE))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_INSPIRE))
@@ -298,14 +331,15 @@ import BTAbilities
 
 function createPaladin(int paladinId) returns BTUnitDefinition
     let tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_BASH_20) + "\n\n" +
+        abilTooltipMap.get(ABIL_BASH_30) + "\n\n" +
+        abilTooltipMap.get(ABIL_CLEAVE_30) + "\n\n" +
         abilTooltipMap.get(ABIL_DEVOTION_AURA_2) + "\n\n" +
         "Eternal Vanguard\n".color(SPECIAL_COLOR) +
         "Upon dying, the paladin becomes a ghost."
     )
     return createSpawnedUnit(paladinId, UnitIds.paladin)
             ..registerTooltipGenerator(tooltip)
-            ..setNormalAbilities(commaList(ABIL_BASH_20, ABIL_DEVOTION_AURA_2))
+            ..setNormalAbilities(commaList(ABIL_BASH_30, ABIL_CLEAVE_30, ABIL_DEVOTION_AURA_2))
             ..tooltipStartListen()
 
             ..setAttack1Data(AttackType.Siege, 120, 5, 7, 1.3)
@@ -325,10 +359,12 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 
 
 @compiletime function createPaladinSquad()
-    let tooltip = new UnitTooltipGenerator("Spawn upon paladin death.")
+    let tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_CLEAVE_30) + "\n\n" +
+        "Spawn upon paladin death.")
     createSpawnedUnit(UNIT_GHOST_PALADIN, UnitIds.paladin)
         ..registerTooltipGenerator(tooltip)
-        ..setNormalAbilities(commaList(""))
+        ..setNormalAbilities(commaList(ABIL_CLEAVE_30))
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Magic, 120, 5, 7, 1.3)

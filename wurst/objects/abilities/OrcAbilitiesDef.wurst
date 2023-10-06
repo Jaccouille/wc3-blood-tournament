@@ -5,7 +5,7 @@ import ColorUtils
 import LocalObjectIDs
 import ItemObjEditingCommon
 import AbilityObjEditingCommons
-import AbilityTooltipGenerator
+import BTAbilityTooltipGenerator
 import UnitObjEditingCommon
 import HashMap
 import BTAbilities
@@ -215,6 +215,7 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
     createAutoCastedEnemyAbility(ABIL_AUTOCAST_DRUNKEN_HAZE)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 600)
+        ..presetManaCost(_ -> 100)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 6)
         ..tooltipStopListen(true)
@@ -222,8 +223,67 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_DRUNKEN_HAZE, tgen.generateFullTooltip())
 
+    itm = createBasicItem(ITEM_MANA_WARD)
+        ..setItemCost(0, 250, 1, 1, 1)
+        ..setNameEnhance("C", "Add Mana Ward ability")
+        ..setInterfaceIcon(Icons.bTNHealingWard)
 
-    var shamanCount = BTBuildingData.getUnitCount(BUILDING_SHAMAN)
+    tgen = new BTAbilityTooltipGenerator(
+        "Summons an immovable ward that restores mana to nearby allies."
+        )
+
+    let BUFF_ID = compiletime(BUFF_ID_GEN.next())
+    new BuffDefinition(BUFF_ID, BuffIds.brillianceAura)
+        ..setIcon(Icons.bTNHealingWard)
+        ..setArtTarget(Abilities.aNrlTarget)
+        ..setTargetAttachmentPoint0(1, "chest")
+        ..setTooltipNormal(1, "Mana Ward")
+        ..setTooltipNormalExtended(1, "This unit's mana is being restored " +
+            " by a nearby ward")
+
+    new AbilityDefinitionAuraBrilliancecreep(ABIL_MANA_WARD_AURA)
+        ..setLevels(1)
+        ..setCheckDependencies(false)
+        ..setArtTarget("")
+        ..presetBuffs(_ -> commaList(BUFF_ID))
+        ..registerTooltipGenerator(tgen)
+        ..presetPercentBonus(_ -> true)
+        ..tooltipStartListen()
+        ..presetManaRegenerationIncrease(_ -> 0.04)
+        ..presetAreaofEffect(_ -> 500)
+        ..setNameEnhance("C", "Mana Ward Aura")
+        ..tooltipStopListen(false)
+
+    new AbilityDefinitionHealingWard(ABIL_MANA_WARD)
+        ..setLevels(1)
+        ..setWardUnitType(1, commaList(UNIT_MANA_WARD))
+        ..presetCooldown(_ -> 0)
+        ..setCheckDependencies(false)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDurationNormal(_ -> 5)
+        ..presetManaCost(_ -> 200)
+        ..presetCastRange(_ -> 600)
+        ..setNameEnhance("C", "Mana Ward")
+        ..tooltipStopListen(false)
+
+    createAutoCastedAlliedAbility(ABIL_AUTOCAST_MANA_WARD)
+        ..registerTooltipGenerator(tgen)
+        ..presetCastRange(_ -> 600)
+        ..presetManaCost(_ -> 200)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 10)
+        ..tooltipStopListen(true)
+
+    new UnitDefinition(UNIT_MANA_WARD, UnitIds.healingward)
+        ..setNormalAbilities(commaList(ABIL_MANA_WARD_AURA))
+        ..setName("Mana Ward")
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_MANA_WARD, tgen.generateFullTooltip())
+
+
+    let shamanCount = BTBuildingData.getUnitCount(BUILDING_SHAMAN)
     itm = createBasicItem(ITEM_ORB_LIGHTNING)
         ..setItemCost(0, 50, 1, shamanCount, shamanCount)
         ..setNameEnhance("X", "Add 1 Lightning Orb")
@@ -276,7 +336,7 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
         ..setNumberofSummonedUnits(1, 1)
         ..presetManaCost(_ -> 0)
         ..presetDurationNormal(_ -> 30)
-        ..presetCooldown(_ -> 15)
+        ..presetCooldown(_ -> 30)
         ..setNameEnhance("Z", "Summon Spirit Wolf")
         ..tooltipStopListen(true)
 
@@ -370,3 +430,49 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
             ))
 
     abilTooltipMap.put(ABIL_OGRE_SWING, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Increase nearby allies damage every time this unit kills an enemy. " +
+        "Each chained kill increase the level of the ability. Level count is reset " +
+        "when the buff expires."
+    )
+    new AbilityDefinitionBattleRoar(ABIL_INVIGORATE)
+        ..setAnimationNames("")
+        ..setHeroAbility(false)
+        ..presetDefenseIncrease(lvl -> 0)
+        ..presetLifeRegenerationRate(lvl -> 0)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..setLevels(10)
+        ..presetDamageIncrease(lvl -> 10. * lvl)
+        ..presetAreaofEffect(lvl -> 200. + 25 * lvl)
+        ..presetDurationNormal(lvl -> 5)
+        ..presetManaCost(lvl -> 0)
+        ..presetCooldown(lvl -> 0)
+        ..setNameEnhance("Z", "Invigorate")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_INVIGORATE, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator(
+        "This unit gains temporary damage boost on every kill. " +
+        "Each chained kill increase the level of the ability. Level count is reset " +
+        "when the buff expires."
+    )
+    new AbilityDefinitionRoar(ABIL_KILLING_SPREE)
+        ..setAnimationNames("")
+        ..setHeroAbility(false)
+        ..presetAreaofEffect(lvl -> 1)
+        ..presetDefenseIncrease(lvl -> 0)
+        ..presetLifeRegenerationRate(lvl -> 0)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..setLevels(10)
+        ..presetDamageIncrease(lvl -> 0.2 * lvl)
+        ..presetDurationNormal(lvl -> 10)
+        ..presetManaCost(lvl -> 0)
+        ..presetCooldown(lvl -> 0)
+        ..setNameEnhance("Z", "Killing Spree")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_KILLING_SPREE, tgen.generateFullTooltip())

@@ -59,6 +59,18 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
         forUnitsInRange(dyingUnit.getPos(), 600) (unit u) ->
             u.issuePointOrder("attack", CENTER)
 
+    else if killer.getTypeId() == UNIT_WARMONGER
+        if not killer.hasAbility(BuffIds.battleRoar)
+            killer.setAbilityLevel(ABIL_INVIGORATE, 1)
+        killer.issueImmediateOrderById(OrderIds.battleroar)
+        killer.incAbilityLevel(ABIL_INVIGORATE)
+
+    else if killer.getTypeId() == UNIT_BERSERKER
+        if not killer.hasAbility(BuffIds.roar)
+            killer.setAbilityLevel(ABIL_KILLING_SPREE, 1)
+        killer.issueImmediateOrderById(OrderIds.roar)
+        killer.incAbilityLevel(ABIL_KILLING_SPREE)
+
 function getBounty(unit dyingUnit) returns int
     return (dyingUnit.getPointValue() * gameConfig.getBountyMultiplier()).toInt()
 

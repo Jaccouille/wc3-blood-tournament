@@ -8,7 +8,7 @@ import LocalObjectIDs
 import OrcAbilitiesDef
 import UnitObjEditingCommon
 import UnitTooltipGenerator
-import AbilityTooltipGenerator
+import BTAbilityTooltipGenerator
 import ItemObjEditingCommon
 import BTAbilities
 import ArmySpawner
@@ -37,23 +37,28 @@ import ArmySpawner
         ..setIconGameInterfaceExt(Icons.bTNGrunt)
         ..setUnitSoundSetExt(Soundsets.grunt)
 
-    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_CRITICAL_STRIKE_40))
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_KILLING_SPREE) + "\n\n" +
+        abilTooltipMap.get(ABIL_CRITICAL_STRIKE_30)
+        )
     let itm = createBasicItem(ITEM_BERSERKER)
     let gruntCount = BTBuildingData.getUnitCount(BUILDING_GRUNT)
-    createSpawnedUnit(UNIT_BERSERKER, UnitIds.gromhellscream, BUILDING_BERSERKER)
-        ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_40))
+    createSpawnedUnit(UNIT_BERSERKER, UnitIds.chaosgrunt, BUILDING_BERSERKER)
+        ..setAnimationCastBackswing(0)
+        ..setAnimationCastPoint(0)
+        ..setNormalAbilities(commaList(ABIL_KILLING_SPREE, ABIL_CRITICAL_STRIKE_30))
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 48, 4, 4, 1.1)
+        ..setAttack1Data(AttackType.Normal, 55, 4, 4, 1.1)
 
         ..setArmorData(ArmorType.Large, 3)
         ..setHitPointsMaximumBase(500)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
-        ..setItemCostReplacement(0, 100, 1, gruntCount, gruntCount, BUILDING_GRUNT)
+        ..setItemCostReplacement(0, 75, 1, gruntCount, gruntCount, BUILDING_GRUNT)
 
         ..setSizeSmall()
 
@@ -62,8 +67,8 @@ import ArmySpawner
 
         ..setArtSpecial(Objects.orcLargeDeathExplode)
 
-        ..setModelFileExt(Units.hellscream1)
-        ..setIconGameInterfaceExt(Icons.bTNHellScream)
+        ..setModelFileExt(Units.chaosOrcRange)
+        ..setIconGameInterfaceExt(Icons.bTNChaosGrunt)
         ..setUnitSoundSetExt(Soundsets.hellscream)
 
 @compiletime function creatTrolls()
@@ -173,11 +178,12 @@ import ArmySpawner
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_MELEE_AURA_FLAT_20) + "\n\n" +
+        abilTooltipMap.get(ABIL_MAGIC_ARMOR_50) + "\n\n" +
         abilTooltipMap.get(ABIL_BASH_30)
         )
     let itm = createBasicItem(ITEM_PACK_LEADER)
     createSpawnedUnit(UNIT_PACK_LEADER, UnitIds.thrall, BUILDING_PACK_LEADER)
-        ..setNormalAbilities(commaList(ABIL_MELEE_AURA_FLAT_20, ABIL_BASH_30))
+        ..setNormalAbilities(commaList(ABIL_MELEE_AURA_FLAT_20, ABIL_MAGIC_ARMOR_50, ABIL_BASH_30))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -199,6 +205,39 @@ import ArmySpawner
         ..setModelFileExt(Units.thrall1)
         ..setIconGameInterfaceExt(Icons.bTNThrall)
         ..setUnitSoundSetExt(Soundsets.thrall)
+
+
+@compiletime function createWarmonger()
+    let tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_INVIGORATE) + "\n\n" +
+        abilTooltipMap.get(ABIL_CRITICAL_STRIKE_40)
+        )
+    createSpawnedUnit(UNIT_WARMONGER, UnitIds.gromhellscream, BUILDING_WARMONGER)
+        ..setAnimationCastBackswing(0)
+        ..setAnimationCastPoint(0)
+        ..setNormalAbilities(commaList(ABIL_INVIGORATE, ABIL_CRITICAL_STRIKE_40))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Normal, 86, 6, 8, 1.0)
+
+        ..setArmorData(ArmorType.Large, 5)
+        ..setHitPointsMaximumBase(1100)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..setSizeSmall()
+
+        ..setNameEnhance("R", "Warmonger")
+        ..tooltipStopListen(true)
+
+        ..setArtSpecial(Objects.orcLargeDeathExplode)
+
+        ..setModelFileExt(Units.hellscream1)
+        ..setIconGameInterfaceExt(Icons.bTNHellScream)
+        ..setUnitSoundSetExt(Soundsets.hellscream)
 
 @compiletime function createKodo()
     let tooltip = new UnitTooltipGenerator(
@@ -424,7 +463,7 @@ import ArmySpawner
 
         ..setArmorData(ArmorType.Small, 4)
         ..setHitPointsMaximumBase(440)
-        ..setMana(400)
+        ..setMana(600)
 
         ..setSpeedBase(300)
 
@@ -582,6 +621,7 @@ import ArmySpawner
             BUILDING_GRUNT,
             BUILDING_HEADHUNTER,
             BUILDING_RAIDER,
+            BUILDING_WARMONGER,
             BUILDING_WITCH_DOCTOR,
             BUILDING_SHAMAN,
             BUILDING_OGRE,
