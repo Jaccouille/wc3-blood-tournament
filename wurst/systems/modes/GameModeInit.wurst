@@ -118,6 +118,21 @@ init
             mode.message("All random disabled, players can choose builder".color(SPECIAL_COLOR))
             gameConfig.setAllRandom(false)
 
+    new GameMode("set-exchange-rate", "ser", "General", "Set gold/blood points exchange rates, default : " +
+        gameConfig.getGoldExchange().toString() + " gold for " + gameConfig.getBloodPointExchange().toString() +
+        " blood points") (mode, args) ->
+        if (args.size() > 2)
+            let goldEx = min(max(args.get(1).toInt(), -10000), 10000)
+            let bpEx = min(max(args.get(2).toInt(), -10000), 10000)
+            gameConfig.setGoldExchange(goldEx)
+            gameConfig.setBloodPointExchange(bpEx)
+            let goldMsg = goldEx.toString().color(COLOR_GOLD)
+            let bpMsg = bpEx.toString().color(COLOR_RED)
+            mode.message("Exchange rate set to : {0} <---> {1}".format(
+                goldMsg, bpMsg
+            ))
+
+
     new GameMode("no-portal", "np", "Removes portal model") (mode, args) ->
         if not gameConfig.isDisplayPortalEnabled()
             mode.message("Portal display disable".color(SPECIAL_COLOR))

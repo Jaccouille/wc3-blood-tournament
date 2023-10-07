@@ -14,7 +14,11 @@ import TooltipsUtils
 import GameConstants
 import PlayerData
 import BuffObjEditing
+import GameStates
+import GameConfig
 import UnitCreationTrigger
+import StandardTextTags
+import ColorUtils
 
 @compiletime function createRacePickingMiscAbilities()
     new ChannelAbilityPreset(ABIL_RANDOM_RACE, 1, true)
@@ -135,7 +139,66 @@ import UnitCreationTrigger
             ..setBaseOrderID(1, "blizzard")
 
 
+function createTradeResourceAbility(int abilId) returns ChannelAbilityPreset
+    return new ChannelAbilityPreset(abilId, 1, true)
+        ..presetManaCost(lvl -> 0)
+        ..presetCooldown(lvl -> 0)
+        ..setHeroAbility(false)
+        ..setItemAbility(false)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("")
+        ..setArtEffect("")
+        ..setArtDuration(1, 0)
+        ..setArtTarget("")
+        ..setArtCaster("")
+
+let TOOLTIP_TRADE_GOLD = "Exchange {0} blood points for {1} gold."
+let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
+
+@compiletime function createTradeResourcesAbilities()
+    createTradeResourceAbility(ABIL_TRADE_GOLD)
+        ..setNameEnhance("D", "Trade Gold")
+        ..setTooltipNormalExtended(1, TOOLTIP_TRADE_GOLD)
+        ..setIconNormal(Icons.bTNMGExchange)
+
+    createTradeResourceAbility(ABIL_TRADE_BLOOD_POINT)
+        ..setNameEnhance("F", "Trade Blood Points")
+        ..setTooltipNormalExtended(1, TOOLTIP_TRADE_BLOOD_POINT)
+        ..setIconNormal(Icons.bTNCorpseExplode)
+
+
 init
+    GameStates.modesSelection.onExit() (state) ->
+        let goldEx = gameConfig.getGoldExchange()
+        let bpEx = gameConfig.getBloodPointExchange()
+        setAbilityExtendedTooltip(ABIL_TRADE_GOLD,
+            TOOLTIP_TRADE_GOLD.format(
+                bpEx.toString().color(COLOR_RED), goldEx.toString().color(COLOR_GOLD)),
+            0)
+        setAbilityExtendedTooltip(ABIL_TRADE_BLOOD_POINT,
+            TOOLTIP_TRADE_BLOOD_POINT.format(
+                goldEx.toString().color(COLOR_GOLD), bpEx.toString().color(COLOR_RED)),
+            0)
+
+    EventListener.onCast(ABIL_TRADE_GOLD) (unit caster) ->
+        if caster.getOwner().getLumber() >= gameConfig.getBloodPointExchange()
+            flashEffect(UI.goldCredit, caster.getPos3Real())
+            caster.getOwner().addGold(gameConfig.getGoldExchange())
+            caster.getOwner().addLumber(-gameConfig.getBloodPointExchange())
+            createGoldBountyTextTag(caster, gameConfig.getGoldExchange())
+        else
+            simError(caster.getOwner(), "Not enough blood points for exchange")
+
+    EventListener.onCast(ABIL_TRADE_BLOOD_POINT) (unit caster) ->
+        if caster.getOwner().getGold() >= gameConfig.getGoldExchange()
+            flashEffect(Objects.humanSmallDeathExplode, caster.getPos3Real())
+            caster.getOwner().addLumber(gameConfig.getBloodPointExchange())
+            caster.getOwner().addGold(-gameConfig.getGoldExchange())
+            createLumberBountyTextTag(caster, gameConfig.getBloodPointExchange())
+                ..setColor(colorA(255, 0, 0, 255))
+        else
+            simError(caster.getOwner(), "Not enough gold for exchange")
+
     EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_START) ->
         let u = EventData.getConstructingStructure()
         // When move ability is casted, it creates a unit in middle map

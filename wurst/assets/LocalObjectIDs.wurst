@@ -206,6 +206,7 @@ public let UNIT_BEAST_BUILDER     = compiletime(UNIT_ID_GEN.next())
 // Speed boost banner
 public let UNIT_SPEED_BANNER     = compiletime(UNIT_ID_GEN.next())
 
+// ==================== MISC ABILITIES =================
 public let ABIL_ALTAR_LIGHTNING = compiletime(ABIL_ID_GEN.next())
 public let ABIL_SELL_BUILDING   = compiletime(ABIL_ID_GEN.next())
 public let ABIL_RANDOM_RACE     = compiletime(ABIL_ID_GEN.next())
@@ -215,6 +216,8 @@ public let ABIL_SHOP_PURCHASE   = compiletime(ABIL_ID_GEN.next())
 public let ABIL_MOVE_BUILDING   = compiletime(ABIL_ID_GEN.next())
 public let ABIL_ORDER_UNIT      = compiletime(ABIL_ID_GEN.next())
 public let ABIL_SPEED_BOOST     = compiletime(ABIL_ID_GEN.next())
+public let ABIL_TRADE_GOLD      = compiletime(ABIL_ID_GEN.next())
+public let ABIL_TRADE_BLOOD_POINT    = compiletime(ABIL_ID_GEN.next())
 
 // ==================== COMMON ABILITIES =================
 public let ABIL_CLEAVE_10          = compiletime(ABIL_ID_GEN.next())

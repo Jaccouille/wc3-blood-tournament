@@ -19,6 +19,8 @@ class GameConfig
     private var multipleBuilder = false
     private var allRandom = false
     private var displayPortal = true
+    private var goldExchange = 150
+    private var bloodPointExchange = 1500
 
     function setTestMode(boolean value)
         testMode = value
@@ -110,5 +112,18 @@ class GameConfig
 
     function isDisplayPortalEnabled() returns boolean
         return displayPortal
+
+    function setGoldExchange(int value)
+        goldExchange = value
+
+    function getGoldExchange() returns int
+        return goldExchange
+
+    function setBloodPointExchange(int value)
+        bloodPointExchange = value
+
+    function getBloodPointExchange() returns int
+        return bloodPointExchange
+
 
 public constant gameConfig = new GameConfig()
