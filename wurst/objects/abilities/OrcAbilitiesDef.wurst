@@ -224,7 +224,7 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
     abilTooltipMap.put(ABIL_DRUNKEN_HAZE, tgen.generateFullTooltip())
 
     itm = createBasicItem(ITEM_MANA_WARD)
-        ..setItemCost(0, 250, 1, 1, 1)
+        ..setItemCost(0, 250, 1, 3, 3)
         ..setNameEnhance("C", "Add Mana Ward ability")
         ..setInterfaceIcon(Icons.bTNHealingWard)
 
@@ -261,13 +261,13 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..presetDurationNormal(_ -> 5)
+        ..presetDurationNormal(_ -> 10)
         ..presetManaCost(_ -> 200)
         ..presetCastRange(_ -> 600)
         ..setNameEnhance("C", "Mana Ward")
         ..tooltipStopListen(false)
 
-    createAutoCastedAlliedAbility(ABIL_AUTOCAST_MANA_WARD)
+    createAutoCastAlliedManaTarget(ABIL_AUTOCAST_MANA_WARD)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 600)
         ..presetManaCost(_ -> 200)
@@ -278,6 +278,9 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
     new UnitDefinition(UNIT_MANA_WARD, UnitIds.healingward)
         ..setNormalAbilities(commaList(ABIL_MANA_WARD_AURA))
         ..setName("Mana Ward")
+        ..setTintingColorBlue(255)
+        ..setTintingColorGreen(0)
+        ..setTintingColorRed(0)
 
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_MANA_WARD, tgen.generateFullTooltip())
@@ -467,12 +470,13 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
         ..presetLifeRegenerationRate(lvl -> 0)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..setLevels(10)
-        ..presetDamageIncrease(lvl -> 0.2 * lvl)
+        ..setLevels(5)
+        ..presetDamageIncrease(lvl -> 0.4 * lvl)
         ..presetDurationNormal(lvl -> 10)
-        ..presetManaCost(lvl -> 0)
-        ..presetCooldown(lvl -> 0)
         ..setNameEnhance("Z", "Killing Spree")
         ..tooltipStopListen(true)
+        ..presetManaCost(lvl -> 0)
+        ..presetCooldown(lvl -> 0)
+
 
     abilTooltipMap.put(ABIL_KILLING_SPREE, tgen.generateFullTooltip())

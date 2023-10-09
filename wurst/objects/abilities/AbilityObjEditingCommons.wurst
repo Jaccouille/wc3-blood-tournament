@@ -76,6 +76,18 @@ public function createAutoCastedAlliedAbility(int abilId) returns AbilityDefinit
         ..setLevels(1)
         ..setBuffs(1, DUMMY_BUFF.toRawCode())
 
+
+public function createAutoCastAlliedManaTarget(int abilId) returns AbilityDefinitionManaBatteryObsidianStatue
+    return new AbilityDefinitionManaBatteryObsidianStatue(abilId)
+        ..setCheckDependencies(false)
+        ..presetAutocastRequirement(_ -> 0)
+        ..presetManaGained(_ -> -1)
+        ..presetManaCost(_ -> 0)
+        ..presetDurationNormal(_ -> 0.01)
+        ..presetBuffs(_ -> "")
+        ..setArtTarget("")
+        ..setLevels(1)
+
 public function createOrbAbility(int abilId) returns AbilityDefinitionOrbofLightning
     return new  AbilityDefinitionOrbofLightning(abilId)
         ..presetChanceToHitUnits(_ -> 100)

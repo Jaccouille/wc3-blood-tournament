@@ -183,7 +183,7 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_MANA_WARD)
         u.addAbility(ABIL_AUTOCAST_MANA_WARD)
-        u.issueImmediateOrderById(OrderIds.innerfireon)
+        u.issueImmediateOrderById(OrderIds.rechargeon)
 
     itemModifyUnitMap.put(ITEM_MANA_WARD, manaWardAction)
 
@@ -256,7 +256,7 @@ init
         u.addAbility(ABIL_FROST_ARMOR)
         u.issueImmediateOrderById(OrderIds.frostarmoron)
 
-    itemModifyUnitMap.put(ITEM_UNHOLY_FRENZY, frostArmorAction)
+    itemModifyUnitMap.put(ITEM_FROST_ARMOR, frostArmorAction)
 
     let raiseSkeletonMageAction = new ItemModifyUnit()
         ..addAction() (unit u) ->
