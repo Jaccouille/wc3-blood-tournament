@@ -109,7 +109,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..presetCooldown(_ -> 0)
         ..tooltipStartListen()
-        ..presetPreferHostiles(_ -> 15)
+        ..presetPreferHostiles(_ -> 25)
         ..presetAreaofEffect(_ -> 450)
         ..setNameEnhance("Z", "Taunt")
         ..tooltipStopListen(false)
@@ -369,8 +369,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
 
     tgen = new BTAbilityTooltipGenerator(
-        "An aura that gives friendly nearby units a damage shield, "+
-        "which returns a percentage of a melee attacker's damage back to it."
+        "Increase the unit attack rate and movement speed."
     )
     new AbilityDefinitionFrenzy(ABIL_DRUID_FRENZY)
         ..registerTooltipGenerator(tgen)

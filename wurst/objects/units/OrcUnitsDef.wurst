@@ -195,7 +195,7 @@ import ArmySpawner
 
         ..setSpeedBase(350)
         ..setSizeSmall()
-        ..setItemCost(0, 1000, 1, 1, 1)
+        ..setItemCostUnit(0, 1000, 1)
         ..tooltipStopListen(true, itm)
         ..setNameEnhance("Z", "Pack Leader")
         ..setAttack1Range(120)
@@ -258,7 +258,7 @@ import ArmySpawner
         ..setHitPointsMaximumBase(1000)
 
         ..setSpeedBase(270)
-        ..setItemCost(0, 750, 1, 1, 1)
+        ..setItemCostUnit(0, 750, 1)
         ..setSizeLarge()
 
         ..tooltipStopListen()
@@ -469,7 +469,7 @@ import ArmySpawner
 
         ..setSizeSmall()
         ..setAutoPointValue()
-        ..setItemCost(0, 1000, 1)
+        ..setItemCostUnit(0, 1000, 1)
 
         ..setNameEnhance("C", "Farseer")
         ..tooltipStopListen(true, itm)

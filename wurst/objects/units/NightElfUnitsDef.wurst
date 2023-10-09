@@ -172,7 +172,7 @@ import ArmySpawner
         ..setSpeedBase(330)
 
         ..setSizeSmall()
-        ..setItemCost(0, 1000, 1)
+        ..setItemCostUnit(0, 1000, 1)
 
         ..tooltipStopListen(true, itm)
         ..setNameEnhance("Z", "Keeper of the Grove")
@@ -402,12 +402,14 @@ import ArmySpawner
 
 @compiletime function createMountainGiant()
     let tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_TAUNT)
+        abilTooltipMap.get(ABIL_TAUNT) + "\n\n" +
+        abilTooltipMap.get(ABIL_CLEAVE_30)
         )
     createSpawnedUnit(UNIT_MOUNTAIN_GIANT, UnitIds.mountaingiant, BUILDING_MOUNTAIN_GIANT)
         ..setNormalAbilities(commaList(
             ABIL_TAUNT,
-            ABIL_AUTOCAST_TAUNT
+            ABIL_AUTOCAST_TAUNT,
+            ABIL_CLEAVE_30
         ))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_TAUNT))
         ..registerTooltipGenerator(tooltip)
@@ -553,7 +555,7 @@ import ArmySpawner
 
         ..setSizeSmall()
         ..setPointValue(0, 1000, 1)
-        ..setItemCost(0, 1000, 1)
+        ..setItemCostUnit(0, 1000, 1)
 
         ..tooltipStopListen(true, itm)
         ..setNameEnhance("Z", "Priestess of the Moon")
@@ -587,7 +589,7 @@ import ArmySpawner
 
         ..setSizeSmall()
         ..setPointValue(0, 1000, 1)
-        ..setItemCost(0, 1000, 1)
+        ..setItemCostUnit(0, 1000, 1)
         ..tooltipStopListen(true, itm)
 
         ..setNameEnhance("C", "Archdruid")
@@ -614,7 +616,7 @@ import ArmySpawner
         ..setSpeedBase(250)
 
         ..setSizeSmall()
-        ..setUnitClassification(commaList("Sapper"))
+        ..setUnitClassification(commaList(""))
         ..setPointValue(0, 300, 3)
         ..tooltipStopListen(true)
 

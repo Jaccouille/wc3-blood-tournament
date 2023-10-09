@@ -195,7 +195,7 @@ import ArmySpawner
         ..setAttack1ProjectileSpeed(900)
         ..setSizeSmall()
         ..setNameEnhance("X", "Nerubian Queen")
-        ..setItemCost(0, 50, 1)
+        ..setItemCostUnit(0, 50, 1)
         ..setAutoPointValue()
         ..tooltipStopListen(true)
 
@@ -358,7 +358,7 @@ import ArmySpawner
         ..setSpeedBase(270)
 
         ..setSizeSmall()
-        ..setItemCost(0, 800, 1, 1, 1)
+        ..setItemCostUnit(0, 800, 1)
         ..setNameEnhance("Z", "Lich")
         ..tooltipStopListen(true, itm)
         ..setGhostDeath()
@@ -495,7 +495,9 @@ import ArmySpawner
         ..setNameEnhance("D", "Vampire")
 
         ..tooltipStopListen(true)
+        ..setSizeSmall()
         ..setGhostDeath()
+        ..setBuildingScalingValue(0.8)
 
         ..setModelFileExt(Units.heroDreadLord)
         ..setIconGameInterfaceExt(Icons.bTNHeroDreadLord)
@@ -520,7 +522,7 @@ import ArmySpawner
         ..setHitPointsMaximumBase(1200)
 
         ..setSpeedBase(270)
-        ..setItemCost(0, 1000, 1, 1, 1)
+        ..setItemCostUnit(0, 1000)
 
         ..setSizeSmall()
         ..setNameEnhance("Z", "Vampire Lord")
@@ -586,6 +588,8 @@ import ArmySpawner
         ..setNameEnhance("R", "Death Knight")
         ..tooltipStopListen(true)
         ..setManaRegeneration(1)
+        ..setBuildingScalingValue(0.8)
+
 
         ..setArtSpecial(Objects.undeadLargeDeathExplode)
 

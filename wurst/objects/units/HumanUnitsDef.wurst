@@ -109,7 +109,7 @@ import ArmySpawner
         ..setHitPointsMaximumBase(220)
 
         ..setSpeedBase(240)
-        ..setItemCostUnit(0, 100, 1, riflemanCount, riflemanCount)
+        ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
 
         ..setSizeSmall()
         ..setNameEnhance("C", "Rifleman Explosive Ammo")
@@ -135,7 +135,7 @@ import ArmySpawner
         ..setHitPointsMaximumBase(220)
 
         ..setSpeedBase(240)
-        ..setItemCostUnit(0, 50, 1, riflemanCount, riflemanCount)
+        ..setItemCostReplacement(0, 50, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
 
         ..setSizeSmall()
         ..setNameEnhance("C", "Sniper")
