@@ -19,6 +19,8 @@ import GameConfig
 import UnitCreationTrigger
 import StandardTextTags
 import ColorUtils
+import OrderIds
+import DummyCaster
 
 @compiletime function createRacePickingMiscAbilities()
     new ChannelAbilityPreset(ABIL_RANDOM_RACE, 1, true)
@@ -61,24 +63,6 @@ import ColorUtils
 
     new AbilityDefinition(ABIL_SHOP_PURCHASE, AbilityIds.shopPurchaseItem)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.self))
-
-@compiletime function createSellBuilderAbility()
-    new AbilityDefinitionAlchemistTransmute(ABIL_SELL_BUILDING)
-        ..setManaCost(1, 0)
-        ..setCooldown(1, 0)
-        ..setGoldCostFactor(1, 1)
-        ..setLumberCostFactor(1, 1)
-        ..setHeroAbility(false)
-        ..setMaxCreepLevel(1, 1)
-        ..setTargetsAllowed(1, commaList(
-            TargetsAllowed.player_t,
-            TargetsAllowed.structure,
-            TargetsAllowed.invulnerable,
-            TargetsAllowed.nonancient
-        ))
-        ..setName("Sell unit")
-        ..presetTooltipNormal(lvl -> makeToolTipNorm("V", "Sell unit"))
-        ..presetTooltipNormalExtended(lvl -> "Sell the unit and get 100% of its cost back")
 
 
 @compiletime function createMoveBuildingAbility()
@@ -139,7 +123,7 @@ import ColorUtils
             ..setBaseOrderID(1, "blizzard")
 
 
-function createTradeResourceAbility(int abilId) returns ChannelAbilityPreset
+function createStandardChannelAbility(int abilId) returns ChannelAbilityPreset
     return new ChannelAbilityPreset(abilId, 1, true)
         ..presetManaCost(lvl -> 0)
         ..presetCooldown(lvl -> 0)
@@ -156,15 +140,40 @@ let TOOLTIP_TRADE_GOLD = "Exchange {0} blood points for {1} gold."
 let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
 
 @compiletime function createTradeResourcesAbilities()
-    createTradeResourceAbility(ABIL_TRADE_GOLD)
+    createStandardChannelAbility(ABIL_TRADE_GOLD)
         ..setNameEnhance("D", "Trade Gold")
         ..setTooltipNormalExtended(1, TOOLTIP_TRADE_GOLD)
         ..setIconNormal(Icons.bTNMGExchange)
 
-    createTradeResourceAbility(ABIL_TRADE_BLOOD_POINT)
+    createStandardChannelAbility(ABIL_TRADE_BLOOD_POINT)
         ..setNameEnhance("F", "Trade Blood Points")
         ..setTooltipNormalExtended(1, TOOLTIP_TRADE_BLOOD_POINT)
         ..setIconNormal(Icons.bTNCorpseExplode)
+
+
+@compiletime function createSellBuilderAbility()
+    new AbilityDefinitionAlchemistTransmute(ABIL_SELL_BUILDING)
+        ..setCastRange(1, 99999)
+        ..setManaCost(1, 0)
+        ..setCooldown(1, 0)
+        ..setGoldCostFactor(1, 1)
+        ..setLumberCostFactor(1, 1)
+        ..setHeroAbility(false)
+        ..setMaxCreepLevel(1, 1)
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.player_t,
+            TargetsAllowed.structure,
+            TargetsAllowed.invulnerable,
+            TargetsAllowed.nonancient
+        ))
+        ..setName("Sell unit")
+        ..presetTooltipNormal(lvl -> makeToolTipNorm("V", "Sell unit"))
+        ..presetTooltipNormalExtended(lvl -> "Sell the unit and get 100% of its cost back")
+
+    createStandardChannelAbility(ABIL_SELL_ALL)
+        ..setNameEnhance("C", "Sell All")
+        ..setTooltipNormalExtended(1, "Sell all sellable buildings")
+        ..setIconNormal(Icons.bTNChestOfGold)
 
 
 init
@@ -198,6 +207,20 @@ init
                 ..setColor(colorA(255, 0, 0, 255))
         else
             simError(caster.getOwner(), "Not enough gold for exchange")
+
+    EventListener.onCast(ABIL_SELL_ALL) (unit caster) ->
+        let bRect = pDatas.get(caster.getOwner()).buildingRect
+        forUnitsInRect(bRect) (unit u) ->
+            if u.isType(UNIT_TYPE_STRUCTURE)
+                and not u.isType(UNIT_TYPE_ANCIENT)
+                and u.getTypeId() != UNIT_RACE_PICKER
+                new DummyCaster()
+                    ..owner(caster.getOwner())
+                    ..origin(caster.getPos())
+                    ..castTarget(ABIL_SELL_BUILDING, 1, Orders.transmute, u)
+                    ..delay(1)
+                // BlzQueueTargetOrderById(caster, OrderIds.transmute, u)
+                // caster.issueTargetOrderById(OrderIds.transmute, u)
 
     EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_START) ->
         let u = EventData.getConstructingStructure()

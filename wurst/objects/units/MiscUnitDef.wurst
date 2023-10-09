@@ -134,6 +134,7 @@ function createSpeedBanner(int newId) returns BuildingDefinition
             UNIT_UNDEAD_BUILDER,
             UNIT_NIGHT_ELF_BUILDER
         ))
+        ..setUnitClassification(commaList("ancient"))
 
 @compiletime function createDummySoldier()
     createSpawnedUnit(UNIT_DUMMY_SOLDIER, UnitIds.footman)

@@ -72,7 +72,15 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
 
 public function createBuilder(int newId, int origId) returns UnitDefinition
     return new UnitDefinition(newId, origId)
-        ..setNormalAbilities(commaList(AbilityIds.invulnerable, ABIL_ORDER_UNIT, ABIL_SELL_BUILDING, AbilityIds.inventory))
+        ..setNormalAbilities(commaList(
+            AbilityIds.invulnerable,
+            ABIL_ORDER_UNIT,
+            ABIL_SELL_BUILDING,
+            ABIL_TRADE_GOLD,
+            ABIL_TRADE_BLOOD_POINT,
+            ABIL_SELL_ALL,
+            AbilityIds.inventory
+            ))
         ..setAttacksEnabled(AttacksEnabled.None.toObjectInt())
         ..setSpeedBase(522)
         ..setMovementType(MovementType.Fly)
@@ -89,6 +97,7 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
         ..setAnimationCastPoint(0)
         ..setFoodCost(1)
         ..setRequirements(commaList(UPGD_RACE_PICK, UPGD_ALL_RANDOM))
+
 
 /** Configure this variable to `false` if you don't want the
 	property names to have spaces. */
@@ -292,7 +301,7 @@ public class BTUnitDefinition extends UnitDefinition
         this.charges = charges
 
     /** Used to define unit replacement, it adds army points on spawn
-        srcUnitId being the id of the unit that is being replaced
+        srcUnitId being the id of the building that is being replaced
     */
     function setItemCostReplacement(int gold, int lumber, int charges, int maxStock, int maxStack, int srcUnitId)
         let armyPoints = computeUnitPointValue(gold, lumber, charges) * charges
