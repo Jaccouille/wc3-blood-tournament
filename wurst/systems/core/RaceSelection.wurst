@@ -11,10 +11,22 @@ import IDListConstant
 import LocalObjectIDs
 import RoundController
 
+function hasBuildings(player _p) returns boolean
+    let pData = pDatas.get(_p)
+
+    let grp = GetUnitsInRectMatching(
+        pData.buildingRect,
+        Filter( -> GetFilterUnit().isType(UNIT_TYPE_STRUCTURE) and GetFilterUnit().getTypeId() != UNIT_RACE_PICKER ))
+    let size = grp.size()
+    grp.close()
+    return size > 0
+
+
 init
     EventListener.onCast(ABIL_RANDOM_RACE) (unit caster) ->
         let owner = caster.getOwner()
         let pData = pDatas.get(owner)
+
         if pData.builder != null
             SetPlayerTechMaxAllowed(owner, pData.builder.getTypeId(), 1)
             pData.builder.remove()
@@ -24,10 +36,7 @@ init
         let owner = caster.getOwner()
         let pData = pDatas.get(owner)
 
-        let grp = GetUnitsInRectMatching(
-            pDatas.get(owner).buildingRect,
-            Filter( -> GetFilterUnit().isType(UNIT_TYPE_STRUCTURE)))
-        if grp.size() > 0
+        if hasBuildings(owner)
             printTimedToPlayer("Cannot repick with existing building".color(SPECIAL_COLOR), 5, owner)
         else if roundController.hasRoundStarted
             printTimedToPlayer("Cannot repick after first round".color(SPECIAL_COLOR), 5, owner)
@@ -36,7 +45,7 @@ init
         else
             SetPlayerTechMaxAllowed(owner, pData.builder.getTypeId(), 1)
             pData.builder.remove()
-        grp.close()
+
 
     EventListener.add(EVENT_PLAYER_UNIT_TRAIN_FINISH) ->
         let u = EventData.getTrainedUnit()
@@ -47,11 +56,17 @@ init
                 u.setUseFood(false)
 
     GameStates.modesSelection.onExit() (state) ->
-        pDatas.forEach() (player key, PlayerData pData) ->
-            SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 1, key)
+        pDatas.forEach() (player _p, PlayerData pData) ->
+            SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 1, _p)
             if gameConfig.isAllRandomEnabled()
-                pData.builder = createUnit(key, BUILDER_LIST.getRandomElement(), pData.racePicker.getPos())
+                pData.builder = createUnit(_p, BUILDER_LIST.getRandomElement(), pData.racePicker.getPos())
                 pData.racePicker.removeAbility(ABIL_REPICK)
                 pData.racePicker.removeAbility(ABIL_RANDOM_RACE)
             else
-                SetPlayerTechResearchedSwap(UPGD_ALL_RANDOM, 1, key)
+                SetPlayerTechResearchedSwap(UPGD_ALL_RANDOM, 1, _p)
+
+    OnRoundStart.add() (Round round) ->
+        if not gameConfig.isMultipleBuilderEnabled()
+            pDatas.forEach() (player _p, PlayerData pData) ->
+                SetPlayerTechResearchedSwap(UPGD_ALL_RANDOM, 0, _p)
+                SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 0, _p)

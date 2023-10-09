@@ -22,7 +22,7 @@ import ColorUtils
 
 
 /***
-    Copied and reworked from https://github.com/Frotty/Ability-Tooltip-Generator/blob/master/wurst/AbilityTooltipGenerator.wurst
+    Copied and modified from https://github.com/Frotty/Ability-Tooltip-Generator/blob/master/wurst/AbilityTooltipGenerator.wurst
     Credits to Frotty
 ***/
 public class BTAbilityTooltipGenerator implements TooltipGenerator
@@ -50,16 +50,17 @@ public class BTAbilityTooltipGenerator implements TooltipGenerator
         propMap.put(title, lc)
 
     override function applyToDef(AbilityDefinition def)
+        levels = propMap.has("Levels") ? fixValue(propMap.getAndRemove("Levels").run(0)).toInt() : 1
         name = propMap.has("Name") ? propMap.getAndRemove("Name").run(0) : "unnamed"
         hotkey = propMap.has("Hotkey") ? propMap.get("Hotkey").run(0) : "Q"
         targettype = propMap.has("Target Type") ? propMap.get("Target Type").run(0).toInt() castTo Targettype : targettype
         def..setTooltipLearn(generateTooltipLearn())
-            ..setTooltipLearnExtended(generateTooltipExtended(true))
+            ..setTooltipLearnExtended(generateTooltipExtended())
         def..setTooltipNormal(1, generateTooltipNormal())
-            ..setTooltipNormalExtended(1, generateTooltipExtended(false))
+            ..setTooltipNormalExtended(1, generateTooltipExtended())
 
     function applyToDefItem(ItemDefinition defItem)
-        defItem.setTooltipExtended(generateTooltipExtended(false))
+        defItem.setTooltipExtended(generateTooltipExtended())
 
     function generateTooltipLearn() returns string
         return buildLearnTooltip(name)
@@ -70,7 +71,7 @@ public class BTAbilityTooltipGenerator implements TooltipGenerator
         else
             return buildActiveTooltip(name)
 
-    function generateTooltipExtended(boolean _learn) returns string
+    function generateTooltipExtended() returns string
         var s = ""
 
         for key in propMap
@@ -134,5 +135,5 @@ public class BTAbilityTooltipGenerator implements TooltipGenerator
 
     function generateFullTooltip() returns string
         let name = generateTooltipNormal()
-        let tooltipExt = generateTooltipExtended(false)
+        let tooltipExt = generateTooltipExtended()
         return name + "\n" + tooltipExt

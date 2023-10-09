@@ -5,6 +5,8 @@ import ClosureForGroups
 import ClosureTimers
 import public ClosureKeyPresses
 import public LinkedList
+import LocalObjectIDs
+import MapBounds
 
 // Third party imports:
 import public Lodash
@@ -16,6 +18,7 @@ import ScoreBoard
 import SpawnZone
 import public GameConstants
 import public PlayerData
+import ColorUtils
 
 // Distance between units positioned in formation mode
 @configurable constant FORMATION_WIDTH = 120.
@@ -107,7 +110,6 @@ public abstract class Round
 
     function doAfterSpawn()
         doAfter(2) ->
-            // TODO: Crash at round 3
             forUnitsAll() (unit u) ->
                 if not u.isType(UNIT_TYPE_STRUCTURE)
                     and not u.isType(UNIT_TYPE_PEON)
@@ -128,6 +130,7 @@ public abstract class Round
         OnRoundFinish.execute(this)
 
     abstract function spawnArmies()
+    abstract function spawnPortals()
 
     // Todo: rename
     function spawnArmy(SpawnZone spawnZone, LinkedList<unit> buidingList, player _p)
@@ -157,6 +160,13 @@ public class NormalRound extends Round
     construct()
         counter++
         this.roundName = "Round " + counter.toString()
+
+    override function spawnPortals()
+        SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "show", false)
+        SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "birth", false)
+        forUnitsAll() (unit u) ->
+            if u.isType(UNIT_TYPE_STRUCTURE)
+                u.setAnimation("Stand Victory")
 
     override function spawnArmies()
         var zoneIdx = 0
@@ -189,6 +199,26 @@ public class FinalRound extends Round
         else
             this.roundName = "Final"
 
+    override function spawnPortals()
+        SetDoodadAnimationRect(boundRect, DOODAD_ELIM_PORTAL, "show", false)
+        SetDoodadAnimationRect(boundRect, DOODAD_ELIM_PORTAL, "birth", false)
+
+    override function doAfterSpawn()
+        var counter = 5
+        orderBlocker.enable()
+        doPeriodicallyCounted(1, counter + 1) (CallbackCounted cb) ->
+            if cb.isLast()
+                printTimed("FIGHT!!!".color(SPECIAL_COLOR), 3)
+                forUnitsAll() (unit u) ->
+                    if not u.isType(UNIT_TYPE_STRUCTURE)
+                        and not u.isType(UNIT_TYPE_PEON)
+                        and u.getOwner() != ALTAR_PLAYER
+                        u.unpause()
+                        u.issuePointOrder("attack", CENTER)
+            else
+                printTimed(counter.toString() + "...", 5)
+            counter -= 1
+
     override function spawnArmies()
         for contestantPair in matchUp
             let p1 = players[contestantPair.a]
@@ -197,6 +227,7 @@ public class FinalRound extends Round
             scoreBoardEntries.get("BloodPoints").setEntry(p1, "0", "")
             scoreBoardEntries.get("BloodPoints").setEntry(p2, "0", "")
 
+            setupCamera(spawnZones.get(FINAL_ROUND_WEST_ZONE_IDX), spawnZones.get(FINAL_ROUND_EAST_ZONE_IDX), p1, p2)
             spawnArmy(spawnZones.get(FINAL_ROUND_WEST_ZONE_IDX), pDatas.get(p1).buildingList, p1)
             spawnArmy(spawnZones.get(FINAL_ROUND_EAST_ZONE_IDX), pDatas.get(p2).buildingList, p2)
 

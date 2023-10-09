@@ -91,6 +91,14 @@ function spawnSpeedBanner(vec2 pos, player winner)
     flashEffect(Abilities.levelupcaster, pos, 2)
     createUnit(winner.getDummyPlayer(0), UNIT_SPEED_BANNER, pos, 270..asAngleDegrees())
 
+function computeSpeedBannerPos(SpawnZone sp1, SpawnZone sp2) returns vec2
+    let pos1 = sp1.spawnRect.getCenter()
+    let pos2 = sp2.spawnRect.getCenter()
+    let direction = pos1.angleTo(pos2)
+    let dist = pos1.distanceTo(pos2) / 2
+    let middle = pos1.polarOffset(direction, dist)
+    return middle
+
 public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
     if pData.spawnedUnits.isEmpty()
         let matchUpWinner = roundController.currentRound.getOpponent(pData._p)
@@ -98,17 +106,15 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
             forUnitsOfPlayer(matchUpWinner) (unit u) ->
                 u.issuePointOrder("attack", CENTER)
 
-        if roundController.currentRound instanceof NormalRound
-            and matchUpWinner == killerOwner
-            let pos1 = playerToArmySpawner.get(matchUpWinner).spawnZone.spawnRect.getCenter()
-            let pos2 = playerToArmySpawner.get(pData._p).spawnZone.spawnRect.getCenter()
-            let direction = playerToArmySpawner.get(matchUpWinner).spawnZone.angle
-            let dist = pos1.distanceTo(pos2) / 2
-            let middle = pos1.polarOffset(direction, dist)
-            spawnSpeedBanner(middle, matchUpWinner)
+        if matchUpWinner == killerOwner
+            if roundController.currentRound instanceof NormalRound
+                let sp1 = playerToArmySpawner.get(matchUpWinner).spawnZone
+                let sp2 = playerToArmySpawner.get(pData._p).spawnZone
+                let middle = computeSpeedBannerPos(sp1, sp2)
+                spawnSpeedBanner(middle, matchUpWinner)
 
-        else
-            (roundController.currentRound castTo FinalRound).looser = pData._p
+            else if roundController.currentRound instanceof FinalRound
+                (roundController.currentRound castTo FinalRound).looser = pData._p
 
         roundController.currentRound.roundParticipant.remove(pData._p)
 
@@ -117,7 +123,7 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
         if roundController.currentRound.roundParticipant.size() == 1
             onLastArmyRemaining.execute()
         if roundController.currentRound.roundParticipant.isEmpty()
-            onAllUnitDead.execute(pData._p)
+            onAllUnitDead.execute(killerOwner)
 
 
 public function initUnitDeathTrigger()
