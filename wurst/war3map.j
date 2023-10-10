@@ -328,6 +328,7 @@ endfunction
 function main takes nothing returns nothing
     call SetCameraBounds( -7424.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -6656.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 7424.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 8192.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -7424.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 8192.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 7424.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -6656.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM) )
     call SetDayNightModels( "Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl", "Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl" )
+    call SetTerrainFogEx( 0, 0.0, 10000.0, 5.500, 1.000, 0.000, 0.000 )
     call NewSoundEnvironment( "Default" )
     call SetAmbientDaySound( "BlackCitadelDay" )
     call SetAmbientNightSound( "BlackCitadelNight" )
