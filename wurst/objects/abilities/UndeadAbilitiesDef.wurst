@@ -6,11 +6,18 @@ import AbilityObjEditingCommons
 import Assets
 import ItemObjEditingCommon
 import UnitObjEditingCommon
+import ClosureEvents
+import ClosureForGroups
 
 import LocalObjectIDs
 import TooltipsUtils
 import ArmySpawner
+import BuffObjEditing
+import OrderIds
+import DummyCaster
 
+let DEATH_COIL_AOE = 150.
+let DEATH_COIL_TARGET_COUNT = 3
 
 @compiletime function createUndeadAbilities()
     let bansheeCount = BTBuildingData.getUnitCount(BUILDING_BANSHEE)
@@ -187,34 +194,60 @@ import ArmySpawner
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_CRIPPLE, tgen.generateFullTooltip())
 
+
+    itm = createBasicItem(ITEM_DEATH_COIL)
+        ..setItemCost(0, 400, 1, 1, 1)
+        ..setNameEnhance("Z", "Add Death Coil ability")
+        ..setInterfaceIcon(Icons.bTNDeathCoil)
+
+    let BUFF_DEATH_COIL = compiletime(BUFF_ID_GEN.next())
+    new BuffDefinition(BUFF_DEATH_COIL, BuffIds.stunned)
+        ..setIcon(Icons.bTNDeathCoil)
+        ..setArtSpecial(1,"")
+        ..setTargetAttachmentPoint0("chest")
+        ..setArtTarget(1, Abilities.deathCoilSpecialArt)
+        ..setTooltipNormal(1, "Death coil Buff")
+        ..setTooltipNormalExtended(1, "Just a visual effect")
+
+    // TODO: replace by death coil ability for prettier death effect
     tgen = new BTAbilityTooltipGenerator(
         "A coil of death that deal damage to an enemy unit.")
     new AbilityDefinitionFireBoltcreep(ABIL_DEATH_COIL)
-        ..presetDurationNormal(_ -> 0.01)
+        ..presetDurationNormal(_ -> 0.1)
         ..setCheckDependencies(false)
-        ..presetCooldown(_ -> 0)
+        ..setDummyAbility()
+        ..setArtSpecial(Abilities.deathCoilSpecialArt)
         ..registerTooltipGenerator(tgen)
-        ..presetDamage(_ -> 300)
+        ..presetManaCost(_ -> 125)
         ..tooltipStartListen()
-        ..presetCastRange(_ -> 800)
-        ..presetManaCost(_ -> 75)
+        ..presetDamage(_ -> 150)
+        ..addTooltipProperty("Target limit", _ -> DEATH_COIL_TARGET_COUNT.toString())
+        ..presetAreaofEffect(_ -> DEATH_COIL_AOE)
         ..setNameEnhance("Z", "Death Coil")
         ..tooltipStopListen(false)
         ..setMissileArt(Abilities.deathCoilMissile)
+        ..setBuffs(1, BUFF_DEATH_COIL.toRawCode())
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_DEATH_COIL)
-        ..presetManaCost(_ -> 75)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_DEATH_COIL)
         ..presetDurationNormal(_ -> 0)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
+        ..presetManaCost(_ -> 125)
         ..presetCooldown(_ -> 6)
-        ..tooltipStopListen(true)
         ..presetCastRange(_ -> 800)
+        ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Death Coil")
         ..setIconNormal(Icons.bTNDeathCoil)
         ..setIconTurnOff(Icons.bTNDeathCoil)
 
+    tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_DEATH_COIL, tgen.generateFullTooltip())
+
+
+    itm = createBasicItem(ITEM_UNHOLY_AURA)
+        ..setItemCost(0, 500, 1, 1, 1)
+        ..setNameEnhance("Z", "Add Unholy Aura")
+        ..setInterfaceIcon(Icons.bTNUnholyAura)
 
     tgen = new BTAbilityTooltipGenerator(
         "Gives all friendly nearby units a bonus to hit point regeneration.")
@@ -232,6 +265,7 @@ import ArmySpawner
         ..tooltipStopListen(true)
         ..setArtTarget(Abilities.unholyAura)
 
+    tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_UNHOLY_AURA, tgen.generateFullTooltip())
 
     tgen = new BTAbilityTooltipGenerator(
@@ -248,3 +282,62 @@ import ArmySpawner
         ..setArtTarget("")
 
     abilTooltipMap.put(ABIL_ORB_CORRUPTION, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Infected units killed will spawn a zombie.")
+
+    let BUFF_INFECTION = compiletime(BUFF_ID_GEN.next())
+    new BuffDefinition(BUFF_INFECTION, BuffIds.blackArrow)
+        ..setIcon(Icons.bTNPlagueCloud)
+        ..setArtTarget(1, Units.plagueCloudTarget)
+        ..setTooltipNormal(1, "Infection")
+        ..setTargetAttachments(1)
+        ..setTargetAttachmentPoint0("head")
+        ..setTooltipNormalExtended(1, "This unit is infected; it will spawn a"
+            + " zombie upon death.")
+
+    let abilId = ABIL_ID_GEN.next()
+    new AbilityDefinitionOrbofDarkness(ABIL_INFECTION)
+        ..setEnabledAttackIndex(1, 0)
+        ..setEffectAbility(1, abilId.toRawCode())
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.ground,
+            TargetsAllowed.organic
+            ))
+        ..setDamageBonus(1, 0)
+        ..setTargetAttachmentPoint1("chest")
+        ..setArtTarget(Units.plagueCloudTarget)
+
+    new AbilityDefinitionOrbofDarknessBlackArrow(abilId)
+        ..registerTooltipGenerator(tgen)
+        ..setMissileArt("")
+        ..presetSummonedUnitType(_ -> commaList(UNIT_ZOMBIE))
+        ..presetDamageBonus(_ -> 0)
+        ..tooltipStartListen()
+        ..presetNumberofSummonedUnits(_ -> 1)
+        ..setDurationNormal(1, 6)
+        ..setNameEnhance("Z", "Infection")
+        ..tooltipStopListen(true)
+        ..setBuffs(1, BUFF_INFECTION.toRawCode())
+
+    abilTooltipMap.put(ABIL_INFECTION, tgen.generateFullTooltip())
+
+
+init
+    EventListener.onTargetCast(ABIL_DEATH_COIL) (unit caster, unit target) ->
+        if (caster.getTypeId() == UNIT_DEATH_KNIGHT)
+            int _count = 0
+            let dummy = new DummyCaster()
+                ..owner(caster.getOwner())
+                ..origin(caster.getPos())
+                ..delay(1)
+            forUnitsInRange(target.getPos(), DEATH_COIL_AOE) (unit u) ->
+                if _count < DEATH_COIL_TARGET_COUNT
+                    and u.isEnemyOf(caster)
+                    dummy.castTarget(ABIL_DEATH_COIL, 1, Orders.firebolt, u)
+
+                    // if InstantDummyCaster.castTarget(
+                    //     caster.getOwner(),
+                    //     ABIL_DEATH_COIL, 1, OrderIds.firebolt, u) == false
+                    //     Log.info("Death COil failed")
+                    _count++

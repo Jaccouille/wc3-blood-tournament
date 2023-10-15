@@ -114,17 +114,16 @@ import ArmySpawner
 
 @compiletime function createDryad()
     var tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_REJUVENATION) + "\n\n" +
+        abilTooltipMap.get(ABIL_ABOLISH_MAGIC) + "\n\n" +
         abilTooltipMap.get(ABIL_POISON_SPEAR)
         )
     createSpawnedUnit(UNIT_DRYAD, UnitIds.dryad, BUILDING_DRYAD)
         ..registerTooltipGenerator(tooltip)
         ..setNormalAbilities(commaList(
             ABIL_POISON_SPEAR,
-            ABIL_AUTOCAST_REJUVENATION,
-            ABIL_REJUVENATION
+            ABIL_ABOLISH_MAGIC
         ))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_REJUVENATION))
+        ..setDefaultActiveAbility(commaList(ABIL_ABOLISH_MAGIC))
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Pierce, 32, 1, 8, 2)
@@ -140,7 +139,7 @@ import ArmySpawner
         ..setSizeSmall()
         ..setAutoPointValue()
         ..setAutoBuildingCost()
-        ..setNameEnhance("E", "Dryad")
+        ..setNameEnhance("S", "Dryad")
         ..tooltipStopListen()
 
         ..setModelFileExt(Units.dryad1)
@@ -175,7 +174,7 @@ import ArmySpawner
         ..setItemCostUnit(0, 1000, 1)
 
         ..tooltipStopListen(true, itm)
-        ..setNameEnhance("Z", "Keeper of the Grove")
+        ..setNameEnhance("X", "Keeper of the Grove")
 
         ..setArtSpecial(Objects.nightElfLargeDeathExplode)
         .setIconGameInterfaceExt(Icons.bTNKeeperOfTheGrove)
@@ -240,31 +239,6 @@ import ArmySpawner
         ..setIconGameInterfaceExt(Icons.bTNHuntress)
         ..setUnitSoundSetExt(Soundsets.huntress)
 
-    tooltip = new UnitTooltipGenerator("")
-    createSpawnedUnit(UNIT_SPECTRE, UnitIds.vengeance, BUILDING_SPECTRE)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Magic, 35, 4, 2, 1.6)
-        ..setAttack1Range(300)
-
-        ..setArmorData(ArmorType.Divine, 2)
-        ..setHitPointsMaximumBase(200)
-        ..setHitPointsRegenerationRate(-10)
-
-        ..setSpeedBase(270)
-        ..setSummonedUnit()
-
-        ..setSizeSmall()
-        ..setNameEnhance("X", "Spectre")
-        ..setPointValue(25)
-
-        ..tooltipStopListen()
-        ..setGhostDeath()
-
-        ..setModelFileExt(Units.vengeance)
-        ..setIconGameInterfaceExt(Icons.bTNAvengingWatcher)
-        ..setUnitSoundSetExt(Soundsets.vengeance)
 
 @compiletime function createDruidTalon()
     let tooltip = new UnitTooltipGenerator(
@@ -312,7 +286,7 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 39, 3, 13, 1.5)
+        ..setAttack1Data(AttackType.Normal, 39, 3, 10, 1.5)
 
         ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(550)
@@ -322,7 +296,7 @@ import ArmySpawner
         ..setAutoBuildingCost()
 
         ..tooltipStopListen()
-        ..setNameEnhance("S", "Druid of the Claw")
+        ..setNameEnhance("E", "Druid of the Claw")
 
         ..setSizeSmall()
         ..setMana(0)
@@ -332,6 +306,7 @@ import ArmySpawner
         ..setUnitSoundSetExt(Soundsets.druidOfTheClaw)
 
     tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_ROAR) + "\n\n" +
         abilTooltipMap.get(ABIL_BASH_20) + "\n\n" +
         abilTooltipMap.get(ABIL_HARDENED_SKIN_15)
         )
@@ -340,8 +315,8 @@ import ArmySpawner
     var itm = createBasicItem(ITEM_BEAR)
     createSpawnedUnit(UNIT_BEAR, UnitIds.druidoftheclawmorphed)
         ..registerItemDef(itm, ItemModifierType.Replace)
-        ..setNormalAbilities(commaList(ABIL_BASH_20, ABIL_HARDENED_SKIN_15))
-        ..setDefaultActiveAbility(commaList(""))
+        ..setNormalAbilities(commaList(ABIL_ROAR, ABIL_AUTOCAST_ROAR, ABIL_BASH_20, ABIL_HARDENED_SKIN_15))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_ROAR))
         ..setRequiredAnimationNames("alternate")
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -349,7 +324,8 @@ import ArmySpawner
         ..setAttack1Data(AttackType.Normal, 67, 5, 13, 1.5)
 
         ..setArmorData(ArmorType.Large, 6)
-        ..setHitPointsMaximumBase(900)
+        ..setHitPointsMaximumBase(1200)
+        ..setMana(200)
 
         ..setSpeedBase(270)
         ..setItemCostReplacement(0, 500, 1, druidClawCount, druidClawCount, BUILDING_DRUID_CLAW)
@@ -359,7 +335,6 @@ import ArmySpawner
         ..setNameEnhance("Z", "Bear Form")
 
         ..tooltipStopListen(true, itm)
-        ..setMana(0)
         ..setScalingValue(1.15)
 
         ..setIconGameInterfaceExt(Icons.bTNBearForm)
@@ -382,10 +357,10 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Siege, 75, 3, 17, 1.2)
+        ..setAttack1Data(AttackType.Siege, 75, 3, 9, 1.2)
 
-        ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(700)
+        ..setArmorData(ArmorType.Large, 2)
+        ..setHitPointsMaximumBase(1200)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -418,7 +393,7 @@ import ArmySpawner
         ..setAttack1Data(AttackType.Siege, 113, 10, 7, 2)
 
         ..setArmorData(ArmorType.Fortified, 6)
-        ..setHitPointsMaximumBase(1000)
+        ..setHitPointsMaximumBase(1500)
 
         ..setSpeedBase(240)
 
@@ -470,10 +445,41 @@ import ArmySpawner
         ..setIconGameInterfaceExt(Icons.bTNHeroWarden)
         ..setUnitSoundSetExt(Soundsets.maiev)
 
-    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_SPIRIT_OF_VENGEANCE))
+
+    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_TERRIFY_ORB))
+    createSpawnedUnit(UNIT_SPECTRE, UnitIds.vengeance, BUILDING_SPECTRE)
+        ..setNormalAbilities(commaList(ABIL_TERRIFY_ORB))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 35, 4, 2, 1.8)
+        ..setAttack1Range(300)
+
+        ..setArmorData(ArmorType.Divine, 2)
+        ..setHitPointsMaximumBase(200)
+        // ..setHitPointsRegenerationRate(-10)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..setSummonedUnit()
+
+        ..setSizeSmall()
+        ..setNameEnhance("R", "Spirit of Vengeance")
+
+        ..tooltipStopListen()
+        ..setGhostDeath()
+
+        ..setModelFileExt(Units.vengeance)
+        ..setIconGameInterfaceExt(Icons.bTNAvengingWatcher)
+        ..setUnitSoundSetExt(Soundsets.vengeance)
+
+    let itm = createBasicItem(ITEM_AVATAR_OF_VENGEANCE)
+    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_TERROR_AURA))
     createSpawnedUnit(UNIT_AVATAR_OF_VENGEANCE, UnitIds.spiritofvengeance, BUILDING_AVATAR_OF_VENGEANCE)
-        ..setNormalAbilities(commaList(ABIL_SPIRIT_OF_VENGEANCE))
-        ..setDefaultActiveAbility(commaList(ABIL_SPIRIT_OF_VENGEANCE))
+        ..setNormalAbilities(commaList(ABIL_TERROR_AURA))
+        ..setDefaultActiveAbility(commaList(ABIL_TERROR_AURA))
+        ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -482,17 +488,17 @@ import ArmySpawner
 
         ..setArmorData(ArmorType.Divine, 7)
         ..setHitPointsMaximumBase(550)
-        ..setMana(200)
 
         ..setSpeedBase(330)
 
         ..setSizeSmall()
         ..setAutoPointValue()
-        ..setAutoBuildingCost()
+        ..setItemCostUnit(0, 1000, 1)
         ..setSummonedUnit()
 
-        ..setNameEnhance("R", "Avatar Of Vengeance")
-        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Avatar Of Vengeance")
+        ..tooltipStopListen(true, itm)
+        ..setMana(0)
         ..setScalingValue(0.85)
         ..setBuildingScalingValue(0.8)
         ..setGhostDeath()
@@ -547,14 +553,13 @@ import ArmySpawner
         ..setAttack1Data(AttackType.Pierce, 110, 9, 6, 1)
         ..setAttack1Range(600)
 
-        ..setArmorData(ArmorType.Medium, 6)
-        ..setHitPointsMaximumBase(800)
+        ..setArmorData(ArmorType.Medium, 4)
+        ..setHitPointsMaximumBase(500)
         ..setMana(300)
 
         ..setSpeedBase(300)
 
         ..setSizeSmall()
-        ..setPointValue(0, 1000, 1)
         ..setItemCostUnit(0, 1000, 1)
 
         ..tooltipStopListen(true, itm)
@@ -661,7 +666,7 @@ import ArmySpawner
             BUILDING_DRUID_TALON,
             BUILDING_DRUID_CLAW,
             BUILDING_MOUNTAIN_GIANT,
-            BUILDING_AVATAR_OF_VENGEANCE,
+            BUILDING_SPECTRE,
             BUILDING_DAEMON_HUNTER,
             BUILDING_BALLISTA
         ))

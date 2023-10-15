@@ -34,11 +34,38 @@ import ArmySpawner
         ..setNameEnhance("Q", "Zombie")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_GHOUL))
+        // ..setUpgradeTo(commaList(BUILDING_GHOUL))
 
         ..setModelFileExt(Units.zombie)
         ..setIconGameInterfaceExt(Icons.bTNZombie)
         ..setUnitSoundSetExt(Soundsets.zombie)
+
+    let zombieCount = BTBuildingData.getUnitCount(BUILDING_ZOMBIE)
+    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_INFECTION))
+    let itm = createBasicItem(ITEM_PLAGUE_BEARER)
+    createSpawnedUnit(UNIT_PLAGUE_BEARER, UnitIds.dalaranmutant)
+        ..registerItemDef(itm, ItemModifierType.Replace)
+        ..registerTooltipGenerator(tooltip)
+        ..setNormalAbilities(commaList(ABIL_INFECTION))
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Normal, 16, 3, 3, 1.4)
+
+        ..setArmorData(ArmorType.Small, 3)
+        ..setHitPointsMaximumBase(200)
+
+        ..setSpeedBase(270)
+        ..setItemCostReplacement(0, 100, 1, zombieCount, zombieCount, BUILDING_ZOMBIE)
+
+
+        ..setSizeSmall()
+        ..setPriority(2)
+        ..setNameEnhance("Z", "Plague Bearer")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true, itm)
+        ..setTintingColorRed(180)
+
+        ..setIconGameInterfaceExt(Icons.bTNDalaranMutant)
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_LIFESTEAL_75))
     createSpawnedUnit(UNIT_GHOUL, UnitIds.ghoul, BUILDING_GHOUL)
@@ -444,7 +471,7 @@ import ArmySpawner
         ..setModelFileExt(Units.abomination1)
         ..setIconGameInterfaceExt(Icons.bTNAbomination)
         ..setUnitSoundSetExt(Soundsets.abomination)
-        ..setBuildingScalingValue(0.8)
+        ..setBuildingScalingValue(0.7)
 
     tooltip = new UnitTooltipGenerator("Flesh Golem Desc")
     createSpawnedUnit(UNIT_FLESH_GOLEM, UnitIds.fleshgolem, BUILDING_FLESH_GOLEM)
@@ -560,13 +587,11 @@ import ArmySpawner
 @compiletime function createDeathKnight()
     var tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_DEATH_COIL) + "\n\n" +
-        abilTooltipMap.get(ABIL_UNHOLY_AURA) + "\n\n" +
         "Dark Ritual\n".color(SPECIAL_COLOR) +
         "Replenish 10% of target maximum health as mana on kill."
     )
     createSpawnedUnit(UNIT_DEATH_KNIGHT, UnitIds.deathknight, BUILDING_DEATH_KNIGHT)
         ..setNormalAbilities(commaList(
-            ABIL_UNHOLY_AURA,
             ABIL_DEATH_COIL,
             ABIL_AUTOCAST_DEATH_COIL
             ))
@@ -574,7 +599,7 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 122, 3, 17, 1.2)
+        ..setAttack1Data(AttackType.Normal, 122, 3, 17, 1.5)
 
         ..setArmorData(ArmorType.Large, 5)
         ..setHitPointsMaximumBase(1400)

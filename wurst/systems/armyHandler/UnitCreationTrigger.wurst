@@ -55,6 +55,9 @@ init
             Log.info("Unknown unit spawned for " + EventData.getTriggerPlayer().getName())
         else
             pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).spawnedUnits.push(summonedUnit)
+            // To reduce pathing lag, assign the new unit to the last dummy player
+            let newOwner = pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).dummyPlayers.getLast()
+            summonedUnit.setOwner(newOwner, false)
             summonedUnit.issuePointOrder("attack", CENTER)
 
     GameStates.gameplay.onEnter() state ->

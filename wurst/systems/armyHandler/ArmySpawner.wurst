@@ -86,12 +86,12 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_MAGE         , 300, 0   , genList(UNIT_MAGE            , 3))
     new BTBuildingData(BUILDING_SWORD_MASTER , 0  , 3000, genList(UNIT_SWORD_MASTER    , 4))
     new BTBuildingData(BUILDING_ELVEN_MAGE   , 0  , 3000, genList(UNIT_ELVEN_MAGE      , 3))
-    new BTBuildingData(BUILDING_PALADIN      , 0  , 1600, asList (UNIT_PALADIN_1       , UNIT_PALADIN_2, UNIT_PALADIN_3))
+    new BTBuildingData(BUILDING_PALADIN      , 0  , 1500, asList (UNIT_PALADIN_1))
     new BTBuildingData(BUILDING_ARCHMAGE     , 0  , 2000, asList (UNIT_WATER_ELEMENTAL , UNIT_WATER_ELEMENTAL, UNIT_ARCHMAGE))
 
-    new BTBuildingData(BUILDING_GRUNT                , 100 , 0   , genList(UNIT_GRUNT                , 7 ))
+    new BTBuildingData(BUILDING_GRUNT                , 100 , 0   , genList(UNIT_GRUNT                , 5 ))
     new BTBuildingData(BUILDING_HEADHUNTER           , 150 , 0   , genList(UNIT_HEADHUNTER           , 10))
-    new BTBuildingData(BUILDING_HEADHUNTER, BUILDING_TRAPPER              , 0   , 600 , genList(UNIT_TRAPPER              , 10))
+    new BTBuildingData(BUILDING_HEADHUNTER, BUILDING_TRAPPER              , 0   , 1000 , genList(UNIT_TRAPPER              , 10))
     new BTBuildingData(BUILDING_RAIDER               , 250 , 0   , genList(UNIT_RAIDER               , 5 ))
     new BTBuildingData(BUILDING_WITCH_DOCTOR         , 150 , 0   , genList(UNIT_WITCH_DOCTOR         , 3 ))
     new BTBuildingData(BUILDING_SHAMAN               , 200 , 0   , genList(UNIT_SHAMAN               , 4 ))
@@ -116,9 +116,9 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_NERUBIAN       , 0   , 800 , genList(UNIT_NERUBIAN        , 5  ))
     new BTBuildingData(BUILDING_NECROMANCER    , 200 , 0   , genList(UNIT_NECROMANCER     , 5  ))
     new BTBuildingData(BUILDING_LICH           , 0   , 1000, genList(UNIT_LICH            , 1  ))
-    new BTBuildingData(BUILDING_DEATH_KNIGHT   , 0   , 1500, genList(UNIT_DEATH_KNIGHT    , 3  ))
+    new BTBuildingData(BUILDING_DEATH_KNIGHT   , 0   , 1200, genList(UNIT_DEATH_KNIGHT    , 1  ))
     new BTBuildingData(BUILDING_BANSHEE        , 150 , 0   , genList(UNIT_BANSHEE         , 3  ))
-    new BTBuildingData(BUILDING_ABOMINATION    , 300 , 0   , genList(UNIT_ABOMINATION     , 3  ))
+    new BTBuildingData(BUILDING_ABOMINATION    , 100 , 0   , genList(UNIT_ABOMINATION     , 1  ))
     new BTBuildingData(BUILDING_FLESH_GOLEM    , 0   , 1400, genList(UNIT_FLESH_GOLEM     , 4  ))
     new BTBuildingData(BUILDING_VAMPIRE        , 350 , 0   , genList(UNIT_VAMPIRE         , 5  ))
     new BTBuildingData(BUILDING_VAMPIRE_LORD   , 0   , 1000, genList(UNIT_VAMPIRE_LORD    , 3  ))
@@ -128,7 +128,7 @@ function genList(int unitId, int count) returns LinkedList<int>
 
     new BTBuildingData(BUILDING_TREANT                , 100 , 0   , genList(UNIT_TREANT                , 10 ))
     new BTBuildingData(BUILDING_ARCHER                , 100 , 0   , genList(UNIT_ARCHER                , 10  ))
-    new BTBuildingData(BUILDING_ARCHER, BUILDING_NE_RANGER             , 0   , 1800, genList(UNIT_NE_RANGER             , 6  ))
+    new BTBuildingData(BUILDING_ARCHER, BUILDING_NE_RANGER , 0   , 2400, genList(UNIT_NE_RANGER             , 6  ))
     new BTBuildingData(BUILDING_HUNTRESS              , 200 , 0   , genList(UNIT_HUNTRESS              , 5  ))
     new BTBuildingData(BUILDING_DRUID_TALON           , 150 , 0   , genList(UNIT_DRUID_TALON           , 3  ))
     new BTBuildingData(BUILDING_DRUID_CLAW            , 250 , 0   , genList(UNIT_DRUID_CLAW            , 5  ))
@@ -137,7 +137,7 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_ANCIENT_PROTECTOR     , 0   , 1600, genList(UNIT_ANCIENT_PROTECTOR     , 4  ))
     new BTBuildingData(BUILDING_MOUNTAIN_GIANT        , 300 , 0   , genList(UNIT_MOUNTAIN_GIANT        , 1  ))
     new BTBuildingData(BUILDING_SENTRY                , 150 , 0   , genList(UNIT_SENTRY                , 10 ))
-    new BTBuildingData(BUILDING_SPECTRE               , 0   , 800 , genList(UNIT_SPECTRE               , 10 ))
+    new BTBuildingData(BUILDING_SPECTRE               , 150   , 1000 , genList(UNIT_SPECTRE               , 10 ))
     new BTBuildingData(BUILDING_WARDEN                , 0   , 1500, genList(UNIT_WARDEN                , 3  ))
     new BTBuildingData(BUILDING_AVATAR_OF_VENGEANCE   , 0   , 2100, genList(UNIT_AVATAR_OF_VENGEANCE   , 3  ))
     new BTBuildingData(BUILDING_BALLISTA              , 0   , 3000, genList(UNIT_BALLISTA              , 2  ))
@@ -180,7 +180,6 @@ public class ArmySpawner
     LinkedList<Pair<ItemModifyUnit, int>> unitModifierList = new LinkedList<Pair<ItemModifyUnit, int>>
 
     construct(player _p)
-        // Log.info("[ArmySpawner] [construct]")
         this._p = _p
         this.pData = pDatas.get(_p)
         this.initReinforcementListener()
@@ -188,7 +187,15 @@ public class ArmySpawner
     function setBuildingList(LinkedList<unit> buildingList)
         this.buildingList = buildingList
 
-    function executeItemBonus(LinkedList<item> inv)
+    private function isBuildingSpawnOver() returns boolean
+        return buildingIdx >= buildingList.size()
+
+    private function isSquadSpawnOver() returns boolean
+        if isBuildingSpawnOver()
+            return true
+        return squadIdx >= squadIds.size()
+
+    private function executeItemBonus(LinkedList<item> inv)
         for itm in inv
             // Log.info("AitemModifyUnit :" + unitModifierList.size().toString())
             if itemAddUnitMap.has(itm.getTypeId())
@@ -207,7 +214,7 @@ public class ArmySpawner
         //  (spawnZone.angle.cos().abs().toString()) + " " + this.spawnDirection.degrees().toString())
         this.pos = spawnZone.initialPos
 
-    function spawnUnit(int unitId, vec2 spawnPos) returns unit
+    private function spawnUnit(int unitId, vec2 spawnPos) returns unit
         let armySize = pDatas.get(_p).spawnedUnits.size()
         // Log.info("Army size : " + armySize.toString())
         // Need to spread unit owner over 2 dummy player, once it reaches MAX_UNIT_PER_PLAYER
@@ -225,6 +232,7 @@ public class ArmySpawner
             newUnit.setBaseDamage(
                 (newUnit.getBaseDamage(0) * gameConfig.getDamageMultiplier()).toInt() , 0)
 
+        // TODO: handle multiple item for 1 unit (see paladin skin)
         // Apply Item modifier
         if not unitModifierList.isEmpty()
             // Log.info("Execute for : " + newUnit.getName() + " " + unitModifierList.size().toString())
@@ -299,18 +307,10 @@ public class ArmySpawner
         // 400 is kind of a random value
         let invertedAngle = (180 + spawnZone.angle.degrees() % 360).asAngleDegrees()
         pos = spawnZone.spawnRect.getCenter().polarOffset(invertedAngle, 400)
-        if not isProdBuild
-            createTTEx(pos.withZ(100.), invertedAngle.degrees().toString(), 10)
-            createTTEx(pos.withZ(300.), invertedAngle.direction().toString(), 10)
+        // if not isProdBuild
+        //     createTTEx(pos.withZ(100.), invertedAngle.degrees().toString(), 10)
+        //     createTTEx(pos.withZ(300.), invertedAngle.direction().toString(), 10)
         // Log.info("Position reserve : " + pos.toString())
-
-    private function isBuildingSpawnOver() returns boolean
-        return buildingIdx >= buildingList.size()
-
-    private function isSquadSpawnOver() returns boolean
-        if isBuildingSpawnOver()
-            return true
-        return squadIdx >= squadIds.size()
 
     private function getRandomReinforcementPos() returns vec2
         let spawnRect = spawnZone.spawnRect

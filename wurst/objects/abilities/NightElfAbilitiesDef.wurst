@@ -309,7 +309,10 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_POISON_SPEAR, tgen.generateFullTooltip())
 
     tgen = new BTAbilityTooltipGenerator(
-        "Poisoned target cannot be healed.")
+        "Afflicts a target enemy unit with a deadly parasite " +
+        "that deals damage over duration. " +
+        "If the afflicted unit dies while under the effect of Parasite, " +
+        " a treant will spawn from its corpse.")
 
     new AbilityDefinitionParasite(ABIL_PARASITE_SEED)
         ..registerTooltipGenerator(tgen)
@@ -342,6 +345,13 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_THORN_AURA, tgen.generateFullTooltip())
 
 
+
+    let dryadCount = BTBuildingData.getUnitCount(BUILDING_DRYAD)
+    itm = createBasicItem(ITEM_REJUVENATION)
+        ..setItemCost(0, 50, 1, dryadCount, dryadCount)
+        ..setNameEnhance("Z", "Add 1 Rejuvenation")
+        ..setInterfaceIcon(Icons.bTNRejuvenation)
+
     tgen = new BTAbilityTooltipGenerator(
         "Heals a target friendly unit over the duration."
     )
@@ -365,6 +375,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStopListen(true)
         ..presetCastRange(_ -> 600)
 
+    tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_REJUVENATION, tgen.generateFullTooltip())
 
 
@@ -428,6 +439,131 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_SPIRIT_OF_VENGEANCE, tgen.generateFullTooltip())
+
+
+    let BUFF_HAUNT = compiletime(BUFF_ID_GEN.next())
+    new BuffDefinition(BUFF_HAUNT, BuffIds.shadowStrike)
+        // ..setIcon(Icons.bTNCurse)
+        // ..setArtTarget(1, Abilities.curseTarget)
+        // ..setTargetAttachmentPoint0("overhead")
+        ..setTooltipNormal(1, "Haunted")
+        ..setTooltipNormalExtended(1, "This unit is haunted; it cannot fight.")
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Haunts a target, making it unable to attack."
+        )
+    let abilId = ABIL_ID_GEN.next()
+    new AbilityDefinitionOrbofLightning(ABIL_TERRIFY_ORB)
+        ..setMissileArt(Abilities.vengeanceMissile)
+        ..setArtTarget("")
+        ..setEnabledAttackIndex(1, 0)
+        ..presetChanceToHitUnits(_ -> 20)
+        ..presetChanceToHitSummons(_ -> 20)
+        ..setEffectAbility(1, abilId.toRawCode())
+        ..setDamageBonus(1, 0)
+
+    new AbilityDefinitionBrewmasterDrunkenHaze(abilId)
+        ..setIconNormal(Icons.bTNCurse)
+        ..presetCastRange(_ -> 700)
+        ..setAreaofEffect(1, 0)
+        ..setBuffs(1, BUFF_HAUNT.toRawCode())
+        ..setLevels(1)
+        ..setManaCost(1, 0)
+        ..setMissileArc(0)
+        ..setMissileSpeed(600)
+        ..setHeroAbility(false)
+        ..setChanceToMiss(1, 0)
+        ..setAttacksPrevented(1, 15) // All checkbox checks
+        ..setMissileArt(Abilities.shadowStrikeMissile)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..addTooltipProperty("Chance to hit units", _ ->  0.2.toPercent())
+        ..addTooltipProperty("Chance to hit summons", _ ->  0.2.toPercent())
+        ..presetMovementSpeedModifier(_ -> 0.75)
+        ..presetDurationNormal(_ -> 5)
+        ..presetCooldown(_ -> 10)
+        ..setNameEnhance("Z", "Haunts")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_TERRIFY_ORB, tgen.generateFullTooltip())
+
+
+    let BUFF_TERROR = compiletime(BUFF_ID_GEN.next())
+    new BuffDefinition(BUFF_TERROR, BuffIds.enduranceAura)
+        ..setIcon(Icons.bTNPossession)
+        ..setArtTarget(1, Abilities.orbCorruptionSpecialArt)
+        ..setTargetAttachmentPoint0(1, "chest")
+        ..setTooltipNormal(1, "Terror Aura")
+        ..setTooltipNormalExtended(1,
+            "This unit is terrified; its attack speed is reduced."
+        )
+
+    tgen = new BTAbilityTooltipGenerator(
+            "Decrease the attack speed of nearby enemies.")
+    new AbilityDefinitionAuraEnduranceCreep(ABIL_TERROR_AURA)
+        ..setLevels(1)
+        ..setBuffs(1, BUFF_TERROR.toRawCode())
+        ..setArtTarget(Abilities.obsidianRegenAura)
+        ..setHeroAbility(false)
+        ..setMovementSpeedIncrease(1, 0)
+        ..presetTargetsAllowed(_ -> commaList(
+            TargetsAllowed.enemies
+            ))
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..setAttackSpeedIncrease(1, -0.3)
+        ..addTooltipProperty("Attack Speed Decrease", _ -> 0.3.toPercent())
+        ..presetAreaofEffect(_ -> 600)
+        ..setName("Terror Aura")
+        ..tooltipStopListen()
+
+    abilTooltipMap.put(ABIL_TERROR_AURA, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Gives bonus damage to nearby friendly units.")
+    new AbilityDefinitionRoar(ABIL_ROAR)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..presetCooldown(_ -> 0)
+        ..tooltipStartListen()
+        ..presetDamageIncrease(_ -> 0.30)
+        ..presetDurationNormal(_ -> 6)
+        ..presetAreaofEffect(_ -> 500)
+        ..presetManaCost(_ -> 125)
+        ..setNameEnhance("Z", "Roar")
+        ..tooltipStopListen(false)
+
+    createAutoCastedEnemyAbility(ABIL_AUTOCAST_ROAR)
+        ..registerTooltipGenerator(tgen)
+        ..presetCastRange(_ -> 125)
+        ..tooltipStartListen()
+        ..presetManaCost(_ -> 125)
+        ..presetCooldown(_ -> 15)
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_ROAR, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Dispels positive buffs from enemy units, " +
+        "and negative buffs from friendly units. " +
+        "Deals damage to summoned units."
+    )
+    new AbilityDefinitionAbolishMagic(ABIL_ABOLISH_MAGIC)
+        ..setCheckDependencies(false)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetSummonedUnitDamage(_ -> 200)
+        ..presetManaCost(_ -> 30)
+        ..presetCooldown(_ -> 2)
+        ..presetCastRange(_ -> 500)
+        ..setNameEnhance("Z", "Abolish Magic")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_ABOLISH_MAGIC, tgen.generateFullTooltip())
 
 
 init

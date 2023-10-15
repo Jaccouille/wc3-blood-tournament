@@ -96,6 +96,7 @@ import UnitObjEditingCommon
         ..setAttack1WeaponType(WeaponType.Artillery)
         ..setName("Tournament Manager")
         ..setProperNames("Need a name")
+        ..setHitPointsMaximumBase(666)
 
 function createSpeedBanner(int newId) returns BuildingDefinition
     return new BuildingDefinition(newId, UnitIds.farm)

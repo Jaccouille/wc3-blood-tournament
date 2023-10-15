@@ -11,12 +11,14 @@ import Assets
 import OrderIds
 import ItemStockHandler
 import ClosureForGroups
+import SpawnZone
 
 function customAction(unit killer, unit dyingUnit, PlayerData pData)
 
-    if dyingUnit.getTypeId() == UNIT_PALADIN_1
+    if (dyingUnit.getTypeId() == UNIT_PALADIN_1
         or dyingUnit.getTypeId() == UNIT_PALADIN_2
-        or dyingUnit.getTypeId() == UNIT_PALADIN_3
+        or dyingUnit.getTypeId() == UNIT_PALADIN_3)
+        and  killer.getOwner() != players[PLAYER_NEUTRAL_AGGRESSIVE]
         doAfter(1) ->
             // if roundController.currentRound.
             flashEffect(Abilities.resurrecttarget, dyingUnit.getPos())
@@ -24,7 +26,8 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
                 dyingUnit.getPos(), dyingUnit.getFacingAngle())
             ..issuePointOrder("attack", CENTER)
             if u == null
-                Log.info("Unknown unit spawned for" + dyingUnit.getOwner().getName())
+                Log.info("Unknown unit spawned for" +
+                dyingUnit.getOwner().getTruePlayerFromDummy().getName())
             else
                 pData.spawnedUnits.push(u)
 
@@ -56,14 +59,17 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
         killer.issueImmediateOrderById(OrderIds.berserk)
 
     else if dyingUnit.getTypeId() == UNIT_MOUNTAIN_GIANT
-        forUnitsInRange(dyingUnit.getPos(), 600) (unit u) ->
-            u.issuePointOrder("attack", CENTER)
+        // Log.info("MG DEAD")
+        forUnitsInRange(dyingUnit.getPos(), 1500) (unit u) ->
+            if u.isAlive() and u.isEnemyOf(dyingUnit)
+                // Log.info("Reordering " + u.getName())
+                u.issuePointOrder("attack", CENTER)
 
     else if killer.getTypeId() == UNIT_WARMONGER
         if not killer.hasAbility(BuffIds.battleRoar)
-            killer.setAbilityLevel(ABIL_INVIGORATE, 1)
+            killer.setAbilityLevel(ABIL_RAMPAGE, 1)
         killer.issueImmediateOrderById(OrderIds.battleroar)
-        killer.incAbilityLevel(ABIL_INVIGORATE)
+        killer.incAbilityLevel(ABIL_RAMPAGE)
 
     else if killer.getTypeId() == UNIT_BERSERKER
         if not killer.hasAbility(BuffIds.roar)
@@ -111,7 +117,13 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
                 let sp1 = playerToArmySpawner.get(matchUpWinner).spawnZone
                 let sp2 = playerToArmySpawner.get(pData._p).spawnZone
                 let middle = computeSpeedBannerPos(sp1, sp2)
-                spawnSpeedBanner(middle, matchUpWinner)
+                var hasSpawned = false
+                // TODO: probably doesn't work
+                forUnitsInRange(middle, 500) (unit u) ->
+                    if u.getTypeId() == UNIT_SPEED_BANNER
+                        hasSpawned = true
+                if not hasSpawned
+                    spawnSpeedBanner(middle, matchUpWinner)
 
             else if roundController.currentRound instanceof FinalRound
                 (roundController.currentRound castTo FinalRound).looser = pData._p
@@ -119,11 +131,12 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
         roundController.currentRound.roundParticipant.remove(pData._p)
 
         // Log.info(pData._p.getName() + " has been eliminated")
+        let winner = killerOwner == ALTAR_PLAYER ? pData._p : killerOwner
 
         if roundController.currentRound.roundParticipant.size() == 1
             onLastArmyRemaining.execute()
         if roundController.currentRound.roundParticipant.isEmpty()
-            onAllUnitDead.execute(killerOwner)
+            onAllUnitDead.execute(winner)
 
 
 public function initUnitDeathTrigger()

@@ -442,6 +442,10 @@ let SLOW_TARGET_COUNT = 2
         ..setTargetAttachmentPoint0(1, "chest")
         ..setArtTarget(1, Abilities.staff_Sanctuary_Target)
 
+    itm = createBasicItem(ITEM_INSPIRE)
+        ..setItemCost(0, 500, 1, 1, 1)
+        ..setNameEnhance("X", "Add Inspire ability")
+        ..setInterfaceIcon(Icons.bTNInnerFire)
     tgen = new BTAbilityTooltipGenerator(
         "Inspire nearby troops, regenerating their hit points."
     )
@@ -470,7 +474,9 @@ let SLOW_TARGET_COUNT = 2
         ..presetCooldown(_ -> 20)
         ..tooltipStopListen(true)
 
+    tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_INSPIRE, tgen.generateFullTooltip())
+
 
 init
     EventListener.onTargetCast(ABIL_SLOW) (unit caster, unit target) ->

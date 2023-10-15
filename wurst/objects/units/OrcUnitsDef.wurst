@@ -209,13 +209,12 @@ import ArmySpawner
 
 @compiletime function createWarmonger()
     let tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_INVIGORATE) + "\n\n" +
-        abilTooltipMap.get(ABIL_CRITICAL_STRIKE_40)
+        abilTooltipMap.get(ABIL_CRITICAL_STRIKE_60)
         )
     createSpawnedUnit(UNIT_WARMONGER, UnitIds.gromhellscream, BUILDING_WARMONGER)
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
-        ..setNormalAbilities(commaList(ABIL_INVIGORATE, ABIL_CRITICAL_STRIKE_40))
+        ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_60))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -232,6 +231,7 @@ import ArmySpawner
 
         ..setNameEnhance("R", "Warmonger")
         ..tooltipStopListen(true)
+        ..setBuildingScalingValue(0.85)
 
         ..setArtSpecial(Objects.orcLargeDeathExplode)
 
@@ -241,7 +241,7 @@ import ArmySpawner
 
 @compiletime function createKodo()
     let tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_DAMAGE_AURA_25) + "\n\n"
+        abilTooltipMap.get(ABIL_DAMAGE_AURA_25)
         )
     let itm = createBasicItem(ITEM_KODO)
     createSpawnedUnit(UNIT_KODO, UnitIds.kotobeast)
@@ -262,7 +262,7 @@ import ArmySpawner
         ..setSizeLarge()
 
         ..tooltipStopListen()
-        ..setNameEnhance("D", "Kodo Beast")
+        ..setNameEnhance("X", "Kodo Beast")
 
         ..tooltipStopListen(true, itm)
         ..setMana(0)

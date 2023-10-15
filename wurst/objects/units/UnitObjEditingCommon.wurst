@@ -77,7 +77,6 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
             ABIL_ORDER_UNIT,
             ABIL_SELL_BUILDING,
             ABIL_TRADE_GOLD,
-            ABIL_TRADE_BLOOD_POINT,
             ABIL_SELL_ALL,
             AbilityIds.inventory
             ))
@@ -304,16 +303,15 @@ public class BTUnitDefinition extends UnitDefinition
         srcUnitId being the id of the building that is being replaced
     */
     function setItemCostReplacement(int gold, int lumber, int charges, int maxStock, int maxStack, int srcUnitId)
-        let armyPoints = computeUnitPointValue(gold, lumber, charges) * charges
+        let newPointValue = computeUnitPointValue(gold, lumber, charges)
+            + BTBuildingData.getUnitPointValue(srcUnitId)
+        setPointValue(newPointValue)
+        let armyPoints = newPointValue * charges
         addTooltipProperty("Army points", armyPoints)
-
         // Used on item purchase to increase army points
         itemDef.setHitPoints(armyPoints)
         itemDef.setItemCost(gold, lumber, charges, maxStack, maxStock)
 
-        let newPointValue = computeUnitPointValue(gold, lumber, charges)
-            + BTBuildingData.getUnitPointValue(srcUnitId)
-        setPointValue(newPointValue)
         this.charges = charges
 
     /** Use for unit linked to a building (not items one) **/

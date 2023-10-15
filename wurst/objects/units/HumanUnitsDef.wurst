@@ -259,8 +259,8 @@ import ArmySpawner
         ..setUnitSoundSetExt(Soundsets.knight)
 
     tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_MAGIC_ARMOR_50) + "\n\n" +
         abilTooltipMap.get(ABIL_BASH_30) + "\n\n" +
+        abilTooltipMap.get(ABIL_MAGIC_ARMOR_50) + "\n\n" +
         abilTooltipMap.get(ABIL_HOLY_BLADE)
     )
     // var itm = createBasicItem(ITEM_CRUSADER)
@@ -299,14 +299,13 @@ import ArmySpawner
 
 
     tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_INSPIRE) + "\n\n" +
         abilTooltipMap.get(ABIL_CLEAVE_30)
     )
 
     let itm = createBasicItem(ITEM_MARSHALL)
     createSpawnedUnit(UNIT_MARSHALL, UnitIds.lordgarithos)
-        ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_INSPIRE, ABIL_AUTOCAST_INSPIRE))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_INSPIRE))
+        ..setNormalAbilities(commaList(ABIL_CLEAVE_30))
+        ..setDefaultActiveAbility(commaList(""))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -315,16 +314,16 @@ import ArmySpawner
 
         ..setArmorData(ArmorType.Large, 10)
         ..setHitPointsMaximumBase(1300)
-        ..setMana(150)
 
         ..setSpeedBase(330)
         ..setAutoPointValue()
         ..setSizeLarge()
         ..tooltipStopListen(true, itm)
 
-        ..setItemCostUnit(0, 1500, 1)
+        ..setItemCostUnit(0, 1000, 1)
         ..setNameEnhance("X", "Marshall")
-        ..setScalingValue(1.15)
+        ..setScalingValue(1.2)
+        ..setMana(0)
 
         ..setIconGameInterfaceExt(Icons.bTNGarithos)
 
@@ -350,7 +349,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
             ..setSpeedBase(300)
 
             ..setSizeSmall()
-            ..setPointValue(0, 1500, 3)
+            ..setPointValue(0, 1000, 1)
             ..tooltipStopListen(true)
 
             ..setAttack1Range(120)
@@ -375,7 +374,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setSummonedUnit()
 
         ..setSpeedBase(300)
-        ..setPointValue(0, 900, 3)
+        ..setAutoPointValue()
         ..tooltipStopListen(true)
 
         ..setArtSpecial(Objects.humanLargeDeathExplode)
@@ -393,10 +392,25 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     createPaladin(UNIT_PALADIN_3)
         ..setModelFile(Units.heroPaladinBoss2)
 
+    createBasicItem(ITEM_PALADIN_SKIN_BLACK)
+        ..setName("Black Hair Color")
+        ..setTooltipBasic("Black Hair Color")
+        ..setTooltipExtended("Change paladin model to a black haired one.")
+        ..setInterfaceIcon(Icons.bTNHeroPaladin)
+        ..setItemCost(0, 0, 1, 1, 1)
+
+    createBasicItem(ITEM_PALADIN_SKIN_WHITE)
+        ..setName("White Hair Color")
+        ..setTooltipBasic("White Hair Color")
+        ..setTooltipExtended("Change paladin model to a white haired one.")
+        ..setInterfaceIcon(Icons.bTNHeroPaladin)
+        ..setItemCost(0, 0, 1, 1, 1)
+
+    // TODO: lumber cost shoud match armyspawner automatically
     let buildingDef = createBuildingUnit(BUILDING_PALADIN)
-        ..setNameEnhance("R", "Paladin 3x")
+        ..setNameEnhance("R", "Paladin 1x")
         ..setUnitsTrained(commaList(UNIT_PALADIN_1, UNIT_GHOST_PALADIN))
-        ..setLumberCost(1500)
+        ..setLumberCost(1000)
         ..setModelFile(Units.heroPaladin)
         ..setIconGameInterface(Icons.bTNHeroPaladin)
         ..setUnitSoundSet(Soundsets.uther)

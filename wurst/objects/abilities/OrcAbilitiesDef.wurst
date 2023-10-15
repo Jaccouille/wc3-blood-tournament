@@ -30,6 +30,7 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
     new AbilityDefinitionBloodlustCreep(ABIL_BLOODLUST)
         ..setTooltipNormal(1, TOOLTIP_BLOODLUST)
         ..setTooltipNormalExtended(1, TOOLTIP_EXT_BLOODLUST)
+        ..setScalingFactor(1, 0)
 
     let witchDoctorCount = BTBuildingData.getUnitCount(BUILDING_WITCH_DOCTOR)
     var itm = createBasicItem(ITEM_HEALING_WAVE)
@@ -84,10 +85,10 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
         ..tooltipStartListen()
-        ..setAttackSpeedIncrease(1, 1)
-        ..addTooltipProperty("Attack Speed Bonus", _ -> "100%")
-        ..setDamageTakenIncrease(1, 0.4)
-        ..addTooltipProperty("Damage Taken Bonus", _ -> 0.4.toPercent())
+        ..setAttackSpeedIncrease(1, 1.5)
+        ..addTooltipProperty("Attack Speed Bonus", _ -> "150%")
+        ..setDamageTakenIncrease(1, 0.5)
+        ..addTooltipProperty("Damage Taken Bonus", _ -> 0.5.toPercent())
         ..setMovementSpeedIncrease(1, 0.3)
         ..addTooltipProperty("Movement Speed Bonus", _ -> 0.3.toPercent())
         ..presetDurationNormal(_ -> 3)
@@ -434,28 +435,53 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
 
     abilTooltipMap.put(ABIL_OGRE_SWING, tgen.generateFullTooltip())
 
+    let BUFF_RAMPAGE = compiletime(BUFF_ID_GEN.next())
+    new BuffDefinition(BUFF_RAMPAGE, BuffIds.battleRoar)
+        ..setIcon(Icons.bTNBerserk)
+        ..setArtTarget(Abilities.trollBeserkerTarget)
+        ..setTargetAttachmentPoint1(1, "head")
+        ..setTooltipNormal(1, "Rampage")
+        ..setTooltipNormalExtended(1, "This unit has rampage;" +
+            " its attack damage has been increased.")
+
+    itm = createBasicItem(ITEM_RAMPAGE)
+        ..setItemCost(0, 750, 1, 1, 1)
+        ..setNameEnhance("Z", "Add Rampage ability")
+        ..setInterfaceIcon(Icons.bTNBerserk)
     tgen = new BTAbilityTooltipGenerator(
         "Increase nearby allies damage every time this unit kills an enemy. " +
         "Each chained kill increase the level of the ability. Level count is reset " +
         "when the buff expires."
     )
-    new AbilityDefinitionBattleRoar(ABIL_INVIGORATE)
+    new AbilityDefinitionBattleRoar(ABIL_RAMPAGE)
         ..setAnimationNames("")
+        ..setIconNormal(Icons.bTNBerserk)
         ..setHeroAbility(false)
         ..presetDefenseIncrease(lvl -> 0)
         ..presetLifeRegenerationRate(lvl -> 0)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..setLevels(10)
-        ..presetDamageIncrease(lvl -> 10. * lvl)
+        ..setLevels(5)
+        ..presetDamageIncrease(lvl -> 15. * lvl)
         ..presetAreaofEffect(lvl -> 200. + 25 * lvl)
         ..presetDurationNormal(lvl -> 5)
+        ..setNameEnhance("Z", "Rampage")
+        ..tooltipStopListen(true)
+        ..presetBuffs(_ -> BUFF_RAMPAGE.toRawCode())
         ..presetManaCost(lvl -> 0)
         ..presetCooldown(lvl -> 0)
-        ..setNameEnhance("Z", "Invigorate")
-        ..tooltipStopListen(true)
 
-    abilTooltipMap.put(ABIL_INVIGORATE, tgen.generateFullTooltip())
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_RAMPAGE, tgen.generateFullTooltip())
+
+
+    let BUFF_KILLING_SPREE = compiletime(BUFF_ID_GEN.next())
+    new BuffDefinition(BUFF_KILLING_SPREE, BuffIds.battleRoar)
+        ..setIcon(Icons.bTNChaosGrunt)
+        ..setTargetAttachmentPoint1(1, "head")
+        ..setTooltipNormal(1, "Killing Spree")
+        ..setTooltipNormalExtended(1, "This unit is on a killing spree;" +
+            " its attack damage is increased.")
 
     tgen = new BTAbilityTooltipGenerator(
         "This unit gains temporary damage boost on every kill. " +
@@ -477,6 +503,8 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
         ..tooltipStopListen(true)
         ..presetManaCost(lvl -> 0)
         ..presetCooldown(lvl -> 0)
+        ..setArtCaster("")
+        ..presetBuffs(_ -> BUFF_KILLING_SPREE.toRawCode())
 
 
     abilTooltipMap.put(ABIL_KILLING_SPREE, tgen.generateFullTooltip())

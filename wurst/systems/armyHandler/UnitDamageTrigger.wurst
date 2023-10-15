@@ -10,6 +10,12 @@ init
     DamageEvent.addListener() ->
         let target = DamageEvent.getTarget()
         let src = DamageEvent.getSource()
+
+        if src.hasAbility(ABIL_ABOLISH_MAGIC) and src.getAbilityCooldownRemaining(ABIL_ABOLISH_MAGIC) <= 0
+            and target.isType(UNIT_TYPE_SUMMONED)
+            src.issueTargetOrderById(OrderIds.autodispel, target)
+
+
         switch target.getTypeId()
             case UNIT_WARDEN
                 if target.getPos().distanceTo(src.getPos()) > 200
