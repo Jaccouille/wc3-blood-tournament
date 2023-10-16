@@ -18,7 +18,7 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
     if (dyingUnit.getTypeId() == UNIT_PALADIN_1
         or dyingUnit.getTypeId() == UNIT_PALADIN_2
         or dyingUnit.getTypeId() == UNIT_PALADIN_3)
-        and  killer.getOwner() != players[PLAYER_NEUTRAL_AGGRESSIVE]
+        and killer.getOwner() != players[PLAYER_NEUTRAL_AGGRESSIVE]
         doAfter(1) ->
             // if roundController.currentRound.
             flashEffect(Abilities.resurrecttarget, dyingUnit.getPos())
@@ -110,7 +110,8 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
         let matchUpWinner = roundController.currentRound.getOpponent(pData._p)
         if matchUpWinner != null
             forUnitsOfPlayer(matchUpWinner) (unit u) ->
-                u.issuePointOrder("attack", CENTER)
+                if not u.isType(UNIT_TYPE_PEON) and not u.isType(UNIT_TYPE_STRUCTURE)
+                    u.issuePointOrder("attack", CENTER)
 
         if matchUpWinner == killerOwner
             if roundController.currentRound instanceof NormalRound

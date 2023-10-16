@@ -105,8 +105,9 @@ class RoundController
                 interludeTime = 120.
                 hasFinalStarted = true
                 doAfter(interludeTime - 10.) ->
-                    if gameConfig.isDisplayPortalEnabled()
-                        currentRound.spawnPortals()
+                    if not currentRound.hasStarted
+                        if gameConfig.isDisplayPortalEnabled()
+                            currentRound.spawnPortals()
                 forDestructablesInRect(boundRect) (destructable d) ->
                     if d.getTypeId() == DESC_BRIDGES_VERTICAL
                         or d.getTypeId() == DESC_BRIDGES_HORIZONTAL
@@ -147,7 +148,7 @@ class RoundController
             if currentRound instanceof FinalRound
                 // Registering the winner to create final round matchup
                 if previousRoundWinner == null
-                    Log.info("Adding previous winner " + winner.getName())
+                    // Log.info("Adding previous winner " + winner.getName())
                     previousRoundWinner = winner
                 else
                     Log.info("Removing previous winner")
