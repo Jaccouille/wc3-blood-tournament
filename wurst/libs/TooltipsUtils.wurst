@@ -7,6 +7,10 @@ import ObjectIds
 // Local imports:
 import ColorUtils
 
+
+public function real.percRound() returns string
+    return (this.toString(0) + "%")
+
 public function real.toPercent() returns string
     if this > 1 and this - this.toInt() != 0
         return this.toString() + "%"

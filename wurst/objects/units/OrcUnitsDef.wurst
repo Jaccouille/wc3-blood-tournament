@@ -58,7 +58,7 @@ import ArmySpawner
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
-        ..setItemCostReplacement(0, 75, 1, gruntCount, gruntCount, BUILDING_GRUNT)
+        ..setItemCostReplacement(0, 100, 1, gruntCount, gruntCount, BUILDING_GRUNT)
 
         ..setSizeSmall()
 
@@ -178,8 +178,8 @@ import ArmySpawner
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_MELEE_AURA_FLAT_20) + "\n\n" +
-        abilTooltipMap.get(ABIL_MAGIC_ARMOR_50) + "\n\n" +
-        abilTooltipMap.get(ABIL_BASH_30)
+        abilTooltipMap.get(ABIL_BASH_30) + "\n\n" +
+        abilTooltipMap.get(ABIL_MAGIC_ARMOR_50)
         )
     let itm = createBasicItem(ITEM_PACK_LEADER)
     createSpawnedUnit(UNIT_PACK_LEADER, UnitIds.thrall, BUILDING_PACK_LEADER)

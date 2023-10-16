@@ -49,7 +49,7 @@ let SLOW_TARGET_COUNT = 2
         ..setNameEnhance("X", "Add 1 Armor Blessing")
         ..setInterfaceIcon(Icons.bTNBarkSkin)
 
-    tgen = new BTAbilityTooltipGenerator("Increase armor.")
+    tgen = new BTAbilityTooltipGenerator("Increases armor.")
     new AbilityDefinitionInnerFireCreep(ABIL_ARMOR_BLESSING)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
@@ -82,7 +82,7 @@ let SLOW_TARGET_COUNT = 2
         ..setNameEnhance("C", "Add 1 Weapon Blessing")
         ..setInterfaceIcon(Icons.bTNTransmute)
 
-    tgen = new BTAbilityTooltipGenerator("Increase damage.")
+    tgen = new BTAbilityTooltipGenerator("Increases damage.")
     new AbilityDefinitionInnerFireCreep(ABIL_WEAPON_BLESSING)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
@@ -135,7 +135,7 @@ let SLOW_TARGET_COUNT = 2
         ..setNameEnhance("Z", "Upgrade into 1 Dark Mage")
         ..setInterfaceIcon(Icons.bTNOrbOfDarkness)
 
-    tgen = new BTAbilityTooltipGenerator("Increase damage. Units killed "+
+    tgen = new BTAbilityTooltipGenerator("Increases damage. Units killed "+
         "by the mage will spawn a Ghost."
         )
     let abilId = ABIL_ID_GEN.next()
@@ -163,7 +163,7 @@ let SLOW_TARGET_COUNT = 2
         ..setInterfaceIcon(Icons.bTNOrbOfFire)
 
     tgen = new BTAbilityTooltipGenerator(
-        "Increase damage. Units killed by the mage will explode.")
+        "Increases damage. Units killed by the mage will explode.")
     new AbilityDefinitionFirelordIncinerate(ABIL_INCINERATE)
         ..setLevels(1)
         ..presetBonusDamageMultiplier(_ -> 0)
@@ -216,7 +216,7 @@ let SLOW_TARGET_COUNT = 2
         ..setInterfaceIcon(Icons.bTNOrbOfFrost)
 
     tgen = new BTAbilityTooltipGenerator(
-        "Increase damage. Slow the movement speed and attack "+
+        "Increases damage. Slow the movement speed and attack "+
         "rate of the enemy for <AIob,Dur1> seconds."
     )
     new AbilityDefinitionFrostDamageBonus(ABIL_ORB_FROST)
@@ -233,7 +233,7 @@ let SLOW_TARGET_COUNT = 2
 
     tgen = new BTAbilityTooltipGenerator(
     "Blasts enemy units around a target enemy unit with a " +
-    "wave of damaging frost that slows movement by 50% and attack rate by 25%."
+    "wave of damaging frost that slows movement and attack rate."
     )
     new AbilityDefinitionFrostNovacreep(ABIL_FROST_NOVA)
         ..setLevels(1)
@@ -242,6 +242,8 @@ let SLOW_TARGET_COUNT = 2
         ..tooltipStartListen()
         ..presetAreaofEffectDamage(_ -> 50)
         ..presetSpecificTargetDamage(_ -> 100)
+        ..addTooltipProperty("Attack Speed Reduction", _ -> "25%")
+        ..addTooltipProperty("Movement Speed Reduction", _ -> "50%")
         ..presetAreaofEffect(_ -> 150)
         ..presetManaCost(_ -> 180)
         ..presetDurationNormal(_ -> 3)
@@ -292,7 +294,7 @@ let SLOW_TARGET_COUNT = 2
     abilTooltipMap.put(ABIL_BLIZZARD, tgen.generateFullTooltip())
 
     tgen = new BTAbilityTooltipGenerator(
-        "Reduces piercing damage."
+        "Reduces piercing damage. Can reflect piercing missile back to the attacker."
     )
 
     let footmanCount = BTBuildingData.getUnitCount(BUILDING_FOOTMAN) + 1
@@ -304,11 +306,15 @@ let SLOW_TARGET_COUNT = 2
     new AbilityDefinitionDefend(ABIL_DEFEND)
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
-        ..tooltipStartListen()
-        ..presetChancetoDeflect(_ -> 30)
+        ..presetChancetoDeflect(_ -> 60)
         ..presetDamageDealt(_ -> 1)
         ..presetDamageTaken(_ -> 0.35)
         ..presetMovementSpeedFactor(_ -> 0.3)
+        ..tooltipStartListen()
+        ..addTooltipProperty("Chance to Deflect", _ -> "60%")
+        ..addTooltipProperty("Damage Returned", _ -> "100%")
+        ..addTooltipProperty("Damage Taken", _ -> "35%")
+        ..addTooltipProperty("Movement Speed Reduced", _ -> "30%")
         ..setNameEnhance("Z", "Defend")
         ..tooltipStopListen(true)
 
@@ -337,7 +343,7 @@ let SLOW_TARGET_COUNT = 2
 
 
     tgen = new BTAbilityTooltipGenerator(
-        "Apply a burning damage ignoring armor over time."
+        "Applies a burning damage over time, ignores armor."
     )
     let BUFF_BURN_ID_STACK = BUFF_ID_GEN.next()
     new BuffDefinition(BUFF_BURN_ID_STACK, BuffIds.slowPoisonStacking)
@@ -447,7 +453,8 @@ let SLOW_TARGET_COUNT = 2
         ..setNameEnhance("X", "Add Inspire ability")
         ..setInterfaceIcon(Icons.bTNInnerFire)
     tgen = new BTAbilityTooltipGenerator(
-        "Inspire nearby troops, regenerating their hit points."
+        "Inspires nearby troops, regenerating their hit points every " +
+        "seconds over the duration."
     )
     new AbilityDefinitionRoar(ABIL_INSPIRE)
         ..setHeroAbility(false)

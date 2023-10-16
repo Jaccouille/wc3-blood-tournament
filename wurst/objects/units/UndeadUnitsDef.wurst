@@ -365,14 +365,14 @@ import ArmySpawner
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_RAISE_REVENANT) + "\n\n" +
         abilTooltipMap.get(ABIL_ORB_CORRUPTION) + "\n\n" +
-        abilTooltipMap.get(ABIL_BRILLANCE_AURA_1)
+        abilTooltipMap.get(ABIL_BRILLANCE_AURA_2)
     )
     let itm = createBasicItem(ITEM_LICH)
     createSpawnedUnit(UNIT_LICH, UnitIds.lich, BUILDING_LICH)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setNormalAbilities(commaList(ABIL_RAISE_REVENANT, ABIL_ORB_CORRUPTION, ABIL_BRILLANCE_AURA_1))
+        ..setNormalAbilities(commaList(ABIL_RAISE_REVENANT, ABIL_ORB_CORRUPTION, ABIL_BRILLANCE_AURA_2))
         ..setDefaultActiveAbility(commaList(ABIL_RAISE_REVENANT))
 
         ..setAttack1Data(AttackType.Magic, 115, 4, 9, 1.75)
@@ -549,7 +549,7 @@ import ArmySpawner
         ..setHitPointsMaximumBase(1200)
 
         ..setSpeedBase(270)
-        ..setItemCostUnit(0, 1000)
+        ..setItemCostUnit(0, 1500)
 
         ..setSizeSmall()
         ..setNameEnhance("Z", "Vampire Lord")

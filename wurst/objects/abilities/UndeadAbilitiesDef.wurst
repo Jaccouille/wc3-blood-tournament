@@ -32,8 +32,9 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setCheckDependencies(false)
         ..presetCooldown(_ -> 0)
         ..registerTooltipGenerator(tgen)
-        ..tooltipStartListen()
         ..presetAttackSpeedBonus(_ -> 0.60)
+        ..tooltipStartListen()
+        ..addTooltipProperty("Attack Speed Bonus", _ -> "60%")
         ..presetCastRange(_ -> 500)
         ..presetDamageperSecond(_ -> 4)
         ..presetManaCost(_ -> 40)
@@ -100,6 +101,8 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetArmorBonus(_ -> 4)
+        ..addTooltipProperty("Attack Speed Reduction", _ -> "25%")
+        ..addTooltipProperty("Movement Speed Reduction", _ -> "50%")
         ..presetCooldown(_ -> 4)
         ..presetManaCost(_ -> 50)
         ..presetDurationNormal(_ -> 30)
@@ -114,8 +117,9 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..presetUnitTypeOne(_ -> commaList(UNIT_SKELETON))
         ..presetUnitTypeForLimitCheck(_ -> commaList(UNIT_SKELETON))
-        ..tooltipStartListen()
         ..presetUnitsSummonedTypeOne(_ -> 1)
+        ..tooltipStartListen()
+        ..addTooltipProperty("Summoned Unit Count", _ -> "1")
         ..presetManaCost(_ -> 75)
         ..presetCastRange(_ -> 650)
         ..presetCooldown(_ -> 12)
@@ -135,8 +139,9 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..presetUnitTypeOne(_ -> commaList(UNIT_SKELETON_MAGE))
         ..presetUnitTypeForLimitCheck(_ -> commaList(UNIT_SKELETON_MAGE))
-        ..tooltipStartListen()
         ..presetUnitsSummonedTypeOne(_ -> 1)
+        ..tooltipStartListen()
+        ..addTooltipProperty("Summoned Unit Count", _ -> "1")
         ..presetManaCost(_ -> 75)
         ..presetCastRange(_ -> 650)
         ..presetCooldown(_ -> 12)
@@ -151,8 +156,9 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..presetUnitTypeOne(_ -> commaList(UNIT_REVENANT))
         ..presetUnitTypeForLimitCheck(_ -> commaList(UNIT_REVENANT))
-        ..tooltipStartListen()
         ..presetUnitsSummonedTypeOne(_ -> 2)
+        ..tooltipStartListen()
+        ..addTooltipProperty("Summoned Unit Count", _ -> "2")
         ..presetManaCost(_ -> 150)
         ..presetCastRange(_ -> 600)
         ..presetCooldown(_ -> 10)
@@ -162,7 +168,8 @@ let DEATH_COIL_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_RAISE_REVENANT, tgen.generateFullTooltip())
 
     tgen = new BTAbilityTooltipGenerator(
-        "Reduces attack rate and movement speed of target units. Orb effect.")
+        "Reduces attack rate and movement speed of target units. " +
+        "This is an Orb effect, necromancer will still cast raise skeleton.")
     new AbilityDefinitionOrbofSpells(ABIL_CRIPPLE_ORB)
         ..registerTooltipGenerator(tgen)
         ..presetChanceToHitUnits(_ -> 100)
@@ -250,7 +257,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setInterfaceIcon(Icons.bTNUnholyAura)
 
     tgen = new BTAbilityTooltipGenerator(
-        "Gives all friendly nearby units a bonus to hit point regeneration.")
+        "Regenerate nearby friendly units hitpoints every seconds.")
     new AbilityDefinitionAuraRegenerationStatue(ABIL_UNHOLY_AURA)
         ..presetDurationNormal(_ -> 0)
         ..setPercentage(1, true)
@@ -284,6 +291,7 @@ let DEATH_COIL_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_ORB_CORRUPTION, tgen.generateFullTooltip())
 
     tgen = new BTAbilityTooltipGenerator(
+        "Basic attack applies infection. " +
         "Infected units killed will spawn a zombie.")
 
     let BUFF_INFECTION = compiletime(BUFF_ID_GEN.next())
@@ -313,8 +321,8 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setMissileArt("")
         ..presetSummonedUnitType(_ -> commaList(UNIT_ZOMBIE))
         ..presetDamageBonus(_ -> 0)
-        ..tooltipStartListen()
         ..presetNumberofSummonedUnits(_ -> 1)
+        ..tooltipStartListen()
         ..setDurationNormal(1, 6)
         ..setNameEnhance("Z", "Infection")
         ..tooltipStopListen(true)

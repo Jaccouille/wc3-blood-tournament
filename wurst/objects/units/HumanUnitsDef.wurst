@@ -119,12 +119,12 @@ import ArmySpawner
 
 
     tooltip = new UnitTooltipGenerator(
-        "High range unit.\n\n" +
-        abilTooltipMap.get(ABIL_CRITICAL_STRIKE_20)
+        abilTooltipMap.get(ABIL_CRITICAL_STRIKE_40) + "\n\n" +
+        "High range unit."
     )
     itm = createBasicItem(ITEM_SNIPER)
     createSpawnedUnit(UNIT_SNIPER, UnitIds.rifleman)
-        ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_20))
+        ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_40))
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -201,7 +201,7 @@ import ArmySpawner
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_SPELL_STEAL) + "\n\n" +
-        abilTooltipMap.get(ABIL_MAGIC_ARMOR_30)
+        abilTooltipMap.get(ABIL_MAGIC_ARMOR_30) + "\n"
         )
     let itm = createBasicItem(ITEM_SPELL_BREAKER)
     createSpawnedUnit(UNIT_SPELL_BREAKER, UnitIds.spellbreaker)
@@ -261,7 +261,7 @@ import ArmySpawner
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_BASH_30) + "\n\n" +
         abilTooltipMap.get(ABIL_MAGIC_ARMOR_50) + "\n\n" +
-        abilTooltipMap.get(ABIL_HOLY_BLADE)
+        abilTooltipMap.get(ABIL_HOLY_BLADE) + "\n"
     )
     // var itm = createBasicItem(ITEM_CRUSADER)
     createSpawnedUnit(UNIT_CRUSADER, UnitIds.knight, BUILDING_CRUSADER)
@@ -299,12 +299,13 @@ import ArmySpawner
 
 
     tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_CLEAVE_30)
+        abilTooltipMap.get(ABIL_CLEAVE_30) + "\n\n" +
+        abilTooltipMap.get(ABIL_MAGIC_ARMOR_50)
     )
 
     let itm = createBasicItem(ITEM_MARSHALL)
     createSpawnedUnit(UNIT_MARSHALL, UnitIds.lordgarithos)
-        ..setNormalAbilities(commaList(ABIL_CLEAVE_30))
+        ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_MAGIC_ARMOR_50))
         ..setDefaultActiveAbility(commaList(""))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)

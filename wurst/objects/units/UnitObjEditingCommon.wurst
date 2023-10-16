@@ -332,7 +332,10 @@ public class BTUnitDefinition extends UnitDefinition
         this.setName(name)
         this.setTooltipBasic(makeToolTipNorm(hotkey, name))
         if this.buildingDef != null
-            buildingDef.setNameEnhance(hotkey, name + " x" + spawnCount.toString())
+            if this.buildingData.isAnUpgrade
+                buildingDef.setNameEnhance(hotkey, "Upgrade to " + name + " x" + spawnCount.toString())
+            else
+                buildingDef.setNameEnhance(hotkey, name + " x" + spawnCount.toString())
         if this.itemDef != null
             var itemName = modifierType == modifierType.Addition ?
                 "Add {0} ".format(this.charges.toString()) :
