@@ -11,8 +11,8 @@ buildMapData:
     description: Just another blood tournament map
     suggestedPlayers: "8"
     loadingScreen:
-      background: Generic
-      title: Blood tournament 2024
+      model: LoadingScreen.mdx
+      title: ""
       subTitle: ""
       text: ""
   players:
