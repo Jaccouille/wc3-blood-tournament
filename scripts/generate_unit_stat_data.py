@@ -1,0 +1,163 @@
+import re
+import csv
+from pathlib import Path
+
+
+with open(str(Path("wurst/systems/armyHandler/ArmySpawner.wurst")), "r") as file:
+    file_contents = file.read()
+
+# Define a regular expression pattern to match "new BTBuildingData" lines with BUILDING_ IDs
+# pattern = re.compile(
+#     r"new\s+BTBuildingData\s*\(\s*(BUILDING_[A-Z_]+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*genList\((.*?)\)\s*\)"
+# )
+pattern = re.compile(
+    r"new\s+BTBuildingData\s*\(\s*(BUILDING_[A-Z_]+(?:\s*,\s*BUILDING_[A-Z_]+)*)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*genList\((.*?)\)\s*\)"
+)
+
+
+# Find all matches in the code
+matches = pattern.findall(file_contents)
+
+# Iterate through the matches and extract the information
+building_data = {}
+for match in matches:
+    building_id, gold_cost, lumber_cost, unit_list = match
+    unit_count = int(unit_list.split(",")[-1])
+    building_data[building_id.split(",")[-1].strip()] = {
+        "goldCost": int(gold_cost),
+        "lumberCost": int(lumber_cost),
+        "unitCount": unit_count,
+    }
+
+
+def getAttackData(attack_data: str):
+    attack_type, damage, d1, d2, attack_rate = attack_data.split(",")
+    min = int(damage)
+    max = int(damage) + int(d1) * int(d2)
+    dps = round((min + max / 2) / float(attack_rate), 2)
+    return {"attackType": attack_type.split(".")[1], "dps": dps}
+
+
+def getArmorData(armor_data: str):
+    armor_type, armor = armor_data.split(",")
+    reduction_percent = round((int(armor) * 0.06) / (1 + 0.06 * int(armor)) * 100, 2)
+    return {
+        "armorType": armor_type.split(".")[1],
+        "reductionPercent": reduction_percent,
+    }
+
+
+attribute_to_register = {
+    "setAttack1Data": getAttackData,
+    "setArmorData": getArmorData,
+    "setHitPointsMaximumBase": None,
+}
+
+# Initialize a list to store extracted attributes
+unit_attributes_list = []
+
+
+def read_unit_attributes(filepath: str):
+    # Read the unit definition file
+    with open(str(Path(filepath)), "r") as file:
+        file_contents = file.read()
+
+    # Define regular expressions for extracting unit attributes
+    unit_regex = re.compile(r"createSpawnedUnit\((.*?), (.*?), (.*?)\)")
+    function_calls = re.compile(r"\.\.(\w+)\((.*?)\)", re.DOTALL)
+
+    # Find all unit matches
+    unit_matches = unit_regex.findall(file_contents)
+    for unit_match in unit_matches:
+        unit_id, _, building_id = unit_match
+
+        unit_def_pattern = re.compile(
+            rf"createSpawnedUnit\({unit_id},.*?\)\n((?:(\s*\.\.|\s*ABIL\w+|\s*\)|\s*\/\/).*?\n)*)\s*",
+            re.DOTALL,
+        )
+
+        unit_def_match = unit_def_pattern.search(file_contents)
+        attribute_matches = function_calls.findall(unit_def_match.group())
+
+        # Requires additional compute
+        attr_to_extract = {
+            x[0]: x[1]
+            for x in attribute_matches
+            if x[0] in attribute_to_register.keys()
+            and attribute_to_register[x[0]] != None
+        }
+        attr_final = {
+            x[0]: x[1]
+            for x in attribute_matches
+            if x[0] in attribute_to_register.keys()
+            and attribute_to_register[x[0]] == None
+        }
+
+        # TODO: build up the attributes, remove attackData1, armorData1...
+        for k, v in attr_to_extract.items():
+            attr_final.update(attribute_to_register[k](v))
+
+        if building_data.get(building_id) is not None:
+            attr_final.update(building_data.get(building_id))
+
+        # Add unit attributes to the list
+        unit_attributes_list.append(
+            {
+                "UnitId": unit_id,
+                "BuildingType": building_id,
+                **attr_final,
+            }
+        )
+
+
+# The following block is executed only if the script is run directly, not if it's imported as a module.
+if __name__ == "__main__":
+    race_dict = {
+        "dps": 0,
+        "attackType": 0,
+        "reductionPercent": 0,
+        "unitCount": 0,
+        "goldCost": 0,
+        "BuildingType": 0,
+        "setHitPointsMaximumBase": 0,
+        "lumberCost": 0,
+        "armorType": 0,
+    }
+    unit_attributes_list.append({**{"UnitId": "Human"}, **race_dict})
+    read_unit_attributes("wurst/objects/units/HumanUnitsDef.wurst")
+    unit_attributes_list.append({**{"UnitId": "Orc"}, **race_dict})
+    read_unit_attributes("wurst/objects/units/OrcUnitsDef.wurst")
+    unit_attributes_list.append({**{"UnitId": "Undead"}, **race_dict})
+    read_unit_attributes("wurst/objects/units/UndeadUnitsDef.wurst")
+    unit_attributes_list.append({**{"UnitId": "NightElf"}, **race_dict})
+    read_unit_attributes("wurst/objects/units/NightElfUnitsDef.wurst")
+    # Define the CSV file and header
+    csv_file = "unit_attributes.csv"
+
+    # all_attribute_names = set()
+    # for attributes in unit_attributes_list:
+    #     all_attribute_names.update(attributes.keys())
+    # header.extend(sorted(all_attribute_names))
+
+    for row in unit_attributes_list:
+        attack_type = row.get("attackType", 0)
+        dps = row.get("dps", 0)
+        armorType = row.get("armorType", 0)
+        reductionPercent = row.get("reductionPercent", 0)
+        goldCost = row.get("goldCost", 0)
+        lumberCost = row.get("lumberCost", 0)
+        unitCount = row.get("unitCount", 1)
+        power = round((dps + reductionPercent + goldCost + lumberCost) / 10, 0)
+        row.update({"power": power})
+        row.update({"powerStacked": round(power * unitCount, 0)})
+
+    # Extract all attribute names and add them to the CSV header
+    header = list(unit_attributes_list[0].keys())
+
+    # Write unit attributes to the CSV file
+    with open(csv_file, "w", newline="") as csv_file:
+        csv_writer = csv.DictWriter(csv_file, fieldnames=header)
+        csv_writer.writeheader()
+        csv_writer.writerows(unit_attributes_list)
+
+    print(f"Unit attributes saved to {csv_file}")
