@@ -27,15 +27,18 @@ public function AbilityDefinition.setHotkeyEnhance(string hotkey)
 
 /** Apparently parasite will prioritize farhest target */
 public function createAutoCastedLongRangeEnemyAbility(int abilId) returns AbilityDefinitionParasite
+    let someBuff = createDummyBuffObject("Dummy buff parasite", "Dummy buff parasite", Icons.bTNFarm)
+
     return new AbilityDefinitionParasite(abilId)
         ..presetAttackSpeedFactor(_ -> 0)
         ..presetDamageperSecond(_ -> 0)
         ..presetSummonedUnitCount(_ -> 0)
         ..presetUnitType(_ -> "")
         ..presetManaCost(_ -> 0)
-        ..presetDurationNormal(_ -> 0.01)
-        ..presetBuffs(_ -> "")
+        ..presetDurationNormal(_ -> 0.1)
+        ..presetBuffs(_ -> someBuff.buffId.toRawCode())
         ..setArtTarget("")
+        ..setMissileArt("")
         ..setLevels(1)
         ..setCheckDependencies(false)
 

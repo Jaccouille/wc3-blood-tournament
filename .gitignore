@@ -1,6 +1,13 @@
 /_build
 wurst.dependencies
 /.vscode
-/ogSrc
+
+
 */venv
 /temp
+
+# unit stat file
+*.csv
+
+# blood tourny old map
+/ogSrc

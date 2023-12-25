@@ -178,6 +178,7 @@ public class ArmySpawner
     PlayerData pData
     EventListener reinforcementListener
     boolean spawnFinished = false
+    // List of units spawned by a building
     LinkedList<int> squadIds = new LinkedList<int>
     LinkedList<Pair<ItemModifyUnit, int>> unitModifierList = new LinkedList<Pair<ItemModifyUnit, int>>
 
@@ -197,7 +198,7 @@ public class ArmySpawner
             return true
         return squadIdx >= squadIds.size()
 
-    private function executeItemBonus(LinkedList<item> inv)
+    private function applyItemModifier(LinkedList<item> inv)
         for itm in inv
             // Log.info("AitemModifyUnit :" + unitModifierList.size().toString())
             if itemAddUnitMap.has(itm.getTypeId())
@@ -256,7 +257,6 @@ public class ArmySpawner
         squadIds.clear()
         buildingIdx = 0
         squadIdx = 0
-        // let pData = pDatas.get(_p)
         spawnFinished = false
         // TODO: Add to gameConfig?
         // Determine number of unit per line
@@ -271,10 +271,12 @@ public class ArmySpawner
             // Get list of unit mapped to the building
             let building = buildingList.get(buildingIdx)
             // Log.info("Spawning " + building.getName())
+
+            //
             squadIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
             // Log.info("passed AddAll " + building.getName())
 
-            executeItemBonus(building.getInventory())
+            applyItemModifier(building.getInventory())
             // Log.info("passed executeItemBonus " + building.getName())
 
             // Spawn while there's something to spawn and unitLimit isn't reached
@@ -328,7 +330,7 @@ public class ArmySpawner
         if squadIds.isEmpty()
             let building = buildingList.get(buildingIdx)
             squadIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
-            executeItemBonus(building.getInventory())
+            applyItemModifier(building.getInventory())
 
         let unitId = squadIds.get(squadIdx)
         let u = spawnUnit(unitId, getRandomReinforcementPos())

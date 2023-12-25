@@ -166,13 +166,13 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
             TargetsAllowed.invulnerable,
             TargetsAllowed.nonancient
         ))
-        ..setName("Sell unit")
-        ..presetTooltipNormal(lvl -> makeToolTipNorm("V", "Sell unit"))
-        ..presetTooltipNormalExtended(lvl -> "Sell the unit and get 100% of its cost back")
+        ..setName("Sell building")
+        ..presetTooltipNormal(lvl -> makeToolTipNorm("V", "Sell building"))
+        ..presetTooltipNormalExtended(lvl -> "Sell the building and get 100% of its cost back.\nCannot sell upgraded buildings.")
 
     createStandardChannelAbility(ABIL_SELL_ALL)
         ..setNameEnhance("C", "Sell All")
-        ..setTooltipNormalExtended(1, "Sell all sellable buildings")
+        ..setTooltipNormalExtended(1, "Sell all sellable buildings.\nCannot sell upgraded buildings.")
         ..setIconNormal(Icons.bTNChestOfGold)
 
 

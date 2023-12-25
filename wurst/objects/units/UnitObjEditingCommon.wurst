@@ -95,6 +95,7 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
         ..setFoodCost(1)
+        ..setTooltipExtended("")
         ..setRequirements(commaList(UPGD_RACE_PICK, UPGD_ALL_RANDOM))
 
 
@@ -198,6 +199,14 @@ public class BTUnitDefinition extends UnitDefinition
         // TODO: find a better formula, doesn't take the dice into acccount?
         let dps = (min + max / 2) / attackCooldown
         addTooltipProperty("DPS", dps.toString(2))
+
+    override function setAttack1MaximumNumberofTargets(int data)
+        def.setInt("utc1", data)
+        addTooltipProperty("Bounce Count", data)
+
+    override function setAttack1DamageLossFactor(real data)
+        def.setReal("udl1", data)
+        addTooltipProperty("Bounce Damage Reduction", (data * 100).percRound())
 
     override function setHitPointsMaximumBase(int data)
         def.setInt("uhpm", data)

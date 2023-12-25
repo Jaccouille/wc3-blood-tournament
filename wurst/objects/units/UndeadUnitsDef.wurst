@@ -317,10 +317,13 @@ import ArmySpawner
     tooltip = new UnitTooltipGenerator("Summoned by Necromancer.")
     createSpawnedUnit(UNIT_SKELETON_MAGE, UnitIds.skeletalmage)
         ..registerTooltipGenerator(tooltip)
+        ..setAttack1AreaofEffectFullDamage(400)
         ..tooltipStartListen()
         ..setNormalAbilities("")
 
         ..setAttack1Data(AttackType.Magic, 22, 2, 6, 1.6)
+        ..setAttack1MaximumNumberofTargets(2)
+        ..setAttack1DamageLossFactor(0.30)
         ..setAttack1Range(450)
 
         ..setArmorData(ArmorType.Medium, 2)
@@ -343,7 +346,7 @@ import ArmySpawner
         ..setAttack1Data(AttackType.Magic, 52, 8, 3, 1.3)
 
         ..setArmorData(ArmorType.Divine, 4)
-        ..setHitPointsMaximumBase(180)
+        ..setHitPointsMaximumBase(260)
 
         ..setSpeedBase(270)
         ..setPointValue(20)
@@ -622,29 +625,29 @@ import ArmySpawner
         ..setIconGameInterfaceExt(Icons.bTNHeroDeathKnight)
         ..setUnitSoundSetExt(Soundsets.heroDeathKnight)
 
-    tooltip = new UnitTooltipGenerator("Archimonde Desc")
-    createSpawnedUnit(UNIT_ARCHIMONDE, UnitIds.archimonde, BUILDING_ARCHIMONDE)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
+    // tooltip = new UnitTooltipGenerator("Archimonde Desc")
+    // createSpawnedUnit(UNIT_ARCHIMONDE, UnitIds.archimonde, BUILDING_ARCHIMONDE)
+    //     ..registerTooltipGenerator(tooltip)
+    //     ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Chaos, 550, 16, 16, 1.5)
-        ..setAttack1Range(550)
+    //     ..setAttack1Data(AttackType.Chaos, 550, 16, 16, 1.5)
+    //     ..setAttack1Range(550)
 
-        ..setArmorData(ArmorType.Large, 5)
-        ..setHitPointsMaximumBase(1600)
+    //     ..setArmorData(ArmorType.Large, 5)
+    //     ..setHitPointsMaximumBase(1600)
 
-        ..setSpeedBase(270)
+    //     ..setSpeedBase(270)
 
-        ..setSizeSmall()
-        ..setNameEnhance("C", "Archimonde")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-        ..setBuildingLumberCost(5000)
+    //     ..setSizeSmall()
+    //     ..setNameEnhance("C", "Archimonde")
+    //     ..setAutoPointValue()
+    //     ..tooltipStopListen(true)
+    //     ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
+    //     ..setBuildingLumberCost(5000)
 
-        ..setModelFileExt(Units.warlock)
-        ..setIconGameInterfaceExt(Icons.bTNArchimonde)
-        ..setUnitSoundSetExt(Soundsets.warlock)
+    //     ..setModelFileExt(Units.warlock)
+    //     ..setIconGameInterfaceExt(Icons.bTNArchimonde)
+    //     ..setUnitSoundSetExt(Soundsets.warlock)
 
 
 @compiletime function createBuilder()

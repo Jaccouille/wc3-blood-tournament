@@ -332,7 +332,7 @@ let DEATH_COIL_TARGET_COUNT = 3
 
 
 init
-    EventListener.onTargetCast(ABIL_DEATH_COIL) (unit caster, unit target) ->
+    EventListener.onTargetCast(ABIL_AUTOCAST_DEATH_COIL) (unit caster, unit target) ->
         if (caster.getTypeId() == UNIT_DEATH_KNIGHT)
             int _count = 0
             let dummy = new DummyCaster()
