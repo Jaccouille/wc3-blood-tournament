@@ -165,6 +165,30 @@ def get_changelog(repo, sha, marker="$changelog: "):
                 # Output the changelog message.
                 yield line.lstrip(marker).rstrip()
 
+def get_local_changelog(repo_path, start_sha, end_sha=None, marker="$changelog: "):
+    # Open the repository
+    repo = Repo(repo_path)
+
+    # Get last commit sha of the current branch
+    if end_sha == None:
+        end_sha = repo.head.object.hexsha
+
+    # Iterate over commits between start_sha and end_sha
+    for commit in repo.iter_commits(rev=f'{start_sha}..{end_sha}'):
+        # Consider each line of the commit message separately.
+        for line in commit.message.split("\n"):
+            # Verify that the line marks a changelog item.
+            if line.startswith(marker):
+                # Output the changelog message.
+                print(f"Changelog: {line.lstrip(marker).rstrip()}")
+                yield line.lstrip(marker).rstrip()
+
+        # print(f"Commit ID: {commit.hexsha}")
+        # print(f"Author: {commit.author.name} <{commit.author.email}>")
+        # print(f"Commit message: {commit.message}")
+        # print(f"Commit date: {commit.authored_datetime}")
+        # print()
+
 
 def write_changelog(major, minor, patch, changelog):
     # Compute the package name.
@@ -262,19 +286,19 @@ if __name__ == "__main__":
     chdir(args.path)
 
     # Create the client for GitHub interaction.
-    # if args.token:
-    #     github = Github(args.token)
-    # else:
-    #     github = Github(args.username, getpass())
+    if args.token:
+        github = Github(args.token)
+    else:
+        github = Github(args.username, getpass())
 
     # Look up the repository.
-    # repo = github.get_repo(get_repo(args.remote))
+    repo = github.get_repo(get_repo(args.remote))
 
     # Fetch the previous version.
-    # version = get_version(repo)
+    version = get_version(repo)
 
     # # Fetch the SHA associated with that version.
-    # sha = args.last or get_sha(repo, version)
+    sha = args.last or get_sha(repo, version)
 
     version = args.version
 
@@ -301,29 +325,29 @@ if __name__ == "__main__":
     version = f"v{major}.{minor}{patch}"
 
     # # Compute the changelog.
-    # changelog = sorted(get_changelog(repo, sha))
+    changelog = sorted(get_changelog(repo, sha))
+    # changelog = sorted(get_local_changelog(".", sha))
 
     # # Write the changelog package.
-    # package = write_changelog(major, minor, patch, changelog)
+    package = write_changelog(major, minor, patch, changelog)
 
     # Update the build file for the map.
     build, target = update_build(version)
-    build_map(args.base, target)
 
     # Update the repository with the modified files.
-    # if args.dry_run:
-    #     print("Changelog:", *changelog, sep="\n")
-    # else:
-    #     # Verify that the map can be built.
-    #     build_map(args.base, target)
+    if args.dry_run:
+        print("Changelog:", *changelog, sep="\n")
+    else:
+        # Verify that the map can be built.
+        build_map(args.base, target)
 
-    #     # Push the changes.
-    #     update_repo(args.remote, [package, build], version)
+        # Push the changes.
+        update_repo(args.remote, [package, build], version)
 
-    #     # Release the changes.
-    #     repo.create_git_release(
-    #         tag=version,
-    #         name=version,
-    #         message="\n".join(changelog),
-    #         target_commitish=repo.get_branch("master"),
-    #     ).upload_asset(target)
+        # Release the changes.
+        repo.create_git_release(
+            tag=version,
+            name=version,
+            message="\n".join(changelog),
+            target_commitish=repo.get_branch("master"),
+        ).upload_asset(target)

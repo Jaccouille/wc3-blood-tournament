@@ -1,0 +1,107 @@
+package ChangeLog
+
+// Standard library imports:
+import Assets
+import ClosureTimers
+import HashMap
+import LinkedList
+import Quest
+import SimError
+
+// Third-party imports:
+import Lodash
+
+// Local imports:
+import ChatCommands
+import ColorUtils
+import StringUtils
+
+// Formatting strings used to display messages.
+let TITLE_MSG = "Changelog for ".color(ENERGY_COLOR) + "{0}".color(GOLD_COLOR)
+let ENTRY_MSG = DASH + "{0}".color(GENERAL_COLOR)
+
+public class ChangeLog
+    static let versions = new HashMap<string, thistype>()
+    static let list = new LinkedList<thistype>()
+    static var sorted = false
+    static Comparator<thistype> comparator = (a, b) -> begin
+        return a.major != b.major ?
+            (b.major - a.major) :
+            (a.minor != b.minor ?
+                b.minor - a.minor :
+                b.rev.toInt() - a.rev.toInt())
+    end
+
+    // The version this changelog applies to.
+    int major
+    int minor
+    char rev
+
+    // The list of changes, which are human-readable descriptions.
+    let changes = new OwnedLinkedList<string>()
+
+    construct(int major, int minor, int rev)
+        this.major = major
+        this.minor = minor
+        this.rev = char(rev)
+        versions.put(this.getVersionString(), this)
+        list.add(this)
+
+    function getVersionString() returns string
+        return "v{0}.{1}{2}".format(
+            this.major.toString(),
+            this.minor.toString(),
+            this.rev.toString()
+        )
+
+    function add(string change)
+        this.changes.add(change)
+
+    static function getVersion(string which) returns thistype
+        if versions.has(which)
+            return versions.get(which)
+        return null
+
+    static function ordered() returns LinkedList<thistype>
+        if not sorted
+            list.sortWith(comparator)
+            sorted = true
+        return list
+
+    function getTitle() returns string
+        return TITLE_MSG.format(this.getVersionString())
+
+    function getDescription() returns string
+        return this.changes
+            .map((change, index) -> ENTRY_MSG.format(change))
+            .join("\n")
+
+    function toString() returns string
+        return this.getTitle() + "\n" + this.getDescription()
+
+    static function handler(player triggerPlayer, LinkedList<string> args)
+        let changelog = args.size() > 1
+            ? ChangeLog.getVersion(args.get(1))
+            : ChangeLog.ordered().getFirst()
+
+        if changelog == null
+            simError(triggerPlayer, "Invalid changelog specified.")
+        else
+            // Print each line individually to avoid truncation.
+            for line in changelog.toString().toLines()
+                triggerPlayer.print(line, 15)
+
+
+init
+    registerCommandAll("changelog") (triggerPlayer, args) ->
+        ChangeLog.handler(triggerPlayer, args)
+    registerCommandAll("cl") (triggerPlayer, args) ->
+        ChangeLog.handler(triggerPlayer, args)
+
+    nullTimer() ->
+        for changelog in ChangeLog.ordered()
+            new Quest(true)
+                ..setTitle(changelog.getTitle())
+                ..setDescription(changelog.getDescription())
+                ..setIcon(Icons.bTNScrollOfTownPortal)
+                ..setState(QuestState.DISCOVERED)

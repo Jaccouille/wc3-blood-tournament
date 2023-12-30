@@ -1,75 +1,75 @@
 projectName: Blood Tournamenet DE
 dependencies:
-  - https://github.com/wurstscript/wurstStdlib2
-  - https://github.com/theQuazz/wurst-lodash
-  - https://github.com/Cokemonkey11/wurst-debugging-tools
+- https://github.com/wurstscript/wurstStdlib2
+- https://github.com/theQuazz/wurst-lodash
+- https://github.com/Cokemonkey11/wurst-debugging-tools
 buildMapData:
-  name: Blood Tournament DE v0.1e
-  fileName: Blood.Tournament.DE.v0.1e
+  name: Blood Tournament DE v0.1k
+  fileName: Blood.Tournament.DE.v0.1k
   author: Jaccouille
   scenarioData:
     description: Just another blood tournament map
-    suggestedPlayers: "8"
+    suggestedPlayers: '8'
     loadingScreen:
       model: LoadingScreen.mdx
-      title: ""
-      subTitle: ""
-      text: ""
+      title: ''
+      subTitle: ''
+      text: ''
   players:
-    - id: 0
-      name: Player 1
-      race: HUMAN
-      controller: USER
-      fixedStartLoc: true
-    - id: 1
-      name: Player 2
-      race: HUMAN
-      controller: USER
-      fixedStartLoc: true
-    - id: 2
-      name: Player 3
-      race: HUMAN
-      controller: USER
-      fixedStartLoc: true
-    - id: 3
-      name: Player 4
-      race: HUMAN
-      controller: USER
-      fixedStartLoc: true
-    - id: 4
-      name: Player 5
-      race: HUMAN
-      controller: USER
-      fixedStartLoc: true
-    - id: 5
-      name: Player 6
-      race: HUMAN
-      controller: USER
-      fixedStartLoc: true
-    - id: 6
-      name: Player 7
-      race: HUMAN
-      controller: USER
-      fixedStartLoc: true
-    - id: 7
-      name: Player 8
-      race: HUMAN
-      controller: USER
-      fixedStartLoc: true
+  - id: 0
+    name: Player 1
+    race: HUMAN
+    controller: USER
+    fixedStartLoc: true
+  - id: 1
+    name: Player 2
+    race: HUMAN
+    controller: USER
+    fixedStartLoc: true
+  - id: 2
+    name: Player 3
+    race: HUMAN
+    controller: USER
+    fixedStartLoc: true
+  - id: 3
+    name: Player 4
+    race: HUMAN
+    controller: USER
+    fixedStartLoc: true
+  - id: 4
+    name: Player 5
+    race: HUMAN
+    controller: USER
+    fixedStartLoc: true
+  - id: 5
+    name: Player 6
+    race: HUMAN
+    controller: USER
+    fixedStartLoc: true
+  - id: 6
+    name: Player 7
+    race: HUMAN
+    controller: USER
+    fixedStartLoc: true
+  - id: 7
+    name: Player 8
+    race: HUMAN
+    controller: USER
+    fixedStartLoc: true
   forces:
-    - name: DefaultForce
-      playerIds:
-        - 0
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-        - 6
-        - 7
-      flags:
-        allied: false
-        alliedVictory: false
-        sharedVision: false
-        sharedControl: false
-        sharedControlAdvanced: false
+  - name: DefaultForce
+    playerIds:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    flags:
+      allied: false
+      alliedVictory: false
+      sharedVision: false
+      sharedControl: false
+      sharedControlAdvanced: false

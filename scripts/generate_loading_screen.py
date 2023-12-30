@@ -102,27 +102,31 @@ def generate_loading_screen(changelogs: list, version: str):
 
     # TODO: Add error handling?
     # img.save("imports/LoadingScreen.jpg", "JPEG", quality=100)
-    img.save("imports/LoadingScreen.png")
-    print("Saved new image in imports/LoadingScreen.jpg")
+    img.save("imports/LoadingScreen.tga")
+    print("Saved new image in imports/LoadingScreen.tga")
 
 
 if __name__ == "__main__":
     # Testing value
-    version = "3.9b"
+    # version = "3.9b"
+    # changelogs = [
+    #     "Added 30% Spell Resistance to Mammoth & Disco Duck.",
+    #     "Added global message indicating when a player chooses to be an observer.",
+    #     "Decreased damage by 4 and attack speed from 1 to 1.75 for Adolescent and Adult Elk.",
+    #     "Fixed bug where Shapeshifter would stutter during transformations.",
+    #     "Fixed bug where transport ship could be crafted without -enable-boat mode.",
+    #     "Improved the armor reduction for Greater Track armor from 4 to 5; duration, from 30 to 25 seconds; cooldown, from 50 to 35 seconds.",
+    #     "Increased radius for Reveal slightly: for level 1 from 1000 to 1200, for level 2 from 1700 to 1800.",
+    #     "Prevented Shield Bash from targeting bosses.",
+    #     "Reduced Shapeshifter's Bear Form damage from 25 -> 17.",
+    #     "Reduced minimum mana burn for Mage Masher from 10 to 7.",
+    #     "Removed healing from Bear's Bulwark.",
+    #     "Removed troll cursor that was used for the Undead race.",
+    #     "Removed visual effect associated with mana burn for items that only drain mana.",
+    #     "Replaced the -as command with -dps.",
+    # ]
+    version = "TEST VERSION"
     changelogs = [
-        "Added 30% Spell Resistance to Mammoth & Disco Duck.",
-        "Added global message indicating when a player chooses to be an observer.",
-        "Decreased damage by 4 and attack speed from 1 to 1.75 for Adolescent and Adult Elk.",
-        "Fixed bug where Shapeshifter would stutter during transformations.",
-        "Fixed bug where transport ship could be crafted without -enable-boat mode.",
-        "Improved the armor reduction for Greater Track armor from 4 to 5; duration, from 30 to 25 seconds; cooldown, from 50 to 35 seconds.",
-        "Increased radius for Reveal slightly: for level 1 from 1000 to 1200, for level 2 from 1700 to 1800.",
-        "Prevented Shield Bash from targeting bosses.",
-        "Reduced Shapeshifter's Bear Form damage from 25 -> 17.",
-        "Reduced minimum mana burn for Mage Masher from 10 to 7.",
-        "Removed healing from Bear's Bulwark.",
-        "Removed troll cursor that was used for the Undead race.",
-        "Removed visual effect associated with mana burn for items that only drain mana.",
-        "Replaced the -as command with -dps.",
+        "Quick test with farsight",
     ]
     generate_loading_screen(changelogs, version)

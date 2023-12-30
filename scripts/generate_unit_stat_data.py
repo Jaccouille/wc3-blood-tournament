@@ -7,9 +7,6 @@ with open(str(Path("wurst/systems/armyHandler/ArmySpawner.wurst")), "r") as file
     file_contents = file.read()
 
 # Define a regular expression pattern to match "new BTBuildingData" lines with BUILDING_ IDs
-# pattern = re.compile(
-#     r"new\s+BTBuildingData\s*\(\s*(BUILDING_[A-Z_]+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*genList\((.*?)\)\s*\)"
-# )
 pattern = re.compile(
     r"new\s+BTBuildingData\s*\(\s*(BUILDING_[A-Z_]+(?:\s*,\s*BUILDING_[A-Z_]+)*)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*genList\((.*?)\)\s*\)"
 )
@@ -35,7 +32,7 @@ def getAttackData(attack_data: str):
     min = int(damage)
     max = int(damage) + int(d1) * int(d2)
     dps = round((min + max / 2) / float(attack_rate), 2)
-    return {"attackType": attack_type.split(".")[1], "dps": dps}
+    return {"attackType": attack_type.split(".")[1], "dps": dps, "esperanceDps" : 0}
 
 
 def getArmorData(armor_data: str):
@@ -44,6 +41,7 @@ def getArmorData(armor_data: str):
     return {
         "armorType": armor_type.split(".")[1],
         "reductionPercent": reduction_percent,
+        "esperanceReductionPercent": 0,
     }
 
 
@@ -55,7 +53,6 @@ attribute_to_register = {
 
 # Initialize a list to store extracted attributes
 unit_attributes_list = []
-
 
 def read_unit_attributes(filepath: str):
     # Read the unit definition file
@@ -72,11 +69,13 @@ def read_unit_attributes(filepath: str):
         unit_id, _, building_id = unit_match
 
         unit_def_pattern = re.compile(
-            rf"createSpawnedUnit\({unit_id},.*?\)\n((?:(\s*\.\.|\s*ABIL\w+|\s*\)|\s*\/\/).*?\n)*)\s*",
+            rf"(?<!\/\/\s)createSpawnedUnit\({unit_id},.*?\)\n((?:(\s*\.\.|\s*ABIL\w+|\s*\)|\s*\/\/).*?\n)*)\s*",
             re.DOTALL,
         )
 
         unit_def_match = unit_def_pattern.search(file_contents)
+        if unit_def_match is None:
+            continue
         attribute_matches = function_calls.findall(unit_def_match.group())
 
         # Requires additional compute
@@ -114,8 +113,10 @@ def read_unit_attributes(filepath: str):
 if __name__ == "__main__":
     race_dict = {
         "dps": 0,
+        "esperanceDps": 0,
         "attackType": 0,
         "reductionPercent": 0,
+        "esperanceReductionPercent": 0,
         "unitCount": 0,
         "goldCost": 0,
         "BuildingType": 0,
@@ -123,6 +124,7 @@ if __name__ == "__main__":
         "lumberCost": 0,
         "armorType": 0,
     }
+
     unit_attributes_list.append({**{"UnitId": "Human"}, **race_dict})
     read_unit_attributes("wurst/objects/units/HumanUnitsDef.wurst")
     unit_attributes_list.append({**{"UnitId": "Orc"}, **race_dict})
@@ -139,17 +141,41 @@ if __name__ == "__main__":
     #     all_attribute_names.update(attributes.keys())
     # header.extend(sorted(all_attribute_names))
 
+    minPower = 0
+
     for row in unit_attributes_list:
         attack_type = row.get("attackType", 0)
         dps = row.get("dps", 0)
         armorType = row.get("armorType", 0)
         reductionPercent = row.get("reductionPercent", 0)
+        hitpoint = int(row.get("setHitPointsMaximumBase", 0))
         goldCost = row.get("goldCost", 0)
         lumberCost = row.get("lumberCost", 0)
         unitCount = row.get("unitCount", 1)
-        power = round((dps + reductionPercent + goldCost + lumberCost) / 10, 0)
+        # esperance_value =
+        # TODO: faire la médianne pour faire plez a stéphane
+        esperance_dps = sum(unit_attr.get('dps', 0) for unit_attr in unit_attributes_list) / (len(unit_attributes_list) - 4)
+        esperance_reductionPercent = sum(unit_attr.get('reductionPercent', 0) for unit_attr in unit_attributes_list) / (len(unit_attributes_list) - 4)
+        esperance_hitpoint = sum(int(unit_attr.get('setHitPointsMaximumBase', 0)) for unit_attr in unit_attributes_list) / (len(unit_attributes_list) - 4)
+
+        true_dps = dps - esperance_dps
+        true_reductionPercent = reductionPercent - esperance_reductionPercent
+        true_hitpoint = hitpoint - esperance_hitpoint
+
+        if unitCount > 0:
+            power = round((true_dps + true_hitpoint + true_reductionPercent) / unitCount, 0)
+            if minPower > power:
+                minPower = power
+        else:
+            power = 0
+        # power = round((dps + reductionPercent + goldCost + lumberCost) / 10, 0)
         row.update({"power": power})
-        row.update({"powerStacked": round(power * unitCount, 0)})
+
+        row["esperanceDps"] = esperance_dps
+        row["esperanceReductionPercent"] = esperance_reductionPercent
+        row.update({"esperance_hitpoint" : esperance_hitpoint})
+        # row.update({"powerStacked": round(power * unitCount, 0)})
+    unit_attributes_list = [{k: v + abs(minPower) if k == "power" else v for k, v in unit_attr.items()} for unit_attr in unit_attributes_list]
 
     # Extract all attribute names and add them to the CSV header
     header = list(unit_attributes_list[0].keys())
