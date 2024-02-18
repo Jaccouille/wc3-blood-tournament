@@ -4,14 +4,15 @@ dependencies:
 - https://github.com/theQuazz/wurst-lodash
 - https://github.com/Cokemonkey11/wurst-debugging-tools
 buildMapData:
-  name: Blood Tournament DE v0.1k
-  fileName: Blood.Tournament.DE.v0.1k
+  name: Blood Tournament DE v0.1l
+  fileName: Blood.Tournament.DE.v0.1l
   author: Jaccouille
   scenarioData:
     description: Just another blood tournament map
     suggestedPlayers: '8'
     loadingScreen:
       model: LoadingScreen.mdx
+      # background: HUMANX04
       title: ''
       subTitle: ''
       text: ''
