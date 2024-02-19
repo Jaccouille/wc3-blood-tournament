@@ -18,7 +18,7 @@ init
     new GameMode("start", "st", "General", "Start the game") (mode, args) ->
         GameMode.endModeSelection(true)
 
-    new GameMode("round-gold", "rg", "General", "Gold income per round, default : " +
+    new GameMode("round-gold", "rg", "General", "Set gold income per round, default : " +
         gameConfig.getRoundGoldIncome().getFirst().toString() + ", min : 100") (mode, args) ->
         if (args.size() > 1)
             let roundGoldIncomes = args.drop(1).map(e -> max(e.toInt(), 100))
@@ -30,7 +30,7 @@ init
             mode.message(msg)
             gameConfig.setRoundGoldIncome(roundGoldIncomes)
 
-    new GameMode("round", "r", "General", "Number of rounds before elimination phase, default : " +
+    new GameMode("round", "r", "General", "Set number of rounds before elimination phase, default : " +
         gameConfig.getRoundCount().toString() + ", max : 64, min : 0") (mode, args) ->
         if (args.size() > 1)
             let roundCount = min(max(args.get(1).toInt(), 0), 64)
@@ -46,14 +46,14 @@ init
             mode.message("Bot mode disabled, bot won't replace leavers".color(SPECIAL_COLOR))
             gameConfig.setBotAIMode(false)
 
-    new GameMode("start-gold", "sg", "General", "First round gold amount per players, default : " +
+    new GameMode("start-gold", "sg", "General", "Set first round gold amount per players, default : " +
     gameConfig.getStartingGold().toString() + ", min : 100") (mode, args) ->
         if (args.size() > 1)
             let startingGold = max(args.get(1).toInt(), 100)
             mode.message("Starting gold set to " + startingGold.toString().color(GOLD_COLOR))
             gameConfig.setStartingGold(startingGold)
 
-    new GameMode("start-bp", "sb", "General", "First round blood point amount per players, default : " +
+    new GameMode("start-bp", "sb", "General", "Set first round blood point amount per players, default : " +
     gameConfig.getStartingLumber().toString() + ", min : 0") (mode, args) ->
         if (args.size() > 1)
             let startingLumber = max(args.get(1).toInt(), 0)
@@ -61,13 +61,13 @@ init
             gameConfig.setStartingLumber(startingLumber)
 
     new GameMode("interlude-time", "it", "Time between each round (seconds) default : " +
-        gameConfig.getRoundInterludeTime().toInt().toString() + ", max : 180, min : 15") (mode, args) ->
+        gameConfig.getRoundInterludeTime().toInt().toString() + ", max : 180, min : 30") (mode, args) ->
         if (args.size() > 1)
-            let interludeTime = min(max(args.get(1).toInt(), 15), 180)
+            let interludeTime = min(max(args.get(1).toInt(), 30), 180)
             mode.message("Interlude time set to " + interludeTime.toString().color(GOLD_COLOR))
             gameConfig.setRoundInterludeTime(interludeTime.toReal())
 
-    new GameMode("spawn-capacity", "sc", "Max unit spawn capacity, default : " +
+    new GameMode("spawn-capacity", "sc", "Set max unit spawn capacity, default : " +
         gameConfig.getSpawnCap().toString() + ", max : 160, min : 60") (mode, args) ->
         if (args.size() > 1)
             let spawnCap = max(min(args.get(1).toInt(), 160), 60)

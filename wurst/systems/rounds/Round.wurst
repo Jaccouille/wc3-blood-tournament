@@ -231,9 +231,9 @@ public class FinalRound extends Round
             spawnArmy(spawnZones.get(FINAL_ROUND_WEST_ZONE_IDX), pDatas.get(p1).buildingList, p1)
             spawnArmy(spawnZones.get(FINAL_ROUND_EAST_ZONE_IDX), pDatas.get(p2).buildingList, p2)
 
-            let msg = "{0} {1} units VS {2} {3} units"
-                .format(
-                    p1.getNameColored(true), pDatas.get(p1).spawnedUnits.size().toString(),
-                    p2.getNameColored(true), pDatas.get(p2).spawnedUnits.size().toString()
-                )
-            Log.info(msg)
+            // let msg = "{0} {1} units VS {2} {3} units"
+            //     .format(
+            //         p1.getNameColored(true), pDatas.get(p1).spawnedUnits.size().toString(),
+            //         p2.getNameColored(true), pDatas.get(p2).spawnedUnits.size().toString()
+            //     )
+            // Log.info(msg)

@@ -7,6 +7,7 @@ import HashMap
 import GameConfig
 import GameStates
 import Players
+import ColorUtils
 
 public constant pDatas = new IterableMap<player, PlayerData>
 
@@ -62,10 +63,10 @@ public class PlayerData
 
     function giveReward()
         let msg = "You acquired " +
-            armyPoints.toString() +
+            armyPoints.toString().color(COLOR_RED) +
             " + " +
-            roundBountySum.toString() +
-            " points"
+            roundBountySum.toString().color(COLOR_RED) +
+            " blood points"
         printTimedToPlayer(msg, 15, _p)
         _p.addLumber(armyPoints)
         roundBountySum = 0

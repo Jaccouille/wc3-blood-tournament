@@ -260,12 +260,14 @@ public function initRoundController()
         if roundController.currentRound instanceof FinalRound
             roundController.buildFinalRoundMatchup(round.winner)
             let looser = (round castTo FinalRound).looser
-            printTimed(round.winner.getName() + " has eliminated " + looser.getName() , 3)
+            printTimed(round.winner.getNameColored() + " has eliminated " + looser.getNameColored() , 3)
             scoreBoardEntries.get("PlayerName").setEntryColor(looser, COLOR_GRAY)
         else
             doAfter(3) ->
                 altarEntity.hideCounter()
-                printTimed(round.winner.getName() + " gets " + altarEntity.bloodPointCounter.toString() + " for winning the round" , 15)
+                printTimed(round.winner.getNameColored() + " gets "
+                    + altarEntity.bloodPointCounter.toString().color(COLOR_RED)
+                    + " for winning the round" , 15)
             doAfter(5) ->
                 if round.goldReward > 0
                     printTimed("You get " + round.goldReward.toString() + " golds from round income", 15)
@@ -280,4 +282,4 @@ public function initRoundController()
         Log.info("Match over")
         if roundController.previousRoundWinner != null
             GameStates.gameplay.exit()
-            print(roundController.previousRoundWinner.getName() + " is the Blood tournament champion!")
+            print(roundController.previousRoundWinner.getNameColored() + " is the " + "Blood tournament".color(COLOR_RED) + "champion!")
