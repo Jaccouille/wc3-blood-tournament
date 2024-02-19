@@ -320,10 +320,14 @@ public class ArmySpawner
         let spawnRect = spawnZone.spawnRect
         // TODO: uber retarded way to properly get the angle I wanted with both jass and LUA
         // 1 < 1.00 in LUA -> true, false in JASS
-        let offset = (spawnZone.angle.cos().abs() < 0.99 ? spawnRect.height() / 2 : spawnRect.width() / 2)
+        let offset = (spawnZone.angle.cos().abs() < 0.99 ? spawnRect.width() / 2 : spawnRect.height() / 2)
+        // Log.info("offset : " + offset.toString() + " height : " + spawnRect.height().toString())
+
         if spawnZone.angle.cos().abs() < 0.99
+            // vertical
             return pos + vec2(GetRandomReal(-offset, offset), 0)
         else
+            // horizontal
             return pos + vec2(0, GetRandomReal(-offset, offset))
 
     private function spawnReinforcement()
