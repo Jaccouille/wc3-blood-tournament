@@ -14,16 +14,17 @@ let about = asList(
     "Fight against other players during 7 rounds, then eliminate them in the elimination phase",
     "Choose a builder and construct building. A building spawn a squad",
     "Example: \"Footman x10\" spawns a squad of 10 footmen.",
-    "A buidling can be upgraded or buy items which can apply the following effect:",
+    "A buidling can be upgraded or it can buy items which can apply the following effect:",
     "- Add a unit to the squad",
     "- Replace a unit of the squad",
     "- Add/replace an ability to a unit of the squad",
-    "Find the right combination of units to overcome your opponents"
+    "Find the right combination of units to overcome your opponents!"
 ).joinBy("\n")
 
 let bloodpoints = asList(
-    "Blood points is acquired by building and killings",
-    "You can spend it to upgrade your buildings"
+    "Blood points is acquired by building and killing enemy units during round phase",
+    "You can spend it to upgrade your buildings or trade " +
+    "it for gold (using builder ability)"
 ).joinBy("\n")
 
 let credits = asList(
@@ -42,7 +43,7 @@ let community = asList(
 ).joinBy("\n")
 
 let programming = asList(
-    "This map was fully created using Wurstscript",
+    "This map was made using Wurstscript (wurstlang.org)",
     "It re-use Wurst code made by :",
     "Frotty, Overkane, Quazz, Master-Troll"
 ).joinBy("\n")

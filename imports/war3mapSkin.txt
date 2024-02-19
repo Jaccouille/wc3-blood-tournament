@@ -19,4 +19,6 @@ DAMAGETIP_PIERCE=Damage against:|n|cff00FF00Small: 200%|r|n|cff00FF00Unarmored: 
 DAMAGETIP_SIEGE=Damage against:|n|cff00FF00Fort: 200%|r|n|cff00FF00Unarmored: 200%|r|n|cff00FF00Medium: 150%|r|n|cffFFFFFFSmall: 100%|r|n|cffFFFFFFLarge: 100%|r|n|cffFF0000Spectral: 10%|r
 
 COLON_LUMBER=Blood points:
-RESOURCE_UBERTIP_LUMBER=Blood point are harvested from kills.
+QUESTSOPTIONAL=Available Modes
+RESOURCE_UBERTIP_LUMBER=Blood points are harvested from kills.
+RESOURCE_UBERTIP_GOLD=Gold is received after round end.
