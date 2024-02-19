@@ -409,7 +409,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 
     // TODO: lumber cost shoud match armyspawner automatically
     let buildingDef = createBuildingUnit(BUILDING_PALADIN)
-        ..setNameEnhance("R", "Paladin 1x")
+        ..setNameEnhance("R", "Paladin x1")
         ..setUnitsTrained(commaList(UNIT_PALADIN_1, UNIT_GHOST_PALADIN))
         ..setLumberCost(1000)
         ..setModelFile(Units.heroPaladin)

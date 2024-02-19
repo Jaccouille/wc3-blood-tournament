@@ -126,6 +126,7 @@ function createSpeedBanner(int newId) returns BuildingDefinition
         ..setFoodProduced(1)
         ..setLumberCost(0)
         ..setGoldCost(0)
+        ..setScalingValue(0.85)
         ..setName("Race Picker")
         ..setUpgradesUsed("")
         ..setUpgradesTo("")
