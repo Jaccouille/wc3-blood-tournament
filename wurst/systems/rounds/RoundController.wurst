@@ -267,14 +267,14 @@ public function initRoundController()
                 altarEntity.hideCounter()
                 printTimed(round.winner.getNameColored() + " gets "
                     + altarEntity.bloodPointCounter.toString().color(COLOR_RED)
-                    + " for winning the round" , 15)
+                    + " bonus blood points for winning the round" , 15)
             doAfter(5) ->
                 if round.goldReward > 0
-                    printTimed("You get " + round.goldReward.toString() + " golds from round income", 15)
+                    printTimed("You get " + round.goldReward.toString().color(COLOR_GOLD) + " golds from round income", 15)
                 if round.bloodPointReward > 0
-                    printTimed("You get " + round.bloodPointReward.toString() + " blood points from round income", 15)
+                    printTimed("You get " + round.bloodPointReward.toString().color(COLOR_RED) + " blood points from round income", 15)
                 pDatas.forEach() (player key, PlayerData value) ->
-                    value.giveReward()
+                    value.giveBloodPointsReward()
                     key.addGold(round.goldReward)
                     key.addLumber(round.bloodPointReward)
 
@@ -282,7 +282,7 @@ public function initRoundController()
         // Log.info("Match over")
         if roundController.previousRoundWinner != null
             GameStates.gameplay.exit()
-            print(roundController.previousRoundWinner.getNameColored() + " is the " + "Blood tournament".color(COLOR_RED) + "champion!")
-            PlayMusic(Sounds.credits)
-            doAfter(10) ->
+            print(roundController.previousRoundWinner.getNameColored() + " is the " + "Blood tournament".color(COLOR_RED) + " champion!")
+            // PlayMusic(Sounds.credits)
+            doAfter(15) ->
                 printTimed("You can leave the game by the way", 10)

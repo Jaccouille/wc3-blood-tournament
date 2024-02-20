@@ -61,7 +61,7 @@ public class PlayerData
     function subArmyPoints(int value)
         armyPoints -= (value * gameConfig.getArmyPointsMultiplier()).toInt()
 
-    function giveReward()
+    function giveBloodPointsReward()
         let msg = "You acquired " +
             armyPoints.toString().color(COLOR_RED) +
             " + " +
