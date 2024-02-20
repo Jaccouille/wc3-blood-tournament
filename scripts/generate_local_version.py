@@ -11,6 +11,7 @@ It has been modified to generate local versions of the map based on wurst.build.
 from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
 from configparser import ConfigParser
 from functools import partial
+from datetime import date
 from getpass import getpass
 from itertools import takewhile
 from operator import methodcaller
@@ -29,7 +30,7 @@ from yaml import dump, Dumper, load, Loader
 
 
 # The template for the changelog file.
-template = Template(
+changelog_template = Template(
     """
 package {{ package }}
 
@@ -42,6 +43,39 @@ init
 {% endfor %}
 """.lstrip(),
     trim_blocks=True,
+)
+
+war3map_skin_template = Template(
+"""
+[CustomSkin]
+InfoPanelIconArmorDivine=UI\Widgets\Console\Human\infocard-armor-spectral.dds
+
+[Errors]
+Notancient=Cannot sell building with items/upgrades
+
+[FrameDef]
+ARMORTIP_SMALL=Damage received from:|n|cff00FF00Pierce: 200%|r|n|cffFFFFFFMagic: 100%|r|n|cffFFFFFFSiege: 100%|r|n|cffFF0000Normal: 75%|r
+ARMORTIP_MEDIUM=Damage received from:|n|cff00FF00Normal: 175%|r|n|cff00FF00Siege: 150%|r|n|cffFF0000Magic: 75%|r|n|cffFF0000Pierce: 75%|r
+ARMORTIP_LARGE=Damage received from:|n|cff00FF00Magic: 200%|r|n|cffFFFFFFNormal: 100%|r|n|cffFFFFFFPierce: 100%|r|n|cffFFFFFFSiege: 100%|r
+ARMORTIP_FORT=Damage received from:|n|cff00FF00Siege: 200%|r|n|cffFFFFFFNormal: 100%|r|n|cffFF0000Magic: 35%|r|n|cffFF0000Pierce: 35%|r
+ARMORTIP_DIVINE=Damage received from:|n|cff00FF00Magic: 200%|r|n|cffFF0000Normal: 20%|r|n|cffFF0000Pierce: 10%|r|n|cffFF0000Siege: 10%|r
+ARMORTIP_NONE=Damage received from:|n|cff00FF00Siege: 200%|r|n|cff00FF00Magic: 150%|r|n|cff00FF00Normal: 150%|r|n|cff00FF00Pierce: 150%|r
+ARMOR_DIVINE=Type: |Cffffcc00Spectral|R
+
+DAMAGETIP_MAGIC=Damage against:|n|cff00FF00Large: 200%|r|n|cff00FF00Spectral: 200%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFSmall: 100%|r|n|cffFF0000Medium: 75%|r|n|cffFF0000Fort: 35%|r
+DAMAGETIP_MELEE=Damage against:|n|cff00FF00Medium: 175%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFLarge: 100%|r|n|cffFFFFFFFort: 100%|r|n|cffFF0000Small: 75%|r|n|cffFF0000Spectral: 20%|r
+DAMAGETIP_PIERCE=Damage against:|n|cff00FF00Small: 200%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFLarge: 100%|r|n|cffFF0000Medium: 75%|r|n|cffFF0000Fort: 35%|r|n|cffFF0000Spectral: 10%|r
+DAMAGETIP_SIEGE=Damage against:|n|cff00FF00Fort: 200%|r|n|cff00FF00Unarmored: 200%|r|n|cff00FF00Medium: 150%|r|n|cffFFFFFFSmall: 100%|r|n|cffFFFFFFLarge: 100%|r|n|cffFF0000Spectral: 10%|r
+
+COLON_LUMBER=Blood points:
+QUESTSOPTIONAL=Available Modes
+RESOURCE_UBERTIP_LUMBER=Blood points are harvested from kills.
+RESOURCE_UBERTIP_GOLD=Gold is received after round end.
+QUESTS={{ version }}
+UPKEEP_NONE=|cffffd700{{ version }}
+RESOURCE_UBERTIP_UPKEEP=Released on {{ release_date }}
+RESOURCE_UBERTIP_UPKEEP_INFO=|cff00FF00
+"""
 )
 
 
@@ -65,6 +99,7 @@ def build_parser():
         "--dry-run", help="Disable publishing changes.", action="store_true"
     )
 
+    parser.add_argument("--local", help="Run on local git repository instead of remote", action="store_true")
     # Add the arguments for GitHub credentials.
     parser.add_argument("--token", help="PAT used for GitHub.")
     parser.add_argument("--username", help="Username for GitHub.")
@@ -165,13 +200,10 @@ def get_changelog(repo, sha, marker="$changelog: "):
                 # Output the changelog message.
                 yield line.lstrip(marker).rstrip()
 
-def get_local_changelog(repo_path, start_sha, end_sha=None, marker="$changelog: "):
-    # Open the repository
-    repo = Repo(repo_path)
-
+def get_local_changelog(repo, start_sha, end_sha=None, marker="$changelog: "):
     # Get last commit sha of the current branch
     if end_sha == None:
-        end_sha = repo.head.object.hexsha
+        end_sha = repo.head.object
 
     # Iterate over commits between start_sha and end_sha
     for commit in repo.iter_commits(rev=f'{start_sha}..{end_sha}'):
@@ -180,7 +212,7 @@ def get_local_changelog(repo_path, start_sha, end_sha=None, marker="$changelog: 
             # Verify that the line marks a changelog item.
             if line.startswith(marker):
                 # Output the changelog message.
-                print(f"Changelog: {line.lstrip(marker).rstrip()}")
+                # print(f"Changelog: {line.lstrip(marker).rstrip()}")
                 yield line.lstrip(marker).rstrip()
 
         # print(f"Commit ID: {commit.hexsha}")
@@ -202,11 +234,20 @@ def write_changelog(major, minor, patch, changelog):
 
     # Construct the path of the file.
     with open(path, "w") as package:
-        package.write(template.render(**kwargs))
+        package.write(changelog_template.render(**kwargs))
 
     # Output the path for later use.
     return path
 
+def write_war3map_skin(version, release_date):
+    kwargs = locals()
+    # Compute the path of the changelog file.
+    path = join("imports", "war3mapSkin.txt")
+
+    # Construct the path of the file.
+    with open(path, "w") as package:
+        package.write(war3map_skin_template.render(**kwargs))
+    return path
 
 # Extracts the list of WurstScript arguments from the local arguments file.
 def get_args():
@@ -274,6 +315,14 @@ def get_repo(remote):
     # Construct and output the repository target.
     return "/".join(match)
 
+def find_recent_release_commit(repo):
+    releases = [commit for commit in repo.iter_commits() if commit.summary.startswith("Release")]
+
+    if releases:
+        most_recent_release = releases[0]
+        return most_recent_release
+    else:
+        return None
 
 if __name__ == "__main__":
     # Create the parser.
@@ -285,22 +334,26 @@ if __name__ == "__main__":
     # Update the working directory.
     chdir(args.path)
 
-    # Create the client for GitHub interaction.
-    if args.token:
-        github = Github(args.token)
+    sha = ""
+    if not args.local:
+        # Create the client for GitHub interaction.
+        if args.token:
+            github = Github(args.token)
+        else:
+            github = Github(args.username, getpass())
+        # Look up the repository.
+        repo = github.get_repo(get_repo(args.remote))
+
+        # Fetch the previous version.
+        version = get_version(repo)
+
+        # # Fetch the SHA associated with that version.
+        sha = args.last or get_sha(repo, version)
+
+        version = args.version
     else:
-        github = Github(args.username, getpass())
-
-    # Look up the repository.
-    repo = github.get_repo(get_repo(args.remote))
-
-    # Fetch the previous version.
-    version = get_version(repo)
-
-    # # Fetch the SHA associated with that version.
-    sha = args.last or get_sha(repo, version)
-
-    version = args.version
+        repo = Repo(".")
+        sha = find_recent_release_commit(repo)
 
     # Parse the version.
     # major, minor, patch = search("v{:d}.{:d}{}", version)
@@ -324,25 +377,38 @@ if __name__ == "__main__":
     # Update the version.
     version = f"v{major}.{minor}{patch}"
 
-    # # Compute the changelog.
-    changelog = sorted(get_changelog(repo, sha))
-    # changelog = sorted(get_local_changelog(".", sha))
+    # Compute the changelog.
+    # changelog = sorted(get_changelog(repo, sha))
+    changelog = sorted(get_local_changelog(repo, sha))
 
-    # # Write the changelog package.
+    # Write the changelog package.
     package = write_changelog(major, minor, patch, changelog)
+
+    # Write the war3mapSkin.txt.
+    mapskin = write_war3map_skin(version, date.today().strftime("%d/%m/%Y"))
 
     # Update the build file for the map.
     build, target = update_build(version)
 
     # Update the repository with the modified files.
-    if args.dry_run:
+    if args.local:
+        build_map(args.base, target)
+        # Stage the file for commit
+        repo.index.add([package, build, mapskin])
+
+        # Commit the
+        commit_message = f'Release v{version}\n' + "\n\* ".join(changelog)
+        repo.index.commit(commit_message)
+        print("Changelog:", *changelog, sep="\n")
+        # Verify that the map can be built.
+    elif args.dry_run:
         print("Changelog:", *changelog, sep="\n")
     else:
         # Verify that the map can be built.
         build_map(args.base, target)
 
         # Push the changes.
-        update_repo(args.remote, [package, build], version)
+        update_repo(args.remote, [package, build, mapskin], version)
 
         # Release the changes.
         repo.create_git_release(
