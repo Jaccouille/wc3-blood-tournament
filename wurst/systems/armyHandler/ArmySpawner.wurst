@@ -198,6 +198,9 @@ public class ArmySpawner
             return true
         return squadIdx >= squadIds.size()
 
+    /**
+        Register callback defined in ItemCallbackDefinition.wurst with
+    **/
     private function applyItemModifier(LinkedList<item> inv)
         for itm in inv
             // Log.info("AitemModifyUnit :" + unitModifierList.size().toString())
@@ -217,6 +220,15 @@ public class ArmySpawner
         //  (spawnZone.angle.cos().abs().toString()) + " " + this.spawnDirection.degrees().toString())
         this.pos = spawnZone.initialPos
 
+    private function executeUnitModifier(unit newUnit)
+        // a being the callback defined in ItemCallbackDefinition.wurst
+        unitModifierList.get(0).a.execute(newUnit)
+        // b being the item charges
+        unitModifierList.get(0).b -= 1
+        // Clean up the pair obj once it has been used
+        if unitModifierList.get(0).b <= 0
+            destroy unitModifierList.dequeue()
+
     private function spawnUnit(int unitId, vec2 spawnPos) returns unit
         let armySize = pDatas.get(_p).spawnedUnits.size()
         // Log.info("Army size : " + armySize.toString())
@@ -235,20 +247,19 @@ public class ArmySpawner
             newUnit.setBaseDamage(
                 (newUnit.getBaseDamage(0) * gameConfig.getDamageMultiplier()).toInt() , 0)
 
-        // TODO: handle multiple item for 1 unit (see paladin skin)
+        // TODO: handle skin item separately
         // Apply Item modifier
         if not unitModifierList.isEmpty()
-            // Log.info("Execute for : " + newUnit.getName() + " " + unitModifierList.size().toString())
-            unitModifierList.get(0).a.execute(newUnit)
-            // b being the item charges
-            unitModifierList.get(0).b -= 1
-            // Clean up the pair obj once it has been used
-            if unitModifierList.get(0).b <= 0
-                destroy unitModifierList.dequeue()
+            // If unit is the last in the squad, apply all remaining modifier
+            if squadIdx == squadIds.size() - 1
+                while unitModifierList.size() > 0
+                    executeUnitModifier(newUnit)
+            else
+                executeUnitModifier(newUnit)
 
         BlzShowUnitTeamGlow(newUnit, false)
         if newUnit.getName() == null
-            Log.info("Unknown unit spawned for " + _p.getDummyPlayer(dummyPlayerIdx).getName())
+            Log.info("Unknown unit spawned for " + _p.getDummyPlayer(dummyPlayerIdx).getName() + " id : " + newUnit.getTypeId().toString())
         else
             pData.spawnedUnits.push(newUnit)
         return newUnit
