@@ -1,3 +1,4 @@
+
 [CustomSkin]
 InfoPanelIconArmorDivine=UI\Widgets\Console\Human\infocard-armor-spectral.dds
 
@@ -22,3 +23,7 @@ COLON_LUMBER=Blood points:
 QUESTSOPTIONAL=Available Modes
 RESOURCE_UBERTIP_LUMBER=Blood points are harvested from kills.
 RESOURCE_UBERTIP_GOLD=Gold is received after round end.
+QUESTS=v0.1m
+UPKEEP_NONE=|cffffd700v0.1m
+RESOURCE_UBERTIP_UPKEEP=Released on 20/02/2024
+RESOURCE_UBERTIP_UPKEEP_INFO=|cff00FF00
