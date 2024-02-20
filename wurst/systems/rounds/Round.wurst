@@ -224,6 +224,9 @@ public class FinalRound extends Round
             let p1 = players[contestantPair.a]
             let p2 = players[contestantPair.b]
 
+            let msg = p1.getNameColored() + " VS " + p2.getNameColored()
+            printTimed(msg, 5)
+
             scoreBoardEntries.get("BloodPoints").setEntry(p1, "0", "")
             scoreBoardEntries.get("BloodPoints").setEntry(p2, "0", "")
 

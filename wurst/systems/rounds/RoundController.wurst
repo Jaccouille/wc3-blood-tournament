@@ -4,6 +4,7 @@ package RoundController
 import ClosureTimers
 import HashSet
 import TimerUtils
+import Sounds
 
 // Local imports:
 import AltarEntity
@@ -15,7 +16,6 @@ import public Round
 import ColorUtils
 import LocalObjectIDs
 import ClosureForGroups
-import Orders
 import MapBounds
 
 public constant roundController = new RoundController()
@@ -279,7 +279,10 @@ public function initRoundController()
                     key.addLumber(round.bloodPointReward)
 
     onAllroundsFinished = () ->
-        Log.info("Match over")
+        // Log.info("Match over")
         if roundController.previousRoundWinner != null
             GameStates.gameplay.exit()
             print(roundController.previousRoundWinner.getNameColored() + " is the " + "Blood tournament".color(COLOR_RED) + "champion!")
+            PlayMusic(Sounds.credits)
+            doAfter(10) ->
+                printTimed("You can leave the game by the way", 10)
