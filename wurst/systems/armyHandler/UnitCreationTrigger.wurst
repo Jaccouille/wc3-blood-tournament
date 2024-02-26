@@ -52,7 +52,7 @@ init
     ..addAction() ->
         let summonedUnit = GetSummonedUnit()
         if summonedUnit == null
-            Log.info("Unknown unit spawned for " + EventData.getTriggerPlayer().getName())
+            Log.debug("Unknown unit spawned for " + EventData.getTriggerPlayer().getName())
         else
             pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).spawnedUnits.push(summonedUnit)
             // To reduce pathing lag, assign the new unit to the last dummy player
@@ -64,8 +64,10 @@ init
 
         EventListener.add(EVENT_PLAYER_UNIT_UPGRADE_FINISH) ->
             let u = EventData.getTriggerUnit()
+            let pData = pDatas.get(u.getOwner())
             u.addType(UNIT_TYPE_ANCIENT)
             BlzShowUnitTeamGlow(u, false)
+            pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(u.getTypeId()).upgradeBonusArmyPoints)
 
         EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
             let newBuilding = EventData.getTriggerUnit()

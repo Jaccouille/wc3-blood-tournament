@@ -37,8 +37,14 @@ public class BTBuildingData
     static function getBuildingArmyPoints(int unitId) returns int
         return unitIdToDataMap.get(unitId).buildingArmyPoints
 
+    static function getBuildingUpgradeBonusArmyPoints(int unitId) returns int
+        return unitIdToDataMap.get(unitId).upgradeBonusArmyPoints
+
     LinkedList<int> unitToSpawn
     int buildingArmyPoints = 0
+    // Difference between current building army points and the source building army points
+    // We need to know the amount of army point to ADD after upgrade
+    int upgradeBonusArmyPoints = 0
     int unitPointValue = 0
     int goldCost = 0
     int lumberCost = 0
@@ -58,11 +64,11 @@ public class BTBuildingData
         this.goldCost = goldCost
         this.lumberCost = lumberCost
         unitPointValue = computeUnitPointValue(goldCost, lumberCost, unitToSpawn.size())
-        buildingArmyPoints += unitPointValue * unitToSpawn.size()
+        upgradeBonusArmyPoints += unitPointValue * unitToSpawn.size()
         if unitIdToDataMap.get(upgradeFrom) != null
             this.isAnUpgrade = true
             unitPointValue += unitIdToDataMap.get(upgradeFrom).unitPointValue
-            buildingArmyPoints += unitIdToDataMap.get(upgradeFrom).buildingArmyPoints
+            buildingArmyPoints = upgradeBonusArmyPoints + unitIdToDataMap.get(upgradeFrom).buildingArmyPoints
         else
             printLog(Loglevel.ERROR, "Unknown upgrade from id")
 
@@ -122,8 +128,8 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_BANSHEE        , 150 , 0   , genList(UNIT_BANSHEE         , 3  ))
     new BTBuildingData(BUILDING_ABOMINATION    , 100 , 0   , genList(UNIT_ABOMINATION     , 1  ))
     new BTBuildingData(BUILDING_FLESH_GOLEM    , 0   , 1400, genList(UNIT_FLESH_GOLEM     , 4  ))
-    new BTBuildingData(BUILDING_VAMPIRE        , 350 , 0   , genList(UNIT_VAMPIRE         , 5  ))
-    new BTBuildingData(BUILDING_VAMPIRE_LORD   , 0   , 1000, genList(UNIT_VAMPIRE_LORD    , 3  ))
+    new BTBuildingData(BUILDING_VAMPIRE        , 300 , 0   , genList(UNIT_VAMPIRE         , 3  ))
+    new BTBuildingData(BUILDING_VAMPIRE_LORD   , 0   , 1000, genList(UNIT_VAMPIRE_LORD    , 1  ))
     new BTBuildingData(BUILDING_CRYPT_LORD     , 0   , 3000, genList(UNIT_CRYPT_LORD      , 3  ))
     new BTBuildingData(BUILDING_DARK_RANGER    , 0   , 3000, genList(UNIT_DARK_RANGER     , 5  ))
     new BTBuildingData(BUILDING_ARCHIMONDE     , 0   , 3000, genList(UNIT_ARCHIMONDE      , 1  ))
@@ -203,12 +209,12 @@ public class ArmySpawner
     **/
     private function applyItemModifier(LinkedList<item> inv)
         for itm in inv
-            // Log.info("AitemModifyUnit :" + unitModifierList.size().toString())
+            // Log.debug("AitemModifyUnit :" + unitModifierList.size().toString())
             if itemAddUnitMap.has(itm.getTypeId())
                 itemAddUnitMap.get(itm.getTypeId()).execute(squadIds, itm.getCharges())
             if itemModifyUnitMap.has(itm.getTypeId())
                 unitModifierList.push(new Pair(itemModifyUnitMap.get(itm.getTypeId()), itm.getCharges()))
-            // Log.info("BitemModifyUnit :" + unitModifierList.size().toString())
+            // Log.debug("BitemModifyUnit :" + unitModifierList.size().toString())
 
     function setSpawnZone(SpawnZone spawnZone)
         this.spawnZone = spawnZone
@@ -216,7 +222,7 @@ public class ArmySpawner
         // TODO: uber retarded way to properly get the angle I wanted with both jass and LUA
         // 1 < 1.00 in LUA -> true, false in JASS
         this.spawnDirection = (spawnZone.angle.cos().abs() < 0.99 ? 0 : 90).asAngleDegrees()
-        // Log.info((spawnZone.angle.cos().abs() < 0.99).toString() + " " +
+        // Log.debug((spawnZone.angle.cos().abs() < 0.99).toString() + " " +
         //  (spawnZone.angle.cos().abs().toString()) + " " + this.spawnDirection.degrees().toString())
         this.pos = spawnZone.initialPos
 
@@ -231,15 +237,15 @@ public class ArmySpawner
 
     private function spawnUnit(int unitId, vec2 spawnPos) returns unit
         let armySize = pDatas.get(_p).spawnedUnits.size()
-        // Log.info("Army size : " + armySize.toString())
+        // Log.debug("Army size : " + armySize.toString())
         // Need to spread unit owner over 2 dummy player, once it reaches MAX_UNIT_PER_PLAYER
         // change the idx to next dummy player
         let dummyPlayerIdx = armySize div MAX_UNIT_PER_PLAYER mod pDatas.get(_p).dummyPlayers.size()
 
-        // Log.info("pre spawn")
+        // Log.debug("pre spawn")
         let newUnit = createUnit(_p.getDummyPlayer(dummyPlayerIdx), unitId, spawnPos, spawnZone.angle)
         count += 1
-        // Log.info("Unit spawned " +  count.toString())
+        // Log.debug("Unit spawned " +  count.toString())
         // newUnit.setMoveSpeed(522)
         if gameConfig.getHealthMultiplier() != 1.
             newUnit.setHP(newUnit.getHP() * gameConfig.getHealthMultiplier())
@@ -259,7 +265,7 @@ public class ArmySpawner
 
         BlzShowUnitTeamGlow(newUnit, false)
         if newUnit.getName() == null
-            Log.info("Unknown unit spawned for " + _p.getDummyPlayer(dummyPlayerIdx).getName() + " id : " + newUnit.getTypeId().toString())
+            Log.debug("Unknown unit spawned for " + _p.getDummyPlayer(dummyPlayerIdx).getName() + " id : " + newUnit.getTypeId().toString())
         else
             pData.spawnedUnits.push(newUnit)
         return newUnit
@@ -281,26 +287,26 @@ public class ArmySpawner
         while buildingIdx < buildingList.size() and pData.spawnedUnits.size() < spawnZone.unitLimit
             // Get list of unit mapped to the building
             let building = buildingList.get(buildingIdx)
-            // Log.info("Spawning " + building.getName())
+            // Log.debug("Spawning " + building.getName())
 
             //
             squadIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
-            // Log.info("passed AddAll " + building.getName())
+            // Log.debug("passed AddAll " + building.getName())
 
             applyItemModifier(building.getInventory())
-            // Log.info("passed executeItemBonus " + building.getName())
+            // Log.debug("passed executeItemBonus " + building.getName())
 
             // Spawn while there's something to spawn and unitLimit isn't reached
             while squadIdx < squadIds.size() and pData.spawnedUnits.size() < spawnZone.unitLimit
-                // Log.info("Spawn start of idx: " + squadIdx.toString())
+                // Log.debug("Spawn start of idx: " + squadIdx.toString())
                 spawnUnit(squadIds.get(squadIdx), pos)
                 // Pause unit until battle start
                 ..pause()
-                // Log.info("Passed the spawn id: " + squadIdx.toString())
+                // Log.debug("Passed the spawn id: " + squadIdx.toString())
 
                 // Update position for next unit
                 // if spawnZone.spawnRect == gg_rct_Frontrank_EN
-                //     Log.info(pos.toString() + " " + spawnDirection.degrees().toString() + " " +  (pData.spawnedUnits.size() % unitPerLine).toString())
+                //     Log.debug(pos.toString() + " " + spawnDirection.degrees().toString() + " " +  (pData.spawnedUnits.size() % unitPerLine).toString())
                 pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
 
                 // Move to next line
@@ -309,9 +315,10 @@ public class ArmySpawner
                         spawnZone.angle.op_minus(180..asAngleDegrees()),
                         FORMATION_HEIGHT * pData.spawnedUnits.size() / unitPerLine)
                 squadIdx++
-            squadIdx = 0
-            squadIds.clear()
-            buildingIdx++
+            if pData.spawnedUnits.size() < spawnZone.unitLimit
+                squadIdx = 0
+                squadIds.clear()
+                buildingIdx++
         if isBuildingSpawnOver() and isSquadSpawnOver()
             spawnFinished = true
             if gameConfig.isDisplayPortalEnabled()
@@ -325,14 +332,14 @@ public class ArmySpawner
         // if not isProdBuild
         //     createTTEx(pos.withZ(100.), invertedAngle.degrees().toString(), 10)
         //     createTTEx(pos.withZ(300.), invertedAngle.direction().toString(), 10)
-        // Log.info("Position reserve : " + pos.toString())
+        // Log.debug("Position reserve : " + pos.toString())
 
     private function getRandomReinforcementPos() returns vec2
         let spawnRect = spawnZone.spawnRect
         // TODO: uber retarded way to properly get the angle I wanted with both jass and LUA
         // 1 < 1.00 in LUA -> true, false in JASS
         let offset = (spawnZone.angle.cos().abs() < 0.99 ? spawnRect.width() / 2 : spawnRect.height() / 2)
-        // Log.info("offset : " + offset.toString() + " height : " + spawnRect.height().toString())
+        // Log.debug("offset : " + offset.toString() + " height : " + spawnRect.height().toString())
 
         if spawnZone.angle.cos().abs() < 0.99
             // vertical

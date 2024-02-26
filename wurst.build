@@ -15,6 +15,8 @@ buildMapData:
       title: ''
       subTitle: ''
       text: ''
+  optionsFlags:
+    forcesFixed: true
   players:
   - id: 0
     name: Player 1

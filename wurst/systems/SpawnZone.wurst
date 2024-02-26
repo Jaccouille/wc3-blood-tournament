@@ -9,7 +9,7 @@ import GameConfig
 import GameStates
 import LocalObjectIDs
 
-constant FINAL_ROUND_SPAWN_LIMIT = 200
+constant FINAL_ROUND_SPAWN_LIMIT = 150
 
 public class SpawnZone
     rect spawnRect

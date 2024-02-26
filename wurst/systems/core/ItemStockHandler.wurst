@@ -9,6 +9,7 @@ import ClosureTimers
 import PlayerExtension
 import ScoreBoard
 import OrderIds
+import ArmySpawner
 
 public HashMap<int, LinkedList<int>> unitItemSold = new HashMap<int, LinkedList<int>>
 
@@ -85,6 +86,7 @@ function initItemStockData()
     unitItemSold.put(BUILDING_RIFLEMAN  , asList(ITEM_MORTAR            , ITEM_SNIPER         , ITEM_EXPLOSIVE_AMMO          ))
     unitItemSold.put(BUILDING_PRIEST    , asList(ITEM_SPELL_BREAKER     , ITEM_ARMOR_BLESSING , ITEM_WEAPON_BLESSING         ))
     unitItemSold.put(BUILDING_KNIGHT    , asList(ITEM_MARSHALL                                      ))
+    unitItemSold.put(BUILDING_CRUSADER    , asList(ITEM_MARSHALL                                      ))
     unitItemSold.put(BUILDING_SORCERESS , asList(ITEM_COURT_ENCHANTRESS , ITEM_DARK_MAGE      , ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
     unitItemSold.put(BUILDING_PALADIN , asList(ITEM_PALADIN_SKIN_BLACK, ITEM_PALADIN_SKIN_WHITE, ITEM_INSPIRE))
     sharedStocksMap.put(BUILDING_PALADIN , asList(ITEM_PALADIN_SKIN_BLACK, ITEM_PALADIN_SKIN_WHITE))
@@ -141,7 +143,7 @@ init
             // move ability in this context
             if i != null and canBuy(itemId, building.getOwner())
                 building.addItemById(itemId)
-                ItemStockHandler.unitToItemStockMap.get(building). reduceStock(itemId, 1)
+                ItemStockHandler.unitToItemStockMap.get(building).reduceStock(itemId, 1)
 
                 if not building.isType(UNIT_TYPE_ANCIENT)
                     building.addType(UNIT_TYPE_ANCIENT)
@@ -149,9 +151,10 @@ init
                 // Item who doesn't give any blood point got 1 hp
                 let bloodPoint = i.getLife().toInt()
                 if bloodPoint > 1
-                    building.getOwner().getPlayerData().addArmyPoints(bloodPoint)
+                    let bonusArmyPoints = bloodPoint - BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitPointValue
+                    building.getOwner().getPlayerData().addArmyPoints(bonusArmyPoints)
                     scoreBoardEntries.get("ArmyPoints")
-                        .addValue(building.getOwner(), bloodPoint)
+                        .addValue(building.getOwner(), bonusArmyPoints)
             i.remove()
 
     // When an item is bought, it doesn't go in the building inventory, it

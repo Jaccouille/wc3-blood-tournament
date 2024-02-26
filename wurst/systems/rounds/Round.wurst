@@ -92,15 +92,15 @@ public abstract class Round
 
     function start()
         // Round start
-        // Log.info("exec round callback")
+        // Log.debug("exec round callback")
         OnRoundStart.execute(this)
-        // Log.info(this.roundName + " start")
+        // Log.debug(this.roundName + " start")
         doBeforeSpawn()
-        // Log.info(this.roundName + " doBeforeSpawn")
+        // Log.debug(this.roundName + " doBeforeSpawn")
         spawnArmies()
-        // Log.info(this.roundName + " spawnArmies")
+        // Log.debug(this.roundName + " spawnArmies")
         doAfterSpawn()
-        // Log.info(this.roundName + " doAfterSpawn")
+        // Log.debug(this.roundName + " doAfterSpawn")
 
     function doBeforeSpawn()
         forUnitsAll() (unit u) ->
@@ -239,4 +239,4 @@ public class FinalRound extends Round
             //         p1.getNameColored(true), pDatas.get(p1).spawnedUnits.size().toString(),
             //         p2.getNameColored(true), pDatas.get(p2).spawnedUnits.size().toString()
             //     )
-            // Log.info(msg)
+            // Log.debug(msg)

@@ -41,7 +41,8 @@ public class PlayerData
 
         dummyPlayer.setColor(_p.getColor())
         dummyPlayers.push(dummyPlayer)
-        dummyPlayer.setName(_p.getName() + " " + dummyPlayers.size().toString())
+        // dummyPlayer.setName(_p.getName() + " " + dummyPlayers.size().toString())
+        dummyPlayer.setName(_p.getName())
 
     function renameDummyPlayer()
         for dummyPlayer in dummyPlayers

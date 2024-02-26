@@ -26,7 +26,7 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
                 dyingUnit.getPos(), dyingUnit.getFacingAngle())
             ..issuePointOrder("attack", CENTER)
             if u == null
-                Log.info("Unknown unit spawned for" +
+                Log.debug("Unknown unit spawned for" +
                 dyingUnit.getOwner().getTruePlayerFromDummy().getName())
             else
                 pData.spawnedUnits.push(u)
@@ -59,10 +59,10 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
         killer.issueImmediateOrderById(OrderIds.berserk)
 
     else if dyingUnit.getTypeId() == UNIT_MOUNTAIN_GIANT
-        // Log.info("MG DEAD")
+        // Log.debug("MG DEAD")
         forUnitsInRange(dyingUnit.getPos(), 1500) (unit u) ->
             if u.isAlive() and u.isEnemyOf(dyingUnit)
-                // Log.info("Reordering " + u.getName())
+                // Log.debug("Reordering " + u.getName())
                 u.issuePointOrder("attack", CENTER)
 
     else if killer.getTypeId() == UNIT_WARMONGER and killer.hasAbility(ABIL_RAMPAGE)
@@ -132,7 +132,6 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
 
         roundController.currentRound.roundParticipant.remove(pData._p)
 
-        // Log.info(pData._p.getName() + " has been eliminated")
         let winner = killerOwner == ALTAR_PLAYER ? pData._p : killerOwner
 
         if roundController.currentRound.roundParticipant.size() == 1
@@ -146,7 +145,6 @@ public function initUnitDeathTrigger()
         pDatas.forEach() (player key, PlayerData pData) ->
             if pData.buildingList.size() <= 0
                 roundController.currentRound.roundParticipant.remove(pData._p)
-                // Log.info(pData._p.getName() + " has been eliminated")
 
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
@@ -178,7 +176,7 @@ public function initUnitDeathTrigger()
                 pData.spawnedUnits.remove(dyingUnit)
                 checkIfPlayerDefeated(pData, killerOwner)
             else
-                Log.info("Cannot remove " + dyingUnit.getName())
+                Log.debug("Cannot remove " + dyingUnit.getName())
 
             // Custom Action affecting killer unit
             customAction(killer, dyingUnit, pData)

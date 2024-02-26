@@ -12,20 +12,24 @@ import LocalObjectIDs
 
 init
     GameStates.gameplay.onEnter() (state) ->
-        registerCommandAll("skip") (player triggerPlayer, LinkedList<string> arguments) ->
-            if Vote.voteInstanceMap.has("skip")
-                Vote.voteInstanceMap.get("skip").castVote(triggerPlayer)
+        registerCommandAll("sr") (player triggerPlayer, LinkedList<string> arguments) ->
+            if roundController.currentRound.hasStarted
+                printTimedToPlayer("Vote failed! Round already started!", 3, triggerPlayer)
             else
-                let voteInstance = new Vote("Skip Round", 60., 1)
-                voteInstance.addAction() () ->
-                    if not roundController.currentRound.hasStarted
-                        if gameConfig.isDisplayPortalEnabled()
-                            SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "show", false)
-                            SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "birth", false)
-                        roundController.startRound()
-                    else
-                        printTimed("Vote failed! Round already started!", 3)
-                voteInstance.castVote(triggerPlayer)
+                if Vote.voteInstanceMap.has("sr")
+                    Vote.voteInstanceMap.get("sr").castVote(triggerPlayer)
+                else
+                    let voteInstance = new Vote("Start Round", 60., 1)
+                    voteInstance.addAction() () ->
+                        if not roundController.currentRound.hasStarted
+                            if gameConfig.isDisplayPortalEnabled()
+                                SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "show", false)
+                                SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "birth", false)
+                            roundController.startRound()
+                        else
+                            printTimed("Vote failed! Round already started!", 3)
+                    voteInstance.castVote(triggerPlayer)
+
         OnRoundStart.add() (Round round) ->
-            if Vote.voteInstanceMap.has("skip")
-                Vote.voteInstanceMap.get("skip").endVote()
+            if Vote.voteInstanceMap.has("sr")
+                Vote.voteInstanceMap.get("sr").endVote()

@@ -54,7 +54,7 @@ function initVision()
                 .start()
 
 init
-    // preload()
+    preload()
     GAME_TIMER.start(99999999, null)
 
     // register altar callback indicator before replacing it
@@ -68,6 +68,7 @@ init
         let pData = pDatas.get(target.getOwner())
         pData.racePicker = target
     replaceIndicator()
+
     nullTimer() ->
         initRoundController()
         initUnitDeathTrigger()

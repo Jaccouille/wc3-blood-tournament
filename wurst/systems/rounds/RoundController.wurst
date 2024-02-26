@@ -104,10 +104,9 @@ class RoundController
                 disableOrderBlocker()
                 interludeTime = 120.
                 hasFinalStarted = true
-                doAfter(interludeTime - 10.) ->
-                    if not currentRound.hasStarted
-                        if gameConfig.isDisplayPortalEnabled()
-                            currentRound.spawnPortals()
+                if not currentRound.hasStarted
+                    if gameConfig.isDisplayPortalEnabled()
+                        currentRound.spawnPortals()
                 forDestructablesInRect(boundRect) (destructable d) ->
                     if d.getTypeId() == DESC_BRIDGES_VERTICAL
                         or d.getTypeId() == DESC_BRIDGES_HORIZONTAL
@@ -125,7 +124,7 @@ class RoundController
                     if gameConfig.isDisplayPortalEnabled()
                         currentRound.spawnPortals()
 
-        // Log.info(interludeTime.toString())
+        // Log.debug(interludeTime.toString())
         tdialog.setRealTimeRemaining(interludeTime)
         roundInterludeTimer.doAfter(interludeTime) ->
             startRound()
@@ -148,17 +147,17 @@ class RoundController
             if currentRound instanceof FinalRound
                 // Registering the winner to create final round matchup
                 if previousRoundWinner == null
-                    // Log.info("Adding previous winner " + winner.getName())
+                    // Log.debug("Adding previous winner " + winner.getName())
                     previousRoundWinner = winner
                 else
-                    Log.info("Removing previous winner")
+                    Log.debug("Removing previous winner")
                     previousRoundWinner = null
             currentRound = null
             preRoundPhaseStart()
 
     function buildFinalRoundMatchup(player winner)
         if roundController.previousRoundWinner != null
-            Log.info("Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + winner.getNameColored(true))
+            Log.debug("Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + winner.getNameColored(true))
             roundController.addRound(
                 new FinalRound()
                     ..addMatchup(new Pair(roundController.previousRoundWinner.getId(), winner.getId())))
@@ -182,7 +181,7 @@ function generateMatchups() returns LinkedList<LinkedList<Pair<int, int>>>
 
         while roundPairs.size() < 4
             // usedPairs.forEach() (Pair<integer, integer> t) ->
-            //     Log.info("[generateMatchups] used_pairs : " + t.a.toString() + " " + t.b.toString())
+            //     Log.debug("[generateMatchups] used_pairs : " + t.a.toString() + " " + t.b.toString())
             for pair in possibleMatchUp
                 if not usedPairs.has(pair)
                     and not usedPlayers.has(pair.a)
@@ -195,11 +194,11 @@ function generateMatchups() returns LinkedList<LinkedList<Pair<int, int>>>
         roundPairs.shuffle()
         roundParticipantList.add(roundPairs)
         usedPlayers.clear()
-    // Log.info("[generateMatchups] after combos")
+    // Log.debug("[generateMatchups] after combos")
     // roundParticipantList.forEach() (LinkedList<Pair<integer, integer>> t) ->
-    //     Log.info("==============================")
+    //     Log.debug("==============================")
     //     t.forEach() (Pair<integer, integer> t) ->
-    //         Log.info("roundParticipantList : " + t.a.toString() + " " + t.b.toString())
+    //         Log.debug("roundParticipantList : " + t.a.toString() + " " + t.b.toString())
     roundParticipantList.shuffle()
     return roundParticipantList
 
@@ -223,7 +222,7 @@ function generateRounds()
 
 function generateFinalRounds()
     let matches = generateMatchups().getRandomElement()
-    // Log.info("matches " + matches.size().toString())
+    // Log.debug("matches " + matches.size().toString())
     for matchUp in matches
         roundController.addRounds(asList<Round>(
             new FinalRound()
@@ -238,17 +237,17 @@ public function initRoundController()
         roundController.preRoundPhaseStart()
 
     onLastArmyRemaining = () ->
-        // Log.info("Clean up phase")
+        // Log.debug("Clean up phase")
         altarEntity.getOrbUnit().unpause()
         altarEntity.getArenaMaster().setAnimation("Stand First")
         altarEntity.showCounter()
 
     onAllUnitDead = (player winner) ->
-        // Log.info("All unit dead")
+        // Log.debug("All unit dead")
         roundController.checkIfCurrentroundDone(winner)
 
     OnRoundFinish.add() (Round round) ->
-        Log.info(round.roundName + " finished")
+        Log.debug(round.roundName + " finished")
         altarEntity.getOrbUnit().pause()
         altarEntity.getArenaMaster().setAnimation("Stand")
 
@@ -263,12 +262,13 @@ public function initRoundController()
             printTimed(round.winner.getNameColored() + " has eliminated " + looser.getNameColored() , 3)
             scoreBoardEntries.get("PlayerName").setEntryColor(looser, COLOR_GRAY)
         else
+            printTimed("{0} finished!".format(round.roundName).color(HIGHLIGHT_COLOR), 15)
             doAfter(3) ->
                 altarEntity.hideCounter()
                 printTimed(round.winner.getNameColored() + " gets "
                     + altarEntity.bloodPointCounter.toString().color(COLOR_RED)
                     + " bonus blood points for winning the round" , 15)
-            doAfter(5) ->
+            doAfter(6) ->
                 if round.goldReward > 0
                     printTimed("You get " + round.goldReward.toString().color(COLOR_GOLD) + " golds from round income", 15)
                 if round.bloodPointReward > 0
@@ -277,12 +277,18 @@ public function initRoundController()
                     value.giveBloodPointsReward()
                     key.addGold(round.goldReward)
                     key.addLumber(round.bloodPointReward)
+                    doAfter(3) ->
+                        let opponent = roundController.currentRound.getOpponent(key)
+                        printTimedToPlayer("You will face {0} in the next round".format(opponent.getNameColored()),
+                            15, key)
 
     onAllroundsFinished = () ->
-        // Log.info("Match over")
+        // Log.debug("Match over")
+        StopMusic(false)
+        ClearMapMusic()
+        PlayMusic(Sounds.credits)
         if roundController.previousRoundWinner != null
             GameStates.gameplay.exit()
             print(roundController.previousRoundWinner.getNameColored() + " is the " + "Blood tournament".color(COLOR_RED) + " champion!")
-            // PlayMusic(Sounds.credits)
             doAfter(15) ->
                 printTimed("You can leave the game by the way", 10)

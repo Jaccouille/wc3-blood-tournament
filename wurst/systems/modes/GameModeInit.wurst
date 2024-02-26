@@ -37,14 +37,14 @@ init
             mode.message("Round number before elimination phase set to " + roundCount.toString().color(SPECIAL_COLOR))
             gameConfig.setRoundCount(roundCount)
 
-    new GameMode("bot", "b", "General", "Enable bot for leaver, default : " +
-    gameConfig.isBotAIEnabled().toString()) (mode, args) ->
-        if not gameConfig.isBotAIEnabled()
-            mode.message("Bot mode enabled, a bot will replace leavers".color(SPECIAL_COLOR))
-            gameConfig.setBotAIMode(true)
-        else
-            mode.message("Bot mode disabled, bot won't replace leavers".color(SPECIAL_COLOR))
-            gameConfig.setBotAIMode(false)
+    // new GameMode("bot", "b", "General", "Enable bot for leaver, default : " +
+    // gameConfig.isBotAIEnabled().toString()) (mode, args) ->
+    //     if not gameConfig.isBotAIEnabled()
+    //         mode.message("Bot mode enabled, a bot will replace leavers".color(SPECIAL_COLOR))
+    //         gameConfig.setBotAIMode(true)
+    //     else
+    //         mode.message("Bot mode disabled, bot won't replace leavers".color(SPECIAL_COLOR))
+    //         gameConfig.setBotAIMode(false)
 
     new GameMode("start-gold", "sg", "General", "Set first round gold amount per players, default : " +
     gameConfig.getStartingGold().toString() + ", min : 100") (mode, args) ->
@@ -150,5 +150,4 @@ init
 
     new GameMode("dev", "d", "Testing", "Development mode (-tm, -b, -st)", false) (mode, args) ->
         GameMode.find("tm").enable()
-        GameMode.find("b").enable()
         GameMode.find("st").enable()

@@ -91,18 +91,20 @@ init
     itemAddUnitMap.put(ITEM_MARSHALL, marshallAction)
 
 
-    let paladinBlackHairAction = new ItemModifyUnit()
-        ..addAction() (unit u) ->
-        BlzSetUnitSkin(u, UNIT_PALADIN_2)
+    let paladinBlackHairAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitTospawn, int count) ->
+        for i = 1 to count
+            replaceUnit(unitTospawn, UNIT_PALADIN_1, UNIT_PALADIN_2)
 
-    itemModifyUnitMap.put(ITEM_PALADIN_SKIN_BLACK, paladinBlackHairAction)
+    itemAddUnitMap.put(ITEM_PALADIN_SKIN_BLACK, paladinBlackHairAction)
 
 
-    let paladinWhiteHairAction = new ItemModifyUnit()
-        ..addAction() (unit u) ->
-        BlzSetUnitSkin(u, UNIT_PALADIN_3)
+    let paladinWhiteHairAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitTospawn, int count) ->
+        for i = 1 to count
+            replaceUnit(unitTospawn, UNIT_PALADIN_1, UNIT_PALADIN_3)
 
-    itemModifyUnitMap.put(ITEM_PALADIN_SKIN_WHITE, paladinWhiteHairAction)
+    itemAddUnitMap.put(ITEM_PALADIN_SKIN_WHITE, paladinWhiteHairAction)
 
 
     let inspireAction = new ItemModifyUnit()

@@ -217,3 +217,12 @@ public function initScoreBoard()
             let buildingPoint = BTBuildingData.getBuildingArmyPoints(u.getTypeId())
             scoreBoardEntries.get("ArmyPoints")
                 .addValue(pData._p, (buildingPoint * gameConfig.getArmyPointsMultiplier()).toInt())
+
+    EventListener.add(EVENT_PLAYER_UNIT_UPGRADE_FINISH) ->
+        let u = EventData.getTriggerUnit()
+        let pData = pDatas.get(u.getOwner())
+
+        if BTBuildingData.unitIdToDataMap.has(u.getTypeId())
+            let buildingPoint = BTBuildingData.getBuildingUpgradeBonusArmyPoints(u.getTypeId())
+            scoreBoardEntries.get("ArmyPoints")
+                .addValue(pData._p, (buildingPoint * gameConfig.getArmyPointsMultiplier()).toInt())

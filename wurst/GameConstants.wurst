@@ -9,6 +9,6 @@ public constant ALTAR_PLAYER = players[PLAYER_NEUTRAL_AGGRESSIVE]
 public constant REFUND_VALUE = 0.8
 
 public function player.isHuman() returns boolean
-    return this.getId() < 8
+    return this.getId() < 8 and this.isIngame()
 
 public constant CENTER = vec2(0, 1025)

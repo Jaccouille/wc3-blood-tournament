@@ -90,4 +90,6 @@ class OgreSwing
 
 init
     EventListener.onTargetCast(ABIL_OGRE_SWING) (unit caster, unit target) ->
+        if target.hasAbility(BuffIds.ensnareGround)
+            target.removeAbility(BuffIds.ensnareGround)
         new OgreSwing(caster, target, GetRandomInt(MIN_DIST, MAX_DIST))
