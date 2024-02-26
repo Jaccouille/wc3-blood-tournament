@@ -12,7 +12,7 @@ import IDListConstant
 import LocalObjectIDs
 import Players
 import Round
-import Toolkit
+import ChatCommands
 import TerrainUtils
 import ItemStockHandler
 
@@ -43,6 +43,7 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
         BUILDING_WITCH_DOCTOR,
         BUILDING_SHAMAN,
         BUILDING_OGRE,
+        BUILDING_WARMONGER,
         BUILDING_FARSEER,
         BUILDING_BLADE_MASTER,
         BUILDING_SHADOW_HUNTER,
@@ -72,7 +73,8 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
         BUILDING_BALLISTA
     ))
 
-let UPGRADE_OPTIONS = new HashMap<int, LinkedList<int>>
+public let UPGRADE_OPTIONS = new HashMap<int, LinkedList<int>>
+    ..put(BUILDING_KNIGHT, asList(BUILDING_CRUSADER))
     ..put(BUILDING_HEADHUNTER, asList(BUILDING_TRAPPER))
     ..put(BUILDING_ZOMBIE, asList(BUILDING_GHOUL))
     ..put(BUILDING_CRYPT_FIEND, asList(BUILDING_NERUBIAN))
@@ -84,7 +86,7 @@ class BuilderAI
     PlayerData pData
     CallbackPeriodic cb
     boolean isEnabled = false
-    boolean enableForHumanPlayer = false
+    boolean enableForHumanPlayer = true
 
     construct(player _player)
         this._player = _player
@@ -95,41 +97,49 @@ class BuilderAI
         if pData.builder == null
             pData.racePicker.issueImmediateOrder(UnitId2String(BUILDER_LIST.getRandomElement()))
 
+    private function tryToBuyItems(LinkedList<unit> buildingList)
+        let buildingWithItemsToBuy = buildingList
+            .lodashFilter(building -> ItemStockHandler.unitToItemStockMap.has(building))
+        if buildingWithItemsToBuy.size() > 0
+            let randomBuilding = buildingWithItemsToBuy.getRandomElement()
+            let stockHandler = ItemStockHandler.unitToItemStockMap.get(randomBuilding)
+            var choseUpgrade = false
+            while not choseUpgrade
+                Log.debug("name = " + randomBuilding.getName() + " for player " + randomBuilding.getOwner().getName())
+                Log.debug("name = " + randomBuilding.getName() + " size: " + " " + unitItemSold.get(randomBuilding.getTypeId()).size().toString())
+                let randomItem = unitItemSold.get(randomBuilding.getTypeId()).getRandomElement()
+                if stockHandler.hasItem(randomItem)
+                    randomBuilding.issueImmediateOrderById(randomItem)
+                    choseUpgrade = true
+
     // TODO: learn how to do AI
     function startAI()
         isEnabled = true
         pickBuilder()
 
         cb = doPeriodically(2) (CallbackPeriodic cb) ->
+            if not isEnabled
+                destroy cb
+
             // Try to upgrade existing units
-            if pData._p.getLumber() > 50 and pData.buildingList.size() > 0
-                var buildingList = pData.buildingList.copy()
+            if pData._p.getLumber() >= 50 and pData.buildingList.size() > 0
+                let buildingList = pData.buildingList.copy()
 
                 // Get existing building that can be upgraded
                 let upgradableBuildings = buildingList
                     .lodashFilter(building -> UPGRADE_OPTIONS.has(building.getTypeId()))
 
+                // Try to upgrade building, if not, try to buy items
                 if upgradableBuildings.size() > 0
                     let unitToUpgrade = upgradableBuildings.getRandomElement()
                     let upgradeChoice = UPGRADE_OPTIONS.get(unitToUpgrade.getTypeId()).getRandomElement()
 
                     if OrderId2StringBJ(upgradeChoice)  != ""
                         unitToUpgrade.issueImmediateOrder(OrderId2StringBJ(upgradeChoice))
-                // Item behavior
                 else
-                    buildingList = pData.buildingList.copy()
-                    let upgradableBuildings2 = buildingList
-                        .lodashFilter(building -> ItemStockHandler.unitToItemStockMap.has(building))
-                    if upgradableBuildings2.size() > 0
-                        let randomBuilding = upgradableBuildings2.getRandomElement()
-                        let stockHandler = ItemStockHandler.unitToItemStockMap.get(randomBuilding)
-                        var choseUpgrade = false
-                        while not choseUpgrade
-                            // TODO: Fix item purchase
-                            let randomItem = unitItemSold.get(randomBuilding.getTypeId()).getRandomElement()
-                            if stockHandler.hasItem(randomItem)
-                                randomBuilding.issueImmediateOrderById(randomItem)
-                                choseUpgrade = true
+                    // TODO: improve for undead
+                    tryToBuyItems(buildingList)
+
 
             if pData.builder != null and pData._p.getGold() >= 100
                 let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()
@@ -137,8 +147,11 @@ class BuilderAI
                 while pos.isTerrainPathable(PATHING_TYPE_BUILDABILITY)
                     pos = pData.buildingRect.randomPoint()
                 BlzQueueBuildOrderById(pData.builder, unitToBuild, pos.x, pos.y)
-            if not isEnabled
-                destroy cb
+            // trade blood points for gold
+            else if pData.builder != null and pData._p.getLumber() >= 1500
+                pData.builder.issueImmediateOrder("berserk")
+
+
 
     function stopAI()
         BlzUnitForceStopOrder(pData.builder, true)
@@ -147,22 +160,27 @@ class BuilderAI
     function toggleAI()
         if isEnabled and enableForHumanPlayer
             stopAI()
-            Log.info("stop builder AI for " + _player.getName())
+            if _player.isHuman()
+                printTimed("Bot controller disabled for {0}".format(_player.getNameColored()), 5)
+            Log.debug("stop builder AI for " + _player.getName())
         else if enableForHumanPlayer
             startAI()
-            Log.info("start builder AI for " + _player.getName())
+            if _player.isHuman()
+                printTimed("Bot controller enabled for {0}".format(_player.getNameColored()), 5)
+            Log.debug("start builder AI for " + _player.getName())
 
 function startAI()
     Log.debug("Start builder AI")
     for aiInstance in BuilderAI
         // TODO: only enable if player isn't bot
-        if aiInstance.enableForHumanPlayer
+        if aiInstance.enableForHumanPlayer and not aiInstance.isEnabled
             aiInstance.startAI()
 
 function stopAI()
     Log.debug("Stop builder AI")
     for aiInstance in BuilderAI
-        aiInstance.stopAI()
+        if aiInstance.isEnabled
+            aiInstance.stopAI()
 
 function toggleAI()
     Log.debug("Toggle builder AI")
@@ -189,7 +207,7 @@ init
             OnRoundStart.add() (Round round) ->
                 stopAI()
 
-    registerToolkitCommand("ai") (player triggerPlayer, LinkedList<string> arguments) ->
-        let aiInstance = playerToBuilderAI.get(triggerPlayer)
-        aiInstance.enableForHumanPlayer = aiInstance.enableForHumanPlayer == false ? true : false
+    registerCommandAll("bot") (triggerPlayer, args) ->
+        // let aiInstance = playerToBuilderAI.get(triggerPlayer)
+        // aiInstance.enableForHumanPlayer = aiInstance.enableForHumanPlayer == false ? true : false
         playerToBuilderAI.get(triggerPlayer).toggleAI()
