@@ -104,7 +104,7 @@ function initItemStockData()
     sharedStocksMap.put(BUILDING_WITCH_DOCTOR, asList(ITEM_DRUNKEN_HAZE, ITEM_HEALING_WAVE, ITEM_MANA_WARD))
 
     // ================ UNDEAD =============
-    unitItemSold.put(BUILDING_ZOMBIE, asList(ITEM_PLAGUE_BEARER                  ))
+    // unitItemSold.put(BUILDING_ZOMBIE, asList(ITEM_PLAGUE_BEARER                  ))
     unitItemSold.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER                  ))
     unitItemSold.put(BUILDING_NECROMANCER    , asList(ITEM_CRIPPLE       , ITEM_RAISE_SKELETON_MAGE, ITEM_LICH))
     unitItemSold.put(BUILDING_BANSHEE        , asList(ITEM_UNHOLY_FRENZY, ITEM_FROST_ARMOR                    ))

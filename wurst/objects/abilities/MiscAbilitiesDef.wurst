@@ -144,7 +144,7 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
         ..setNameEnhance("D", "Trade Gold")
         ..setTooltipNormalExtended(1, TOOLTIP_TRADE_GOLD)
         ..setIconNormal(Icons.bTNMGExchange)
-        ..setOrderStringActivate("berserk")
+        ..setBaseOrderID(1, "berserk")
 
     createStandardChannelAbility(ABIL_TRADE_BLOOD_POINT)
         ..setNameEnhance("F", "Trade Blood Points")

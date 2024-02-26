@@ -18,12 +18,6 @@ import ItemStockHandler
 
 let playerToBuilderAI = new HashMap<player, BuilderAI>
 
-
-
-
-
-
-
 let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
     ..put(UNIT_HUMAN_BUILDER, asList(
         BUILDING_FOOTMAN,
@@ -76,7 +70,7 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
 public let UPGRADE_OPTIONS = new HashMap<int, LinkedList<int>>
     ..put(BUILDING_KNIGHT, asList(BUILDING_CRUSADER))
     ..put(BUILDING_HEADHUNTER, asList(BUILDING_TRAPPER))
-    ..put(BUILDING_ZOMBIE, asList(BUILDING_GHOUL))
+    ..put(BUILDING_ZOMBIE, asList(BUILDING_PLAGUE_BEARER))
     ..put(BUILDING_CRYPT_FIEND, asList(BUILDING_NERUBIAN))
     ..put(BUILDING_ARCHER, asList(BUILDING_NE_RANGER))
 
@@ -137,7 +131,6 @@ class BuilderAI
                     if OrderId2StringBJ(upgradeChoice)  != ""
                         unitToUpgrade.issueImmediateOrder(OrderId2StringBJ(upgradeChoice))
                 else
-                    // TODO: improve for undead
                     tryToBuyItems(buildingList)
 
 
@@ -149,6 +142,7 @@ class BuilderAI
                 BlzQueueBuildOrderById(pData.builder, unitToBuild, pos.x, pos.y)
             // trade blood points for gold
             else if pData.builder != null and pData._p.getLumber() >= 1500
+                Log.info("Trying to trade gold")
                 pData.builder.issueImmediateOrder("berserk")
 
 

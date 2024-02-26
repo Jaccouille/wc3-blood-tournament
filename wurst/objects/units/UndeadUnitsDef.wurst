@@ -34,7 +34,7 @@ import ArmySpawner
         ..setNameEnhance("Q", "Zombie")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-        // ..setUpgradeTo(commaList(BUILDING_GHOUL))
+        ..setUpgradeTo(commaList(BUILDING_PLAGUE_BEARER))
 
         ..setModelFileExt(Units.zombie)
         ..setIconGameInterfaceExt(Icons.bTNZombie)
@@ -43,7 +43,7 @@ import ArmySpawner
     let zombieCount = BTBuildingData.getUnitCount(BUILDING_ZOMBIE)
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_INFECTION))
     let itm = createBasicItem(ITEM_PLAGUE_BEARER)
-    createSpawnedUnit(UNIT_PLAGUE_BEARER, UnitIds.dalaranmutant)
+    createSpawnedUnit(UNIT_PLAGUE_BEARER, UnitIds.dalaranmutant, BUILDING_PLAGUE_BEARER)
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..setNormalAbilities(commaList(ABIL_INFECTION))
@@ -57,15 +57,20 @@ import ArmySpawner
         ..setSpeedBase(270)
         ..setItemCostReplacement(0, 100, 1, zombieCount, zombieCount, BUILDING_ZOMBIE)
 
-
         ..setSizeSmall()
         ..setPriority(2)
         ..setNameEnhance("Z", "Plague Bearer")
+
         ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
         ..tooltipStopListen(true, itm)
         ..setTintingColorRed(180)
+        ..setScalingValue(0.85)
 
         ..setIconGameInterfaceExt(Icons.bTNDalaranMutant)
+        ..setModelFileExt(Units.dalaranMutant)
+        ..setUnitSoundSetExt(Soundsets.zombie)
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_LIFESTEAL_75))
     createSpawnedUnit(UNIT_GHOUL, UnitIds.ghoul, BUILDING_GHOUL)
@@ -89,8 +94,8 @@ import ArmySpawner
         ..tooltipStopListen(true)
 
         ..setModelFileExt(Units.ghoul1)
-        ..setIconGameInterfaceExt(Icons.bTNGhoul)
         ..setUnitSoundSetExt(Soundsets.ghoul)
+        ..setIconGameInterfaceExt(Icons.bTNGhoul)
 
 
 @compiletime function createSkeletalArcher()
