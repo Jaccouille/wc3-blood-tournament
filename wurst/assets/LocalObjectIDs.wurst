@@ -364,6 +364,9 @@ public let ABIL_TERROR_AURA               = compiletime(ABIL_ID_GEN.next())
 public let ABIL_TERRIFY                   = compiletime(ABIL_ID_GEN.next())
 public let ABIL_TERRIFY_ORB               = compiletime(ABIL_ID_GEN.next())
 
+public let BUFF_RAMPAGE                   = compiletime(BUFF_ID_GEN.next())
+public let BUFF_KILLING_SPREE             = compiletime(BUFF_ID_GEN.next())
+
 public let ITEM_CAPTAIN            = compiletime(ITEM_ID_GEN.next())
 public let ITEM_PALADIN_SKIN_BLACK = compiletime(ITEM_ID_GEN.next())
 public let ITEM_PALADIN_SKIN_WHITE = compiletime(ITEM_ID_GEN.next())
