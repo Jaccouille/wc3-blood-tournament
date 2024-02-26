@@ -347,8 +347,4 @@ init
                     and u.isEnemyOf(caster)
                     dummy.castTarget(ABIL_DEATH_COIL, 1, Orders.firebolt, u)
 
-                    // if InstantDummyCaster.castTarget(
-                    //     caster.getOwner(),
-                    //     ABIL_DEATH_COIL, 1, OrderIds.firebolt, u) == false
-                    //     Log.info("Death COil failed")
                     _count++

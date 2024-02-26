@@ -109,8 +109,8 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..presetCooldown(_ -> 0)
         ..tooltipStartListen()
-        ..presetPreferHostiles(_ -> 25)
-        ..presetAreaofEffect(_ -> 450)
+        ..presetPreferHostiles(_ -> 40)
+        ..presetAreaofEffect(_ -> 1000)
         ..setNameEnhance("Z", "Taunt")
         ..tooltipStopListen(false)
 
@@ -118,7 +118,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 250)
         ..tooltipStartListen()
-        ..presetCooldown(_ -> 10)
+        ..presetCooldown(_ -> 5)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_TAUNT, tgen.generateFullTooltip())

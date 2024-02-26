@@ -215,7 +215,7 @@ import ArmySpawner
         ..setAttack1Range(300)
 
         ..setArmorData(ArmorType.Medium, 4)
-        ..setHitPointsMaximumBase(700)
+        ..setHitPointsMaximumBase(500)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -260,7 +260,7 @@ import ArmySpawner
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_BASH_30) + "\n\n" +
-        abilTooltipMap.get(ABIL_MAGIC_ARMOR_50) + "\n\n" +
+        abilTooltipMap.get(ABIL_MAGIC_ARMOR_30) + "\n\n" +
         abilTooltipMap.get(ABIL_HOLY_BLADE) + "\n"
     )
     // var itm = createBasicItem(ITEM_CRUSADER)
@@ -275,10 +275,10 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 90, 4, 6, 1.4)
+        ..setAttack1Data(AttackType.Normal, 80, 4, 6, 1.4)
 
-        ..setArmorData(ArmorType.Large, 7)
-        ..setHitPointsMaximumBase(900)
+        ..setArmorData(ArmorType.Large, 6)
+        ..setHitPointsMaximumBase(800)
 
         ..setSpeedBase(350)
 

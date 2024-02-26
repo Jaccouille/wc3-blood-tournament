@@ -353,10 +353,7 @@ import ArmySpawner
 
 
 @compiletime function createShaman()
-    let abilTooltips = TOOLTIP_BLOODLUST + "\n"
-        + TOOLTIP_EXT_BLOODLUST + "\n\n"
-        + abilTooltipMap.get(ABIL_SUMMON_SPIRIT_WOLF1)
-    var tooltip = new UnitTooltipGenerator(abilTooltips)
+    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_BLOODLUST))
     createSpawnedUnit(UNIT_SHAMAN, UnitIds.shaman, BUILDING_SHAMAN)
         ..setNormalAbilities(commaList(ABIL_BLOODLUST, ABIL_SUMMON_SPIRIT_WOLF1))
         ..registerTooltipGenerator(tooltip)

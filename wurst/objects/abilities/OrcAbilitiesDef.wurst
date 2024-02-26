@@ -14,23 +14,27 @@ import Assets
 import TooltipsUtils
 import ArmySpawner
 
-public constant TOOLTIP_BLOODLUST = "Bloodlust".color(SPECIAL_COLOR)
-public constant TOOLTIP_EXT_BLOODLUST = ("" +
-    "Increases a friendly unit's attack rate by "+
-    "{0} and movement speed by "+
-    "{1}.\nLasts {2} seconds.")
-    .format(
-        "<Ablo,DataA1,%>%".color(COLOR_RED),
-        "<Ablo,DataB1,%>%".color(COLOR_ORANGE),
-        "<Ablo,Dur1>".color(COLOR_LIGHT_BLUE)
-    )
-
 
 @compiletime function orcAbilites()
+    var tgen = new BTAbilityTooltipGenerator(
+        "Increases a friendly unit's attack and movement speed.")
     new AbilityDefinitionBloodlustCreep(ABIL_BLOODLUST)
-        ..setTooltipNormal(1, TOOLTIP_BLOODLUST)
-        ..setTooltipNormalExtended(1, TOOLTIP_EXT_BLOODLUST)
+        ..registerTooltipGenerator(tgen)
+        ..setLevels(1)
+        ..tooltipStartListen()
+        ..setNameEnhance("Z", "Bloodlust")
+        ..setAttackSpeedIncrease(1, 0.5)
+        ..addTooltipProperty("Attack Speed Bonus", _ -> 0.5.toPercent())
+        ..setMovementSpeedIncrease(1, 0.25)
+        ..addTooltipProperty("Movement Speed Bonus", _ -> 0.25.toPercent())
+        ..presetManaCost(_ -> 80)
+        ..presetCooldown(_ -> 4)
+        ..presetDurationNormal(_ -> 60)
+        ..presetCastRange(_ -> 600)
         ..setScalingFactor(1, 0)
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_BLOODLUST, tgen.generateFullTooltip())
 
     let witchDoctorCount = BTBuildingData.getUnitCount(BUILDING_WITCH_DOCTOR)
     var itm = createBasicItem(ITEM_HEALING_WAVE)
@@ -38,7 +42,7 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
         ..setNameEnhance("X", "Add 1 Healing Wave")
         ..setInterfaceIcon(Icons.bTNHealingWave)
 
-    var tgen = new BTAbilityTooltipGenerator(
+    tgen = new BTAbilityTooltipGenerator(
         "Calls forth a wave of healing energy that bounces.")
     new AbilityDefinitionHealingWaveCreep(ABIL_HEALING_WAVE)
         ..registerTooltipGenerator(tgen)
@@ -399,7 +403,7 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
         "The Ogre tosses a unit with its club, " +
         "deals damage to unit on landing zone and reduces " +
         "their attack and movement speed. " +
-        "Cannot toss big unit."
+        "Cannot toss giant unit."
         )
 
     new AbilityDefinitionMountainKingThunderClap(ABIL_OGRE_SWING_SLAM)
@@ -435,7 +439,6 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
 
     abilTooltipMap.put(ABIL_OGRE_SWING, tgen.generateFullTooltip())
 
-    let BUFF_RAMPAGE = compiletime(BUFF_ID_GEN.next())
     new BuffDefinition(BUFF_RAMPAGE, BuffIds.battleRoar)
         ..setIcon(Icons.bTNBerserk)
         ..setArtTarget(Abilities.trollBeserkerTarget)
@@ -475,7 +478,6 @@ public constant TOOLTIP_EXT_BLOODLUST = ("" +
     abilTooltipMap.put(ABIL_RAMPAGE, tgen.generateFullTooltip())
 
 
-    let BUFF_KILLING_SPREE = compiletime(BUFF_ID_GEN.next())
     new BuffDefinition(BUFF_KILLING_SPREE, BuffIds.battleRoar)
         ..setIcon(Icons.bTNChaosGrunt)
         ..setTargetAttachmentPoint1(1, "head")

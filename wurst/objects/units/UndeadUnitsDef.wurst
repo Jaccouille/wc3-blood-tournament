@@ -268,7 +268,7 @@ import ArmySpawner
         ..setDefaultActiveAbility(commaList(ABIL_RAISE_SKELETON))
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 27, 5, 3, 1.75)
+        ..setAttack1Data(AttackType.Magic, 14, 5, 3, 1.75)
         ..setAttack1Range(700)
 
         ..setArmorData(ArmorType.Unarmored, 2)
@@ -552,7 +552,7 @@ import ArmySpawner
         ..setHitPointsMaximumBase(1200)
 
         ..setSpeedBase(270)
-        ..setItemCostUnit(0, 1500)
+        ..setItemCostUnit(0, 1500, 1)
 
         ..setSizeSmall()
         ..setNameEnhance("Z", "Vampire Lord")
