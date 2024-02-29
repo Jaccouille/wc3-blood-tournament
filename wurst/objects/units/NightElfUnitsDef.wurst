@@ -346,10 +346,10 @@ import ArmySpawner
         ..setNormalAbilities(commaList(
             ABIL_HOWL_OF_TERROR,
             ABIL_CLEAVE_30,
-            ABIL_AUTOCAST_HOWL_OF_TERROR,
+            // ABIL_AUTOCAST_HOWL_OF_TERROR,
             ABIL_HARDENED_SKIN_10
             ))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_HOWL_OF_TERROR))
+        // ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_HOWL_OF_TERROR))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -373,14 +373,12 @@ import ArmySpawner
 
 @compiletime function createMountainGiant()
     let tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_TAUNT) + "\n\n" +
-        abilTooltipMap.get(ABIL_CLEAVE_30)
+        abilTooltipMap.get(ABIL_TAUNT)
         )
     createSpawnedUnit(UNIT_MOUNTAIN_GIANT, UnitIds.mountaingiant, BUILDING_MOUNTAIN_GIANT)
         ..setNormalAbilities(commaList(
             ABIL_TAUNT,
-            ABIL_AUTOCAST_TAUNT,
-            ABIL_CLEAVE_30
+            ABIL_AUTOCAST_TAUNT
         ))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_TAUNT))
         ..registerTooltipGenerator(tooltip)
@@ -389,7 +387,7 @@ import ArmySpawner
         ..setAttack1Data(AttackType.Siege, 113, 10, 7, 2)
 
         ..setArmorData(ArmorType.Fortified, 6)
-        ..setHitPointsMaximumBase(1500)
+        ..setHitPointsMaximumBase(1200)
 
         ..setSpeedBase(240)
 

@@ -375,8 +375,9 @@ import ArmySpawner
 
     tgen = new BTAbilityTooltipGenerator(
         "Calls forth a bolt of lightning that deals damage and bounce.")
-    new AbilityDefinitionChainLightningcreep(ABIL_CHAIN_LIGHTNING)
-        ..setAnimationNames(commaList("spell", "chain"))
+    new AbilityDefinitionFarseerChainLightning(ABIL_CHAIN_LIGHTNING)
+        ..setHeroAbility(false)
+        // ..setAnimationNames(commaList("spell", "chain"))&
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
         ..presetDamageReductionperTarget(_ -> 0)
@@ -384,7 +385,7 @@ import ArmySpawner
         ..tooltipStartListen()
         ..presetDamageperTarget(_ -> 150)
         ..presetNumberofTargetsHit(_ -> 6)
-        ..presetManaCost(_ -> 75)
+        ..presetManaCost(_ -> 200)
         ..presetCastRange(_ -> 600)
         ..setNameEnhance("Z", "Chain Lightning")
         ..tooltipStopListen(false)

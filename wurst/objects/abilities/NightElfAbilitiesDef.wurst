@@ -21,17 +21,16 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
 @compiletime function createNightElfAbilities()
 
-    var tgen = new BTAbilityTooltipGenerator("Can attack multiple target. " +
-        "Multishot deals half damage to additional targets.")
+    var tgen = new BTAbilityTooltipGenerator("Fire projectile to additional target.")
     new AbilityDefinitionRocketAttack(ABIL_MULTISHOT_3)
         ..setCheckDependencies(false)
         ..setMissileArt(Abilities.arrowMissile1)
-        ..presetDamagePerTarget(_ -> 25)
+        ..presetDamagePerTarget(_ -> 0)
         ..presetAreaofEffect(_ -> 800)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..presetMaximumNumberofTargets(_ -> 2)
-        ..setNameEnhance("Z", "Multishot 2")
+        ..presetMaximumNumberofTargets(_ -> 1)
+        ..setNameEnhance("Z", "Multishot 1")
         ..tooltipStopListen(true)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
@@ -110,7 +109,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..presetCooldown(_ -> 0)
         ..tooltipStartListen()
         ..presetPreferHostiles(_ -> 40)
-        ..presetAreaofEffect(_ -> 1000)
+        ..presetAreaofEffect(_ -> 600)
         ..setNameEnhance("Z", "Taunt")
         ..tooltipStopListen(false)
 
@@ -118,7 +117,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 250)
         ..tooltipStartListen()
-        ..presetCooldown(_ -> 5)
+        ..presetCooldown(_ -> 12)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_TAUNT, tgen.generateFullTooltip())
@@ -402,7 +401,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setLevels(1)
         ..setHeroAbility(false)
         ..registerTooltipGenerator(tgen)
-        ..presetCooldown(_ -> 0)
+        ..presetCooldown(_ -> 6)
         ..presetDamageIncrease(_ -> 0.40)
         ..tooltipStartListen()
         ..addTooltipProperty("Damage Reduction", _ -> "40%")
@@ -417,7 +416,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..presetCastRange(_ -> 125)
         ..tooltipStartListen()
         ..presetManaCost(_ -> 0)
-        ..presetCooldown(_ -> 10)
+        ..presetCooldown(_ -> 6)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_HOWL_OF_TERROR, tgen.generateFullTooltip())
