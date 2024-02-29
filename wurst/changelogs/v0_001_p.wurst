@@ -1,0 +1,6 @@
+package v0_001_p
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 1, 'p')
