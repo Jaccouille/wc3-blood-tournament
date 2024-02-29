@@ -256,6 +256,8 @@ public let ABIL_RANGED_AURA_25     = compiletime(ABIL_ID_GEN.next())
 public let ABIL_DAMAGE_AURA_25     = compiletime(ABIL_ID_GEN.next())
 public let ABIL_MAGIC_ARMOR_30     = compiletime(ABIL_ID_GEN.next())
 public let ABIL_MAGIC_ARMOR_50     = compiletime(ABIL_ID_GEN.next())
+public let ABIL_DEFLECT_30         = compiletime(ABIL_ID_GEN.next())
+public let ABIL_DEFLECT_75         = compiletime(ABIL_ID_GEN.next())
 public let ABIL_MANA_SHIELD        = compiletime(ABIL_ID_GEN.next())
 
 // ==================== HUMAN ABILITIES =================
@@ -330,6 +332,8 @@ public let ABIL_DEATH_COIL                = compiletime(ABIL_ID_GEN.next())
 public let ABIL_AUTOCAST_DEATH_COIL       = compiletime(ABIL_ID_GEN.next())
 public let ABIL_UNHOLY_AURA               = compiletime(ABIL_ID_GEN.next())
 public let ABIL_ORB_CORRUPTION            = compiletime(ABIL_ID_GEN.next())
+public let ABIL_CARRION_SWARM             = compiletime(ABIL_ID_GEN.next())
+public let ABIL_AUTOCAST_CARRION_SWARM    = compiletime(ABIL_ID_GEN.next())
 
 // ==================== NIGHT ELF ABILITIES =================
 public let ABIL_MULTISHOT_3               = compiletime(ABIL_ID_GEN.next())

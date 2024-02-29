@@ -174,6 +174,27 @@ function createMagicResistance(int abilId, real value) returns AbilityDefinition
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
     return abilDef
 
+function createDeflect(int abilId, real value) returns AbilityDefinitionHardenedSkin
+    let tgen = new BTAbilityTooltipGenerator(
+        "Deflect incoming ranged damage, reducing their damage.")
+    let abilDef = new AbilityDefinitionHardenedSkin(abilId)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..setArtCaster(Abilities.defendCaster)
+        ..registerTooltipGenerator(tgen)
+        ..presetChancetoReduceDamage(_ -> value)
+        ..presetIgnoredDamage(_ -> 60)
+        ..presetMinimumDamage(_ -> 5)
+        ..setIncludeMeleeDamage(1, false)
+        ..setIncludeRangedDamage(1, true)
+        ..tooltipStartListen()
+        ..setRequirements("")
+        ..setCheckDependencies(false)
+        ..setName("Deflect " + value.toPercent())
+        ..tooltipStopListen()
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
+
 function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraWarDrumsKodobeast
     let tgen = new BTAbilityTooltipGenerator(
         "Adds a damage increase to the attacks of nearby friendly units.")
@@ -237,6 +258,10 @@ function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraW
 @compiletime function createMagicResistanceAbilities()
     createMagicResistance(ABIL_MAGIC_ARMOR_30, 0.3)
     createMagicResistance(ABIL_MAGIC_ARMOR_50, 0.5)
+
+@compiletime function createDeflectAbilities()
+    createDeflect(ABIL_DEFLECT_30, 30)
+    createDeflect(ABIL_DEFLECT_75, 75)
 
 @compiletime function createDamageAuraAbilities()
     createDamageAura(ABIL_DAMAGE_AURA_25, 0.25)

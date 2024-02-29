@@ -209,12 +209,13 @@ import ArmySpawner
 
 @compiletime function createWarmonger()
     let tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_CRITICAL_STRIKE_60)
+        abilTooltipMap.get(ABIL_CRITICAL_STRIKE_60)  + "\n\n" +
+        abilTooltipMap.get(ABIL_DEFLECT_75)
         )
     createSpawnedUnit(UNIT_WARMONGER, UnitIds.gromhellscream, BUILDING_WARMONGER)
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
-        ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_60))
+        ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_60, ABIL_DEFLECT_75))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -355,7 +356,7 @@ import ArmySpawner
 @compiletime function createShaman()
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_BLOODLUST))
     createSpawnedUnit(UNIT_SHAMAN, UnitIds.shaman, BUILDING_SHAMAN)
-        ..setNormalAbilities(commaList(ABIL_BLOODLUST, ABIL_SUMMON_SPIRIT_WOLF1))
+        ..setNormalAbilities(commaList(ABIL_BLOODLUST))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
