@@ -15,8 +15,12 @@ import Round
 import ChatCommands
 import TerrainUtils
 import ItemStockHandler
+import BuffObjEditing
+import Assets
 
 let playerToBuilderAI = new HashMap<player, BuilderAI>
+let botEnabled = compiletime(createDummyBuffObject("Bot enabled", "This player is being controlled by a bot",
+     Icons.bTNMagicalSentry, Abilities.magicSentryCaster, "overhead"))
 
 let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
     ..put(UNIT_HUMAN_BUILDER, asList(
@@ -59,6 +63,7 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
         BUILDING_HUNTRESS,
         BUILDING_DRYAD,
         BUILDING_MOUNTAIN_GIANT,
+        BUILDING_SPECTRE,
         BUILDING_AVATAR_OF_VENGEANCE,
         BUILDING_DRUID_TALON,
         BUILDING_DRUID_CLAW,
@@ -80,7 +85,7 @@ class BuilderAI
     PlayerData pData
     CallbackPeriodic cb
     boolean isEnabled = false
-    boolean enableForHumanPlayer = true
+    boolean enableForHumanPlayer = false
 
     construct(player _player)
         this._player = _player
@@ -109,6 +114,7 @@ class BuilderAI
     // TODO: learn how to do AI
     function startAI()
         isEnabled = true
+        pData.racePicker.addAbility(botEnabled.abilId)
         pickBuilder()
 
         cb = doPeriodically(2) (CallbackPeriodic cb) ->
@@ -142,22 +148,24 @@ class BuilderAI
                 BlzQueueBuildOrderById(pData.builder, unitToBuild, pos.x, pos.y)
             // trade blood points for gold
             else if pData.builder != null and pData._p.getLumber() >= 1500
-                Log.info("Trying to trade gold")
                 pData.builder.issueImmediateOrder("berserk")
 
 
 
     function stopAI()
+        pData.racePicker.removeAbility(botEnabled.abilId)
         BlzUnitForceStopOrder(pData.builder, true)
         isEnabled = false
 
     function toggleAI()
         if isEnabled and enableForHumanPlayer
+            enableForHumanPlayer = false
             stopAI()
             if _player.isHuman()
                 printTimed("Bot controller disabled for {0}".format(_player.getNameColored()), 5)
             Log.debug("stop builder AI for " + _player.getName())
-        else if enableForHumanPlayer
+        else
+            enableForHumanPlayer = true
             startAI()
             if _player.isHuman()
                 printTimed("Bot controller enabled for {0}".format(_player.getNameColored()), 5)

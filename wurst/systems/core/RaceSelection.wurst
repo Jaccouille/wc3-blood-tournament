@@ -23,6 +23,10 @@ function hasBuildings(player _p) returns boolean
 
 
 init
+    EventListener.add(EVENT_PLAYER_UNIT_TRAIN_CANCEL) ->
+        if EventData.getTriggerUnit().getTypeId() == UNIT_RACE_PICKER
+            SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 1, EventData.getTriggerUnit().getOwner())
+
     EventListener.onCast(ABIL_RANDOM_RACE) (unit caster) ->
         let owner = caster.getOwner()
         let pData = pDatas.get(owner)
@@ -31,6 +35,7 @@ init
             SetPlayerTechMaxAllowed(owner, pData.builder.getTypeId(), 1)
             pData.builder.remove()
         pData.racePicker.issueImmediateOrder(UnitId2String(BUILDER_LIST.getRandomElement()))
+        SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 0, owner)
 
     EventListener.onCast(ABIL_REPICK) (unit caster) ->
         let owner = caster.getOwner()

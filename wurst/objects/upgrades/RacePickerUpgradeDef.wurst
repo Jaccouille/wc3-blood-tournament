@@ -8,8 +8,8 @@ import LocalObjectIDs
 
 @compiletime function createRacePickerUpgrade()
     new UpgradeDefinition(UPGD_RACE_PICK)
-        ..setName(1, "Mode selection finished")
-        ..setTooltip(1, "Mode selection finished")
+        ..setName(1, "Pre round phase")
+        ..setTooltip(1, "Pre round phase")
 
     new UpgradeDefinition(UPGD_ALL_RANDOM)
         ..setName(1, "All random disabled")

@@ -15,6 +15,7 @@ import ScoreBoard
 import public Round
 import ColorUtils
 import LocalObjectIDs
+import Players
 import ClosureForGroups
 import MapBounds
 
@@ -72,6 +73,11 @@ class RoundController
         // TODO: Maybe move board update to scoreboard package?
         BOARD_TITLE_PREFIX = currentRound.roundName
         if currentRound instanceof NormalRound
+            doAfter(9) ->
+                ALL_PLAYERS.forEach() (player _p) ->
+                    let opponent = roundController.currentRound.getOpponent(_p)
+                    printTimedToPlayer("You will face {0} in the next round".format(opponent.getNameColored()),
+                            15, _p)
             BOARD_TITLE_PREFIX += "/" + gameConfig.getRoundCount().toString()
 
         if currentRound instanceof FinalRound
@@ -262,7 +268,7 @@ public function initRoundController()
             printTimed(round.winner.getNameColored() + " has eliminated " + looser.getNameColored() , 3)
             scoreBoardEntries.get("PlayerName").setEntryColor(looser, COLOR_GRAY)
         else
-            printTimed("{0} finished!".format(round.roundName).color(HIGHLIGHT_COLOR), 15)
+            printTimed("{0} finished!".format(round.roundName).color(GOLD_COLOR), 15)
             doAfter(3) ->
                 altarEntity.hideCounter()
                 printTimed(round.winner.getNameColored() + " gets "
@@ -277,10 +283,7 @@ public function initRoundController()
                     value.giveBloodPointsReward()
                     key.addGold(round.goldReward)
                     key.addLumber(round.bloodPointReward)
-                    doAfter(3) ->
-                        let opponent = roundController.currentRound.getOpponent(key)
-                        printTimedToPlayer("You will face {0} in the next round".format(opponent.getNameColored()),
-                            15, key)
+
 
     onAllroundsFinished = () ->
         // Log.debug("Match over")

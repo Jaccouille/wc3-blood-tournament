@@ -271,7 +271,7 @@ let SLOW_TARGET_COUNT = 2
         ..setHeroAbility(false)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
-        ..setBuffs(1, commaList(BuffIds.blizzard))
+        ..setBuffs(1, commaList(""))
         ..presetNumberofShards(_ -> 6)
         ..presetAreaofEffect(_ -> 300)
         ..presetCooldown(_ -> 0)

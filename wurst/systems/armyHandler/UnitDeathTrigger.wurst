@@ -110,9 +110,11 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
     if pData.spawnedUnits.isEmpty()
         let matchUpWinner = roundController.currentRound.getOpponent(pData._p)
         if matchUpWinner != null
-            forUnitsOfPlayer(matchUpWinner) (unit u) ->
-                if not u.isType(UNIT_TYPE_PEON) and not u.isType(UNIT_TYPE_STRUCTURE)
-                    u.issuePointOrder("attack", CENTER)
+            // Trying to fix taunted units being stuck
+            nullTimer() ->
+                forUnitsOfPlayer(matchUpWinner) (unit u) ->
+                    if not u.isType(UNIT_TYPE_PEON) and not u.isType(UNIT_TYPE_STRUCTURE)
+                        u.issuePointOrder("attack", CENTER)
 
         if matchUpWinner == killerOwner
             if roundController.currentRound instanceof NormalRound

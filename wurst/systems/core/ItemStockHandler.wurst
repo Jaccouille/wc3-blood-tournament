@@ -111,6 +111,7 @@ function initItemStockData()
     unitItemSold.put(BUILDING_VAMPIRE        , asList(ITEM_VAMPIRE_LORD                                       ))
     unitItemSold.put(BUILDING_DEATH_KNIGHT   , asList(ITEM_UNHOLY_AURA                                       ))
     sharedStocksMap.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER                  ))
+    sharedStocksMap.put(BUILDING_BANSHEE, asList(ITEM_UNHOLY_FRENZY, ITEM_FROST_ARMOR                  ))
 
     // ================ NIGHT ELF =============
     unitItemSold.put(BUILDING_DRYAD      , asList(ITEM_REJUVENATION, ITEM_KEEPER_OF_THE_GROVE                                               ))

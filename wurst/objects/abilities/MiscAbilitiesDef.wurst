@@ -6,6 +6,7 @@ import ClosureEvents
 import Assets
 import ClosureForGroups
 import SimError
+import SoundUtils
 
 // Local imports:
 import AbilityObjEditingCommons
@@ -22,6 +23,8 @@ import ColorUtils
 import OrderIds
 import DummyCaster
 
+let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
+
 @compiletime function createRacePickingMiscAbilities()
     new ChannelAbilityPreset(ABIL_RANDOM_RACE, 1, true)
         ..presetManaCost(lvl -> 0)
@@ -30,7 +33,7 @@ import DummyCaster
         ..setHotkeyEnhance("Z")
         ..setName("Pick Random Race")
         ..presetTooltipNormal(lvl -> makeToolTipNorm("Z", "Pick Random Race"))
-        ..presetTooltipNormalExtended(lvl -> "Pick Random Race")
+        ..presetTooltipNormalExtended(lvl -> "Pick Random Race. Cannot repick.")
         ..setIconNormal(Icons.bTNSelectHeroOn)
         ..setIconResearch(Icons.bTNSelectHeroOn)
         ..setIconTurnOff(Icons.bTNSelectHeroOn)
@@ -191,20 +194,23 @@ init
             0)
 
     EventListener.onCast(ABIL_TRADE_GOLD) (unit caster) ->
-        if caster.getOwner().getLumber() >= gameConfig.getBloodPointExchange()
+        let owner = caster.getOwner()
+        if owner.getLumber() >= gameConfig.getBloodPointExchange()
             flashEffect(UI.goldCredit, caster.getPos3Real())
-            caster.getOwner().addGold(gameConfig.getGoldExchange())
-            caster.getOwner().addLumber(-gameConfig.getBloodPointExchange())
-            createGoldBountyTextTag(caster, gameConfig.getGoldExchange())
+            owner.addGold(gameConfig.getGoldExchange())
+            owner.addLumber(-gameConfig.getBloodPointExchange())
+            createGoldBountyTextTag(caster, gameConfig.getGoldExchange(), owner)
+            RECEIVE_GOLD.playOnPoint(caster.getPos3Fly())
         else
             simError(caster.getOwner(), "Not enough blood points for exchange")
 
     EventListener.onCast(ABIL_TRADE_BLOOD_POINT) (unit caster) ->
-        if caster.getOwner().getGold() >= gameConfig.getGoldExchange()
+        let owner = caster.getOwner()
+        if owner.getGold() >= gameConfig.getGoldExchange()
             flashEffect(Objects.humanSmallDeathExplode, caster.getPos3Real())
-            caster.getOwner().addLumber(gameConfig.getBloodPointExchange())
-            caster.getOwner().addGold(-gameConfig.getGoldExchange())
-            createLumberBountyTextTag(caster, gameConfig.getBloodPointExchange())
+            owner.addLumber(gameConfig.getBloodPointExchange())
+            owner.addGold(-gameConfig.getGoldExchange())
+            createLumberBountyTextTag(caster, gameConfig.getBloodPointExchange(), owner)
                 ..setColor(colorA(255, 0, 0, 255))
         else
             simError(caster.getOwner(), "Not enough gold for exchange")
@@ -245,4 +251,6 @@ init
     EventListener.onPointCast(ABIL_ORDER_UNIT) (unit caster, vec2 target) ->
         forUnitsInRange(target, 200) (unit u) ->
             if u.getCurrentOrder() == 0
+                and not u.isType(UNIT_TYPE_PEON)
+                and not u.isType(UNIT_TYPE_STRUCTURE)
                 u.issuePointOrder("attack", CENTER)

@@ -4,7 +4,7 @@ import DamageEvent
 import LocalObjectIDs
 import OrderIds
 import ClosureTimers
-
+import BuffIds
 
 init
     DamageEvent.addListener() ->
@@ -32,3 +32,6 @@ init
                     src.issueImmediateOrderById(OrderIds.spiritwolf)
             case UNIT_COURT_ENCHANTRESS
                 src.issueImmediateOrderById(OrderIds.parasiteon)
+            case UNIT_OWLBEAR
+                if not target.hasAbility(BuffIds.howlofTerror)
+                    src.issueImmediateOrderById(OrderIds.howlofterror)
