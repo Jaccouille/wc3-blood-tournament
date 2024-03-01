@@ -45,6 +45,13 @@ init
     trim_blocks=True,
 )
 
+description_template = Template(
+"""Released on {{ release_date }}
+    A Blood tournament map featuring Human, Orc, Undead and Night Elf faction.\
+      \nCan be played solo against bots.
+"""
+)
+
 war3map_skin_template = Template(
 """
 [CustomSkin]
@@ -71,7 +78,6 @@ COLON_LUMBER=Blood points:
 QUESTSOPTIONAL=Available Modes
 RESOURCE_UBERTIP_LUMBER=Blood points are harvested from kills.
 RESOURCE_UBERTIP_GOLD=Gold is received after round end.
-QUESTS={{ version }} - {{ release_date }}
 UPKEEP_NONE=|cffffd700{{ version }}
 RESOURCE_UBERTIP_UPKEEP=Released on {{ release_date }}
 RESOURCE_UBERTIP_UPKEEP_INFO=|cff00FF00
@@ -163,12 +169,20 @@ def update_build(version):
 
     # Look up the previous name of the map.
     name = build["buildMapData"]["name"]
+    description = build["buildMapData"]["scenarioData"]["description"]
+    description = description_template.render({"release_date": date.today().strftime("%d/%m/%Y")})
+    build["buildMapData"]["scenarioData"].update(
+        {
+            "description": description
+        }
+    )
 
     # Construct the new name for the map.
     name = f"{name.rsplit(maxsplit=1)[0]} {version}"
 
     # Strip whitespace for the filename to ease access.
-    filename = ".".join(name.split())
+    # Remove color code if it exist in the name string
+    filename = ".".join((name[10:] if name[0] == "|" else name).split())
 
     # Update the build file.
     build["buildMapData"].update(
@@ -397,7 +411,7 @@ if __name__ == "__main__":
         repo.index.add([package, build, mapskin])
 
         # Commit the
-        commit_message = f'Release v{version}\n' + "\n\* ".join(changelog)
+        commit_message = f'Release {version}\n' + "\n\* ".join(changelog)
         repo.index.commit(commit_message)
         print("Changelog:", *changelog, sep="\n")
         # Verify that the map can be built.
