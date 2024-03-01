@@ -118,6 +118,14 @@ init
             mode.message("All random disabled, players can choose builder".color(SPECIAL_COLOR))
             gameConfig.setAllRandom(false)
 
+    new GameMode("fog", "f", "Enable fog of war on player's building zones") (mode, args) ->
+        if not gameConfig.isFogOfWarEnabled()
+            mode.message("Fog of war enabled, player's building zones are masked".color(SPECIAL_COLOR))
+            gameConfig.setFogOfWar(true)
+        else
+            mode.message("Fog of war disabled, player's building zones are exposed".color(SPECIAL_COLOR))
+            gameConfig.setFogOfWar(false)
+
     new GameMode("set-exchange-rate", "ser", "General", "Set gold/blood points exchange rates, default : " +
         gameConfig.getGoldExchange().toString() + " gold for " + gameConfig.getBloodPointExchange().toString() +
         " blood points") (mode, args) ->

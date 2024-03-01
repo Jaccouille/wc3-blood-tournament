@@ -1,0 +1,15 @@
+package FogOfWar
+
+import GameStates
+import PlayerData
+import Players
+import GameConfig
+
+
+init
+    GameStates.modesSelection.onExit() (state) ->
+        if gameConfig.isFogOfWarEnabled()
+            ALL_PLAYERS.forEach() (player _p) ->
+                pDatas.forEach() (player key, PlayerData pData) ->
+                    if _p != key
+                        createBlackMask(_p, pData.buildingRect, false, true).start()
