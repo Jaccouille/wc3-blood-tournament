@@ -1,0 +1,8 @@
+package v0_001_q
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 1, 'q')
+        ..add("(UN) Added carrion swarm to vampire Lord")
+        ..add("Reduced Decay Time from 88 to 15 seconds")

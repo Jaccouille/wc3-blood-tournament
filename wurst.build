@@ -4,13 +4,12 @@ dependencies:
 - https://github.com/theQuazz/wurst-lodash
 - https://github.com/Cokemonkey11/wurst-debugging-tools
 buildMapData:
-  name: '|cffff5436Blood Tournament Definitive Edition v0.1p'
-  fileName: Blood.Tournament.Definitive.Edition.v0.1p
+  name: '|cffff5436Blood Tournament Definitive Edition v0.1q'
+  fileName: Blood.Tournament.Definitive.Edition.v0.1q
   author: Jaccouille
   scenarioData:
-    description: "\n    Released on 01/03/2024\n    A Blood tournament map featuring\
-      \ Human, Orc, Undead and Night Elf faction.      \nCan be played solo against\
-      \ bots."
+    description: "Released on 02/03/2024\n    A Blood tournament map featuring Human,\
+      \ Orc, Undead and Night Elf faction.      \nCan be played solo against bots."
     suggestedPlayers: '8'
     loadingScreen:
       title: Jaccouille presents
