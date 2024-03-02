@@ -1,0 +1,8 @@
+package v0_001_r
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 1, 'r')
+        ..add("(UN) Fixed plague bearer tooltip")
+        ..add("(UN) Nerfed carrion swarm")

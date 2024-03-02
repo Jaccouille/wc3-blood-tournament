@@ -4,8 +4,8 @@ dependencies:
 - https://github.com/theQuazz/wurst-lodash
 - https://github.com/Cokemonkey11/wurst-debugging-tools
 buildMapData:
-  name: '|cffff5436Blood Tournament Definitive Edition v0.1q'
-  fileName: Blood.Tournament.Definitive.Edition.v0.1q
+  name: '|cffff5436Blood Tournament Definitive Edition v0.1r'
+  fileName: Blood.Tournament.Definitive.Edition.v0.1r
   author: Jaccouille
   scenarioData:
     description: "Released on 02/03/2024\n    A Blood tournament map featuring Human,\
