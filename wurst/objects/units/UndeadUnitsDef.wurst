@@ -539,14 +539,15 @@ import ArmySpawner
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_LIFESTEAL_75) + "\n\n" +
-        abilTooltipMap.get(ABIL_EVASION_30) + "\n\n" +
+        abilTooltipMap.get(ABIL_CARRION_SWARM) + "\n\n" +
         "Absord Life Essence\n".color(SPECIAL_COLOR) +
         "Permanently gain 20% of enemy max health point as health point upon kill."
     )
     let itm = createBasicItem(ITEM_VAMPIRE_LORD)
     createSpawnedUnit(UNIT_VAMPIRE_LORD, UnitIds.dreadlord, BUILDING_VAMPIRE_LORD)
         ..registerItemDef(itm, ItemModifierType.Addition)
-        ..setNormalAbilities(commaList(ABIL_LIFESTEAL_75, ABIL_EVASION_30))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_CARRION_SWARM))
+        ..setNormalAbilities(commaList(ABIL_LIFESTEAL_75, ABIL_CARRION_SWARM, ABIL_AUTOCAST_CARRION_SWARM))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -554,6 +555,7 @@ import ArmySpawner
 
         ..setArmorData(ArmorType.Large, 8)
         ..setHitPointsMaximumBase(1200)
+        ..setMana(200)
 
         ..setSpeedBase(270)
         ..setItemCostUnit(0, 1500, 1)

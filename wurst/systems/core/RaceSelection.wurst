@@ -31,11 +31,14 @@ init
         let owner = caster.getOwner()
         let pData = pDatas.get(owner)
 
-        if pData.builder != null
-            SetPlayerTechMaxAllowed(owner, pData.builder.getTypeId(), 1)
-            pData.builder.remove()
-        pData.racePicker.issueImmediateOrder(UnitId2String(BUILDER_LIST.getRandomElement()))
-        SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 0, owner)
+        if hasBuildings(owner)
+            printTimedToPlayer("Cannot random with existing building".color(SPECIAL_COLOR), 5, owner)
+        else
+            if pData.builder != null
+                SetPlayerTechMaxAllowed(owner, pData.builder.getTypeId(), 1)
+                pData.builder.remove()
+            pData.racePicker.issueImmediateOrder(UnitId2String(BUILDER_LIST.getRandomElement()))
+            SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 0, owner)
 
     EventListener.onCast(ABIL_REPICK) (unit caster) ->
         let owner = caster.getOwner()

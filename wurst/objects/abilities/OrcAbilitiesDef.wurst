@@ -377,7 +377,6 @@ import ArmySpawner
         "Calls forth a bolt of lightning that deals damage and bounce.")
     new AbilityDefinitionFarseerChainLightning(ABIL_CHAIN_LIGHTNING)
         ..setHeroAbility(false)
-        // ..setAnimationNames(commaList("spell", "chain"))&
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
         ..presetDamageReductionperTarget(_ -> 0)
@@ -391,6 +390,7 @@ import ArmySpawner
         ..tooltipStopListen(false)
 
     createAutoCastedEnemyAbility(ABIL_AUTOCAST_CHAIN_LIGHTNING)
+        ..setAnimationNames("spell,chain")
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 600)
         ..tooltipStartListen()

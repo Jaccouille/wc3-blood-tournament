@@ -101,11 +101,12 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetArmorBonus(_ -> 4)
+        ..presetArmorDuration(_ -> 30)
         ..addTooltipProperty("Attack Speed Reduction", _ -> "25%")
         ..addTooltipProperty("Movement Speed Reduction", _ -> "50%")
+        ..presetDurationNormal(_ -> 5)
         ..presetCooldown(_ -> 4)
         ..presetManaCost(_ -> 50)
-        ..presetDurationNormal(_ -> 30)
         ..setNameEnhance("X", "Frost Armor")
         ..tooltipStopListen(true)
 
@@ -332,6 +333,35 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setBuffs(1, BUFF_INFECTION.toRawCode())
 
     abilTooltipMap.put(ABIL_INFECTION, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Sends a horde of bats to deal damage to each enemy unit in a cone.")
+    new AbilityDefinitionCarrionSwarmcreep(ABIL_CARRION_SWARM)
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..setArtSpecial(Abilities.deathCoilSpecialArt)
+        ..registerTooltipGenerator(tgen)
+        ..presetManaCost(_ -> 125)
+        ..tooltipStartListen()
+        ..presetDamage(_ -> 150)
+        ..presetDistance(_ -> 800)
+        ..presetMaxDamage(_ -> 900)
+        ..tooltipStopListen(false)
+        ..setNameEnhance("Z", "Carrion Swarm")
+
+    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_CARRION_SWARM)
+        ..setAnimationNames("attack,slam")
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetManaCost(_ -> 125)
+        ..presetCooldown(_ -> 6)
+        ..presetCastRange(_ -> 600)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Carrion Swarm")
+        ..setIconNormal(Icons.bTNCarrionSwarm)
+        ..setIconTurnOff(Icons.bTNCarrionSwarm)
+
+    abilTooltipMap.put(ABIL_CARRION_SWARM, tgen.generateFullTooltip())
 
 
 init

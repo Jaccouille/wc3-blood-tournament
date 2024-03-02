@@ -83,6 +83,7 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
             ))
         ..setAttacksEnabled(AttacksEnabled.None.toObjectInt())
         ..setSpeedBase(522)
+        ..setHitPointsMaximumBase(1337)
         ..setMovementType(MovementType.Fly)
         ..setBuildTime(1)
         ..setFoodCost(0)
