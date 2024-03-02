@@ -334,6 +334,8 @@ public let ABIL_UNHOLY_AURA               = compiletime(ABIL_ID_GEN.next())
 public let ABIL_ORB_CORRUPTION            = compiletime(ABIL_ID_GEN.next())
 public let ABIL_CARRION_SWARM             = compiletime(ABIL_ID_GEN.next())
 public let ABIL_AUTOCAST_CARRION_SWARM    = compiletime(ABIL_ID_GEN.next())
+public let ABIL_AFFLICTION                = compiletime(ABIL_ID_GEN.next())
+public let ABIL_AUTOCAST_AFFLICTION       = compiletime(ABIL_ID_GEN.next())
 
 // ==================== NIGHT ELF ABILITIES =================
 public let ABIL_MULTISHOT_3               = compiletime(ABIL_ID_GEN.next())
@@ -370,6 +372,7 @@ public let ABIL_TERROR_AURA               = compiletime(ABIL_ID_GEN.next())
 public let ABIL_TERRIFY                   = compiletime(ABIL_ID_GEN.next())
 public let ABIL_TERRIFY_ORB               = compiletime(ABIL_ID_GEN.next())
 
+public let BUFF_AFFLICTION                = compiletime(BUFF_ID_GEN.next())
 public let BUFF_RAMPAGE                   = compiletime(BUFF_ID_GEN.next())
 public let BUFF_KILLING_SPREE             = compiletime(BUFF_ID_GEN.next())
 public let BUFF_BOT_ENABLED               = compiletime(BUFF_ID_GEN.next())

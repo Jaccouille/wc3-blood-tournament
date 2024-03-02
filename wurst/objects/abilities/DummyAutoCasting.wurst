@@ -43,6 +43,7 @@ init
         ..put(ABIL_AUTOCAST_FROST_NOVA, new BuffTuple(OrderIds.frostnova, -1))
         ..put(ABIL_AUTOCAST_MANA_WARD, new BuffTuple(OrderIds.healingward, -1))
         ..put(ABIL_AUTOCAST_CARRION_SWARM, new BuffTuple(OrderIds.carrionswarm, -1))
+        ..put(ABIL_AUTOCAST_AFFLICTION, new BuffTuple(OrderIds.acidbomb, -1))
 
     dummyToRealImmediateCastMap
         ..put(ABIL_AUTOCAST_TAUNT, OrderIds.taunt)

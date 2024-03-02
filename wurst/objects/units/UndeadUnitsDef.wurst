@@ -595,16 +595,16 @@ import ArmySpawner
 
 @compiletime function createDeathKnight()
     var tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_DEATH_COIL) + "\n\n" +
+        abilTooltipMap.get(ABIL_AFFLICTION) + "\n\n" +
         "Dark Ritual\n".color(SPECIAL_COLOR) +
         "Replenish 10% of target maximum health as mana on kill."
     )
     createSpawnedUnit(UNIT_DEATH_KNIGHT, UnitIds.deathknight, BUILDING_DEATH_KNIGHT)
         ..setNormalAbilities(commaList(
-            ABIL_DEATH_COIL,
-            ABIL_AUTOCAST_DEATH_COIL
+            ABIL_AFFLICTION,
+            ABIL_AUTOCAST_AFFLICTION
             ))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_DEATH_COIL))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_AFFLICTION))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -612,7 +612,7 @@ import ArmySpawner
 
         ..setArmorData(ArmorType.Large, 5)
         ..setHitPointsMaximumBase(1400)
-        ..setMana(300)
+        ..setMana(200)
 
         ..setSpeedBase(350)
         ..setAutoPointValue()

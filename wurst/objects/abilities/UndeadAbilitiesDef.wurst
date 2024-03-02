@@ -345,7 +345,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetDamage(_ -> 150)
         ..presetDistance(_ -> 800)
-        ..presetMaxDamage(_ -> 900)
+        ..presetMaxDamage(_ -> 1500)
         ..tooltipStopListen(false)
         ..setNameEnhance("Z", "Carrion Swarm")
 
@@ -362,6 +362,48 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setIconTurnOff(Icons.bTNCarrionSwarm)
 
     abilTooltipMap.put(ABIL_CARRION_SWARM, tgen.generateFullTooltip())
+
+    new BuffDefinition(BUFF_AFFLICTION, BuffIds.curse)
+        ..setTooltipNormal(1, "Affliction")
+        ..setTooltipNormalExtended(1, "This unit is cursed; has reduced attack speed and takes damage over time")
+        ..setName(1, "Affliction")
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Sends a curse to a target that inflict damage over time and reduces attack speed.")
+    new AbilityDefinitionAlchemistAcidBomb(ABIL_AFFLICTION)
+        ..setLevels(1)
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..setMissileArt(Abilities.possessionMissile)
+        ..setMissileArc(0)
+        ..setMissileSpeed(1000)
+        ..presetCastRange(_ -> 900)
+        ..registerTooltipGenerator(tgen)
+        ..presetManaCost(_ -> 125)
+        ..presetArmorPenalty(_ -> 0)
+        ..tooltipStartListen()
+        ..presetAttackSpeedReduction(_ -> 0.40)
+        ..presetPrimaryDamage(_ -> 10)
+        ..setBuffs(1, BUFF_AFFLICTION.toRawCode())
+        ..presetSecondaryDamage(_ -> 5)
+        ..presetAreaofEffect(_ -> 200)
+        ..presetDurationNormal(_ -> 5)
+
+        ..tooltipStopListen(false)
+        ..setNameEnhance("Z", "Affliction")
+
+    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_AFFLICTION)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetManaCost(_ -> 125)
+        ..presetCooldown(_ -> 4)
+        ..presetCastRange(_ -> 800)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Affliction")
+        ..setIconNormal(Icons.bTNCurse)
+        ..setIconTurnOff(Icons.bTNCurse)
+
+    abilTooltipMap.put(ABIL_AFFLICTION, tgen.generateFullTooltip())
 
 
 init
