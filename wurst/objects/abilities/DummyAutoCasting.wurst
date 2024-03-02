@@ -22,7 +22,6 @@ public let dummyToRealImmediateCastMap = new HashMap<int, int>
 
 init
     dummyToRealCastMapTarget
-        ..put(ABIL_AUTOCAST_FIRE_SHIELD, new BuffTuple(0, -1))
         ..put(ABIL_AUTOCAST_HEALING_WAVE, new BuffTuple(OrderIds.healingwave, -1))
         ..put(ABIL_AUTOCAST_ACID_BOMB, new BuffTuple(OrderIds.acidbomb, -1))
         ..put(ABIL_AUTOCAST_CHAIN_LIGHTNING, new BuffTuple(OrderIds.chainlightning, -1))
@@ -44,6 +43,7 @@ init
         ..put(ABIL_AUTOCAST_MANA_WARD, new BuffTuple(OrderIds.healingward, -1))
         ..put(ABIL_AUTOCAST_CARRION_SWARM, new BuffTuple(OrderIds.carrionswarm, -1))
         ..put(ABIL_AUTOCAST_AFFLICTION, new BuffTuple(OrderIds.acidbomb, -1))
+        ..put(ABIL_AUTOCAST_SOUL_BURN, new BuffTuple(OrderIds.soulburn, BuffIds.soulBurn))
 
     dummyToRealImmediateCastMap
         ..put(ABIL_AUTOCAST_TAUNT, OrderIds.taunt)
@@ -70,8 +70,6 @@ init
                 // caster.resetAbilityCooldown(abilId)
 
             // TODO: refactor into previous if condition
-            if abilId == ABIL_AUTOCAST_FIRE_SHIELD
-                target.addAbility(ABIL_FIRE_SHIELD)
         else if dummyToRealImmediateCastMap.has(abilId)
             let orderId = dummyToRealImmediateCastMap.get(abilId)
             caster.startAbilityCooldown(abilId)

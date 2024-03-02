@@ -179,32 +179,29 @@ let SLOW_TARGET_COUNT = 2
 
     var tooltip = tgen.generateFullTooltip()
 
-    tgen = new BTAbilityTooltipGenerator(
-        ("Permanently add a shield of fire around an allied unit, dealing {0} " +
-        "damage per second to enemies around it.")
-    .format(
-            getAbilityDataField(ABIL_FIRE_SHIELD, "DataA1").color(COLOR_RED)
-            )
+    tgen = new BTAbilityTooltipGenerator("Wreaths an enemy unit in magical flames "
+    + "which cause damage over time, prevent the casting of spells, "
+    + "and reduce attack damage."
     )
-    new AbilityDefinitionPermanentImmolation(ABIL_FIRE_SHIELD)
+    new AbilityDefinitionFirelordSoulBurn(ABIL_SOUL_BURN)
+        ..setLevels(1)
         ..registerTooltipGenerator(tgen)
-        ..setAreaofEffect(1, 160.)
-        ..setBuffs(1, BuffIds.permanentImmolationRed.toRawCode())
-        ..setRequirements("")
-        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..presetManaCost(_ -> 50)
         ..tooltipStartListen()
-        ..presetDamageperInterval(_ -> 20)
-        ..setNameEnhance("Z", "Fire Shield")
+        ..presetDamageAmount(_ -> 20)
+        ..setDamagePenalty(1, 0.5)
+        ..addTooltipProperty("Damage Reduction", _-> 0.5.toPercent())
+        ..presetDurationNormal(_ -> 6)
+        ..setNameEnhance("X", "Soul Burn")
         ..tooltipStopListen(false)
 
-    createAutoCastedAlliedAbility(ABIL_AUTOCAST_FIRE_SHIELD)
+    createAutoCastedEnemyAbility(ABIL_AUTOCAST_SOUL_BURN)
         ..registerTooltipGenerator(tgen)
-        ..tooltipStartListen()
-        ..presetCooldown(_ -> 10)
-        ..presetManaCost(_ -> 30)
         ..presetCastRange(_ -> 600)
-        ..setNameEnhance("Z", "Fire Shield")
-        ..setCheckDependencies(false)
+        ..presetManaCost(_ -> 80)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 3)
         ..tooltipStopListen(true)
 
     tooltip += "\n\n" + tgen.generateFullTooltip()

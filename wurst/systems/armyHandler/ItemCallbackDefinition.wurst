@@ -156,8 +156,9 @@ init
     let fireMageAction = new ItemModifyUnit()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_INCINERATE)
-        u.addAbility(ABIL_AUTOCAST_FIRE_SHIELD)
-        u.issueImmediateOrderById(OrderIds.innerfireon)
+        u.addAbility(ABIL_AUTOCAST_SOUL_BURN)
+        u.addAbility(ABIL_SOUL_BURN)
+        u.issueImmediateOrderById(OrderIds.curseon)
 
     itemModifyUnitMap.put(ITEM_FIRE_MAGE, fireMageAction)
 
