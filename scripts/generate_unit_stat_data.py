@@ -179,7 +179,56 @@ if __name__ == "__main__":
 
     # Extract all attribute names and add them to the CSV header
     header = list(unit_attributes_list[0].keys())
-
+    
+    ############################################################
+    # TIS I #
+    ############################################################
+    
+    # Imports, config on pandas's side so it does not pester with false positives warnings and change display settings
+    import pandas as pd
+    from IPython.display import display
+    pd.options.mode.chained_assignment = None
+    pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_columns', None)
+    
+    # Create the dataframe from the csv and begin cleaning the Dataframe
+    df = pd.DataFrame(unit_attributes_list)
+    df = df.drop(columns=['esperanceDps', 'esperanceReductionPercent', 'esperance_hitpoint', 'power', 'BuildingType'])
+    # df.describe(include='all')
+    # display(df)
+    
+    # Code to add the Faction as a new column
+    threshold_values = ['Human', 'Orc', 'Undead', 'NightElf']
+    currentFaction = ''
+    def calculate_new_column_value(row, thresholds):
+        global currentFaction
+        if row['UnitId'] in thresholds:
+            currentFaction = row['UnitId']
+            return f"None"
+        else:
+            return f"{currentFaction}"
+    df['Faction'] = df.apply(calculate_new_column_value, args=(threshold_values,), axis=1)
+    
+    # Finish cleaning of the Dataframe and removing the archmage because it is the only row with Nan values
+    df = df.loc[df["Faction"] != 'None']
+    df['UnitId'] = df['UnitId'].str[5:]
+    df = df.rename(columns= {'UnitId': 'Unit', 'setHitPointsMaximumBase': 'HitPoints'})
+    df = df.rename(columns= {'setHitPointsMaximumBase': 'HitPoints'})
+    df = df.loc[df["Unit"] != 'ARCHMAGE']
+    df = df.astype({"Unit":'category', "dps":'float64', "attackType":'category', "reductionPercent":'float64', "unitCount":'int64', "goldCost":'int64', "HitPoints":'int64', "lumberCost":'int64',
+                    "armorType":'category', "Faction":'category'}) 
+    
+    # Analyses
+    df.describe(include='all')
+    display(df)
+    df.groupby(['armorType', 'Faction']).mean('reductionPercent')
+    df.groupby(['armorType', 'Faction']).agg(["mean","count"])
+    
+    
+    ############################################################
+    # TIS I #
+    ############################################################
+    
     # Write unit attributes to the CSV file
     with open(csv_file, "w", newline="") as csv_file:
         csv_writer = csv.DictWriter(csv_file, fieldnames=header)
