@@ -343,11 +343,11 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..presetManaCost(_ -> 125)
         ..tooltipStartListen()
-        ..presetDamage(_ -> 150)
+        ..presetDamage(_ -> 100)
         ..presetDistance(_ -> 800)
-        ..presetMaxDamage(_ -> 1500)
-        ..tooltipStopListen(false)
+        ..presetMaxDamage(_ -> 2000)
         ..setNameEnhance("Z", "Carrion Swarm")
+        ..tooltipStopListen(false)
 
     createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_CARRION_SWARM)
         ..setAnimationNames("attack,slam")
@@ -386,7 +386,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetPrimaryDamage(_ -> 10)
         ..setBuffs(1, BUFF_AFFLICTION.toRawCode())
         ..presetSecondaryDamage(_ -> 5)
-        ..presetAreaofEffect(_ -> 200)
+        ..presetAreaofEffect(_ -> 400)
         ..presetDurationNormal(_ -> 5)
 
         ..tooltipStopListen(false)

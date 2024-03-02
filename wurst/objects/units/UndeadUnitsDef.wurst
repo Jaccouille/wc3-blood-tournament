@@ -15,7 +15,7 @@ import ColorUtils
 import ArmySpawner
 
 @compiletime function createZombie()
-    var tooltip = new UnitTooltipGenerator("Cheap meat shield")
+    var tooltip = new UnitTooltipGenerator("Cheap meat shield.")
     createSpawnedUnit(UNIT_ZOMBIE, UnitIds.zombie, BUILDING_ZOMBIE)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -64,7 +64,7 @@ import ArmySpawner
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 
-        ..tooltipStopListen(true, itm)
+        ..tooltipStopListen(true)
         ..setTintingColorRed(180)
 
         ..setIconGameInterfaceExt(Icons.bTNDalaranMutant)

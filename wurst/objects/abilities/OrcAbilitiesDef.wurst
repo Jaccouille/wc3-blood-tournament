@@ -391,6 +391,7 @@ import ArmySpawner
 
     createAutoCastedEnemyAbility(ABIL_AUTOCAST_CHAIN_LIGHTNING)
         ..setAnimationNames("spell,chain")
+        ..presetManaCost(_ -> 200)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 600)
         ..tooltipStartListen()
