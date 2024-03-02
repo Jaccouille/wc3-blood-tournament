@@ -10,3 +10,4 @@ MaxUnitSpeed=522.0
 UpgradeRefundRate=1.0
 ItemStackingEnabled=1
 DefendDeflection=1
+BoneDecayTime=15
