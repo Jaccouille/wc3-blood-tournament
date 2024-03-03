@@ -308,6 +308,14 @@ init
 
     itemModifyUnitMap.put(ITEM_RAISE_SKELETON_MAGE, raiseSkeletonMageAction)
 
+    let raiseSkeletonOrcAction = new ItemModifyUnit()
+        ..addAction() (unit u) ->
+        u.removeAbility(ABIL_RAISE_SKELETON)
+        u.addAbility(ABIL_RAISE_SKELETON_ORC)
+        u.issueImmediateOrderById(OrderIds.raisedeadon)
+
+    itemModifyUnitMap.put(ITEM_RAISE_SKELETON_ORC, raiseSkeletonOrcAction)
+
     let crippleAction = new ItemModifyUnit()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_CRIPPLE_ORB)
