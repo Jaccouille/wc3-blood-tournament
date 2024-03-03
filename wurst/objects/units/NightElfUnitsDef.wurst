@@ -319,7 +319,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Normal, 67, 5, 13, 1.5)
 
-        ..setArmorData(ArmorType.Large, 6)
+        ..setArmorData(ArmorType.Small, 6)
         ..setHitPointsMaximumBase(1200)
         ..setMana(200)
 
