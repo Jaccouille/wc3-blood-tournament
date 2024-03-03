@@ -4,6 +4,7 @@ package BuilderAI
 import ClosureTimers
 import HashMap
 import LinkedListModule
+import ClosureEvents
 
 // Local imports:
 import GameConfig
@@ -208,6 +209,11 @@ init
 
             OnRoundStart.add() (Round round) ->
                 stopAI()
+
+
+        EventListener.add(EVENT_PLAYER_LEAVE) ->
+            if gameConfig.isBotAIEnabled()
+                playerToBuilderAI.get(GetTriggerPlayer()).toggleAI()
 
     registerCommandAll("bot") (triggerPlayer, args) ->
         // let aiInstance = playerToBuilderAI.get(triggerPlayer)
