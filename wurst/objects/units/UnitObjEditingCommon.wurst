@@ -318,7 +318,7 @@ public class BTUnitDefinition extends UnitDefinition
             + BTBuildingData.getUnitPointValue(srcUnitId)
         setPointValue(newPointValue)
         let armyPoints = newPointValue * charges
-        addTooltipProperty("Army points", armyPoints)
+        addTooltipProperty("Army points per unit", armyPoints)
         // Used on item purchase to increase army points
         itemDef.setHitPoints(armyPoints)
         itemDef.setItemCost(gold, lumber, charges, maxStack, maxStock)

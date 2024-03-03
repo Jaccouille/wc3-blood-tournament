@@ -57,7 +57,6 @@ import ArmySpawner
         ..setHitPointsMaximumBase(500)
 
         ..setSpeedBase(270)
-        ..setAutoPointValue()
         ..setItemCostReplacement(0, 100, 1, gruntCount, gruntCount, BUILDING_GRUNT)
 
         ..setSizeSmall()
