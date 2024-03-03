@@ -8,6 +8,7 @@ import GameStates
 import GameConfig
 import MapBounds
 import LocalObjectIDs
+import Players
 
 
 init
@@ -19,7 +20,11 @@ init
                 if Vote.voteInstanceMap.has("sr")
                     Vote.voteInstanceMap.get("sr").castVote(triggerPlayer)
                 else
-                    let voteInstance = new Vote("Start Round", 60., 1)
+                    var count = 0
+                    for _p in ALL_PLAYERS
+                        if _p.isHuman()
+                            count++
+                    let voteInstance = new Vote("Start Round", 60., count)
                     voteInstance.addAction() () ->
                         if not roundController.currentRound.hasStarted
                             if gameConfig.isDisplayPortalEnabled()

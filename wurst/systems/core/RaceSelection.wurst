@@ -76,5 +76,7 @@ init
     OnRoundStart.add() (Round round) ->
         if not gameConfig.isMultipleBuilderEnabled()
             pDatas.forEach() (player _p, PlayerData pData) ->
+                if pData.builder == null
+                    pData.builder = createUnit(_p, BUILDER_LIST.getRandomElement(), pData.racePicker.getPos())
                 SetPlayerTechResearchedSwap(UPGD_ALL_RANDOM, 0, _p)
                 SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 0, _p)

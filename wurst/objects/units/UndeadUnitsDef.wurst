@@ -66,6 +66,7 @@ import ArmySpawner
 
         ..tooltipStopListen(true)
         ..setTintingColorRed(180)
+        ..setScalingValue(1.5)
 
         ..setIconGameInterfaceExt(Icons.bTNDalaranMutant)
         ..setModelFileExt(Units.dalaranMutant)
