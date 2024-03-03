@@ -1,0 +1,18 @@
+package v0_001_s
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 1, 's')
+        ..add("(HU) Replaced sorc fire shield by soul burn")
+        ..add("(NE) Changed bear form armor from large to small")
+        ..add("(OR) Improved raider burning blades")
+        ..add("(UN) Reduced Lich revenant count from 2 to 1, improved its stats")
+        ..add("(UN) Replaced necro skele mage by skele Orc")
+        ..add("Added music for elimination pahse")
+        ..add("Bot now replace leaving players")
+        ..add("Fixed Affliction reduction speed not working")
+        ..add("Fixed army points tooltip display on unit item")
+        ..add("Fixed some tooltip")
+        ..add("Fixed vote system")
+        ..add("Reduced carrion swarm max damage")
