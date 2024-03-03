@@ -26,6 +26,7 @@ interface OnAllroundsFinished
 
 public OnAllroundsFinished onAllroundsFinished
 
+boolean hasElimStarted = false
 boolean hasQuarterStarted = false
 boolean hasDemiStarted = false
 
@@ -283,6 +284,14 @@ public function initRoundController()
                     value.giveBloodPointsReward()
                     key.addGold(round.goldReward)
                     key.addLumber(round.bloodPointReward)
+
+    // Start Elimination phase music
+    OnRoundStart.add() (Round round) ->
+        if hasQuarterStarted and not hasElimStarted
+            hasElimStarted = true
+            StopMusic(false)
+            ClearMapMusic()
+            PlayMusic(Sounds.pH1)
 
 
     onAllroundsFinished = () ->
