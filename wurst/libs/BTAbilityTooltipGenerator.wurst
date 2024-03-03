@@ -20,6 +20,7 @@ import ColorUtils
 @configurable function buildDescription(string description) returns string
     return description + "|r"
 
+constant HOTKEY_HINT = "\n\nNote: hotkeys can be used with grid binding enabled, see Options -> Input -> Preset keybindings.".color(GENERAL_COLOR)
 
 /***
     Copied and modified from https://github.com/Frotty/Ability-Tooltip-Generator/blob/master/wurst/AbilityTooltipGenerator.wurst
@@ -60,7 +61,9 @@ public class BTAbilityTooltipGenerator implements TooltipGenerator
             ..setTooltipNormalExtended(1, generateTooltipExtended())
 
     function applyToDefItem(ItemDefinition defItem)
-        defItem.setTooltipExtended(generateTooltipExtended())
+        var s = generateTooltipExtended()
+        s += HOTKEY_HINT
+        defItem.setTooltipExtended(s)
 
     function generateTooltipLearn() returns string
         return buildLearnTooltip(name)
@@ -137,3 +140,8 @@ public class BTAbilityTooltipGenerator implements TooltipGenerator
         let name = generateTooltipNormal()
         let tooltipExt = generateTooltipExtended()
         return name + "\n" + tooltipExt
+
+    function generateFullTooltipItem() returns string
+        let name = generateTooltipNormal()
+        let tooltipExt = generateTooltipExtended()
+        return name + "\n" + tooltipExt + HOTKEY_HINT

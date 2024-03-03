@@ -4,12 +4,15 @@ package UnitTooltipGenerator
 import HashMap
 import UnitObjEditing
 import ItemObjEditing
+import ColorUtils
 
 public constant GOLD_COLOR = color(255, 215,   0)
 
 @configurable constant TITLE_TTYPE = ""
 @configurable constant MAX_TITLES = 10
 @configurable constant DESCRIPTION_PATTERN = "$description$|r"
+
+constant HOTKEY_HINT = "\n\nNote: hotkeys can be used with grid binding enabled, see Options -> Input -> Preset keybindings.".color(GENERAL_COLOR)
 
 /**
     Bonus value is unused for this map
@@ -55,7 +58,7 @@ public class UnitTooltipGenerator implements TooltipGenerator
 
     override function applyToDef(ItemDefinition def)
         name = propMap.has("Name") ? propMap.getAndRemove("Name").value : "unnamed"
-        def.setTooltipExtended(generateTooltipExtended())
+        def.setTooltipExtended(generateTooltipExtended() + HOTKEY_HINT)
 
     private function generateTooltipExtended() returns string
         var s = ""

@@ -204,7 +204,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetCooldown(_ -> 3)
         ..tooltipStopListen(true)
 
-    tooltip += "\n\n" + tgen.generateFullTooltip()
+    tooltip += "\n\n" + tgen.generateFullTooltipItem()
     itm.setTooltipExtended(tooltip)
 
     itm = createBasicItem(ITEM_ICE_MAGE)
@@ -256,7 +256,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetCooldown(_ -> 5)
         ..tooltipStopListen(true)
 
-    tooltip += "\n\n" + tgen.generateFullTooltip()
+    tooltip += "\n\n" + tgen.generateFullTooltipItem()
     itm.setTooltipExtended(tooltip)
 
     tgen = new BTAbilityTooltipGenerator(

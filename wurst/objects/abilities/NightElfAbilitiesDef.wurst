@@ -401,25 +401,27 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setLevels(1)
         ..setHeroAbility(false)
         ..registerTooltipGenerator(tgen)
-        ..presetCooldown(_ -> 6)
         ..presetDamageIncrease(_ -> 0.40)
         ..tooltipStartListen()
         ..addTooltipProperty("Damage Reduction", _ -> "40%")
         ..presetDurationNormal(_ -> 6)
         ..presetAreaofEffect(_ -> 500)
         ..presetManaCost(_ -> 75)
+        ..presetCooldown(_ -> 6)
         ..setNameEnhance("Z", "Howl Of Terror")
         ..tooltipStopListen(false)
+
+    abilTooltipMap.put(ABIL_HOWL_OF_TERROR, tgen.generateFullTooltip())
 
     createAutoCastedEnemyAbility(ABIL_AUTOCAST_HOWL_OF_TERROR)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 125)
-        ..tooltipStartListen()
         ..presetManaCost(_ -> 0)
+        ..tooltipStartListen()
         ..presetCooldown(_ -> 6)
         ..tooltipStopListen(true)
 
-    abilTooltipMap.put(ABIL_HOWL_OF_TERROR, tgen.generateFullTooltip())
+    // abilTooltipMap.put(ABIL_HOWL_OF_TERROR, tgen.generateFullTooltip())
 
 
     tgen = new BTAbilityTooltipGenerator(
@@ -477,10 +479,11 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setAttacksPrevented(1, 15) // All checkbox checks
         ..setMissileArt(Abilities.shadowStrikeMissile)
         ..registerTooltipGenerator(tgen)
+        ..addTooltipProperty("Chance to hit summons", _ ->  0.2.toPercent())
         ..tooltipStartListen()
         ..addTooltipProperty("Chance to hit units", _ ->  0.2.toPercent())
-        ..addTooltipProperty("Chance to hit summons", _ ->  0.2.toPercent())
-        ..presetMovementSpeedModifier(_ -> 0.75)
+        ..setMovementSpeedModifier(1, 0.75)
+        ..addTooltipProperty("Movement speed reduction", _ -> 0.75.toPercent())
         ..presetDurationNormal(_ -> 5)
         ..presetCooldown(_ -> 10)
         ..setNameEnhance("Z", "Haunts")
