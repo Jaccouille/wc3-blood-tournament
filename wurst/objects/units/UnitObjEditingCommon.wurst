@@ -382,7 +382,7 @@ public function UnitOrBuildingOrHeroDefinition.setNameEnhance(string hotkey, str
 public function ItemDefinition.setNameEnhance(string hotkey, string name)
     this.setHotkeyEnhance(hotkey)
     this.setName(name)
-    this.setTooltipBasic(makeToolTipNorm(hotkey, name))
+    this.setTooltipBasic(name)
 
 public function UnitDefinition.setName(string name)
     this.def.setString("unam", name)
