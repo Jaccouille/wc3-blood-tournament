@@ -46,15 +46,13 @@ public class Vote
             printTimedToPlayer("You already voted for " + this.name, 5, _p)
 
     function endVote()
+        if voteInstanceMap.has(this.name)
+            voteInstanceMap.remove(this.name)
         if hasVoted.size() >= amountToPass
             printTimed(this.name + " vote passed!", 5)
             cb.execute()
         else
             printTimed(this.name + " vote failed!", 5)
-        destroy this
-
-    ondestroy
-        if voteInstanceMap.has(this.name)
-            voteInstanceMap.remove(this.name)
         destroy cb
         destroy hasVoted
+        destroy this

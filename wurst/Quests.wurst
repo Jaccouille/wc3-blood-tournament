@@ -38,7 +38,7 @@ let credits = asList(
 ).joinBy("\n")
 
 let commands = asList(
-    "-sr:|r start round, vote to begin next round".color(HIGHLIGHT_COLOR),
+    "-r:|r Ready, vote to begin next round".color(HIGHLIGHT_COLOR),
     "-clear:|r clears displayed text messages".color(HIGHLIGHT_COLOR),
     "-modes:|r displays current established modes".color(HIGHLIGHT_COLOR)
 ).joinBy("\n")

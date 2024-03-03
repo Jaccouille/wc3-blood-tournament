@@ -13,18 +13,18 @@ import Players
 
 init
     GameStates.gameplay.onEnter() (state) ->
-        registerCommandAll("sr") (player triggerPlayer, LinkedList<string> arguments) ->
+        registerCommandAll("r") (player triggerPlayer, LinkedList<string> arguments) ->
             if roundController.currentRound.hasStarted
                 printTimedToPlayer("Vote failed! Round already started!", 3, triggerPlayer)
             else
-                if Vote.voteInstanceMap.has("sr")
-                    Vote.voteInstanceMap.get("sr").castVote(triggerPlayer)
+                if Vote.voteInstanceMap.has("Ready")
+                    Vote.voteInstanceMap.get("Ready").castVote(triggerPlayer)
                 else
                     var count = 0
                     for _p in ALL_PLAYERS
                         if _p.isHuman()
                             count++
-                    let voteInstance = new Vote("Start Round", 60., count)
+                    let voteInstance = new Vote("Ready", 60., count)
                     voteInstance.addAction() () ->
                         if not roundController.currentRound.hasStarted
                             if gameConfig.isDisplayPortalEnabled()
@@ -36,5 +36,5 @@ init
                     voteInstance.castVote(triggerPlayer)
 
         OnRoundStart.add() (Round round) ->
-            if Vote.voteInstanceMap.has("sr")
-                Vote.voteInstanceMap.get("sr").endVote()
+            if Vote.voteInstanceMap.has("Ready")
+                Vote.voteInstanceMap.get("Ready").endVote()
