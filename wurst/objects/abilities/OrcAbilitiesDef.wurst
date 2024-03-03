@@ -145,25 +145,25 @@ import ArmySpawner
 
     let raiderCount = BTBuildingData.getUnitCount(BUILDING_RAIDER)
     itm = createBasicItem(ITEM_BURNING_BLADE)
-        ..setItemCost(0, 50, 1, raiderCount, raiderCount)
-        ..setNameEnhance("X", "Add 1 Burning Blade")
+        ..setItemCost(0, 200, raiderCount, 1, 1)
+        ..setNameEnhance("X", "Add Burning Blades")
         ..setInterfaceIcon(Icons.bTNArcaniteMelee)
 
     tgen = new BTAbilityTooltipGenerator(
         "Reduces the effectiveness of healing and regeneration on enemy units.")
-    new AbilityDefinitionHealReductionBonus(ABIL_BURNING_BLADE_75)
+    new AbilityDefinitionHealReductionBonus(ABIL_BURNING_BLADE_100)
         ..setCheckDependencies(false)
         ..setArtTarget("Environment\\SmallBuildingFire\\SmallBuildingFire2.mdl")
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..setHealingMultiplier(1, 0.75)
-        ..addTooltipProperty("Heal Reduction", _ -> 0.75.toPercent())
+        ..setHealingMultiplier(1, 1)
+        ..addTooltipProperty("Heal Reduction", _ -> "100%")
         ..presetDurationNormal(_ -> 4)
         ..setNameEnhance("Z", "Burning Blade")
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
-    abilTooltipMap.put(ABIL_BURNING_BLADE_75, tgen.generateFullTooltip())
+    abilTooltipMap.put(ABIL_BURNING_BLADE_100, tgen.generateFullTooltip())
 
 
     tgen = new BTAbilityTooltipGenerator(
