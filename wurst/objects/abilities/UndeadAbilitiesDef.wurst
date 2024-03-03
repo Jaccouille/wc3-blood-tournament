@@ -345,7 +345,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetDamage(_ -> 100)
         ..presetDistance(_ -> 800)
-        ..presetMaxDamage(_ -> 2000)
+        ..presetMaxDamage(_ -> 1500)
         ..setNameEnhance("Z", "Carrion Swarm")
         ..tooltipStopListen(false)
 
@@ -382,7 +382,8 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetManaCost(_ -> 125)
         ..presetArmorPenalty(_ -> 0)
         ..tooltipStartListen()
-        ..presetAttackSpeedReduction(_ -> 0.40)
+        ..setAttackSpeedReduction(1, 40)
+        ..addTooltipProperty("Attack Speed Reduction", _ -> "40%")
         ..presetPrimaryDamage(_ -> 10)
         ..setBuffs(1, BUFF_AFFLICTION.toRawCode())
         ..presetSecondaryDamage(_ -> 5)
