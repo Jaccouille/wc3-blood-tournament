@@ -43,7 +43,7 @@ let boardColumns = asList(
     new BoardColumn("PlayerName"   , null , NAME_LABEL_WIDTH  , HIGHLIGHT_COLOR ),
     new BoardColumn(COL_ARMY_PTS  , null , COL_LABEL_WIDTH , HIGHLIGHT_COLOR ),
     new BoardColumn(COL_BLOOD_PTS , null , COL_LABEL_WIDTH , HIGHLIGHT_COLOR ),
-    new BoardColumn(COL_TOTAL_BLOOD_PTS , null , COL_LABEL_WIDTH , HIGHLIGHT_COLOR )
+    new BoardColumn(COL_TOTAL_BLOOD_PTS , null , 0.05 , HIGHLIGHT_COLOR )
 )
 
 public class ScoreBoardColumnEntries

@@ -249,6 +249,12 @@ init
             simError(caster.getOwner(), "Cannot move building outside of your building zone")
 
     EventListener.onPointCast(ABIL_ORDER_UNIT) (unit caster, vec2 target) ->
+        let msg = caster.getOwner().getNameColored() + " used move units"
+        createTTEx(target.toVec3(), msg, 10)
+            ..setVelocity(0, 0.03)
+            ..setFadepoint(2.)
+            ..setLifespan(3.0)
+            ..setPermanent(false)
         forUnitsInRange(target, 200) (unit u) ->
             if u.getCurrentOrder() == 0
                 and not u.isType(UNIT_TYPE_PEON)

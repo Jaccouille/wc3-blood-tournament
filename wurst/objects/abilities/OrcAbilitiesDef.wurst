@@ -255,6 +255,7 @@ import ArmySpawner
         ..presetAmountRegenerated(_ -> 0.04)
         ..tooltipStartListen()
         ..addTooltipProperty("Mana Regeneration", _ -> "4%")
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.allies))
         ..presetAreaofEffect(_ -> 500)
         ..setNameEnhance("C", "Mana Ward Aura")
         ..tooltipStopListen(false)

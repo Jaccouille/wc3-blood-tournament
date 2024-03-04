@@ -317,11 +317,10 @@ import ArmySpawner
         ..setHitPointsMaximumBase(1300)
 
         ..setSpeedBase(330)
-        ..setAutoPointValue()
         ..setSizeLarge()
+        ..setItemCostUnit(0, 1000, 1)
         ..tooltipStopListen(true, itm)
 
-        ..setItemCostUnit(0, 1000, 1)
         ..setNameEnhance("X", "Marshall")
         ..setScalingValue(1.2)
         ..setMana(0)

@@ -410,7 +410,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetPrimaryDamage(_ -> 10)
         ..setBuffs(1, BUFF_AFFLICTION.toRawCode())
         ..presetSecondaryDamage(_ -> 5)
-        ..presetAreaofEffect(_ -> 400)
+        ..presetAreaofEffect(_ -> 300)
         ..presetDurationNormal(_ -> 5)
         ..setNameEnhance("Z", "Affliction")
 

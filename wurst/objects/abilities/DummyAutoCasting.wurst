@@ -23,9 +23,9 @@ public let dummyToRealImmediateCastMap = new HashMap<int, int>
 init
     dummyToRealCastMapTarget
         ..put(ABIL_AUTOCAST_HEALING_WAVE, new BuffTuple(OrderIds.healingwave, -1))
-        ..put(ABIL_AUTOCAST_ACID_BOMB, new BuffTuple(OrderIds.acidbomb, -1))
+        ..put(ABIL_AUTOCAST_ACID_BOMB, new BuffTuple(OrderIds.acidbomb, BuffIds.acidBomb))
         ..put(ABIL_AUTOCAST_CHAIN_LIGHTNING, new BuffTuple(OrderIds.chainlightning, -1))
-        ..put(ABIL_AUTOCAST_DRUNKEN_HAZE, new BuffTuple(OrderIds.drunkenhaze, -1))
+        ..put(ABIL_AUTOCAST_DRUNKEN_HAZE, new BuffTuple(OrderIds.drunkenhaze, BuffIds.drunkenHaze))
         ..put(ABIL_AUTOCAST_BLIZZARD, new BuffTuple(OrderIds.blizzard, -1))
         ..put(ABIL_AUTOCAST_UNHOLY_FRENZY,
             new BuffTuple(OrderIds.unholyfrenzy, BuffIds.unholyFrenzy)
@@ -42,7 +42,7 @@ init
         ..put(ABIL_AUTOCAST_FROST_NOVA, new BuffTuple(OrderIds.frostnova, -1))
         ..put(ABIL_AUTOCAST_MANA_WARD, new BuffTuple(OrderIds.healingward, -1))
         ..put(ABIL_AUTOCAST_CARRION_SWARM, new BuffTuple(OrderIds.carrionswarm, -1))
-        ..put(ABIL_AUTOCAST_AFFLICTION, new BuffTuple(OrderIds.acidbomb, -1))
+        ..put(ABIL_AUTOCAST_AFFLICTION, new BuffTuple(OrderIds.acidbomb, BuffIds.acidBomb))
         ..put(ABIL_AUTOCAST_SOUL_BURN, new BuffTuple(OrderIds.soulburn, BuffIds.soulBurn))
 
     dummyToRealImmediateCastMap
