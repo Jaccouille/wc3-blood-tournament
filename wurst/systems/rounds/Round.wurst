@@ -174,9 +174,6 @@ public class NormalRound extends Round
             let p1 = players[contestantPair.a]
             let p2 = players[contestantPair.b]
 
-            scoreBoardEntries.get("BloodPoints").setEntry(p1, "0", "")
-            scoreBoardEntries.get("BloodPoints").setEntry(p2, "0", "")
-
             setupCamera(spawnZones.get(zoneIdx), spawnZones.get(zoneIdx + 1), p1, p2)
             spawnArmy(spawnZones.get(zoneIdx), pDatas.get(p1).buildingList, p1)
             spawnArmy(spawnZones.get(zoneIdx + 1), pDatas.get(p2).buildingList, p2)
@@ -226,9 +223,6 @@ public class FinalRound extends Round
 
             let msg = p1.getNameColored() + " VS " + p2.getNameColored()
             printTimed(msg, 5)
-
-            scoreBoardEntries.get("BloodPoints").setEntry(p1, "0", "")
-            scoreBoardEntries.get("BloodPoints").setEntry(p2, "0", "")
 
             setupCamera(spawnZones.get(FINAL_ROUND_WEST_ZONE_IDX), spawnZones.get(FINAL_ROUND_EAST_ZONE_IDX), p1, p2)
             spawnArmy(spawnZones.get(FINAL_ROUND_WEST_ZONE_IDX), pDatas.get(p1).buildingList, p1)

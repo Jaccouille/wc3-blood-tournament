@@ -1,27 +1,26 @@
 package ScoreBoard
 
 // Standard libs imports:
-import ClosureEvents
 import ClosureTimers
 import HashMap
 import Icons
 import LinkedListModule
 
 // Local imports:
-import ArmySpawner
 import Boards
 import ColorUtils
-import GameConstants
-import PlayerExtension
 import Players
 import public PlayerData
-import GameConfig
 import GameStates
 
 let KILL_COLUMN_WIDTH = 0.055
 let STAT_LABEL_WIDTH = 0.1
 let NAME_LABEL_WIDTH = 0.18
-let LEVEL_LABEL_WIDTH = 0.07
+let COL_LABEL_WIDTH = 0.07
+
+let COL_ARMY_PTS = "ArmyPoints"
+let COL_BLOOD_PTS = "BloodPoints"
+let COL_TOTAL_BLOOD_PTS = "Total BP"
 
 let iconPlayerInGame = Icons.bTNSelectHeroOn
 
@@ -42,8 +41,9 @@ class BoardColumn
 // ScoreBoard category listed
 let boardColumns = asList(
     new BoardColumn("PlayerName"   , null , NAME_LABEL_WIDTH  , HIGHLIGHT_COLOR ),
-    new BoardColumn("ArmyPoints"  , null , LEVEL_LABEL_WIDTH , HIGHLIGHT_COLOR ),
-    new BoardColumn("BloodPoints" , null , LEVEL_LABEL_WIDTH , HIGHLIGHT_COLOR )
+    new BoardColumn(COL_ARMY_PTS  , null , COL_LABEL_WIDTH , HIGHLIGHT_COLOR ),
+    new BoardColumn(COL_BLOOD_PTS , null , COL_LABEL_WIDTH , HIGHLIGHT_COLOR ),
+    new BoardColumn(COL_TOTAL_BLOOD_PTS , null , COL_LABEL_WIDTH , HIGHLIGHT_COLOR )
 )
 
 public class ScoreBoardColumnEntries
@@ -189,40 +189,19 @@ public var BOARD_TITLE_PREFIX = ""
 public function setBoardTitle(string title)
     scoreBoard.board.setTitle(title)
 
+function refreshScoreBoard()
+    for i = 0 to 7
+        let _p = players[i]
+        let ap = pDatas.get(_p).armyPoints
+        let bp = pDatas.get(_p).roundBloodPoints
+        let tbp = pDatas.get(_p).totalBloodPoints
+        scoreBoardEntries.get(COL_ARMY_PTS).setEntry(_p, ap.toString(), null)
+        scoreBoardEntries.get(COL_BLOOD_PTS).setEntry(_p, bp.toString(), null)
+        scoreBoardEntries.get(COL_TOTAL_BLOOD_PTS).setEntry(_p, tbp.toString(), null)
+
 public function initScoreBoard()
     // Scoreboard timer refresh
     GameStates.modesSelection.onExit() (state) ->
         doPeriodically(1) (CallbackPeriodic cb) ->
             scoreBoard.board.setTitle(BOARD_TITLE_PREFIX)
-
-    EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
-        let owner = EventData.getKillingUnit().getOwner()
-        let dyingUnit = EventData.getDyingUnit()
-        let pData = pDatas.get(dyingUnit.getOwner().getTruePlayerFromDummy())
-        if owner != ALTAR_PLAYER
-            // Is a building
-            if BTBuildingData.unitIdToDataMap.has(dyingUnit.getTypeId())
-                let buildingPoint = BTBuildingData.getBuildingArmyPoints(dyingUnit.getTypeId())
-                scoreBoardEntries.get("ArmyPoints")
-                    .addValue(pData._p, -(buildingPoint * gameConfig.getArmyPointsMultiplier()).toInt())
-            else
-                scoreBoardEntries.get("BloodPoints")
-                    .addValue(owner.getTruePlayerFromDummy(), dyingUnit.getPointValue())
-
-    EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
-        let u = EventData.getTriggerUnit()
-        let pData = pDatas.get(u.getOwner())
-
-        if BTBuildingData.unitIdToDataMap.has(u.getTypeId())
-            let buildingPoint = BTBuildingData.getBuildingArmyPoints(u.getTypeId())
-            scoreBoardEntries.get("ArmyPoints")
-                .addValue(pData._p, (buildingPoint * gameConfig.getArmyPointsMultiplier()).toInt())
-
-    EventListener.add(EVENT_PLAYER_UNIT_UPGRADE_FINISH) ->
-        let u = EventData.getTriggerUnit()
-        let pData = pDatas.get(u.getOwner())
-
-        if BTBuildingData.unitIdToDataMap.has(u.getTypeId())
-            let buildingPoint = BTBuildingData.getBuildingUpgradeBonusArmyPoints(u.getTypeId())
-            scoreBoardEntries.get("ArmyPoints")
-                .addValue(pData._p, (buildingPoint * gameConfig.getArmyPointsMultiplier()).toInt())
+            refreshScoreBoard()

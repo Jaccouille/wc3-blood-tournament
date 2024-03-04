@@ -152,10 +152,13 @@ init
                 // Item who doesn't give any blood point got 1 hp
                 let bloodPoint = i.getLife().toInt()
                 if bloodPoint > 1
-                    let bonusArmyPoints = bloodPoint - BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitPointValue
+                    // If we replace an unit
+                    var bonusArmyPoints = bloodPoint - BTBuildingData.unitIdToDataMap.get(
+                        building.getTypeId()).unitPointValue
+                    // If we add an unit
+                    if i.getName().contains("Add")
+                        bonusArmyPoints = bloodPoint
                     building.getOwner().getPlayerData().addArmyPoints(bonusArmyPoints)
-                    scoreBoardEntries.get("ArmyPoints")
-                        .addValue(building.getOwner(), bonusArmyPoints)
             i.remove()
 
     // When an item is bought, it doesn't go in the building inventory, it
