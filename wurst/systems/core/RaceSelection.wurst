@@ -2,6 +2,8 @@ package RaceSelection
 
 // Standard libs imports:
 import ClosureEvents
+import Assets
+import ClosureTimers
 
 // Local imports:
 import ColorUtils
@@ -36,9 +38,11 @@ init
         else
             if pData.builder != null
                 SetPlayerTechMaxAllowed(owner, pData.builder.getTypeId(), 1)
+                flashEffect(Abilities.aIilTarget, pData.builder.getPos3Real())
                 pData.builder.remove()
-            pData.racePicker.issueImmediateOrder(UnitId2String(BUILDER_LIST.getRandomElement()))
-            SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 0, owner)
+            if not pData.racePicker.issueImmediateOrder(UnitId2String(BUILDER_LIST.getRandomElement()))
+                nullTimer() ->
+                    pData.racePicker.issueImmediateOrder(UnitId2String(BUILDER_LIST.getRandomElement()))
 
     EventListener.onCast(ABIL_REPICK) (unit caster) ->
         let owner = caster.getOwner()
@@ -52,6 +56,7 @@ init
             printTimedToPlayer("No builder to repick".color(SPECIAL_COLOR), 5, owner)
         else
             SetPlayerTechMaxAllowed(owner, pData.builder.getTypeId(), 1)
+            flashEffect(Abilities.aIilTarget, pData.builder.getPos3Real())
             pData.builder.remove()
 
 
