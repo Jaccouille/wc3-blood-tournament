@@ -313,6 +313,7 @@ import ArmySpawner
         ..setSpeedBase(270)
         ..setPointValue(5)
         ..setSummonedUnit()
+        ..setGhostDeath()
 
         ..setSizeSmall()
         ..setNameEnhance("Q", "Skeleton Warrior")
@@ -333,6 +334,7 @@ import ArmySpawner
         ..setSpeedBase(270)
         ..setPointValue(15)
         ..setSummonedUnit()
+        ..setGhostDeath()
 
         ..setSizeSmall()
         ..setNameEnhance("Q", "Skeletal Orc")
@@ -357,6 +359,7 @@ import ArmySpawner
         ..setSpeedBase(270)
         ..setPointValue(5)
         ..setSummonedUnit()
+        ..setGhostDeath()
 
         ..setSizeSmall()
         ..setNameEnhance("Q", "Skeletal Mage")
