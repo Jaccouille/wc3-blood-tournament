@@ -95,7 +95,7 @@ function initItemStockData()
     sharedStocksMap.put(BUILDING_SORCERESS , asList(ITEM_DARK_MAGE         , ITEM_FIRE_MAGE      , ITEM_ICE_MAGE                ))
 
     // ================ ORC =============
-    unitItemSold.put(BUILDING_GRUNT       , asList(ITEM_BERSERKER   , ITEM_KODO                       ))
+    unitItemSold.put(BUILDING_GRUNT       , asList(ITEM_KODO                       ))
     unitItemSold.put(BUILDING_RAIDER      , asList(ITEM_PACK_LEADER, ITEM_BURNING_BLADE               ))
     unitItemSold.put(BUILDING_OGRE        , asList(ITEM_OGRE_ARMORED                                  ))
     unitItemSold.put(BUILDING_WITCH_DOCTOR, asList(ITEM_DRUNKEN_HAZE, ITEM_HEALING_WAVE, ITEM_MANA_WARD))

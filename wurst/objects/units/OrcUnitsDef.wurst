@@ -29,6 +29,7 @@ import ArmySpawner
         ..setSizeSmall()
         ..setAutoPointValue()
         ..setAutoBuildingCost()
+        ..setUpgradeTo(commaList(BUILDING_BERSERKER))
 
         ..setNameEnhance("Q", "Grunt")
         ..tooltipStopListen(true)
@@ -42,12 +43,12 @@ import ArmySpawner
         abilTooltipMap.get(ABIL_CRITICAL_STRIKE_30)
         )
     let itm = createBasicItem(ITEM_BERSERKER)
-    let gruntCount = BTBuildingData.getUnitCount(BUILDING_GRUNT)
+    // let gruntCount = BTBuildingData.getUnitCount(BUILDING_GRUNT)
     createSpawnedUnit(UNIT_BERSERKER, UnitIds.chaosgrunt, BUILDING_BERSERKER)
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
         ..setNormalAbilities(commaList(ABIL_KILLING_SPREE, ABIL_CRITICAL_STRIKE_30))
-        ..registerItemDef(itm, ItemModifierType.Replace)
+        // ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -57,12 +58,15 @@ import ArmySpawner
         ..setHitPointsMaximumBase(500)
 
         ..setSpeedBase(270)
-        ..setItemCostReplacement(0, 100, 1, gruntCount, gruntCount, BUILDING_GRUNT)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        // ..setItemCostReplacement(0, 100, 1, gruntCount, gruntCount, BUILDING_GRUNT)
 
         ..setSizeSmall()
 
         ..setNameEnhance("Z", "Berserker")
-        ..tooltipStopListen(true, itm)
+        ..tooltipStopListen(true)
+        // ..tooltipStopListen(true, itm)
 
         ..setArtSpecial(Objects.orcLargeDeathExplode)
 
@@ -96,29 +100,6 @@ import ArmySpawner
 
         ..setModelFileExt(Units.headhunter1)
         ..setIconGameInterfaceExt(Icons.bTNHeadhunter)
-        ..setUnitSoundSetExt(Soundsets.headHunter)
-
-    tooltip = new UnitTooltipGenerator("Head Hunter Berserker Desc")
-    createSpawnedUnit(UNIT_HEADHUNTER_BERSERKER, UnitIds.berserker, BUILDING_HEADHUNTER_BERSERKER)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Pierce, 40, 4, 9, 1.6)
-        ..setAttack1Range(550)
-
-        ..setArmorData(ArmorType.Unarmored, 3)
-        ..setHitPointsMaximumBase(140)
-
-        ..setSpeedBase(270)
-        ..setSizeSmall()
-        ..setNameEnhance("Z", "Head Hunter Berserker")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingLumberCost(900)
-
-        ..setModelFileExt(Units.headhunter_V1)
-        ..setRequiredAnimationNamesExt("alternate")
-        ..setIconGameInterfaceExt(Icons.bTNHeadHunterBerserker)
         ..setUnitSoundSetExt(Soundsets.headHunter)
 
     tooltip = new UnitTooltipGenerator(
@@ -457,6 +438,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Magic, 79, 4, 14, 1.60)
         ..setAttack1Range(600)
+        ..setAttack1ProjectileArt(Abilities.serpentWardMissile)
 
         ..setArmorData(ArmorType.Small, 4)
         ..setHitPointsMaximumBase(440)
