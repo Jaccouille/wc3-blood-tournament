@@ -34,16 +34,16 @@ init
         gameConfig.getRoundCount().toString() + ", max : 64, min : 0") (mode, args) ->
         if (args.size() > 1)
             let roundCount = min(max(args.get(1).toInt(), 0), 64)
-            mode.message("Round number before elimination phase set to " + roundCount.toString().color(SPECIAL_COLOR))
+            mode.message("Round number before elimination phase set to " + roundCount.toString().color(GENERAL_COLOR))
             gameConfig.setRoundCount(roundCount)
 
     // new GameMode("bot", "b", "General", "Enable bot for leaver, default : " +
     // gameConfig.isBotAIEnabled().toString()) (mode, args) ->
     //     if not gameConfig.isBotAIEnabled()
-    //         mode.message("Bot mode enabled, a bot will replace leavers".color(SPECIAL_COLOR))
+    //         mode.message("Bot mode enabled, a bot will replace leavers".color(GENERAL_COLOR))
     //         gameConfig.setBotAIMode(true)
     //     else
-    //         mode.message("Bot mode disabled, bot won't replace leavers".color(SPECIAL_COLOR))
+    //         mode.message("Bot mode disabled, bot won't replace leavers".color(GENERAL_COLOR))
     //         gameConfig.setBotAIMode(false)
 
     new GameMode("start-gold", "sg", "General", "Set first round gold amount per players, default : " +
@@ -68,9 +68,9 @@ init
             gameConfig.setRoundInterludeTime(interludeTime.toReal())
 
     new GameMode("spawn-capacity", "sc", "Set max unit spawn capacity, default : " +
-        gameConfig.getSpawnCap().toString() + ", max : 160, min : 60") (mode, args) ->
+        gameConfig.getSpawnCap().toString() + ", max : 120, min : 60") (mode, args) ->
         if (args.size() > 1)
-            let spawnCap = max(min(args.get(1).toInt(), 160), 60)
+            let spawnCap = max(min(args.get(1).toInt(), 120), 60)
             mode.message("Spawn capacity set to " + spawnCap.toString().color(GOLD_COLOR))
             gameConfig.setSpawnCap(spawnCap)
 
@@ -104,26 +104,26 @@ init
 
     new GameMode("multiple-builder", "mb", "Disable builder limit") (mode, args) ->
         if not gameConfig.isMultipleBuilderEnabled()
-            mode.message("Multiple builder enabled, players can use more than 1 builder".color(SPECIAL_COLOR))
+            mode.message("Multiple builder enabled, players can use more than 1 builder".color(GENERAL_COLOR))
             gameConfig.setMultipleBuilder(true)
         else
-            mode.message("Multiple builder disabled, players can use only 1 builder".color(SPECIAL_COLOR))
+            mode.message("Multiple builder disabled, players can use only 1 builder".color(GENERAL_COLOR))
             gameConfig.setMultipleBuilder(false)
 
     new GameMode("all-random", "ar", "Every players get 1 random builder (doesn't work with mb)") (mode, args) ->
         if not gameConfig.isAllRandomEnabled()
-            mode.message("All random enabled, players get random builder".color(SPECIAL_COLOR))
+            mode.message("All random enabled, players get random builder".color(GENERAL_COLOR))
             gameConfig.setAllRandom(true)
         else
-            mode.message("All random disabled, players can choose builder".color(SPECIAL_COLOR))
+            mode.message("All random disabled, players can choose builder".color(GENERAL_COLOR))
             gameConfig.setAllRandom(false)
 
     new GameMode("fog", "f", "Enable fog of war on player's building zones") (mode, args) ->
         if not gameConfig.isFogOfWarEnabled()
-            mode.message("Fog of war enabled, player's building zones are masked".color(SPECIAL_COLOR))
+            mode.message("Fog of war enabled, player's building zones are masked".color(GENERAL_COLOR))
             gameConfig.setFogOfWar(true)
         else
-            mode.message("Fog of war disabled, player's building zones are exposed".color(SPECIAL_COLOR))
+            mode.message("Fog of war disabled, player's building zones are exposed".color(GENERAL_COLOR))
             gameConfig.setFogOfWar(false)
 
     new GameMode("set-exchange-rate", "ser", "General", "Set gold/blood points exchange rates, default : " +
@@ -143,10 +143,10 @@ init
 
     new GameMode("no-portal", "np", "Removes portal model") (mode, args) ->
         if not gameConfig.isDisplayPortalEnabled()
-            mode.message("Portal display disable".color(SPECIAL_COLOR))
+            mode.message("Portal display disable".color(GENERAL_COLOR))
             gameConfig.setDisplayPortal(false)
         else
-            mode.message("Portal display enable".color(SPECIAL_COLOR))
+            mode.message("Portal display enable".color(GENERAL_COLOR))
             gameConfig.setDisplayPortal(true)
 
     new GameMode("test-mode", "tm", "Testing", "Enables test commands") (mode, args) ->
