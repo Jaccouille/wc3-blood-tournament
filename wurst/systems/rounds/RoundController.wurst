@@ -304,5 +304,12 @@ public function initRoundController()
         if roundController.previousRoundWinner != null
             GameStates.gameplay.exit()
             print(roundController.previousRoundWinner.getNameColored() + " is the " + "Blood tournament".color(COLOR_RED) + " champion!")
+            doAfter(3) ->
+                var bloodSpilled = 0
+                for _p in pDatas
+                    bloodSpilled += pDatas.get(_p).totalBloodPoints
+                bloodSpilled += altarEntity.bloodPointCounter
+                printTimed("{0} Blood points have been spilled during this tournament".format(bloodSpilled.toString().color(COLOR_RED)), 15)
+
             doAfter(15) ->
                 printTimed("You can leave the game by the way", 10)
