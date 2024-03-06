@@ -253,6 +253,12 @@ init
             replaceUnit(unitToSpawn, UNIT_OGRE, UNIT_OGRE_ARMORED)
     itemAddUnitMap.put(ITEM_OGRE_ARMORED, armoredOgreAction)
 
+    let magiOgreAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            replaceUnit(unitToSpawn, UNIT_OGRE, UNIT_OGRE_MAGI)
+    itemAddUnitMap.put(ITEM_OGRE_MAGI, magiOgreAction)
+
 
     let rampageAction = new ItemModifyUnit()
         ..addAction() (unit u) ->

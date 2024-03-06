@@ -35,3 +35,9 @@ init
             case UNIT_OWLBEAR
                 if not target.hasAbility(BuffIds.howlofTerror)
                     src.issueImmediateOrderById(OrderIds.howlofterror)
+            case UNIT_OGRE
+                if src.getAbilityCooldownRemaining(ABIL_OGRE_SWING) <= 0
+                    src.issueTargetOrderById(OrderIds.curse, target)
+            case UNIT_OGRE_ARMORED
+                if src.getAbilityCooldownRemaining(ABIL_OGRE_SWING) <= 0
+                    src.issueTargetOrderById(OrderIds.curse, target)

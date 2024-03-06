@@ -75,6 +75,7 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
 
 public let UPGRADE_OPTIONS = new HashMap<int, LinkedList<int>>
     ..put(BUILDING_KNIGHT, asList(BUILDING_CRUSADER))
+    ..put(BUILDING_GRUNT, asList(BUILDING_BERSERKER))
     ..put(BUILDING_HEADHUNTER, asList(BUILDING_TRAPPER))
     ..put(BUILDING_ZOMBIE, asList(BUILDING_PLAGUE_BEARER))
     ..put(BUILDING_CRYPT_FIEND, asList(BUILDING_NERUBIAN))

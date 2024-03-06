@@ -463,7 +463,7 @@ import ArmySpawner
         abilTooltipMap.get(ABIL_OGRE_SWING) + "\n\n"
     )
     createSpawnedUnit(UNIT_OGRE, UnitIds.ogre1, BUILDING_OGRE)
-        ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
+        // ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
         ..setNormalAbilities(commaList(ABIL_OGRE_SWING))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -494,11 +494,9 @@ import ArmySpawner
         abilTooltipMap.get(ABIL_HARDENED_SKIN_10)
     )
     let ogreCount = BTBuildingData.getUnitCount(BUILDING_OGRE)
-    let itm = createBasicItem(ITEM_OGRE_ARMORED)
+    var itm = createBasicItem(ITEM_OGRE_ARMORED)
     createSpawnedUnit(UNIT_OGRE_ARMORED, UnitIds.ogre1, BUILDING_OGRE_ARMORED)
-        ..setDefaultActiveAbility(commaList(
-            ABIL_OGRE_SWING
-            ))
+        // ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
         ..setNormalAbilities(commaList(ABIL_OGRE_SWING, ABIL_HARDENED_SKIN_10))
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
@@ -521,6 +519,40 @@ import ArmySpawner
         ..setModelFileExt(Units.ogreLord1)
         ..setIconGameInterfaceExt(Icons.bTNOgreLord)
         ..setUnitSoundSetExt(Soundsets.ogre)
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_FIREBOLT) + "\n\n" +
+        abilTooltipMap.get(ABIL_MAGIC_ARMOR_50) + "\n\n" +
+        abilTooltipMap.get(ABIL_HARDENED_SKIN_5)
+    )
+    itm = createBasicItem(ITEM_OGRE_MAGI)
+    createSpawnedUnit(UNIT_OGRE_MAGI, UnitIds.ogremagi)
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_FIREBOLT))
+        ..setNormalAbilities(commaList(ABIL_FIREBOLT, ABIL_AUTOCAST_FIREBOLT, ABIL_MAGIC_ARMOR_50, ABIL_HARDENED_SKIN_5))
+        ..registerItemDef(itm, ItemModifierType.Replace)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAnimationCastPoint(0.310)
+        ..setProjectileLaunchX(80)
+
+        ..setAttack1Data(AttackType.Siege, 80, 9, 11, 2)
+
+        ..setArmorData(ArmorType.Unarmored, 0)
+        ..setHitPointsMaximumBase(1500)
+        ..setMana(200)
+
+        ..setSpeedBase(240)
+        ..setItemCostReplacement(0, 200, 1, ogreCount, ogreCount, BUILDING_OGRE)
+        ..setSizeLarge()
+
+        ..setNameEnhance("X", "Magi Ogre")
+        ..tooltipStopListen(true, itm)
+        ..setAttack1Range(120)
+        ..setScalingValue(1.6)
+
+        ..setModelFile(Units.ogreMagi1)
+        ..setIconGameInterfaceExt(Icons.bTNOgreMagi)
+        ..setUnitSoundSet(Soundsets.ogre)
 
 @compiletime function createShadowHunter()
     let tooltip = new UnitTooltipGenerator("Shadowhunter Desc")

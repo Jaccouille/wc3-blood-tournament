@@ -15,7 +15,7 @@ import TooltipsUtils
 import ArmySpawner
 
 
-@compiletime function orcAbilites()
+@compiletime function orcAbilities()
     var tgen = new BTAbilityTooltipGenerator(
         "Increases a friendly unit's attack and movement speed.")
     new AbilityDefinitionBloodlustCreep(ABIL_BLOODLUST)
@@ -441,6 +441,31 @@ import ArmySpawner
             ))
 
     abilTooltipMap.put(ABIL_OGRE_SWING, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Hurls a fiery bolt that stuns a target enemy unit.")
+    new AbilityDefinitionFireBoltwarlock(ABIL_FIREBOLT)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..setDummyAbility()
+        ..tooltipStartListen()
+        ..presetDamage(_ -> 180)
+        ..presetDurationNormal(_ -> 2)
+        ..presetManaCost(_ -> 75)
+        ..setNameEnhance("Z", "Firebolt")
+        ..tooltipStopListen(false)
+
+    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_FIREBOLT)
+        ..presetManaCost(_ -> 75)
+        ..registerTooltipGenerator(tgen)
+        ..presetCastRange(_ -> 900)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 5)
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_FIREBOLT, tgen.generateFullTooltip())
+
 
     new BuffDefinition(BUFF_RAMPAGE, BuffIds.battleRoar)
         ..setIcon(Icons.bTNBerserk)
