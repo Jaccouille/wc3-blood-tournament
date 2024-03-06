@@ -365,7 +365,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setNameEnhance("Z", "Rejuvenation")
         ..tooltipStopListen(false)
 
-    createAutoCastedAlliedAbility(ABIL_AUTOCAST_REJUVENATION)
+    createAutoCastedAllieHealdAbility(ABIL_AUTOCAST_REJUVENATION)
         ..registerTooltipGenerator(tgen)
         ..setBuffs(1, BuffIds.rejuvenation.toRawCode())
         ..tooltipStartListen()

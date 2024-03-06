@@ -370,7 +370,7 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_REJUVENATION)
         u.addAbility(ABIL_AUTOCAST_REJUVENATION)
-        u.issueImmediateOrderById(OrderIds.innerfireon)
+        u.issueImmediateOrderById(OrderIds.healon)
 
     itemModifyUnitMap.put(ITEM_REJUVENATION, rejuvenationAction)
 

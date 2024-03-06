@@ -79,6 +79,24 @@ public function createAutoCastedAlliedAbility(int abilId) returns AbilityDefinit
         ..setLevels(1)
         ..setBuffs(1, DUMMY_BUFF.toRawCode())
 
+public function createAutoCastedAllieHealdAbility(int abilId) returns AbilityDefinitionHeal
+    let DUMMY_BUFF = BUFF_ID_GEN.next()
+    createDummyBuffAllied(DUMMY_BUFF)
+        ..setIcon(Icons.bTNAntiMagicShell)
+        ..setName(1, "Dummy Buff")
+        ..setTooltipNormal(1, "Dummy Buff")
+        ..setTooltipNormalExtended("Used to hide buff art")
+
+    return new AbilityDefinitionHeal(abilId)
+        ..setCheckDependencies(false)
+        ..presetManaCost(_ -> 0)
+        ..presetHitPointsGained(_ -> 0)
+        ..presetDurationNormal(_ -> 0.01)
+        ..presetBuffs(_ -> "")
+        ..setArtTarget("")
+        ..setLevels(1)
+        ..setBuffs(1, DUMMY_BUFF.toRawCode())
+
 
 public function createAutoCastAlliedManaTarget(int abilId) returns AbilityDefinitionManaBatteryObsidianStatue
     return new AbilityDefinitionManaBatteryObsidianStatue(abilId)

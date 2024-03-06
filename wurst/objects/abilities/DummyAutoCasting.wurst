@@ -65,6 +65,12 @@ init
                 let orderId = dummyToRealCastMapTarget.get(abilId).orderId
                 caster.startAbilityCooldown(abilId)
                 caster.issueTargetOrderById(orderId, target)
+
+                // Special case for dummy cast spell based on healing
+                // see https://www.hiveworkshop.com/threads/autocast-spell-that-target-injured-ally-apart-from-priest-healing.352970/
+                if abilId == ABIL_AUTOCAST_REJUVENATION
+                    target.removeAbility(ABIL_AUTOCAST_REJUVENATION)
+                    target.addAbility(ABIL_AUTOCAST_REJUVENATION)
             else
                 caster.issuePointOrder("attack", CENTER)
                 // caster.resetAbilityCooldown(abilId)
