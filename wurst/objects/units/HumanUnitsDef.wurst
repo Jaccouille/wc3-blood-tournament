@@ -373,12 +373,12 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAttack1Data(AttackType.Magic, 120, 5, 7, 1.3)
 
         ..setArmorData(ArmorType.Divine, 4)
-        ..setHitPointsMaximumBase(600)
+        ..setHitPointsMaximumBase(450)
         ..setHitPointsRegenerationRate(-15)
         ..setSummonedUnit()
 
         ..setSpeedBase(300)
-        ..setAutoPointValue()
+        ..setPointValue(60)
         ..tooltipStopListen(true)
 
         ..setArtSpecial(Objects.humanLargeDeathExplode)
