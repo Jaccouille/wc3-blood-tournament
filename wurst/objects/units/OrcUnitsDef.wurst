@@ -84,6 +84,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Pierce, 24, 2, 8, 1.8)
         ..setAttack1Range(600)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 2)
         ..setHitPointsMaximumBase(80)
@@ -114,6 +115,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Pierce, 40, 2, 4, 1.4)
         ..setAttack1Range(350)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 4)
         ..setHitPointsMaximumBase(160)
@@ -171,7 +173,7 @@ import ArmySpawner
         ..setAttack1Data(AttackType.Siege, 111, 6, 7, 1.6)
 
         ..setArmorData(ArmorType.Large, 7)
-        ..setHitPointsMaximumBase(900)
+        ..setHitPointsMaximumBase(1100)
 
         ..setSpeedBase(350)
         ..setSizeSmall()
@@ -179,6 +181,7 @@ import ArmySpawner
         ..tooltipStopListen(true, itm)
         ..setNameEnhance("Z", "Pack Leader")
         ..setAttack1Range(120)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setAttack1WeaponType(WeaponType.Normal)
         ..setAttack1WeaponSound(WeaponSound.MetalHeavyBash)
 
@@ -234,6 +237,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Pierce, 37, 5, 5, 1.5)
         ..setAttack1Range(350)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Small, 4)
         ..setHitPointsMaximumBase(1000)
@@ -258,6 +262,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Magic, 36, 2, 6, 1.45)
         ..setAttack1Range(400)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(120)
@@ -314,6 +319,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Magic, 11, 2, 4, 1.75)
         ..setAttack1Range(450)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(120)
@@ -342,6 +348,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Magic, 19, 2, 4, 1.75)
         ..setAttack1Range(550)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(80)
@@ -438,6 +445,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Magic, 79, 4, 14, 1.60)
         ..setAttack1Range(600)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setAttack1ProjectileArt(Abilities.serpentWardMissile)
 
         ..setArmorData(ArmorType.Small, 4)
@@ -483,6 +491,7 @@ import ArmySpawner
         ..tooltipStopListen(true)
 
         ..setAttack1Range(120)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setScalingValue(1.6)
 
         ..setModelFileExt(Units.ogre1)
@@ -514,6 +523,7 @@ import ArmySpawner
         ..setNameEnhance("Z", "Armored Ogre")
         ..tooltipStopListen(true, itm)
         ..setAttack1Range(120)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setScalingValue(1.6)
 
         ..setModelFileExt(Units.ogreLord1)
@@ -548,6 +558,7 @@ import ArmySpawner
         ..setNameEnhance("X", "Magi Ogre")
         ..tooltipStopListen(true, itm)
         ..setAttack1Range(120)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setScalingValue(1.6)
 
         ..setModelFile(Units.ogreMagi1)
@@ -562,6 +573,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Normal, 60, 10, 4, 1.1)
         ..setAttack1Range(550)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Small, 4)
         ..setHitPointsMaximumBase(800)
@@ -609,6 +621,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Normal, 50, 15, 15, 2)
         ..setAttack1Range(1100)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Large, 2)
         ..setHitPointsMaximumBase(240)

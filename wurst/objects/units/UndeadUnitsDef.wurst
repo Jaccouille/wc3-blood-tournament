@@ -110,6 +110,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Pierce, 26, 4, 4, 1.3)
         ..setAttack1Range(600)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(140)
@@ -135,6 +136,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Pierce, 26, 4, 4, 1.3)
         ..setAttack1Range(600)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(140)
@@ -156,6 +158,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Pierce, 14, 2, 2, 1.5)
         ..setAttack1Range(500)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(100)
@@ -182,6 +185,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Pierce, 18, 2, 2, 1.5)
         ..setAttack1Range(400)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(200)
@@ -218,6 +222,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Pierce, 70, 8, 4, 1.5)
         ..setAttack1Range(500)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 6)
         ..setHitPointsMaximumBase(200)
@@ -239,6 +244,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Pierce, 37, 8, 2, 1.3)
         ..setAttack1Range(400)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Large, 3)
         ..setHitPointsMaximumBase(300)
@@ -275,6 +281,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Magic, 14, 5, 3, 1.75)
         ..setAttack1Range(700)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 2)
         ..setHitPointsMaximumBase(50)
@@ -352,6 +359,7 @@ import ArmySpawner
         ..setAttack1MaximumNumberofTargets(2)
         ..setAttack1DamageLossFactor(0.30)
         ..setAttack1Range(450)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(150)
@@ -390,7 +398,7 @@ import ArmySpawner
         ..setTintingColorGreen(255)
         ..setMana(0)
         ..setAttack1WeaponType(WeaponType.Normal)
-        ..setAttack1WeaponSound(WeaponSound.MetalMediumBash)
+        ..setAttack1WeaponSound(WeaponSound.MetalHeavyBash)
         ..setGhostDeath()
 
     tooltip = new UnitTooltipGenerator(
@@ -408,6 +416,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Magic, 115, 4, 9, 1.75)
         ..setAttack1Range(700)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Divine, 4)
         ..setHitPointsMaximumBase(260)
@@ -435,6 +444,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Magic, 20, 4, 6, 1.75)
         ..setAttack1Range(400)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Divine, 2)
         ..setHitPointsMaximumBase(65)
@@ -461,6 +471,7 @@ import ArmySpawner
 
         ..setAttack1Data(AttackType.Pierce, 66, 7, 3, 1.3)
         ..setAttack1Range(650)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Small, 4)
         ..setHitPointsMaximumBase(180)
