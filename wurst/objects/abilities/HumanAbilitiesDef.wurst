@@ -264,12 +264,12 @@ let SLOW_TARGET_COUNT = 2
         "in a target area."
     )
 
-    new AbilityDefinitionArchMageBlizzard(ABIL_BLIZZARD)
+    new AbilityDefinitionBlizzardcreep(ABIL_BLIZZARD)
         ..setAnimationNames("stand,victory")
         ..setHeroAbility(false)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
-        ..setBuffs(1, commaList(""))
+        // ..setBuffs(1, commaList(BuffIds.blizzardCaster))
         ..presetNumberofShards(_ -> 6)
         ..presetAreaofEffect(_ -> 300)
         ..presetCooldown(_ -> 0)

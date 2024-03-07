@@ -37,7 +37,9 @@ init
                     src.issueImmediateOrderById(OrderIds.howlofterror)
             case UNIT_OGRE
                 if src.getAbilityCooldownRemaining(ABIL_OGRE_SWING) <= 0
+                    and not target.isType(UNIT_TYPE_ANCIENT) and not target.isType(UNIT_TYPE_SUMMONED)
                     src.issueTargetOrderById(OrderIds.curse, target)
             case UNIT_OGRE_ARMORED
                 if src.getAbilityCooldownRemaining(ABIL_OGRE_SWING) <= 0
+                    and not target.isType(UNIT_TYPE_ANCIENT) and not target.isType(UNIT_TYPE_SUMMONED)
                     src.issueTargetOrderById(OrderIds.curse, target)
