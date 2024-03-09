@@ -334,7 +334,6 @@ import ArmySpawner
 
 function createPaladin(int paladinId) returns BTUnitDefinition
     let tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_BASH_30) + "\n\n" +
         abilTooltipMap.get(ABIL_CLEAVE_30) + "\n\n" +
         abilTooltipMap.get(ABIL_DEVOTION_AURA_2) + "\n\n" +
         "Eternal Vanguard\n".color(SPECIAL_COLOR) +
@@ -342,7 +341,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     )
     return createSpawnedUnit(paladinId, UnitIds.paladin)
             ..registerTooltipGenerator(tooltip)
-            ..setNormalAbilities(commaList(ABIL_BASH_30, ABIL_CLEAVE_30, ABIL_DEVOTION_AURA_2))
+            ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_DEVOTION_AURA_2))
             ..tooltipStartListen()
 
             ..setAttack1Data(AttackType.Siege, 120, 5, 7, 1.3)
@@ -354,6 +353,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 
             ..setSizeSmall()
             ..setPointValue(0, 1000, 1)
+            ..addTooltipProperty("Army points", "100")
             ..tooltipStopListen(true)
 
             ..setAttack1Range(120)
@@ -367,7 +367,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         "Spawn upon paladin death.")
     createSpawnedUnit(UNIT_GHOST_PALADIN, UnitIds.paladin)
         ..registerTooltipGenerator(tooltip)
-        ..setNormalAbilities(commaList(ABIL_CLEAVE_30))
+        ..setNormalAbilities(commaList(""))
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Magic, 120, 5, 7, 1.3)
