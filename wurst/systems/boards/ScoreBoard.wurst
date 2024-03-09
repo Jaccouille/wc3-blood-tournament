@@ -16,10 +16,10 @@ import GameStates
 let KILL_COLUMN_WIDTH = 0.055
 let STAT_LABEL_WIDTH = 0.1
 let NAME_LABEL_WIDTH = 0.18
-let COL_LABEL_WIDTH = 0.07
+let COL_LABEL_WIDTH = 0.06
 
-let COL_ARMY_PTS = "ArmyPoints"
-let COL_BLOOD_PTS = "BloodPoints"
+let COL_ARMY_PTS = "ArmyPts"
+let COL_BLOOD_PTS = "BloodPts"
 let COL_TOTAL_BLOOD_PTS = "Total BP"
 
 let iconPlayerInGame = Icons.bTNSelectHeroOn

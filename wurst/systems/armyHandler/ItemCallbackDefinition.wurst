@@ -6,7 +6,7 @@ import LocalObjectIDs
 import OrderIds
 
 public let itemAddUnitMap = new HashMap<int, ItemAddUnit>
-public let itemModifyUnitMap = new HashMap<int, ItemModifyUnit>
+public let itemModifyUnitMap = new HashMap<int, ItemModifierAction>
 
 interface AddUnitCallbackListener
     function execute(LinkedList<int> unitTospawn, int count)
@@ -23,7 +23,18 @@ public class ItemAddUnit
     function execute(LinkedList<int> unitTospawn, int count)
         this.listener.execute(unitTospawn, count)
 
-public class ItemModifyUnit
+public class ItemModifier
+    ItemModifierAction action
+    int charges
+
+    construct(ItemModifierAction action, int charges)
+        this.action = action
+        this.charges = charges
+
+/**
+ * Represents an action that modifies a unit when an item is used.
+ */
+public class ItemModifierAction
     private ActionCallbackListener listener
 
     function addAction(ActionCallbackListener listener)
@@ -39,7 +50,7 @@ function replaceUnit(LinkedList<int> unitToSpawn, int oldUnit, int newUnit)
 init
 
     // ========================= HUMANS =========================
-    let defendAction = new ItemModifyUnit()
+    let defendAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_DEFEND)
         u.issueImmediateOrderById(OrderIds.defend)
@@ -107,7 +118,7 @@ init
     itemAddUnitMap.put(ITEM_PALADIN_SKIN_WHITE, paladinWhiteHairAction)
 
 
-    let inspireAction = new ItemModifyUnit()
+    let inspireAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_INSPIRE)
         u.addAbility(ABIL_AUTOCAST_INSPIRE)
@@ -131,14 +142,14 @@ init
     itemAddUnitMap.put(ITEM_SPELL_BREAKER, spellBreakerAction)
 
 
-    let armorBlessingAction = new ItemModifyUnit()
+    let armorBlessingAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ARMOR_BLESSING)
         u.issueImmediateOrderById(OrderIds.innerfireon)
 
     itemModifyUnitMap.put(ITEM_ARMOR_BLESSING, armorBlessingAction)
 
-    let weaponBlessingAction = new ItemModifyUnit()
+    let weaponBlessingAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_WEAPON_BLESSING)
         u.issueImmediateOrderById(OrderIds.innerfireon)
@@ -146,14 +157,14 @@ init
     itemModifyUnitMap.put(ITEM_WEAPON_BLESSING, weaponBlessingAction)
 
 
-    let darkMageAction = new ItemModifyUnit()
+    let darkMageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ORB_DARKNESS)
 
     itemModifyUnitMap.put(ITEM_DARK_MAGE, darkMageAction)
 
 
-    let fireMageAction = new ItemModifyUnit()
+    let fireMageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_INCINERATE)
         u.addAbility(ABIL_AUTOCAST_SOUL_BURN)
@@ -163,7 +174,7 @@ init
     itemModifyUnitMap.put(ITEM_FIRE_MAGE, fireMageAction)
 
 
-    let iceMageAction = new ItemModifyUnit()
+    let iceMageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ORB_FROST)
         u.addAbility(ABIL_AUTOCAST_FROST_NOVA)
@@ -182,12 +193,12 @@ init
 
 
     // ========================= ORC =========================
-    let spiritWolfAction = new ItemModifyUnit()
+    let spiritWolfAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_SUMMON_SPIRIT_WOLF1)
     itemModifyUnitMap.put(ITEM_SPIRIT_WOLF1, spiritWolfAction)
 
-    let orbLightningAction = new ItemModifyUnit()
+    let orbLightningAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ORB_LIGHTNING)
     itemModifyUnitMap.put(ITEM_ORB_LIGHTNING, orbLightningAction)
@@ -199,7 +210,7 @@ init
 
     itemAddUnitMap.put(ITEM_FARSEER, farseerAction)
 
-    let healingWaveAction = new ItemModifyUnit()
+    let healingWaveAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_HEALING_WAVE)
         u.addAbility(ABIL_AUTOCAST_HEALING_WAVE)
@@ -207,7 +218,7 @@ init
 
     itemModifyUnitMap.put(ITEM_HEALING_WAVE, healingWaveAction)
 
-    let manaWardAction = new ItemModifyUnit()
+    let manaWardAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_MANA_WARD)
         u.addAbility(ABIL_AUTOCAST_MANA_WARD)
@@ -215,7 +226,7 @@ init
 
     itemModifyUnitMap.put(ITEM_MANA_WARD, manaWardAction)
 
-    let drunkenHazeAction = new ItemModifyUnit()
+    let drunkenHazeAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_DRUNKEN_HAZE)
         u.addAbility(ABIL_AUTOCAST_DRUNKEN_HAZE)
@@ -223,7 +234,7 @@ init
 
     itemModifyUnitMap.put(ITEM_DRUNKEN_HAZE, drunkenHazeAction)
 
-    let burningBladeAction = new ItemModifyUnit()
+    let burningBladeAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_BURNING_BLADE_100)
 
@@ -260,7 +271,7 @@ init
     itemAddUnitMap.put(ITEM_OGRE_MAGI, magiOgreAction)
 
 
-    let rampageAction = new ItemModifyUnit()
+    let rampageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_RAMPAGE)
 
@@ -287,7 +298,7 @@ init
             replaceUnit(unitToSpawn, UNIT_SKELETAL_ARCHER, UNIT_FROST_ARCHER)
     itemAddUnitMap.put(ITEM_FROST_ARCHER, frostArrowAction)
 
-    let unholyFrenzyAction = new ItemModifyUnit()
+    let unholyFrenzyAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.removeAbility(ABIL_AUTOCAST_ANTI_MAGIC_SHELL)
         u.removeAbility(ABIL_ANTI_MAGIC_SHELL)
@@ -297,7 +308,7 @@ init
 
     itemModifyUnitMap.put(ITEM_UNHOLY_FRENZY, unholyFrenzyAction)
 
-    let frostArmorAction = new ItemModifyUnit()
+    let frostArmorAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.removeAbility(ABIL_AUTOCAST_ANTI_MAGIC_SHELL)
         u.removeAbility(ABIL_ANTI_MAGIC_SHELL)
@@ -306,7 +317,7 @@ init
 
     itemModifyUnitMap.put(ITEM_FROST_ARMOR, frostArmorAction)
 
-    let raiseSkeletonMageAction = new ItemModifyUnit()
+    let raiseSkeletonMageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.removeAbility(ABIL_RAISE_SKELETON)
         u.addAbility(ABIL_RAISE_SKELETON_MAGE)
@@ -314,7 +325,7 @@ init
 
     itemModifyUnitMap.put(ITEM_RAISE_SKELETON_MAGE, raiseSkeletonMageAction)
 
-    let raiseSkeletonOrcAction = new ItemModifyUnit()
+    let raiseSkeletonOrcAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.removeAbility(ABIL_RAISE_SKELETON)
         u.addAbility(ABIL_RAISE_SKELETON_ORC)
@@ -322,7 +333,7 @@ init
 
     itemModifyUnitMap.put(ITEM_RAISE_SKELETON_ORC, raiseSkeletonOrcAction)
 
-    let crippleAction = new ItemModifyUnit()
+    let crippleAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_CRIPPLE_ORB)
 
@@ -341,7 +352,7 @@ init
     itemAddUnitMap.put(ITEM_VAMPIRE_LORD, vampireLordAction)
 
 
-    let deathcoilAction = new ItemModifyUnit()
+    let deathcoilAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_AUTOCAST_DEATH_COIL)
         u.addAbility(ABIL_DEATH_COIL)
@@ -352,7 +363,7 @@ init
     itemModifyUnitMap.put(ITEM_DEATH_COIL, deathcoilAction)
 
 
-    let unholyAuraAction = new ItemModifyUnit()
+    let unholyAuraAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_UNHOLY_AURA)
 
@@ -372,7 +383,7 @@ init
             unitToSpawn.push(UNIT_ARCHDRUID)
     itemAddUnitMap.put(ITEM_ARCHDRUID, archdruidAction)
 
-    let rejuvenationAction = new ItemModifyUnit()
+    let rejuvenationAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_REJUVENATION)
         u.addAbility(ABIL_AUTOCAST_REJUVENATION)
@@ -380,7 +391,7 @@ init
 
     itemModifyUnitMap.put(ITEM_REJUVENATION, rejuvenationAction)
 
-    let entanglingRootAction = new ItemModifyUnit()
+    let entanglingRootAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ENTANGLING_ROOT)
         u.addAbility(ABIL_AUTOCAST_ENTANGLING_ROOT)
@@ -388,7 +399,7 @@ init
 
     itemModifyUnitMap.put(ITEM_ENTANGLING_ROOT, entanglingRootAction)
 
-    let wandOfIllusionAction = new ItemModifyUnit()
+    let wandOfIllusionAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_WAND_OF_ILLUSION)
         u.addAbility(ABIL_AUTOCAST_WAND_OF_ILLUSION)

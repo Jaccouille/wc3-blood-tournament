@@ -165,14 +165,16 @@ function genList(int unitId, int count) returns LinkedList<int>
 // Distance between units positioned in formation mode
 @configurable constant FORMATION_WIDTH = 120.
 @configurable constant FORMATION_HEIGHT = 80.
-@configurable constant MAX_UNIT_PER_PLAYER = 80
+// Number of units allocated per dummy players
+@configurable constant MAX_UNIT_PER_DUMMY_PLAYER = 80
 
 public let playerToArmySpawner = new HashMap<player, ArmySpawner>
 
 
 public class ArmySpawner
-// TODO: remove once debug done
+    // TODO: remove once debug done
     static int count = 0
+
     SpawnZone spawnZone
     player _p
     angle spawnDirection
@@ -186,7 +188,9 @@ public class ArmySpawner
     boolean spawnFinished = false
     // List of units spawned by a building
     LinkedList<int> squadIds = new LinkedList<int>
-    LinkedList<Pair<ItemModifyUnit, int>> unitModifierList = new LinkedList<Pair<ItemModifyUnit, int>>
+
+    // LinkedList<ItemModifier> unitModifierList = new LinkedList<ItemModifier>
+    LinkedList<ItemModifier> unitModifierList = new LinkedList<ItemModifier>
 
     construct(player _p)
         this._p = _p
@@ -213,7 +217,7 @@ public class ArmySpawner
             if itemAddUnitMap.has(itm.getTypeId())
                 itemAddUnitMap.get(itm.getTypeId()).execute(squadIds, itm.getCharges())
             if itemModifyUnitMap.has(itm.getTypeId())
-                unitModifierList.push(new Pair(itemModifyUnitMap.get(itm.getTypeId()), itm.getCharges()))
+                unitModifierList.push(new ItemModifier(itemModifyUnitMap.get(itm.getTypeId()), itm.getCharges()))
             // Log.debug("BitemModifyUnit :" + unitModifierList.size().toString())
 
     function setSpawnZone(SpawnZone spawnZone)
@@ -228,11 +232,11 @@ public class ArmySpawner
 
     private function executeUnitModifier(unit newUnit)
         // a being the callback defined in ItemCallbackDefinition.wurst
-        unitModifierList.get(0).a.execute(newUnit)
+        unitModifierList.get(0).action.execute(newUnit)
         // b being the item charges
-        unitModifierList.get(0).b -= 1
+        unitModifierList.get(0).charges -= 1
         // Clean up the pair obj once it has been used
-        if unitModifierList.get(0).b <= 0
+        if unitModifierList.get(0).charges <= 0
             destroy unitModifierList.dequeue()
 
     private function spawnUnit(int unitId, vec2 spawnPos) returns unit
@@ -240,13 +244,12 @@ public class ArmySpawner
         // Log.debug("Army size : " + armySize.toString())
         // Need to spread unit owner over 2 dummy player, once it reaches MAX_UNIT_PER_PLAYER
         // change the idx to next dummy player
-        let dummyPlayerIdx = armySize div MAX_UNIT_PER_PLAYER mod pDatas.get(_p).dummyPlayers.size()
+        let dummyPlayerIdx = armySize div MAX_UNIT_PER_DUMMY_PLAYER mod pDatas.get(_p).dummyPlayers.size()
 
         // Log.debug("pre spawn")
         let newUnit = createUnit(_p.getDummyPlayer(dummyPlayerIdx), unitId, spawnPos, spawnZone.angle)
         count += 1
         // Log.debug("Unit spawned " +  count.toString())
-        // newUnit.setMoveSpeed(522)
         if gameConfig.getHealthMultiplier() != 1.
             newUnit.setHP(newUnit.getHP() * gameConfig.getHealthMultiplier())
         if gameConfig.getDamageMultiplier() != 1.
