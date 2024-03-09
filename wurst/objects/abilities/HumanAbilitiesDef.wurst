@@ -122,7 +122,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetAreaofEffect(_ -> SLOW_AOE)
         ..presetManaCost(_ -> 90)
         ..presetCooldown(_ -> 4)
-        ..presetCastRange(_ -> 700)
+        ..presetCastRange(_ -> 750)
         ..setNameEnhance("Z", "Slow")
         ..tooltipStopListen(true)
 
@@ -198,7 +198,7 @@ let SLOW_TARGET_COUNT = 2
 
     createAutoCastedEnemyAbility(ABIL_AUTOCAST_SOUL_BURN)
         ..registerTooltipGenerator(tgen)
-        ..presetCastRange(_ -> 600)
+        ..presetCastRange(_ -> 750)
         ..presetManaCost(_ -> 80)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 3)
@@ -235,23 +235,22 @@ let SLOW_TARGET_COUNT = 2
     new AbilityDefinitionFrostNovacreep(ABIL_FROST_NOVA)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
-        ..presetCooldown(_ -> 0)
+        ..setDummyAbility()
         ..tooltipStartListen()
-        ..presetAreaofEffectDamage(_ -> 50)
-        ..presetSpecificTargetDamage(_ -> 100)
+        ..presetAreaofEffectDamage(_ -> 75)
+        ..presetSpecificTargetDamage(_ -> 150)
         ..addTooltipProperty("Attack Speed Reduction", _ -> "25%")
         ..addTooltipProperty("Movement Speed Reduction", _ -> "50%")
         ..presetAreaofEffect(_ -> 150)
-        ..presetManaCost(_ -> 180)
+        ..presetManaCost(_ -> 125)
         ..presetDurationNormal(_ -> 3)
-        ..presetCastRange(_ -> 600)
         ..setNameEnhance("X", "Frost Nova")
         ..tooltipStopListen(false)
 
     createAutoCastedEnemyAbility(ABIL_AUTOCAST_FROST_NOVA)
         ..registerTooltipGenerator(tgen)
-        ..presetCastRange(_ -> 600)
-        ..presetManaCost(_ -> 100)
+        ..presetCastRange(_ -> 750)
+        ..presetManaCost(_ -> 125)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 5)
         ..tooltipStopListen(true)
@@ -261,7 +260,7 @@ let SLOW_TARGET_COUNT = 2
 
     tgen = new BTAbilityTooltipGenerator(
         "Calls down waves of freezing ice shards that damage units " +
-        "in a target area."
+        "in a target area. Does not stack with other blizzard."
     )
 
     new AbilityDefinitionBlizzardcreep(ABIL_BLIZZARD)

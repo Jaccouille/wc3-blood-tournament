@@ -343,7 +343,7 @@ public let ABIL_AFFLICTION                = compiletime(ABIL_ID_GEN.next())
 public let ABIL_AUTOCAST_AFFLICTION       = compiletime(ABIL_ID_GEN.next())
 
 // ==================== NIGHT ELF ABILITIES =================
-public let ABIL_MULTISHOT_3               = compiletime(ABIL_ID_GEN.next())
+public let ABIL_MULTISHOT_1               = compiletime(ABIL_ID_GEN.next())
 public let ABIL_MULTISHOT_5               = compiletime(ABIL_ID_GEN.next())
 public let ABIL_BLINK                     = compiletime(ABIL_ID_GEN.next())
 public let ABIL_FAN_OF_KNIVES             = compiletime(ABIL_ID_GEN.next())

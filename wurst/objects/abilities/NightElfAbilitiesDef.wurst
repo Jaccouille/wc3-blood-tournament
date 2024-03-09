@@ -22,7 +22,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 @compiletime function createNightElfAbilities()
 
     var tgen = new BTAbilityTooltipGenerator("Fire projectile to additional target.")
-    new AbilityDefinitionRocketAttack(ABIL_MULTISHOT_3)
+    new AbilityDefinitionRocketAttack(ABIL_MULTISHOT_1)
         ..setCheckDependencies(false)
         ..setMissileArt(Abilities.arrowMissile1)
         ..setMissileSpeed(STANDARD_PROJECTILE_SPEED)
@@ -35,7 +35,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStopListen(true)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
-    abilTooltipMap.put(ABIL_MULTISHOT_3, tgen.generateFullTooltip())
+    abilTooltipMap.put(ABIL_MULTISHOT_1, tgen.generateFullTooltip())
 
     tgen = new BTAbilityTooltipGenerator("Can attack multiple target.")
     new AbilityDefinitionRocketAttack(ABIL_MULTISHOT_5)
@@ -130,7 +130,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
     tgen = new BTAbilityTooltipGenerator(
         "Calls down waves of falling stars; " +
-        "each wave deals damage to units in an area.")
+        "each wave deals damage to units in an area. Does not stack with other starfall.")
     new AbilityDefinitionArchMageBlizzard(ABIL_STARFALL)
         ..setHeroAbility(false)
         ..setBuffs(1, "")
@@ -197,10 +197,10 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         )
     new AbilityDefinitionEntanglingRootscreep(ABIL_ENTANGLING_ROOT)
         ..setHeroAbility(false)
+        ..setDummyAbility()
         ..setCheckDependencies(false)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
-        ..presetCastRange(_ -> 800)
         ..presetCooldown(_ -> 80)
         ..tooltipStartListen()
         ..presetDamageperSecond(_ -> 20)
@@ -214,7 +214,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetCooldown(_ -> 5)
         ..presetManaCost(_ -> 80)
-        ..presetCastRange(_ -> 800)
+        ..presetCastRange(_ -> 700)
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
@@ -318,10 +318,12 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     new AbilityDefinitionParasite(ABIL_PARASITE_SEED)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..presetDamageperSecond(_ -> 20)
+        ..presetDamageperSecond(_ -> 40)
         ..presetSummonedUnitCount(_ -> 2)
         ..presetSummonedUnitDuration(_ -> 80)
         ..presetCooldown(_ -> 2)
+        ..presetCastRange(_ -> 900)
+        ..presetDurationNormal(_ -> 10)
         ..presetManaCost(_ -> 40)
         ..setNameEnhance("Z", "Parasite Seed")
         ..tooltipStopListen(true)
@@ -357,13 +359,12 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "Heals a target friendly unit over the duration."
     )
     new AbilityDefinitionRejuvinationcreep(ABIL_REJUVENATION)
+        ..setDummyAbility()
         ..registerTooltipGenerator(tgen)
-        ..presetCooldown(_ -> 0)
         ..presetManaCost(_ -> 60)
         ..tooltipStartListen()
         ..presetHitPointsGained(_ -> 600)
         ..presetDurationNormal(_ -> 12)
-        ..presetCastRange(_ -> 600)
         ..setNameEnhance("Z", "Rejuvenation")
         ..tooltipStopListen(false)
 
@@ -374,7 +375,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..presetCooldown(_ -> 4)
         ..presetManaCost(_ -> 60)
         ..tooltipStopListen(true)
-        ..presetCastRange(_ -> 600)
+        ..presetCastRange(_ -> 900)
 
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_REJUVENATION, tgen.generateFullTooltip())
@@ -567,7 +568,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..presetSummonedUnitDamage(_ -> 200)
         ..presetManaCost(_ -> 30)
         ..presetCooldown(_ -> 2)
-        ..presetCastRange(_ -> 500)
+        ..presetCastRange(_ -> 900)
         ..setNameEnhance("Z", "Abolish Magic")
         ..tooltipStopListen(true)
 

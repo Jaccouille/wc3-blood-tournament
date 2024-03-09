@@ -89,9 +89,9 @@ import ArmySpawner
         ..setIconGameInterfaceExt(Icons.bTNArcher)
         ..setUnitSoundSetExt(Soundsets.archer)
 
-    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_MULTISHOT_3))
+    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_MULTISHOT_1))
     createSpawnedUnit(UNIT_NE_RANGER, UnitIds.shandris, BUILDING_NE_RANGER)
-        ..setNormalAbilities(commaList(ABIL_MULTISHOT_3))
+        ..setNormalAbilities(commaList(ABIL_MULTISHOT_1))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
