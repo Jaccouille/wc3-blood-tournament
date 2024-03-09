@@ -24,7 +24,7 @@ class GameConfig
     private var bloodPointExchange = 1500
     private var fogOfWar = false
     private let banList = new LinkedList<int>()
-    private let builderList = new LinkedList<int>()
+    private let builderList = BUILDER_LIST
 
     function setTestMode(boolean value)
         testMode = value
