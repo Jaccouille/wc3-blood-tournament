@@ -2,18 +2,17 @@ projectName: Blood Tournamenet DE
 dependencies:
 - https://github.com/wurstscript/wurstStdlib2
 - https://github.com/theQuazz/wurst-lodash
-- https://github.com/Cokemonkey11/wurst-debugging-tools
 buildMapData:
-  name: '|cffff5436Blood Tournament Definitive Edition v0.1s'
-  fileName: Blood.Tournament.Definitive.Edition.v0.1s
+  name: '|cffff5436Blood Tournament Definitive Edition v0.1t'
+  fileName: Blood.Tournament.Definitive.Edition.v0.1t
   author: Jaccouille
   scenarioData:
-    description: "Released on 03/03/2024\n    A Blood tournament map featuring Human,\
+    description: "Released on 09/03/2024\n    A Blood tournament map featuring Human,\
       \ Orc, Undead and Night Elf faction.      \nCan be played solo against bots."
     suggestedPlayers: '8'
     loadingScreen:
       title: Jaccouille presents
-      subTitle: '|cffff5436Blood Tournament Definitive Edition v0.1m'
+      subTitle: '|cffff5436Blood Tournament Definitive Edition v0.1t'
       text: "Choose a faction amongst Human, Orc, Undead or Night Elf.\n  Experiment\
         \ and find the optimal army composition.\n  Enjoy the mayhem!"
   optionsFlags:

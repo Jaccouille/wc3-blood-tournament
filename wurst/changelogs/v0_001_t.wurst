@@ -1,0 +1,14 @@
+package v0_001_t
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 1, 't')
+        ..add("(HU) Reduced ghost paladin hp from 600 to 450")
+        ..add("(HU) Reduced sniper damage")
+        ..add("(HU) Removed paladin cleave")
+        ..add("(OR) new unit : Ogre magi alternative to armored Ogre")
+        ..add("(UN) Fixed skeleton death giving corpses")
+        ..add("Added total BP sum")
+        ..add("Added total blood point spilled at the end of the game")
+        ..add("Increased all projectile speed")
