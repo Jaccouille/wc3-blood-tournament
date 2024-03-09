@@ -129,7 +129,7 @@ import ArmySpawner
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Pierce, 45, 4, 6, 1.7)
+        ..setAttack1Data(AttackType.Pierce, 32, 4, 6, 1.7)
         ..setAttack1Range(900)
 
         ..setArmorData(ArmorType.Medium, 2)
