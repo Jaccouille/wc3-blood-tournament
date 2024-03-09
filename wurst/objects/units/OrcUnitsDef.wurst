@@ -471,7 +471,7 @@ import ArmySpawner
         abilTooltipMap.get(ABIL_OGRE_SWING) + "\n\n"
     )
     createSpawnedUnit(UNIT_OGRE, UnitIds.ogre1, BUILDING_OGRE)
-        // ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
+        ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
         ..setNormalAbilities(commaList(ABIL_OGRE_SWING))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -505,7 +505,7 @@ import ArmySpawner
     let ogreCount = BTBuildingData.getUnitCount(BUILDING_OGRE)
     var itm = createBasicItem(ITEM_OGRE_ARMORED)
     createSpawnedUnit(UNIT_OGRE_ARMORED, UnitIds.ogre1, BUILDING_OGRE_ARMORED)
-        // ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
+        ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
         ..setNormalAbilities(commaList(ABIL_OGRE_SWING, ABIL_HARDENED_SKIN_10))
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
