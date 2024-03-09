@@ -14,6 +14,8 @@ import GameStates
 import Toolkit
 import IDListConstant
 
+@configurable constant LABEL_COLOR = GENERAL_COLOR
+@configurable constant VALUE_COLOR = SPECIAL_COLOR
 
 init
     new GameMode("start", "st", "General", "Start the game") (mode, args) ->
@@ -23,11 +25,11 @@ init
         gameConfig.getRoundGoldIncome().getFirst().toString() + ", min : 100") (mode, args) ->
         if (args.size() > 1)
             let roundGoldIncomes = args.drop(1).map(e -> max(e.toInt(), 100))
-            var msg = "Round gold income set to : "
-            msg += roundGoldIncomes.map(e -> e.toString().color(GOLD_COLOR)).join(", ")
+            var msg = "Round gold income set to : ".color(LABEL_COLOR)
+            msg += roundGoldIncomes.map(e -> e.toString().color(VALUE_COLOR)).join(", ")
 
-            msg += "\nRemaining round gold income set to "
-                + roundGoldIncomes.getLast().toString().color(GOLD_COLOR)
+            msg += "\nRemaining round gold income set to :".color(LABEL_COLOR)
+                + roundGoldIncomes.getLast().toString().color(VALUE_COLOR)
             mode.message(msg)
             gameConfig.setRoundGoldIncome(roundGoldIncomes)
 
@@ -35,37 +37,38 @@ init
         gameConfig.getRoundCount().toString() + ", max : 64, min : 0") (mode, args) ->
         if (args.size() > 1)
             let roundCount = min(max(args.get(1).toInt(), 0), 64)
-            mode.message("Round number before elimination phase set to " + roundCount.toString().color(GENERAL_COLOR))
+            mode.message("Round number before elimination phase set to ".color(LABEL_COLOR)
+             + roundCount.toString().color(VALUE_COLOR))
             gameConfig.setRoundCount(roundCount)
 
     // new GameMode("bot", "b", "General", "Enable bot for leaver, default : " +
     // gameConfig.isBotAIEnabled().toString()) (mode, args) ->
     //     if not gameConfig.isBotAIEnabled()
-    //         mode.message("Bot mode enabled, a bot will replace leavers".color(GENERAL_COLOR))
+    //         mode.message("Bot mode enabled, a bot will replace leavers".color(LABEL_COLOR))
     //         gameConfig.setBotAIMode(true)
     //     else
-    //         mode.message("Bot mode disabled, bot won't replace leavers".color(GENERAL_COLOR))
+    //         mode.message("Bot mode disabled, bot won't replace leavers".color(LABEL_COLOR))
     //         gameConfig.setBotAIMode(false)
 
     new GameMode("start-gold", "sg", "General", "Set first round gold amount per players, default : " +
     gameConfig.getStartingGold().toString() + ", min : 100") (mode, args) ->
         if (args.size() > 1)
             let startingGold = max(args.get(1).toInt(), 100)
-            mode.message("Starting gold set to " + startingGold.toString().color(GOLD_COLOR))
+            mode.message("Starting gold set to ".color(LABEL_COLOR) + startingGold.toString().color(VALUE_COLOR))
             gameConfig.setStartingGold(startingGold)
 
     new GameMode("start-bp", "sb", "General", "Set first round blood point amount per players, default : " +
     gameConfig.getStartingLumber().toString() + ", min : 0") (mode, args) ->
         if (args.size() > 1)
             let startingLumber = max(args.get(1).toInt(), 0)
-            mode.message("Starting blood point set to " + startingLumber.toString().color(RED_COLOR))
+            mode.message("Starting blood point set to ".color(LABEL_COLOR) + startingLumber.toString().color(RED_COLOR))
             gameConfig.setStartingLumber(startingLumber)
 
     new GameMode("interlude-time", "it", "Time between each round (seconds) default : " +
         gameConfig.getRoundInterludeTime().toInt().toString() + ", max : 180, min : 30") (mode, args) ->
         if (args.size() > 1)
             let interludeTime = min(max(args.get(1).toInt(), 30), 180)
-            mode.message("Interlude time set to " + interludeTime.toString().color(GOLD_COLOR))
+            mode.message("Interlude time set to ".color(LABEL_COLOR) + interludeTime.toString().color(VALUE_COLOR))
             gameConfig.setRoundInterludeTime(interludeTime.toReal())
 
     new GameMode("ban", "b", "General", "Ban faction, separated by space, up to {0} ban, e.g : HU OR UN"
@@ -76,7 +79,8 @@ init
             if banList.size() >= BUILDER_LIST.size()
                 banList.pop()
             gameConfig.setBanList(banList)
-            let msg  = "Ban : {0}".format(factionNames.map(e -> RACE_ABBREV.get(e.toUpperCase())).joinBy(", ").color(COLOR_RED))
+            let msg  = "Ban : {0}".color(LABEL_COLOR)
+                .format(factionNames.map(e -> RACE_ABBREV.get(e.toUpperCase())).joinBy(", ").color(VALUE_COLOR))
             mode.message(msg)
 
 
@@ -84,59 +88,59 @@ init
         gameConfig.getSpawnCap().toString() + ", max : 120, min : 60") (mode, args) ->
         if (args.size() > 1)
             let spawnCap = max(min(args.get(1).toInt(), 120), 60)
-            mode.message("Spawn capacity set to " + spawnCap.toString().color(GOLD_COLOR))
+            mode.message("Spawn capacity set to ".color(LABEL_COLOR) + spawnCap.toString().color(VALUE_COLOR))
             gameConfig.setSpawnCap(spawnCap)
 
     new GameMode("bounty-multiplier", "bm", "Set blood points bounty multiplier, default : " +
         gameConfig.getBountyMultiplier().toString(1) + ", max : 10.0, min : 0") (mode, args) ->
         if (args.size() > 1)
             let bountyMultiplier = min(max(args.get(1).toReal(), 0.0), 10.0)
-            mode.message("Bounty multiplier set to x" + bountyMultiplier.toString(2).color(GOLD_COLOR))
+            mode.message("Bounty multiplier set to ".color(LABEL_COLOR) + "x{0}".color(VALUE_COLOR).format(bountyMultiplier.toString(2)))
             gameConfig.setBountyMultiplier(bountyMultiplier)
 
     new GameMode("army-points-multiplier", "apm", "Set army points multiplier, default : " +
         gameConfig.getArmyPointsMultiplier().toString(1) + ", max : 10.0, min : 0") (mode, args) ->
         if (args.size() > 1)
             let armyPointMultiplier = min(max(args.get(1).toReal(), 0.0), 10.0)
-            mode.message("Army points multiplier set to x" + armyPointMultiplier.toString(2).color(GOLD_COLOR))
+            mode.message("Army points multiplier set to ".color(LABEL_COLOR) + "x{0}".color(VALUE_COLOR).format(armyPointMultiplier.toString(2)))
             gameConfig.setArmyPointsMultiplier(armyPointMultiplier)
 
     new GameMode("damage-multiplier", "dm", "Set unit basic attack multiplier, default : " +
         gameConfig.getDamageMultiplier().toString(1) + ", max : 2.0, min : 0.5") (mode, args) ->
         if (args.size() > 1)
             let damageMultiplier = min(max(args.get(1).toReal(), 0.5), 2.0)
-            mode.message("Damage multiplier set to x" + damageMultiplier.toString(2).color(GOLD_COLOR))
+            mode.message("Damage multiplier set to ".color(LABEL_COLOR) + "x{0}".color(VALUE_COLOR).format(damageMultiplier.toString(2)))
             gameConfig.setDamageMultiplier(damageMultiplier)
 
     new GameMode("health-multiplier", "hm", "Set blood points health multiplier, default : " +
         gameConfig.getHealthMultiplier().toString(1) + ", max : 2.0, min : 0.5") (mode, args) ->
         if (args.size() > 1)
             let healthMultiplier = min(max(args.get(1).toReal(), 0.5), 2.0)
-            mode.message("Health multiplier set to x" + healthMultiplier.toString(2).color(GOLD_COLOR))
+            mode.message("Health multiplier set to ".color(LABEL_COLOR) + "x{0}".color(VALUE_COLOR).format(healthMultiplier.toString(2)))
             gameConfig.setHealthMultiplier(healthMultiplier)
 
     new GameMode("multiple-builder", "mb", "Disable builder limit") (mode, args) ->
         if not gameConfig.isMultipleBuilderEnabled()
-            mode.message("Multiple builder enabled, players can use more than 1 builder".color(GENERAL_COLOR))
+            mode.message("Multiple builder enabled, players can use more than 1 builder".color(LABEL_COLOR))
             gameConfig.setMultipleBuilder(true)
         else
-            mode.message("Multiple builder disabled, players can use only 1 builder".color(GENERAL_COLOR))
+            mode.message("Multiple builder disabled, players can use only 1 builder".color(LABEL_COLOR))
             gameConfig.setMultipleBuilder(false)
 
     new GameMode("all-random", "ar", "Every players get 1 random builder (doesn't work with mb)") (mode, args) ->
         if not gameConfig.isAllRandomEnabled()
-            mode.message("All random enabled, players get random builder".color(GENERAL_COLOR))
+            mode.message("All random enabled, players get random builder".color(LABEL_COLOR))
             gameConfig.setAllRandom(true)
         else
-            mode.message("All random disabled, players can choose builder".color(GENERAL_COLOR))
+            mode.message("All random disabled, players can choose builder".color(LABEL_COLOR))
             gameConfig.setAllRandom(false)
 
     new GameMode("fog", "f", "Enable fog of war on player's building zones") (mode, args) ->
         if not gameConfig.isFogOfWarEnabled()
-            mode.message("Fog of war enabled, player's building zones are masked".color(GENERAL_COLOR))
+            mode.message("Fog of war enabled, player's building zones are masked".color(LABEL_COLOR))
             gameConfig.setFogOfWar(true)
         else
-            mode.message("Fog of war disabled, player's building zones are exposed".color(GENERAL_COLOR))
+            mode.message("Fog of war disabled, player's building zones are exposed".color(LABEL_COLOR))
             gameConfig.setFogOfWar(false)
 
     new GameMode("set-exchange-rate", "ser", "General", "Set gold/blood points exchange rates, default : " +
@@ -149,17 +153,17 @@ init
             gameConfig.setBloodPointExchange(bpEx)
             let goldMsg = goldEx.toString().color(COLOR_GOLD)
             let bpMsg = bpEx.toString().color(COLOR_RED)
-            mode.message("Exchange rate set to : {0} <---> {1}".format(
+            mode.message("Exchange rate set to : {0} <---> {1}".color(LABEL_COLOR).format(
                 goldMsg, bpMsg
             ))
 
 
     new GameMode("no-portal", "np", "Removes portal model") (mode, args) ->
         if not gameConfig.isDisplayPortalEnabled()
-            mode.message("Portal display disable".color(GENERAL_COLOR))
+            mode.message("Portal display disable".color(LABEL_COLOR))
             gameConfig.setDisplayPortal(false)
         else
-            mode.message("Portal display enable".color(GENERAL_COLOR))
+            mode.message("Portal display enable".color(LABEL_COLOR))
             gameConfig.setDisplayPortal(true)
 
     new GameMode("test-mode", "tm", "Testing", "Enables test commands") (mode, args) ->

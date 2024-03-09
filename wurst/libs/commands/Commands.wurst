@@ -3,8 +3,23 @@ package Commands
 
 // Local imports:
 import ChatCommands
+import ColorUtils
 
 init
     registerCommandAll("clear") (triggerPlayer, args) ->
         if localPlayer == triggerPlayer
             ClearTextMessages()
+    registerCommandAll("tc") (triggerPlayer, args) ->
+        if localPlayer == triggerPlayer
+            printTimedToPlayer("Test", 10, triggerPlayer)
+            printTimedToPlayer("Test".color(ENERGY_COLOR), 10, triggerPlayer)
+            printTimedToPlayer("Test".color(GENERAL_COLOR), 10, triggerPlayer)
+            printTimedToPlayer("Test".color(GOLD_COLOR), 10, triggerPlayer)
+            printTimedToPlayer("Test".color(GRAY_COLOR), 10, triggerPlayer)
+            printTimedToPlayer("Test".color(GREEN_COLOR), 10, triggerPlayer)
+            printTimedToPlayer("Test".color(HIGHLIGHT_COLOR), 10, triggerPlayer)
+            printTimedToPlayer("Test".color(RED_COLOR), 10, triggerPlayer)
+            printTimedToPlayer("Test".color(SPECIAL_COLOR), 10, triggerPlayer)
+            printTimedToPlayer("Test".color(HEALTH_COLOR), 10, triggerPlayer)
+            printTimedToPlayer("Test".color(MAGIC_RESIST_COLOR), 10, triggerPlayer)
+            printTimedToPlayer("Test".color(ARTIFACT_COLOR), 10, triggerPlayer)
