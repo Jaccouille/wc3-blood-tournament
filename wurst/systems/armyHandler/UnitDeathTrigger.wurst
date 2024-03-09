@@ -169,6 +169,7 @@ public function initUnitDeathTrigger()
             if killerOwner != ALTAR_PLAYER
                 and roundController.currentRound instanceof NormalRound
                 and killerOwner != dyingUnit.getOwner()
+                and not IsUnitIllusion(dyingUnit)
                 if dyingUnit.getPointValue() > 0
                     if dyingUnit.getOwner() != killerOwner and killer != null
                         pDatas.get(killerOwner).addBounty(getBounty(dyingUnit))
