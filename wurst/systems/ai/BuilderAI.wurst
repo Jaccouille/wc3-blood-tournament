@@ -96,7 +96,7 @@ class BuilderAI
 
     function pickBuilder()
         if pData.builder == null
-            pData.racePicker.issueImmediateOrder(UnitId2String(BUILDER_LIST.getRandomElement()))
+            pData.racePicker.issueImmediateOrder(UnitId2String(gameConfig.getBuilderList().getRandomElement()))
 
     private function tryToBuyItems(LinkedList<unit> buildingList)
         let buildingWithItemsToBuy = buildingList

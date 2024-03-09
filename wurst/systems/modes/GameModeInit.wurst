@@ -12,6 +12,7 @@ import GameConfig
 import GameMode
 import GameStates
 import Toolkit
+import IDListConstant
 
 
 init
@@ -66,6 +67,18 @@ init
             let interludeTime = min(max(args.get(1).toInt(), 30), 180)
             mode.message("Interlude time set to " + interludeTime.toString().color(GOLD_COLOR))
             gameConfig.setRoundInterludeTime(interludeTime.toReal())
+
+    new GameMode("ban", "b", "General", "Ban faction, separated by space, up to {0} ban, e.g : HU OR UN"
+        .format((BUILDER_LIST.size() - 1).toString())) (mode, args) ->
+        if (args.size() > 1)
+            let factionNames = args.drop(1).map(e -> e)
+            let banList = factionNames.map(e -> BAN_MAP.get(e.toUpperCase()))
+            if banList.size() >= BUILDER_LIST.size()
+                banList.pop()
+            gameConfig.setBanList(banList)
+            let msg  = "Ban : {0}".format(factionNames.map(e -> RACE_ABBREV.get(e.toUpperCase())).joinBy(", ").color(COLOR_RED))
+            mode.message(msg)
+
 
     new GameMode("spawn-capacity", "sc", "Set max unit spawn capacity, default : " +
         gameConfig.getSpawnCap().toString() + ", max : 120, min : 60") (mode, args) ->

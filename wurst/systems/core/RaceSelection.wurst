@@ -40,9 +40,9 @@ init
                 SetPlayerTechMaxAllowed(owner, pData.builder.getTypeId(), 1)
                 flashEffect(Abilities.aIilTarget, pData.builder.getPos3Real())
                 pData.builder.remove()
-            if not pData.racePicker.issueImmediateOrder(UnitId2String(BUILDER_LIST.getRandomElement()))
+            if not pData.racePicker.issueImmediateOrder(UnitId2String(gameConfig.getBuilderList().getRandomElement()))
                 nullTimer() ->
-                    pData.racePicker.issueImmediateOrder(UnitId2String(BUILDER_LIST.getRandomElement()))
+                    pData.racePicker.issueImmediateOrder(UnitId2String(gameConfig.getBuilderList().getRandomElement()))
 
     EventListener.onCast(ABIL_REPICK) (unit caster) ->
         let owner = caster.getOwner()
@@ -69,10 +69,14 @@ init
                 u.setUseFood(false)
 
     GameStates.modesSelection.onExit() (state) ->
+        let banList = gameConfig.getBanList()
         pDatas.forEach() (player _p, PlayerData pData) ->
+            for builderId in banList
+                SetPlayerTechMaxAllowed(_p, builderId, 0)
+
             SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 1, _p)
             if gameConfig.isAllRandomEnabled()
-                pData.builder = createUnit(_p, BUILDER_LIST.getRandomElement(), pData.racePicker.getPos())
+                pData.builder = createUnit(_p, gameConfig.getBuilderList().getRandomElement(), pData.racePicker.getPos())
                 pData.racePicker.removeAbility(ABIL_REPICK)
                 pData.racePicker.removeAbility(ABIL_RANDOM_RACE)
             else
@@ -82,6 +86,6 @@ init
         if not gameConfig.isMultipleBuilderEnabled()
             pDatas.forEach() (player _p, PlayerData pData) ->
                 if pData.builder == null
-                    pData.builder = createUnit(_p, BUILDER_LIST.getRandomElement(), pData.racePicker.getPos())
+                    pData.builder = createUnit(_p, gameConfig.getBuilderList().getRandomElement(), pData.racePicker.getPos())
                 SetPlayerTechResearchedSwap(UPGD_ALL_RANDOM, 0, _p)
                 SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 0, _p)

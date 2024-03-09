@@ -3,6 +3,9 @@ package PlayerExtension
 // Local imports:
 import PlayerData
 
+public function player.getBuilder() returns unit
+    return pDatas.get(this).builder
+
 public function player.getPlayerData() returns PlayerData
     return pDatas.get(this)
 

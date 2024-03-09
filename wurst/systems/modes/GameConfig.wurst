@@ -2,6 +2,7 @@ package GameConfig
 
 // Standard libs imports:
 import LinkedList
+import IDListConstant
 
 class GameConfig
     private var testMode = false
@@ -22,6 +23,8 @@ class GameConfig
     private var goldExchange = 150
     private var bloodPointExchange = 1500
     private var fogOfWar = false
+    private let banList = new LinkedList<int>()
+    private let builderList = new LinkedList<int>()
 
     function setTestMode(boolean value)
         testMode = value
@@ -51,8 +54,8 @@ class GameConfig
         return roundGoldIncome
 
     function setRoundGoldIncome(LinkedList<int> roundGoldIncome)
-        roundGoldIncome.clear()
-        roundGoldIncome.addAll(roundGoldIncome)
+        this.roundGoldIncome.clear()
+        this.roundGoldIncome.addAll(roundGoldIncome)
 
     function setRoundCount(int value)
         roundCount = value
@@ -132,5 +135,19 @@ class GameConfig
     function getBloodPointExchange() returns int
         return bloodPointExchange
 
+    function getBanList() returns LinkedList<int>
+        return banList
+
+    function setBanList(LinkedList<int> banList)
+        this.banList.clear()
+        this.banList.addAll(banList)
+
+        this.builderList.clear()
+        this.builderList.addAll(BUILDER_LIST)
+        for ban in banList
+            this.builderList.remove(ban)
+
+    function getBuilderList() returns LinkedList<int>
+        return builderList
 
 public constant gameConfig = new GameConfig()
