@@ -111,10 +111,10 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
         let matchUpWinner = roundController.currentRound.getOpponent(pData._p)
         if matchUpWinner != null
             // Trying to fix taunted units being stuck
-            nullTimer() ->
-                forUnitsOfPlayer(matchUpWinner) (unit u) ->
-                    if not u.isType(UNIT_TYPE_PEON) and not u.isType(UNIT_TYPE_STRUCTURE)
-                        u.issuePointOrder("attack", CENTER)
+            // nullTimer() ->
+            //     forUnitsOfPlayer(matchUpWinner) (unit u) ->
+            //         if not u.isType(UNIT_TYPE_PEON) and not u.isType(UNIT_TYPE_STRUCTURE)
+            //             u.issuePointOrder("attack", CENTER)
 
         if matchUpWinner == killerOwner
             if roundController.currentRound instanceof NormalRound
@@ -128,6 +128,13 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
                         hasSpawned = true
                 if not hasSpawned
                     spawnSpeedBanner(middle, matchUpWinner)
+
+                nullTimer() ->
+                    forUnitsOfPlayer(matchUpWinner) (unit u) ->
+                        if not u.isType(UNIT_TYPE_PEON) and not u.isType(UNIT_TYPE_STRUCTURE)
+                            // u.issuePointOrder("attack", CENTER)
+                            u.issuePointOrder("attack", middle)
+                            BlzQueuePointOrderById(u, OrderIds.attack, CENTER.x, CENTER.y)
 
             else if roundController.currentRound instanceof FinalRound
                 (roundController.currentRound castTo FinalRound).looser = pData._p
