@@ -1,7 +1,0 @@
-package v0_001_m
-
-import ChangeLog
-
-init
-    new ChangeLog(0, 1, 'm')
-        ..add("Fixed reinforcement offset")
