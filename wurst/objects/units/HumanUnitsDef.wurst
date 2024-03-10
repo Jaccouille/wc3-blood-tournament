@@ -586,7 +586,5 @@ function createPaladin(int paladinId) returns BTUnitDefinition
             BUILDING_PALADIN,
             BUILDING_PRIEST,
             BUILDING_SORCERESS,
-            BUILDING_SWORD_MASTER,
-            BUILDING_RIFLEMAN,
-            BUILDING_ELVEN_MAGE
+            BUILDING_RIFLEMAN
         ))

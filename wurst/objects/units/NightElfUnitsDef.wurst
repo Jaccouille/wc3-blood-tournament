@@ -672,7 +672,5 @@ import ArmySpawner
             BUILDING_DRUID_TALON,
             BUILDING_DRUID_CLAW,
             BUILDING_MOUNTAIN_GIANT,
-            BUILDING_SPECTRE,
-            BUILDING_DAEMON_HUNTER,
-            BUILDING_BALLISTA
+            BUILDING_SPECTRE
         ))

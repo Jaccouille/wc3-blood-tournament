@@ -648,8 +648,5 @@ import ArmySpawner
             BUILDING_WARMONGER,
             BUILDING_WITCH_DOCTOR,
             BUILDING_SHAMAN,
-            BUILDING_OGRE,
-            BUILDING_BLADE_MASTER,
-            BUILDING_SHADOW_HUNTER,
-            BUILDING_DEMOLISHER
+            BUILDING_OGRE
         ))

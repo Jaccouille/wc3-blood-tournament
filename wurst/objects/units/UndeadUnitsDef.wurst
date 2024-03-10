@@ -702,7 +702,5 @@ import ArmySpawner
             BUILDING_DEATH_KNIGHT,
             BUILDING_BANSHEE,
             BUILDING_ABOMINATION,
-            BUILDING_VAMPIRE,
-            BUILDING_CRYPT_LORD,
-            BUILDING_ARCHIMONDE
+            BUILDING_VAMPIRE
         ))
