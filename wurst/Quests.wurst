@@ -34,11 +34,13 @@ let credits = asList(
     "Billy-Jack/Baal:|r For making Star Wars Blood tournament which inspired Jacc to make this map".color(GENERAL_COLOR),
     "Quazz:|r For introducing Jacc to Warcraft 3 modding".color(GENERAL_COLOR),
     "Frotty, Wurst community:|r For making Wurstscript and answering Jacc dumb questions".color(GENERAL_COLOR),
+    "General Frank and Ujimasa Hojo for models".color(GENERAL_COLOR),
     "Hiveworkshop.com:|r".color(GENERAL_COLOR) + " for hosting a massive amount of information on modding"
 ).joinBy("\n")
 
 let commands = asList(
     "-r:|r Ready, vote to begin next round".color(HIGHLIGHT_COLOR),
+    "-bot:|r Toggle bot".color(HIGHLIGHT_COLOR),
     "-clear:|r clears displayed text messages".color(HIGHLIGHT_COLOR),
     "-modes:|r displays current established modes".color(HIGHLIGHT_COLOR),
     "-cl:|r displays last changelog".color(HIGHLIGHT_COLOR)
@@ -47,7 +49,7 @@ let commands = asList(
 let community = asList(
     "You can give your feedback/suggestion to Jaccouille, reachable on :",
     "Blood tournament Discord: ".color(HIGHLIGHT_COLOR) + "https://discord.gg/xhQQzMWnPG",
-    "GitHub: ".color(HIGHLIGHT_COLOR) + "https://github.com/Jaccouille/wc3-blood-tournament/tree/vanilla"
+    "GitHub: ".color(HIGHLIGHT_COLOR) + "https://github.com/Jaccouille/wc3-blood-tournament"
 ).joinBy("\n")
 
 let programming = asList(
