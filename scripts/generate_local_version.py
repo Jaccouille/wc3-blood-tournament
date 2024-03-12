@@ -61,17 +61,17 @@ InfoPanelIconArmorDivine=UI\Widgets\Console\Human\infocard-armor-spectral.dds
 Notancient=Cannot sell building with items/upgrades
 
 [FrameDef]
-ARMORTIP_SMALL=Damage received from:|n|cff00FF00Pierce: 200%|r|n|cffFFFFFFMagic: 100%|r|n|cffFFFFFFSiege: 100%|r|n|cffFF0000Normal: 75%|r
-ARMORTIP_MEDIUM=Damage received from:|n|cff00FF00Normal: 175%|r|n|cff00FF00Siege: 150%|r|n|cffFF0000Magic: 75%|r|n|cffFF0000Pierce: 75%|r
+ARMORTIP_SMALL=Damage received from:|n|cff00FF00Pierce: 200%|r|n|cffFFFFFFMagic: 100%|r|n|cffFFFFFFSiege: 100%|r|n|cffFFFF00Normal: 75%|r
+ARMORTIP_MEDIUM=Damage received from:|n|cff00FF00Normal: 175%|r|n|cff00FF00Siege: 150%|r|n|cffFFFF00Magic: 75%|r|n|cffFFFF00Pierce: 75%|r
 ARMORTIP_LARGE=Damage received from:|n|cff00FF00Magic: 200%|r|n|cffFFFFFFNormal: 100%|r|n|cffFFFFFFPierce: 100%|r|n|cffFFFFFFSiege: 100%|r
 ARMORTIP_FORT=Damage received from:|n|cff00FF00Siege: 200%|r|n|cffFFFFFFNormal: 100%|r|n|cffFF0000Magic: 35%|r|n|cffFF0000Pierce: 35%|r
 ARMORTIP_DIVINE=Damage received from:|n|cff00FF00Magic: 200%|r|n|cffFF0000Normal: 20%|r|n|cffFF0000Pierce: 10%|r|n|cffFF0000Siege: 10%|r
 ARMORTIP_NONE=Damage received from:|n|cff00FF00Siege: 200%|r|n|cff00FF00Magic: 150%|r|n|cff00FF00Normal: 150%|r|n|cff00FF00Pierce: 150%|r
 ARMOR_DIVINE=Type: |Cffffcc00Spectral|R
 
-DAMAGETIP_MAGIC=Damage against:|n|cff00FF00Large: 200%|r|n|cff00FF00Spectral: 200%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFSmall: 100%|r|n|cffFF0000Medium: 75%|r|n|cffFF0000Fort: 35%|r
-DAMAGETIP_MELEE=Damage against:|n|cff00FF00Medium: 175%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFLarge: 100%|r|n|cffFFFFFFFort: 100%|r|n|cffFF0000Small: 75%|r|n|cffFF0000Spectral: 20%|r
-DAMAGETIP_PIERCE=Damage against:|n|cff00FF00Small: 200%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFLarge: 100%|r|n|cffFF0000Medium: 75%|r|n|cffFF0000Fort: 35%|r|n|cffFF0000Spectral: 10%|r
+DAMAGETIP_MAGIC=Damage against:|n|cff00FF00Large: 200%|r|n|cff00FF00Spectral: 200%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFSmall: 100%|r|n|cffFFFF00Medium: 75%|r|n|cffFF0000Fort: 35%|r
+DAMAGETIP_MELEE=Damage against:|n|cff00FF00Medium: 175%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFLarge: 100%|r|n|cffFFFFFFFort: 100%|r|n|cffFFFF00Small: 75%|r|n|cffFF0000Spectral: 20%|r
+DAMAGETIP_PIERCE=Damage against:|n|cff00FF00Small: 200%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFLarge: 100%|r|n|cffFFFF00Medium: 75%|r|n|cffFF0000Fort: 35%|r|n|cffFF0000Spectral: 10%|r
 DAMAGETIP_SIEGE=Damage against:|n|cff00FF00Fort: 200%|r|n|cff00FF00Unarmored: 200%|r|n|cff00FF00Medium: 150%|r|n|cffFFFFFFSmall: 100%|r|n|cffFFFFFFLarge: 100%|r|n|cffFF0000Spectral: 10%|r
 
 COLON_LUMBER=Blood points:
@@ -189,6 +189,11 @@ def update_build(version):
         {
             "name": name,
             "fileName": filename,
+        }
+    )
+    build["buildMapData"]["scenarioData"]["loadingScreen"].update(
+        {
+            "subTitle": name,
         }
     )
 
@@ -406,7 +411,7 @@ if __name__ == "__main__":
 
     # Update the repository with the modified files.
     if args.local:
-        build_map(args.base, target)
+        # build_map(args.base, target)
         # Stage the file for commit
         repo.index.add([package, build, mapskin])
 

@@ -24,7 +24,7 @@ armor_names = {
 def get_color_code(damage):
     if damage >= 1.5:
         return "|cff00FF00"  # Green
-    elif damage < 0.8:
+    elif damage < 0.7:
         return "|cffFF0000"  # Red
     elif damage < 1.0:
         return "|cffFFFF00"  # Yellow
@@ -133,6 +133,7 @@ MaxUnitSpeed=522.0
 UpgradeRefundRate=1.0
 ItemStackingEnabled=1
 DefendDeflection=1
+BoneDecayTime=15
 """.format(
     damage_table_str=damage_table_str
 )

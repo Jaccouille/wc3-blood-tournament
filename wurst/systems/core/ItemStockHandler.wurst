@@ -25,6 +25,12 @@ public class ItemCost
         this.gold = gold
         this.lumber = lumber
 
+/**
+    The ItemStockHandler class is responsible for managing the stock of items.
+    We need to add item to stock through trigger in order to manipulate the stock
+    see https://www.hiveworkshop.com/threads/modify-item-sold-made-stock.350087/
+
+ */
 public class ItemStockHandler
     static HashMap<unit, ItemStockHandler> unitToItemStockMap = new HashMap<unit, ItemStockHandler>
     unit building

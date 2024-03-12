@@ -95,7 +95,7 @@ import UnitObjEditingCommon
         ..setAttack1WeaponSound(WeaponSound.Nothing)
         ..setAttack1WeaponType(WeaponType.Artillery)
         ..setName("Tournament Manager")
-        ..setProperNames("Need a name")
+        ..setProperNames("Duke Splatalot")
         ..setHitPointsMaximumBase(666)
 
 function createSpeedBanner(int newId) returns BuildingDefinition
