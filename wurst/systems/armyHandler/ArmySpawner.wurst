@@ -167,6 +167,8 @@ function genList(int unitId, int count) returns LinkedList<int>
 @configurable constant FORMATION_HEIGHT = 80.
 // Number of units allocated per dummy players
 @configurable constant MAX_UNIT_PER_DUMMY_PLAYER = 80
+        // 400 is kind of a random value
+@configurable constant PORTAL_DIST_OFFSET = 400.
 
 public let playerToArmySpawner = new HashMap<player, ArmySpawner>
 
@@ -181,6 +183,7 @@ public class ArmySpawner
     int buildingIdx = 0
     int squadIdx = 0
     vec2 pos
+    vec2 portalSpawnPos
     LinkedList<unit> buildingList
     int unitPerLine
     PlayerData pData
@@ -229,6 +232,8 @@ public class ArmySpawner
         // Log.debug((spawnZone.angle.cos().abs() < 0.99).toString() + " " +
         //  (spawnZone.angle.cos().abs().toString()) + " " + this.spawnDirection.degrees().toString())
         this.pos = spawnZone.initialPos
+        let invertedAngle = (180 + spawnZone.angle.degrees() % 360).asAngleDegrees()
+        this.portalSpawnPos = this.pos.polarOffset(invertedAngle, PORTAL_DIST_OFFSET * 2)
 
     private function executeUnitModifier(unit newUnit)
         // a being the callback defined in ItemCallbackDefinition.wurst
@@ -273,21 +278,28 @@ public class ArmySpawner
             pData.spawnedUnits.push(newUnit)
         return newUnit
 
-    function spawnArmy()
+    function initSpawner()
         squadIds.clear()
         buildingIdx = 0
         squadIdx = 0
         spawnFinished = false
+
+
         // TODO: Add to gameConfig?
         // Determine number of unit per line
         unitPerLine = spawnDirection.degrees() == 0.
             ? (spawnZone.width /  FORMATION_WIDTH).round()
             : (spawnZone.height / FORMATION_WIDTH).round()
 
+    function spawnArmy(boolean spawnFromPortal)
+        var spawnCount = 0
+
         if buildingList.isEmpty()
             spawnUnit(UNIT_DUMMY_SOLDIER, pos)
 
-        while buildingIdx < buildingList.size() and pData.spawnedUnits.size() < spawnZone.unitLimit
+        while buildingIdx < buildingList.size()
+            and pData.spawnedUnits.size() < spawnZone.unitLimit
+            and spawnCount < unitPerLine
             // Get list of unit mapped to the building
             let building = buildingList.get(buildingIdx)
             // Log.debug("Spawning " + building.getName())
@@ -300,11 +312,20 @@ public class ArmySpawner
             // Log.debug("passed executeItemBonus " + building.getName())
 
             // Spawn while there's something to spawn and unitLimit isn't reached
-            while squadIdx < squadIds.size() and pData.spawnedUnits.size() < spawnZone.unitLimit
+            while squadIdx < squadIds.size()
+                and pData.spawnedUnits.size() < spawnZone.unitLimit
+                and spawnCount < unitPerLine
                 // Log.debug("Spawn start of idx: " + squadIdx.toString())
-                spawnUnit(squadIds.get(squadIdx), pos)
-                // Pause unit until battle start
-                ..pause()
+
+                if spawnFromPortal
+                    spawnUnit(squadIds.get(squadIdx), portalSpawnPos)
+                    ..issuePointOrder("attack", pos)
+                    flashEffect(Abilities.blinkTarget,  portalSpawnPos)
+                    portalSpawnPos = portalSpawnPos.polarOffset(spawnDirection, FORMATION_WIDTH)
+                else
+                    spawnUnit(squadIds.get(squadIdx), pos)
+                    // Pause unit until battle start
+                    ..pause()
                 // Log.debug("Passed the spawn id: " + squadIdx.toString())
 
                 // Update position for next unit
@@ -317,25 +338,39 @@ public class ArmySpawner
                     pos = spawnZone.initialPos.polarOffset(
                         spawnZone.angle.op_minus(180..asAngleDegrees()),
                         FORMATION_HEIGHT * pData.spawnedUnits.size() / unitPerLine)
+
+                    if spawnFromPortal
+                        let invertedAngle = (180 + spawnZone.angle.degrees() % 360).asAngleDegrees()
+                        let y = spawnDirection.degrees() == 0. ? pos.y : spawnZone.initialPos.y
+                        let x = spawnDirection.degrees() == 0. ? pos.x :spawnZone.initialPos.x
+                        portalSpawnPos = vec2(x, y).polarOffset(invertedAngle, PORTAL_DIST_OFFSET * 2)
+
+
                 squadIdx++
+                spawnCount++
             if pData.spawnedUnits.size() < spawnZone.unitLimit
                 squadIdx = 0
                 squadIds.clear()
                 buildingIdx++
         if isBuildingSpawnOver() and isSquadSpawnOver()
-            spawnFinished = true
             if gameConfig.isDisplayPortalEnabled()
                 SetDoodadAnimationRect(this.pData.buildingRect, DOODAD_PORTAL, "death", false)
                 spawnZone.closePortal()
 
+            spawnFinished = true
+
         // Set position to the reinforcement spawn point
-        // 400 is kind of a random value
-        let invertedAngle = (180 + spawnZone.angle.degrees() % 360).asAngleDegrees()
-        pos = spawnZone.spawnRect.getCenter().polarOffset(invertedAngle, 400)
+        if not spawnFromPortal
+            setReinforcementPos()
         // if not isProdBuild
         //     createTTEx(pos.withZ(100.), invertedAngle.degrees().toString(), 10)
         //     createTTEx(pos.withZ(300.), invertedAngle.direction().toString(), 10)
         // Log.debug("Position reserve : " + pos.toString())
+
+    function setReinforcementPos()
+        let invertedAngle = (180 + spawnZone.angle.degrees() % 360).asAngleDegrees()
+        pos = spawnZone.spawnRect.getCenter()
+            .polarOffset(invertedAngle, PORTAL_DIST_OFFSET)
 
     private function getRandomReinforcementPos() returns vec2
         let spawnRect = spawnZone.spawnRect

@@ -19,6 +19,9 @@ import SpawnZone
 import public GameConstants
 import public PlayerData
 import ColorUtils
+import PlayerExtension
+import UnitExtensions
+import Sounds
 
 // Distance between units positioned in formation mode
 @configurable constant FORMATION_WIDTH = 120.
@@ -73,6 +76,7 @@ public abstract class Round
     player winner
     string roundName
     boolean hasStarted = false
+    int setupTime
 
     function setName(string name)
         this.roundName = name
@@ -107,18 +111,55 @@ public abstract class Round
             if IsUnitDeadBJ(u)
                 u.remove()
         hasStarted = true
+        for pair in matchUp
+            setDummyAlliance(players[pair.a], players[pair.b], true)
+
+    function setDummyAlliance(player p1, player p2, boolean isAllied)
+        for dummyA in p1.getPlayerData().dummyPlayers
+            for dummyB in p2.getPlayerData().dummyPlayers
+                dummyA.setPlayerAlliance(dummyB, ALLIANCE_PASSIVE, isAllied)
+                dummyB.setPlayerAlliance(dummyA, ALLIANCE_PASSIVE, isAllied)
+
+    function playTickSound()
+        KillSoundWhenDone(
+            CreateSound(
+                Sounds.battleNetTick,
+                false,
+                false,
+                false,
+                10,
+                10,
+                ""
+            )
+        ..setPitch(1.)
+        ..setVolume(127)
+        ..play()
+        )
 
     function doAfterSpawn()
-        doAfter(2) ->
-            forUnitsAll() (unit u) ->
-                if not u.isType(UNIT_TYPE_STRUCTURE)
-                    and not u.isType(UNIT_TYPE_PEON)
-                    and u.getOwner() != ALTAR_PLAYER
-                    u.unpause()
-                    u.issuePointOrder("attack", CENTER)
-            nullTimer() ->
-                preventOrder = true
-                orderBlocker.enable()
+        doPeriodicallyCounted(1, setupTime + 1) (CallbackCounted cb) ->
+            if cb.isLast()
+                for pair in matchUp
+                    setDummyAlliance(players[pair.a], players[pair.b], false)
+
+                printTimed("FIGHT!!!".color(SPECIAL_COLOR), 3)
+                forUnitsAll() (unit u) ->
+                    if u.isSoldier()
+                        u.unpause()
+                        u.issuePointOrder("attack", CENTER)
+                nullTimer() ->
+                    preventOrder = true
+                    orderBlocker.enable()
+
+            else if setupTime < 6
+                printTimed(setupTime.toString() + "...", 5)
+                playTickSound()
+
+                if setupTime == 3
+                    forUnitsAll() (unit u) ->
+                        if u.isSoldier()
+                            u.setAnimation("Stand Ready")
+            setupTime -= 1
 
     function setRewards(int gold, int bloodPoint)
         this.goldReward = gold
@@ -140,7 +181,15 @@ public abstract class Round
         playerToArmySpawner.get(_p)
             ..setSpawnZone(spawnZone)
             ..setBuildingList(buidingList)
-            ..spawnArmy()
+            ..initSpawner()
+
+        doPeriodically(1) (CallbackPeriodic cb) ->
+            playerToArmySpawner.get(_p)
+                ..spawnArmy(true)
+            if _p.getPlayerData().spawnedUnits.size() >= spawnZone.unitLimit
+                or playerToArmySpawner.get(_p).spawnFinished
+                playerToArmySpawner.get(_p).setReinforcementPos()
+                destroy cb
 
     function computeCameraPos(SpawnZone spawnZone1, SpawnZone spawnZone2) returns vec2
         let center1 =  spawnZone1.spawnRect.getCenter()
@@ -158,6 +207,7 @@ public class NormalRound extends Round
     static int counter = 0
 
     construct()
+        this.setupTime = 12
         counter++
         this.roundName = "Round " + counter.toString()
 
@@ -187,6 +237,7 @@ public class FinalRound extends Round
     player looser = null
 
     construct()
+        this.setupTime = 11
         counter++
         // TODO: Dynamically handle following player count?
         if counter < 5
@@ -199,22 +250,6 @@ public class FinalRound extends Round
     override function spawnPortals()
         SetDoodadAnimationRect(boundRect, DOODAD_ELIM_PORTAL, "show", false)
         SetDoodadAnimationRect(boundRect, DOODAD_ELIM_PORTAL, "birth", false)
-
-    override function doAfterSpawn()
-        var counter = 5
-        orderBlocker.enable()
-        doPeriodicallyCounted(1, counter + 1) (CallbackCounted cb) ->
-            if cb.isLast()
-                printTimed("FIGHT!!!".color(SPECIAL_COLOR), 3)
-                forUnitsAll() (unit u) ->
-                    if not u.isType(UNIT_TYPE_STRUCTURE)
-                        and not u.isType(UNIT_TYPE_PEON)
-                        and u.getOwner() != ALTAR_PLAYER
-                        u.unpause()
-                        u.issuePointOrder("attack", CENTER)
-            else
-                printTimed(counter.toString() + "...", 5)
-            counter -= 1
 
     override function spawnArmies()
         for contestantPair in matchUp
