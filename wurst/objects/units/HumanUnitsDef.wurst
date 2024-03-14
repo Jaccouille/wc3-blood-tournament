@@ -334,14 +334,16 @@ import ArmySpawner
 
 function createPaladin(int paladinId) returns BTUnitDefinition
     let tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_CLEAVE_30) + "\n\n" +
+        // abilTooltipMap.get(ABIL_CLEAVE_30) + "\n\n" +
+        abilTooltipMap.get(ABIL_BASH_30) + "\n\n" +
         abilTooltipMap.get(ABIL_DEVOTION_AURA_2) + "\n\n" +
         "Eternal Vanguard\n".color(SPECIAL_COLOR) +
         "Upon dying, the paladin becomes a ghost."
     )
     return createSpawnedUnit(paladinId, UnitIds.paladin)
             ..registerTooltipGenerator(tooltip)
-            ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_DEVOTION_AURA_2))
+            // ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_DEVOTION_AURA_2))
+            ..setNormalAbilities(commaList(ABIL_BASH_30, ABIL_DEVOTION_AURA_2))
             ..tooltipStartListen()
 
             ..setAttack1Data(AttackType.Siege, 120, 5, 7, 1.3)
@@ -363,7 +365,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
 
 @compiletime function createPaladinSquad()
     let tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_CLEAVE_30) + "\n\n" +
+        // abilTooltipMap.get(ABIL_CLEAVE_30) + "\n\n" +
         "Spawn upon paladin death.")
     createSpawnedUnit(UNIT_GHOST_PALADIN, UnitIds.paladin)
         ..registerTooltipGenerator(tooltip)
