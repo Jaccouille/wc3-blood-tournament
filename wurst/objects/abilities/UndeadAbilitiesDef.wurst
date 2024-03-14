@@ -200,7 +200,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetChanceToHitUnits(_ -> 100)
         ..presetChanceToHitSummons(_ -> 100)
         ..setEnabledAttackIndex(1, 0)
-        ..presetDamageBonus(_ -> 0)
+        ..presetDamageBonus(_ -> 15)
         ..presetEffectAbility(_ -> commaList(ABIL_CRIPPLE))
 
     itm = createBasicItem(ITEM_CRIPPLE)
