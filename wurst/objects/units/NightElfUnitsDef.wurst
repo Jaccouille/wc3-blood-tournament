@@ -380,18 +380,20 @@ import ArmySpawner
 
 @compiletime function createMountainGiant()
     let tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_TAUNT)
+        abilTooltipMap.get(ABIL_TAUNT) + "\n\n" +
+        abilTooltipMap.get(ABIL_CLEAVE_20)
         )
     createSpawnedUnit(UNIT_MOUNTAIN_GIANT, UnitIds.mountaingiant, BUILDING_MOUNTAIN_GIANT)
         ..setNormalAbilities(commaList(
             ABIL_TAUNT,
+            ABIL_CLEAVE_20,
             ABIL_AUTOCAST_TAUNT
         ))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_TAUNT))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Siege, 113, 10, 7, 2)
+        ..setAttack1Data(AttackType.Siege, 80, 10, 7, 2)
 
         ..setArmorData(ArmorType.Fortified, 6)
         ..setHitPointsMaximumBase(1200)
