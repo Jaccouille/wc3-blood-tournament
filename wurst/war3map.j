@@ -59,7 +59,7 @@ function CreateBuildingsForPlayer0 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', 4224.0, 6272.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', 4288.0, 6272.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -70,7 +70,7 @@ function CreateBuildingsForPlayer1 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', 5760.0, 5248.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', 5824.0, 5248.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -81,7 +81,7 @@ function CreateBuildingsForPlayer2 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', 5248.0, -2560.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', 5312.0, -2560.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -92,7 +92,7 @@ function CreateBuildingsForPlayer3 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', 4224.0, -4096.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', 4288.0, -4096.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -103,7 +103,7 @@ function CreateBuildingsForPlayer4 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', -4224.0, -4096.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', -4160.0, -4096.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -114,7 +114,7 @@ function CreateBuildingsForPlayer5 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', -5248.0, -2560.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', -5184.0, -2560.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -125,7 +125,7 @@ function CreateBuildingsForPlayer6 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', -5760.0, 5248.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', -5696.0, 5248.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -136,7 +136,7 @@ function CreateBuildingsForPlayer7 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u = BlzCreateUnitWithSkin( p, 'h008', -4224.0, 6272.0, 270.000, 'h008' )
+    set u = BlzCreateUnitWithSkin( p, 'h008', -4160.0, 6272.0, 270.000, 'h008' )
 endfunction
 
 //===========================================================================
@@ -190,14 +190,14 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_Frontrank_EN = Rect( 4608.0, 1504.0, 5760.0, 2816.0 )
     set gg_rct_Frontrank_NW = Rect( -1792.0, 5632.0, -512.0, 6784.0 )
     set gg_rct_Frontrank_WS = Rect( -5760.0, -768.0, -4608.0, 512.0 )
-    set gg_rct_Red = Rect( 3584.0, 5568.0, 4896.0, 6176.0 )
-    set gg_rct_Blue = Rect( 5120.0, 4544.0, 6464.0, 5184.0 )
-    set gg_rct_Teal = Rect( 4608.0, -3232.0, 5952.0, -2656.0 )
-    set gg_rct_Purple = Rect( 3584.0, -4768.0, 4896.0, -4192.0 )
-    set gg_rct_Yellow = Rect( -4864.0, -4768.0, -3552.0, -4192.0 )
-    set gg_rct_Orange = Rect( -5888.0, -3232.0, -4576.0, -2656.0 )
-    set gg_rct_Green = Rect( -6400.0, 4576.0, -5088.0, 5152.0 )
-    set gg_rct_Pink = Rect( -4864.0, 5600.0, -3552.0, 6176.0 )
+    set gg_rct_Red = Rect( 3584.0, 5568.0, 5120.0, 6176.0 )
+    set gg_rct_Blue = Rect( 5120.0, 4544.0, 6528.0, 5184.0 )
+    set gg_rct_Teal = Rect( 4608.0, -3232.0, 6144.0, -2656.0 )
+    set gg_rct_Purple = Rect( 3584.0, -4768.0, 5120.0, -4192.0 )
+    set gg_rct_Yellow = Rect( -4864.0, -4768.0, -3328.0, -4192.0 )
+    set gg_rct_Orange = Rect( -5888.0, -3232.0, -4352.0, -2656.0 )
+    set gg_rct_Green = Rect( -6400.0, 4576.0, -4864.0, 5152.0 )
+    set gg_rct_Pink = Rect( -4864.0, 5600.0, -3328.0, 6176.0 )
     set gg_rct_Final_Round_West = Rect( -1536.0, 0.0, -512.0, 2176.0 )
     set gg_rct_Final_Round_East = Rect( 512.0, 0.0, 1536.0, 2176.0 )
 endfunction
@@ -351,14 +351,14 @@ function config takes nothing returns nothing
     call SetTeams( 8 )
     call SetGamePlacement( MAP_PLACEMENT_TEAMS_TOGETHER )
 
-    call DefineStartLocation( 0, 4224.0, 6208.0 )
-    call DefineStartLocation( 1, 5760.0, 5248.0 )
-    call DefineStartLocation( 2, 5248.0, -2560.0 )
-    call DefineStartLocation( 3, 4224.0, -4096.0 )
-    call DefineStartLocation( 4, -4224.0, -4096.0 )
-    call DefineStartLocation( 5, -5248.0, -2560.0 )
-    call DefineStartLocation( 6, -5760.0, 5248.0 )
-    call DefineStartLocation( 7, -4224.0, 6272.0 )
+    call DefineStartLocation( 0, 4288.0, 6208.0 )
+    call DefineStartLocation( 1, 5824.0, 5248.0 )
+    call DefineStartLocation( 2, 5312.0, -2560.0 )
+    call DefineStartLocation( 3, 4288.0, -4096.0 )
+    call DefineStartLocation( 4, -4160.0, -4096.0 )
+    call DefineStartLocation( 5, -5184.0, -2560.0 )
+    call DefineStartLocation( 6, -5696.0, 5248.0 )
+    call DefineStartLocation( 7, -4160.0, 6272.0 )
 
     // Player setup
     call InitCustomPlayerSlots(  )
