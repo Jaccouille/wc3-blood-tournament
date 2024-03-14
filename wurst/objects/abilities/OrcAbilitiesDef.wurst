@@ -36,46 +36,6 @@ import ArmySpawner
 
     abilTooltipMap.put(ABIL_BLOODLUST, tgen.generateFullTooltip())
 
-    let witchDoctorCount = BTBuildingData.getUnitCount(BUILDING_WITCH_DOCTOR)
-    var itm = createBasicItem(ITEM_HEALING_WAVE)
-        ..setItemCost(0, 100, 1, witchDoctorCount, witchDoctorCount)
-        ..setNameEnhance("X", "Add 1 Healing Wave")
-        ..setInterfaceIcon(Icons.bTNHealingWave)
-
-    tgen = new BTAbilityTooltipGenerator(
-        "Calls forth a wave of healing energy that bounces.")
-    new AbilityDefinitionHealingWaveCreep(ABIL_HEALING_WAVE)
-        ..registerTooltipGenerator(tgen)
-        ..setLevels(1)
-        ..setDummyAbility()
-        ..tooltipStartListen()
-        ..setNameEnhance("X", "Healing Wave")
-        ..setDamageperTarget(1, 200)
-        ..addTooltipProperty("Heal by target", _ -> "200")
-        ..presetNumberofTargetsHit(_ -> 4)
-        ..presetManaCost(_ -> 75)
-        ..tooltipStopListen(true)
-
-    createAutoCastedAlliedAbility(ABIL_AUTOCAST_HEALING_WAVE)
-        ..registerTooltipGenerator(tgen)
-        ..presetCastRange(_ -> 700)
-        ..presetManaCost(_ -> 75)
-        ..tooltipStartListen()
-        ..presetCooldown(_ -> 10)
-        ..tooltipStopListen(true)
-
-    tgen.applyToDefItem(itm)
-
-
-    // itm = createBasicItem(ITEM_SERPENT_WARD)
-    //     ..setItemCost(0, 500, 4, 1, 1)
-    //     ..setNameEnhance("X", "Learn Serpent Ward")
-    //     ..setInterfaceIcon(Icons.bTNSerpentWard)
-    // createAutoCastedAlliedAbility(ABIL_AUTOCAST_SERPENT_WARD)
-
-    // tgen = new BTAbilityTooltipGenerator("Increase damage. Units killed by the mage will turn into Ghost.")
-    // new AbilityDefinitionHealingWaveCreep(ABIL_SERPENT_WARD)
-
     let BUFF_BERSERK = BUFF_ID_GEN.next()
 
     new BuffDefinition(BUFF_BERSERK, BuffIds.berserk)
@@ -143,7 +103,7 @@ import ArmySpawner
     abilTooltipMap.put(ABIL_BURNING_BLADE_50, tgen.generateFullTooltip())
 
     let raiderCount = BTBuildingData.getUnitCount(BUILDING_RAIDER)
-    itm = createBasicItem(ITEM_BURNING_BLADE)
+    var itm = createBasicItem(ITEM_BURNING_BLADE)
         ..setItemCost(0, 200, raiderCount, 1, 1)
         ..setNameEnhance("X", "Add Burning Blades")
         ..setInterfaceIcon(Icons.bTNArcaniteMelee)
@@ -166,6 +126,41 @@ import ArmySpawner
     abilTooltipMap.put(ABIL_BURNING_BLADE_100, tgen.generateFullTooltip())
 
 
+    let witchDoctorCount = BTBuildingData.getUnitCount(BUILDING_WITCH_DOCTOR)
+    itm = createBasicItem(ITEM_HEALING_WAVE)
+        ..setItemCost(0, 100, 1, witchDoctorCount, witchDoctorCount)
+        ..setNameEnhance("X", "Add 1 Healing Wave")
+        ..setInterfaceIcon(Icons.bTNHealingWave)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Calls forth a wave of healing energy that bounces.")
+    new AbilityDefinitionHealingWaveCreep(ABIL_HEALING_WAVE)
+        ..registerTooltipGenerator(tgen)
+        ..setLevels(1)
+        ..setDummyAbility()
+        ..tooltipStartListen()
+        ..setNameEnhance("X", "Healing Wave")
+        ..setDamageperTarget(1, 125)
+        ..addTooltipProperty("Heal by target", _ -> "125")
+        ..presetNumberofTargetsHit(_ -> 4)
+        ..presetManaCost(_ -> 75)
+        ..tooltipStopListen(false)
+
+    createAutoCastedAllieHealdAbility(ABIL_AUTOCAST_HEALING_WAVE)
+        ..presetCastRange(_ -> 700)
+        ..presetManaCost(_ -> 75)
+        ..tooltipStartListen()
+        ..registerTooltipGenerator(tgen)
+        ..presetCooldown(_ -> 6)
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_HEALING_WAVE, tgen.generateFullTooltip())
+
+    itm = createBasicItem(ITEM_ACID_BOMB)
+        ..setItemCost(0, 150, 1, 1, 1)
+        ..setNameEnhance("X", "Replace 1 Healing Wave with Acid Bomb")
+        ..setInterfaceIcon(Icons.bTNAcidBomb)
+
     tgen = new BTAbilityTooltipGenerator(
         "Decreases armor of the target and nearby enemy units.")
     new AbilityDefinitionAlchemistAcidBomb(ABIL_ACID_BOMB)
@@ -179,7 +174,7 @@ import ArmySpawner
         ..presetSecondaryDamage(_ -> 10)
         ..presetDurationNormal(_ -> 6)
         ..presetManaCost(_ -> 100)
-        ..presetAreaofEffect(_ -> 100)
+        ..presetAreaofEffect(_ -> 200)
         ..setNameEnhance("Z", "Acid Bomb")
         ..tooltipStopListen(false)
 
@@ -191,31 +186,32 @@ import ArmySpawner
         ..presetCooldown(_ -> 8)
         ..tooltipStopListen(true)
 
-    abilTooltipMap.put(ABIL_ACID_BOMB, tgen.generateFullTooltip())
+    tgen.applyToDefItem(itm)
 
 
     itm = createBasicItem(ITEM_DRUNKEN_HAZE)
-        ..setItemCost(0, 125, 1, witchDoctorCount, witchDoctorCount)
-        ..setNameEnhance("Z", "Add 1 Drunken Haze ability")
+        ..setItemCost(0, 150, 1, 1, 1)
+        ..setNameEnhance("Z", "Replace 1 Healing Wave with Drunken Haze")
         ..setInterfaceIcon(Icons.bTNStrongDrink)
 
     tgen = new BTAbilityTooltipGenerator(
-        "Drenches enemy units in alcohol, causing their attack to miss.")
+        "Drenches enemy units in alcohol, silencing them and causing their attack to miss.")
     new AbilityDefinitionBrewmasterDrunkenHaze(ABIL_DRUNKEN_HAZE)
         ..setLevels(1)
         ..setDummyAbility()
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
+        ..presetAttacksPrevented(_ -> 4)
         ..tooltipStartListen()
         ..setChanceToMiss(1, 0.40)
         ..addTooltipProperty("Chance to miss", _ -> 0.40.toPercent())
-        ..presetDurationNormal(_ -> 6)
+        ..presetDurationNormal(_ -> 4)
         ..presetManaCost(_ -> 100)
-        ..presetAreaofEffect(_ -> 150)
-        ..setNameEnhance("Z", "Acid Bomb")
+        ..presetAreaofEffect(_ -> 200)
+        ..setNameEnhance("Z", "Drunken Haze")
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_DRUNKEN_HAZE)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_DRUNKEN_HAZE)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 700)
         ..presetManaCost(_ -> 100)
@@ -227,8 +223,8 @@ import ArmySpawner
     abilTooltipMap.put(ABIL_DRUNKEN_HAZE, tgen.generateFullTooltip())
 
     itm = createBasicItem(ITEM_MANA_WARD)
-        ..setItemCost(0, 250, 1, 3, 3)
-        ..setNameEnhance("C", "Add 1 Mana Ward ability")
+        ..setItemCost(0, 250, 1, 1, 1)
+        ..setNameEnhance("C", "Replace 1 Healing Wave with Mana Ward")
         ..setInterfaceIcon(Icons.bTNHealingWard)
 
     tgen = new BTAbilityTooltipGenerator(

@@ -218,6 +218,14 @@ init
 
     itemModifyUnitMap.put(ITEM_HEALING_WAVE, healingWaveAction)
 
+    let acidBombAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_ACID_BOMB)
+        u.addAbility(ABIL_AUTOCAST_ACID_BOMB)
+        u.issueImmediateOrderById(OrderIds.curseon)
+
+    itemModifyUnitMap.put(ITEM_ACID_BOMB, acidBombAction)
+
     let manaWardAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_MANA_WARD)
@@ -230,7 +238,7 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_DRUNKEN_HAZE)
         u.addAbility(ABIL_AUTOCAST_DRUNKEN_HAZE)
-        u.issueImmediateOrderById(OrderIds.curseon)
+        u.issueImmediateOrderById(OrderIds.parasiteon)
 
     itemModifyUnitMap.put(ITEM_DRUNKEN_HAZE, drunkenHazeAction)
 

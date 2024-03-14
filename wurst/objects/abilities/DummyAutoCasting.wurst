@@ -72,6 +72,9 @@ init
                 if abilId == ABIL_AUTOCAST_REJUVENATION
                     target.removeAbility(ABIL_AUTOCAST_REJUVENATION)
                     target.addAbility(ABIL_AUTOCAST_REJUVENATION)
+                else if abilId == ABIL_AUTOCAST_HEALING_WAVE
+                    target.removeAbility(ABIL_AUTOCAST_HEALING_WAVE)
+                    target.addAbility(ABIL_AUTOCAST_HEALING_WAVE)
             else
                 caster.issuePointOrder("attack", CENTER)
                 // caster.resetAbilityCooldown(abilId)

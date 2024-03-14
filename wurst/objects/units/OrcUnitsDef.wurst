@@ -70,7 +70,7 @@ import ArmySpawner
 
         ..setArtSpecial(Objects.orcLargeDeathExplode)
 
-        ..setModelFileExt(Units.chaosOrcRange)
+        ..setModelFileExt(Units.chaosGrunt1)
         ..setIconGameInterfaceExt(Icons.bTNChaosGrunt)
         ..setUnitSoundSetExt(Soundsets.hellscream)
 
@@ -309,20 +309,20 @@ import ArmySpawner
 
 @compiletime function creatWitchDoctor()
     let tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_ACID_BOMB) + "\n\n"
+        abilTooltipMap.get(ABIL_HEALING_WAVE) + "\n\n"
         )
     createSpawnedUnit(UNIT_WITCH_DOCTOR, UnitIds.witchdoctor, BUILDING_WITCH_DOCTOR)
-        ..setNormalAbilities(commaList(ABIL_ACID_BOMB, ABIL_AUTOCAST_ACID_BOMB))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_ACID_BOMB))
+        ..setNormalAbilities(commaList(ABIL_HEALING_WAVE, ABIL_AUTOCAST_HEALING_WAVE))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_HEALING_WAVE))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 11, 2, 4, 1.75)
+        ..setAttack1Data(AttackType.Magic, 16, 2, 4, 1.75)
         ..setAttack1Range(450)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(120)
+        ..setHitPointsMaximumBase(140)
         ..setMana(250)
 
         ..setSpeedBase(270)

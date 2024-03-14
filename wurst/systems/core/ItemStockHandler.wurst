@@ -105,10 +105,9 @@ function initItemStockData()
     unitItemSold.put(BUILDING_BERSERKER    , asList(ITEM_KODO                                            ))
     unitItemSold.put(BUILDING_RAIDER       , asList(ITEM_PACK_LEADER  , ITEM_BURNING_BLADE               ))
     unitItemSold.put(BUILDING_OGRE         , asList(ITEM_OGRE_ARMORED , ITEM_OGRE_MAGI                   ))
-    unitItemSold.put(BUILDING_WITCH_DOCTOR , asList(ITEM_DRUNKEN_HAZE , ITEM_HEALING_WAVE, ITEM_MANA_WARD))
+    unitItemSold.put(BUILDING_WITCH_DOCTOR , asList(ITEM_DRUNKEN_HAZE , ITEM_ACID_BOMB, ITEM_MANA_WARD))
     unitItemSold.put(BUILDING_SHAMAN       , asList(ITEM_ORB_LIGHTNING, ITEM_FARSEER                     ))
     unitItemSold.put(BUILDING_WARMONGER    , asList(ITEM_RAMPAGE                                         ))
-    sharedStocksMap.put(BUILDING_WITCH_DOCTOR, asList(ITEM_DRUNKEN_HAZE, ITEM_HEALING_WAVE, ITEM_MANA_WARD))
     sharedStocksMap.put(BUILDING_OGRE, asList(ITEM_OGRE_ARMORED, ITEM_OGRE_MAGI))
 
     // ================ UNDEAD =============
