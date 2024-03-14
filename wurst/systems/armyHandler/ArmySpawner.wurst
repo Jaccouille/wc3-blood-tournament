@@ -168,7 +168,7 @@ function genList(int unitId, int count) returns LinkedList<int>
 // Number of units allocated per dummy players
 @configurable constant MAX_UNIT_PER_DUMMY_PLAYER = 80
         // 400 is kind of a random value
-@configurable constant PORTAL_DIST_OFFSET = 400.
+@configurable constant PORTAL_DIST_OFFSET = 500.
 
 public let playerToArmySpawner = new HashMap<player, ArmySpawner>
 

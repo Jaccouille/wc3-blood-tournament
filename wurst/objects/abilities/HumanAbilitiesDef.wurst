@@ -132,7 +132,7 @@ let SLOW_TARGET_COUNT = 2
     let sorceressCount = BTBuildingData.getUnitCount(BUILDING_SORCERESS)
     itm = createBasicItem(ITEM_DARK_MAGE)
         ..setItemCost(0, 100, 1, sorceressCount, sorceressCount)
-        ..setNameEnhance("Z", "Upgrade into 1 Dark Mage")
+        ..setNameEnhance("Z", "Add 1 Orb of Darkness")
         ..setInterfaceIcon(Icons.bTNOrbOfDarkness)
 
     tgen = new BTAbilityTooltipGenerator("Increases damage. Units killed "+
@@ -159,7 +159,7 @@ let SLOW_TARGET_COUNT = 2
 
     itm = createBasicItem(ITEM_FIRE_MAGE)
         ..setItemCost(0, 100, 1, sorceressCount, sorceressCount)
-        ..setNameEnhance("X", "Upgrade into 1 Fire Mage")
+        ..setNameEnhance("X", "Add 1 Fire Orb")
         ..setInterfaceIcon(Icons.bTNOrbOfFire)
 
     tgen = new BTAbilityTooltipGenerator(
@@ -209,7 +209,7 @@ let SLOW_TARGET_COUNT = 2
 
     itm = createBasicItem(ITEM_ICE_MAGE)
         ..setItemCost(0, 100, 1, sorceressCount, sorceressCount)
-        ..setNameEnhance("C", "Upgrade into 1 Ice Mage")
+        ..setNameEnhance("C", "Add 1 Frost Orb")
         ..setInterfaceIcon(Icons.bTNOrbOfFrost)
 
     tgen = new BTAbilityTooltipGenerator(

@@ -69,6 +69,7 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
         ..setGroundTexture("")
         ..setUpgradesUsed("")
         ..setRequirements("")
+        ..setPlacementRequires(commaList("unwalkable"))
         ..setSelectionScale(1.0)
         ..setShadowTextureBuilding("ShadowCrates")
 
