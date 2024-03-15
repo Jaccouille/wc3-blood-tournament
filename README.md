@@ -62,3 +62,13 @@ For making a cool Star Wars Blood Tournament map that inspired me to make this: 
 [Ujimasa Hojo](https://www.hiveworkshop.com/members/142431/) (edited his paladin model, changed material type to additive or something to make a ghost paladin),
 
 Found demon pillar here: [UTM Outland](https://www.hiveworkshop.com/threads/outland-utm.152344/), made by [Dan van Ohllus](https://www.hiveworkshop.com/forums/members/Dan%20van%20Ohllus/)
+
+## Developping
+### Setup
+Install [Wurstlang](https://wurstlang.org/start)
+
+Once it's done, simply clone the project and update it to download the dependencies :
+
+- Using CLI, run `grill install`
+
+- Using WurstSetup (Graphical User Interface), open the `wurst.build` file and click on `Update Project`
