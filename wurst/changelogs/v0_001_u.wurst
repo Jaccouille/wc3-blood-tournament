@@ -1,0 +1,13 @@
+package v0_001_u
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 1, 'u')
+        ..add("(HU) Replaced paladin cleave by 30% stun")
+        ..add("(NE) Reduced Mountain Giant damage by 30, added 20% cleave")
+        ..add("(OR) Replaced Witch Doctor acid bomb by healing wave as base spell")
+        ..add("(UN) Null damage Orb now adds 15 damage to necromancer")
+        ..add("Named tournament manager")
+        ..add("Reworked building terrain")
+        ..add("Units now spawn from the portal and position themselve on the battlefield")
