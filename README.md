@@ -5,6 +5,7 @@ This is a remade version of the Blood tournament map playable on Warcraft III v1
 ## Gameplay
 
 Players construct buildings that spawn groups of units in 7 free-for-all rounds.
+![24-03-10-19-52-18](https://github.com/Jaccouille/wc3-blood-tournament/assets/7768858/c2c7dc47-1bf2-4460-81a3-ba8657c6dbe4)
 
 You earn blood points by killing enemy units which can be spent to build or upgrade your units.
 Featuring big battles and a lot of blood.
@@ -18,7 +19,7 @@ Enjoy the mayhem!
 This version features multiple game modes to add some degree of replayability.
 
 Red player has 60 seconds to choose the mode from the following list.
-[MEDIA=imgur]9uYYo3Z[/MEDIA]
+![24-03-10-18-23-31](https://github.com/Jaccouille/wc3-blood-tournament/assets/7768858/7a368477-17c1-4d2c-86c9-e1c82f1d8d40)
 
 ### Upgrade through items
 This version features an upgrade system using items bought by the building, you can :
@@ -28,7 +29,7 @@ This version features an upgrade system using items bought by the building, you 
 
 Example:
 - A 10x Footman building can add a captain and gain defend ability.
-[MEDIA=imgur]8jpe3fG[/MEDIA]
+![24-03-10-18-30-17](https://github.com/Jaccouille/wc3-blood-tournament/assets/7768858/7316335d-88a1-4286-a56a-c7a829f87c6b)
 
 ### Bots
 
