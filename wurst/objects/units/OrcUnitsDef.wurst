@@ -322,7 +322,7 @@ import ArmySpawner
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(140)
+        ..setHitPointsMaximumBase(100)
         ..setMana(250)
 
         ..setSpeedBase(270)
