@@ -341,7 +341,7 @@ public class ArmySpawner
 
                     if spawnFromPortal
                         let invertedAngle = (180 + spawnZone.angle.degrees() % 360).asAngleDegrees()
-                        let y = spawnDirection.degrees() == 0. ? pos.y : spawnZone.initialPos.y
+                        let y = spawnDirection.degrees() == 0. ? spawnZone.initialPos.y : pos.y
                         let x = spawnDirection.degrees() == 0. ? pos.x :spawnZone.initialPos.x
                         portalSpawnPos = vec2(x, y).polarOffset(invertedAngle, PORTAL_DIST_OFFSET * 2)
 
