@@ -158,7 +158,7 @@ import ArmySpawner
 
     itm = createBasicItem(ITEM_ACID_BOMB)
         ..setItemCost(0, 150, 1, 1, 1)
-        ..setNameEnhance("X", "Replace 1 Healing Wave with Acid Bomb")
+        ..setNameEnhance("X", "Replace 1 Healing Wave with 1 Acid Bomb")
         ..setInterfaceIcon(Icons.bTNAcidBomb)
 
     tgen = new BTAbilityTooltipGenerator(
@@ -191,7 +191,7 @@ import ArmySpawner
 
     itm = createBasicItem(ITEM_DRUNKEN_HAZE)
         ..setItemCost(0, 150, 1, 1, 1)
-        ..setNameEnhance("Z", "Replace 1 Healing Wave with Drunken Haze")
+        ..setNameEnhance("Z", "Replace 1 Healing Wave with 1 Drunken Haze")
         ..setInterfaceIcon(Icons.bTNStrongDrink)
 
     tgen = new BTAbilityTooltipGenerator(
@@ -224,7 +224,7 @@ import ArmySpawner
 
     itm = createBasicItem(ITEM_MANA_WARD)
         ..setItemCost(0, 250, 1, 1, 1)
-        ..setNameEnhance("C", "Replace 1 Healing Wave with Mana Ward")
+        ..setNameEnhance("C", "Replace 1 Healing Wave with 1 Mana Ward")
         ..setInterfaceIcon(Icons.bTNHealingWard)
 
     tgen = new BTAbilityTooltipGenerator(

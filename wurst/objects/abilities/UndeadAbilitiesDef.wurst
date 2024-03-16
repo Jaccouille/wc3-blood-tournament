@@ -23,7 +23,7 @@ let DEATH_COIL_TARGET_COUNT = 3
     let bansheeCount = BTBuildingData.getUnitCount(BUILDING_BANSHEE)
     var itm = createBasicItem(ITEM_UNHOLY_FRENZY)
         ..setItemCost(0, 100, 1, bansheeCount, bansheeCount)
-        ..setNameEnhance("Z", "Add 1 Unholy Frenzy")
+        ..setNameEnhance("Z", "Replace 1 Anti-Magic Shell with 1 Unholy Frenzy")
         ..setInterfaceIcon(Icons.bTNUnholyFrenzy)
 
     var tgen = new BTAbilityTooltipGenerator("Increases the attack rate of a " +
@@ -87,7 +87,7 @@ let DEATH_COIL_TARGET_COUNT = 3
 
     itm = createBasicItem(ITEM_FROST_ARMOR)
         ..setItemCost(0, 50, 1, bansheeCount, bansheeCount)
-        ..setNameEnhance("X", "Add 1 Frost Armor")
+        ..setNameEnhance("X", "Replace 1 Anti-Magic Shell with 1 Frost Armor")
         ..setInterfaceIcon(Icons.bTNFrostArmor)
 
     tgen = new BTAbilityTooltipGenerator(

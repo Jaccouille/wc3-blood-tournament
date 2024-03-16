@@ -188,7 +188,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     let druidTalonCount = BTBuildingData.getUnitCount(BUILDING_DRUID_TALON)
     var itm = createBasicItem(ITEM_ENTANGLING_ROOT)
         ..setItemCost(0, 100, 1, druidTalonCount, druidTalonCount)
-        ..setNameEnhance("Z", "Add 1 Entangling Root")
+        ..setNameEnhance("Z", "Replace 1 Faerie Fire with 1 Entangling Root")
         ..setInterfaceIcon(Icons.bTNEntanglingRoots)
 
     tgen = new BTAbilityTooltipGenerator(
@@ -221,8 +221,8 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_ENTANGLING_ROOT, tgen.generateFullTooltip())
 
     itm = createBasicItem(ITEM_WAND_OF_ILLUSION)
-        ..setItemCost(0, 100, 1, druidTalonCount, druidTalonCount)
-        ..setNameEnhance("Z", "Add 1 Wand of Illusion")
+        ..setItemCost(0, 75, 1, druidTalonCount, druidTalonCount)
+        ..setNameEnhance("Z", "Replace 1 Faerie Fire with 1 Wand of Illusion")
         ..setInterfaceIcon(Icons.bTNWand)
 
     tgen = new BTAbilityTooltipGenerator(
@@ -352,7 +352,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     let dryadCount = BTBuildingData.getUnitCount(BUILDING_DRYAD)
     itm = createBasicItem(ITEM_REJUVENATION)
         ..setItemCost(0, 50, 1, dryadCount, dryadCount)
-        ..setNameEnhance("Z", "Add 1 Rejuvenation")
+        ..setNameEnhance("Z", "Replace 1 Abolish Magic with 1 Rejuvenation")
         ..setInterfaceIcon(Icons.bTNRejuvenation)
 
     tgen = new BTAbilityTooltipGenerator(

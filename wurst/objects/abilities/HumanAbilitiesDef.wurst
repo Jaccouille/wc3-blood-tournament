@@ -46,7 +46,7 @@ let SLOW_TARGET_COUNT = 2
     let priestCount = BTBuildingData.getUnitCount(BUILDING_PRIEST)
     var itm = createBasicItem(ITEM_ARMOR_BLESSING)
         ..setItemCost(0, 50, 1, priestCount, priestCount)
-        ..setNameEnhance("X", "Add 1 Armor Blessing")
+        ..setNameEnhance("X", "Replace 1 Heal with 1 Armor Blessing")
         ..setInterfaceIcon(Icons.bTNBarkSkin)
 
     tgen = new BTAbilityTooltipGenerator("Increases armor.")
@@ -79,7 +79,7 @@ let SLOW_TARGET_COUNT = 2
 
     itm = createBasicItem(ITEM_WEAPON_BLESSING)
         ..setItemCost(0, 50, 1, priestCount, priestCount)
-        ..setNameEnhance("C", "Add 1 Weapon Blessing")
+        ..setNameEnhance("C", "Replace 1 Heal with 1 Weapon Blessing")
         ..setInterfaceIcon(Icons.bTNTransmute)
 
     tgen = new BTAbilityTooltipGenerator("Increases damage.")
@@ -181,7 +181,7 @@ let SLOW_TARGET_COUNT = 2
 
     tgen = new BTAbilityTooltipGenerator("Wreaths an enemy unit in magical flames "
     + "which cause damage over time, prevent the casting of spells, "
-    + "and reduce attack damage."
+    + "and reduce attack damage. Replaces slow."
     )
     new AbilityDefinitionFirelordSoulBurn(ABIL_SOUL_BURN)
         ..setLevels(1)
@@ -230,7 +230,7 @@ let SLOW_TARGET_COUNT = 2
 
     tgen = new BTAbilityTooltipGenerator(
     "Blasts enemy units around a target enemy unit with a " +
-    "wave of damaging frost that slows movement and attack rate."
+    "wave of damaging frost that slows movement and attack rate. Replaces slow."
     )
     new AbilityDefinitionFrostNovacreep(ABIL_FROST_NOVA)
         ..setLevels(1)
