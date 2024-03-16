@@ -207,7 +207,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetDamageperSecond(_ -> 20)
         ..presetDurationNormal(_ -> 4)
-        ..presetManaCost(_ -> 0)
+        ..presetManaCost(_ -> 80)
         ..setNameEnhance("W", "Entangling Root")
         ..tooltipStopListen(false)
 
@@ -246,7 +246,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetCooldown(_ -> 3)
         ..presetManaCost(_ -> 60)
-        ..presetCastRange(_ -> 500)
+        ..presetCastRange(_ -> 600)
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)

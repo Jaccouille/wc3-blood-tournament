@@ -182,12 +182,12 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 10, 2, 3, 1.75)
-        ..setAttack1Range(400)
+        ..setAttack1Data(AttackType.Magic, 14, 2, 3, 1.75)
+        ..setAttack1Range(650)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 2)
-        ..setHitPointsMaximumBase(160)
+        ..setHitPointsMaximumBase(70)
         ..setMana(200)
 
         ..setSpeedBase(270)

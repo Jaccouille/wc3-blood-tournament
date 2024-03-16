@@ -33,7 +33,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetHitPointsGained(_ -> 30)
         ..presetCooldown(_ -> 1)
         ..presetManaCost(_ -> 10)
-        ..presetCastRange(_ -> 250)
+        ..presetCastRange(_ -> 700)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_HEAL, tgen.generateFullTooltip())
@@ -63,7 +63,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetDefenseIncrease(_ -> 4)
         ..presetCooldown(_ -> 2)
         ..presetManaCost(_ -> 50)
-        ..presetCastRange(_ -> 600)
+        ..presetCastRange(_ -> 700)
         ..setBuffs(1, ARMOR_BLESSING_BUFF.toRawCode())
         ..tooltipStopListen(true)
 
@@ -97,7 +97,7 @@ let SLOW_TARGET_COUNT = 2
         ..setDamageIncrease(1, 0.5)
         ..presetCooldown(_ -> 2)
         ..presetManaCost(_ -> 50)
-        ..presetCastRange(_ -> 600)
+        ..presetCastRange(_ -> 700)
         ..setBuffs(1, WEAPON_BLESSING_BUFF.toRawCode())
         ..tooltipStopListen(true)
 

@@ -251,12 +251,12 @@ import UnitTooltipGenerator
         ..setDefaultActiveAbility(commaList(ABIL_FAERIE_FIRE))
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 30, 3, 2, 1.75)
-        ..setAttack1Range(400)
+        ..setAttack1Data(AttackType.Magic, 24, 3, 2, 1.75)
+        ..setAttack1Range(550)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(60)
+        ..setHitPointsMaximumBase(80)
         ..setMana(200)
 
         ..setSpeedBase(270)
