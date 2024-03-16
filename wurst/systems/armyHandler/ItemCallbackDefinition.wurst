@@ -359,17 +359,11 @@ init
             unitToSpawn.push(UNIT_VAMPIRE_LORD)
     itemAddUnitMap.put(ITEM_VAMPIRE_LORD, vampireLordAction)
 
-
-    let deathcoilAction = new ItemModifierAction()
+    let spawnGutCrawlerAction = new ItemModifierAction()
         ..addAction() (unit u) ->
-        u.addAbility(ABIL_AUTOCAST_DEATH_COIL)
-        u.addAbility(ABIL_DEATH_COIL)
-        u.issueImmediateOrderById(OrderIds.parasiteon)
-        u.setMaxMana(300)
-        u.setMana(300)
+        u.addAbility(ABIL_SPAWN_GUT_CRAWLER)
 
-    itemModifyUnitMap.put(ITEM_DEATH_COIL, deathcoilAction)
-
+    itemModifyUnitMap.put(ITEM_SPAWN_GUT_CRAWLER, spawnGutCrawlerAction)
 
     let unholyAuraAction = new ItemModifierAction()
         ..addAction() (unit u) ->

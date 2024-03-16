@@ -428,6 +428,24 @@ let DEATH_COIL_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_AFFLICTION, tgen.generateFullTooltip())
 
 
+    itm = createBasicItem(ITEM_SPAWN_GUT_CRAWLER)
+        ..setItemCost(0, 200, 1, 1, 1)
+        ..setNameEnhance("Z", "Add Spawn Gut Crawlers")
+        ..setInterfaceIcon(Icons.bTNGhoul)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Spawn 2 Gut Crawlers upon death.")
+    new AbilityDefinitionSpawnHydraHatchling(ABIL_SPAWN_GUT_CRAWLER)
+        ..setCheckDependencies(false)
+        // We create the unit through the unitDeathTrigger.wurst package
+        // because we want the gut crawler to leave a corpse
+        ..setNumberofUnits(1, 0)
+        ..setUnitType(1, commaList(UNIT_GUT_CRAWLER))
+        ..setNameEnhance("Z", "Gut Crawlers")
+
+    tgen.applyToDefItem(itm)
+
+
 init
     EventListener.onTargetCast(ABIL_AUTOCAST_DEATH_COIL) (unit caster, unit target) ->
         if (caster.getTypeId() == UNIT_DEATH_KNIGHT)
