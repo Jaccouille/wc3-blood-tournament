@@ -18,6 +18,8 @@ import LocalObjectIDs
 import Players
 import ClosureForGroups
 import MapBounds
+import SpawnZone
+import ArmyPreviewer
 
 public constant roundController = new RoundController()
 
@@ -64,6 +66,14 @@ class RoundController
         ScoreBoardColumnEntries.orderRowsForNextRound(roundParticipants)
         destroy roundParticipants
 
+    private function initPreviewer(player _p, int zoneIdx)
+        if not playerToArmyPreviewer.has(_p)
+            playerToArmyPreviewer.put(_p, new ArmyPreviewer(_p))
+        let ap = playerToArmyPreviewer.get(_p)
+        ap.setSpawnZone(spawnZones.get(zoneIdx))
+        ap.initSpawner()
+        ap.startPreview()
+
     function preRoundPhaseStart()
         if rounds.isEmpty()
             onAllroundsFinished.execute()
@@ -74,6 +84,17 @@ class RoundController
         // TODO: Maybe move board update to scoreboard package?
         BOARD_TITLE_PREFIX = currentRound.roundName
         if currentRound instanceof NormalRound
+            // Init previewer for each player
+            var zoneIdx = 0
+            for contestantPair in currentRound.matchUp
+                // Spread the previewer refresh to avoid lag spike
+                doAfter(zoneIdx.toReal()) ->
+                    let p1 = players[contestantPair.a]
+                    let p2 = players[contestantPair.b]
+                    initPreviewer(p1, zoneIdx)
+                    initPreviewer(p2, zoneIdx + 1)
+                zoneIdx += 2
+
             doAfter(9) ->
                 ALL_PLAYERS.forEach() (player _p) ->
                     let opponent = roundController.currentRound.getOpponent(_p)
@@ -140,6 +161,10 @@ class RoundController
         roundInterludeTimer.destr()
 
     function startRound()
+        for i = 0 to 7
+            if playerToArmyPreviewer.has(players[i])
+                playerToArmyPreviewer.get(players[i])
+                .stopPreview()
         tdialog.destr()
         hasRoundStarted = true
         pDatas.forEach() (player _, PlayerData pData) ->

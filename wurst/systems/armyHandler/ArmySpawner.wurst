@@ -192,7 +192,6 @@ public class ArmySpawner
     // List of units spawned by a building
     LinkedList<int> squadIds = new LinkedList<int>
 
-    // LinkedList<ItemModifier> unitModifierList = new LinkedList<ItemModifier>
     LinkedList<ItemModifier> unitModifierList = new LinkedList<ItemModifier>
 
     construct(player _p)
@@ -211,18 +210,6 @@ public class ArmySpawner
             return true
         return squadIdx >= squadIds.size()
 
-    /**
-        Register callback defined in ItemCallbackDefinition.wurst with
-    **/
-    private function applyItemModifier(LinkedList<item> inv)
-        for itm in inv
-            // Log.debug("AitemModifyUnit :" + unitModifierList.size().toString())
-            if itemAddUnitMap.has(itm.getTypeId())
-                itemAddUnitMap.get(itm.getTypeId()).execute(squadIds, itm.getCharges())
-            if itemModifyUnitMap.has(itm.getTypeId())
-                unitModifierList.push(new ItemModifier(itemModifyUnitMap.get(itm.getTypeId()), itm.getCharges()))
-            // Log.debug("BitemModifyUnit :" + unitModifierList.size().toString())
-
     function setSpawnZone(SpawnZone spawnZone)
         this.spawnZone = spawnZone
 
@@ -234,6 +221,18 @@ public class ArmySpawner
         this.pos = spawnZone.initialPos
         let invertedAngle = (180 + spawnZone.angle.degrees() % 360).asAngleDegrees()
         this.portalSpawnPos = this.pos.polarOffset(invertedAngle, PORTAL_DIST_OFFSET * 2)
+
+    /**
+        Register callback defined in ItemCallbackDefinition.wurst with
+    **/
+    private function registerItemModifier(LinkedList<item> inv)
+        for itm in inv
+            // Log.debug("AitemModifyUnit :" + unitModifierList.size().toString())
+            if itemAddUnitMap.has(itm.getTypeId())
+                itemAddUnitMap.get(itm.getTypeId()).execute(squadIds, itm.getCharges())
+            if itemModifyUnitMap.has(itm.getTypeId())
+                unitModifierList.push(new ItemModifier(itemModifyUnitMap.get(itm.getTypeId()), itm.getCharges()))
+            // Log.debug("BitemModifyUnit :" + unitModifierList.size().toString())
 
     private function executeUnitModifier(unit newUnit)
         // a being the callback defined in ItemCallbackDefinition.wurst
@@ -308,7 +307,7 @@ public class ArmySpawner
             squadIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
             // Log.debug("passed AddAll " + building.getName())
 
-            applyItemModifier(building.getInventory())
+            registerItemModifier(building.getInventory())
             // Log.debug("passed executeItemBonus " + building.getName())
 
             // Spawn while there's something to spawn and unitLimit isn't reached
@@ -390,7 +389,7 @@ public class ArmySpawner
         if squadIds.isEmpty()
             let building = buildingList.get(buildingIdx)
             squadIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
-            applyItemModifier(building.getInventory())
+            registerItemModifier(building.getInventory())
 
         let unitId = squadIds.get(squadIdx)
         let u = spawnUnit(unitId, getRandomReinforcementPos())

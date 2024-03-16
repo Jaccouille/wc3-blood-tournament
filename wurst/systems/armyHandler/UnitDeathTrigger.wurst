@@ -12,6 +12,7 @@ import OrderIds
 import ItemStockHandler
 import ClosureForGroups
 import SpawnZone
+import ArmyPreviewer
 
 function customAction(unit killer, unit dyingUnit, PlayerData pData)
 
@@ -180,6 +181,8 @@ public function initUnitDeathTrigger()
             pData.buildingList.remove(dyingUnit)
             if ItemStockHandler.hasUnit(dyingUnit)
                 destroy ItemStockHandler.unitToItemStockMap.get(dyingUnit)
+            if playerToArmyPreviewer.has(dyingUnit.getOwner())
+                playerToArmyPreviewer.get(dyingUnit.getOwner()).shouldRefresh = true
         else if dyingUnit.getPointValue() > 0
 
             // Add blood points bounty

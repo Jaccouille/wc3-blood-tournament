@@ -25,6 +25,11 @@ import DummyCaster
 
 let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
 
+@compiletime function createAbilInvisiblity()
+    new AbilityDefinitionPermanentInvisibility(ABIL_INVISIBLITY)
+        ..setDurationNormal(1, 0)
+        ..setCheckDependencies(false)
+
 @compiletime function createRacePickingMiscAbilities()
     new ChannelAbilityPreset(ABIL_RANDOM_RACE, 1, true)
         ..presetManaCost(lvl -> 0)

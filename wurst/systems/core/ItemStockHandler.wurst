@@ -10,6 +10,7 @@ import PlayerExtension
 import ScoreBoard
 import OrderIds
 import ArmySpawner
+import ArmyPreviewer
 
 public HashMap<int, LinkedList<int>> unitItemSold = new HashMap<int, LinkedList<int>>
 
@@ -168,6 +169,8 @@ init
                     if i.getName().contains("Add")
                         bonusArmyPoints = bloodPoint
                     building.getOwner().getPlayerData().addArmyPoints(bonusArmyPoints)
+                if playerToArmyPreviewer.has(building.getOwner())
+                    playerToArmyPreviewer.get(building.getOwner()).shouldRefresh = true
             i.remove()
 
     // When an item is bought, it doesn't go in the building inventory, it

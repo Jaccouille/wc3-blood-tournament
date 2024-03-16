@@ -10,7 +10,11 @@ import GameConstants
 import GameStates
 import ArmySpawner
 import ItemStockHandler
+import LocalObjectIDs
 import PlayerExtension
+import ArmyPreviewer
+
+
 
 public function insertBuilding(LinkedList<unit> buildingList, unit newBuilding)
     // Remove the building so we can re insert it in the list
@@ -44,6 +48,18 @@ public function insertBuilding(LinkedList<unit> buildingList, unit newBuilding)
     if not buildingList.has(newBuilding)
         buildingList.push(newBuilding)
 
+    // Debugging
+    // for building in buildingList
+    //     createTTEx(building.getPos3Real().add(0, 0, 10), buildingList.indexOf(building).toString(), 10)
+    //         ..setLifespan(2)
+    //         ..setPermanent(false)
+
+    updatePreviewer(newBuilding.getOwner())
+
+function updatePreviewer(player _p)
+    if playerToArmyPreviewer.has(_p)
+        playerToArmyPreviewer.get(_p).shouldRefresh = true
+
 
 init
     CreateTrigger()
@@ -68,6 +84,7 @@ init
             u.addType(UNIT_TYPE_ANCIENT)
             BlzShowUnitTeamGlow(u, false)
             pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(u.getTypeId()).upgradeBonusArmyPoints)
+            updatePreviewer(u.getOwner())
 
         EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
             let newBuilding = EventData.getTriggerUnit()

@@ -1,0 +1,173 @@
+package ArmyPreviewer
+
+// Standard libs imports:
+import ClosureEvents
+import HashMap
+import LinkedList
+import ClosureForGroups
+import ClosureTimers
+
+import Lodash
+
+// Local imports:
+import GameConstants
+import LocalObjectIDs
+import PlayerData
+import PlayerExtension
+import SpawnZone
+import GameConfig
+import UnitExtensions
+import ItemCallbackDefinition
+import Assets
+import ArmySpawner
+
+
+// Distance between units positioned in formation mode
+@configurable constant FORMATION_WIDTH = 120.
+@configurable constant FORMATION_HEIGHT = 80.
+// Number of units allocated per dummy players
+@configurable constant MAX_UNIT_PER_DUMMY_PLAYER = 80
+        // 400 is kind of a random value
+@configurable constant PORTAL_DIST_OFFSET = 500.
+
+public let playerToArmyPreviewer = new HashMap<player, ArmyPreviewer>
+
+public class ArmyPreviewer
+    boolean shouldRefresh = true
+    SpawnZone spawnZone
+    player _p
+    angle spawnDirection
+    int buildingIdx = 0
+    int squadIdx = 0
+    vec2 pos
+    int unitPerLine
+    PlayerData pData
+    EventListener reinforcementListener
+    // List of units spawned by a building
+    LinkedList<int> squadIds = new LinkedList<int>
+    int spawnCount = 0
+    CallbackPeriodic cb
+    boolean isEnable
+
+    LinkedList<ItemModifier> unitModifierList = new LinkedList<ItemModifier>
+
+    construct(player _p)
+        this._p = _p
+
+    function setSpawnZone(SpawnZone spawnZone)
+        this.spawnZone = spawnZone
+        // TODO: uber retarded way to properly get the angle I wanted with both jass and LUA
+        // 1 < 1.00 in LUA -> true, false in JASS
+        this.spawnDirection = (spawnZone.angle.cos().abs() < 0.99 ? 0 : 90).asAngleDegrees()
+        this.pos = spawnZone.initialPos
+
+        unitPerLine = spawnDirection.degrees() == 0.
+            ? (spawnZone.width /  FORMATION_WIDTH).round()
+            : (spawnZone.height / FORMATION_WIDTH).round()
+
+    function clearPreview()
+        forUnitsOfPlayer(_p.getDummyPlayer(0)) (unit u) ->
+            if u.isSoldier()
+                u.remove()
+
+    function startPreview()
+        isEnable = true
+        shouldRefresh = true
+        cb = doPeriodically(5) (CallbackPeriodic cb) ->
+            if shouldRefresh and isEnable
+                clearPreview()
+                initSpawner()
+                spawnPreview()
+
+    function stopPreview()
+        if isEnable
+            clearPreview()
+            isEnable = false
+            destroy cb
+
+    /**
+        Register callback defined in ItemCallbackDefinition.wurst with
+    **/
+    private function registerItemModifier(LinkedList<item> inv)
+        for itm in inv
+            // Log.debug("AitemModifyUnit :" + unitModifierList.size().toString())
+            if itemAddUnitMap.has(itm.getTypeId())
+                itemAddUnitMap.get(itm.getTypeId()).execute(squadIds, itm.getCharges())
+            if itemModifyUnitMap.has(itm.getTypeId())
+                unitModifierList.push(new ItemModifier(itemModifyUnitMap.get(itm.getTypeId()), itm.getCharges()))
+            // Log.debug("BitemModifyUnit :" + unitModifierList.size().toString())
+
+
+    private function executeUnitModifier(unit newUnit)
+        // a being the callback defined in ItemCallbackDefinition.wurst
+        unitModifierList.get(0).action.execute(newUnit)
+        // b being the item charges
+        unitModifierList.get(0).charges -= 1
+        // Clean up the pair obj once it has been used
+        if unitModifierList.get(0).charges <= 0
+            destroy unitModifierList.dequeue()
+
+    private function spawnUnit(int unitId, vec2 spawnPos) returns unit
+        let armySize = pDatas.get(_p).spawnedUnits.size()
+        let dummyPlayer = _p.getDummyPlayer(0)
+
+        let newUnit = createUnit(dummyPlayer, unitId, spawnPos, spawnZone.angle)
+
+        if gameConfig.getHealthMultiplier() != 1.
+            newUnit.setHP(newUnit.getHP() * gameConfig.getHealthMultiplier())
+        if gameConfig.getDamageMultiplier() != 1.
+            newUnit.setBaseDamage(
+                (newUnit.getBaseDamage(0) * gameConfig.getDamageMultiplier()).toInt() , 0)
+
+        // Apply Item modifier
+        if not unitModifierList.isEmpty()
+            // If unit is the last in the squad, apply all remaining modifier
+            if squadIdx == squadIds.size() - 1
+                while unitModifierList.size() > 0
+                    executeUnitModifier(newUnit)
+            else
+                executeUnitModifier(newUnit)
+
+        BlzShowUnitTeamGlow(newUnit, false)
+        if newUnit.getName() == null
+            Log.debug("Unknown unit spawned for " + dummyPlayer.getName() + " id : " + newUnit.getTypeId().toString())
+        return newUnit
+
+
+    function initSpawner()
+        squadIds.clear()
+        this.pos = spawnZone.initialPos
+        spawnCount = 0
+        buildingIdx = 0
+        squadIdx = 0
+
+    function spawnPreview()
+        let buildingList = this._p.getPlayerData().buildingList
+
+        while buildingIdx < buildingList.size() and spawnCount < spawnZone.unitLimit
+            let building = buildingList.get(buildingIdx)
+            squadIds.addAll(BTBuildingData.unitIdToDataMap.get(
+                building.getTypeId()).unitToSpawn)
+
+            registerItemModifier(building.getInventory())
+
+            while squadIdx < squadIds.size()
+                and spawnCount < spawnZone.unitLimit
+
+                spawnUnit(squadIds.get(squadIdx), pos)
+                //   ..pause()
+                  ..addAbility(ABIL_INVISIBLITY)
+                pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+                spawnCount++
+
+                if spawnCount % unitPerLine == 0
+                    pos = spawnZone.initialPos.polarOffset(
+                        spawnZone.angle.op_minus(180..asAngleDegrees()),
+                        FORMATION_HEIGHT * spawnCount / unitPerLine)
+
+                squadIdx++
+            if spawnCount < spawnZone.unitLimit
+                squadIdx = 0
+                squadIds.clear()
+                buildingIdx++
+        shouldRefresh = false
