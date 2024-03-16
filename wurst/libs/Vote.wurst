@@ -1,9 +1,12 @@
 package Vote
 
-import LinkedList
+// Standard libs imports:
 import ClosureTimers
-import ColorUtils
 import HashMap
+import LinkedList
+
+// Local imports:
+import ColorUtils
 
 public interface VoteCallback
     function execute()

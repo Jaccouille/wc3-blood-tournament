@@ -1,15 +1,17 @@
 package VotesDefinition
 
-import Vote
-import ChatCommands
+// Standard libs imports:
 import HashMap
-import RoundController
-import GameStates
-import GameConfig
 import MapBounds
+
+// Local imports:
+import ChatCommands
+import GameConfig
+import GameStates
 import LocalObjectIDs
 import Players
-
+import RoundController
+import Vote
 
 init
     GameStates.gameplay.onEnter() (state) ->

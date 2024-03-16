@@ -1,21 +1,24 @@
 package HumanAbilitiesDef
 
-import AbilityObjEditingCommons
-import LocalObjectIDs
-import ItemObjEditingCommon
-import BTAbilityTooltipGenerator
-import UnitObjEditingCommon
+// Standard libs imports:
 import Assets
-import ColorUtils
-import HashMap
-import TooltipsUtils
-import BTAbilities
 import BuffObjEditing
-import ClosureForGroups
 import ClosureEvents
-import ArmySpawner
+import ClosureForGroups
+import HashMap
 import InstantDummyCaster
 import OrderIds
+
+// Local imports:
+import AbilityObjEditingCommons
+import ArmySpawner
+import BTAbilities
+import BTAbilityTooltipGenerator
+import ColorUtils
+import ItemObjEditingCommon
+import LocalObjectIDs
+import TooltipsUtils
+import UnitObjEditingCommon
 
 let SLOW_AOE = 150.
 let SLOW_TARGET_COUNT = 2

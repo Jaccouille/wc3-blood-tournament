@@ -1,20 +1,20 @@
 package ChangeLog
 
-// Standard library imports:
+// Standard libs imports:
 import Assets
 import ClosureTimers
 import HashMap
 import LinkedList
 import Quest
-import SimError
+import StringUtils
 
-// Third-party imports:
+// Third party imports:
 import Lodash
 
 // Local imports:
 import ChatCommands
 import ColorUtils
-import StringUtils
+import SimError
 
 // Formatting strings used to display messages.
 let TITLE_MSG = "Changelog for ".color(ENERGY_COLOR) + "{0}".color(GOLD_COLOR)

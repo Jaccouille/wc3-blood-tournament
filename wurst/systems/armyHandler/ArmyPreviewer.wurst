@@ -1,26 +1,26 @@
 package ArmyPreviewer
 
 // Standard libs imports:
+import Assets
 import ClosureEvents
-import HashMap
-import LinkedList
 import ClosureForGroups
 import ClosureTimers
+import HashMap
+import LinkedList
 
+// Third party imports:
 import Lodash
 
 // Local imports:
+import ArmySpawner
+import GameConfig
 import GameConstants
+import ItemCallbackDefinition
 import LocalObjectIDs
 import PlayerData
 import PlayerExtension
 import SpawnZone
-import GameConfig
 import UnitExtensions
-import ItemCallbackDefinition
-import Assets
-import ArmySpawner
-
 
 // Distance between units positioned in formation mode
 @configurable constant FORMATION_WIDTH = 120.
@@ -32,6 +32,7 @@ import ArmySpawner
 
 public let playerToArmyPreviewer = new HashMap<player, ArmyPreviewer>
 
+// TODO: Rework alongisde army spawner since they got similar functionalities
 public class ArmyPreviewer
     boolean shouldRefresh = true
     SpawnZone spawnZone
@@ -108,7 +109,6 @@ public class ArmyPreviewer
             destroy unitModifierList.dequeue()
 
     private function spawnUnit(int unitId, vec2 spawnPos) returns unit
-        let armySize = pDatas.get(_p).spawnedUnits.size()
         let dummyPlayer = _p.getDummyPlayer(0)
 
         let newUnit = createUnit(dummyPlayer, unitId, spawnPos, spawnZone.angle)

@@ -4,17 +4,17 @@ package GameInit
 import ClosureTimers
 import ObjectIdGenerator
 import Preloader
+import Sounds
 
 // Local imports:
 import AltarEntity
 import ArmySpawner
+import GameStates
 import Indicators
 import LocalObjectIDs
 import RoundController
 import ScoreBoard
 import UnitDeathTrigger
-import Sounds
-import GameStates
 
 // A timer for the core gameplay.
 public constant GAME_TIMER = CreateTimer()

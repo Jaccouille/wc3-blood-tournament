@@ -9,7 +9,6 @@ import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
 
-
 @compiletime function createBeastUnitsDef()
     let tooltip = new UnitTooltipGenerator("Footman Desc")
     createSpawnedUnit(UNIT_GNOLL, UnitIds.gnoll1, BUILDING_GNOLL)

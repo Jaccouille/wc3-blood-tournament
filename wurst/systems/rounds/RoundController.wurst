@@ -1,25 +1,25 @@
 package RoundController
 
 // Standard libs imports:
+import ClosureForGroups
 import ClosureTimers
 import HashSet
-import TimerUtils
+import MapBounds
 import Sounds
+import TimerUtils
 
 // Local imports:
 import AltarEntity
+import ArmyPreviewer
+import ColorUtils
 import GameConfig
 import GameStates
-import OrderBlocker
-import ScoreBoard
-import public Round
-import ColorUtils
 import LocalObjectIDs
+import OrderBlocker
 import Players
-import ClosureForGroups
-import MapBounds
+import ScoreBoard
 import SpawnZone
-import ArmyPreviewer
+import public Round
 
 public constant roundController = new RoundController()
 

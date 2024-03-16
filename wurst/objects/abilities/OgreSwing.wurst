@@ -1,12 +1,15 @@
 package OgreSwing
 
-import ClosureEvents
-import TimerUtils
-import OrderIds
-import DummyCaster
+// Standard libs imports:
 import Assets
-import LocalObjectIDs
+import ClosureEvents
+import DummyCaster
+import OrderIds
 import TerrainUtils
+import TimerUtils
+
+// Local imports:
+import LocalObjectIDs
 
 constant ANGLE = 45.
 constant gravity = 175.

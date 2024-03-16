@@ -1,20 +1,22 @@
 package NightElfAbilitiesDef
 
-import BTAbilities
-import BTAbilityTooltipGenerator
-import AbilityObjEditingCommons
+// Standard libs imports:
 import Assets
-import ItemObjEditingCommon
-import UnitObjEditingCommon
 import BuffObjEditing
-import TooltipsUtils
 import ClosureEvents
+import ClosureForGroups
 import InstantDummyCaster
 import OrderIds
-import ClosureForGroups
-import ArmySpawner
 
+// Local imports:
+import AbilityObjEditingCommons
+import ArmySpawner
+import BTAbilities
+import BTAbilityTooltipGenerator
+import ItemObjEditingCommon
 import LocalObjectIDs
+import TooltipsUtils
+import UnitObjEditingCommon
 
 let FAERIE_FIRE_AOE = 150.
 let FAERIE_FIRE_TARGET_COUNT = 3

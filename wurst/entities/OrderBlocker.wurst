@@ -1,10 +1,12 @@
 package OrderBlocker
 
+// Standard libs imports:
+import HashSet
+import OrderIds
+
 // Local imports:
 import ColorUtils
 import GameConstants
-import HashSet
-import OrderIds
 
 public boolean preventOrder = false
 public trigger orderBlocker

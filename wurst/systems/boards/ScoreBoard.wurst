@@ -9,9 +9,9 @@ import LinkedListModule
 // Local imports:
 import Boards
 import ColorUtils
+import GameStates
 import Players
 import public PlayerData
-import GameStates
 
 let KILL_COLUMN_WIDTH = 0.055
 let STAT_LABEL_WIDTH = 0.1

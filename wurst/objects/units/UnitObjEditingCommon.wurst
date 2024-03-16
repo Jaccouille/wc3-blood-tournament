@@ -4,19 +4,17 @@ package UnitObjEditingCommon
 import AbilityObjEditing
 import Assets
 import ErrorHandling
-import ObjectIds
 import ItemObjEditing
 import LinkedList
-
-// Third party imports:
+import ObjectIds
 
 // Local imports:
 import ArmySpawner
 import GridHotkeyPosition
+import ItemObjEditingCommon
 import LocalObjectIDs
 import TooltipsUtils
 import UnitTooltipGenerator
-import ItemObjEditingCommon
 
 public constant STANDARD_PROJECTILE_SPEED = 1200
 

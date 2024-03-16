@@ -1,10 +1,13 @@
 package UnitDamageTrigger
 
-import DamageEvent
-import LocalObjectIDs
-import OrderIds
-import ClosureTimers
+// Standard libs imports:
 import BuffIds
+import ClosureTimers
+import DamageEvent
+import OrderIds
+
+// Local imports:
+import LocalObjectIDs
 
 init
     DamageEvent.addListener() ->

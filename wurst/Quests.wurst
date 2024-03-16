@@ -1,13 +1,12 @@
 package Quests
 
-
-// Standard library imports:
+// Standard libs imports:
+import Icons
 import LinkedList
+import Quest
 
 // Local imports:
 import ColorUtils
-import Quest
-import Icons
 
 
 let about = asList(

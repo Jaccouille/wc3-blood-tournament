@@ -2,6 +2,8 @@ package GameConfig
 
 // Standard libs imports:
 import LinkedList
+
+// Local imports:
 import IDListConstant
 
 class GameConfig

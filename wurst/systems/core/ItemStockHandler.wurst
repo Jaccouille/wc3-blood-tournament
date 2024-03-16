@@ -1,16 +1,19 @@
 package ItemStockHandler
 
-import LinkedList
-import HashMap
+// Standard libs imports:
 import ClosureEvents
-import LocalObjectIDs
-import ClosuresForItems
 import ClosureTimers
+import HashMap
+import LinkedList
+import OrderIds
+
+// Local imports:
+import ArmyPreviewer
+import ArmySpawner
+import ClosuresForItems
+import LocalObjectIDs
 import PlayerExtension
 import ScoreBoard
-import OrderIds
-import ArmySpawner
-import ArmyPreviewer
 
 public HashMap<int, LinkedList<int>> unitItemSold = new HashMap<int, LinkedList<int>>
 

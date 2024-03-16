@@ -2,8 +2,10 @@ package UnitTooltipGenerator
 
 // Standard libs imports:
 import HashMap
-import UnitObjEditing
 import ItemObjEditing
+import UnitObjEditing
+
+// Local imports:
 import ColorUtils
 
 public constant GOLD_COLOR = color(255, 215,   0)

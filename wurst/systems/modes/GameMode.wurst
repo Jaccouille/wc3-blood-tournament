@@ -15,7 +15,6 @@ import ChatCommands
 import ColorUtils
 import GameStates
 
-
 // The interval, in seconds, during which modes can be selected.
 let MODES_TIME_LIMIT = 60.0
 

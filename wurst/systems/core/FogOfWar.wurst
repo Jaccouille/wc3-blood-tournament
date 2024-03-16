@@ -1,10 +1,10 @@
 package FogOfWar
 
+// Local imports:
+import GameConfig
 import GameStates
 import PlayerData
 import Players
-import GameConfig
-
 
 init
     GameStates.modesSelection.onExit() (state) ->

@@ -5,16 +5,15 @@ import ClosureEvents
 import HashMap
 import LinkedList
 
-import PlayerData
+// Local imports:
+import ArmyPreviewer
+import ArmySpawner
 import GameConstants
 import GameStates
-import ArmySpawner
 import ItemStockHandler
 import LocalObjectIDs
+import PlayerData
 import PlayerExtension
-import ArmyPreviewer
-
-
 
 public function insertBuilding(LinkedList<unit> buildingList, unit newBuilding)
     // Remove the building so we can re insert it in the list

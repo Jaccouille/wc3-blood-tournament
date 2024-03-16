@@ -3,16 +3,16 @@ package UndeadUnitsDef
 // Standard libs imports:
 import Assets
 import ChannelAbilityPreset
+import LinkedList
 
 // Local imports:
+import ArmySpawner
+import BTAbilities
+import ColorUtils
 import ItemObjEditingCommon
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
-import BTAbilities
-import LinkedList
-import ColorUtils
-import ArmySpawner
 
 @compiletime function createZombie()
     var tooltip = new UnitTooltipGenerator("Cheap meat shield.")

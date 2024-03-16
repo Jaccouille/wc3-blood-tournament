@@ -4,15 +4,15 @@ package HumanUnitsDef
 import Assets
 
 // Local imports:
-import ItemObjEditingCommon
+import ArmySpawner
+import BTAbilities
 import BTAbilityTooltipGenerator
+import ColorUtils
+import ItemObjEditingCommon
+import LocalAssets
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
-import ColorUtils
-import LocalAssets
-import BTAbilities
-import ArmySpawner
 
 @compiletime function createFootman()
     var tooltip = new UnitTooltipGenerator("Basic melee unit")

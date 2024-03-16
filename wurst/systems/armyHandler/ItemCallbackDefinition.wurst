@@ -1,9 +1,12 @@
 package ItemCallbackDefinition
 
+// Standard libs imports:
 import HashMap
 import LinkedList
-import LocalObjectIDs
 import OrderIds
+
+// Local imports:
+import LocalObjectIDs
 
 public let itemAddUnitMap = new HashMap<int, ItemAddUnit>
 public let itemModifyUnitMap = new HashMap<int, ItemModifierAction>

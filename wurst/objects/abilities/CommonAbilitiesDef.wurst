@@ -1,11 +1,14 @@
 package CommonAbilitiesDef
 
-import LocalObjectIDs
-import BTAbilityTooltipGenerator
+// Standard libs imports:
+import Assets
+
+// Local imports:
 import AbilityObjEditingCommons
 import BTAbilities
+import BTAbilityTooltipGenerator
+import LocalObjectIDs
 import TooltipsUtils
-import Assets
 
 function createCleave(int abilId, real distributedDamage, real aoe) returns AbilityDefinitionPitLordCleavingAttack
     let tgen = new BTAbilityTooltipGenerator(

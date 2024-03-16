@@ -5,14 +5,13 @@ import Assets
 import ChannelAbilityPreset
 
 // Local imports:
+import ArmySpawner
+import BTAbilities
+import ColorUtils
 import ItemObjEditingCommon
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
-import BTAbilities
-import ColorUtils
-import ArmySpawner
-
 
 @compiletime function createTreant()
     var tooltip = new UnitTooltipGenerator("Footman Desc")

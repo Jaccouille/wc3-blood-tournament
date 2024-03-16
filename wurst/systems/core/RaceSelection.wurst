@@ -1,8 +1,8 @@
 package RaceSelection
 
 // Standard libs imports:
-import ClosureEvents
 import Assets
+import ClosureEvents
 import ClosureTimers
 
 // Local imports:

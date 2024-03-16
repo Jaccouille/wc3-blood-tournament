@@ -1,8 +1,8 @@
 package IDListConstant
 
 // Standard libs imports:
-import LinkedList
 import HashMap
+import LinkedList
 
 // Local imports:
 import LocalObjectIDs

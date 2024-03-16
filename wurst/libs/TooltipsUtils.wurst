@@ -7,7 +7,6 @@ import ObjectIds
 // Local imports:
 import ColorUtils
 
-
 public function real.percRound() returns string
     return (this.toString(0) + "%")
 

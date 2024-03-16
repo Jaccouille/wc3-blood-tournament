@@ -1,8 +1,11 @@
 package BTAbilityTooltipGenerator
 
-import public ChannelAbilityPreset
-import ItemObjEditing
+// Standard libs imports:
 import HashMap
+import ItemObjEditing
+import public ChannelAbilityPreset
+
+// Local imports:
 import ColorUtils
 
 @configurable constant TITLE_COLOR = GOLD_COLOR.toColorString()

@@ -1,17 +1,17 @@
 package DebugCommande
 
 // Standard libs imports:
+import ClosureForGroups
+import ClosureTimers
 import ObjectIds
 
 // Local imports:
 import ArmySpawner
-import RoundController
-import ClosureForGroups
-import ClosureTimers
+import ClosuresForItems
 import OrderBlocker
+import RoundController
 import Toolkit
 import UnitDeathTrigger
-import ClosuresForItems
 
 init
     registerToolkitCommand("su") (player triggerPlayer, LinkedList<string> arguments) ->

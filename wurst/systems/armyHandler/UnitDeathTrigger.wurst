@@ -1,18 +1,20 @@
 package UnitDeathTrigger
 
+// Standard libs imports:
+import Assets
+import ClosureForGroups
+import ClosureTimers
+import OrderIds
+
 // Local imports:
+import ArmyPreviewer
 import ArmySpawner
 import GameConfig
+import ItemStockHandler
+import LocalObjectIDs
 import PlayerExtension
 import RoundController
-import ClosureTimers
-import LocalObjectIDs
-import Assets
-import OrderIds
-import ItemStockHandler
-import ClosureForGroups
 import SpawnZone
-import ArmyPreviewer
 
 function customAction(unit killer, unit dyingUnit, PlayerData pData)
 

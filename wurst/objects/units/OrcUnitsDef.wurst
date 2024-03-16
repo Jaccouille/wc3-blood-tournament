@@ -4,14 +4,14 @@ package OrcUnitsDef
 import Assets
 
 // Local imports:
+import ArmySpawner
+import BTAbilities
+import BTAbilityTooltipGenerator
+import ItemObjEditingCommon
 import LocalObjectIDs
 import OrcAbilitiesDef
 import UnitObjEditingCommon
 import UnitTooltipGenerator
-import BTAbilityTooltipGenerator
-import ItemObjEditingCommon
-import BTAbilities
-import ArmySpawner
 
 @compiletime function createGrunt()
     var tooltip = new UnitTooltipGenerator("Basic melee unit.")

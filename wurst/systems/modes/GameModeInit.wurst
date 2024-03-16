@@ -11,8 +11,8 @@ import ColorUtils
 import GameConfig
 import GameMode
 import GameStates
-import Toolkit
 import IDListConstant
+import Toolkit
 
 @configurable constant LABEL_COLOR = GENERAL_COLOR
 @configurable constant VALUE_COLOR = SPECIAL_COLOR

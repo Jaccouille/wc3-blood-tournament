@@ -46,11 +46,19 @@ def add_import_line(import_files, import_lines, header):
 
 def get_wurst_files(directory):
     file_list = []
+    # Directories to exclude
+    exclude_dirs = ['changelogs']  # Add your directories to exclude here
+
     for root, dirs, files in os.walk(directory):
+        # Exclude directories
+        dirs[:] = [d for d in dirs if d not in exclude_dirs]
+
         for file in files:
             if file.endswith(".wurst"):
                 file_list.append(os.path.join(root, file))
     return file_list
+
+
 
 
 def register_project_package():

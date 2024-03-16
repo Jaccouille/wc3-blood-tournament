@@ -1,13 +1,13 @@
 package ItemObjEditingCommon
 
+// Standard libs imports:
 import ErrorHandling
-
-import ItemObjEditing
 import ItemIds
-import ItemStockHandler
+import ItemObjEditing
 
 // Local imports:
 import GridHotkeyPosition
+import ItemStockHandler
 
 public function ItemDefinition.setHotkeyEnhance(string hotkey)
     if not hotKeyMapping.has(hotkey)

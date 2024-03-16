@@ -1,10 +1,10 @@
 package UnitExtensions
 
-// Standard library imports:
+// Standard libs imports:
+import HashMap
 import LinkedList
 
 // Local imports:
-import HashMap
 import GameConstants
 
 

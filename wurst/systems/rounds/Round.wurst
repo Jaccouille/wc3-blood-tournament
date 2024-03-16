@@ -3,25 +3,25 @@ package Round
 // Standard libs imports:
 import ClosureForGroups
 import ClosureTimers
+import MapBounds
+import Sounds
 import public ClosureKeyPresses
 import public LinkedList
-import LocalObjectIDs
-import MapBounds
 
 // Third party imports:
 import public Lodash
 
 // Local imports:
 import ArmySpawner
+import ColorUtils
+import LocalObjectIDs
 import OrderBlocker
+import PlayerExtension
 import ScoreBoard
 import SpawnZone
+import UnitExtensions
 import public GameConstants
 import public PlayerData
-import ColorUtils
-import PlayerExtension
-import UnitExtensions
-import Sounds
 
 // Distance between units positioned in formation mode
 @configurable constant FORMATION_WIDTH = 120.

@@ -2,16 +2,15 @@ package AbilityObjEditingCommons
 
 // Standard libs imports:
 import AbilityObjEditing
-import ErrorHandling
-import TooltipsUtils
-import BuffObjEditing
 import Assets
+import BuffObjEditing
+import ErrorHandling
 import ObjectIdGenerator
 import ObjectIds
 
 // Local imports:
 import GridHotkeyPosition
-
+import TooltipsUtils
 
 public function AbilityDefinition.setNameEnhance(string hotkey, string name)
     this.setHotkeyEnhance(hotkey)

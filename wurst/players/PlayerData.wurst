@@ -4,10 +4,10 @@ package PlayerData
 import HashMap
 
 // Local imports:
+import ColorUtils
 import GameConfig
 import GameStates
 import Players
-import ColorUtils
 
 public constant pDatas = new IterableMap<player, PlayerData>
 

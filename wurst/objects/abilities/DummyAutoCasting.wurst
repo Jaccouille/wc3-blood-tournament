@@ -1,12 +1,14 @@
 package DummyAutoCasting
 
-import HashMap
-import ClosureEvents
-import LocalObjectIDs
-import GameConstants
-import OrderIds
+// Standard libs imports:
 import BuffIds
+import ClosureEvents
+import HashMap
+import OrderIds
 
+// Local imports:
+import GameConstants
+import LocalObjectIDs
 
 public class BuffTuple
     int orderId

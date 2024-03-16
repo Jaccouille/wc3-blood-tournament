@@ -1,19 +1,20 @@
 package OrcAbilitiesDef
 
-// Local imports:
-import ColorUtils
-import LocalObjectIDs
-import ItemObjEditingCommon
-import AbilityObjEditingCommons
-import BTAbilityTooltipGenerator
-import UnitObjEditingCommon
-import HashMap
-import BTAbilities
-import BuffObjEditing
+// Standard libs imports:
 import Assets
-import TooltipsUtils
-import ArmySpawner
+import BuffObjEditing
+import HashMap
 
+// Local imports:
+import AbilityObjEditingCommons
+import ArmySpawner
+import BTAbilities
+import BTAbilityTooltipGenerator
+import ColorUtils
+import ItemObjEditingCommon
+import LocalObjectIDs
+import TooltipsUtils
+import UnitObjEditingCommon
 
 @compiletime function orcAbilities()
     var tgen = new BTAbilityTooltipGenerator(

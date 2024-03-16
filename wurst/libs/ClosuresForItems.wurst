@@ -2,6 +2,8 @@
 Author: Jesse Rogers & Jonathan Claus
 **/
 package ClosuresForItems
+
+// Third Party imports
 import Lodash
 
 // items
