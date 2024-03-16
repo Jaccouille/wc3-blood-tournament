@@ -54,7 +54,7 @@ init
     gameConfig.getStartingGold().toString() + ", min : 100") (mode, args) ->
         if (args.size() > 1)
             let startingGold = max(args.get(1).toInt(), 100)
-            mode.message("Starting gold set to ".color(LABEL_COLOR) + startingGold.toString().color(VALUE_COLOR))
+            mode.message("Starting gold set to ".color(LABEL_COLOR) + startingGold.toString().color(GOLD_COLOR))
             gameConfig.setStartingGold(startingGold)
 
     new GameMode("start-bp", "sb", "General", "Set first round blood point amount per players, default : " +
