@@ -162,6 +162,12 @@ let SLOW_TARGET_COUNT = 2
         ..setNameEnhance("X", "Add 1 Fire Orb")
         ..setInterfaceIcon(Icons.bTNOrbOfFire)
 
+    createVisualAbility(ABIL_INCINERATE_VISUAL)
+        ..setTargetAttachments(1)
+        ..setTargetAttachmentPoint("weapon")
+        ..setArtTarget(Abilities.aIfbTarget)
+        ..setName("Visual Incinerate")
+
     tgen = new BTAbilityTooltipGenerator(
         "Increases damage. Units killed by the mage will explode.")
     new AbilityDefinitionFirelordIncinerate(ABIL_INCINERATE)
@@ -174,8 +180,6 @@ let SLOW_TARGET_COUNT = 2
         ..presetDeathDamageHalfAmount(_ -> 25)
         ..setNameEnhance("X", "Incinerate")
         ..tooltipStopListen(true)
-        ..setArtTarget(Abilities.aIfbTarget)
-        ..setTargetAttachmentPoint1("weapon")
 
     var tooltip = tgen.generateFullTooltip()
 

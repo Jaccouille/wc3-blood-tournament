@@ -167,6 +167,7 @@ init
     let fireMageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_INCINERATE)
+        u.addAbility(ABIL_INCINERATE_VISUAL)
         u.addAbility(ABIL_AUTOCAST_SOUL_BURN)
         u.addAbility(ABIL_SOUL_BURN)
         u.issueImmediateOrderById(OrderIds.curseon)

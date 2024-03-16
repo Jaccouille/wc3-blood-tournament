@@ -101,7 +101,7 @@ import ArmySpawner
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Pierce, 30, 3, 4, 1.7)
+        ..setAttack1Data(AttackType.Pierce, 40, 3, 4, 1.7)
         ..setAttack1Range(450)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setSmallSplash()
@@ -113,7 +113,7 @@ import ArmySpawner
         ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
 
         ..setSizeSmall()
-        ..setNameEnhance("C", "Rifleman Explosive Ammo")
+        ..setNameEnhance("X", "Rifleman Explosive Ammo")
         ..tooltipStopListen(true, itm)
 
         ..setIconGameInterfaceExt(Icons.bTNHumanMissileUpThree)
@@ -136,7 +136,7 @@ import ArmySpawner
         ..setHitPointsMaximumBase(220)
 
         ..setSpeedBase(240)
-        ..setItemCostReplacement(0, 50, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
+        ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
 
         ..setSizeSmall()
         ..setNameEnhance("C", "Sniper")

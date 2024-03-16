@@ -39,6 +39,7 @@ public function createAutoCastedLongRangeEnemyAbility(int abilId) returns Abilit
         ..presetBuffs(_ -> someBuff.buffId.toRawCode())
         ..setArtTarget("")
         ..setMissileArt("")
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
         ..setLevels(1)
         ..setCheckDependencies(false)
 

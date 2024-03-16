@@ -61,7 +61,7 @@ init
     gameConfig.getStartingLumber().toString() + ", min : 0") (mode, args) ->
         if (args.size() > 1)
             let startingLumber = max(args.get(1).toInt(), 0)
-            mode.message("Starting blood point set to ".color(LABEL_COLOR) + startingLumber.toString().color(RED_COLOR))
+            mode.message("Starting blood points set to ".color(LABEL_COLOR) + startingLumber.toString().color(RED_COLOR))
             gameConfig.setStartingLumber(startingLumber)
 
     new GameMode("interlude-time", "it", "Time between each round (seconds) default : " +

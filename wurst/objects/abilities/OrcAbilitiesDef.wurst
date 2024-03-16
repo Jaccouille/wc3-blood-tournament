@@ -439,8 +439,9 @@ import ArmySpawner
 
     tgen = new BTAbilityTooltipGenerator(
         "Hurls a fiery bolt that stuns a target enemy unit.")
-    new AbilityDefinitionFireBoltwarlock(ABIL_FIREBOLT)
+    new AbilityDefinitionFireBoltcreep(ABIL_FIREBOLT)
         ..setHeroAbility(false)
+        ..setMissileArt(Abilities.fireBallMissile)
         ..registerTooltipGenerator(tgen)
         ..setDummyAbility()
         ..tooltipStartListen()
