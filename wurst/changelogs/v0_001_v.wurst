@@ -1,0 +1,14 @@
+package v0_001_v
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 1, 'v')
+        ..add("(HU) Fixed sorc fire orb visual effect")
+        ..add("(HU) Increase sniper price from 50 to 100 bp")
+        ..add("(HU) Increased rifleman explosive ammo damage by 10")
+        ..add("(OR) Fixed ogre magi firebolt stun")
+        ..add("(OR) Reduced Witch Doctor HP from 140 to 100")
+        ..add("(OR) Reduced healing wave heal from 125 to 75")
+        ..add("(UN) Added Spawn Gut Crawler item to Abomination")
+        ..add("Added an army previewer to preview the units position on the arena")
