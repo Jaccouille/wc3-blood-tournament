@@ -165,9 +165,10 @@ public class ScoreBoardColumnEntries
     function setEntry(player _player, string value, string icon)
         let entryRow = scoreBoard.getPlayerPos(_player.getName(true))
 
-        scoreBoard.setValue(entryRow, entryColumn, value)
-        if icon != null
-            scoreBoard.setIcon(entryRow, entryColumn, icon)
+        if entryRow > 0
+            scoreBoard.setValue(entryRow, entryColumn, value)
+            if icon != null
+                scoreBoard.setIcon(entryRow, entryColumn, icon)
 
     function setEntryIcon(player _player, string icon)
         let entryRow = scoreBoard.getPlayerPos(_player.getName(true))
@@ -198,6 +199,26 @@ function refreshScoreBoard()
         scoreBoardEntries.get(COL_ARMY_PTS).setEntry(_p, ap.toString(), null)
         scoreBoardEntries.get(COL_BLOOD_PTS).setEntry(_p, bp.toString(), null)
         scoreBoardEntries.get(COL_TOTAL_BLOOD_PTS).setEntry(_p, tbp.toString(), null)
+
+// To format time elapsed
+function toTimeString(int numSecs) returns string
+    let sec = numSecs mod 60
+    let min = (numSecs div 60) mod 60
+    let hrs = numSecs div 3600
+    var str = ""
+
+    if hrs > 0
+        str += hrs.toString() + ":"
+
+    if min < 10
+        str += "0"
+    str += min.toString() + ":"
+
+    if sec < 10
+        str += "0"
+    str += sec.toString()
+
+    return str
 
 public function initScoreBoard()
     // Scoreboard timer refresh
