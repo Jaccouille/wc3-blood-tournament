@@ -48,6 +48,7 @@ class OgreSwing
         this.velocity = velXY.withZ(velZ)
         this.ang = velXY.getAngle()
 
+        // TODO: Try to fix this
         target.setAnimation("walk")
         target.setTimeScale(10)
         target.setPathing(false)

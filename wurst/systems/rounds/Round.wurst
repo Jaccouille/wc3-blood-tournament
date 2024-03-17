@@ -17,7 +17,6 @@ import ColorUtils
 import LocalObjectIDs
 import OrderBlocker
 import PlayerExtension
-import ScoreBoard
 import SpawnZone
 import UnitExtensions
 import public GameConstants
@@ -157,7 +156,7 @@ public abstract class Round
 
                 if setupTime == 3
                     forUnitsAll() (unit u) ->
-                        if u.isSoldier()
+                        if u.isSoldier() and not u.hasAbility(ABIL_DEFEND)
                             u.setAnimation("Stand Ready")
             setupTime -= 1
 

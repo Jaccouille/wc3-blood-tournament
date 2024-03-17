@@ -16,6 +16,7 @@ function createCleave(int abilId, real distributedDamage, real aoe) returns Abil
     let abilDef =  new AbilityDefinitionPitLordCleavingAttack(abilId)
         ..setLevels(1)
         ..setHeroAbility(false)
+        ..setArtTarget("")
         ..registerTooltipGenerator(tgen)
         ..presetDistributedDamageFactor(_ -> distributedDamage)
         ..tooltipStartListen()
