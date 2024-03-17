@@ -8,7 +8,6 @@ import MapBounds
 import ChatCommands
 import GameConfig
 import GameStates
-import LocalObjectIDs
 import Players
 import RoundController
 import Vote
@@ -30,8 +29,7 @@ init
                     voteInstance.addAction() () ->
                         if not roundController.currentRound.hasStarted
                             if gameConfig.isDisplayPortalEnabled()
-                                SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "show", false)
-                                SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "birth", false)
+                                roundController.currentRound.spawnPortals()
                             roundController.startRound()
                         else
                             printTimed("Vote failed! Round already started!", 3)

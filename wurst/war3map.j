@@ -198,8 +198,8 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_Orange = Rect( -5888.0, -3232.0, -4352.0, -2656.0 )
     set gg_rct_Green = Rect( -6400.0, 4576.0, -4864.0, 5152.0 )
     set gg_rct_Pink = Rect( -4864.0, 5600.0, -3328.0, 6176.0 )
-    set gg_rct_Final_Round_West = Rect( -1536.0, 0.0, -512.0, 2176.0 )
-    set gg_rct_Final_Round_East = Rect( 512.0, 0.0, 1536.0, 2176.0 )
+    set gg_rct_Final_Round_West = Rect( -1536.0, -128.0, -512.0, 2304.0 )
+    set gg_rct_Final_Round_East = Rect( 512.0, -128.0, 1536.0, 2304.0 )
 endfunction
 
 //***************************************************************************
