@@ -1,0 +1,14 @@
+package v0_001_w
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 1, 'w')
+        ..add("(HU) Decreased Priest HP from 160 to 70")
+        ..add("(HU) Increased Priest damage by 4, attack range from 400 to 650")
+        ..add("(HU) Increased all Priest spell range to 700")
+        ..add("(NE) Increased Druid of Talon HP from 60 to 80")
+        ..add("(NE) Increased Wand of illusion cast range from 500 to 600")
+        ..add("(NE) Lowered Druid of Talon damage by 6, increased attack from 400 to 550")
+        ..add("Fixe demi-final scoreboard bug")
+        ..add("Fixed spawn bug where squad spawn would stop after reaching end of line")
