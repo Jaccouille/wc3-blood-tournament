@@ -7,7 +7,6 @@ import LinkedList
 // Local imports:
 import GameConstants
 
-
 public function unit.freeSlots() returns int
     int result = 0
     for slot = 0 to this.inventorySize() - 1

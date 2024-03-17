@@ -8,7 +8,6 @@ import Quest
 // Local imports:
 import ColorUtils
 
-
 let about = asList(
     "Fight against other players during 7 rounds, then eliminate them in the elimination phase.",
     "Choose a builder and construct building.",
