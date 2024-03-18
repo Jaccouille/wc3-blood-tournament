@@ -3,6 +3,7 @@ package OgreSwing
 // Standard libs imports:
 import Assets
 import ClosureEvents
+import ClosureForGroups
 import DummyCaster
 import OrderIds
 import TerrainUtils
@@ -10,6 +11,7 @@ import TimerUtils
 
 // Local imports:
 import LocalObjectIDs
+import UnitExtensions
 
 constant ANGLE = 45.
 constant gravity = 175.
@@ -87,7 +89,17 @@ class OgreSwing
                 ..origin(target.getPos())
                 ..owner(caster.getOwner())
                 ..delay(1)
-                ..castImmediate(ABIL_OGRE_SWING_SLAM, 1,  OrderIds.thunderclap)
+                ..castTarget(ABIL_OGRE_SWING_SLAM, 1, OrderIds.acidbomb, target)
+                // ..castImmediate(ABIL_OGRE_SWING_SLAM, 1,  OrderIds.thunderclap)
+            flashEffect(Abilities.thunderclapCaster, targetPos)
+            let maxDamage = 300
+            var damageSum = 0
+            forUnitsInRange(targetPos.toVec2(), 250) (unit u) ->
+                if u.isEnemyOf(caster.getOwner()) and u.isAlive() and u.isSoldier()
+                    and damageSum < maxDamage
+                    damageSum += 30
+                    caster.damageTarget(u, 30, true, true,
+                        ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS)
 
     ondestroy
 
