@@ -9,9 +9,10 @@ import ClosureTimers
 import ColorUtils
 import GameConfig
 import GameStates
-import IDListConstant
 import LocalObjectIDs
+import LocalAssets
 import RoundController
+import ScoreBoard
 
 function hasBuildings(player _p) returns boolean
     let pData = pDatas.get(_p)
@@ -28,6 +29,7 @@ init
     EventListener.add(EVENT_PLAYER_UNIT_TRAIN_CANCEL) ->
         if EventData.getTriggerUnit().getTypeId() == UNIT_RACE_PICKER
             SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 1, EventData.getTriggerUnit().getOwner())
+            pDatas.get(EventData.getTriggerUnit().getOwner()).hasRandomed = false
 
     EventListener.onCast(ABIL_RANDOM_RACE) (unit caster) ->
         let owner = caster.getOwner()
@@ -43,6 +45,7 @@ init
             if not pData.racePicker.issueImmediateOrder(UnitId2String(gameConfig.getBuilderList().getRandomElement()))
                 nullTimer() ->
                     pData.racePicker.issueImmediateOrder(UnitId2String(gameConfig.getBuilderList().getRandomElement()))
+            pData.hasRandomed = true
 
     EventListener.onCast(ABIL_REPICK) (unit caster) ->
         let owner = caster.getOwner()
@@ -58,6 +61,7 @@ init
             SetPlayerTechMaxAllowed(owner, pData.builder.getTypeId(), 1)
             flashEffect(Abilities.aIilTarget, pData.builder.getPos3Real())
             pData.builder.remove()
+            pData.hasRandomed = false
 
 
     EventListener.add(EVENT_PLAYER_UNIT_TRAIN_FINISH) ->
@@ -67,6 +71,7 @@ init
             SetPlayerTechMaxAllowed(u.getOwner(), u.getTypeId(), 0)
             if gameConfig.isMultipleBuilderEnabled()
                 u.setUseFood(false)
+
 
     GameStates.modesSelection.onExit() (state) ->
         let banList = gameConfig.getBanList()
@@ -89,3 +94,14 @@ init
                     pData.builder = createUnit(_p, gameConfig.getBuilderList().getRandomElement(), pData.racePicker.getPos())
                 SetPlayerTechResearchedSwap(UPGD_ALL_RANDOM, 0, _p)
                 SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 0, _p)
+
+    // Register builder
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_TRAIN_FINISH)
+    ..addCondition(Condition(() -> GetTrainedUnit().isType(UNIT_TYPE_PEON)))
+    ..addAction() ->
+        let builder = GetTrainedUnit()
+        pDatas.get(builder.getOwner()).builder = builder
+        if pDatas.get(builder.getOwner()).hasRandomed
+            addEffect(LocalAbilities.strawHat, builder, "head")
+        scoreBoardEntries.get("PlayerName").setEntryIcon(builder.getOwner(), builder.getIcon())

@@ -45,4 +45,5 @@ For making a cool Star Wars Blood Tournament map that inspired me to make this: 
 Models:
 [URL='https://www.hiveworkshop.com/members/127492/']General Frank[/URL], [URL='https://www.hiveworkshop.com/members/142431/https://www.hiveworkshop.com/threads/orb-of-blood.106236/']Orb of blood[/URL], (edited to reduce rotation speed)
 [URL='https://www.hiveworkshop.com/members/142431/']Ujimasa Hojo[/URL] (edited his paladin model, changed material type to additive or something to make a ghost paladin),
+[URL='https://www.hiveworkshop.com/members/imforfun.205582/']imforfun[/URL] [URL='https://www.hiveworkshop.com/threads/straw-hat.251247/']Straw Hat[/URL]
 Found demon pillar here: [URL='https://www.hiveworkshop.com/threads/outland-utm.152344/']UTM Outland[/URL], made by [URL='https://www.hiveworkshop.com/forums/members/Dan%20van%20Ohllus/']Dan van Ohllus[/URL]
