@@ -294,13 +294,27 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..setAmountofHitPointsRegenerated(1, 0.02)
         ..addTooltipProperty("Amount of Hit Points Regenerated", _ -> 0.02.toPercent())
-        ..presetAreaofEffect(_ -> 900)
+        ..presetAreaofEffect(_ -> 1200)
         ..setNameEnhance("Z", "Unholy Aura")
         ..tooltipStopListen(true)
         ..setArtTarget(Abilities.unholyAura)
 
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_UNHOLY_AURA, tgen.generateFullTooltip())
+
+    new BuffDefinition(BUFF_UNHOLY_AURA, BuffIds.unholyAura)
+        ..setIcon(Icons.bTNUnholyAura)
+        ..setArtSpecial(1, Abilities.unholyAura)
+        ..setTooltipNormal(1, "Unholy Aura")
+        ..setArtTarget("")
+        ..setTooltipNormalExtended(1, "This unit is affected by Unholy Aura; it regains 2% health point per second.")
+
+    new AbilityDefinitionUnholyAuracreep(ABIL_UNHOLY_AURA_VISUAL)
+        ..setLevels(1)
+        ..setMovementSpeedIncrease(1, 0)
+        ..setLifeRegenerationIncrease(1, 0)
+        ..setBuffs(1, BUFF_UNHOLY_AURA.toRawCode())
+        ..setAreaofEffect(1, 1200)
 
     tgen = new BTAbilityTooltipGenerator(
         "Reduce enemy armor on hit.")
