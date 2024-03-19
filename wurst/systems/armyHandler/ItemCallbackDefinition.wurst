@@ -372,6 +372,7 @@ init
     let unholyAuraAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_UNHOLY_AURA)
+        u.addAbility(ABIL_UNHOLY_AURA_VISUAL)
 
     itemModifyUnitMap.put(ITEM_UNHOLY_AURA, unholyAuraAction)
 

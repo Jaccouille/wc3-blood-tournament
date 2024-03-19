@@ -12,28 +12,32 @@ import Players
 import RoundController
 import Vote
 
+public function voteReady(player triggerPlayer)
+    if roundController.currentRound.hasStarted
+        printTimedToPlayer("Vote failed! Round already started!", 3, triggerPlayer)
+    else
+        if Vote.voteInstanceMap.has("Ready")
+            Vote.voteInstanceMap.get("Ready").castVote(triggerPlayer)
+        else
+            var count = 0
+            for _p in ALL_PLAYERS
+                if _p.isHuman()
+                    count++
+            let voteInstance = new Vote("Ready", 60., count)
+            voteInstance.addAction() () ->
+                if not roundController.currentRound.hasStarted
+                    if gameConfig.isDisplayPortalEnabled()
+                        roundController.currentRound.spawnPortals()
+                    roundController.startRound()
+                else
+                    printTimed("Vote failed! Round already started!", 3)
+            voteInstance.castVote(triggerPlayer)
+
+
 init
     GameStates.gameplay.onEnter() (state) ->
         registerCommandAll("r") (player triggerPlayer, LinkedList<string> arguments) ->
-            if roundController.currentRound.hasStarted
-                printTimedToPlayer("Vote failed! Round already started!", 3, triggerPlayer)
-            else
-                if Vote.voteInstanceMap.has("Ready")
-                    Vote.voteInstanceMap.get("Ready").castVote(triggerPlayer)
-                else
-                    var count = 0
-                    for _p in ALL_PLAYERS
-                        if _p.isHuman()
-                            count++
-                    let voteInstance = new Vote("Ready", 60., count)
-                    voteInstance.addAction() () ->
-                        if not roundController.currentRound.hasStarted
-                            if gameConfig.isDisplayPortalEnabled()
-                                roundController.currentRound.spawnPortals()
-                            roundController.startRound()
-                        else
-                            printTimed("Vote failed! Round already started!", 3)
-                    voteInstance.castVote(triggerPlayer)
+            voteReady(triggerPlayer)
 
         OnRoundStart.add() (Round round) ->
             if Vote.voteInstanceMap.has("Ready")

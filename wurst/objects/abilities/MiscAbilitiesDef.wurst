@@ -22,6 +22,7 @@ import PlayerData
 import SimError
 import TooltipsUtils
 import UnitCreationTrigger
+import VotesDefinition
 
 let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
 
@@ -38,7 +39,7 @@ let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
         ..setHotkeyEnhance("C")
         ..setName("Pick Random Race")
         ..presetTooltipNormal(lvl -> makeToolTipNorm("C", "Pick Random Race"))
-        ..presetTooltipNormalExtended(lvl -> "Pick Random Race. Cannot repick.")
+        ..presetTooltipNormalExtended(lvl -> "Pick Random Race.\nCannot repick." + "\n\nNote: You get a straw hat for randoming".color(SPECIAL_COLOR))
         ..setIconNormal(Icons.bTNSelectHeroOn)
         ..setIconResearch(Icons.bTNSelectHeroOn)
         ..setIconTurnOff(Icons.bTNSelectHeroOn)
@@ -159,6 +160,12 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
         ..setTooltipNormalExtended(1, TOOLTIP_TRADE_BLOOD_POINT)
         ..setIconNormal(Icons.bTNCorpseExplode)
 
+@compiletime function createReadyAbility()
+    createStandardChannelAbility(ABIL_START_ROUND)
+        ..setNameEnhance("F", "Ready")
+        ..setTooltipNormalExtended(1, "Vote to start round")
+        ..setIconNormal(Icons.bTNReplay_Play)
+        ..setBaseOrderID(1, OrderIds.immolation.toRawCode())
 
 @compiletime function createSellBuilderAbility()
     new AbilityDefinitionAlchemistTransmute(ABIL_SELL_BUILDING)
@@ -197,6 +204,10 @@ init
             TOOLTIP_TRADE_BLOOD_POINT.format(
                 goldEx.toString().color(COLOR_GOLD), bpEx.toString().color(COLOR_RED)),
             0)
+
+    EventListener.onCast(ABIL_START_ROUND) (unit caster) ->
+        let owner = caster.getOwner()
+        voteReady(owner)
 
     EventListener.onCast(ABIL_TRADE_GOLD) (unit caster) ->
         let owner = caster.getOwner()

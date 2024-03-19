@@ -226,6 +226,7 @@ public let ABIL_TRADE_GOLD        = compiletime(ABIL_ID_GEN.next())
 public let ABIL_TRADE_BLOOD_POINT = compiletime(ABIL_ID_GEN.next())
 public let ABIL_BOT_ENABLED       = compiletime(BUFF_ID_GEN.next())
 public let ABIL_INVISIBLITY       = compiletime(BUFF_ID_GEN.next())
+public let ABIL_START_ROUND       = compiletime(BUFF_ID_GEN.next())
 
 // ==================== COMMON ABILITIES =================
 public let ABIL_CLEAVE_10          = compiletime(ABIL_ID_GEN.next())

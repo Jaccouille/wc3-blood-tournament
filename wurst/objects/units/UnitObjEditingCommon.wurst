@@ -77,6 +77,7 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
         ..setNormalAbilities(commaList(
             AbilityIds.invulnerable,
             ABIL_ORDER_UNIT,
+            ABIL_START_ROUND,
             ABIL_SELL_BUILDING,
             ABIL_TRADE_GOLD,
             ABIL_SELL_ALL,
