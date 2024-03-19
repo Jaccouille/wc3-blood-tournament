@@ -410,7 +410,9 @@ if __name__ == "__main__":
     build, target = update_build(version)
 
     # Update the repository with the modified files.
-    if args.local:
+    if args.dry_run:
+        print("Changelog:", *changelog, sep="\n")
+    elif args.local:
         # build_map(args.base, target)
         # Stage the file for commit
         repo.index.add([package, build, mapskin])
@@ -420,8 +422,6 @@ if __name__ == "__main__":
         repo.index.commit(commit_message)
         print("Changelog:", *changelog, sep="\n")
         # Verify that the map can be built.
-    elif args.dry_run:
-        print("Changelog:", *changelog, sep="\n")
     else:
         # Verify that the map can be built.
         build_map(args.base, target)
