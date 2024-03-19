@@ -1,0 +1,11 @@
+package v0_001_x
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 1, 'x')
+        ..add("(HU) Increased soul burn cooldown from 3 to 5 seconds")
+        ..add("(OR) Increased Ogre Swing attack speed slow from 20 to 40%")
+        ..add("(UN) Increased Lich Raise Revenant from 750 to 1500")
+        ..add("Added more bridge to reduce unit lagging when moving to middle")
+        ..add("Potentially fixed desync issue with ogre")
