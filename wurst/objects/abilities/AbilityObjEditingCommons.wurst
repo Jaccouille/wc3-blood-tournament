@@ -43,11 +43,19 @@ public function createAutoCastedLongRangeEnemyAbility(int abilId) returns Abilit
         ..setCheckDependencies(false)
 
 public function createAutoCastedEnemyAbility(int abilId) returns AbilityDefinitionCursecreep
+    // Need to do this otherwise the ability still apply default curse buff
+    let buffId = BUFF_ID_GEN.next()
+    new BuffDefinition(buffId, 'Basl')
+        ..setName(1, "Dummy buff place holder (curse)")
+        ..setTooltipNormal(1, "Ignore this")
+        ..setTooltipNormalExtended(1, "")
+        ..setIcon("")
+    let someBuff = createDummyBuffObject("Dummy buff curse", "Dummy buff curse", Icons.bTNFarm)
     return new AbilityDefinitionCursecreep(abilId)
         ..presetManaCost(_ -> 0)
-        ..presetDurationNormal(_ -> 0.01)
+        ..presetDurationNormal(_ -> 0.1)
         ..presetChancetoMiss(_ -> 0)
-        ..presetBuffs(_ -> "")
+        ..presetBuffs(_ -> someBuff.buffId.toRawCode())
         ..setArtTarget("")
         ..setLevels(1)
         ..setCheckDependencies(false)

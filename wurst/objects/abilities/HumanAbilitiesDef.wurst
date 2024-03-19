@@ -208,7 +208,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetCastRange(_ -> 750)
         ..presetManaCost(_ -> 80)
         ..tooltipStartListen()
-        ..presetCooldown(_ -> 3)
+        ..presetCooldown(_ -> 5)
         ..tooltipStopListen(true)
 
     tooltip += "\n\n" + tgen.generateFullTooltipItem()

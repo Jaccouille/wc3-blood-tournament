@@ -187,10 +187,10 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..addTooltipProperty("Summoned Unit Count", _ -> "1")
         ..presetManaCost(_ -> 125)
-        ..presetCastRange(_ -> 750)
+        ..presetCastRange(_ -> 1500)
         ..presetCooldown(_ -> 10)
         ..presetDurationNormal(_ -> 40)
-        ..setNameEnhance("Z", "Raise Revenants")
+        ..setNameEnhance("Z", "Raise Revenant")
         ..tooltipStopListen(true)
     abilTooltipMap.put(ABIL_RAISE_REVENANT, tgen.generateFullTooltip())
 

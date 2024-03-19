@@ -62,6 +62,9 @@ class OgreSwing
         startTimedLoop()
 
     override function onTimedLoop()
+        if target.hasAbility(BuffIds.ensnareGround)
+            target.removeAbility(BuffIds.ensnareGround)
+
         if duration < elapse_time
             onLanding()
             stopTimedLoopAndDestroy()
@@ -85,16 +88,24 @@ class OgreSwing
             target.setPathing(true)
             target.setFlyHeight(target.getDefaultFlyHeight(), HEIGHT_CHANGE_RATE)
             target.setTimeScale(1)
+
+            var spellTarget = target
+
+            if not target.isAlive()
+                forUnitsInRange(target.getPos(), 120) (unit u) ->
+                    if u.isEnemyOf(caster.getOwner()) and u.isAlive() and u.isSoldier()
+                        spellTarget = u
+
             new DummyCaster()
                 ..origin(target.getPos())
                 ..owner(caster.getOwner())
                 ..delay(1)
-                ..castTarget(ABIL_OGRE_SWING_SLAM, 1, OrderIds.acidbomb, target)
+                ..castTarget(ABIL_OGRE_SWING_SLAM, 1, OrderIds.acidbomb, spellTarget)
                 // ..castImmediate(ABIL_OGRE_SWING_SLAM, 1,  OrderIds.thunderclap)
-            flashEffect(Abilities.thunderclapCaster, targetPos)
+            flashEffect(Abilities.thunderclapCaster, target.getPos())
             let maxDamage = 300
             var damageSum = 0
-            forUnitsInRange(targetPos.toVec2(), 250) (unit u) ->
+            forUnitsInRange(target.getPos(), 250) (unit u) ->
                 if u.isEnemyOf(caster.getOwner()) and u.isAlive() and u.isSoldier()
                     and damageSum < maxDamage
                     damageSum += 30
