@@ -84,3 +84,5 @@ init
             ).start()
     GameStates.modesSelection.onExit() (state) ->
         playGameInitSound()
+        let msg = "Game Started!\nChoose a builder from the tavern and build!"
+        printTimed(msg, 10)
