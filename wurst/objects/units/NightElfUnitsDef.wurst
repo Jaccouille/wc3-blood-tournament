@@ -486,11 +486,11 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 66, 7, 4, 0.9)
+        ..setAttack1Data(AttackType.Magic, 66, 7, 4, 1.1)
         ..setAttack1Range(450)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
-        ..setArmorData(ArmorType.Divine, 7)
+        ..setArmorData(ArmorType.Divine, 4)
         ..setHitPointsMaximumBase(550)
 
         ..setSpeedBase(330)

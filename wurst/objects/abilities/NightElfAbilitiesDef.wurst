@@ -142,7 +142,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetCooldown(_ -> 0)
         ..presetCastRange(_ -> 9999)
-        ..presetDamage(_ -> 100)
+        ..presetDamage(_ -> 60)
         ..presetMaximumDamageperWave(_ -> 600)
         ..presetNumberofShards(_ -> 8)
         ..presetNumberofWaves(_ -> 3)
