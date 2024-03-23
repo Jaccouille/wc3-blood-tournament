@@ -143,6 +143,14 @@ init
             mode.message("Fog of war disabled, player's building zones are exposed".color(LABEL_COLOR))
             gameConfig.setFogOfWar(false)
 
+    new GameMode("blood-compensation", "bc", "Enable blood donation, players get a blood points donation after each round") (mode, args) ->
+        if not gameConfig.isBloodDonationEnabled()
+            mode.message("Blood donation enabled, players get a blood points donation after each round".color(LABEL_COLOR))
+            gameConfig.setBloodDonation(true)
+        else
+            mode.message("Blood donation disabled".color(LABEL_COLOR))
+            gameConfig.setBloodDonation(false)
+
     new GameMode("set-exchange-rate", "ser", "General", "Set gold/blood points exchange rates, default : " +
         gameConfig.getGoldExchange().toString() + " gold for " + gameConfig.getBloodPointExchange().toString() +
         " blood points") (mode, args) ->
