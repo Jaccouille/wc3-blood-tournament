@@ -20,6 +20,7 @@ import Players
 import ScoreBoard
 import SpawnZone
 import public Round
+import BloodDonation
 
 public constant roundController = new RoundController()
 
@@ -311,6 +312,7 @@ public function initRoundController()
                     value.giveBloodPointsReward()
                     key.addGold(round.goldReward)
                     key.addLumber(round.bloodPointReward)
+                giveBloodDonation.execute(round)
 
     // Start Elimination phase music
     OnRoundStart.add() (Round round) ->

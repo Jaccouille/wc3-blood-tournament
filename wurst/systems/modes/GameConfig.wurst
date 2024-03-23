@@ -13,7 +13,7 @@ class GameConfig
     private var startingLumber = 0
     private let roundGoldIncome = asList(600)
     private var roundCount = 7
-    private var roundInterludeTime = 60.
+    private var roundInterludeTime = 90.
     private var spawnCap = 60
     private var bountyMultiplier = 1.
     private var armyPointsMultiplier = 1.
@@ -27,6 +27,7 @@ class GameConfig
     private var fogOfWar = false
     private let banList = new LinkedList<int>()
     private let builderList = BUILDER_LIST.copy()
+    private var bloodDonation = true
 
     function setTestMode(boolean value)
         testMode = value
@@ -151,5 +152,11 @@ class GameConfig
 
     function getBuilderList() returns LinkedList<int>
         return builderList
+
+    function setBloodDonation(boolean value)
+        bloodDonation = value
+
+    function isBloodDonationEnabled() returns boolean
+        return bloodDonation
 
 public constant gameConfig = new GameConfig()

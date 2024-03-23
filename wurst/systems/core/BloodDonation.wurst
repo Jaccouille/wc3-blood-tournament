@@ -1,0 +1,136 @@
+package BloodDonation
+
+import HashMap
+import AltarEntity
+import CustomProjectile
+import ClosureTimers
+import Assets
+import GameConfig
+import Round
+
+interface BloodDonationCallBack
+    abstract function execute(Round round)
+
+public BloodDonationCallBack giveBloodDonation
+
+class BloodDeficit
+    player _p
+    int deficitAmount
+    int totalBloodPoints
+    int deficitPercent
+
+    construct(player _p, int bloodDeficit, int totalBloodPoints)
+        this._p = _p
+        this.deficitAmount = bloodDeficit
+        this.totalBloodPoints = totalBloodPoints
+        this.deficitPercent = ((deficitAmount / max(totalBloodPoints, 1)) * 100).toInt()
+
+
+
+public class BloodDonation
+    LinkedList<BloodDeficit> bloodDeficits = new LinkedList<BloodDeficit>()
+    int highestBloodPoints = 0
+
+    construct()
+        pDatas.forEach() (player _p, PlayerData pData) ->
+            if pData.totalBloodPoints > highestBloodPoints
+                highestBloodPoints = pData.totalBloodPoints
+        if gameConfig.isTestModeEnabled()
+            Log.info("Highest Blood Points: " + highestBloodPoints.toString())
+        pDatas.forEach() (player _p, PlayerData pData) ->
+            bloodDeficits.add(
+                new BloodDeficit(_p, highestBloodPoints - pData.totalBloodPoints, pData.totalBloodPoints))
+
+
+class CorpseProjectile extends CustomProjectile
+    int bloodPoints = 0
+    player target
+
+    construct(vec3 startPos, vec3 targetPos, real groundSpeed, real gravity, string effectPath)
+        super(startPos, targetPos, groundSpeed, gravity, effectPath)
+
+    function setBloodPoints(int bloodPoints)
+        this.bloodPoints = bloodPoints
+        this.missileFx.setScale(3)
+
+    function setTarget(player target)
+        this.target = target
+
+    override function onImpact()
+        pDatas.get(target).addBounty(this.bloodPoints)
+        createTTEx(
+            targetPos,
+            "+" + this.bloodPoints.toString(),
+            8,
+            colorA(255, 0, 0, 255),
+            target
+        )
+        ..setVelocity(0.0, 0.03)
+        ..setFadepoint(1.5)
+        ..setLifespan(2.0)
+        ..setPermanent(false)
+
+
+public function playLaunchSound()
+    // Create, play, and kill the sound.
+    KillSoundWhenDone(
+        CreateSound(
+            Sounds.hPitLordYes2,
+            false,
+            false,
+            false,
+            10,
+            10,
+            ""
+        )
+            ..setPitch(1.)
+            ..setVolume(127)
+            ..play()
+    )
+
+function launchCorpse(int bloodPoints, player target)
+    let pData = pDatas.get(target)
+    let arenaMaster = altarEntity.getArenaMaster()
+
+    if GetLocalPlayer() == target
+        playLaunchSound()
+
+    arenaMaster.setAnimation("attack")
+
+    new CorpseProjectile(
+        arenaMaster.getPos3Real(),
+        pData.buildingRect.getCenter().withTerrainZ(),
+        2, 175, Abilities.meatwagonMissile)
+        ..setBloodPoints(bloodPoints)
+        ..setTarget(target)
+
+
+
+
+init
+    giveBloodDonation = (Round round) ->
+        if gameConfig.isBloodDonationEnabled()
+            var count = 1
+            let bloodDonation = new BloodDonation()
+            bloodDonation.bloodDeficits.sortWith((o1, o2) -> (o2.totalBloodPoints - o1.totalBloodPoints))
+            bloodDonation.bloodDeficits.forEach() (BloodDeficit bloodDeficit) ->
+                var color = colorA(255, 255, 255, 255)
+                if bloodDeficit.deficitPercent > 300
+                    color = colorA(255, 0, 0, 255)
+                else if bloodDeficit.deficitPercent > 150
+                    color = colorA(255, 255, 0, 255)
+
+                var msg = "{0} Blood Deficit: {1}%".format(bloodDeficit._p.getNameColored().substring(0, 12), bloodDeficit.deficitPercent.toString().color(color))
+                msg += " Total : " + bloodDeficit.totalBloodPoints.toString().color(colorA(255, 0, 0, 255))
+
+                let bloodDonationAmount = ((bloodDeficit.deficitPercent / 100) * 0.4 * pDatas.get(bloodDeficit._p).totalBloodPoints).toInt()
+                msg += " donation: {0}".format(bloodDonationAmount.toString().color(colorA(255, 0, 0, 255)))
+                msg += " Sum : {0}".format((bloodDonationAmount + bloodDeficit.totalBloodPoints).toString().color(colorA(255, 0, 0, 255)))
+                if gameConfig.isTestModeEnabled()
+                    Log.info(msg)
+                let msgplayer = "You get a blood donation of {0} blood points from the tournament manager".format(bloodDonationAmount.toString().color(colorA(255, 0, 0, 255)))
+                printTimedToPlayer(msgplayer, 10, bloodDeficit._p)
+                if bloodDonationAmount > 0
+                    doAfter(count * 0.810) ->
+                        launchCorpse(bloodDonationAmount, bloodDeficit._p)
+                    count++
