@@ -117,7 +117,7 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_DEMOLISHER           ,                      0   , 3000 , genList(UNIT_DEMOLISHER           , 3  ))
 
     new BTBuildingData(BUILDING_ZOMBIE         , 50  , 0   , genList(UNIT_ZOMBIE          , 10 ))
-    new BTBuildingData(BUILDING_ZOMBIE, BUILDING_PLAGUE_BEARER , 0   , 600 , genList(UNIT_PLAGUE_BEARER           , 10 ))
+    new BTBuildingData(BUILDING_ZOMBIE, BUILDING_PLAGUE_BEARER , 0   , 500 , genList(UNIT_PLAGUE_BEARER           , 10 ))
     new BTBuildingData(BUILDING_ZOMBIE, BUILDING_GHOUL          , 0   , 600 , genList(UNIT_GHOUL           , 10 ))
     new BTBuildingData(BUILDING_SKELETAL_ARCHER, 100 , 0   , genList(UNIT_SKELETAL_ARCHER , 10 ))
     new BTBuildingData(BUILDING_CRYPT_FIEND    , 150 , 0   , genList(UNIT_CRYPT_FIEND     , 5  ))
