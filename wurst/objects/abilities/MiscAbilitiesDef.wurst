@@ -163,7 +163,7 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
 @compiletime function createReadyAbility()
     createStandardChannelAbility(ABIL_START_ROUND)
         ..setNameEnhance("F", "Ready")
-        ..setTooltipNormalExtended(1, "Vote to start round")
+        ..setTooltipNormalExtended(1, "Vote to start round.")
         ..setIconNormal(Icons.bTNReplay_Play)
         ..setBaseOrderID(1, OrderIds.immolation.toRawCode())
 
