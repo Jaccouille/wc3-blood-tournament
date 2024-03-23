@@ -209,6 +209,7 @@ public class BTUnitDefinition extends UnitDefinition
         addTooltipProperty("Bounce Count", data)
 
     override function setAttack1DamageLossFactor(real data)
+        // Note: Doesn't seem to work, always output 0
         def.setReal("udl1", data)
         addTooltipProperty("Bounce Damage Reduction", (data * 100).percRound())
 
