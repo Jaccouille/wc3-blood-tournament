@@ -15,6 +15,10 @@ public class PlayerData
     // let army = new LinkedList<LinkedList<int>>
     let buildingList = new LinkedList<unit>
     let spawnedUnits = new LinkedList<unit>
+
+    let bpPerRound = new LinkedList<int>
+    let bdPerRound = new LinkedList<int>
+
     rect buildingRect = null
     player _p
     int roundBloodPoints = 0
@@ -63,6 +67,11 @@ public class PlayerData
         roundBloodPoints += value
         _p.addLumber(value)
 
+    function addDonation(int value)
+        bdPerRound.push(value)
+        totalBloodPoints += value
+        _p.addLumber(value)
+
     function addArmyPoints(int value)
         armyPoints += (value * gameConfig.getArmyPointsMultiplier()).toInt()
 
@@ -78,6 +87,7 @@ public class PlayerData
         printTimedToPlayer(msg, 15, _p)
         _p.addLumber(armyPoints)
         totalBloodPoints += armyPoints + roundBloodPoints
+        bpPerRound.push(armyPoints + roundBloodPoints)
 
 
 public function initPlayers()

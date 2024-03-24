@@ -57,7 +57,7 @@ class CorpseProjectile extends CustomProjectile
         this.target = target
 
     override function onImpact()
-        pDatas.get(target).addBounty(this.bloodPoints)
+        pDatas.get(target).addDonation(this.bloodPoints)
         createTTEx(
             targetPos,
             "+" + this.bloodPoints.toString(),
@@ -123,14 +123,20 @@ init
                 var msg = "{0} Blood Deficit: {1}%".format(bloodDeficit._p.getNameColored().substring(0, 12), bloodDeficit.deficitPercent.toString().color(color))
                 msg += " Total : " + bloodDeficit.totalBloodPoints.toString().color(colorA(255, 0, 0, 255))
 
-                let bloodDonationAmount = ((bloodDeficit.deficitPercent / 100) * 0.4 * pDatas.get(bloodDeficit._p).totalBloodPoints).toInt()
+                var bloodDonationAmount = ((bloodDeficit.deficitPercent / 100) * 0.4 * pDatas.get(bloodDeficit._p).totalBloodPoints).toInt()
+                bloodDonationAmount = (bloodDonationAmount * gameConfig.getArmyPointsMultiplier()).toInt()
+                // round floor to 5
+                bloodDonationAmount += 5 - (bloodDonationAmount % 5).toInt()
                 msg += " donation: {0}".format(bloodDonationAmount.toString().color(colorA(255, 0, 0, 255)))
                 msg += " Sum : {0}".format((bloodDonationAmount + bloodDeficit.totalBloodPoints).toString().color(colorA(255, 0, 0, 255)))
                 if gameConfig.isTestModeEnabled()
                     Log.info(msg)
-                let msgplayer = "You get a blood donation of {0} blood points from the tournament manager".format(bloodDonationAmount.toString().color(colorA(255, 0, 0, 255)))
-                printTimedToPlayer(msgplayer, 10, bloodDeficit._p)
+                if bloodDonationAmount > 0
+                    let msgplayer = "You get a blood donation of {0} blood points from the tournament manager".format(bloodDonationAmount.toString().color(colorA(255, 0, 0, 255)))
+                    printTimedToPlayer(msgplayer, 10, bloodDeficit._p)
                 if bloodDonationAmount > 0
                     doAfter(count * 0.810) ->
                         launchCorpse(bloodDonationAmount, bloodDeficit._p)
                     count++
+                else
+                    pDatas.get(bloodDeficit._p).addDonation(0)
