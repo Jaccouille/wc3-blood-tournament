@@ -92,6 +92,12 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setNameEnhance("X", "Replace 1 Anti-Magic Shell with 1 Frost Armor")
         ..setInterfaceIcon(Icons.bTNFrostArmor)
 
+    let murgulWarlockCount = BTBuildingData.getUnitCount(BUILDING_MURGUL_WARLOCK)
+    let itmFree = createBasicItem(ITEM_FREE_FROST_ARMOR)
+        ..setItemCost(0, 0, 1, murgulWarlockCount, murgulWarlockCount)
+        ..setNameEnhance("X", "Replace autocasted spell with Frost Armor")
+        ..setInterfaceIcon(Icons.bTNFrostArmor)
+
     tgen = new BTAbilityTooltipGenerator(
         "Creates a shield of frost around a target friendly unit." +
         " The shield adds armor and slows melee units that attack it"
@@ -111,6 +117,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
+    tgen.applyToDefItem(itmFree)
     abilTooltipMap.put(ABIL_FROST_ARMOR, tgen.generateFullTooltip())
 
     tgen = new BTAbilityTooltipGenerator("Raises skeletons from a corpse.")

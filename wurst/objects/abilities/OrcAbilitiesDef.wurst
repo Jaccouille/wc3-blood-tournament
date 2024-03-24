@@ -17,6 +17,13 @@ import TooltipsUtils
 import UnitObjEditingCommon
 
 @compiletime function orcAbilities()
+
+    let murgulWarlockCount = BTBuildingData.getUnitCount(BUILDING_MURGUL_WARLOCK)
+    let itmFree = createBasicItem(ITEM_FREE_BLOOD_LUST)
+        ..setItemCost(0, 0, 1, murgulWarlockCount, murgulWarlockCount)
+        ..setNameEnhance("Z", "Replace autocasted spell with Bloodlust")
+        ..setInterfaceIcon(Icons.bTNBloodLust)
+
     var tgen = new BTAbilityTooltipGenerator(
         "Increases a friendly unit's attack and movement speed.")
     new AbilityDefinitionBloodlustCreep(ABIL_BLOODLUST)
@@ -35,6 +42,7 @@ import UnitObjEditingCommon
         ..setScalingFactor(1, 0)
         ..tooltipStopListen(true)
 
+    tgen.applyToDefItem(itmFree)
     abilTooltipMap.put(ABIL_BLOODLUST, tgen.generateFullTooltip())
 
     let BUFF_BERSERK = BUFF_ID_GEN.next()

@@ -78,12 +78,22 @@ init
     GameStates.gameplay.onEnter() state ->
 
         EventListener.add(EVENT_PLAYER_UNIT_UPGRADE_FINISH) ->
-            let u = EventData.getTriggerUnit()
-            let pData = pDatas.get(u.getOwner())
-            u.addType(UNIT_TYPE_ANCIENT)
-            BlzShowUnitTeamGlow(u, false)
-            pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(u.getTypeId()).upgradeBonusArmyPoints)
-            updatePreviewer(u.getOwner())
+            let newBuilding = EventData.getTriggerUnit()
+            let pData = pDatas.get(newBuilding.getOwner())
+            newBuilding.addType(UNIT_TYPE_ANCIENT)
+            BlzShowUnitTeamGlow(newBuilding, false)
+            pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(newBuilding.getTypeId()).upgradeBonusArmyPoints)
+            updatePreviewer(newBuilding.getOwner())
+
+            // Add stock items
+            if unitItemSold.has(newBuilding.getTypeId())
+                let itemStockHandler = new ItemStockHandler(newBuilding)
+                unitItemSold.get(newBuilding.getTypeId()).forEach() (integer t) ->
+                    let itm = createItem(t, vec2(0, 0))
+                    let maxStock = itm.getLevel()
+                    AddItemToStock(newBuilding, t, maxStock, maxStock)
+                    itemStockHandler.addItem(itm.getTypeId(), maxStock)
+                    itm.remove()
 
         EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
             let newBuilding = EventData.getTriggerUnit()

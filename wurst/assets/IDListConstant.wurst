@@ -50,7 +50,8 @@ public let BUILDER_LIST = asList(
     UNIT_HUMAN_BUILDER,
     UNIT_ORC_BUILDER,
     UNIT_UNDEAD_BUILDER,
-    UNIT_NIGHT_ELF_BUILDER
+    UNIT_NIGHT_ELF_BUILDER,
+    UNIT_NAGA_BUILDER
 )
 
 public let BAN_MAP = new IterableMap<string, int>()
@@ -58,15 +59,18 @@ public let BAN_MAP = new IterableMap<string, int>()
     ..put("OR", UNIT_ORC_BUILDER)
     ..put("UN", UNIT_UNDEAD_BUILDER)
     ..put("NE", UNIT_NIGHT_ELF_BUILDER)
+    ..put("NA", UNIT_NAGA_BUILDER)
 
 public let RACE_ABBREV = new HashMap<string, string>()
     ..put("HU", "Human")
     ..put("OR", "Orc")
     ..put("UN", "Undead")
     ..put("NE", "Night Elf")
+    ..put("NA", "Naga")
 
 public let BUILDER_ID_TO_RACE_STR = new HashMap<int, string>()
     ..put(UNIT_HUMAN_BUILDER, "Human")
     ..put(UNIT_ORC_BUILDER, "Orc")
     ..put(UNIT_UNDEAD_BUILDER, "Undead")
     ..put(UNIT_NIGHT_ELF_BUILDER, "Night Elf")
+    ..put(UNIT_NAGA_BUILDER, "Naga")

@@ -162,6 +162,13 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
     abilTooltipMap.put(ABIL_STARFALL, tgen.generateFullTooltip())
 
+
+    let murgulWarlockCount = BTBuildingData.getUnitCount(BUILDING_MURGUL_WARLOCK)
+    let itmFree = createBasicItem(ITEM_FREE_FAERIE_FIRE)
+        ..setItemCost(0, 0, 1, murgulWarlockCount, murgulWarlockCount)
+        ..setNameEnhance("C", "Replace autocasted spell with Faerie Fire")
+        ..setInterfaceIcon(Icons.bTNFaerieFire)
+
     tgen = new BTAbilityTooltipGenerator(
         "Reduces a target enemy unit's armor. Applies to multiple targets."
     )
@@ -185,6 +192,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setNameEnhance("Z", "Faerie Fire")
         ..tooltipStopListen(true)
 
+    tgen.applyToDefItem(itmFree)
     abilTooltipMap.put(ABIL_FAERIE_FIRE, tgen.generateFullTooltip())
 
     let druidTalonCount = BTBuildingData.getUnitCount(BUILDING_DRUID_TALON)

@@ -170,21 +170,6 @@ import UnitTooltipGenerator
         ..setIconGameInterfaceExt(Icons.bTNCentaur)
         ..setUnitSoundSetExt(Soundsets.centaurArcher)
 
-    createSpawnedUnit(UNIT_HYDRA, UnitIds.hydra, BUILDING_HYDRA)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-        ..setAttack1DamageBase(14)
-        ..setHitPointsMaximumBase(100)
-        ..setNameEnhance("D", "Hydra")
-        ..tooltipStopListen(true)
-        ..setSizeSmall()
-        ..setPriority(2)
-        ..setBuildingGoldCost(100)
-
-        ..setModelFileExt(Units.hydra)
-        ..setIconGameInterfaceExt(Icons.bTNHydra)
-        ..setUnitSoundSetExt(Soundsets.hydra)
-
     createSpawnedUnit(UNIT_REXXAR, UnitIds.rexxar, BUILDING_REXXAR)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -227,7 +212,6 @@ import UnitTooltipGenerator
             BUILDING_TAUREN,
             BUILDING_THUNDER_LIZARD,
             BUILDING_CENTAUR,
-            BUILDING_HYDRA,
             BUILDING_REXXAR,
             BUILDING_CHEN
         ))

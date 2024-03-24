@@ -5,9 +5,13 @@ import BuffIds
 import ClosureTimers
 import DamageEvent
 import OrderIds
+import InstantDummyCaster
 
 // Local imports:
 import LocalObjectIDs
+import PlayerData
+import PlayerExtension
+
 
 init
     DamageEvent.addListener() ->
@@ -38,3 +42,12 @@ init
             case UNIT_OWLBEAR
                 if not target.hasAbility(BuffIds.howlofTerror)
                     src.issueImmediateOrderById(OrderIds.howlofterror)
+            case UNIT_SIREN
+                if src.hasAbility(ABIL_CHARM)
+                    if GetRandomInt(0, 100) <= 10
+                        // Log.info("Removing " + target.getName())
+                        // if not pDatas.get(target.getOwner().getTruePlayerFromDummy()).spawnedUnits.remove(target)
+                            // Log.info("merde")
+                        InstantDummyCaster.castTarget(
+                            src.getOwner(), ABIL_CHARM, 1, OrderIds.charm, target)
+                        pDatas.get(src.getOwner().getTruePlayerFromDummy()).spawnedUnits.add(target)

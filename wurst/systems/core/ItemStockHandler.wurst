@@ -95,7 +95,6 @@ function initItemStockData()
     unitItemSold.put(BUILDING_FOOTMAN   , asList(ITEM_CAPTAIN           , ITEM_DEFEND                                        ))
     unitItemSold.put(BUILDING_RIFLEMAN  , asList(ITEM_MORTAR            , ITEM_SNIPER         , ITEM_EXPLOSIVE_AMMO          ))
     unitItemSold.put(BUILDING_PRIEST    , asList(ITEM_SPELL_BREAKER     , ITEM_ARMOR_BLESSING , ITEM_WEAPON_BLESSING         ))
-    unitItemSold.put(BUILDING_KNIGHT    , asList(ITEM_MARSHALL                                      ))
     unitItemSold.put(BUILDING_CRUSADER    , asList(ITEM_MARSHALL                                      ))
     unitItemSold.put(BUILDING_SORCERESS , asList(ITEM_COURT_ENCHANTRESS , ITEM_DARK_MAGE      , ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
     unitItemSold.put(BUILDING_PALADIN , asList(ITEM_PALADIN_SKIN_BLACK, ITEM_PALADIN_SKIN_WHITE, ITEM_INSPIRE))
@@ -134,6 +133,16 @@ function initItemStockData()
     unitItemSold.put(BUILDING_SPECTRE , asList(ITEM_AVATAR_OF_VENGEANCE))
     sharedStocksMap.put(BUILDING_DRUID_TALON, asList(ITEM_WAND_OF_ILLUSION     , ITEM_ENTANGLING_ROOT                       ))
     sharedStocksMap.put(BUILDING_DRUID_CLAW , asList(ITEM_BEAR                 , ITEM_OWLBEAR                               ))
+
+    // ================ NAGA =============
+    unitItemSold.put(BUILDING_MURGUL_WARLOCK , asList(ITEM_FREE_BLOOD_LUST, ITEM_FREE_FROST_ARMOR, ITEM_FREE_FAERIE_FIRE))
+    unitItemSold.put(BUILDING_MYRMIDON , asList(ITEM_DEPTH_COMMANDER))
+    unitItemSold.put(BUILDING_GIANT_TURTLE , asList(ITEM_FIRE_TURTLE, ITEM_FROST_TURTLE))
+    unitItemSold.put(BUILDING_SIREN , asList(ITEM_RAY_OF_DISRUPTION, ITEM_CHARM))
+    sharedStocksMap.put(BUILDING_MURGUL_WARLOCK, asList(ITEM_FREE_BLOOD_LUST, ITEM_FREE_FROST_ARMOR, ITEM_FREE_FAERIE_FIRE))
+    sharedStocksMap.put(BUILDING_GIANT_TURTLE, asList(ITEM_FIRE_TURTLE, ITEM_FROST_TURTLE))
+    sharedStocksMap.put(BUILDING_SIREN, asList(ITEM_RAY_OF_DISRUPTION, ITEM_CHARM))
+
 
 function canBuy(int itemId, player _p) returns boolean
     let goldCost = itemGoldCost.loadInt(itemId, itemId)

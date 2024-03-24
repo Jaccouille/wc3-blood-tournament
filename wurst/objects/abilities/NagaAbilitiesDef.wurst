@@ -1,0 +1,230 @@
+package NagaAbilitiesDef
+
+
+// Standard libs imports:
+import Assets
+import BuffObjEditing
+import ClosureEvents
+import ClosureForGroups
+import HashMap
+import InstantDummyCaster
+import OrderIds
+
+// Local imports:
+import AbilityObjEditingCommons
+import ArmySpawner
+import BTAbilities
+import BTAbilityTooltipGenerator
+import ColorUtils
+import ItemObjEditingCommon
+import LocalObjectIDs
+import TooltipsUtils
+import UnitObjEditingCommon
+
+
+@compiletime function createNagaAbilities()
+    var tgen = new BTAbilityTooltipGenerator(
+        "Deal damage per second and slow target movement and " +
+        "attack speed.")
+    new AbilityDefinitionSlowPoison(ABIL_POISON_SPIT)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDamagePerSecond(_ -> 15)
+        ..presetAttackSpeedFactor(_ -> 0.20)
+        ..presetMovementSpeedFactor(_ -> 0.30)
+        ..presetDurationNormal(_ -> 5)
+        ..setNameEnhance("Z", "Poison Spit")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_POISON_SPIT, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator("Attack 2 additionals target.")
+    new AbilityDefinitionRocketAttack(ABIL_MULTISHOT_2)
+        ..setCheckDependencies(false)
+        ..setMissileArt(Abilities.chimaeraAcidMissile)
+        ..setMissileSpeed(STANDARD_PROJECTILE_SPEED)
+        ..presetDamagePerTarget(_ -> 0)
+        ..presetAreaofEffect(_ -> 550)
+        ..registerTooltipGenerator(tgen)
+        ..presetMaximumNumberofTargets(_ -> 2)
+        ..tooltipStartListen()
+        ..setNameEnhance("Z", "Multishot 2")
+        ..tooltipStopListen(true)
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
+
+    abilTooltipMap.put(ABIL_MULTISHOT_2, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator("Calls forth a cone of lightning on a "
+    + "target enemy unit, hitting multiple enemy units.")
+    new AbilityDefinitionSeaWitchForkedLightning(ABIL_FORKED_LIGHTNING)
+        ..setLevels(1)
+        ..setDummyAbility()
+        ..setCheckDependencies(false)
+        ..registerTooltipGenerator(tgen)
+        ..presetDistance(_ -> 900)
+        ..presetFinalArea(_ -> 300)
+        ..tooltipStartListen()
+        ..presetDamageperTarget(_ -> 200)
+        ..presetNumberofTargetsHit(_ -> 5)
+        ..presetManaCost(_ -> 125)
+        ..setNameEnhance("Z", "Forked Lightning")
+        ..tooltipStopListen(false)
+
+    createAutoCastedEnemyAbility(ABIL_AUTOCAST_FORKED_LIGHTNING)
+        ..registerTooltipGenerator(tgen)
+        ..presetManaCost(_ -> 125)
+        ..tooltipStartListen()
+        ..presetCastRange(_ -> 600)
+        ..presetCooldown(_ -> 6)
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_FORKED_LIGHTNING, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator("Attack light the ground on fire and burn enemy units.")
+    new AbilityDefinitionBallsofFire(ABIL_BURNING_BREATH)
+        ..setCheckDependencies(false)
+        ..setMissileArt(Abilities.redDragonMissile)
+        ..setMissileSpeed(STANDARD_PROJECTILE_SPEED)
+        ..registerTooltipGenerator(tgen)
+        ..presetFullDamageDealt(_ -> 40)
+        ..presetFullDamageInterval(_ -> 0.5)
+        ..presetHalfDamageDealt(_ -> 20)
+        ..presetHalfDamageInterval(_ -> 1)
+        ..presetAreaofEffect(_ -> 150)
+        ..tooltipStartListen()
+        ..presetDurationHero(_ -> 3)
+        ..presetDurationNormal(_ -> 3)
+        ..setNameEnhance("Z", "Burning Breath")
+        ..tooltipStopListen(false)
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
+
+    abilTooltipMap.put(ABIL_BURNING_BREATH, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator("Attack light the ground on fire and burn enemy units.")
+    new AbilityDefinition(ABIL_GLACIAL_BREATH, AbilityIds.frostBreath)
+        ..setCheckDependencies(false)
+        ..setMissileArt(Abilities.frostWyrmMissile)
+        ..setMissileSpeed(STANDARD_PROJECTILE_SPEED)
+        ..registerTooltipGenerator(tgen)
+        ..presetDurationNormal(_ -> 3)
+        ..addTooltipProperty("Attack Speed Reduction", _ -> "25%")
+        ..addTooltipProperty("Movement Speed Reduction", _ -> "50%")
+        ..tooltipStartListen()
+        ..setNameEnhance("Z", "Frost Breath")
+        ..tooltipStopListen(true)
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
+
+    abilTooltipMap.put(ABIL_GLACIAL_BREATH, tgen.generateFullTooltip())
+
+
+    let sirenCount = BTBuildingData.getUnitCount(BUILDING_SIREN)
+    tgen = new BTAbilityTooltipGenerator(
+        "Throws a magical shard of ice at a target enemy unit, " +
+        "dealing damage and stunning the target.")
+    new AbilityDefinitionFrostBolt(ABIL_FROST_BOLT)
+        ..setLevels(1)
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDamage(_ -> 100)
+        ..presetDurationNormal(_ -> 2)
+        ..presetManaCost(_ -> 75)
+        ..setNameEnhance("Z", "Frost Bolt")
+
+        ..tooltipStopListen(false)
+
+    createAutoCastedEnemyAbility(ABIL_AUTOCAST_FROST_BOLT)
+        ..registerTooltipGenerator(tgen)
+        ..presetManaCost(_ -> 75)
+        ..tooltipStartListen()
+        ..presetCastRange(_ -> 900)
+        ..presetCooldown(_ -> 6)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Frost Bolt (autocast)")
+        ..setIconNormal(Icons.bTNFrostBolt)
+        ..setIconTurnOff(Icons.bTNFrostBolt)
+
+    abilTooltipMap.put(ABIL_FROST_BOLT, tgen.generateFullTooltip())
+
+    var itm = createBasicItem(ITEM_RAY_OF_DISRUPTION)
+        ..setItemCost(0, 100, 1, sirenCount, sirenCount)
+        ..setNameEnhance("Z", "Replace 1 Frost Bolt with Ray of Disruption")
+        ..setInterfaceIcon(Icons.bTNWandOfNeutralization)
+    tgen = new BTAbilityTooltipGenerator(
+        "Conjures a stream of neutralizing magic that bounces multiple times, "
+        + "dispelling units in its wake."
+        )
+    new AbilityDefinitionRayOfDisruption(ABIL_DISRUPTION_RAY)
+        ..setLevels(1)
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetMaximumDispelledUnits(_ -> 4)
+        ..presetSummonedUnitDamage(_ -> 100)
+        ..presetManaCost(_ -> 75)
+        ..setNameEnhance("Z", "Ray of Disruption")
+        ..tooltipStopListen(false)
+
+    createAutoCastDispell(ABIL_AUTOCAST_DISRUPTION_RAY)
+        ..registerTooltipGenerator(tgen)
+        ..presetManaCost(_ -> 75)
+        ..tooltipStartListen()
+        ..presetCastRange(_ -> 700)
+        ..presetCooldown(_ -> 6)
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_DISRUPTION_RAY, tgen.generateFullTooltip())
+
+    itm = createBasicItem(ITEM_CHARM)
+        ..setItemCost(0, 150, 1, sirenCount, sirenCount)
+        ..setNameEnhance("Z", "Add 10% chance to cast charm")
+        ..setInterfaceIcon(Icons.bTNCharm)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Takes control of a target enemy unit.\nHas 10% chance to proc on hit.")
+    new AbilityDefinitionCharm(ABIL_CHARM)
+        ..setLevels(1)
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..setMaximumCreepLevel(1, 10)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..setArtTarget(Objects.nagaDeath)
+        ..setTargetAttachmentPoint("chest")
+        ..setNameEnhance("Z", "Charm")
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_CHARM, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Sends a gigantic wave which deals damage to each enemy land unit in a line.")
+    new AbilityDefinitionCrushingWave(ABIL_CRUSHING_WAVE)
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..registerTooltipGenerator(tgen)
+        ..presetManaCost(_ -> 125)
+        ..tooltipStartListen()
+        ..presetDamage(_ -> 100)
+        ..presetDistance(_ -> 800)
+        ..presetMaxDamage(_ -> 1500)
+        ..setNameEnhance("Z", "Crushing Wave")
+        ..tooltipStopListen(false)
+
+    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_CRUSHING_WAVE)
+        ..setAnimationNames("attack,slam")
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetManaCost(_ -> 125)
+        ..presetCooldown(_ -> 6)
+        ..presetCastRange(_ -> 600)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Crushing Wave")
+        ..setIconNormal(Icons.bTNCrushingWave)
+        ..setIconTurnOff(Icons.bTNCrushingWave)
+
+    abilTooltipMap.put(ABIL_CRUSHING_WAVE, tgen.generateFullTooltip())

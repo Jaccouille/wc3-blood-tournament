@@ -1,0 +1,363 @@
+package NagaUnitsDef
+
+// Standard libs imports:
+import Assets
+import ChannelAbilityPreset
+
+// Local imports:
+import LocalObjectIDs
+import UnitObjEditingCommon
+import UnitTooltipGenerator
+import BTAbilities
+import NagaAbilitiesDef
+import ItemObjEditingCommon
+import ArmySpawner
+
+@compiletime function createNagaUnitsDef()
+    var tooltip = new UnitTooltipGenerator("Cannon fodder.")
+    createSpawnedUnit(UNIT_MURLOC, UnitIds.murloctiderunner, BUILDING_MURLOC)
+        ..setNormalAbilities(commaList(ABIL_EVASION_20))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Normal, 22, 1, 4, 1.3)
+
+        ..setArmorData(ArmorType.Small, 0)
+        ..setHitPointsMaximumBase(150)
+
+        ..setSpeedBase(290)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("Q", "Murloc")
+        ..setSizeSmall()
+        ..setUpgradeTo(commaList(BUILDING_MURGUL_WARLOCK))
+
+        ..setModelFileExt(Units.murloc1)
+        ..setIconGameInterfaceExt(Icons.bTNMurloc)
+        ..setUnitSoundSetExt(Soundsets.murloc)
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_SLOW) + "\n\n" +
+        "Can add Bloodlust, Frost Armor, and Faerie Fire for free."
+    )
+    createSpawnedUnit(UNIT_MURGUL_WARLOCK, UnitIds.murgulsnarecaster, BUILDING_MURGUL_WARLOCK)
+        ..setNormalAbilities(commaList(ABIL_SLOW))
+        ..setDefaultActiveAbility(commaList(ABIL_SLOW))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 20, 4, 4, 1.4)
+        ..setAttack1Range(400)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Small, 0)
+        ..setHitPointsMaximumBase(160)
+        ..setMana(200)
+
+        ..setSpeedBase(290)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("Z", "Murgul Warlock")
+        ..setSizeSmall()
+
+        ..setModelFileExt(Units.murgulShadowcaster1)
+        ..setIconGameInterfaceExt(Icons.bTNMurgulShadowCaster)
+        ..setUnitSoundSetExt(Soundsets.murloc)
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_POISON_SPIT)
+        )
+    createSpawnedUnit(UNIT_SNAP_DRAGON, UnitIds.snapdragon, BUILDING_SNAP_DRAGON)
+        // Poison attack
+        ..setNormalAbilities(commaList(ABIL_POISON_SPIT))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Pierce, 22, 4, 4, 1.6)
+        ..setAttack1Range(500)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Medium, 3)
+        ..setHitPointsMaximumBase(180)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+        ..setUpgradeTo(commaList(BUILDING_HYDRA))
+
+        ..setNameEnhance("W", "Snap Dragon")
+        ..setSizeSmall()
+
+        ..setScalingValue(0.9)
+        ..setBuildingScalingValue(0.9)
+        ..setModelFileExt(Units.snapDragon1)
+        ..setIconGameInterfaceExt(Icons.bTNSnapDragon)
+        ..setUnitSoundSetExt(Soundsets.snapDragon)
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_MULTISHOT_2)
+        )
+    createSpawnedUnit(UNIT_HYDRA, UnitIds.hydrahatchling, BUILDING_HYDRA)
+        ..setNormalAbilities(commaList(ABIL_MULTISHOT_2))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Pierce, 45, 7, 4, 2)
+
+        ..setArmorData(ArmorType.Medium, 5)
+        ..setHitPointsMaximumBase(400)
+        ..setAttack1Range(500)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("Z", "Hydra")
+        ..setSizeSmall()
+
+        ..setTintingColorBlue(255)
+        ..setScalingValue(0.8)
+        ..setBuildingScalingValue(0.8)
+        ..setModelFileExt(Units.hydra)
+        ..setIconGameInterfaceExt(Icons.bTNHydra)
+        ..setUnitSoundSetExt(Soundsets.hydra)
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_CLEAVE_20)
+        )
+    createSpawnedUnit(UNIT_MYRMIDON, UnitIds.nagamyrmidon, BUILDING_MYRMIDON)
+        ..setNormalAbilities(commaList(ABIL_CLEAVE_20))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Normal, 56, 4, 6, 2)
+
+        ..setArmorData(ArmorType.Large, 4)
+        ..setHitPointsMaximumBase(750)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("E", "Myrmidon")
+        ..setSizeSmall()
+
+        ..setModelFileExt(Units.nagaMyrmidon1)
+        ..setIconGameInterfaceExt(Icons.bTNNagaMyrmidon)
+        ..setUnitSoundSetExt(Soundsets.nagaMyrmidon)
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_CLEAVE_30) + "\n\n" +
+        abilTooltipMap.get(ABIL_CRUSHING_WAVE)
+
+        )
+    itm = createBasicItem(ITEM_DEPTH_COMMANDER)
+    createSpawnedUnit(UNIT_DEPTH_COMMANDER, UnitIds.nagaroyalguard, BUILDING_DEPTH_COMMANDER)
+        ..registerItemDef(itm, ItemModifierType.Addition)
+        ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_CRUSHING_WAVE, ABIL_AUTOCAST_CRUSHING_WAVE))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_CRUSHING_WAVE))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Normal, 99, 7, 9, 2)
+
+        ..setArmorData(ArmorType.Large, 8)
+        ..setHitPointsMaximumBase(1800)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+        ..setItemCostUnit(0, 1800, 1)
+        // ..setAutoPointValue()
+        // ..setAutoBuildingCost()
+
+        ..setNameEnhance("Z", "Depth Commander")
+        ..tooltipStopListen(true, itm)
+        ..setSizeSmall()
+
+        ..setModelFileExt(Units.nagaRoyalGuard1)
+        ..setIconGameInterfaceExt(Icons.bTNNagaMyrmidonRoyalGuard)
+        ..setUnitSoundSetExt(Soundsets.nagaRoyalGuard)
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_FORKED_LIGHTNING) + "\n\n" +
+        abilTooltipMap.get(ABIL_BRILLANCE_AURA_2)
+    )
+    createSpawnedUnit(UNIT_SEA_WITCH, UnitIds.seawitch, BUILDING_SEA_WITCH)
+        ..setNormalAbilities(commaList(
+            ABIL_AUTOCAST_FORKED_LIGHTNING,
+            ABIL_FORKED_LIGHTNING,
+            ABIL_BRILLANCE_AURA_2
+            ))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_FORKED_LIGHTNING))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Pierce, 90, 7, 7, 1.6)
+        ..setAttack1Range(600)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+        ..setAttack1ProjectileArt(Abilities.arrowMissile1)
+
+        ..setArmorData(ArmorType.Medium, 5)
+        ..setHitPointsMaximumBase(400)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("R", "Sea Witch")
+        ..setSizeSmall()
+
+        ..setModelFileExt(Units.heroNagaSeawitch1)
+        ..setIconGameInterfaceExt(Icons.bTNNagaSeaWitch)
+        ..setUnitSoundSetExt(Soundsets.heroNagaSeawitch)
+
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_SPIKED_CARAPACE_50) + "\n\n" +
+        abilTooltipMap.get(ABIL_BASH_30)
+    )
+    createSpawnedUnit(UNIT_GIANT_TURTLE, UnitIds.giantseaturtle, BUILDING_GIANT_TURTLE)
+        ..setNormalAbilities(commaList(
+            ABIL_SPIKED_CARAPACE_50,
+            ABIL_BASH_30
+        ))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Siege, 90, 6, 9, 2)
+        ..setAttack1Range(350)
+        ..setAttack1ProjectileArt(Abilities.ancientProtectorMissile)
+        ..setAttack1ProjectileSpeed(900)
+
+        ..setArmorData(ArmorType.Large, 8)
+        ..setHitPointsMaximumBase(1000)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("A", "Giant Turtle")
+        ..setSizeLarge()
+
+        ..setBuildingScalingValue(0.65)
+        ..setModelFileExt(Units.giantSeaTurtle1)
+        ..setIconGameInterfaceExt(Icons.bTNSeaTurtleGreen)
+        ..setUnitSoundSetExt(Soundsets.giantSeaTurtle)
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_SPIKED_CARAPACE_50) + "\n\n" +
+        abilTooltipMap.get(ABIL_BURNING_BREATH)
+    )
+    let turtleCount = BTBuildingData.getUnitCount(BUILDING_GIANT_TURTLE)
+    var itm = createBasicItem(ITEM_FIRE_TURTLE)
+    createSpawnedUnit(UNIT_FIRE_TURTLE, UnitIds.giantseaturtle)
+        ..setNormalAbilities(commaList(
+            ABIL_SPIKED_CARAPACE_50,
+            ABIL_BURNING_BREATH
+        ))
+        ..registerItemDef(itm, ItemModifierType.Replace)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1Data(AttackType.Siege, 90, 6, 9, 2)
+        ..setAttack1Range(350)
+        ..setAttack1ProjectileSpeed(900)
+
+        ..setArmorData(ArmorType.Large, 8)
+        ..setHitPointsMaximumBase(1000)
+
+        ..setSpeedBase(270)
+        ..setItemCostReplacement(0, 200, 1, turtleCount, turtleCount, BUILDING_GIANT_TURTLE)
+
+        ..setSizeLarge()
+        ..setNameEnhance("Z", "Fire Turtle")
+        ..tooltipStopListen(true, itm)
+        ..setModelFile(Units.dragonSeaTurtle1)
+
+        ..setIconGameInterfaceExt(Icons.bTNSeaTurtleRed)
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_SPIKED_CARAPACE_50) + "\n\n" +
+        abilTooltipMap.get(ABIL_GLACIAL_BREATH)
+    )
+    itm = createBasicItem(ITEM_FROST_TURTLE)
+    createSpawnedUnit(UNIT_FROST_TURTLE, UnitIds.giantseaturtle)
+        ..setNormalAbilities(commaList(
+            ABIL_SPIKED_CARAPACE_50,
+            ABIL_GLACIAL_BREATH
+        ))
+        ..registerItemDef(itm, ItemModifierType.Replace)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1Data(AttackType.Siege, 90, 6, 9, 2)
+        ..setAttack1Range(350)
+        ..setSmallSplash()
+        ..setAttack1ProjectileSpeed(900)
+
+        ..setArmorData(ArmorType.Large, 8)
+        ..setHitPointsMaximumBase(1000)
+
+        ..setSpeedBase(270)
+        ..setItemCostReplacement(0, 200, 1, turtleCount, turtleCount, BUILDING_GIANT_TURTLE)
+
+        ..setSizeLarge()
+        ..setNameEnhance("Z", "Frost Turtle")
+        ..tooltipStopListen(true, itm)
+
+        ..setTintingColorRed(192)
+        ..setTintingColorGreen(192)
+        ..setModelFile(Units.seaTurtleRange)
+        ..setAttack1WeaponType(WeaponType.MissileSplash)
+
+        ..setIconGameInterfaceExt(Icons.bTNSeaTurtleGreen)
+
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_FROST_BOLT)
+    )
+    createSpawnedUnit(UNIT_SIREN, UnitIds.siren, BUILDING_SIREN)
+        ..setNormalAbilities(commaList(ABIL_FROST_BOLT, ABIL_AUTOCAST_FROST_BOLT))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_FROST_BOLT))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 25, 4, 7, 1.6)
+        ..setAttack1Range(650)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+        ..setAttack1ProjectileArt(Abilities.bansheeMissile)
+
+        ..setArmorData(ArmorType.Unarmored, 0)
+        ..setHitPointsMaximumBase(100)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("S", "Siren")
+        ..setSizeSmall()
+
+        ..setModelFileExt(Units.nagaSiren1)
+        ..setIconGameInterfaceExt(Icons.bTNSeaWitch)
+        ..setUnitSoundSetExt(Soundsets.nagaSiren)
+
+    createBuilder(UNIT_NAGA_BUILDER, UnitIds.murgulslave)
+        ..setNameEnhance("A", "Naga Builder")
+        ..setStructuresBuilt(commaList(
+            BUILDING_MURLOC,
+            BUILDING_SNAP_DRAGON,
+            BUILDING_MYRMIDON,
+            BUILDING_SEA_WITCH,
+            BUILDING_GIANT_TURTLE,
+            BUILDING_SIREN
+        ))

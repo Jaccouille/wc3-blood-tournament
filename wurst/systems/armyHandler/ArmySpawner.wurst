@@ -157,9 +157,20 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_TAUREN        , 0, 0, genList(UNIT_TAUREN         , 5                                                                                     ))
     new BTBuildingData(BUILDING_THUNDER_LIZARD, 0, 0, genList(UNIT_THUNDER_LIZARD , 4                                                                                     ))
     new BTBuildingData(BUILDING_CENTAUR       , 0, 0, genList(UNIT_CENTAUR        , 10                                                                                    ))
-    new BTBuildingData(BUILDING_HYDRA         , 0, 0, genList(UNIT_HYDRA          , 3                                                                                     ))
     new BTBuildingData(BUILDING_REXXAR        , 0, 0, genList(UNIT_REXXAR         , 1                                                                                     ))
     new BTBuildingData(BUILDING_CHEN          , 0, 0, genList(UNIT_CHEN           , 1                                                                                     ))
+
+
+    new BTBuildingData(BUILDING_MURLOC          ,                           100 , 0    , genList(UNIT_MURLOC          , 10 ))
+    new BTBuildingData(BUILDING_MURLOC          , BUILDING_MURGUL_WARLOCK , 0   , 1500 , genList(UNIT_MURGUL_WARLOCK  , 10 ))
+    new BTBuildingData(BUILDING_SNAP_DRAGON     ,                           150 , 0    , genList(UNIT_SNAP_DRAGON     , 5  ))
+    new BTBuildingData(BUILDING_SNAP_DRAGON          , BUILDING_HYDRA ,      0   , 2700 , genList(UNIT_HYDRA       , 3  ))
+    new BTBuildingData(BUILDING_MYRMIDON        ,                           300 , 0    , genList(UNIT_MYRMIDON        , 5  ))
+    new BTBuildingData(BUILDING_DEPTH_COMMANDER ,                           0   , 0    , genList(UNIT_DEPTH_COMMANDER , 5  ))
+    new BTBuildingData(BUILDING_SEA_WITCH       ,                           0   , 1000 , genList(UNIT_SEA_WITCH       , 1  ))
+    new BTBuildingData(BUILDING_GIANT_TURTLE    ,                           300 , 0    , genList(UNIT_GIANT_TURTLE    , 3  ))
+    new BTBuildingData(BUILDING_SIREN           ,                           200 , 0    , genList(UNIT_SIREN           , 4  ))
+
 
 
 // Distance between units positioned in formation mode

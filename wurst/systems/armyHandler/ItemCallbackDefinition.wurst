@@ -437,3 +437,60 @@ init
         for i = 1 to count
             unitToSpawn.push(UNIT_AVATAR_OF_VENGEANCE)
     itemAddUnitMap.put(ITEM_AVATAR_OF_VENGEANCE, avatarOfVengeanceAction)
+
+
+    // ========================= NAGA =========================
+    let fireTurtleAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            replaceUnit(unitToSpawn, UNIT_GIANT_TURTLE, UNIT_FIRE_TURTLE)
+
+    itemAddUnitMap.put(ITEM_FIRE_TURTLE, fireTurtleAction)
+
+    let frostTurtleAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            replaceUnit(unitToSpawn, UNIT_GIANT_TURTLE, UNIT_FROST_TURTLE)
+
+    itemAddUnitMap.put(ITEM_FROST_TURTLE, frostTurtleAction)
+
+    let rayOfDisruptionAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_DISRUPTION_RAY)
+        u.addAbility(ABIL_AUTOCAST_DISRUPTION_RAY)
+        u.issueImmediateOrderById(OrderIds.autodispelon)
+
+    itemModifyUnitMap.put(ITEM_RAY_OF_DISRUPTION, rayOfDisruptionAction)
+
+    let charmAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_CHARM)
+
+    itemModifyUnitMap.put(ITEM_CHARM, charmAction)
+
+    let deptCommanderAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            unitToSpawn.push(UNIT_DEPTH_COMMANDER)
+    itemAddUnitMap.put(ITEM_DEPTH_COMMANDER, deptCommanderAction)
+
+    let bloodLustAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_BLOODLUST)
+        u.issueImmediateOrderById(OrderIds.bloodluston)
+
+    itemModifyUnitMap.put(ITEM_FREE_BLOOD_LUST, bloodLustAction)
+
+    let frostArmorAction2 = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_FROST_ARMOR)
+        u.issueImmediateOrderById(OrderIds.frostarmoron)
+
+    itemModifyUnitMap.put(ITEM_FREE_FROST_ARMOR, frostArmorAction2)
+
+    let faeriefireAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_FAERIE_FIRE)
+        u.issueImmediateOrderById(OrderIds.faeriefireon)
+
+    itemModifyUnitMap.put(ITEM_FREE_FAERIE_FIRE, faeriefireAction)

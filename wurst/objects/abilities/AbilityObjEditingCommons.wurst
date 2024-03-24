@@ -117,6 +117,17 @@ public function createAutoCastAlliedManaTarget(int abilId) returns AbilityDefini
         ..setArtTarget("")
         ..setLevels(1)
 
+public function createAutoCastDispell(int abilId) returns AbilityDefinitionAbolishMagicCreep
+    return new AbilityDefinitionAbolishMagicCreep(abilId)
+        ..setSummonedUnitDamage(1, 0)
+        ..setManaLoss(1, 0)
+        ..setCheckDependencies(false)
+        ..presetManaCost(_ -> 0)
+        ..presetDurationNormal(_ -> 0.01)
+        ..presetBuffs(_ -> "")
+        ..setArtTarget("")
+        ..setLevels(1)
+
 public function createOrbAbility(int abilId) returns AbilityDefinitionOrbofLightning
     return new  AbilityDefinitionOrbofLightning(abilId)
         ..presetChanceToHitUnits(_ -> 100)

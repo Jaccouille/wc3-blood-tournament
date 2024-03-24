@@ -72,3 +72,13 @@ Once it's done, simply clone the project and update it to download the dependenc
 - Using CLI, run `grill install`
 
 - Using WurstSetup (Graphical User Interface), open the `wurst.build` file and click on `Update Project`
+
+### Add faction
+
+In localObjectIDs.wurst, add the ids of your units, an id for the spawned unit, an id for the buidlings
+```
+public let UNIT_NAGA_SIREN            = compiletime(UNIT_ID_GEN.next())
+public let BUILDING_NAGA_SIREN        = compiletime(UNIT_ID_GEN.next())
+```
+
+Then create a file in `wurst/objects/units` named `{yourFaction}UnitsDef.wurst`, this file will contains all your faction units definition

@@ -26,13 +26,10 @@ let botEnabled = compiletime(createDummyBuffObject("Bot enabled", "This player i
 let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
     ..put(UNIT_HUMAN_BUILDER, asList(
         BUILDING_FOOTMAN,
-        BUILDING_ELVEN_ARCHER,
         BUILDING_KNIGHT,
         BUILDING_PRIEST,
         BUILDING_PALADIN,
         BUILDING_SORCERESS,
-        BUILDING_SWORD_MASTER,
-        BUILDING_ELVEN_MAGE,
         BUILDING_RIFLEMAN
     ))
     ..put(UNIT_ORC_BUILDER, asList(
@@ -42,11 +39,7 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
         BUILDING_WITCH_DOCTOR,
         BUILDING_SHAMAN,
         BUILDING_OGRE,
-        BUILDING_WARMONGER,
-        BUILDING_FARSEER,
-        BUILDING_BLADE_MASTER,
-        BUILDING_SHADOW_HUNTER,
-        BUILDING_DEMOLISHER
+        BUILDING_WARMONGER
     ))
     ..put(UNIT_UNDEAD_BUILDER, asList(
         BUILDING_ZOMBIE,
@@ -55,9 +48,7 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
         BUILDING_DEATH_KNIGHT,
         BUILDING_BANSHEE,
         BUILDING_ABOMINATION,
-        BUILDING_VAMPIRE,
-        BUILDING_CRYPT_LORD,
-        BUILDING_ARCHIMONDE
+        BUILDING_VAMPIRE
     ))
     ..put(UNIT_NIGHT_ELF_BUILDER, asList(
         BUILDING_ARCHER,
@@ -65,12 +56,16 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
         BUILDING_DRYAD,
         BUILDING_MOUNTAIN_GIANT,
         BUILDING_SPECTRE,
-        BUILDING_AVATAR_OF_VENGEANCE,
         BUILDING_DRUID_TALON,
-        BUILDING_DRUID_CLAW,
-        BUILDING_DAEMON_HUNTER,
-        BUILDING_PRIESTESS_OF_THE_MOON,
-        BUILDING_BALLISTA
+        BUILDING_DRUID_CLAW
+    ))
+    ..put(UNIT_NAGA_BUILDER, asList(
+        BUILDING_MURLOC,
+        BUILDING_SNAP_DRAGON,
+        BUILDING_MYRMIDON,
+        BUILDING_SEA_WITCH,
+        BUILDING_GIANT_TURTLE,
+        BUILDING_SIREN
     ))
 
 public let UPGRADE_OPTIONS = new HashMap<int, LinkedList<int>>
@@ -80,6 +75,8 @@ public let UPGRADE_OPTIONS = new HashMap<int, LinkedList<int>>
     ..put(BUILDING_ZOMBIE, asList(BUILDING_PLAGUE_BEARER))
     ..put(BUILDING_CRYPT_FIEND, asList(BUILDING_NERUBIAN))
     ..put(BUILDING_ARCHER, asList(BUILDING_NE_RANGER))
+    ..put(BUILDING_MURLOC, asList(BUILDING_MURGUL_WARLOCK))
+    ..put(BUILDING_SNAP_DRAGON, asList(BUILDING_HYDRA))
 
 class BuilderAI
     use LinkedListModule

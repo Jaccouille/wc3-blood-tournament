@@ -45,8 +45,12 @@ init
         ..put(ABIL_AUTOCAST_FIREBOLT, new BuffTuple(OrderIds.firebolt, -1))
         ..put(ABIL_AUTOCAST_MANA_WARD, new BuffTuple(OrderIds.healingward, -1))
         ..put(ABIL_AUTOCAST_CARRION_SWARM, new BuffTuple(OrderIds.carrionswarm, -1))
+        ..put(ABIL_AUTOCAST_CRUSHING_WAVE, new BuffTuple(OrderIds.carrionswarm, -1))
         ..put(ABIL_AUTOCAST_AFFLICTION, new BuffTuple(OrderIds.acidbomb, BuffIds.acidBomb))
         ..put(ABIL_AUTOCAST_SOUL_BURN, new BuffTuple(OrderIds.soulburn, BuffIds.soulBurn))
+        ..put(ABIL_AUTOCAST_FORKED_LIGHTNING, new BuffTuple(OrderIds.forkedlightning, -1))
+        ..put(ABIL_AUTOCAST_FROST_BOLT, new BuffTuple(OrderIds.thunderbolt, -1))
+        ..put(ABIL_AUTOCAST_DISRUPTION_RAY, new BuffTuple(852615, -1))
 
     dummyToRealImmediateCastMap
         ..put(ABIL_AUTOCAST_TAUNT, OrderIds.taunt)
@@ -79,7 +83,7 @@ init
                     target.addAbility(ABIL_AUTOCAST_HEALING_WAVE)
             else
                 caster.issuePointOrder("attack", CENTER)
-                // caster.resetAbilityCooldown(abilId)
+                caster.resetAbilityCooldown(abilId)
 
             // TODO: refactor into previous if condition
         else if dummyToRealImmediateCastMap.has(abilId)

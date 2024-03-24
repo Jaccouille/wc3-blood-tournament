@@ -3,6 +3,9 @@ package LocalObjectIDs
 // Standard libs imports:
 import ObjectIdGenerator
 
+
+// ==================== ID GENERATORS =================
+// ==================== Human =================
 public let UNIT_FOOTMAN                 = compiletime(UNIT_ID_GEN.next())
 public let BUILDING_FOOTMAN             = compiletime(UNIT_ID_GEN.next())
 public let UNIT_RIFLEMAN                = compiletime(UNIT_ID_GEN.next())
@@ -44,6 +47,7 @@ public let UNIT_MORTAR                  = compiletime(UNIT_ID_GEN.next())
 public let UNIT_GHOST                   = compiletime(UNIT_ID_GEN.next())
 public let UNIT_WATER_ELEMENTAL         = compiletime(UNIT_ID_GEN.next())
 
+// ==================== Orc =================
 public let UNIT_GRUNT                = compiletime(UNIT_ID_GEN.next())
 public let BUILDING_GRUNT            = compiletime(UNIT_ID_GEN.next())
 public let UNIT_KODO                 = compiletime(UNIT_ID_GEN.next())
@@ -87,6 +91,7 @@ public let UNIT_SPIRIT_WOLF1             = compiletime(UNIT_ID_GEN.next())
 public let UNIT_SPIRIT_WOLF2             = compiletime(UNIT_ID_GEN.next())
 public let UNIT_MANA_WARD                = compiletime(UNIT_ID_GEN.next())
 
+// ==================== Undead =================
 public let UNIT_GHOUL               = compiletime(UNIT_ID_GEN.next())
 public let BUILDING_GHOUL           = compiletime(UNIT_ID_GEN.next())
 public let UNIT_CRYPT_FIEND         = compiletime(UNIT_ID_GEN.next())
@@ -131,6 +136,7 @@ public let UNIT_ARCHIMONDE          = compiletime(UNIT_ID_GEN.next())
 public let BUILDING_ARCHIMONDE      = compiletime(UNIT_ID_GEN.next())
 
 
+// ==================== Night elf =================
 public let UNIT_TREANT                    = compiletime(UNIT_ID_GEN.next())
 public let BUILDING_TREANT                = compiletime(UNIT_ID_GEN.next())
 public let UNIT_ARCHER                    = compiletime(UNIT_ID_GEN.next())
@@ -171,6 +177,7 @@ public let BUILDING_AVATAR_OF_VENGEANCE = compiletime(UNIT_ID_GEN.next())
 public let UNIT_BALLISTA                = compiletime(UNIT_ID_GEN.next())
 public let BUILDING_BALLISTA            = compiletime(UNIT_ID_GEN.next())
 
+// ==================== Beast =================
 public let UNIT_GNOLL              = compiletime(UNIT_ID_GEN.next())
 public let BUILDING_GNOLL          = compiletime(UNIT_ID_GEN.next())
 public let UNIT_GNOLL_UPGRADE      = compiletime(UNIT_ID_GEN.next())
@@ -189,12 +196,35 @@ public let UNIT_THUNDER_LIZARD     = compiletime(UNIT_ID_GEN.next())
 public let BUILDING_THUNDER_LIZARD = compiletime(UNIT_ID_GEN.next())
 public let UNIT_CENTAUR            = compiletime(UNIT_ID_GEN.next())
 public let BUILDING_CENTAUR        = compiletime(UNIT_ID_GEN.next())
-public let UNIT_HYDRA              = compiletime(UNIT_ID_GEN.next())
-public let BUILDING_HYDRA          = compiletime(UNIT_ID_GEN.next())
 public let UNIT_REXXAR             = compiletime(UNIT_ID_GEN.next())
 public let BUILDING_REXXAR         = compiletime(UNIT_ID_GEN.next())
 public let UNIT_CHEN               = compiletime(UNIT_ID_GEN.next())
 public let BUILDING_CHEN           = compiletime(UNIT_ID_GEN.next())
+
+
+// ==================== Naga =================
+public let UNIT_MURLOC              = compiletime(UNIT_ID_GEN.next())
+public let BUILDING_MURLOC          = compiletime(UNIT_ID_GEN.next())
+public let UNIT_MURGUL_WARLOCK      = compiletime(UNIT_ID_GEN.next())
+public let BUILDING_MURGUL_WARLOCK  = compiletime(UNIT_ID_GEN.next())
+public let UNIT_SNAP_DRAGON         = compiletime(UNIT_ID_GEN.next())
+public let BUILDING_SNAP_DRAGON     = compiletime(UNIT_ID_GEN.next())
+public let UNIT_MYRMIDON            = compiletime(UNIT_ID_GEN.next())
+public let BUILDING_MYRMIDON        = compiletime(UNIT_ID_GEN.next())
+public let UNIT_DEPTH_COMMANDER     = compiletime(UNIT_ID_GEN.next())
+public let BUILDING_DEPTH_COMMANDER = compiletime(UNIT_ID_GEN.next())
+public let UNIT_SEA_WITCH           = compiletime(UNIT_ID_GEN.next())
+public let BUILDING_SEA_WITCH       = compiletime(UNIT_ID_GEN.next())
+public let UNIT_HYDRA               = compiletime(UNIT_ID_GEN.next())
+public let BUILDING_HYDRA           = compiletime(UNIT_ID_GEN.next())
+public let UNIT_GIANT_TURTLE        = compiletime(UNIT_ID_GEN.next())
+public let BUILDING_GIANT_TURTLE    = compiletime(UNIT_ID_GEN.next())
+public let UNIT_FIRE_TURTLE         = compiletime(UNIT_ID_GEN.next())
+public let UNIT_FROST_TURTLE        = compiletime(UNIT_ID_GEN.next())
+public let UNIT_SIREN               = compiletime(UNIT_ID_GEN.next())
+public let BUILDING_SIREN           = compiletime(UNIT_ID_GEN.next())
+
+
 
 public let UNIT_ARENA_MASTER      = compiletime(HERO_ID_GEN.next())
 public let UNIT_DUMMY_ORB_BLOOD   = compiletime(UNIT_ID_GEN.next())
@@ -206,6 +236,7 @@ public let UNIT_ORC_BUILDER       = compiletime(UNIT_ID_GEN.next())
 public let UNIT_UNDEAD_BUILDER    = compiletime(UNIT_ID_GEN.next())
 public let UNIT_NIGHT_ELF_BUILDER = compiletime(UNIT_ID_GEN.next())
 
+public let UNIT_NAGA_BUILDER      = compiletime(UNIT_ID_GEN.next())
 public let UNIT_BEAST_BUILDER     = compiletime(UNIT_ID_GEN.next())
 
 // Speed boost banner
@@ -264,6 +295,8 @@ public let ABIL_MAGIC_ARMOR_50     = compiletime(ABIL_ID_GEN.next())
 public let ABIL_DEFLECT_30         = compiletime(ABIL_ID_GEN.next())
 public let ABIL_DEFLECT_75         = compiletime(ABIL_ID_GEN.next())
 public let ABIL_MANA_SHIELD        = compiletime(ABIL_ID_GEN.next())
+public let ABIL_SPIKED_CARAPACE_30 = compiletime(ABIL_ID_GEN.next())
+public let ABIL_SPIKED_CARAPACE_50 = compiletime(ABIL_ID_GEN.next())
 
 // ==================== HUMAN ABILITIES =================
 public let ABIL_HEAL                  = compiletime(ABIL_ID_GEN.next())
@@ -383,6 +416,22 @@ public let ABIL_TERROR_AURA               = compiletime(ABIL_ID_GEN.next())
 public let ABIL_TERRIFY                   = compiletime(ABIL_ID_GEN.next())
 public let ABIL_TERRIFY_ORB               = compiletime(ABIL_ID_GEN.next())
 
+// ==================== NAGA ABILITIES =================
+public let ABIL_POISON_SPIT               = compiletime(ABIL_ID_GEN.next())
+public let ABIL_MULTISHOT_2               = compiletime(ABIL_ID_GEN.next())
+public let ABIL_AUTOCAST_FORKED_LIGHTNING = compiletime(ABIL_ID_GEN.next())
+public let ABIL_FORKED_LIGHTNING          = compiletime(ABIL_ID_GEN.next())
+public let ABIL_BURNING_BREATH            = compiletime(ABIL_ID_GEN.next())
+public let ABIL_GLACIAL_BREATH            = compiletime(ABIL_ID_GEN.next())
+public let ABIL_CHARM                     = compiletime(ABIL_ID_GEN.next())
+public let ABIL_AUTOCAST_FROST_BOLT       = compiletime(ABIL_ID_GEN.next())
+public let ABIL_FROST_BOLT                = compiletime(ABIL_ID_GEN.next())
+public let ABIL_AUTOCAST_DISRUPTION_RAY   = compiletime(ABIL_ID_GEN.next())
+public let ABIL_DISRUPTION_RAY            = compiletime(ABIL_ID_GEN.next())
+public let ABIL_CRUSHING_WAVE             = compiletime(ABIL_ID_GEN.next())
+public let ABIL_AUTOCAST_CRUSHING_WAVE    = compiletime(ABIL_ID_GEN.next())
+
+
 public let BUFF_AFFLICTION                = compiletime(BUFF_ID_GEN.next())
 public let BUFF_RAMPAGE                   = compiletime(BUFF_ID_GEN.next())
 public let BUFF_UNHOLY_AURA               = compiletime(BUFF_ID_GEN.next())
@@ -460,6 +509,16 @@ public let ITEM_SPAWN_GUT_CRAWLER     = compiletime(ITEM_ID_GEN.next())
 public let ITEM_ENTANGLING_ROOT         = compiletime(ITEM_ID_GEN.next())
 public let ITEM_WAND_OF_ILLUSION        = compiletime(ITEM_ID_GEN.next())
 public let ITEM_REJUVENATION            = compiletime(ITEM_ID_GEN.next())
+
+public let ITEM_FIRE_TURTLE       = compiletime(ITEM_ID_GEN.next())
+public let ITEM_FROST_TURTLE      = compiletime(ITEM_ID_GEN.next())
+public let ITEM_RAY_OF_DISRUPTION = compiletime(ITEM_ID_GEN.next())
+public let ITEM_CHARM             = compiletime(ITEM_ID_GEN.next())
+public let ITEM_DEPTH_COMMANDER   = compiletime(ITEM_ID_GEN.next())
+public let ITEM_FREE_BLOOD_LUST      = compiletime(ITEM_ID_GEN.next())
+public let ITEM_FREE_FROST_ARMOR     = compiletime(ITEM_ID_GEN.next())
+public let ITEM_FREE_FAERIE_FIRE     = compiletime(ITEM_ID_GEN.next())
+
 
 public let UPGD_RACE_PICK   = compiletime(UPGD_ID_GEN.next())
 public let UPGD_ALL_RANDOM  = compiletime(UPGD_ID_GEN.next())
