@@ -110,7 +110,7 @@ let SLOW_TARGET_COUNT = 2
         " Applies to multiple targets."
     )
     new AbilityDefinitionSlow(ABIL_DUMMY_CAST_SLOW)
-        ..presetDurationNormal(_ -> 15)
+        ..presetDurationNormal(_ -> 12)
         ..setDummyAbility()
         ..setNameEnhance("Z", "Slow Dummy")
 
@@ -118,9 +118,11 @@ let SLOW_TARGET_COUNT = 2
         ..setLevels(1)
         ..tooltipStartListen()
         ..registerTooltipGenerator(tgen)
-        ..presetAttackSpeedFactor(_ -> 0.25)
-        ..presetMovementSpeedFactor(_ -> 0.4)
-        ..presetDurationNormal(_ -> 15)
+        ..setAttackSpeedFactor(1, 0.25)
+        ..addTooltipProperty("Attack Speed Reduced", _ -> 0.25.toPercent())
+        ..setMovementSpeedFactor(1, 0.4)
+        ..addTooltipProperty("Movement Speed Reduced", _ -> 0.4.toPercent())
+        ..presetDurationNormal(_ -> 12)
         ..addTooltipProperty("Target limit", _ -> SLOW_TARGET_COUNT.toString())
         ..presetAreaofEffect(_ -> SLOW_AOE)
         ..presetManaCost(_ -> 90)
