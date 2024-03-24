@@ -217,7 +217,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 30, 4, 3, 1.6)
+        ..setAttack1Data(AttackType.Normal, 26, 4, 3, 1.6)
         ..setAttack1MaximumNumberofTargets(3)
         ..addTooltipProperty("Bounce Damage Reduction", "50%")
         ..setAttack1Range(300)
