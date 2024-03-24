@@ -202,7 +202,7 @@ public class BTUnitDefinition extends UnitDefinition
         addTooltipProperty("Damage", tooltip)
         // TODO: find a better formula, doesn't take the dice into acccount?
         let dps = (min + max / 2) / attackCooldown
-        addTooltipProperty("DPS", dps.toString(2))
+        addTooltipProperty("DPS", dps.toInt().toString())
 
     override function setAttack1MaximumNumberofTargets(int data)
         def.setInt("utc1", data)
