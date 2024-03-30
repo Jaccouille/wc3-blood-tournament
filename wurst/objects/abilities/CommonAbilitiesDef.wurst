@@ -79,14 +79,15 @@ function createLifeSteal(int abilId, real value) returns AbilityDefinitionVampir
     return abilDef
 
 function createHardenedSkin(int abilId, real value) returns AbilityDefinitionHardenedSkin
-    let tgen = new BTAbilityTooltipGenerator(
-        "Reduces all attacks damage.")
+    let tgen = new BTAbilityTooltipGenerator("Reduces all attacks damage by {0}."
+        .format(value.toInt().toString()))
     let abilDef = new AbilityDefinitionHardenedSkin(abilId)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..presetChancetoReduceDamage(_ -> 100)
-        ..tooltipStartListen()
         ..presetIgnoredDamage(_ -> value)
         ..presetMinimumDamage(_ -> 3)
+        ..tooltipStartListen()
         ..setName("Hardened Skin " + value.toString(0))
         ..tooltipStopListen()
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
