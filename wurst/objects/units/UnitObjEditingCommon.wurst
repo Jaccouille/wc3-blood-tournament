@@ -199,7 +199,7 @@ public class BTUnitDefinition extends UnitDefinition
         let tooltip = attackTypeStr.firstUpper() +
              " | " + min.toString() + " - " + max.toString() +
              " | " + attackCooldown.toString()
-        addTooltipProperty("Damage", tooltip)
+        addTooltipProperty("Damage", tooltip + " seconds")
         // TODO: find a better formula, doesn't take the dice into acccount?
         let dps = (min + max / 2) / attackCooldown
         addTooltipProperty("DPS", dps.toInt().toString())
