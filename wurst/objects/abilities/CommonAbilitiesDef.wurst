@@ -216,6 +216,21 @@ function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraW
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
     return abilDef
 
+function createEnduranceAura(int abilId, real value) returns AbilityDefinitionAuraEnduranceCreep
+    let tgen = new BTAbilityTooltipGenerator(
+        "Increases attack speed of nearby friendly units.")
+    let abilDef = new AbilityDefinitionAuraEnduranceCreep(abilId)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..presetMovementSpeedIncrease(_ -> 0)
+        ..presetAttackSpeedIncrease(_ -> value)
+        ..tooltipStartListen()
+        ..presetAreaofEffect(_ -> 1200)
+        ..setName("Attack Speed Bonus " + value.toPercent())
+        ..tooltipStopListen()
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
 
 function createSpikedCarapace(int abilId, real value) returns AbilityDefinitionCryptLordSpikedCarapace
 
@@ -289,6 +304,9 @@ function createSpikedCarapace(int abilId, real value) returns AbilityDefinitionC
 
 @compiletime function createDamageAuraAbilities()
     createDamageAura(ABIL_DAMAGE_AURA_25, 0.25)
+
+@compiletime function createEnduranceAuraAbilities()
+    createEnduranceAura(ABIL_ENDURANCE_AURA_25, 0.25)
 
 @compiletime function createRangedAuraAbilities()
     createRangedAura(ABIL_RANGED_AURA_15, 0.15)

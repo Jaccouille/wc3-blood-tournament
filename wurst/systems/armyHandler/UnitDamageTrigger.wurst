@@ -51,3 +51,8 @@ init
                         InstantDummyCaster.castTarget(
                             src.getOwner(), ABIL_CHARM, 1, OrderIds.charm, target)
                         pDatas.get(src.getOwner().getTruePlayerFromDummy()).spawnedUnits.add(target)
+
+            case UNIT_SPIRIT_WALKER
+                if src.hasAbility(ABIL_ANCESTRAL_SPIRIT)
+                    if GetRandomInt(0, 100) <= 10
+                        src.issueImmediateOrderById(OrderIds.ancestralspirit)

@@ -1,48 +1,49 @@
 # TODO
 - Item healing reduc attack index
 
-- start camera player
-- Add dispell to all race
-- tooltip * percent
-- Add loading screen
-- Item stock share mana ward
-- Test auto cast to mana target
-- Add red fog
-- Can't random with existing building
-- Display different error message for builder after round start
-- Reduce Heroes Scaling value
-- Periodcally check for stuck unit
-- Reduce vampire collision
-- Elimination phase portal
-- Wrong looser in elim
+- Unit replace army pts (check all)
+
+- Fire arrow
+- Raider upgrade
+- Witch doctor mana Ward
+- Rework berserk
+- Rework abom
+- TEst queue order
+
+- Convert orb of blood to mdx
+- bp item cost overhaul
+- Review displayed message text format/color
+- Review all tooltip, set a norm to respect
 
 ## Not important
-- Fix grom soundset
+- Make a save load army template in a textbook
+- Compute lvl similar to what power is in heroes of might and magic
+- Fix necro, null damage + skeleton pushes item to lich
+- allows multiple mode on 1 line
+- Random unit mode
+- compute item tooltitp charge "Add 1 xx"
 - suffix player name with bot when AI on
-- Speed boost after winning
 - Add some handicap/bonus point for weaker player
-- remove aura art
 - Siege tank for human
 - Improve builder AI
 - Custom ui to display unit stats
 - setup a pipeline to handle external 3d assets in mdl
-- Generate a custom UI tech tree
 - Handle team game
 - Add kill count to each unit
 - Add ui to credit modeller
 - Change statut UI (see ITT)
 - Test parseTag native
+- Custom UI damage table
 
 
 
 ## Faction
 ### Beast Kingdom
 #### Units
-- Gnoll, Pigs, Wolf, Furbolg, Sasquatch
-- Tauren -> Cairne
+- shitty pigs, minotaur, spirit walker,
 - Lizard -> Thunder/Fire Salamander
 - Centaur -> Centar Axe thrower
-- Hydra
 
 - Chen
 - Beastmaster
+- BEAST KING KING KONG JUMP AND BOOM BLOOD SPLASH

@@ -259,6 +259,12 @@ public class BTUnitDefinition extends UnitDefinition
     function setBuildingScalingValue(real data)
         buildingDef.setScalingValue(data)
 
+    function setBuildinTinting(int r, int g, int b)
+        buildingDef.setTintingColorRed(r)
+        buildingDef.setTintingColorGreen(g)
+        buildingDef.setTintingColorBlue(b)
+
+
     function setBuildingGoldCost(int data)
         buildingDef.setGoldCost(data)
 

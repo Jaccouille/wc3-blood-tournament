@@ -1,0 +1,610 @@
+package BeastAbilitiesDef
+
+// Standard libs imports:
+import Assets
+import BuffObjEditing
+import ClosureEvents
+import ClosureForGroups
+import DamageEvent
+import HashMap
+import InstantDummyCaster
+import DummyCaster
+import OrderIds
+
+// Local imports:
+import AbilityObjEditingCommons
+import ArmySpawner
+import BTAbilities
+import BTAbilityTooltipGenerator
+import ColorUtils
+import ItemObjEditingCommon
+import LocalObjectIDs
+import TooltipsUtils
+import UnitObjEditingCommon
+
+constant THUNDER_LIZARD_CAST_CHANCE = 20
+
+@compiletime function createBeastAbilities()
+    let taurenCount = BTBuildingData.getUnitCount(BUILDING_TAUREN)
+    var itm = createBasicItem(ITEM_PULVERIZE)
+            ..setItemCost(0, 500, taurenCount, 1, 1)
+            ..setNameEnhance("Z", "Add Pulverize")
+            ..setInterfaceIcon(Icons.bTNSmash)
+
+    var tgen = new BTAbilityTooltipGenerator(
+        "Gives a chance that an attack will deal pure damage to nearby units.")
+    new AbilityDefinitionPulverizecreep(ABIL_PULVERIZE)
+        ..setCheckDependencies(false)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetChancetoStomp(_ -> 30)
+        ..presetDamageDealt(_ -> 60)
+        ..presetFullDamageRadius(_ -> 150)
+        ..presetHalfDamageRadius(_ -> 250)
+        ..setNameEnhance("Z", "Pulverize")
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_PULVERIZE, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator(
+        "A wave of force that ripples out from the unit, causing damage to land units in a line.")
+    new AbilityDefinitionCrushingWave(ABIL_SHOCKWAVE)
+        ..setMissileArt(Abilities.shockwaveMissile)
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDamage(_ -> 90)
+        ..presetDistance(_ -> 900)
+        ..presetMaxDamage(_ -> 1500)
+        ..setNameEnhance("Z", "Shock Wave")
+        ..tooltipStopListen(false)
+        ..presetManaCost(_ -> 125)
+
+    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_SHOCKWAVE)
+        ..setAnimationNames("attack,slam")
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetManaCost(_ -> 125)
+        ..presetCooldown(_ -> 10)
+        ..presetCastRange(_ -> 600)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Shock Wave")
+        ..setIconNormal(Icons.bTNShockWave)
+        ..setIconTurnOff(Icons.bTNShockWave)
+
+    abilTooltipMap.put(ABIL_SHOCKWAVE, tgen.generateFullTooltip())
+
+
+    let quillBoarCount = BTBuildingData.getUnitCount(BUILDING_QUILLBOAR)
+    itm = createBasicItem(ITEM_QUILL_SPRAY)
+            ..setItemCost(0, 1000, quillBoarCount, 1, 1)
+            ..setNameEnhance("Z", "Add Quill Spray")
+            ..setInterfaceIcon(Icons.bTNQuillSpray)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Adds bonus damage to the Quill Beast's attack "
+        + "and causes its attacks to do area of effect damage.")
+    new AbilityDefinitionOrbofAnnihilation(ABIL_QUILL_SPRAY)
+        ..setCheckDependencies(false)
+        ..setIconNormal(Icons.bTNQuillSpray)
+        ..setIconTurnOff(Icons.bTNQuillSprayOff)
+        ..setMissileArc(0)
+        ..setMissileArt(Abilities.quillSprayMissile)
+        ..setMissileSpeed(1500)
+        ..setDummyAbility()
+        ..registerTooltipGenerator(tgen)
+        ..presetDamageBonus(_ -> 0)
+        ..tooltipStartListen()
+        ..presetFullDamageRadius(_ -> 35)
+        ..presetHalfDamageRadius(_ -> 75)
+        ..presetAreaofEffect(_ -> 120)
+        ..setNameEnhance("Z", "Quill Spray")
+        ..tooltipStopListen(true)
+        ..presetCastRange(_ -> 600)
+        ..presetManaCost(_ -> 0)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_QUILL_SPRAY, tgen.generateFullTooltip())
+
+
+    let spiritWalkerCount = BTBuildingData.getUnitCount(BUILDING_SPIRIT_WALKER)
+
+    itm = createBasicItem(ITEM_ANCESTRAL_SPIRIT)
+        ..setItemCost(0, 100, 1, spiritWalkerCount, spiritWalkerCount)
+        ..setNameEnhance("Z", "Replace 1 dispell with Ancestral Spirit")
+        ..setInterfaceIcon(Icons.bTNAncestralSpirit)
+
+    tgen = new BTAbilityTooltipGenerator(
+         "Raises a fallen Tauren from the dead.")
+    new AbilityDefinitionAncestralSpirit(ABIL_ANCESTRAL_SPIRIT)
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..registerTooltipGenerator(tgen)
+        ..presetManaCost(_ -> 75)
+        ..presetLifeRestoredFactor(_ -> 1)
+        ..presetManaRestoredFactor(_ -> 1)
+        ..presetAreaofEffect(_ -> 600)
+        ..tooltipStartListen()
+        ..setNameEnhance("Z", "Ancestral Spirit")
+        ..tooltipStopListen(false)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_ANCESTRAL_SPIRIT, tgen.generateFullTooltip())
+
+    itm = createBasicItem(ITEM_SPIRIT_LINK)
+            ..setItemCost(0, 100, 1, spiritWalkerCount, spiritWalkerCount)
+            ..setNameEnhance("Z", "Replace 1 Banish with Spirit Link")
+            ..setInterfaceIcon(Icons.bTNSpiritLink)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Links alied units together in a chain. All units with Spirit Link on them " +
+         " will live longer, by distributing the damage they take " +
+         "across other Spirit Linked units.")
+
+    new AbilityDefinitionSpiritLink(ABIL_SPIRIT_LINK)
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..registerTooltipGenerator(tgen)
+        ..presetManaCost(_ -> 75)
+        ..tooltipStartListen()
+        ..presetMaximumNumberofTargets(_ -> 4)
+        ..presetDistributedDamageFactor(_ -> 0.5)
+        ..addTooltipProperty("Damage Distributed", _ -> "50%")
+        ..presetAreaofEffect(_ -> 600)
+        ..presetDurationNormal(_ -> 60)
+        ..setNameEnhance("Z", "Spirit Link")
+        ..tooltipStopListen(false)
+
+    createAutoCastedAlliedAbility(ABIL_AUTOCAST_SPIRIT_LINK)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetManaCost(_ -> 75)
+        ..presetCooldown(_ -> 6)
+        ..presetCastRange(_ -> 750)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Spirit Link")
+        ..setIconNormal(Icons.bTNSpiritLink)
+        ..setIconTurnOff(Icons.bTNSpiritLink)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_SPIRIT_LINK, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Turns a unit ethereal and slows its movement speed. " +
+        "Ethereal creatures cannot attack, but they can cast spells and certain " +
+        "spells cast upon them will have a greater effect"
+         )
+
+    new AbilityDefinitionBloodMageBanish(ABIL_BANISH)
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..registerTooltipGenerator(tgen)
+        ..presetManaCost(_ -> 75)
+        ..tooltipStartListen()
+        ..setMovementSpeedReduction(1, 0.5)
+        ..addTooltipProperty("Movement Speed Reduction", _ -> "50%")
+        ..presetDurationNormal(_ -> 8)
+        ..setNameEnhance("Z", "Banish")
+        ..tooltipStopListen(false)
+
+    createAutoCastedEnemyAbility(ABIL_AUTOCAST_BANISH)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetManaCost(_ -> 75)
+        ..presetCooldown(_ -> 4)
+        ..presetCastRange(_ -> 750)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Banish")
+        ..setIconNormal(Icons.bTNBanish)
+        ..setIconTurnOff(Icons.bTNBanish)
+
+    abilTooltipMap.put(ABIL_BANISH, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Sprays waves of healing mist; each wave heals all friendly units in an area."
+    )
+
+    new AbilityDefinitionAlchemistHealingSpray(ABIL_HEALING_SPRAY)
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..registerTooltipGenerator(tgen)
+        ..setMissileCount(1, 6)
+        ..setMaxDamage(1, 6000)
+        ..tooltipStartListen()
+        ..setDamageAmount(1, 70)
+        ..addTooltipProperty("Healing Amount", _ -> "70")
+        ..presetWaveCount(_ -> 4)
+        ..presetAreaofEffect(_ -> 250)
+        ..presetManaCost(_ -> 75)
+        ..setNameEnhance("Z", "Healing Spray")
+        ..tooltipStopListen(false)
+        ..presetTargetsAllowed(_ -> commaList(TargetsAllowed.friend))
+
+    createAutoCastedAllieHealdAbility(ABIL_AUTOCAST_HEALING_SPRAY)
+        ..registerTooltipGenerator(tgen)
+        ..presetManaCost(_ -> 75)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 8)
+        ..presetCastRange(_ -> 750)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Healing Spray")
+        ..setIconNormal(Icons.bTNHealingSpray)
+        ..setIconTurnOff(Icons.bTNHealingSpray)
+
+    abilTooltipMap.put(ABIL_HEALING_SPRAY, tgen.generateFullTooltip())
+
+    itm = createBasicItem(ITEM_PUTRID_SPRAY)
+            ..setItemCost(0, 500, 1, 1, 1)
+            ..setNameEnhance("Z", "Replace Healing Spray with Putrid Spray")
+            ..setInterfaceIcon(Icons.bTNPlagueCloud)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Sprays waves of damaging mist; each wave damages all enemy units in an area."
+    )
+
+    new AbilityDefinitionAlchemistHealingSpray(ABIL_PUTRID_SPRAY)
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..setMissileArt(Abilities.sludgeMissile)
+        ..registerTooltipGenerator(tgen)
+        ..setMissileCount(1, 4)
+        ..tooltipStartListen()
+        ..setDamageAmount(1, -30)
+        ..addTooltipProperty("Damage Amount", _ -> "30")
+        ..presetWaveCount(_ -> 4)
+        ..presetAreaofEffect(_ -> 200)
+        ..presetManaCost(_ -> 75)
+        ..setNameEnhance("Z", "Putrid Spray")
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.enemies,
+            TargetsAllowed.vulnerable
+            ))
+        ..tooltipStopListen(false)
+        ..setIconNormal(Icons.bTNPlagueCloud)
+
+    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_PUTRID_SPRAY)
+        ..registerTooltipGenerator(tgen)
+        ..presetCooldown(_ -> 8)
+        ..presetManaCost(_ -> 75)
+        ..tooltipStartListen()
+        ..presetCastRange(_ -> 750)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Putrid Spray")
+        ..setIconNormal(Icons.bTNPlagueCloud)
+        ..setIconTurnOff(Icons.bTNPlagueCloud)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_PUTRID_SPRAY, tgen.generateFullTooltip())
+
+    itm = createBasicItem(ITEM_FERVOR_POTION)
+            ..setItemCost(0, 200, 1, 1, 1)
+            ..setNameEnhance("Z", "Replace Mana Potion with Fervor Potion")
+            ..setInterfaceIcon(Icons.bTNReincarnation)
+
+    tgen = new BTAbilityTooltipGenerator(
+         "Toss an unstable concoction at friendly units, making them attack and" +
+         " move faster but with less armor."
+         )
+
+    let BUFF_FERVOR_POTION = compiletime(BUFF_ID_GEN.next())
+    new BuffDefinition(BUFF_FERVOR_POTION, BuffIds.innerFire)
+        ..setIcon(Icons.bTNReincarnation)
+        ..setArtTarget(Abilities.bloodLustSpecial)
+        ..setTargetAttachmentPoint0("hand,left")
+        ..setTargetAttachmentPoint1("hand,right")
+        ..setTargetAttachments(1, 2)
+        ..setName("Fervor Potion Buff")
+        ..setTooltipNormal(1, "Fervor Potion")
+        ..setTooltipNormalExtended(1, "This unit has been affected by a Fervor Potion; "+
+        "it attacks faster but has less armor.")
+
+    new AbilityDefinitionAlchemistAcidBomb(ABIL_FERVOR_POTION)
+        ..setAnimationNames("Attack,two,Spell")
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..registerTooltipGenerator(tgen)
+        ..setBuffs(1, BUFF_FERVOR_POTION.toRawCode())
+        ..tooltipStartListen()
+        ..presetArmorPenalty(_ -> 5)
+        ..setAttackSpeedReduction(1, 0.5)
+        ..addTooltipProperty("Damage Amount", _ -> "30")
+        ..setMovementSpeedReduction(1, 0.5)
+        ..setPrimaryDamage(1, 10)
+        ..setSecondaryDamage(1, 0)
+        ..presetDurationNormal(_ -> 5)
+        ..presetAreaofEffect(_ -> 200)
+        ..presetManaCost(_ -> 100)
+        ..setNameEnhance("Z", "Fervor Potion")
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.friend
+            ))
+        ..tooltipStopListen(false)
+        ..setIconNormal(Icons.bTNReincarnation)
+
+    createAutoCastedAlliedAbility(ABIL_AUTOCAST_FERVOR_POTION)
+        ..setAnimationNames("Attack,two,Spell")
+        ..registerTooltipGenerator(tgen)
+        ..presetCooldown(_ -> 10)
+        ..presetManaCost(_ -> 100)
+        ..tooltipStartListen()
+        ..presetCastRange(_ -> 750)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Fervor Potion")
+        ..setIconNormal(Icons.bTNReincarnation)
+        ..setIconTurnOff(Icons.bTNReincarnation)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_FERVOR_POTION, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Toss a mana potion at friendly units, regenerating their mana over " +
+        " the duration.")
+
+    new AbilityDefinitionScrollofLifeRegen(ABIL_MANA_REGENERATION)
+        ..setDummyAbility()
+        ..setNameEnhance("Z", "Mana Potion regenration")
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..setAllowWhenFull(1, AllowWhenFull.ALWAYS)
+        ..setLifeRegenerated(1, 0)
+        ..presetManaRegenerated(_ -> 125)
+        ..presetDurationNormal(_ -> 10)
+        ..presetAreaofEffect(_ -> 400)
+        ..tooltipStopListen(false)
+        ..setItemAbility(false)
+
+    new AbilityDefinitionAlchemistAcidBomb(ABIL_MANA_POTION)
+        ..setAnimationNames("Attack,two,Spell")
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..presetArmorPenalty(_ -> 0)
+        ..setPrimaryDamage(1, 0)
+        ..setSecondaryDamage(1, 0)
+        ..presetDurationNormal(_ -> 0.01)
+        ..presetAreaofEffect(_ -> 1)
+        ..presetManaCost(_ -> 0)
+        ..setNameEnhance("Z", "Mana Potion")
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.friend
+            ))
+        ..setIconNormal(Icons.bTNPotionOfClarity)
+
+    createAutoCastAlliedManaTarget(ABIL_AUTOCAST_MANA_POTION)
+        ..setAnimationNames("Attack,two,Spell")
+        ..registerTooltipGenerator(tgen)
+        ..presetManaCost(_ -> 0)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 16)
+        ..presetCastRange(_ -> 750)
+        ..setNameEnhance("Z", "Mana Potion")
+        ..tooltipStopListen(true)
+        ..setIconNormal(Icons.bTNPotionOfClarity)
+        ..setIconTurnOff(Icons.bTNPotionOfClarity)
+
+    abilTooltipMap.put(ABIL_MANA_POTION, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Has {0}% chance to greatly slow enemies in a small radius.".format(
+            THUNDER_LIZARD_CAST_CHANCE.toString()
+        )
+        )
+    let BUFF_ID = compiletime(BUFF_ID_GEN.next())
+    new BuffDefinition(BUFF_ID, BuffIds.purge)
+        ..setTooltipNormal(1, "Paralyzed")
+        ..setTooltipNormalExtended(1, "This unit is paralyzed; its movement and attack have been impaired.")
+
+    new AbilityDefinitionAlchemistAcidBomb(ABIL_SHOCK_BREATH)
+        ..registerTooltipGenerator(tgen)
+        ..setCheckDependencies(false)
+        ..setMissileArt("")
+        ..setBuffs(1, BUFF_ID.toRawCode())
+        ..setDummyAbility()
+        ..presetArmorPenalty(_ -> 0)
+        ..tooltipStartListen()
+        ..setPrimaryDamage(1, 0)
+        ..setSecondaryDamage(1, 0)
+        ..setMovementSpeedReduction(1, -0.9)
+        ..addTooltipProperty("Movement Speed Reduction", _ -> "90%")
+        ..setAttackSpeedReduction(1, -0.9)
+        ..addTooltipProperty("Attack Speed Reduction", _ -> "90%")
+        ..presetDurationNormal(_ -> 2)
+        ..presetAreaofEffect(_ -> 150)
+        ..setNameEnhance("Z", "Paralyzing Breath")
+        ..tooltipStopListen(true)
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.enemies
+            ))
+        ..setIconNormal(Icons.bTNPurge)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_SHOCK_BREATH, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Reduces enemies armor upon basic attack hit. "
+        )
+    var abilId = ABIL_ID_GEN.next()
+    new AbilityDefinitionOrbofLightning(ABIL_CORROSIVE_BREATH_ORB)
+        ..setMissileArt(Abilities.greenDragonMissile)
+        ..setArtTarget(Abilities.bottleImpact)
+        ..setTargetAttachmentPoint1("head")
+        ..setEnabledAttackIndex(1, 0)
+        ..presetChanceToHitUnits(_ -> 100)
+        ..presetChanceToHitSummons(_ -> 100)
+        ..setEffectAbility(1, abilId.toRawCode())
+        ..setDamageBonus(1, 0)
+
+    new AbilityDefinitionAlchemistAcidBomb(abilId)
+        ..registerTooltipGenerator(tgen)
+        ..setCheckDependencies(false)
+        ..setMissileArt("")
+        ..setMissileSpeed(5000)
+        ..setDummyAbility()
+        ..tooltipStartListen()
+        ..presetArmorPenalty(_ -> 3)
+        ..setPrimaryDamage(1, 20)
+        ..setSecondaryDamage(1, 15)
+        ..presetDurationNormal(_ -> 3)
+        ..presetAreaofEffect(_ -> 200)
+        ..setNameEnhance("Z", "Corrosive Breath")
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.enemies
+            ))
+        ..tooltipStopListen(true)
+        ..setIconNormal(Icons.bTNCorrosiveBreath)
+
+    abilTooltipMap.put(ABIL_CORROSIVE_BREATH_ORB, tgen.generateFullTooltip())
+
+    let lizardCount = BTBuildingData.getUnitCount(BUILDING_THUNDER_LIZARD)
+    itm = createBasicItem(ITEM_STORM_LIZARD)
+        ..setItemCost(0, 100, 1, lizardCount, lizardCount)
+        ..setNameEnhance("X", "Add {0}% chance to cast Chain Lightning on attack"
+            .format(THUNDER_LIZARD_CAST_CHANCE.toString()))
+        ..setInterfaceIcon(Icons.bTNChainLightning)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Has {0}% chance to cast Chain Lightning on attack.".format(
+            THUNDER_LIZARD_CAST_CHANCE.toString())
+        )
+    new AbilityDefinitionChainLightningcreep(ABIL_STORM_BREATH)
+        ..setCheckDependencies(false)
+        ..presetDamageReductionperTarget(_ -> 0)
+        ..setDummyAbility()
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDamageperTarget(_ -> 75)
+        ..presetNumberofTargetsHit(_ -> 4)
+        ..setNameEnhance("Z", "Storm Breath")
+        ..tooltipStopListen(true)
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.enemies
+            ))
+        ..setIconNormal(Icons.bTNChainLightning)
+
+    createVisualAbility(ABIL_STORM_BREATH_VISUAL)
+        ..setArtTarget(Abilities.purgeBuffTarget)
+        ..setTargetAttachmentPoint1("head")
+        ..setTargetAttachments(1)
+
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_STORM_BREATH, tgen.generateFullTooltip())
+
+
+    itm = createBasicItem(ITEM_DEFENSE_ROAR)
+            ..setItemCost(0, 500, 1, 1, 1)
+            ..setNameEnhance("X", "Add Defense Roar")
+            ..setInterfaceIcon(Icons.bTNArcaniteArmor)
+
+    tgen = new BTAbilityTooltipGenerator(
+         "Gives bonus armor to nearby friendly units."
+         )
+
+    let BUFF_DEFENSE_ROAR = compiletime(BUFF_ID_GEN.next())
+    new BuffDefinition(BUFF_DEFENSE_ROAR, BuffIds.innerFire)
+        ..setIcon(Icons.bTNArcaniteArmor)
+        ..setArtTarget(Abilities.aIdaTarget)
+        ..setName("Defense Roar Buff")
+        ..setTooltipNormal(1, "Defense Roar")
+        ..setTooltipNormalExtended(1, "This unit has Defense Roar; " +
+        "its armor has been increased.")
+
+    new AbilityDefinitionRoar(ABIL_DEFENSE_REXXAR_ROAR)
+        ..setAnimationNames("spell,slam")
+        ..setBuffs(1, BUFF_DEFENSE_ROAR.toRawCode())
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..presetCooldown(_ -> 0)
+        ..presetDamageIncrease(_ -> 0.0)
+        ..tooltipStartListen()
+        ..presetDefenseIncrease(_ -> 5)
+        ..presetDurationNormal(_ -> 7)
+        ..presetAreaofEffect(_ -> 900)
+        ..presetManaCost(_ -> 125)
+        ..addTooltipProperty("Cooldown", _ -> "15")
+        ..setNameEnhance("Z", "Defense Roar")
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_DEFENSE_REXXAR_ROAR, tgen.generateFullTooltip())
+
+
+    itm = createBasicItem(ITEM_BATTLE_ROAR)
+            ..setItemCost(0, 500, 1, 1, 1)
+            ..setNameEnhance("Z", "Add Battle Roar")
+            ..setInterfaceIcon(Icons.bTNBattleRoar)
+
+    tgen = new BTAbilityTooltipGenerator(
+         "Gives bonus damage to nearby friendly units."
+         )
+
+    new AbilityDefinitionRoar(ABIL_BATTLE_REXXAR_ROAR)
+        ..setAnimationNames("spell,slam")
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..presetCooldown(_ -> 0)
+        ..presetDamageIncrease(_ -> 0.30)
+        ..tooltipStartListen()
+        ..addTooltipProperty("Damage Increase", _ -> "30%")
+        ..presetDurationNormal(_ -> 7)
+        ..presetAreaofEffect(_ -> 900)
+        ..presetManaCost(_ -> 125)
+        ..setNameEnhance("Z", "Battle Roar")
+        ..tooltipStopListen(true)
+
+    createAutoCastedEnemyAbility(ABIL_AUTOCAST_REXXAR_ROAR)
+        ..setAnimationNames("spell,slam")
+        ..registerTooltipGenerator(tgen)
+        ..presetCastRange(_ -> 750)
+        ..tooltipStartListen()
+        ..presetManaCost(_ -> 125)
+        ..presetCooldown(_ -> 15)
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_BATTLE_REXXAR_ROAR, tgen.generateFullTooltip())
+
+
+init
+    DamageEvent.addListener() ->
+        let target = DamageEvent.getTarget()
+        let src = DamageEvent.getSource()
+        if src.getTypeId() == UNIT_ALCHEMIST
+            if target.isAllyOf(src)
+                InstantDummyCaster.castImmediate(src.getOwner(),
+                ABIL_MANA_REGENERATION, 1, OrderIds.scrollOfRegeneration, target.getPos())
+            else if src.getAbilityCooldownRemaining(ABIL_AUTOCAST_HEALING_SPRAY) <= 0
+                and src.getAbilityManaCost(ABIL_AUTOCAST_HEALING_SPRAY, 0) <= src.getMana()
+                src.issueImmediateOrderById(OrderIds.healon)
+        if src.hasAbility(ABIL_SHOCK_BREATH)
+            if GetRandomInt(0, 100) <= THUNDER_LIZARD_CAST_CHANCE
+                InstantDummyCaster.castTarget(src.getOwner(),
+                ABIL_SHOCK_BREATH, 1, OrderIds.acidbomb, target)
+
+                if src.hasAbility(ABIL_STORM_BREATH)
+                    src.issueTargetOrderById(OrderIds.chainlightning, target)
+
+        if src.getTypeId() == UNIT_REXXAR
+            if src.hasAbility(ABIL_BATTLE_REXXAR_ROAR) and src.getAbilityCooldown(
+                ABIL_BATTLE_REXXAR_ROAR, 0) >= 0
+                src.issueImmediateOrderById(OrderIds.roar)
+            if src.hasAbility(ABIL_DEFENSE_REXXAR_ROAR) and src.getAbilityCooldown(
+                ABIL_DEFENSE_REXXAR_ROAR, 0) >= 0
+                src.issueImmediateOrderById(OrderIds.roar)
+
+    EventListener.add(EVENT_PLAYER_UNIT_SPELL_ENDCAST) ->
+        let u = EventData.getSpellAbilityUnit()
+        if u.getTypeId() == UNIT_ALCHEMIST
+            let abilId = EventData.getSpellAbilityId()
+            if abilId == ABIL_HEALING_SPRAY or abilId == ABIL_PUTRID_SPRAY
+                u.issueImmediateOrderById(OrderIds.rechargeon)
+                u.issueImmediateOrderById(OrderIds.innerfireon)
+            else
+                u.issueImmediateOrderById(OrderIds.healon)
+                u.issueImmediateOrderById(OrderIds.parasiteon)

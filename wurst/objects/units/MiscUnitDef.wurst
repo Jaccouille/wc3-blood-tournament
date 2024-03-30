@@ -136,7 +136,8 @@ function createSpeedBanner(int newId) returns BuildingDefinition
             UNIT_ORC_BUILDER,
             UNIT_UNDEAD_BUILDER,
             UNIT_NIGHT_ELF_BUILDER,
-            UNIT_NAGA_BUILDER
+            UNIT_NAGA_BUILDER,
+            UNIT_BEAST_BUILDER
         ))
         ..setGroundTexture("")
         ..setUnitClassification(commaList("ancient"))

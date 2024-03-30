@@ -100,6 +100,7 @@ public function createAutoCastedAllieHealdAbility(int abilId) returns AbilityDef
         ..presetManaCost(_ -> 0)
         ..presetHitPointsGained(_ -> 0)
         ..presetDurationNormal(_ -> 0.01)
+        ..presetTargetsAllowed(_ -> commaList(TargetsAllowed.friend))
         ..presetBuffs(_ -> "")
         ..setArtTarget("")
         ..setLevels(1)
@@ -115,6 +116,10 @@ public function createAutoCastAlliedManaTarget(int abilId) returns AbilityDefini
         ..presetDurationNormal(_ -> 0.01)
         ..presetBuffs(_ -> "")
         ..setArtTarget("")
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.friend,
+            TargetsAllowed.self
+        ))
         ..setLevels(1)
 
 public function createAutoCastDispell(int abilId) returns AbilityDefinitionAbolishMagicCreep

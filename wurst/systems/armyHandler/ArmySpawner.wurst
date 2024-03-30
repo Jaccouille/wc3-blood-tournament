@@ -152,13 +152,13 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_DAEMON_HUNTER         , 0   , 3000, genList(UNIT_DAEMON_HUNTER         , 3  ))
     new BTBuildingData(BUILDING_PRIESTESS_OF_THE_MOON , 0   , 3000, genList(UNIT_PRIESTESS_OF_THE_MOON , 3  ))
 
-    new BTBuildingData(BUILDING_GNOLL         , 0, 0, asList (UNIT_GNOLL          , UNIT_RAZORMAN, UNIT_WOLF, UNIT_FURBOLG, UNIT_SASQUATCH                                ))
-    new BTBuildingData(BUILDING_GNOLL_UPGRADE , 0, 0, asList (UNIT_GNOLL_UPGRADE  , UNIT_RAZORMAN_UPGRADE, UNIT_WOLF_UPGRADE, UNIT_FURBOLG_UPGRADE, UNIT_SASQUATCH_UPGRADE))
-    new BTBuildingData(BUILDING_TAUREN        , 0, 0, genList(UNIT_TAUREN         , 5                                                                                     ))
-    new BTBuildingData(BUILDING_THUNDER_LIZARD, 0, 0, genList(UNIT_THUNDER_LIZARD , 4                                                                                     ))
-    new BTBuildingData(BUILDING_CENTAUR       , 0, 0, genList(UNIT_CENTAUR        , 10                                                                                    ))
-    new BTBuildingData(BUILDING_REXXAR        , 0, 0, genList(UNIT_REXXAR         , 1                                                                                     ))
-    new BTBuildingData(BUILDING_CHEN          , 0, 0, genList(UNIT_CHEN           , 1                                                                                     ))
+    new BTBuildingData(BUILDING_TAUREN        , 250, 0, genList(UNIT_TAUREN         , 5                                                                                     ))
+    new BTBuildingData(BUILDING_QUILLBOAR        , 100, 0, genList(UNIT_QUILLBOAR         , 10                                                                                     ))
+    new BTBuildingData(BUILDING_QUILLBOAR, BUILDING_DIRE_QUILLBOAR        , 0, 1500, genList(UNIT_DIRE_QUILLBOAR         , 10                                                                                     ))
+    new BTBuildingData(BUILDING_SPIRIT_WALKER        , 200, 0, genList(UNIT_SPIRIT_WALKER         , 4                                                                                     ))
+    new BTBuildingData(BUILDING_THUNDER_LIZARD, 300, 0, genList(UNIT_THUNDER_LIZARD , 3                                                                                     ))
+    new BTBuildingData(BUILDING_REXXAR        , 0, 1000, genList(UNIT_REXXAR         , 1                                                                                     ))
+    new BTBuildingData(BUILDING_ALCHEMIST          , 150, 0, genList(UNIT_ALCHEMIST           , 1                                                                                     ))
 
 
     new BTBuildingData(BUILDING_MURLOC          ,                           100 , 0    , genList(UNIT_MURLOC          , 10 ))

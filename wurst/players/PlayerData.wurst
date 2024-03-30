@@ -39,10 +39,10 @@ public class PlayerData
         // SetPlayerAllianceStateBJ(_p, dummyPlayer, bj_ALLIANCE_ALLIED_VISION)
         SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_PASSIVE, true)
         SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_SHARED_VISION, true)
-        // SetPlayerAlliance(dummyPlayer, _p, ALLIANCE_SHARED_ADVANCED_CONTROL, true)
-        // SetPlayerAlliance(dummyPlayer, _p, ALLIANCE_SHARED_CONTROL, true)
-        // SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_SHARED_ADVANCED_CONTROL, true)
-        // SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_SHARED_CONTROL, true)
+        SetPlayerAlliance(dummyPlayer, _p, ALLIANCE_SHARED_ADVANCED_CONTROL, true)
+        SetPlayerAlliance(dummyPlayer, _p, ALLIANCE_SHARED_CONTROL, true)
+        SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_SHARED_ADVANCED_CONTROL, true)
+        SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_SHARED_CONTROL, true)
         // For army previewer
         SetPlayerAlliance(dummyPlayer, _p, ALLIANCE_SHARED_VISION_FORCED, true)
         dummyPlayers.forEach() (player t) ->

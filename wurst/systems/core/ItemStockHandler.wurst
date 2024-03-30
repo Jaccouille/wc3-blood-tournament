@@ -143,6 +143,16 @@ function initItemStockData()
     sharedStocksMap.put(BUILDING_GIANT_TURTLE, asList(ITEM_FIRE_TURTLE, ITEM_FROST_TURTLE))
     sharedStocksMap.put(BUILDING_SIREN, asList(ITEM_RAY_OF_DISRUPTION, ITEM_CHARM))
 
+    // ================ BEAST =============
+    unitItemSold.put(BUILDING_TAUREN , asList(ITEM_PULVERIZE, ITEM_CHIEFTAIN))
+    unitItemSold.put(BUILDING_THUNDER_LIZARD , asList(ITEM_CORROSIVE_LIZARD, ITEM_STORM_LIZARD))
+    unitItemSold.put(BUILDING_SPIRIT_WALKER , asList(ITEM_SPIRIT_LINK))
+    unitItemSold.put(BUILDING_ALCHEMIST , asList(ITEM_PUTRID_SPRAY, ITEM_FERVOR_POTION))
+    unitItemSold.put(BUILDING_REXXAR , asList(ITEM_DEFENSE_ROAR, ITEM_BATTLE_ROAR))
+    sharedStocksMap.put(BUILDING_SPIRIT_WALKER, asList(ITEM_SPIRIT_LINK))
+    sharedStocksMap.put(BUILDING_THUNDER_LIZARD, asList(ITEM_CORROSIVE_LIZARD, ITEM_STORM_LIZARD))
+    sharedStocksMap.put(BUILDING_REXXAR, asList(ITEM_DEFENSE_ROAR, ITEM_BATTLE_ROAR))
+
 
 function canBuy(int itemId, player _p) returns boolean
     let goldCost = itemGoldCost.loadInt(itemId, itemId)

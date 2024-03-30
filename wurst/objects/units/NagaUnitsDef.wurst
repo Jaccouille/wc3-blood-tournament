@@ -9,7 +9,6 @@ import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
 import BTAbilities
-import NagaAbilitiesDef
 import ItemObjEditingCommon
 import ArmySpawner
 
