@@ -388,6 +388,7 @@ import UnitTooltipGenerator
             ABIL_CLEAVE_20,
             ABIL_AUTOCAST_TAUNT
         ))
+        ..setAnimationCastBackswing(1.5)
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_TAUNT))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
