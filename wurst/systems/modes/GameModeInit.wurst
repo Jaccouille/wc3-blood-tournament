@@ -112,7 +112,7 @@ init
             mode.message("Damage multiplier set to ".color(LABEL_COLOR) + "x{0}".color(VALUE_COLOR).format(damageMultiplier.toString(2)))
             gameConfig.setDamageMultiplier(damageMultiplier)
 
-    new GameMode("health-multiplier", "hm", "Set blood points health multiplier, default : " +
+    new GameMode("health-multiplier", "hm", "Set unit health multiplier, default : " +
         gameConfig.getHealthMultiplier().toString(1) + ", max : 2.0, min : 0.5") (mode, args) ->
         if (args.size() > 1)
             let healthMultiplier = min(max(args.get(1).toReal(), 0.5), 2.0)

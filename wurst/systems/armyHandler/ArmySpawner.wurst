@@ -224,7 +224,7 @@ public class ArmySpawner
         count += 1
         // Log.debug("Unit spawned " +  count.toString())
         if gameConfig.getHealthMultiplier() != 1.
-            newUnit.setHP(newUnit.getHP() * gameConfig.getHealthMultiplier())
+            newUnit.setMaxHP((newUnit.getMaxHP() * gameConfig.getHealthMultiplier()).toInt(), true)
         if gameConfig.getDamageMultiplier() != 1.
             newUnit.setBaseDamage(
                 (newUnit.getBaseDamage(0) * gameConfig.getDamageMultiplier()).toInt() , 0)
