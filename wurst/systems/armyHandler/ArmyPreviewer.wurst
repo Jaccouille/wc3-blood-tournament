@@ -21,6 +21,7 @@ import PlayerData
 import PlayerExtension
 import SpawnZone
 import UnitExtensions
+import PingMinimap
 
 // Distance between units positioned in formation mode
 @configurable constant FORMATION_WIDTH = 120.
@@ -137,6 +138,7 @@ public class ArmyPreviewer
     function initSpawner()
         squadIds.clear()
         this.pos = spawnZone.initialPos
+        pingMinimapForPlayer(this._p, this.pos, 3, color(0, 255, 0), PingMinimapStyle.ATTACK)
         spawnCount = 0
         buildingIdx = 0
         squadIdx = 0
