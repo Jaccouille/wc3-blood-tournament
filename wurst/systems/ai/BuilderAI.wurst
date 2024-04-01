@@ -26,13 +26,10 @@ let botEnabled = compiletime(createDummyBuffObject("Bot enabled", "This player i
 let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
     ..put(UNIT_HUMAN_BUILDER, asList(
         BUILDING_FOOTMAN,
-        BUILDING_ELVEN_ARCHER,
         BUILDING_KNIGHT,
         BUILDING_PRIEST,
         BUILDING_PALADIN,
         BUILDING_SORCERESS,
-        BUILDING_SWORD_MASTER,
-        BUILDING_ELVEN_MAGE,
         BUILDING_RIFLEMAN
     ))
     ..put(UNIT_ORC_BUILDER, asList(
@@ -42,12 +39,9 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
         BUILDING_WITCH_DOCTOR,
         BUILDING_SHAMAN,
         BUILDING_OGRE,
-        BUILDING_WARMONGER,
-        BUILDING_FARSEER,
-        BUILDING_BLADE_MASTER,
-        BUILDING_SHADOW_HUNTER,
-        BUILDING_DEMOLISHER
+        BUILDING_WARMONGER
     ))
+
     ..put(UNIT_UNDEAD_BUILDER, asList(
         BUILDING_ZOMBIE,
         BUILDING_SKELETAL_ARCHER,
@@ -55,9 +49,7 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
         BUILDING_DEATH_KNIGHT,
         BUILDING_BANSHEE,
         BUILDING_ABOMINATION,
-        BUILDING_VAMPIRE,
-        BUILDING_CRYPT_LORD,
-        BUILDING_ARCHIMONDE
+        BUILDING_VAMPIRE
     ))
     ..put(UNIT_NIGHT_ELF_BUILDER, asList(
         BUILDING_ARCHER,
@@ -65,12 +57,8 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
         BUILDING_DRYAD,
         BUILDING_MOUNTAIN_GIANT,
         BUILDING_SPECTRE,
-        BUILDING_AVATAR_OF_VENGEANCE,
         BUILDING_DRUID_TALON,
-        BUILDING_DRUID_CLAW,
-        BUILDING_DAEMON_HUNTER,
-        BUILDING_PRIESTESS_OF_THE_MOON,
-        BUILDING_BALLISTA
+        BUILDING_DRUID_CLAW
     ))
 
 public let UPGRADE_OPTIONS = new HashMap<int, LinkedList<int>>
@@ -78,7 +66,6 @@ public let UPGRADE_OPTIONS = new HashMap<int, LinkedList<int>>
     ..put(BUILDING_GRUNT, asList(BUILDING_BERSERKER))
     ..put(BUILDING_HEADHUNTER, asList(BUILDING_TRAPPER))
     ..put(BUILDING_ZOMBIE, asList(BUILDING_PLAGUE_BEARER))
-    ..put(BUILDING_CRYPT_FIEND, asList(BUILDING_NERUBIAN))
     ..put(BUILDING_ARCHER, asList(BUILDING_NE_RANGER))
 
 class BuilderAI

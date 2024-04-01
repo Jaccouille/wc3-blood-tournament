@@ -524,63 +524,6 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setGhostDeath()
 
 
-@compiletime function createSwordMaster()
-    let tooltip = new UnitTooltipGenerator("Sword Master Desc")
-
-    createSpawnedUnit(UNIT_SWORD_MASTER, UnitIds.arthaswithfrostmourne, BUILDING_SWORD_MASTER)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-
-        ..setAttack1Data(AttackType.Magic, 250, 5, 14, 0.8)
-
-        ..setArmorData(ArmorType.Large, 10)
-        ..setHitPointsMaximumBase(1800)
-
-        ..setSpeedBase(300)
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setPriority(2)
-        ..setSizeSmall()
-        ..setNameEnhance("Z", "SwordMaster")
-        ..setBuildingLumberCost(3000)
-        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-
-        ..setModelFileExt(Units.arthaswithSword)
-        ..setIconGameInterfaceExt(Icons.bTNArthas)
-        ..setUnitSoundSetExt(Soundsets.arthas)
-
-
-@compiletime function createElvenMage()
-    let tooltip = new UnitTooltipGenerator("Elven Mage Desc")
-
-    createSpawnedUnit(UNIT_ELVEN_MAGE, UnitIds.bloodmage, BUILDING_ELVEN_MAGE)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-
-        ..setAttack1Data(AttackType.Magic, 200, 5, 8, 1.5)
-        ..setAttack1Range(450)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Medium, 6)
-        ..setHitPointsMaximumBase(600)
-
-        ..setMana(1400)
-        ..setManaMaximum(1400)
-        ..setSpeedBase(280)
-
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setSizeSmall()
-        ..setNameEnhance("C", "Elven Mage")
-        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-
-        ..setModelFileExt(Units.kael)
-        ..setIconGameInterfaceExt(Icons.bTNHeroBloodElfPrince)
-        ..setUnitSoundSetExt(Soundsets.kael)
-
-
 @compiletime function createBuilder()
     createBuilder(UNIT_HUMAN_BUILDER, UnitIds.peasant)
         ..setNameEnhance("Q", "Human Builder")

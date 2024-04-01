@@ -177,100 +177,6 @@ import UnitTooltipGenerator
         ..setGhostDeath()
 
 
-@compiletime function createCryptFiend()
-    var tooltip = new UnitTooltipGenerator("Crypt Fiend Desc")
-    createSpawnedUnit(UNIT_CRYPT_FIEND, UnitIds.cryptfiend, BUILDING_CRYPT_FIEND)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Pierce, 18, 2, 2, 1.5)
-        ..setAttack1Range(400)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(200)
-
-        ..setSpeedBase(270)
-
-        ..setAttack1ProjectileSpeed(900)
-        ..setAttack1TargetsAllowed(commaList(
-            TargetsAllowed.ground,
-            TargetsAllowed.structure,
-            TargetsAllowed.debris,
-            TargetsAllowed.air,
-            TargetsAllowed.item_t,
-            TargetsAllowed.ward
-        ))
-        ..setSizeSmall()
-        ..setNameEnhance("Q", "Crypt Fiend")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_NERUBIAN))
-        ..setBuildingGoldCost(150)
-
-        ..setModelFileExt(Units.cryptFiend1)
-        ..setIconGameInterfaceExt(Icons.bTNCryptFiend)
-        ..setUnitSoundSetExt(Soundsets.cryptFiend)
-
-    tooltip = new UnitTooltipGenerator("Nerubian Queen Desc")
-    let itm = createBasicItem(ITEM_NERUBIAN_QUEEN)
-    createSpawnedUnit(UNIT_NERUBIAN_QUEEN, UnitIds.nerubianqueen)
-        ..setNormalAbilities(commaList(""))
-        ..registerItemDef(itm, ItemModifierType.Addition)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Pierce, 70, 8, 4, 1.5)
-        ..setAttack1Range(500)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Medium, 6)
-        ..setHitPointsMaximumBase(200)
-
-        ..setSpeedBase(270)
-
-        ..setAttack1ProjectileSpeed(900)
-        ..setSizeSmall()
-        ..setNameEnhance("X", "Nerubian Queen")
-        ..setItemCostUnit(0, 50, 1)
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-
-    tooltip = new UnitTooltipGenerator("Nerubian Desc")
-    createSpawnedUnit(UNIT_NERUBIAN, UnitIds.nerubianseer, BUILDING_NERUBIAN)
-        ..registerTooltipGenerator(tooltip)
-        ..setNormalAbilities("")
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Pierce, 37, 8, 2, 1.3)
-        ..setAttack1Range(400)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Large, 3)
-        ..setHitPointsMaximumBase(300)
-
-        ..setSpeedBase(270)
-
-        ..setAttack1ProjectileSpeed(600)
-        ..setAttack1TargetsAllowed(commaList(
-            TargetsAllowed.ground,
-            TargetsAllowed.structure,
-            TargetsAllowed.debris,
-            TargetsAllowed.air,
-            TargetsAllowed.item_t,
-            TargetsAllowed.ward
-        ))
-        ..setSizeSmall()
-        ..setNameEnhance("Z", "Nerubian")
-        ..setAttack1ProjectileArt(Abilities.chimaeraAcidMissile)
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingLumberCost(800)
-
-        ..setModelFileExt(Units.nerubian1)
-        ..setIconGameInterfaceExt(Icons.bTNNerubian)
-        ..setUnitSoundSetExt(Soundsets.cryptFiend)
-
 @compiletime function createNecromancer()
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_RAISE_SKELETON))
     createSpawnedUnit(UNIT_NECROMANCER, UnitIds.necromancer, BUILDING_NECROMANCER)
@@ -464,31 +370,6 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.banshee)
         ..setGhostDeath()
 
-    tooltip = new UnitTooltipGenerator("Dark Ranger Desc")
-    createSpawnedUnit(UNIT_DARK_RANGER, UnitIds.darkranger, BUILDING_DARK_RANGER)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Pierce, 66, 7, 3, 1.3)
-        ..setAttack1Range(650)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Small, 4)
-        ..setHitPointsMaximumBase(180)
-        ..setMana(200)
-
-        ..setSpeedBase(300)
-        ..setAutoPointValue()
-        ..setAutoBuildingCost()
-
-        ..setSizeSmall()
-        ..setNameEnhance("Z", "Dark Ranger")
-        ..tooltipStopListen(true)
-
-        ..setModelFileExt(Units.bansheeRanger1)
-        ..setIconGameInterfaceExt(Icons.bTNBansheeRanger)
-        ..setUnitSoundSetExt(Soundsets.bansheeRanger)
-
 @compiletime function createAbomination()
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_CLEAVE_30))
     createSpawnedUnit(UNIT_ABOMINATION, UnitIds.abomination, BUILDING_ABOMINATION)
@@ -605,30 +486,6 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.tichondrius1)
         ..setIconGameInterfaceExt(Icons.bTNTichondrius)
         ..setUnitSoundSetExt(Soundsets.tichondrius)
-
-@compiletime function createCryptLord()
-    let tooltip = new UnitTooltipGenerator("Crypt Lord Desc")
-    createSpawnedUnit(UNIT_CRYPT_LORD, UnitIds.cryptlord, BUILDING_CRYPT_LORD)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Normal, 140, 2, 19, 1.4)
-
-        ..setArmorData(ArmorType.Large, 2)
-        ..setHitPointsMaximumBase(2400)
-
-        ..setSpeedBase(270)
-
-        ..setSizeSmall()
-        ..setNameEnhance("Z", "Crypt Lord")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-        ..setBuildingLumberCost(3000)
-
-        ..setModelFileExt(Units.heroCryptLord1)
-        ..setIconGameInterfaceExt(Icons.bTNHeroCryptLord)
-        ..setUnitSoundSetExt(Soundsets.heroCryptLord)
 
 @compiletime function createDeathKnight()
     var tooltip = new UnitTooltipGenerator(

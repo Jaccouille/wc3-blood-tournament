@@ -33,33 +33,11 @@ import UnitTooltipGenerator
        ..setAutoBuildingCost()
 
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_ANCIENT_PROTECTOR))
 
         ..setModelFileExt(Units.ent)
         ..setIconGameInterfaceExt(Icons.bTNEnt)
         ..setUnitSoundSetExt(Soundsets.ent)
 
-    tooltip = new UnitTooltipGenerator("Ancient Protector Desc")
-    createSpawnedUnit(UNIT_ANCIENT_PROTECTOR, UnitIds.forceofnature, BUILDING_ANCIENT_PROTECTOR)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Siege, 127, 9, 4, 3)
-
-        ..setArmorData(ArmorType.Large, 7)
-        ..setHitPointsMaximumBase(1400)
-
-        ..setSpeedBase(240)
-
-        ..setSizeSmall()
-        ..setNameEnhance("Z", "Ancient Protector")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingLumberCost(1600)
-
-        ..setModelFileExt(Buildings.ancientProtector1)
-        ..setIconGameInterfaceExt(Icons.bTNTreant)
-        ..setUnitSoundSetExt(Soundsets.ent)
 
 @compiletime function createArcher()
     var tooltip = new UnitTooltipGenerator("Basic ranged unit.")
@@ -183,36 +161,7 @@ import UnitTooltipGenerator
         .setIconGameInterfaceExt(Icons.bTNKeeperOfTheGrove)
 
 @compiletime function createHuntress()
-    tooltip = new UnitTooltipGenerator("Sentry Desc")
-    createSpawnedUnit(UNIT_SENTRY, UnitIds.watcher, BUILDING_SENTRY)
-
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Normal, 24, 4, 2, 1.6)
-        ..setAttack1Range(300)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(160)
-
-        ..setSpeedBase(270)
-        ..setSizeSmall()
-        ..setNameEnhance("W", "Sentry")
-        ..setAutoPointValue()
-
-        ..tooltipStopListen()
-        ..setUpgradeTo(commaList(BUILDING_HUNTRESS, BUILDING_SPECTRE))
-        ..setBuildingGoldCost(200)
-        ..setManaMaximum(0)
-
-        ..setAttack1ProjectileArt(Abilities.sentinelMissile)
-        ..setAttack1WeaponType(WeaponType.Missile)
-        ..setModelFileExt(Units.watcher1)
-        ..setIconGameInterfaceExt(Icons.bTNSentinel)
-        ..setUnitSoundSetExt(Soundsets.watcher)
-
-    var tooltip = new UnitTooltipGenerator("Ranged unit with bounce.")
+    let tooltip = new UnitTooltipGenerator("Ranged unit with bounce.")
     createSpawnedUnit(UNIT_HUNTRESS, UnitIds.huntress, BUILDING_HUNTRESS)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -415,41 +364,7 @@ import UnitTooltipGenerator
         ..setBuildingScalingValue(0.65)
 
 @compiletime function createWarden()
-    var tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_BLINK)  + "\n\n" +
-        abilTooltipMap.get(ABIL_FAN_OF_KNIVES)  + "\n\n" +
-        abilTooltipMap.get(ABIL_FEEDBACK)
-    )
-    createSpawnedUnit(UNIT_WARDEN, UnitIds.warden, BUILDING_WARDEN)
-        ..setNormalAbilities(commaList(
-            ABIL_BLINK,
-            ABIL_FAN_OF_KNIVES,
-            ABIL_FEEDBACK))
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Normal, 60, 7, 4, 0.9)
-
-        ..setArmorData(ArmorType.Medium, 4)
-        ..setHitPointsMaximumBase(800)
-        ..setMana(200)
-
-        ..setSpeedBase(330)
-
-        ..setSizeSmall()
-        ..setAutoPointValue()
-        ..setAutoBuildingCost()
-
-        ..tooltipStopListen()
-
-        ..setNameEnhance("R", "Warden")
-
-        ..setModelFileExt(Units.heroWarden)
-        ..setIconGameInterfaceExt(Icons.bTNHeroWarden)
-        ..setUnitSoundSetExt(Soundsets.maiev)
-
-
-    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_TERRIFY_ORB))
+    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_TERRIFY_ORB))
     createSpawnedUnit(UNIT_SPECTRE, UnitIds.vengeance, BUILDING_SPECTRE)
         ..setNormalAbilities(commaList(ABIL_TERRIFY_ORB))
         ..registerTooltipGenerator(tooltip)

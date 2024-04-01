@@ -132,12 +132,6 @@ init
     itemModifyUnitMap.put(ITEM_INSPIRE, inspireAction)
 
 
-    let rangerAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
-        for i = 0 to count
-            unitToSpawn.push(UNIT_RANGER)
-    itemAddUnitMap.put(ITEM_RANGER, rangerAction)
-
     let spellBreakerAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 0 to count

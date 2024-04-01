@@ -254,59 +254,6 @@ import UnitTooltipGenerator
 
         ..setIconGameInterfaceExt(Icons.bTNKotoBeast)
 
-@compiletime function createWarlock()
-    var tooltip = new UnitTooltipGenerator("Warlock Desc")
-    createSpawnedUnit(UNIT_WARLOCK, UnitIds.war2warlock, BUILDING_WARLOCK)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Magic, 36, 2, 6, 1.45)
-        ..setAttack1Range(400)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Small, 2)
-        ..setHitPointsMaximumBase(120)
-
-        ..setManaMaximum(200)
-        ..setManaInitialAmount(200)
-        ..setSpeedBase(270)
-        ..setCategorizationCampaign(false)
-        ..setSizeSmall()
-        ..setPriority(4)
-        ..setNameEnhance("A", "Warlock")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_OCCULTIST))
-        ..setBuildingGoldCost(150)
-
-        ..setModelFileExt(Units.chaosWarlockGreen)
-        ..setIconGameInterfaceExt(Icons.bTNChaosWarlockGreen)
-        ..setUnitSoundSetExt(Soundsets.warlock)
-
-    tooltip = new UnitTooltipGenerator("Occultist Desc")
-    createSpawnedUnit(UNIT_OCCULTIST, UnitIds.stormreaverapprentice, BUILDING_OCCULTIST)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Magic, 63, 2, 9, 1.45)
-
-        ..setArmorData(ArmorType.Small, 2)
-        ..setHitPointsMaximumBase(180)
-
-        ..setManaMaximum(200)
-        ..setManaInitialAmount(200)
-        ..setSpeedBase(270)
-        ..setCategorizationCampaign(false)
-        ..setSizeSmall()
-        ..setNameEnhance("Z", "Occultist")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingLumberCost(900)
-
-        ..setModelFileExt(Units.orcWarlock1)
-        ..setIconGameInterfaceExt(Icons.bTNOrcWarlock)
-        ..setUnitSoundSetExt(Soundsets.orcWarlock)
-
 @compiletime function creatWitchDoctor()
     let tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_HEALING_WAVE) + "\n\n"
@@ -564,79 +511,6 @@ import UnitTooltipGenerator
         ..setModelFile(Units.ogreMagi1)
         ..setIconGameInterfaceExt(Icons.bTNOgreMagi)
         ..setUnitSoundSet(Soundsets.ogre)
-
-@compiletime function createShadowHunter()
-    let tooltip = new UnitTooltipGenerator("Shadowhunter Desc")
-    createSpawnedUnit(UNIT_SHADOW_HUNTER, UnitIds.shadowhunter, BUILDING_SHADOW_HUNTER)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Normal, 60, 10, 4, 1.1)
-        ..setAttack1Range(550)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Small, 4)
-        ..setHitPointsMaximumBase(800)
-
-        ..setSpeedBase(300)
-        ..setSizeSmall()
-        ..setNameEnhance("X", "Shadow Hunter")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-        ..setBuildingLumberCost(3000)
-
-        ..setModelFileExt(Units.heroShadowHunter1)
-        ..setIconGameInterfaceExt(Icons.bTNShadowHunter)
-        ..setUnitSoundSetExt(Soundsets.heroShadowHunter)
-
-@compiletime function createBladeMaster()
-    let tooltip = new UnitTooltipGenerator("Blade Master Desc")
-    createSpawnedUnit(UNIT_BLADE_MASTER, UnitIds.blademaster, BUILDING_BLADE_MASTER)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Normal, 00, 13, 6, 0.7)
-
-        ..setArmorData(ArmorType.Small, 8)
-        ..setHitPointsMaximumBase(2400)
-
-        ..setSpeedBase(320)
-        ..setSizeSmall()
-        ..setNameEnhance("Z", "Blade Master")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-        ..setBuildingLumberCost(3000)
-
-        ..setModelFileExt(Units.heroBladeMaster1)
-        ..setIconGameInterfaceExt(Icons.bTNHeroBlademaster)
-        ..setUnitSoundSetExt(Soundsets.heroBladeMaster)
-
-@compiletime function createDemolisher()
-    let tooltip = new UnitTooltipGenerator("Demolisher Desc")
-    createSpawnedUnit(UNIT_DEMOLISHER, UnitIds.demolisher, BUILDING_DEMOLISHER)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Normal, 50, 15, 15, 2)
-        ..setAttack1Range(1100)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Large, 2)
-        ..setHitPointsMaximumBase(240)
-
-        ..setSpeedBase(230)
-        ..setSizeSmall()
-        ..setNameEnhance("C", "Demolisher")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-        ..setBuildingLumberCost(3000)
-
-        ..setModelFileExt(Units.catapult_V1)
-        ..setIconGameInterfaceExt(Icons.bTNDemolisher)
-        ..setUnitSoundSetExt(Soundsets.catapult)
 
 @compiletime function createBuilder()
     createBuilder(UNIT_ORC_BUILDER, UnitIds.peon)

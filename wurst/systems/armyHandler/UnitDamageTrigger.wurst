@@ -18,14 +18,6 @@ init
             and target.isType(UNIT_TYPE_SUMMONED)
             src.issueTargetOrderById(OrderIds.autodispel, target)
 
-
-        switch target.getTypeId()
-            case UNIT_WARDEN
-                if target.getPos().distanceTo(src.getPos()) > 200
-                    BlzQueuePointOrderById(target, OrderIds.blink, src.getPos().x, src.getPos().y)
-                    doAfter(0.9) ->
-                        BlzQueueImmediateOrderById(target, OrderIds.fanofknives)
-
         switch src.getTypeId()
             case UNIT_SHAMAN
                 if src.getAbilityCooldownRemaining(ABIL_SUMMON_SPIRIT_WOLF1) <= 0
