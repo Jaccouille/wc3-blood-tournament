@@ -8,6 +8,8 @@ import Assets
 import GameConfig
 import Round
 
+import TextTagUtils
+
 interface BloodDonationCallBack
     abstract function execute(Round round)
 
@@ -91,7 +93,7 @@ function launchCorpse(int bloodPoints, player target)
         playLaunchSound()
 
     arenaMaster.setAnimation("attack")
-
+    arenaMaster.queueAnimation("stand")
     new CorpseProjectile(
         arenaMaster.getPos3Real(),
         pData.buildingRect.getCenter().withTerrainZ(),
@@ -121,7 +123,7 @@ init
                 var bloodDonationAmount = ((bloodDeficit.deficitPercent / 100) * 0.4 * pDatas.get(bloodDeficit._p).totalBloodPoints).toInt()
                 bloodDonationAmount = (bloodDonationAmount * gameConfig.getArmyPointsMultiplier()).toInt()
                 // round floor to 5
-                bloodDonationAmount += 5 - (bloodDonationAmount % 5).toInt()
+                bloodDonationAmount -= (bloodDonationAmount % 5).toInt()
                 msg += " donation: {0}".format(bloodDonationAmount.toString().color(colorA(255, 0, 0, 255)))
                 msg += " Sum : {0}".format((bloodDonationAmount + bloodDeficit.totalBloodPoints).toString().color(colorA(255, 0, 0, 255)))
                 if gameConfig.isTestModeEnabled()
