@@ -171,13 +171,13 @@ class RoundController
                 .stopPreview()
         tdialog.destr()
         hasRoundStarted = true
-        pDatas.forEach() (player _, PlayerData pData) ->
-            pData.roundBloodPoints = 0
         if not currentRound.hasStarted
             forUnitsAll() (unit u) ->
                 if u.isType(UNIT_TYPE_STRUCTURE)
                     u.setAnimation("stand")
             currentRound.start()
+            pDatas.forEach() (player _, PlayerData pData) ->
+                pData.roundBloodPoints = 0
 
     function checkIfCurrentroundDone(player winner)
         if currentRound != null
