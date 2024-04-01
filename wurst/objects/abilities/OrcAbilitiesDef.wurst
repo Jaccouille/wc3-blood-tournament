@@ -537,7 +537,7 @@ import UnitObjEditingCommon
         "when the buff expires."
     )
     new AbilityDefinitionRoar(ABIL_KILLING_SPREE)
-        ..setAnimationNames("")
+        ..setAnimationNames("attack")
         ..setHeroAbility(false)
         ..presetAreaofEffect(lvl -> 1)
         ..presetDefenseIncrease(lvl -> 0)
