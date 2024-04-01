@@ -257,10 +257,10 @@ init
         // But I am not sure
         caster.abortOrder()
         if target.isInRect(pDatas.get(caster.getOwner()).buildingRect)
-            flashEffect(Abilities.polyMorphTarget, caster.getPos())
+            flashEffect(Abilities.polyMorphDoneGround, caster.getPos())
             caster.setPos(target)
             insertBuilding(pDatas.get(caster.getOwner()).buildingList, caster)
-            flashEffect(Abilities.polyMorphTarget, caster.getPos())
+            flashEffect(Abilities.polyMorphDoneGround, caster.getPos())
         else
             simError(caster.getOwner(), "Cannot move building outside of your building zone")
 
