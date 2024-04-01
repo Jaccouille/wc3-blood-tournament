@@ -4,6 +4,7 @@ package UnitCreationTrigger
 import ClosureEvents
 import HashMap
 import LinkedList
+import Assets
 
 // Local imports:
 import ArmyPreviewer
@@ -80,7 +81,6 @@ init
         EventListener.add(EVENT_PLAYER_UNIT_UPGRADE_FINISH) ->
             let u = EventData.getTriggerUnit()
             let pData = pDatas.get(u.getOwner())
-            u.addType(UNIT_TYPE_ANCIENT)
             BlzShowUnitTeamGlow(u, false)
             pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(u.getTypeId()).upgradeBonusArmyPoints)
             updatePreviewer(u.getOwner())

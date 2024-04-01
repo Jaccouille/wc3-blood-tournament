@@ -48,7 +48,8 @@ public class BTBuildingData
     int unitPointValue = 0
     int goldCost = 0
     int lumberCost = 0
-    boolean isAnUpgrade = false
+    BTBuildingData upgradeFrom
+
 
     construct(int buildingId, int goldCost, int lumberCost, LinkedList<int> unitToSpawn)
         unitIdToDataMap.put(buildingId, this)
@@ -66,7 +67,7 @@ public class BTBuildingData
         unitPointValue = computeUnitPointValue(goldCost, lumberCost, unitToSpawn.size())
         upgradeBonusArmyPoints += unitPointValue * unitToSpawn.size()
         if unitIdToDataMap.get(upgradeFrom) != null
-            this.isAnUpgrade = true
+            this.upgradeFrom = unitIdToDataMap.get(upgradeFrom)
             unitPointValue += unitIdToDataMap.get(upgradeFrom).unitPointValue
             buildingArmyPoints = upgradeBonusArmyPoints + unitIdToDataMap.get(upgradeFrom).buildingArmyPoints
         else
@@ -94,7 +95,7 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_MAGE         , 300, 0   , genList(UNIT_MAGE            , 3))
     new BTBuildingData(BUILDING_SWORD_MASTER , 0  , 3000, genList(UNIT_SWORD_MASTER    , 4))
     new BTBuildingData(BUILDING_ELVEN_MAGE   , 0  , 3000, genList(UNIT_ELVEN_MAGE      , 3))
-    new BTBuildingData(BUILDING_PALADIN      , 0  , 1500, asList (UNIT_PALADIN_1))
+    new BTBuildingData(BUILDING_PALADIN      , 0  , 1000, asList (UNIT_PALADIN_1))
     new BTBuildingData(BUILDING_ARCHMAGE     , 0  , 2000, asList (UNIT_WATER_ELEMENTAL , UNIT_WATER_ELEMENTAL, UNIT_ARCHMAGE))
 
     new BTBuildingData(BUILDING_GRUNT                ,                      100 , 0    , genList(UNIT_GRUNT                , 5  ))

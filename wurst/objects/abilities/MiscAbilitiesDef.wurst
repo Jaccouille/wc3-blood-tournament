@@ -194,8 +194,8 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
         ..setCastRange(1, 99999)
         ..setManaCost(1, 0)
         ..setCooldown(1, 0)
-        ..setGoldCostFactor(1, 1)
-        ..setLumberCostFactor(1, 1)
+        ..setGoldCostFactor(1, 0)
+        ..setLumberCostFactor(1, 0)
         ..setHeroAbility(false)
         ..setMaxCreepLevel(1, 1)
         ..setTargetsAllowed(1, commaList(
@@ -205,11 +205,11 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
             TargetsAllowed.nonancient
         ))
         ..setNameEnhance("X", "Sell building")
-        ..presetTooltipNormalExtended(lvl -> "Sell the building and get 100% of its cost back.\nCannot sell upgraded buildings.")
+        ..presetTooltipNormalExtended(lvl -> "Sell the building and get 100% of its cost back.\n")
 
     createStandardChannelAbility(ABIL_SELL_ALL)
         ..setNameEnhance("C", "Sell All")
-        ..setTooltipNormalExtended(1, "Sell all sellable buildings.\nCannot sell upgraded buildings.")
+        ..setTooltipNormalExtended(1, "Sell all sellable buildings.\n")
         ..setIconNormal(Icons.bTNChestOfGold)
 
 

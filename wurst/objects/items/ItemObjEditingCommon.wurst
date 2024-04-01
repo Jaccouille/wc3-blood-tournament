@@ -39,10 +39,13 @@ function createBasicItem(int newId, int oldId) returns ItemDefinition
 
 public function ItemDefinition.setItemCost(int gold, int lumber, int charges, int maxStack, int maxStock)
     this.setGoldCost(gold)
-    this.setLevel(maxStock)
     this.setLumberCost(lumber)
     this.setMaxStack(maxStack)
+    // For refund price computation
+    this.setPriority(charges)
     this.setNumberofCharges(charges)
+    // For item stock handler
+    this.setLevel(maxStock)
     this.setStockMaximum(maxStock)
     itemGoldCost.saveInt(this.getNewId(), this.getNewId(), gold)
     itemLumberCost.saveInt(this.getNewId(), this.getNewId(), lumber)

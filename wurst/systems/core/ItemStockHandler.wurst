@@ -140,6 +140,12 @@ function canBuy(int itemId, player _p) returns boolean
     let lumberCost = itemLumberCost.loadInt(itemId, itemId)
     return _p.getGold() >= goldCost and _p.getLumber() >= lumberCost
 
+public function getItemGoldCost(int itemId) returns int
+    return itemGoldCost.loadInt(itemId, itemId)
+
+public function getItemLumberCost(int itemId) returns int
+    return itemLumberCost.loadInt(itemId, itemId)
+
 
 init
     initItemStockData()
@@ -158,9 +164,6 @@ init
             if i != null and canBuy(itemId, building.getOwner())
                 building.addItemById(itemId)
                 ItemStockHandler.unitToItemStockMap.get(building).reduceStock(itemId, 1)
-
-                if not building.isType(UNIT_TYPE_ANCIENT)
-                    building.addType(UNIT_TYPE_ANCIENT)
 
                 // Item who doesn't give any blood point got 1 hp
                 let bloodPoint = i.getLife().toInt()

@@ -260,10 +260,19 @@ public class BTUnitDefinition extends UnitDefinition
         buildingDef.setScalingValue(data)
 
     function setBuildingGoldCost(int data)
+        var goldCost = data
         buildingDef.setGoldCost(data)
+        if buildingData.upgradeFrom != null
+            goldCost += buildingData.upgradeFrom.goldCost
+        buildingDef.setHitPointsMaximumBase(goldCost + 100)
 
     function setBuildingLumberCost(int data)
+        var bpCost = data
         buildingDef.setLumberCost(data)
+        if buildingData.upgradeFrom != null
+            bpCost += buildingData.upgradeFrom.lumberCost
+        buildingDef.setManaMaximum(bpCost)
+        buildingDef.setManaInitialAmount(bpCost)
 
     function setBuildingUnitsTrained(string data)
         buildingDef.setUnitsTrained(data)

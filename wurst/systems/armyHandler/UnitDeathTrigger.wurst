@@ -16,6 +16,7 @@ import PlayerExtension
 import RoundController
 import SpawnZone
 import UnitExtensions
+import TextTagUtils
 
 function customAction(unit killer, unit dyingUnit, PlayerData pData)
 
@@ -96,17 +97,12 @@ function getBounty(unit dyingUnit) returns int
     return (dyingUnit.getPointValue() * gameConfig.getBountyMultiplier()).toInt()
 
 function createBountyTag(unit dyingUnit, player killerOwner)
-    createTTEx(
+    createBloodPointTag(
         dyingUnit.getPos3Real(),
         "+" + getBounty(dyingUnit).toString(),
         8,
-        colorA(255, 0, 0, 255),
         killerOwner
     )
-    ..setVelocity(0.0, 0.03)
-    ..setFadepoint(1.5)
-    ..setLifespan(2.0)
-    ..setPermanent(false)
 
 function spawnSpeedBanner(vec2 pos, player winner)
     flashEffect(Abilities.aIemTarget, pos, 2)
@@ -182,6 +178,26 @@ public function initUnitDeathTrigger()
         if BTBuildingData.unitIdToDataMap.has(dyingUnit.getTypeId())
             pData.subArmyPoints(BTBuildingData.unitIdToDataMap.get(dyingUnit.getTypeId()).buildingArmyPoints)
             pData.buildingList.remove(dyingUnit)
+
+            if killer == pData.builder
+                var goldAmount = dyingUnit.getMaxHP().toInt() - 100
+                var bloodAmount = dyingUnit.getMaxMana().toInt()
+                for t in dyingUnit.getInventory()
+                    if t != null
+                        let goldCost = getItemGoldCost(t.getTypeId()) * (t.getCharges() / BlzGetItemIntegerField(t, ITEM_IF_PRIORITY)).toInt()
+                        goldAmount += goldCost
+                        let lumberCost = getItemLumberCost(t.getTypeId()) *  (t.getCharges() / BlzGetItemIntegerField(t, ITEM_IF_PRIORITY)).toInt()
+                        bloodAmount += lumberCost
+
+                var pos = dyingUnit.getPos3Real()
+                if goldAmount > 0
+                    pData._p.addGold(goldAmount)
+                    createGoldTag(pos, "+" + goldAmount.toString(), 12, pData._p)
+                    pos = pos.add(0, 50, 0)
+                if bloodAmount > 0
+                    pData._p.addLumber(bloodAmount)
+                    createBloodPointTag(pos, "+" + bloodAmount.toString(), 12, pData._p)
+
             if ItemStockHandler.hasUnit(dyingUnit)
                 destroy ItemStockHandler.unitToItemStockMap.get(dyingUnit)
             if playerToArmyPreviewer.has(dyingUnit.getOwner())

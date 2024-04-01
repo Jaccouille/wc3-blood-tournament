@@ -58,17 +58,12 @@ class CorpseProjectile extends CustomProjectile
 
     override function onImpact()
         pDatas.get(target).addDonation(this.bloodPoints)
-        createTTEx(
+        createBloodPointTag(
             targetPos,
             "+" + this.bloodPoints.toString(),
-            8,
-            colorA(255, 0, 0, 255),
+            12,
             target
         )
-        ..setVelocity(0.0, 0.03)
-        ..setFadepoint(1.5)
-        ..setLifespan(2.0)
-        ..setPermanent(false)
 
 
 public function playLaunchSound()

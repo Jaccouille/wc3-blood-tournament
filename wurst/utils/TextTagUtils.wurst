@@ -1,0 +1,21 @@
+package TextTagUtils
+
+
+public function createBloodPointTag(vec3 pos, string text, real size, player displayTo)  returns texttag
+    return createResourceTextTag(pos, text, size, colorA(255, 0, 0, 255), displayTo)
+
+public function createGoldTag(vec3 pos, string text, real size, player displayTo)  returns texttag
+    return createResourceTextTag(pos, text, size, colorA(255, 255, 0, 255), displayTo)
+
+public function createResourceTextTag(vec3 pos, string text, real size, colorA color, player displayTo) returns texttag
+    return createTTEx(
+        pos,
+        text,
+        size,
+        color,
+        displayTo
+    )
+    ..setVelocity(0.0, 0.03)
+    ..setFadepoint(1.5)
+    ..setLifespan(2.0)
+    ..setPermanent(false)
