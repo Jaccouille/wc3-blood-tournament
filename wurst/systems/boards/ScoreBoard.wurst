@@ -19,8 +19,8 @@ let NAME_LABEL_WIDTH = 0.18
 let COL_LABEL_WIDTH = 0.06
 
 let COL_ARMY_PTS = "ArmyPts"
-let COL_BLOOD_PTS = "BloodPts"
-let COL_TOTAL_BLOOD_PTS = "Total BP"
+let COL_KILL_PTS = "KillPts"
+let COL_TOTAL_BLOOD_PTS = "Total BPts"
 
 let iconPlayerInGame = Icons.bTNSelectHeroOn
 
@@ -42,7 +42,7 @@ class BoardColumn
 let boardColumns = asList(
     new BoardColumn("PlayerName"   , null , NAME_LABEL_WIDTH  , HIGHLIGHT_COLOR ),
     new BoardColumn(COL_ARMY_PTS  , null , COL_LABEL_WIDTH , HIGHLIGHT_COLOR ),
-    new BoardColumn(COL_BLOOD_PTS , null , COL_LABEL_WIDTH , HIGHLIGHT_COLOR ),
+    new BoardColumn(COL_KILL_PTS , null , KILL_COLUMN_WIDTH , HIGHLIGHT_COLOR ),
     new BoardColumn(COL_TOTAL_BLOOD_PTS , null , 0.05 , HIGHLIGHT_COLOR )
 )
 
@@ -197,7 +197,7 @@ function refreshScoreBoard()
         let bp = pDatas.get(_p).roundBloodPoints
         let tbp = pDatas.get(_p).totalBloodPoints
         scoreBoardEntries.get(COL_ARMY_PTS).setEntry(_p, ap.toString(), null)
-        scoreBoardEntries.get(COL_BLOOD_PTS).setEntry(_p, bp.toString(), null)
+        scoreBoardEntries.get(COL_KILL_PTS).setEntry(_p, bp.toString(), null)
         scoreBoardEntries.get(COL_TOTAL_BLOOD_PTS).setEntry(_p, tbp.toString(), null)
 
 // To format time elapsed
