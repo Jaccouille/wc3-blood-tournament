@@ -289,8 +289,8 @@ import UnitObjEditingCommon
 
     let shamanCount = BTBuildingData.getUnitCount(BUILDING_SHAMAN)
     itm = createBasicItem(ITEM_ORB_LIGHTNING)
-        ..setItemCost(0, 50, 1, shamanCount, shamanCount)
-        ..setNameEnhance("X", "Add 1 Lightning Orb")
+        ..setItemCost(0, 50, shamanCount, 1, 1)
+        ..setNameEnhance("X", "Add 4 Lightning Orb")
         ..setInterfaceIcon(Icons.bTNOrbOfLightning)
 
     tgen = new BTAbilityTooltipGenerator(
