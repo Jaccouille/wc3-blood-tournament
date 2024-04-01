@@ -20,6 +20,7 @@ import GameStates
 import LocalObjectIDs
 import PlayerData
 import SimError
+import UnitExtensions
 import TooltipsUtils
 import UnitCreationTrigger
 import VotesDefinition
@@ -119,10 +120,10 @@ let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
             ..setItemAbility(false)
             ..presetTargetTypes(Targettype.POINT)
             ..presetTargetsAllowed(lvl -> TargetsAllowed.ground)
-            ..setHotkeyEnhance("X")
+            ..setHotkeyEnhance("C")
             ..setName("Move unit")
-            ..presetTooltipNormal(lvl -> makeToolTipNorm("X", "Move unit"))
-            ..presetTooltipNormalExtended(lvl -> "Use this to unstuck units (works in round phase).")
+            ..presetTooltipNormal(lvl -> makeToolTipNorm("C", "Move unit"))
+            ..presetTooltipNormalExtended(lvl -> "Use this to move units (works in round phase).")
             ..setIconNormal(Icons.bTNNagaUnBurrow)
             ..setIconResearch(Icons.bTNNagaUnBurrow)
             ..setIconTurnOff(Icons.bTNNagaUnBurrow)
@@ -130,6 +131,27 @@ let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
             ..setAreaofEffect(1, 200)
             ..setOrderStringActivate("blizzard")
             ..setBaseOrderID(1, "blizzard")
+
+    new ChannelAbilityPreset(ABIL_UNSTUCK_UNIT, 1, true)
+            ..presetManaCost(lvl -> 0)
+            ..presetCooldown(lvl -> 2)
+            ..presetCastRange(_ -> 99999)
+            ..setHeroAbility(false)
+            ..setItemAbility(false)
+            ..presetTargetTypes(Targettype.UNIT)
+            ..presetTargetsAllowed(lvl -> commaList(
+                TargetsAllowed.ground,
+                TargetsAllowed.vulnerable
+            ))
+            ..setHotkeyEnhance("V")
+            ..setName("Unstuck unit")
+            ..presetTooltipNormal(lvl -> makeToolTipNorm("V", "Unstuck unit"))
+            ..presetTooltipNormalExtended(lvl -> "Use this to unstuck 2 collided units (works in round phase).")
+            ..setIconNormal(Icons.bTNMirrorImage)
+            ..setIconResearch(Icons.bTNMirrorImage)
+            ..setIconTurnOff(Icons.bTNMirrorImage)
+            ..setOrderStringActivate("hex")
+            ..setBaseOrderID(1, "hex")
 
 
 function createStandardChannelAbility(int abilId) returns ChannelAbilityPreset
@@ -182,8 +204,7 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
             TargetsAllowed.invulnerable,
             TargetsAllowed.nonancient
         ))
-        ..setName("Sell building")
-        ..presetTooltipNormal(lvl -> makeToolTipNorm("V", "Sell building"))
+        ..setNameEnhance("X", "Sell building")
         ..presetTooltipNormalExtended(lvl -> "Sell the building and get 100% of its cost back.\nCannot sell upgraded buildings.")
 
     createStandardChannelAbility(ABIL_SELL_ALL)
@@ -247,7 +268,7 @@ init
 
     EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_START) ->
         let u = EventData.getConstructingStructure()
-        // When move ability is casted, it creates a unit in middle map
+        // When building move ability is casted, it creates a unit in middle map
         // Following lines remove it
         if not u.getPos().isInRect(pDatas.get(u.getOwner()).buildingRect)
             u.remove()
@@ -276,3 +297,9 @@ init
                 and not u.isType(UNIT_TYPE_PEON)
                 and not u.isType(UNIT_TYPE_STRUCTURE)
                 u.issuePointOrder("attack", CENTER)
+
+    EventListener.onTargetCast(ABIL_UNSTUCK_UNIT) (unit caster, unit target) ->
+        if target.isSoldier() and target.getCurrentOrder() != OrderIds.move
+            target.setPos(target.getPos() + vec2(0, 10))
+            flashEffect(Abilities.blinkTarget, target.getPos())
+            target.issuePointOrder("attack", CENTER)

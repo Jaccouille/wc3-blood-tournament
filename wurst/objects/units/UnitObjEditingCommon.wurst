@@ -79,8 +79,8 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
             ABIL_ORDER_UNIT,
             ABIL_START_ROUND,
             ABIL_SELL_BUILDING,
+            ABIL_UNSTUCK_UNIT,
             ABIL_TRADE_GOLD,
-            ABIL_SELL_ALL,
             AbilityIds.inventory
             ))
         ..setAttacksEnabled(AttacksEnabled.None.toObjectInt())
