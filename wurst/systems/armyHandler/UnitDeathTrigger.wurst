@@ -15,6 +15,7 @@ import LocalObjectIDs
 import PlayerExtension
 import RoundController
 import SpawnZone
+import UnitExtensions
 
 function customAction(unit killer, unit dyingUnit, PlayerData pData)
 
@@ -108,7 +109,7 @@ function createBountyTag(unit dyingUnit, player killerOwner)
     ..setPermanent(false)
 
 function spawnSpeedBanner(vec2 pos, player winner)
-    flashEffect(Abilities.levelupcaster, pos, 2)
+    flashEffect(Abilities.aIemTarget, pos, 2)
     createUnit(winner.getDummyPlayer(0), UNIT_SPEED_BANNER, pos, 270..asAngleDegrees())
 
 function computeSpeedBannerPos(SpawnZone sp1, SpawnZone sp2) returns vec2
@@ -143,11 +144,11 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
                     spawnSpeedBanner(middle, matchUpWinner)
 
                 nullTimer() ->
-                    forUnitsOfPlayer(matchUpWinner) (unit u) ->
-                        if not u.isType(UNIT_TYPE_PEON) and not u.isType(UNIT_TYPE_STRUCTURE)
-                            // u.issuePointOrder("attack", CENTER)
-                            u.issuePointOrder("attack", middle)
-                            BlzQueuePointOrderById(u, OrderIds.attack, CENTER.x, CENTER.y)
+                    matchUpWinner.getPlayerData().spawnedUnits.forEach() (unit u) ->
+                        if u.isSoldier() and u.isAlive()
+                            u.issuePointOrder("attack", CENTER)
+                            // u.issuePointOrder("attack", middle)
+                            // BlzQueuePointOrderById(u, OrderIds.attack, CENTER.x, CENTER.y)
 
             else if roundController.currentRound instanceof FinalRound
                 (roundController.currentRound castTo FinalRound).looser = pData._p
