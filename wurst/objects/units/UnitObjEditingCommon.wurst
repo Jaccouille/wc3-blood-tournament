@@ -196,12 +196,13 @@ public class BTUnitDefinition extends UnitDefinition
 
         let min = damage
         let max = damage + nbDice * sidePerDice
+        let averageDamage = min + nbDice * (sidePerDice + 1) / 2
         let tooltip = attackTypeStr.firstUpper() +
              " | " + min.toString() + " - " + max.toString() +
              " | " + attackCooldown.toString()
         addTooltipProperty("Damage", tooltip + " seconds")
         // TODO: find a better formula, doesn't take the dice into acccount?
-        let dps = (min + max / 2) / attackCooldown
+        let dps = averageDamage / attackCooldown
         addTooltipProperty("DPS", dps.toInt().toString())
 
     override function setAttack1MaximumNumberofTargets(int data)
