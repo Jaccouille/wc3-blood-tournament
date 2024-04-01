@@ -68,6 +68,9 @@ class RoundController
         destroy roundParticipants
 
     private function initPreviewer(player _p, int zoneIdx)
+        // Don't show previewer for computer player
+        if not _p.isHuman()
+            return
         if not playerToArmyPreviewer.has(_p)
             playerToArmyPreviewer.put(_p, new ArmyPreviewer(_p))
         let ap = playerToArmyPreviewer.get(_p)
