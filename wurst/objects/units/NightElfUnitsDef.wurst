@@ -25,7 +25,7 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(120)
         ..setHitPointsRegenerationRate(-10)
 
-        ..setSpeedBase(250)
+        ..setSpeedBase(270)
 
         ..setSizeSmall()
         ..setNameEnhance("Q", "Treant")
@@ -114,7 +114,7 @@ import UnitTooltipGenerator
         ..setMana(200)
         ..setManaRegeneration(0.75)
 
-        ..setSpeedBase(330)
+        ..setSpeedBase(300)
 
         ..setSizeSmall()
         ..setAutoPointValue()
@@ -149,7 +149,7 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(550)
         ..setMana(200)
 
-        ..setSpeedBase(330)
+        ..setSpeedBase(300)
 
         ..setSizeSmall()
         ..setItemCostUnit(0, 1000, 1)
@@ -175,7 +175,7 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Medium, 4)
         ..setHitPointsMaximumBase(350)
 
-        ..setSpeedBase(350)
+        ..setSpeedBase(300)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 
@@ -347,7 +347,7 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Fortified, 6)
         ..setHitPointsMaximumBase(1200)
 
-        ..setSpeedBase(240)
+        ..setSpeedBase(270)
 
         ..setAutoPointValue()
         ..setAutoBuildingCost()
@@ -409,7 +409,7 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Divine, 4)
         ..setHitPointsMaximumBase(550)
 
-        ..setSpeedBase(330)
+        ..setSpeedBase(300)
 
         ..setSizeSmall()
         ..setAutoPointValue()
@@ -427,31 +427,6 @@ import UnitTooltipGenerator
         ..setIconGameInterfaceExt(Icons.bTNSpiritOfVengeance)
         ..setUnitSoundSetExt(Soundsets.spiritOfVengeance)
 
-// @compiletime function createDaemonHunter()
-//     let tooltip = new UnitTooltipGenerator("Daemon Hunter Desc")
-//  // createSpawnedUnit(UNIT_DAEMON_HUNTER, UnitIds.illidan, BUILDING_DAEMON_HUNTER)
-//         ..registerTooltipGenerator(tooltip)
-//         ..tooltipStartListen()
-
-//         ..setAttack1Data(AttackType.Normal, 177, 7, 16, 0.7)
-
-//         ..setArmorData(ArmorType.Unarmored, 9)
-//         ..setHitPointsMaximumBase(1500)
-
-//         ..setSpeedBase(350)
-
-//         ..setSizeSmall()
-//         ..setAutoPointValue()
-//         ..tooltipStopListen()
-
-//         ..setNameEnhance("Z", "Daemon Hunter")
-//         ..setManaInitialAmount(0)
-//         ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-//         ..setBuildingLumberCost(3000)
-
-//         ..setModelFileExt(Units.heroDemonHunter1)
-//         ..setIconGameInterfaceExt(Icons.bTNHeroDemonHunter)
-//         ..setUnitSoundSetExt(Soundsets.heroDemonHunter)
 
 @compiletime function createPriestessOfTheMoon()
     let tooltip = new UnitTooltipGenerator(

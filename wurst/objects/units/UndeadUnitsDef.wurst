@@ -525,30 +525,6 @@ import UnitTooltipGenerator
         ..setIconGameInterfaceExt(Icons.bTNHeroDeathKnight)
         ..setUnitSoundSetExt(Soundsets.heroDeathKnight)
 
-    // tooltip = new UnitTooltipGenerator("Archimonde Desc")
-    // createSpawnedUnit(UNIT_ARCHIMONDE, UnitIds.archimonde, BUILDING_ARCHIMONDE)
-    //     ..registerTooltipGenerator(tooltip)
-    //     ..tooltipStartListen()
-
-    //     ..setAttack1Data(AttackType.Chaos, 550, 16, 16, 1.5)
-    //     ..setAttack1Range(550)
-
-    //     ..setArmorData(ArmorType.Large, 5)
-    //     ..setHitPointsMaximumBase(1600)
-
-    //     ..setSpeedBase(270)
-
-    //     ..setSizeSmall()
-    //     ..setNameEnhance("C", "Archimonde")
-    //     ..setAutoPointValue()
-    //     ..tooltipStopListen(true)
-    //     ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-    //     ..setBuildingLumberCost(5000)
-
-    //     ..setModelFileExt(Units.warlock)
-    //     ..setIconGameInterfaceExt(Icons.bTNArchimonde)
-    //     ..setUnitSoundSetExt(Soundsets.warlock)
-
 
 @compiletime function createBuilder()
     createBuilder(UNIT_UNDEAD_BUILDER, UnitIds.acolyte)

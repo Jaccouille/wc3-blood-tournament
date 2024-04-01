@@ -74,7 +74,7 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(220)
 
-        ..setSpeedBase(240)
+        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 
@@ -108,7 +108,7 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(220)
 
-        ..setSpeedBase(240)
+        ..setSpeedBase(270)
         ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
 
         ..setSizeSmall()
@@ -134,7 +134,7 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(220)
 
-        ..setSpeedBase(240)
+        ..setSpeedBase(270)
         ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
 
         ..setSizeSmall()
@@ -159,7 +159,7 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(150)
 
-        ..setSpeedBase(220)
+        ..setSpeedBase(270)
         ..setAutoPointValue()
 
         ..setItemCostUnit(0, 500, 1)
@@ -350,7 +350,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
             ..setArmorData(ArmorType.Large, 6)
             ..setHitPointsMaximumBase(1000)
 
-            ..setSpeedBase(300)
+            ..setSpeedBase(270)
 
             ..setSizeSmall()
             ..setPointValue(0, 1000, 1)
@@ -378,7 +378,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setHitPointsRegenerationRate(-15)
         ..setSummonedUnit()
 
-        ..setSpeedBase(300)
+        ..setSpeedBase(270)
         ..setPointValue(60)
         ..tooltipStopListen(true)
 
