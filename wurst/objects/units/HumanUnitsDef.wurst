@@ -23,7 +23,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 14, 1, 2, 1.4)
 
         ..setArmorData(ArmorType.Large, 3)
-        ..setHitPointsMaximumBase(200)
+        ..setHitPointsMaximumBase(400)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -50,7 +50,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 44, 2, 4, 1.3)
 
         ..setArmorData(ArmorType.Large, 7)
-        ..setHitPointsMaximumBase(750)
+        ..setHitPointsMaximumBase(1500)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -72,7 +72,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(450)
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(220)
+        ..setHitPointsMaximumBase(440)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -106,7 +106,7 @@ import UnitTooltipGenerator
         ..setSmallSplash()
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(220)
+        ..setHitPointsMaximumBase(440)
 
         ..setSpeedBase(270)
         ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
@@ -132,7 +132,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(900)
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(220)
+        ..setHitPointsMaximumBase(440)
 
         ..setSpeedBase(270)
         ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
@@ -151,13 +151,13 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Siege, 66, 6, 7, 2.5)
+        ..setAttack1Data(AttackType.Siege, 99, 6, 7, 2.5)
         ..setSmallSplash()
         ..setAttack1Range(1000)
         ..setAttack1ProjectileSpeed(1000)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(150)
+        ..setHitPointsMaximumBase(300)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -186,7 +186,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 2)
-        ..setHitPointsMaximumBase(70)
+        ..setHitPointsMaximumBase(140)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -218,7 +218,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 4)
-        ..setHitPointsMaximumBase(500)
+        ..setHitPointsMaximumBase(1000)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -245,7 +245,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 40, 3, 4, 1.4)
 
         ..setArmorData(ArmorType.Large, 5)
-        ..setHitPointsMaximumBase(500)
+        ..setHitPointsMaximumBase(1000)
 
         ..setSpeedBase(350)
 
@@ -281,7 +281,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 80, 4, 6, 1.4)
 
         ..setArmorData(ArmorType.Large, 6)
-        ..setHitPointsMaximumBase(800)
+        ..setHitPointsMaximumBase(1600)
 
         ..setSpeedBase(350)
 
@@ -317,7 +317,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 120, 7, 8, 1.5)
 
         ..setArmorData(ArmorType.Large, 10)
-        ..setHitPointsMaximumBase(1300)
+        ..setHitPointsMaximumBase(2600)
 
         ..setSpeedBase(330)
         ..setSizeLarge()
@@ -348,7 +348,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
             ..setAttack1Data(AttackType.Siege, 120, 5, 7, 1.3)
 
             ..setArmorData(ArmorType.Large, 6)
-            ..setHitPointsMaximumBase(1000)
+            ..setHitPointsMaximumBase(2000)
 
             ..setSpeedBase(270)
 
@@ -374,7 +374,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAttack1Data(AttackType.Magic, 120, 5, 7, 1.3)
 
         ..setArmorData(ArmorType.Divine, 4)
-        ..setHitPointsMaximumBase(450)
+        ..setHitPointsMaximumBase(900)
         ..setHitPointsRegenerationRate(-15)
         ..setSummonedUnit()
 
@@ -415,7 +415,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     let buildingDef = createBuildingUnit(BUILDING_PALADIN)
         ..setNameEnhance("R", "Paladin x1")
         ..setUnitsTrained(commaList(UNIT_PALADIN_1, UNIT_GHOST_PALADIN))
-        ..setHitPointsMaximumBase(100)
+        ..setHitPointsMaximumBase(200)
         ..setLumberCost(1000)
         ..setManaMaximum(1000)
         ..setManaInitialAmount(1000)
@@ -441,7 +441,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(80)
+        ..setHitPointsMaximumBase(160)
         ..setMana(300)
 
         ..setSpeedBase(270)
@@ -484,7 +484,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setSmallSplash()
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(120)
+        ..setHitPointsMaximumBase(240)
         ..setMana(800)
 
         ..setSpeedBase(270)
@@ -512,7 +512,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Divine, 2)
-        ..setHitPointsMaximumBase(80)
+        ..setHitPointsMaximumBase(160)
         ..setHitPointsRegenerationRate(-5)
         ..setSummonedUnit()
 

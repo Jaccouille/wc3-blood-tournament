@@ -103,13 +103,13 @@ class OgreSwing
                 ..castTarget(ABIL_OGRE_SWING_SLAM, 1, OrderIds.acidbomb, spellTarget)
                 // ..castImmediate(ABIL_OGRE_SWING_SLAM, 1,  OrderIds.thunderclap)
             flashEffect(Abilities.thunderclapCaster, target.getPos())
-            let maxDamage = 300
+            let maxDamage = 600
             var damageSum = 0
             forUnitsInRange(target.getPos(), 250) (unit u) ->
                 if u.isEnemyOf(caster.getOwner()) and u.isAlive() and u.isSoldier()
                     and damageSum < maxDamage
-                    damageSum += 30
-                    caster.damageTarget(u, 30, true, true,
+                    damageSum += 60
+                    caster.damageTarget(u, 60, true, true,
                         ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS)
 
     ondestroy

@@ -22,7 +22,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 14, 4, 2, 2)
 
         ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(120)
+        ..setHitPointsMaximumBase(240)
         ..setHitPointsRegenerationRate(-10)
 
         ..setSpeedBase(270)
@@ -50,7 +50,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(70)
+        ..setHitPointsMaximumBase(140)
 
         ..setSpeedBase(270)
 
@@ -77,7 +77,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(120)
+        ..setHitPointsMaximumBase(240)
 
         ..setSpeedBase(300)
         ..setAutoPointValue()
@@ -110,7 +110,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 3)
-        ..setHitPointsMaximumBase(240)
+        ..setHitPointsMaximumBase(480)
         ..setMana(200)
         ..setManaRegeneration(0.75)
 
@@ -146,7 +146,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 5)
-        ..setHitPointsMaximumBase(550)
+        ..setHitPointsMaximumBase(1100)
         ..setMana(200)
 
         ..setSpeedBase(300)
@@ -173,7 +173,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 4)
-        ..setHitPointsMaximumBase(350)
+        ..setHitPointsMaximumBase(700)
 
         ..setSpeedBase(300)
         ..setAutoPointValue()
@@ -205,7 +205,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(80)
+        ..setHitPointsMaximumBase(160)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -240,7 +240,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 39, 3, 10, 1.5)
 
         ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(550)
+        ..setHitPointsMaximumBase(1100)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -275,7 +275,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 67, 5, 13, 1.5)
 
         ..setArmorData(ArmorType.Small, 6)
-        ..setHitPointsMaximumBase(1200)
+        ..setHitPointsMaximumBase(2400)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -311,7 +311,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Siege, 75, 3, 9, 1.2)
 
         ..setArmorData(ArmorType.Large, 2)
-        ..setHitPointsMaximumBase(1200)
+        ..setHitPointsMaximumBase(2400)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -345,7 +345,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Siege, 80, 10, 7, 2)
 
         ..setArmorData(ArmorType.Fortified, 6)
-        ..setHitPointsMaximumBase(1200)
+        ..setHitPointsMaximumBase(2400)
 
         ..setSpeedBase(270)
 
@@ -375,7 +375,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Divine, 2)
-        ..setHitPointsMaximumBase(200)
+        ..setHitPointsMaximumBase(400)
         // ..setHitPointsRegenerationRate(-10)
 
         ..setSpeedBase(270)
@@ -407,7 +407,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Divine, 4)
-        ..setHitPointsMaximumBase(550)
+        ..setHitPointsMaximumBase(1100)
 
         ..setSpeedBase(300)
 
@@ -450,7 +450,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 4)
-        ..setHitPointsMaximumBase(500)
+        ..setHitPointsMaximumBase(1000)
         ..setMana(300)
 
         ..setSpeedBase(300)
@@ -484,7 +484,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 4)
-        ..setHitPointsMaximumBase(900)
+        ..setHitPointsMaximumBase(1800)
         ..setMana(500)
 
         ..setSpeedBase(270)
@@ -513,7 +513,7 @@ import UnitTooltipGenerator
 
         ..setAttack1Data(AttackType.Magic, 1, 1, 1, 2)
         ..setArmorData(ArmorType.Divine, 0)
-        ..setHitPointsMaximumBase(10)
+        ..setHitPointsMaximumBase(20)
 
         ..setSpeedBase(250)
 
@@ -537,7 +537,7 @@ import UnitTooltipGenerator
 ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
 //         ..setArmorData(ArmorType.Large, 4)
-//         ..setHitPointsMaximumBase(300)
+//         ..setHitPointsMaximumBase(600)
 
 //         ..setSpeedBase(240)
 

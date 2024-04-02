@@ -22,7 +22,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 25, 2, 4, 1.5)
 
         ..setArmorData(ArmorType.Large, 2)
-        ..setHitPointsMaximumBase(300)
+        ..setHitPointsMaximumBase(600)
 
         ..setSpeedBase(270)
 
@@ -55,7 +55,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 55, 4, 4, 1.1)
 
         ..setArmorData(ArmorType.Large, 3)
-        ..setHitPointsMaximumBase(500)
+        ..setHitPointsMaximumBase(1000)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -87,7 +87,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 2)
-        ..setHitPointsMaximumBase(80)
+        ..setHitPointsMaximumBase(160)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -118,7 +118,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 4)
-        ..setHitPointsMaximumBase(160)
+        ..setHitPointsMaximumBase(320)
 
         ..setSpeedBase(270)
 
@@ -143,7 +143,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 41, 5, 4, 1.8)
 
         ..setArmorData(ArmorType.Large, 2)
-        ..setHitPointsMaximumBase(600)
+        ..setHitPointsMaximumBase(1200)
 
         ..setSpeedBase(350)
 
@@ -173,7 +173,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Siege, 111, 6, 7, 1.6)
 
         ..setArmorData(ArmorType.Large, 7)
-        ..setHitPointsMaximumBase(1100)
+        ..setHitPointsMaximumBase(2200)
 
         ..setSpeedBase(350)
         ..setSizeSmall()
@@ -205,7 +205,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 86, 6, 8, 1.0)
 
         ..setArmorData(ArmorType.Large, 5)
-        ..setHitPointsMaximumBase(1100)
+        ..setHitPointsMaximumBase(2200)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -240,7 +240,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Small, 4)
-        ..setHitPointsMaximumBase(1000)
+        ..setHitPointsMaximumBase(2000)
 
         ..setSpeedBase(270)
         ..setItemCostUnit(0, 750, 1)
@@ -269,7 +269,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(100)
+        ..setHitPointsMaximumBase(200)
         ..setMana(250)
 
         ..setSpeedBase(270)
@@ -298,7 +298,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(80)
+        ..setHitPointsMaximumBase(160)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -333,7 +333,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 15, 4, 3, 1.1)
 
         ..setArmorData(ArmorType.Divine, 2)
-        ..setHitPointsMaximumBase(200)
+        ..setHitPointsMaximumBase(400)
 
         ..setSpeedBase(350)
         ..setPointValue(20)
@@ -359,7 +359,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 47, 5, 6, 1.1)
 
         ..setArmorData(ArmorType.Divine, 4)
-        ..setHitPointsMaximumBase(450)
+        ..setHitPointsMaximumBase(900)
 
         ..setSpeedBase(350)
         ..setPointValue(60)
@@ -396,7 +396,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileArt(Abilities.serpentWardMissile)
 
         ..setArmorData(ArmorType.Small, 4)
-        ..setHitPointsMaximumBase(440)
+        ..setHitPointsMaximumBase(880)
         ..setMana(600)
 
         ..setSpeedBase(300)
@@ -426,7 +426,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Siege, 80, 9, 11, 2)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(1500)
+        ..setHitPointsMaximumBase(3000)
 
         ..setSpeedBase(240)
 
@@ -461,7 +461,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Siege, 80, 9, 11, 2)
 
         ..setArmorData(ArmorType.Large, 8)
-        ..setHitPointsMaximumBase(1700)
+        ..setHitPointsMaximumBase(3400)
 
         ..setSpeedBase(240)
         ..setItemCostReplacement(0, 200, 1, ogreCount, ogreCount, BUILDING_OGRE)
@@ -495,7 +495,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Siege, 80, 9, 11, 2)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(1500)
+        ..setHitPointsMaximumBase(3000)
         ..setMana(200)
 
         ..setSpeedBase(240)
