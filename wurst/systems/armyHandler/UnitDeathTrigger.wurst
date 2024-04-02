@@ -140,11 +140,32 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
                     spawnSpeedBanner(middle, matchUpWinner)
 
                 nullTimer() ->
-                    matchUpWinner.getPlayerData().spawnedUnits.forEach() (unit u) ->
+                    // Group order works on 12 units max
+                    let orderUnitCount = 12
+                    let spawnedUnits = matchUpWinner.getPlayerData().spawnedUnits
+                    let grpList = new LinkedList<group>()
+                    let grpNbr = (spawnedUnits.size() / orderUnitCount).toInt() + 1
+
+                    for i = 0 to grpNbr
+                        grpList.push(CreateGroup())
+
+                    var grp = grpList.get(0)
+                    var grpIdx = 0
+                    for u in spawnedUnits
                         if u.isSoldier() and u.isAlive()
-                            u.issuePointOrder("attack", CENTER)
-                            // u.issuePointOrder("attack", middle)
-                            // BlzQueuePointOrderById(u, OrderIds.attack, CENTER.x, CENTER.y)
+                            grp.add(u)
+                        if (spawnedUnits.indexOf(u) % (orderUnitCount - 1) == 0 and spawnedUnits.indexOf(u) > 0)
+                            or spawnedUnits.indexOf(u) == spawnedUnits.size() - 1
+                            grp.pointOrderById(OrderIds.attack, middle)
+                            doAfter(4) ->
+                                grp.pointOrderById(OrderIds.attack, CENTER)
+                                grpList.remove(grp)
+                                grp.close()
+                                if grpList.isEmpty()
+                                    destroy grpList
+                            grpIdx += 1
+                            grp = grpList.get(grpIdx)
+
 
             else if roundController.currentRound instanceof FinalRound
                 (roundController.currentRound castTo FinalRound).looser = pData._p
