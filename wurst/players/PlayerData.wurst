@@ -94,7 +94,7 @@ public class PlayerData
         bpPerRound.push(armyPoints + roundBloodPoints)
 
 
-public function initPlayers()
+public function initPlayerDatas()
     // TODO: refactor for release
     new PlayerData(players[0], gg_rct_Red)
     new PlayerData(players[1], gg_rct_Blue)

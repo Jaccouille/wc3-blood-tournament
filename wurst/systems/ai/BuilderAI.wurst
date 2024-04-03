@@ -86,15 +86,17 @@ class BuilderAI
             pData.racePicker.issueImmediateOrder(UnitId2String(gameConfig.getBuilderList().getRandomElement()))
 
     private function tryToBuyItems(LinkedList<unit> buildingList)
-        let buildingWithItemsToBuy = buildingList
-            .lodashFilter(building -> ItemStockHandler.unitToItemStockMap.has(building))
-        if buildingWithItemsToBuy.size() > 0
+        // Get existing building that can be upgraded
+        let buildingWithItemsToBuy = new LinkedList<unit>
+        for building in buildingList
+            if ItemStockHandler.unitToItemStockMap.has(building)
+                buildingWithItemsToBuy.push(building)
+
+        if buildingWithItemsToBuy != null and buildingWithItemsToBuy.size() > 0
             let randomBuilding = buildingWithItemsToBuy.getRandomElement()
             let stockHandler = ItemStockHandler.unitToItemStockMap.get(randomBuilding)
             var choseUpgrade = false
             while not choseUpgrade
-                Log.debug("name = " + randomBuilding.getName() + " for player " + randomBuilding.getOwner().getName())
-                Log.debug("name = " + randomBuilding.getName() + " size: " + " " + unitItemSold.get(randomBuilding.getTypeId()).size().toString())
                 let randomItem = unitItemSold.get(randomBuilding.getTypeId()).getRandomElement()
                 if stockHandler.hasItem(randomItem)
                     randomBuilding.issueImmediateOrderById(randomItem)
@@ -115,8 +117,10 @@ class BuilderAI
                 let buildingList = pData.buildingList.copy()
 
                 // Get existing building that can be upgraded
-                let upgradableBuildings = buildingList
-                    .lodashFilter(building -> UPGRADE_OPTIONS.has(building.getTypeId()))
+                let upgradableBuildings = new LinkedList<unit>
+                for building in buildingList
+                    if UPGRADE_OPTIONS.has(building.getTypeId())
+                        upgradableBuildings.push(building)
 
                 // Try to upgrade building, if not, try to buy items
                 if upgradableBuildings.size() > 0

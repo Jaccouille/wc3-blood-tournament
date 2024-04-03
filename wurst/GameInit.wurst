@@ -59,17 +59,17 @@ init
 
     // register altar callback indicator before replacing it
     initAltar()
-    initPlayers()
 
     SetTimeOfDayScale(0)
     SetTimeOfDay(12)
 
-    registerIndicatorCallback(UNIT_RACE_PICKER) (unit target) ->
-        let pData = pDatas.get(target.getOwner())
-        pData.racePicker = target
-    replaceIndicator()
 
     nullTimer() ->
+        initPlayerDatas()
+        registerIndicatorCallback(UNIT_RACE_PICKER) (unit target) ->
+            let pData = pDatas.get(target.getOwner())
+            pData.racePicker = target
+        replaceIndicator()
         initRoundController()
         initUnitDeathTrigger()
         initArmySpawner()

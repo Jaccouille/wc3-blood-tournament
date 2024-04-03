@@ -77,6 +77,16 @@ init
             else
                 units.add(target)
 
+    // Toggles an order monitor for the selected units.
+    registerToolkitCommand("current") (triggerPlayer, arguments) ->
+        forUnitsSelected(triggerPlayer) (unit target) ->
+            // Look up the set for the triggering player.
+            let orderID = target.getCurrentOrder()
+            print("{0} was issued order {1}: {2}.".format(
+                target.getName(),
+                orderID.toString(),
+                OrderId2StringBJ(orderID))
+            )
     // Register the events needed to monitor orders.
     registerPlayerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER, function onOrder)
     registerPlayerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER, function onOrder)
