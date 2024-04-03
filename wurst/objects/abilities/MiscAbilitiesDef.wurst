@@ -24,6 +24,7 @@ import UnitExtensions
 import TooltipsUtils
 import UnitCreationTrigger
 import VotesDefinition
+import OrderBlocker
 
 let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
 
@@ -174,7 +175,7 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
     createStandardChannelAbility(ABIL_TRADE_GOLD)
         ..setNameEnhance("D", "Trade Gold")
         ..setTooltipNormalExtended(1, TOOLTIP_TRADE_GOLD)
-        ..setIconNormal(Icons.bTNMGExchange)
+        ..setIconNormal(Icons.bTNLGExchange)
         ..setBaseOrderID(1, "berserk")
 
     createStandardChannelAbility(ABIL_TRADE_BLOOD_POINT)
@@ -294,12 +295,21 @@ init
             ..setPermanent(false)
         forUnitsInRange(target, 200) (unit u) ->
             if u.getCurrentOrder() == 0
-                and not u.isType(UNIT_TYPE_PEON)
-                and not u.isType(UNIT_TYPE_STRUCTURE)
+                and u.isSoldier()
                 u.issuePointOrder("attack", CENTER)
 
     EventListener.onTargetCast(ABIL_UNSTUCK_UNIT) (unit caster, unit target) ->
-        if target.isSoldier() and target.getCurrentOrder() != OrderIds.move
-            target.setPos(target.getPos() + vec2(0, 10))
+        if target.getCurrentOrder() == 0
+            and preventOrder == true
+            and target.isSoldier()
+            target.setPos(target.getPos().moveTowards(CENTER, 50))
             flashEffect(Abilities.blinkTarget, target.getPos())
             target.issuePointOrder("attack", CENTER)
+            let msg = caster.getOwner().getNameColored() + " used unstuck unit"
+            createTTEx(target.getPos3Real(), msg, 10)
+                ..setVelocity(0, 0.03)
+                ..setFadepoint(2.)
+                ..setLifespan(3.0)
+                ..setPermanent(false)
+        else
+            printTimedToPlayer("Unit isn't stuck", 3, caster.getOwner())

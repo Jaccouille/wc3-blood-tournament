@@ -5,15 +5,12 @@
 
 - Fire arrow (potm)
 - Raider upgrade
-- Rework berserk (horrible sound)
 - Rework abom
-- TEst queue order
+- Necro upgrade
+- Rework entangle root
 
--Speed banner sound
--Ping minimap for previewer
--Move sell all button
-- Sell refund upgrade
-- Don't preview bot armies
+- Remove bridges
+- Displace unit
 
 - Convert orb of blood to mdx
 - bp item cost overhaul
@@ -41,6 +38,7 @@
 - Change statut UI (see ITT)
 - Test parseTag native
 - Custom UI damage table
+
 
 
 
