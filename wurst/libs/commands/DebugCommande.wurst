@@ -4,6 +4,7 @@ package DebugCommande
 import ClosureForGroups
 import ClosureTimers
 import ObjectIds
+import Reflection
 
 // Local imports:
 import ArmySpawner
@@ -12,6 +13,7 @@ import OrderBlocker
 import RoundController
 import Toolkit
 import UnitDeathTrigger
+import ArmyPreviewer
 
 init
     registerToolkitCommand("su") (player triggerPlayer, LinkedList<string> arguments) ->
@@ -77,3 +79,21 @@ init
         forItemsInMap() (item i) ->
             _count += 1
         Log.info("Item count: " + _count.toString())
+
+    registerToolkitCommand("ps") (player triggerPlayer, LinkedList<string> arguments) ->
+        for i = 1 to maxTypeId()
+            if instanceCount(i) > 0
+                Log.info(typeIdToTypeName(i) + " " + instanceCount(i).toString() + " " + maxInstanceCount(i).toString())
+        Log.info("Max type id : " + maxTypeId().toString())
+
+    registerToolkitCommand("psa") (player triggerPlayer, LinkedList<string> arguments) ->
+        for i = 1 to maxTypeId()
+            if instanceCount(i) > 100
+                Log.info(typeIdToTypeName(i) + " " + instanceCount(i).toString() + " " + maxInstanceCount(i).toString())
+        Log.info("Max type id : " + maxTypeId().toString())
+
+    registerToolkitCommand("psb") (player triggerPlayer, LinkedList<string> arguments) ->
+        for _p in pDatas
+            if playerToArmyPreviewer.has(_p)
+                let t = playerToArmyPreviewer.get(_p)
+                Log.info(t.squadIds.size().toString() + " " + t.unitModifierList.size().toString())

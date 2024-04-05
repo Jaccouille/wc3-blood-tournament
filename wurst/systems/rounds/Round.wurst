@@ -201,6 +201,10 @@ public abstract class Round
         p1.panCameraToTimed(computeCameraPos(spawnZone1, spawnZone2), 0)
         p2.panCameraToTimed(computeCameraPos(spawnZone1, spawnZone2), 0)
 
+    ondestroy
+        destroy matchUp
+        destroy roundParticipant
+
 
 public class NormalRound extends Round
     static int counter = 0

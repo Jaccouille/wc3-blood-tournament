@@ -63,6 +63,7 @@ init
         if _p.getController() != MAP_CONTROL_USER
             or _p.getSlotState() != PLAYER_SLOT_STATE_PLAYING
             _p.setName(botNames.pop())
+    destroy botNames
 
 
     EventListener.add(EVENT_PLAYER_LEAVE) ->

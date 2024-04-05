@@ -49,6 +49,7 @@ class RoundController
 
     function addRounds(LinkedList<Round> rounds)
         this.rounds.addAll(rounds.copy())
+        destroy rounds
 
     function buildScoreBoardForFinals(string roundPhase)
         // Get all round from the same phase
@@ -190,6 +191,7 @@ class RoundController
                 else
                     Log.debug("Removing previous winner")
                     previousRoundWinner = null
+            destroy currentRound
             currentRound = null
             preRoundPhaseStart()
 

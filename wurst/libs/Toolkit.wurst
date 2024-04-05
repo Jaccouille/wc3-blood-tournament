@@ -28,6 +28,7 @@ public function registerToolkitCommand(string command, CommandHandler handler)
     registerCommandAll(command) (triggerPlayer, arguments) ->
         if isEnabled
             handler.run(triggerPlayer, arguments)
+            destroy arguments
 
 // Enables the toolkit irreversibly.
 public function enableToolkit()

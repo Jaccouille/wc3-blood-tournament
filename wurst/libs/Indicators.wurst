@@ -76,3 +76,4 @@ public function replaceIndicator()
                     if list != null
                         list.forEach() (Callback cb) ->
                             cb.run(target)
+        destroy indicators

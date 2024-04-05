@@ -8,6 +8,7 @@ import ClosureTimers
 import HashMap
 import LinkedListModule
 import TerrainUtils
+import Reflection
 
 // Local imports:
 import ChatCommands
@@ -101,6 +102,7 @@ class BuilderAI
                 if stockHandler.hasItem(randomItem)
                     randomBuilding.issueImmediateOrderById(randomItem)
                     choseUpgrade = true
+        destroy buildingWithItemsToBuy
 
     // TODO: learn how to do AI
     function startAI()
@@ -131,7 +133,8 @@ class BuilderAI
                         unitToUpgrade.issueImmediateOrder(OrderId2StringBJ(upgradeChoice))
                 else
                     tryToBuyItems(buildingList)
-
+                destroy upgradableBuildings
+                destroy buildingList
 
             if pData.builder != null and pData._p.getGold() >= 100
                 let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()

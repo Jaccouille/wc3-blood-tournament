@@ -202,6 +202,7 @@ public class ArmySpawner
             if itemModifyUnitMap.has(itm.getTypeId())
                 unitModifierList.push(new ItemModifier(itemModifyUnitMap.get(itm.getTypeId()), itm.getCharges()))
             // Log.debug("BitemModifyUnit :" + unitModifierList.size().toString())
+        destroy inv
 
     private function executeUnitModifier(unit newUnit)
         // a being the callback defined in ItemCallbackDefinition.wurst
