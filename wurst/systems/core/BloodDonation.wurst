@@ -68,11 +68,11 @@ class CorpseProjectile extends CustomProjectile
         )
 
 
-public function playLaunchSound()
+public function playLaunchSound(string soundPath)
     // Create, play, and kill the sound.
     KillSoundWhenDone(
         CreateSound(
-            Sounds.hPitLordYes2,
+            soundPath,
             false,
             false,
             false,
@@ -89,8 +89,10 @@ function launchCorpse(int bloodPoints, player target)
     let pData = pDatas.get(target)
     let arenaMaster = altarEntity.getArenaMaster()
 
+    var soundPath = ""
     if GetLocalPlayer() == target
-        playLaunchSound()
+        soundPath = Sounds.hPitLordYes2
+    playLaunchSound(soundPath)
 
     arenaMaster.setAnimation("attack")
     arenaMaster.queueAnimation("stand")
@@ -100,8 +102,6 @@ function launchCorpse(int bloodPoints, player target)
         2, 175, Abilities.meatwagonMissile)
         ..setBloodPoints(bloodPoints)
         ..setTarget(target)
-
-
 
 
 init

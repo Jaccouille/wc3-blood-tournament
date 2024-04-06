@@ -168,7 +168,8 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
                             grp.pointOrderById(OrderIds.attack, middle)
                             doAfter(4) ->
                                 grp.pointOrderById(OrderIds.attack, CENTER)
-                                grpList.remove(grp)
+                                if grpList.has(grp)
+                                    grpList.remove(grp)
                                 grp.close()
                                 if grpList.isEmpty()
                                     destroy grpList

@@ -72,7 +72,7 @@ import UnitTooltipGenerator
 
         ..setModelFileExt(Units.chaosGrunt1)
         ..setIconGameInterfaceExt(Icons.bTNChaosGrunt)
-        ..setUnitSoundSetExt(Soundsets.hellscream)
+        ..setUnitSoundSetExt(Soundsets.grunt)
 
 @compiletime function creatTrolls()
     // var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_POISON_SPEAR))
@@ -405,7 +405,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..setItemCostUnit(0, 1000, 1)
 
-        ..setNameEnhance("C", "Farseer")
+        ..setNameEnhance("X", "Farseer")
         ..tooltipStopListen(true, itm)
 
         ..setArtSpecial(Objects.orcLargeDeathExplode)

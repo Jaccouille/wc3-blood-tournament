@@ -65,12 +65,15 @@ public class ItemStockHandler
             if sharedStocksMap.has(building.getTypeId())
                 and sharedStocksMap.get(building.getTypeId()).has(itemId)
                 let sharedStock = sharedStocksMap.get(building.getTypeId())
-                sharedStock.forEach() (integer t) ->
-                    if t != itemId
-                        building.addItemToStock(t, currentStock, currentStock)
-                        itemStock.put(t, currentStock)
-                        if currentStock <= 0
-                            itemStock.remove(t)
+                sharedStock.forEach() (integer itmShared) ->
+                    if itmShared != itemId
+                        let itmSharedStock = itemStock.get(itmShared) - value > 0 ? itemStock.get(itmShared) - value : -1
+
+                        building.addItemToStock(itmShared, itmSharedStock, itmSharedStock)
+                        if itmSharedStock <= 0
+                            itemStock.remove(itmShared)
+                        else
+                            itemStock.put(itmShared, itmSharedStock)
 
             // Update triggered item stock
             itemStock.put(itemId, currentStock)

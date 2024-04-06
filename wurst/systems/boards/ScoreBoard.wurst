@@ -18,9 +18,9 @@ let STAT_LABEL_WIDTH = 0.1
 let NAME_LABEL_WIDTH = 0.18
 let COL_LABEL_WIDTH = 0.06
 
-let COL_ARMY_PTS = "ArmyPts"
-let COL_KILL_PTS = "KillPts"
-let COL_TOTAL_BLOOD_PTS = "Total BPts"
+let COL_ARMY_PTS = "Army Pts"
+let COL_KILL_PTS = "Kill Pts"
+let COL_TOTAL_BLOOD_PTS = "Total Pts"
 
 let iconPlayerInGame = Icons.bTNSelectHeroOn
 

@@ -24,7 +24,7 @@ init
         pDatas.forEach() (player key, PlayerData pData) ->
             let idx = playerToArmySpawner.get(key).buildingIdx
             let nestedIdx = playerToArmySpawner.get(key).squadIdx
-            let spawnFinished = playerToArmySpawner.get(key).spawnFinished
+            let spawnFinished = playerToArmySpawner.get(key).hasSpawnFinished
             Log.info("spawnidx : " + idx.toString() +
                      " spawninestedIdx : " + nestedIdx.toString() +
                      " spawnFinished : " + spawnFinished.toString() +
