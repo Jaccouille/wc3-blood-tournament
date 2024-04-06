@@ -72,7 +72,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(450)
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(440)
+        ..setHitPointsMaximumBase(290)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -281,7 +281,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 80, 4, 6, 1.4)
 
         ..setArmorData(ArmorType.Large, 6)
-        ..setHitPointsMaximumBase(1600)
+        ..setHitPointsMaximumBase(1300)
 
         ..setSpeedBase(350)
 
