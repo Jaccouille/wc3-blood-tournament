@@ -3,16 +3,16 @@ dependencies:
 - https://github.com/wurstscript/wurstStdlib2
 - https://github.com/theQuazz/wurst-lodash
 buildMapData:
-  name: '|cffff5436Blood Tournament Reloaded v0.2a'
-  fileName: Blood.Tournament.Reloaded.v0.2a
+  name: '|cffff5436Blood Tournament Reloaded v0.2b'
+  fileName: Blood.Tournament.Reloaded.v0.2b
   author: Jaccouille
   scenarioData:
-    description: "Released on 03/04/2024\n    A Blood tournament map featuring Human,\
+    description: "Released on 04/06/2024\n    A Blood tournament map featuring Human,\
       \ Orc, Undead and Night Elf faction.      \nCan be played solo against bots."
     suggestedPlayers: '8'
     loadingScreen:
       title: Jaccouille presents
-      subTitle: '|cffff5436Blood Tournament Reloaded v0.2a'
+      subTitle: '|cffff5436Blood Tournament Reloaded v0.2b'
       text: "Choose a faction amongst Human, Orc, Undead or Night Elf.\n  Experiment\
         \ and find the optimal army composition.\n  Enjoy the mayhem!"
   optionsFlags:

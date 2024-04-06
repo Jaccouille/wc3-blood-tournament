@@ -1,0 +1,11 @@
+package v0_002_b
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 2, 'b')
+        ..add("(HU) Reduced Crusader HP 1600 -> 1300")
+        ..add("(HU) Reduced Rifleman HP 440 -> 290")
+        ..add("(NE) Increased Druid Talon DPS and HP 160 -> 210")
+        ..add("(NE) Modified Entangling root to spawn a  AoE slowing ward like unit")
+        ..add("(UN) Added disease cloud to abomination, reduced cleave from 30% -> 20%")
