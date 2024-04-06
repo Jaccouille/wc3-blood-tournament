@@ -189,7 +189,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
     let druidTalonCount = BTBuildingData.getUnitCount(BUILDING_DRUID_TALON)
     var itm = createBasicItem(ITEM_ENTANGLING_ROOT)
-        ..setItemCost(0, 100, 1, druidTalonCount, druidTalonCount)
+        ..setItemCost(0, 200, 1, 1, 1)
         ..setNameEnhance("Z", "Replace 1 Faerie Fire with 1 Entangling Root")
         ..setInterfaceIcon(Icons.bTNEntanglingRoots)
 
@@ -197,17 +197,46 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "Causes roots to burst from the ground, immobilizing, " +
         "disarming and damaging a target enemy temporarily."
         )
-    new AbilityDefinitionEntanglingRootscreep(ABIL_ENTANGLING_ROOT)
+
+    let BUFF_ROOT_SLOW_ID = compiletime(BUFF_ID_GEN.next())
+    new BuffDefinition(BUFF_ROOT_SLOW_ID, BuffIds.enduranceAura)
+        ..setIcon(Icons.bTNEntanglingRoots)
+        ..setArtTarget(Abilities.thornsAuraDamage)
+        ..setTargetAttachments(1, 1)
+        ..setTargetAttachmentPoint0(1, "head")
+        ..setName(1, "Entangling Root")
+        ..setTooltipNormal(1, "Entangling Root")
+        ..setTooltipNormalExtended(1, "This unit is being slowed by a nearby " +
+            " entangling root")
+
+    let ABIL_ROOT_SLOW = compiletime(ABIL_ID_GEN.next())
+    new AbilityDefinitionAuraEnduranceCreep(ABIL_ROOT_SLOW)
+        ..setLevels(1)
+        ..setCheckDependencies(false)
+        ..setArtTarget("")
+        ..presetBuffs(_ -> commaList(BUFF_ROOT_SLOW_ID))
+        ..registerTooltipGenerator(tgen)
+        ..setMovementSpeedIncrease(1, -0.7)
+        ..setAttackSpeedIncrease(1, -0.3)
+        ..tooltipStartListen()
+        ..addTooltipProperty("Movement Speed Reduction", _ -> "70%")
+        ..addTooltipProperty("Attack Speed Reduction", _ -> "30%")
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
+        ..presetAreaofEffect(_ -> 400)
+        ..setNameEnhance("C", "Entangling Root Aura")
+        ..tooltipStopListen(false)
+
+    new AbilityDefinitionHealingWard(ABIL_ENTANGLING_ROOT)
         ..setHeroAbility(false)
+        ..setWardUnitType(1, commaList(UNIT_ENTANGLING_ROOT))
         ..setDummyAbility()
         ..setCheckDependencies(false)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
-        ..presetCooldown(_ -> 80)
         ..tooltipStartListen()
-        ..presetDamageperSecond(_ -> 20)
-        ..presetDurationNormal(_ -> 4)
-        ..presetManaCost(_ -> 80)
+        ..presetDurationNormal(_ -> 10)
+        ..presetManaCost(_ -> 120)
+        ..presetCastRange(_ -> 700)
         ..setNameEnhance("W", "Entangling Root")
         ..tooltipStopListen(false)
 
@@ -215,9 +244,16 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 5)
-        ..presetManaCost(_ -> 80)
+        ..presetManaCost(_ -> 120)
         ..presetCastRange(_ -> 700)
         ..tooltipStopListen(true)
+
+    new UnitDefinition(UNIT_ENTANGLING_ROOT, UnitIds.healingward)
+        ..setModelFile(Abilities.entanglingRootsTarget)
+        ..setNormalAbilities(commaList(ABIL_ROOT_SLOW))
+        ..setScalingValue(1.5)
+        ..setHitPointsMaximumBase(200)
+        ..setName("Entangling Root")
 
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_ENTANGLING_ROOT, tgen.generateFullTooltip())
@@ -575,6 +611,8 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_ABOLISH_MAGIC, tgen.generateFullTooltip())
+
+
 
 
 init

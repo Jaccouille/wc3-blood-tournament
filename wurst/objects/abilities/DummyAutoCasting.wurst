@@ -37,8 +37,8 @@ init
         )
         // ..put(ABIL_AUTOCAST_DEATH_COIL, new BuffTuple(OrderIds.firebolt, -1))
         ..put(ABIL_AUTOCAST_STARFALL, new BuffTuple(OrderIds.blizzard, -1))
-        ..put(ABIL_AUTOCAST_ENTANGLING_ROOT, new BuffTuple(OrderIds.entanglingroots,
-             BuffIds.entanglingRoots))
+        ..put(ABIL_AUTOCAST_ENTANGLING_ROOT, new BuffTuple(OrderIds.healingward,
+             -1))
         ..put(ABIL_AUTOCAST_WAND_OF_ILLUSION, new BuffTuple(OrderIds.wandOfIllusion, -1))
         ..put(ABIL_AUTOCAST_REJUVENATION, new BuffTuple(OrderIds.rejuvination, BuffIds.rejuvenation))
         ..put(ABIL_AUTOCAST_FROST_NOVA, new BuffTuple(OrderIds.frostnova, -1))
