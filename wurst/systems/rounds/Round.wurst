@@ -149,6 +149,9 @@ public abstract class Round
                 nullTimer() ->
                     preventOrder = true
                     orderBlocker.enable()
+                for _p in pDatas
+                    pDatas.get(_p).builder.addAbility(ABIL_UNSTUCK_UNIT)
+                    pDatas.get(_p).builder.addAbility(ABIL_ORDER_UNIT)
 
             else if setupTime < 6
                 printTimed(setupTime.toString() + "...", 5)

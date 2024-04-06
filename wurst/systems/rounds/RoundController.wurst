@@ -290,7 +290,9 @@ public function initRoundController()
         Log.debug(round.roundName + " finished")
         altarEntity.getOrbUnit().pause()
         altarEntity.getArenaMaster().setAnimation("Stand")
-
+        for _p in pDatas
+            pDatas.get(_p).builder.removeAbility(ABIL_UNSTUCK_UNIT)
+            pDatas.get(_p).builder.removeAbility(ABIL_ORDER_UNIT)
         // Remove speed boost banner
         forUnitsAll() (unit u) ->
             if u.getTypeId() == UNIT_SPEED_BANNER
