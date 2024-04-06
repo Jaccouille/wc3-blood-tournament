@@ -186,7 +186,7 @@ public abstract class Round
             playerToArmySpawner.get(_p)
                 ..spawnArmy(true)
             if _p.getPlayerData().spawnedUnits.size() >= spawnZone.unitLimit
-                or playerToArmySpawner.get(_p).spawnFinished
+                or playerToArmySpawner.get(_p).hasSpawnFinished
                 playerToArmySpawner.get(_p).setReinforcementPos()
                 destroy cb
 
@@ -215,8 +215,11 @@ public class NormalRound extends Round
         this.roundName = "Round " + counter.toString()
 
     override function spawnPortals()
-        SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "show", false)
-        SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "birth", false)
+        for zoneIdx = 0 to 7
+            SetDoodadAnimationRect(pDatas.get(players[zoneIdx]).buildingRect, DOODAD_PORTAL, "show", false)
+            SetDoodadAnimationRect(pDatas.get(players[zoneIdx]).buildingRect, DOODAD_PORTAL, "birth", false)
+            spawnZones.get(zoneIdx).openPortal()
+
         forUnitsAll() (unit u) ->
             if u.isType(UNIT_TYPE_STRUCTURE)
                 u.setAnimation("Stand Victory")

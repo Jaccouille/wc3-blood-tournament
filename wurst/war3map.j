@@ -34,6 +34,10 @@ globals
     rect                    gg_rct_Pink                = null
     rect                    gg_rct_Final_Round_West    = null
     rect                    gg_rct_Final_Round_East    = null
+    rect                    gg_rct_NtoCenter           = null
+    rect                    gg_rct_StoCenter           = null
+    rect                    gg_rct_EtoCenter           = null
+    rect                    gg_rct_WtoCenter           = null
 endglobals
 
 function InitGlobals takes nothing returns nothing
@@ -200,6 +204,10 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_Pink = Rect( -4864.0, 5600.0, -3328.0, 6176.0 )
     set gg_rct_Final_Round_West = Rect( -1536.0, -128.0, -512.0, 2304.0 )
     set gg_rct_Final_Round_East = Rect( 512.0, -128.0, 1536.0, 2304.0 )
+    set gg_rct_NtoCenter = Rect( -512.0, 7040.0, 512.0, 7168.0 )
+    set gg_rct_StoCenter = Rect( -512.0, -5120.0, 512.0, -4992.0 )
+    set gg_rct_EtoCenter = Rect( 6016.0, 640.0, 6144.0, 1408.0 )
+    set gg_rct_WtoCenter = Rect( -6144.0, 640.0, -6016.0, 1408.0 )
 endfunction
 
 //***************************************************************************

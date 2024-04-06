@@ -138,6 +138,15 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
                         hasSpawned = true
                 if not hasSpawned
                     spawnSpeedBanner(middle, matchUpWinner)
+                    let armySpawner = playerToArmySpawner.get(matchUpWinner)
+                    let secondRectIdx = spawnZones.indexOf(armySpawner.spawnZone) div 2 + 10
+
+                    armySpawner.spawnZone.closePortal()
+                    if not armySpawner.hasSpawnFinished
+                        armySpawner.spawnZone = spawnZones.get(secondRectIdx)
+                        armySpawner.pos = armySpawner.spawnZone.spawnRect.getCenter()
+                        armySpawner.spawnZone.openPortal()
+
 
                 nullTimer() ->
                     // Group order works on 12 units max

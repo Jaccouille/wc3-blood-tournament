@@ -157,7 +157,7 @@ public class ArmySpawner
     int unitPerLine
     PlayerData pData
     EventListener reinforcementListener
-    boolean spawnFinished = false
+    boolean hasSpawnFinished = false
     // List of units spawned by a building
     LinkedList<int> squadUnitIds = new LinkedList<int>
 
@@ -251,7 +251,7 @@ public class ArmySpawner
         squadUnitIds.clear()
         buildingIdx = 0
         squadIdx = 0
-        spawnFinished = false
+        hasSpawnFinished = false
 
 
         // TODO: Add to gameConfig?
@@ -328,7 +328,7 @@ public class ArmySpawner
                 SetDoodadAnimationRect(this.pData.buildingRect, DOODAD_PORTAL, "death", false)
                 spawnZone.closePortal()
 
-            spawnFinished = true
+            hasSpawnFinished = true
 
         // Set position to the reinforcement spawn point
         if not spawnFromPortal
@@ -374,7 +374,7 @@ public class ArmySpawner
             buildingIdx++
             squadUnitIds.clear()
             if isBuildingSpawnOver()
-                spawnFinished = true
+                hasSpawnFinished = true
                 if gameConfig.isDisplayPortalEnabled()
                     SetDoodadAnimationRect(this.pData.buildingRect, DOODAD_PORTAL, "death", false)
                     spawnZone.closePortal()
@@ -384,7 +384,7 @@ public class ArmySpawner
             let dying = EventData.getDyingUnit()
             let dyingOwner = dying.getOwner().getTruePlayerFromDummy()
             if dyingOwner == this._p
-                and not spawnFinished
+                and not hasSpawnFinished
                 and dying.getPointValue() > 0
                 spawnReinforcement()
 

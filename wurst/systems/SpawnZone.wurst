@@ -59,3 +59,8 @@ init
 
             ..add(new SpawnZone(gg_rct_Final_Round_West, gg_rct_Final_Round_West.getRightBot(), 0..asAngleDegrees(), FINAL_ROUND_SPAWN_LIMIT))
             ..add(new SpawnZone(gg_rct_Final_Round_East, gg_rct_Final_Round_East.getLeftBot(), 180..asAngleDegrees(), FINAL_ROUND_SPAWN_LIMIT))
+
+            ..add(new SpawnZone(gg_rct_StoCenter, gg_rct_StoCenter.getLeftBot(), 90..asAngleDegrees(), gameConfig.getSpawnCap()))
+            ..add(new SpawnZone(gg_rct_NtoCenter, gg_rct_NtoCenter.getLeftTop(), 270..asAngleDegrees(), gameConfig.getSpawnCap()))
+            ..add(new SpawnZone(gg_rct_EtoCenter, gg_rct_EtoCenter.getLeftTop(), 270..asAngleDegrees(), gameConfig.getSpawnCap()))
+            ..add(new SpawnZone(gg_rct_WtoCenter, gg_rct_WtoCenter.getLeftBot(), 90..asAngleDegrees(), gameConfig.getSpawnCap()))
