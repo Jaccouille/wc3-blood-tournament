@@ -170,7 +170,7 @@ def update_build(version):
     # Look up the previous name of the map.
     name = build["buildMapData"]["name"]
     description = build["buildMapData"]["scenarioData"]["description"]
-    description = description_template.render({"release_date": date.today().strftime("%d/%m/%Y")})
+    description = description_template.render({"release_date": date.today().strftime("%m/%d/%Y")})
     build["buildMapData"]["scenarioData"].update(
         {
             "description": description
