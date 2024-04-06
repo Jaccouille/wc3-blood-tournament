@@ -371,9 +371,12 @@ import UnitTooltipGenerator
         ..setGhostDeath()
 
 @compiletime function createAbomination()
-    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_CLEAVE_30))
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_DISEASE_CLOUD) + "\n\n" +
+        abilTooltipMap.get(ABIL_CLEAVE_20)
+        )
     createSpawnedUnit(UNIT_ABOMINATION, UnitIds.abomination, BUILDING_ABOMINATION)
-        ..setNormalAbilities(commaList(ABIL_CLEAVE_30))
+        ..setNormalAbilities(commaList(ABIL_DISEASE_CLOUD, ABIL_CLEAVE_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -469,7 +472,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 154, 7, 7, 1.0)
+        ..setAttack1Data(AttackType.Pierce, 110, 7, 7, 1.0)
 
         ..setArmorData(ArmorType.Large, 8)
         ..setHitPointsMaximumBase(2400)

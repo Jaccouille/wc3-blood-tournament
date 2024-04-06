@@ -460,6 +460,21 @@ let DEATH_COIL_TARGET_COUNT = 3
 
     tgen.applyToDefItem(itm)
 
+    tgen = new BTAbilityTooltipGenerator(
+        "Infects nearby enemy living units with Disease Cloud.")
+    new AbilityDefinitionAuraPlagueAbomination(ABIL_DISEASE_CLOUD)
+        ..setCheckDependencies(false)
+        ..setAuraDuration(1, 6)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDamageperSecond(_ -> 20)
+        ..presetAreaofEffect(_ -> 300)
+        ..addTooltipProperty("Duration", _ -> "6")
+        ..setNameEnhance("Z", "Disease Cloud")
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+
 
 init
     EventListener.onTargetCast(ABIL_AUTOCAST_DEATH_COIL) (unit caster, unit target) ->
