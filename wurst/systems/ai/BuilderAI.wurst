@@ -207,8 +207,10 @@ init
 
 
         EventListener.add(EVENT_PLAYER_LEAVE) ->
-            if gameConfig.isBotAIEnabled()
-                playerToBuilderAI.get(GetTriggerPlayer()).toggleAI()
+            if gameConfig.isBotAIEnabled() and GameStates.gameplay.active
+                let ai = playerToBuilderAI.get(GetTriggerPlayer())
+                if not ai.isEnabled
+                    ai.toggleAI()
 
     registerCommandAll("bot") (triggerPlayer, args) ->
         // let aiInstance = playerToBuilderAI.get(triggerPlayer)

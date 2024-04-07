@@ -459,6 +459,33 @@ import UnitObjEditingCommon
 
     abilTooltipMap.put(ABIL_OGRE_SWING, tgen.generateFullTooltip())
 
+    // let BUFF_FIREBOLT_ID = compiletime(BUFF_ID_GEN.next())
+    // new BuffDefinition(BUFF_FIREBOLT_ID, BuffIds.acidBomb)
+    //     ..setIcon(Icons.bTNFire)
+    //     ..setArtTarget(1, Abilities.flameStrikeDamageTarget)
+    //     ..setName(1, "Firebolt")
+    //     ..setTooltipNormal(1, "Firebolt")
+    //     ..setTooltipNormalExtended(1, "This has been hit by a firebolt; is it taking damage over time")
+
+    // tgen = new BTAbilityTooltipGenerator(
+    //     "Hurls a fiery bolt that stuns a target enemy unit.")
+    // new AbilityDefinitionAlchemistAcidBomb(ABIL_FIREBOLT)
+    //     ..setHeroAbility(false)
+    //     ..setMissileArc(0)
+    //     ..setMissileArt(Abilities.phoenix_Missile)
+    //     ..registerTooltipGenerator(tgen)
+    //     ..setBuffs(1, commaList(BUFF_FIREBOLT_ID))
+    //     ..setDummyAbility()
+    //     ..setArmorPenalty(1, 0)
+    //     ..tooltipStartListen()
+    //     ..presetPrimaryDamage(_ -> 30)
+    //     ..presetSecondaryDamage(_ -> 15)
+    //     ..presetAreaofEffect(_ -> 200)
+    //     ..presetDurationNormal(_ -> 5)
+    //     ..presetManaCost(_ -> 125)
+    //     ..setNameEnhance("Z", "Firebolt")
+    //     ..tooltipStopListen(false)
+
 
     tgen = new BTAbilityTooltipGenerator(
         "Hurls a fiery bolt that stuns a target enemy unit.")

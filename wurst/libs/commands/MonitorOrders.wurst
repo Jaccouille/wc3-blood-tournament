@@ -8,6 +8,8 @@ import RegisterEvents
 
 // Local imports:
 import Toolkit
+import GameConfig
+import GameStates
 
 // Standard library imports:
 
@@ -61,33 +63,35 @@ function onOrder()
 
 
 init
-    // Create an empty set of monitored units per player.
-    for index = 0 to bj_MAX_PLAYER_SLOTS - 1
-        monitored.put(players[index], new HashSet<unit>())
+    GameStates.gameplay.onEnter() state ->
+        if gameConfig.isTestModeEnabled()
+            // Create an empty set of monitored units per player.
+            for index = 0 to bj_MAX_PLAYER_SLOTS - 1
+                monitored.put(players[index], new HashSet<unit>())
 
-    // Toggles an order monitor for the selected units.
-    registerToolkitCommand("monitor") (triggerPlayer, arguments) ->
-        forUnitsSelected(triggerPlayer) (unit target) ->
-            // Look up the set for the triggering player.
-            let units = monitored.get(triggerPlayer)
+            // Toggles an order monitor for the selected units.
+            registerToolkitCommand("monitor") (triggerPlayer, arguments) ->
+                forUnitsSelected(triggerPlayer) (unit target) ->
+                    // Look up the set for the triggering player.
+                    let units = monitored.get(triggerPlayer)
 
-            // Take the necessary action to toggle membership.
-            if units.has(target)
-                units.remove(target)
-            else
-                units.add(target)
+                    // Take the necessary action to toggle membership.
+                    if units.has(target)
+                        units.remove(target)
+                    else
+                        units.add(target)
 
-    // Toggles an order monitor for the selected units.
-    registerToolkitCommand("current") (triggerPlayer, arguments) ->
-        forUnitsSelected(triggerPlayer) (unit target) ->
-            // Look up the set for the triggering player.
-            let orderID = target.getCurrentOrder()
-            print("{0} was issued order {1}: {2}.".format(
-                target.getName(),
-                orderID.toString(),
-                OrderId2StringBJ(orderID))
-            )
-    // Register the events needed to monitor orders.
-    registerPlayerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER, function onOrder)
-    registerPlayerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER, function onOrder)
-    registerPlayerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER, function onOrder)
+            // Toggles an order monitor for the selected units.
+            registerToolkitCommand("current") (triggerPlayer, arguments) ->
+                forUnitsSelected(triggerPlayer) (unit target) ->
+                    // Look up the set for the triggering player.
+                    let orderID = target.getCurrentOrder()
+                    print("{0} was issued order {1}: {2}.".format(
+                        target.getName(),
+                        orderID.toString(),
+                        OrderId2StringBJ(orderID))
+                    )
+            // Register the events needed to monitor orders.
+            registerPlayerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER, function onOrder)
+            registerPlayerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_TARGET_ORDER, function onOrder)
+            registerPlayerUnitEvent(EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER, function onOrder)

@@ -101,7 +101,7 @@ public class ScoreBoardColumnEntries
             loadRoundLayout(playerList)
         else
             for _p in playerList
-                let currentRow = scoreBoard.getPlayerPos(_p.getName(true))
+                let currentRow = scoreBoard.getPlayerPos(_p.getName(false))
                 if currentRow != row
                     scoreBoard.swapRow(row, currentRow)
                 scoreBoard.board.setItemValueColor(row, 0, _p.getColor().toColor().withAlpha(0))
@@ -128,7 +128,7 @@ public class ScoreBoardColumnEntries
         playerList.forEach() (player _player) ->
             row++
             if value == "PlayerName"
-                initRow(row, _player.getName(true), iconPlayerInGame)
+                initRow(row, _player.getName(false), iconPlayerInGame)
                 scoreBoard.setColor(row, entryColumn, _player.getColor().toColor())
                 // TODO: uncomment later maybe
                 // In case player leave before board Init
@@ -163,7 +163,7 @@ public class ScoreBoardColumnEntries
             scoreBoard.setColor(row, entryColumn, COLOR_WHITE.withoutAlpha())
 
     function setEntry(player _player, string value, string icon)
-        let entryRow = scoreBoard.getPlayerPos(_player.getName(true))
+        let entryRow = scoreBoard.getPlayerPos(_player.getName(false))
 
         if entryRow > 0
             scoreBoard.setValue(entryRow, entryColumn, value)
@@ -171,15 +171,15 @@ public class ScoreBoardColumnEntries
                 scoreBoard.setIcon(entryRow, entryColumn, icon)
 
     function setEntryIcon(player _player, string icon)
-        let entryRow = scoreBoard.getPlayerPos(_player.getName(true))
+        let entryRow = scoreBoard.getPlayerPos(_player.getName(false))
         scoreBoard.setIcon(entryRow, entryColumn, icon)
 
     function setEntryColor(player _player, color color)
-        let entryRow = scoreBoard.getPlayerPos(_player.getName(true))
+        let entryRow = scoreBoard.getPlayerPos(_player.getName(false))
         scoreBoard.setColor(entryRow, entryColumn, color)
 
     function addValue(player _player, int value)
-        let playerRow = scoreBoard.getPlayerPos(_player.getName(true))
+        let playerRow = scoreBoard.getPlayerPos(_player.getName(false))
         let currentValue = scoreBoard.getValue(playerRow, entryColumn)
         let newValue = (currentValue.toInt() + value)
         setEntry(_player, newValue.toString(), null)

@@ -85,9 +85,9 @@ init
 
 
     new GameMode("spawn-capacity", "sc", "Set max unit spawn capacity, default : " +
-        gameConfig.getSpawnCap().toString() + ", max : 120, min : 60") (mode, args) ->
+        gameConfig.getSpawnCap().toString() + ", max : 100, min : 60") (mode, args) ->
         if (args.size() > 1)
-            let spawnCap = max(min(args.get(1).toInt(), 120), 60)
+            let spawnCap = max(min(args.get(1).toInt(), 100), 60)
             mode.message("Spawn capacity set to ".color(LABEL_COLOR) + spawnCap.toString().color(VALUE_COLOR))
             gameConfig.setSpawnCap(spawnCap)
 

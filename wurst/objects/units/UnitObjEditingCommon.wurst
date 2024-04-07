@@ -74,10 +74,8 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
     return new UnitDefinition(newId, origId)
         ..setNormalAbilities(commaList(
             AbilityIds.invulnerable,
-            ABIL_ORDER_UNIT,
             ABIL_START_ROUND,
             ABIL_SELL_BUILDING,
-            ABIL_UNSTUCK_UNIT,
             ABIL_TRADE_GOLD,
             AbilityIds.inventory
             ))
@@ -192,7 +190,7 @@ public class BTUnitDefinition extends UnitDefinition
         this.setAttack1DamageNumberofDice(nbDice)
         this.setAttack1DamageSidesperDie(sidePerDice)
 
-        let min = damage
+        let min = damage + nbDice
         let max = damage + nbDice * sidePerDice
         let averageDamage = min + nbDice * (sidePerDice + 1) / 2
         let tooltip = attackTypeStr.firstUpper() +

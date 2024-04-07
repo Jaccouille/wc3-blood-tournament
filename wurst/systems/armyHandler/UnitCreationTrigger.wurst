@@ -15,6 +15,7 @@ import ItemStockHandler
 import LocalObjectIDs
 import PlayerData
 import PlayerExtension
+import GameConfig
 
 public function insertBuilding(LinkedList<unit> buildingList, unit newBuilding)
     // Remove the building so we can re insert it in the list
@@ -70,6 +71,11 @@ init
         if summonedUnit == null
             Log.debug("Unknown unit spawned for " + EventData.getTriggerPlayer().getName())
         else
+            if gameConfig.getDamageMultiplier() != 1.0
+                summonedUnit.setBaseDamage((summonedUnit.getBaseDamage(0) * gameConfig.getDamageMultiplier()).toInt(), 0)
+            if gameConfig.getHealthMultiplier() != 1.0
+                summonedUnit.setMaxHP((summonedUnit.getMaxHP() * gameConfig.getHealthMultiplier()).toInt(), true)
+
             pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).spawnedUnits.push(summonedUnit)
             // To reduce pathing lag, assign the new unit to the last dummy player
             let newOwner = pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).dummyPlayers.getLast()

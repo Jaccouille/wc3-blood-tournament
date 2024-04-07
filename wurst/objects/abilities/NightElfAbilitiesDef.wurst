@@ -201,9 +201,9 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     let BUFF_ROOT_SLOW_ID = compiletime(BUFF_ID_GEN.next())
     new BuffDefinition(BUFF_ROOT_SLOW_ID, BuffIds.enduranceAura)
         ..setIcon(Icons.bTNEntanglingRoots)
-        ..setArtTarget(Abilities.thornsAuraDamage)
+        ..setArtTarget(Abilities.stasisTotemTarget)
         ..setTargetAttachments(1, 1)
-        ..setTargetAttachmentPoint0(1, "head")
+        ..setTargetAttachmentPoint0(1, "overhead")
         ..setName(1, "Entangling Root")
         ..setTooltipNormal(1, "Entangling Root")
         ..setTooltipNormalExtended(1, "This unit is being slowed by a nearby " +
