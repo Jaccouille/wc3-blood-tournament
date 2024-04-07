@@ -120,13 +120,11 @@ function initItemStockData()
     // ================ UNDEAD =============
     // unitItemSold.put(BUILDING_ZOMBIE, asList(ITEM_PLAGUE_BEARER                  ))
     unitItemSold.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_FROST_ARCHER                  ))
-    unitItemSold.put(BUILDING_NECROMANCER    , asList(ITEM_CRIPPLE       , ITEM_RAISE_SKELETON_ORC, ITEM_LICH))
     unitItemSold.put(BUILDING_BANSHEE        , asList(ITEM_UNHOLY_FRENZY, ITEM_FROST_ARMOR                    ))
     unitItemSold.put(BUILDING_VAMPIRE        , asList(ITEM_VAMPIRE_LORD                                       ))
     unitItemSold.put(BUILDING_ABOMINATION        , asList(ITEM_SPAWN_GUT_CRAWLER                                       ))
     unitItemSold.put(BUILDING_DEATH_KNIGHT   , asList(ITEM_UNHOLY_AURA                                       ))
     // sharedStocksMap.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER                  ))
-    sharedStocksMap.put(BUILDING_NECROMANCER, asList(ITEM_CRIPPLE, ITEM_RAISE_SKELETON_ORC                  ))
     sharedStocksMap.put(BUILDING_BANSHEE, asList(ITEM_UNHOLY_FRENZY, ITEM_FROST_ARMOR                  ))
 
     // ================ NIGHT ELF =============

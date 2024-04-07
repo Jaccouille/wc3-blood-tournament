@@ -200,6 +200,7 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setNameEnhance("E", "Necromancer")
         ..tooltipStopListen(true)
+        ..setUpgradeTo(commaList(BUILDING_SPECTRAL_SAGE))
         ..setBuildingUnitsTrained(commaList(
             UNIT_NECROMANCER,
             UNIT_SKELETON,
@@ -211,6 +212,43 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.necromancer1)
         ..setIconGameInterfaceExt(Icons.bTNNecromancer)
         ..setUnitSoundSetExt(Soundsets.necromancer)
+
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_RAISE_SKELETON_ORC))
+    createSpawnedUnit(UNIT_SPECTRAL_SAGE, UnitIds.kelthuzadnecro, BUILDING_SPECTRAL_SAGE)
+        ..registerTooltipGenerator(tooltip)
+        ..setNormalAbilities(commaList(ABIL_RAISE_SKELETON_ORC, ABIL_CRIPPLE_ORB))
+        ..setDefaultActiveAbility(commaList(ABIL_RAISE_SKELETON_ORC))
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 40, 5, 6, 1.6)
+        ..setAttack1Range(750)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Divine, 2)
+        ..setHitPointsMaximumBase(150)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..setArmorSoundType(ArmorSoundType.Ethereal)
+        ..setGhostDeath()
+
+        ..setSizeSmall()
+        ..setNameEnhance("Z", "Spectral Sage")
+        ..tooltipStopListen(true)
+        ..setBuildingUnitsTrained(commaList(
+            UNIT_SPECTRAL_SAGE,
+            UNIT_SKELETON_ORC,
+            UNIT_REVENANT
+            ))
+
+        ..setModelFileExt(Units.kelthuzadGhost)
+        ..setIconGameInterfaceExt(Icons.bTNKelThuzad)
+        ..setUnitSoundSetExt(Soundsets.kelThuzadNecro)
+
 
     tooltip = new UnitTooltipGenerator("Summoned by Necromancer.")
     createSpawnedUnit(UNIT_SKELETON, UnitIds.skeleton)
@@ -428,20 +466,19 @@ import UnitTooltipGenerator
 
 @compiletime function createVampire()
     var tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_LIFESTEAL_50) + "\n\n" +
         abilTooltipMap.get(ABIL_EVASION_10) + "\n\n" +
         "Absord Life Essence\n".color(SPECIAL_COLOR) +
         "Permanently gain 10% of enemy max health point as health point upon kill."
     )
     createSpawnedUnit(UNIT_VAMPIRE, UnitIds.dreadlord, BUILDING_VAMPIRE)
-        ..setNormalAbilities(commaList(ABIL_LIFESTEAL_50))
+        ..setNormalAbilities(commaList(ABIL_EVASION_10))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 61, 4, 4, 1.0)
+        ..setAttack1Data(AttackType.Pierce, 61, 4, 4, 1.2)
 
-        ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(1800)
+        ..setArmorData(ArmorType.Large, 2)
+        ..setHitPointsMaximumBase(1600)
 
         ..setSpeedBase(300)
         ..setAutoPointValue()
@@ -459,7 +496,6 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.heroDreadLord)
 
     tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_LIFESTEAL_75) + "\n\n" +
         abilTooltipMap.get(ABIL_CARRION_SWARM) + "\n\n" +
         "Absord Life Essence\n".color(SPECIAL_COLOR) +
         "Permanently gain 20% of enemy max health point as health point upon kill."
@@ -468,14 +504,14 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_VAMPIRE_LORD, UnitIds.dreadlord, BUILDING_VAMPIRE_LORD)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_CARRION_SWARM))
-        ..setNormalAbilities(commaList(ABIL_LIFESTEAL_75, ABIL_CARRION_SWARM, ABIL_AUTOCAST_CARRION_SWARM))
+        ..setNormalAbilities(commaList(ABIL_CARRION_SWARM, ABIL_AUTOCAST_CARRION_SWARM))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Pierce, 110, 7, 7, 1.0)
 
-        ..setArmorData(ArmorType.Large, 8)
-        ..setHitPointsMaximumBase(2400)
+        ..setArmorData(ArmorType.Large, 5)
+        ..setHitPointsMaximumBase(2000)
         ..setMana(200)
 
         ..setSpeedBase(270)

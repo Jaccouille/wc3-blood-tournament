@@ -97,6 +97,7 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_HEADHUNTER           ,                      150 , 0    , genList(UNIT_HEADHUNTER           , 10 ))
     new BTBuildingData(BUILDING_HEADHUNTER           , BUILDING_TRAPPER ,   0   , 1000 , genList(UNIT_TRAPPER              , 10 ))
     new BTBuildingData(BUILDING_RAIDER               ,                      250 , 0    , genList(UNIT_RAIDER               , 5  ))
+    new BTBuildingData(BUILDING_RAIDER                , BUILDING_MARAUDER , 0   , 1000  , genList(UNIT_MARAUDER            , 5  ))
     new BTBuildingData(BUILDING_WITCH_DOCTOR         ,                      150 , 0    , genList(UNIT_WITCH_DOCTOR         , 3  ))
     new BTBuildingData(BUILDING_SHAMAN               ,                      200 , 0    , genList(UNIT_SHAMAN               , 4  ))
     new BTBuildingData(BUILDING_OGRE                 ,                      300 , 0    , genList(UNIT_OGRE                 , 3  ))
@@ -110,6 +111,7 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_ZOMBIE, BUILDING_GHOUL          , 0   , 600 , genList(UNIT_GHOUL           , 10 ))
     new BTBuildingData(BUILDING_SKELETAL_ARCHER, 100 , 0   , genList(UNIT_SKELETAL_ARCHER , 10 ))
     new BTBuildingData(BUILDING_NECROMANCER    , 200 , 0   , genList(UNIT_NECROMANCER     , 5  ))
+    new BTBuildingData(BUILDING_NECROMANCER, BUILDING_SPECTRAL_SAGE          , 0   , 2000 , genList(UNIT_SPECTRAL_SAGE           , 5 ))
     new BTBuildingData(BUILDING_LICH           , 0   , 1000, genList(UNIT_LICH            , 1  ))
     new BTBuildingData(BUILDING_DEATH_KNIGHT   , 0   , 1200, genList(UNIT_DEATH_KNIGHT    , 1  ))
     new BTBuildingData(BUILDING_BANSHEE        , 150 , 0   , genList(UNIT_BANSHEE         , 3  ))
@@ -166,7 +168,6 @@ public class ArmySpawner
     construct(player _p)
         this._p = _p
         this.pData = pDatas.get(_p)
-        this.initReinforcementListener()
 
     function setBuildingList(LinkedList<unit> buildingList)
         this.buildingList = buildingList
@@ -357,7 +358,7 @@ public class ArmySpawner
             // horizontal
             return pos + vec2(0, GetRandomReal(-offset, offset))
 
-    private function spawnReinforcement()
+    protected function spawnReinforcement()
         if squadUnitIds.isEmpty()
             let building = buildingList.get(buildingIdx)
             squadUnitIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
@@ -379,18 +380,21 @@ public class ArmySpawner
                     SetDoodadAnimationRect(this.pData.buildingRect, DOODAD_PORTAL, "death", false)
                     spawnZone.closePortal()
 
-    private function initReinforcementListener()
-        reinforcementListener = EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
-            let dying = EventData.getDyingUnit()
-            let dyingOwner = dying.getOwner().getTruePlayerFromDummy()
-            if dyingOwner == this._p
-                and not hasSpawnFinished
-                and dying.getPointValue() > 0
-                spawnReinforcement()
-
 
 // TODO: replace with gamestate functional interface just like in ITTs
 public function initArmySpawner()
     setupBuildingData()
     for i = 0 to 7
         playerToArmySpawner.put(players[i], new ArmySpawner(players[i]))
+
+init
+    EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
+        let dying = EventData.getDyingUnit()
+        let dyingOwner = dying.getOwner().getTruePlayerFromDummy()
+        let armySpawner = playerToArmySpawner.get(dyingOwner)
+        let pData = pDatas.get(dyingOwner)
+        let spawnCapacity= armySpawner.spawnZone.unitLimit
+        if not armySpawner.hasSpawnFinished
+            and dying.getPointValue() > 0
+            and pData.spawnedUnits.size() < spawnCapacity
+            armySpawner.spawnReinforcement()
