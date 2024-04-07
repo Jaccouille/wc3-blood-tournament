@@ -293,6 +293,7 @@ public function initRoundController()
         for _p in pDatas
             pDatas.get(_p).builder.removeAbility(ABIL_UNSTUCK_UNIT)
             pDatas.get(_p).builder.removeAbility(ABIL_ORDER_UNIT)
+            pDatas.get(_p).builder.addAbility(ABIL_SELL_BUILDING)
         // Remove speed boost banner
         forUnitsAll() (unit u) ->
             if u.getTypeId() == UNIT_SPEED_BANNER
@@ -328,6 +329,8 @@ public function initRoundController()
             StopMusic(false)
             ClearMapMusic()
             PlayMusic(Sounds.pH1)
+            for _p in pDatas
+                pDatas.get(_p).builder.removeAbility(ABIL_START_ROUND)
 
 
     onAllroundsFinished = () ->

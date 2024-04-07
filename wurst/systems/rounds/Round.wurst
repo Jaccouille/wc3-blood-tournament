@@ -106,6 +106,8 @@ public abstract class Round
         // Log.debug(this.roundName + " doAfterSpawn")
 
     function doBeforeSpawn()
+        for _p in pDatas
+            pDatas.get(_p).builder.removeAbility(ABIL_SELL_BUILDING)
         forUnitsAll() (unit u) ->
             if IsUnitDeadBJ(u)
                 u.remove()
