@@ -143,7 +143,7 @@ import UnitTooltipGenerator
 
         ..setSpeedBase(270)
         ..setSizeSmall()
-        ..setItemCostReplacement(0, 100, 1, skeletalArcherCount, skeletalArcherCount, BUILDING_SKELETAL_ARCHER)
+        ..setItemCostReplacement(0, 1000, 10, 1, 1, BUILDING_SKELETAL_ARCHER)
 
         ..setNameEnhance("X", "Frost Archer")
         ..tooltipStopListen(true, itmFrost)

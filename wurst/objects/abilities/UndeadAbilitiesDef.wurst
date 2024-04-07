@@ -379,7 +379,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..presetManaCost(_ -> 125)
         ..tooltipStartListen()
-        ..presetDamage(_ -> 100)
+        ..presetDamage(_ -> 75)
         ..presetDistance(_ -> 1000)
         ..presetMaxDamage(_ -> 3000)
         ..setNameEnhance("Z", "Carrion Swarm")

@@ -186,7 +186,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 2)
-        ..setHitPointsMaximumBase(140)
+        ..setHitPointsMaximumBase(220)
         ..setMana(200)
 
         ..setSpeedBase(270)

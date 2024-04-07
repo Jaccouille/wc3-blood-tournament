@@ -309,7 +309,7 @@ function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraW
         "Reduces the effectiveness of healing and regeneration on enemy units.")
     new AbilityDefinitionHealReductionBonus(ABIL_BURNING_ARROW)
         ..registerTooltipGenerator(tgen)
-        ..setEnabledAttackIndex(1, 0)
+        // ..setEnabledAttackIndex(1, 0)
         ..setArtTarget(Abilities.flameStrikeEmbers)
         ..setMissileArt(Abilities.flamingArrowMissile)
         ..tooltipStartListen()

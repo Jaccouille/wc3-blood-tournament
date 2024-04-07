@@ -20,8 +20,6 @@ public constant STANDARD_PROJECTILE_SPEED = 1500
 
 function BTUnitDefinition.setCommonAttr()
     this.setBuildTime(1)
-    this.setAttack2DamageSidesperDie(1)
-    this.setAttack2DamageNumberofDice(1)
     this.setLumberBountyAwardedBase(1)
     this.setLumberCost(0)
     this.setAcquisitionRange(2000)
