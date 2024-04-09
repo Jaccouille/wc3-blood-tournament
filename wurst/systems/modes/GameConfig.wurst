@@ -13,7 +13,7 @@ class GameConfig
     private var startingLumber = 0
     private let roundGoldIncome = asList(600)
     private var roundCount = 7
-    private var roundInterludeTime = 90.
+    private var roundInterludeTime = 120.
     private var spawnCap = 60
     private var bountyMultiplier = 1.
     private var armyPointsMultiplier = 1.

@@ -38,6 +38,8 @@ init
     GameStates.gameplay.onEnter() (state) ->
         registerCommandAll("r") (player triggerPlayer, LinkedList<string> arguments) ->
             voteReady(triggerPlayer)
+        registerCommandAll("ready") (player triggerPlayer, LinkedList<string> arguments) ->
+            voteReady(triggerPlayer)
 
         OnRoundStart.add() (Round round) ->
             if Vote.voteInstanceMap.has("Ready")

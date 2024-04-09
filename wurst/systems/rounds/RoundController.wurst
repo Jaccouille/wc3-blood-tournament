@@ -135,7 +135,7 @@ class RoundController
             else
                 // Allow builder to construct
                 disableOrderBlocker()
-                interludeTime = 120.
+                interludeTime = 180.
                 hasFinalStarted = true
                 if not currentRound.hasStarted
                     if gameConfig.isDisplayPortalEnabled()
