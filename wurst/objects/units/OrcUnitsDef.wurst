@@ -51,9 +51,9 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 51, 4, 4, 1.3)
+        ..setAttack1Data(AttackType.Normal, 46, 4, 4, 1.4)
 
-        ..setArmorData(ArmorType.Small, 5)
+        ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(800)
 
         ..setSpeedBase(270)
@@ -169,10 +169,10 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 70, 5, 5, 1.5)
+        ..setAttack1Data(AttackType.Normal, 70, 5, 5, 1.6)
 
         ..setArmorData(ArmorType.Large, 3)
-        ..setHitPointsMaximumBase(1600)
+        ..setHitPointsMaximumBase(1500)
 
         ..setSpeedBase(300)
         ..setAutoPointValue()
@@ -225,12 +225,12 @@ import UnitTooltipGenerator
 @compiletime function createWarmonger()
     let tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_CRITICAL_STRIKE_60)  + "\n\n" +
-        abilTooltipMap.get(ABIL_DEFLECT_75)
+        abilTooltipMap.get(ABIL_DEFLECT_30)
         )
     createSpawnedUnit(UNIT_WARMONGER, UnitIds.gromhellscream, BUILDING_WARMONGER)
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
-        ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_60, ABIL_DEFLECT_75))
+        ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_60, ABIL_DEFLECT_30))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
