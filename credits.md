@@ -12,3 +12,6 @@
     https://www.hiveworkshop.com/threads/modify-item-sold-made-stock.350087/
 
 - imForFun (straw hat)
+
+Testing:
+Venix, honeyBadger, theShadow, Chiller, ovalbomb12, Gonzalo, DarkAssassin

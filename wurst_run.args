@@ -7,12 +7,12 @@ Following are the default enabled arguments:
 -runcompiletimefunctions
 -injectobjects
 stacktraces
--lua
+lua
 
 Optimization arguments (default disabled):
 
--inline
--opt
--localOptimizations
+inline
+opt
+localOptimizations
 
 For a list of all arguments visit the manual or run wurstscript.jar without arguments.

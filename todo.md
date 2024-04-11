@@ -5,16 +5,32 @@
 
 - Fire arrow (potm)
 - Raider upgrade
-- Rework abom
-- Necro upgrade
-- Rework entangle root
 
-- Remove bridges
+- Vampire too weak
+- Wrong winner in tourny
+- Arrow + textag to explain spawn position
+- Ready vote failed, don't display message when round start
+- Thx for playing message + feedback on hiveworkshop...
+
+- End game bot controller
+- Study autocast behavior priority
+- Nerf huntress
+
+- Nerf vampire
+- Round mode doesn't work
+- Frenzy to owlbear
+- Add bridge back
+
+- Mountain giant
+- vote to put afk player to bot
+- check if player has ordered race picker or builder after x seconds
+
+- adjust damage table
 - Displace unit
+- Elim Dummy player
 
 - Convert orb of blood to mdx
 - bp item cost overhaul
-- Review displayed message text format/color
 - Review all tooltip, set a norm to respect
 
 
