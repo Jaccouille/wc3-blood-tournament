@@ -112,7 +112,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..presetCooldown(_ -> 0)
         ..tooltipStartListen()
-        ..presetPreferHostiles(_ -> 40)
+        ..presetPreferHostiles(_ -> 30)
         ..presetAreaofEffect(_ -> 600)
         ..setNameEnhance("Z", "Taunt")
         ..tooltipStopListen(false)

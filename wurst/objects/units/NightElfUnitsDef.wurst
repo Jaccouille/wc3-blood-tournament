@@ -343,8 +343,8 @@ import UnitTooltipGenerator
 
         ..setAttack1Data(AttackType.Siege, 80, 10, 7, 2)
 
-        ..setArmorData(ArmorType.Fortified, 6)
-        ..setHitPointsMaximumBase(2400)
+        ..setArmorData(ArmorType.Large, 6)
+        ..setHitPointsMaximumBase(2800)
 
         ..setSpeedBase(270)
 
