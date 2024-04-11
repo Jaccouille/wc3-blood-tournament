@@ -16,14 +16,14 @@ public function voteReady(player triggerPlayer)
     if roundController.currentRound.hasStarted
         printTimedToPlayer("Vote failed! Round already started!", 3, triggerPlayer)
     else
-        if Vote.voteInstanceMap.has("Ready")
-            Vote.voteInstanceMap.get("Ready").castVote(triggerPlayer)
+        if Vote.voteInstanceMap.has("Start round")
+            Vote.voteInstanceMap.get("Start round").castVote(triggerPlayer)
         else
             var count = 0
             for _p in ALL_PLAYERS
                 if _p.isHuman()
                     count++
-            let voteInstance = new Vote("Ready", 60., count)
+            let voteInstance = new Vote("Start round", 60., count)
             voteInstance.addAction() () ->
                 if not roundController.currentRound.hasStarted
                     if gameConfig.isDisplayPortalEnabled()
@@ -42,5 +42,5 @@ init
             voteReady(triggerPlayer)
 
         OnRoundStart.add() (Round round) ->
-            if Vote.voteInstanceMap.has("Ready")
-                Vote.voteInstanceMap.get("Ready").endVote()
+            if Vote.voteInstanceMap.has("Start round")
+                Vote.voteInstanceMap.get("Start round").endVote(false)
