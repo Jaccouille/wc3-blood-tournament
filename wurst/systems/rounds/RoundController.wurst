@@ -21,6 +21,7 @@ import ScoreBoard
 import SpawnZone
 import public Round
 import BloodDonation
+import AfkDetector
 
 public constant roundController = new RoundController()
 
@@ -89,6 +90,7 @@ class RoundController
         // TODO: Maybe move board update to scoreboard package?
         BOARD_TITLE_PREFIX = currentRound.roundName
         if currentRound instanceof NormalRound
+            ScoreBoardColumnEntries.loadRoundLayout(currentRound.roundParticipant)
             // Init previewer for each player
             var zoneIdx = 0
             for contestantPair in currentRound.matchUp
@@ -99,6 +101,11 @@ class RoundController
                     initPreviewer(p1, zoneIdx)
                     initPreviewer(p2, zoneIdx + 1)
                 zoneIdx += 2
+
+            // Start Afk detector for human player
+            for _p in ALL_PLAYERS
+                if _p.isHuman() and not playerToBuilderAI.get(_p).isEnabled
+                    new AfkDetector(_p, false)
 
             doAfter(9) ->
                 ALL_PLAYERS.forEach() (player _p) ->
@@ -118,8 +125,6 @@ class RoundController
             else if currentRound.roundName == "Final"
                 buildScoreBoardForFinals("Final")
 
-        else
-            ScoreBoardColumnEntries.loadRoundLayout(currentRound.roundParticipant)
 
         roundInterludeTimer = getTimer()
         tdialog = roundInterludeTimer.createTimerDialog()

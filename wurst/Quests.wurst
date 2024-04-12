@@ -38,6 +38,7 @@ let credits = asList(
 
 let commands = asList(
     "-r:|r Ready, vote to begin next round".color(HIGHLIGHT_COLOR),
+    "-afk {player number}:|r Start afk detector, e.g \"-afk 1\" for red player".color(HIGHLIGHT_COLOR),
     "-bot:|r Toggle bot".color(HIGHLIGHT_COLOR),
     "-clear:|r clears displayed text messages".color(HIGHLIGHT_COLOR),
     "-modes:|r displays current established modes".color(HIGHLIGHT_COLOR),

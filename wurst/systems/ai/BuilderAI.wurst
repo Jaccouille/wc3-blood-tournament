@@ -20,7 +20,7 @@ import LocalObjectIDs
 import Players
 import Round
 
-let playerToBuilderAI = new HashMap<player, BuilderAI>
+public let playerToBuilderAI = new HashMap<player, BuilderAI>
 let botEnabled = compiletime(createDummyBuffObject("Bot enabled", "This player is being controlled by a bot",
      Icons.bTNMagicalSentry, Abilities.magicSentryCaster, "overhead"))
 
@@ -188,6 +188,11 @@ function toggleAI()
         if not aiInstance._player.isIngame()
             aiInstance.toggleAI()
 
+public function player.toggleBot()
+    let ai = playerToBuilderAI.get(this)
+    if not ai.isEnabled
+        ai.toggleAI()
+
 
 init
     GameStates.gameplay.onEnter() state ->
@@ -210,9 +215,7 @@ init
 
         EventListener.add(EVENT_PLAYER_LEAVE) ->
             if gameConfig.isBotAIEnabled() and GameStates.gameplay.active
-                let ai = playerToBuilderAI.get(GetTriggerPlayer())
-                if not ai.isEnabled
-                    ai.toggleAI()
+                GetTriggerPlayer().toggleBot()
 
     registerCommandAll("bot") (triggerPlayer, args) ->
         // let aiInstance = playerToBuilderAI.get(triggerPlayer)
