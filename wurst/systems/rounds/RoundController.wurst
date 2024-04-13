@@ -42,6 +42,7 @@ class RoundController
     player previousRoundWinner = null
     timerdialog tdialog
     timer roundInterludeTimer
+    CallbackSingle portalDisplayCb
 
     Round currentRound = null
 
@@ -157,7 +158,7 @@ class RoundController
             interludeTime = gameConfig.getRoundInterludeTime()
 
             // Visual effect before round start
-            doAfter(interludeTime - 10.) ->
+            portalDisplayCb = doAfter(interludeTime - 10.) ->
                 if not currentRound.hasStarted
                     if gameConfig.isDisplayPortalEnabled()
                         currentRound.spawnPortals()
@@ -168,6 +169,7 @@ class RoundController
             startRound()
 
     function stopRoundTimer()
+        destroy portalDisplayCb
         roundInterludeTimer.destr()
 
     function startRound()
@@ -248,10 +250,10 @@ function generateMatchups() returns LinkedList<LinkedList<Pair<int, int>>>
     return roundParticipantList
 
 function generateRounds()
-    let roundParticipantList = generateMatchups()
+    let possiblePair = generateMatchups()
     int idx = 0
     while idx < gameConfig.getRoundCount()
-        let matchUps = roundParticipantList.get(idx mod 7)
+        let matchUps = possiblePair.get(idx mod 7).copy()
         let round = new NormalRound()
                 ..addMatchup(matchUps.dequeue())
                 ..addMatchup(matchUps.dequeue())
@@ -264,6 +266,7 @@ function generateRounds()
         round.setRewards(gold, 0)
         roundController.addRound(round)
         idx++
+    destroy possiblePair
 
 function generateFinalRounds()
     let matches = generateMatchups().getRandomElement()

@@ -22,6 +22,7 @@ public function voteReady(player triggerPlayer)
         else
             var count = 0
             for _p in ALL_PLAYERS
+                // Only count human players and no afk
                 if _p.isHuman() and not playerToBuilderAI.get(_p).isEnabled
                     count++
             let voteInstance = new Vote("Start round", 60., count)
@@ -29,6 +30,7 @@ public function voteReady(player triggerPlayer)
                 if not roundController.currentRound.hasStarted
                     if gameConfig.isDisplayPortalEnabled()
                         roundController.currentRound.spawnPortals()
+                    roundController.stopRoundTimer()
                     roundController.startRound()
                 else
                     printTimed("Vote failed! Round already started!", 3)
