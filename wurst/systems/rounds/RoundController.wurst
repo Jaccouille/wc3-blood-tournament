@@ -346,7 +346,10 @@ public function initRoundController()
         if roundController.previousRoundWinner != null
             GameStates.gameplay.exit()
             print(roundController.previousRoundWinner.getNameColored() + " is the " + "Blood tournament".color(COLOR_RED) + " champion!")
-            doAfter(3) ->
+            doAfter(2) ->
+                printTimed("Thank you for playing, map feedback on hiveworkshop.com are appreciated!", 10)
+
+            doAfter(4) ->
                 var bloodSpilled = 0
                 for _p in pDatas
                     bloodSpilled += pDatas.get(_p).totalBloodPoints
