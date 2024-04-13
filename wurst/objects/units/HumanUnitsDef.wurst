@@ -20,7 +20,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 14, 1, 2, 1.4)
+        ..setAttack1Data(AttackType.Normal, 14, 1, 6, 1.4)
 
         ..setArmorData(ArmorType.Large, 3)
         ..setHitPointsMaximumBase(400)
@@ -47,7 +47,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 44, 2, 4, 1.3)
+        ..setAttack1Data(AttackType.Normal, 44, 1, 16, 1.3)
 
         ..setArmorData(ArmorType.Large, 7)
         ..setHitPointsMaximumBase(1500)
@@ -68,7 +68,7 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_RIFLEMAN, UnitIds.rifleman, BUILDING_RIFLEMAN)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Pierce, 24, 4, 3, 1.7)
+        ..setAttack1Data(AttackType.Pierce, 20, 5, 3, 1.7)
         ..setAttack1Range(450)
 
         ..setArmorData(ArmorType.Medium, 2)
@@ -101,12 +101,12 @@ import UnitTooltipGenerator
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Pierce, 40, 3, 4, 1.7)
+        ..setAttack1Data(AttackType.Pierce, 40, 5, 3, 1.7)
         ..setAttack1Range(450)
         ..setSmallSplash()
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(440)
+        ..setHitPointsMaximumBase(290)
 
         ..setSpeedBase(270)
         ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
@@ -128,11 +128,11 @@ import UnitTooltipGenerator
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Pierce, 32, 4, 6, 1.7)
+        ..setAttack1Data(AttackType.Pierce, 30, 5, 4, 1.7)
         ..setAttack1Range(900)
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(440)
+        ..setHitPointsMaximumBase(290)
 
         ..setSpeedBase(270)
         ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
@@ -151,7 +151,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Siege, 99, 6, 7, 2.5)
+        ..setAttack1Data(AttackType.Siege, 95, 5, 10, 2.5)
         ..setSmallSplash()
         ..setAttack1Range(1000)
         ..setAttack1ProjectileSpeed(1000)
@@ -181,7 +181,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 14, 2, 3, 1.75)
+        ..setAttack1Data(AttackType.Magic, 15, 5, 2, 1.75)
         ..setAttack1Range(650)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
@@ -213,7 +213,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 35, 4, 5, 1.4)
+        ..setAttack1Data(AttackType.Normal, 30, 5, 4, 1.4)
         ..setAttack1Range(300)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
@@ -242,7 +242,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 40, 3, 4, 1.4)
+        ..setAttack1Data(AttackType.Normal, 35, 5, 4, 1.4)
 
         ..setArmorData(ArmorType.Large, 5)
         ..setHitPointsMaximumBase(1000)
@@ -278,7 +278,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 80, 4, 6, 1.4)
+        ..setAttack1Data(AttackType.Normal, 80, 5, 5, 1.4)
 
         ..setArmorData(ArmorType.Large, 6)
         ..setHitPointsMaximumBase(1300)
@@ -314,7 +314,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 120, 7, 8, 1.5)
+        ..setAttack1Data(AttackType.Normal, 110, 10, 6, 1.5)
 
         ..setArmorData(ArmorType.Large, 10)
         ..setHitPointsMaximumBase(2600)
@@ -345,7 +345,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
             ..setNormalAbilities(commaList(ABIL_BASH_30, ABIL_DEVOTION_AURA_2))
             ..tooltipStartListen()
 
-            ..setAttack1Data(AttackType.Siege, 120, 5, 7, 1.3)
+            ..setAttack1Data(AttackType.Siege, 110, 5, 10, 1.3)
 
             ..setArmorData(ArmorType.Large, 6)
             ..setHitPointsMaximumBase(2000)
@@ -371,7 +371,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setNormalAbilities(commaList(""))
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 120, 5, 7, 1.3)
+        ..setAttack1Data(AttackType.Magic, 110, 5, 10, 1.3)
 
         ..setArmorData(ArmorType.Divine, 4)
         ..setHitPointsMaximumBase(900)
@@ -436,7 +436,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 34, 3, 7, 1.9)
+        ..setAttack1Data(AttackType.Magic, 35, 5, 3, 1.9)
         ..setAttack1Range(550)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
@@ -478,7 +478,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 70, 3, 9, 1.75)
+        ..setAttack1Data(AttackType.Magic, 70, 10, 3, 1.75)
         ..setAttack1Range(650)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setSmallSplash()
@@ -507,7 +507,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..tooltipStartListen()
         ..setNormalAbilities("")
 
-        ..setAttack1Data(AttackType.Magic, 12, 3, 3, 1.6)
+        ..setAttack1Data(AttackType.Magic, 12, 3, 5, 1.6)
         ..setAttack1Range(300)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 

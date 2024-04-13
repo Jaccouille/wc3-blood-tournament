@@ -19,7 +19,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 25, 2, 4, 1.5)
+        ..setAttack1Data(AttackType.Normal, 25, 5, 2, 1.5)
 
         ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(600)
@@ -51,7 +51,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 46, 4, 4, 1.4)
+        ..setAttack1Data(AttackType.Normal, 45, 5, 4, 1.4)
 
         ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(800)
@@ -81,7 +81,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 24, 2, 8, 1.8)
+        ..setAttack1Data(AttackType.Pierce, 20, 5, 4, 1.8)
         ..setAttack1Range(600)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
@@ -112,7 +112,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 40, 2, 4, 1.4)
+        ..setAttack1Data(AttackType.Pierce, 35, 5, 3, 1.4)
         ..setAttack1Range(350)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
@@ -139,7 +139,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 41, 5, 4, 1.8)
+        ..setAttack1Data(AttackType.Normal, 35, 5, 5, 1.8)
 
         ..setArmorData(ArmorType.Large, 2)
         ..setHitPointsMaximumBase(1200)
@@ -169,7 +169,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 70, 5, 5, 1.6)
+        ..setAttack1Data(AttackType.Normal, 75, 5, 5, 1.7)
 
         ..setArmorData(ArmorType.Large, 3)
         ..setHitPointsMaximumBase(1500)
@@ -202,7 +202,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Siege, 111, 6, 7, 1.6)
+        ..setAttack1Data(AttackType.Siege, 105, 5, 10, 1.6)
 
         ..setArmorData(ArmorType.Large, 7)
         ..setHitPointsMaximumBase(2200)
@@ -234,7 +234,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 86, 6, 8, 1.0)
+        ..setAttack1Data(AttackType.Normal, 80, 5, 8, 1.0)
 
         ..setArmorData(ArmorType.Large, 5)
         ..setHitPointsMaximumBase(2200)
@@ -267,7 +267,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 37, 5, 5, 1.5)
+        ..setAttack1Data(AttackType.Pierce, 35, 5, 5, 1.5)
         ..setAttack1Range(350)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
@@ -296,7 +296,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 16, 2, 4, 1.75)
+        ..setAttack1Data(AttackType.Magic, 15, 5, 2, 1.75)
         ..setAttack1Range(450)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
@@ -325,7 +325,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 19, 2, 4, 1.75)
+        ..setAttack1Data(AttackType.Magic, 15, 5, 3, 1.75)
         ..setAttack1Range(550)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
@@ -362,7 +362,7 @@ import UnitTooltipGenerator
         ..tooltipStartListen()
         ..setNormalAbilities("")
 
-        ..setAttack1Data(AttackType.Normal, 15, 4, 3, 1.1)
+        ..setAttack1Data(AttackType.Normal, 15, 5, 3, 1.1)
 
         ..setArmorData(ArmorType.Divine, 2)
         ..setHitPointsMaximumBase(400)
@@ -388,7 +388,7 @@ import UnitTooltipGenerator
         ..tooltipStartListen()
         ..setNormalAbilities("")
 
-        ..setAttack1Data(AttackType.Normal, 47, 5, 6, 1.1)
+        ..setAttack1Data(AttackType.Normal, 45, 5, 6, 1.1)
 
         ..setArmorData(ArmorType.Divine, 4)
         ..setHitPointsMaximumBase(900)
@@ -422,7 +422,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 79, 4, 14, 1.60)
+        ..setAttack1Data(AttackType.Magic, 70, 5, 13, 1.6)
         ..setAttack1Range(600)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setAttack1ProjectileArt(Abilities.serpentWardMissile)
@@ -455,7 +455,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Siege, 80, 9, 11, 2)
+        ..setAttack1Data(AttackType.Siege, 70, 10, 10, 2)
 
         ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(3000)
@@ -490,7 +490,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Siege, 80, 9, 11, 2)
+        ..setAttack1Data(AttackType.Siege, 70, 10, 10, 2)
 
         ..setArmorData(ArmorType.Large, 8)
         ..setHitPointsMaximumBase(3400)
@@ -524,7 +524,7 @@ import UnitTooltipGenerator
         ..setAnimationCastPoint(0.310)
         ..setProjectileLaunchX(80)
 
-        ..setAttack1Data(AttackType.Siege, 80, 9, 11, 2)
+        ..setAttack1Data(AttackType.Siege, 70, 10, 10, 2)
 
         ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(3000)
