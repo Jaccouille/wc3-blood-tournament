@@ -18,6 +18,7 @@ public class AfkDetector
     unit unitMonitored
     CallbackSingle cb
     EventListener listener
+    boolean showMsg
 
     construct(player _p)
         initialize(_p, false)
@@ -26,6 +27,7 @@ public class AfkDetector
         initialize(_p, showMsg)
 
     function initialize(player _p, boolean showMsg)
+        this.showMsg = showMsg
         if showMsg
             printTimed(("{0} has {1} seconds to use builder to prove he isn't AFK"
             .format(_p.getNameColored(), AFK_TIMER.toInt().toString())), 10)
@@ -36,15 +38,12 @@ public class AfkDetector
         if unitMonitored == null
             unitMonitored = pDatas.get(_p).racePicker
 
-        listener = EventListener.add(unitMonitored, EVENT_PLAYER_UNIT_ISSUED_ORDER) ->
-
-            if showMsg
-                printTimed("{0} isn't AFK".format(this._p.getNameColored()), 10)
-            if listener != null
-                destroy listener
-            if cb != null
-                destroy cb
-            destroy this
+        if unitMonitored.isType(UNIT_TYPE_PEON)
+            listener = EventListener.add(unitMonitored, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER) ->
+                onOrder()
+        else
+            listener = EventListener.add(unitMonitored, EVENT_PLAYER_UNIT_ISSUED_ORDER) ->
+                onOrder()
 
         cb = doAfter(AFK_TIMER) ->
             printTimed(("{0} is AFK, he has to type {1} to retake control".format(
@@ -55,6 +54,15 @@ public class AfkDetector
                 destroy listener
             this._p.toggleBot()
             destroy this
+
+    function onOrder()
+        if showMsg
+            printTimed("{0} isn't AFK".format(this._p.getNameColored()), 10)
+        if listener != null
+            destroy listener
+        if cb != null
+            destroy cb
+        destroy this
 
     ondestroy
         playerToAfkDetector.remove(this._p)
