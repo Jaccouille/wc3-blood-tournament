@@ -242,7 +242,7 @@ public function initUnitDeathTrigger()
                 and not IsUnitIllusion(dyingUnit)
                 if dyingUnit.getPointValue() > 0
                     if dyingUnit.getOwner() != killerOwner and killer != null
-                        pDatas.get(killerOwner).addBounty(getBounty(dyingUnit))
+                        pDatas.get(killerOwner).addRoundBloodPoints(getBounty(dyingUnit))
                         createBountyTag(dyingUnit, killerOwner)
 
             if pData.spawnedUnits.has(dyingUnit)

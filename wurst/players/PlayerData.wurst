@@ -67,6 +67,9 @@ public class PlayerData
         // return this._p
         return dummyPlayers.get(idx)
 
+    function addRoundBloodPoints(int value)
+        roundBloodPoints += value
+
     function addBounty(int value)
         roundBloodPoints += value
         _p.addLumber(value)
@@ -89,7 +92,7 @@ public class PlayerData
             roundBloodPoints.toString().color(COLOR_RED) +
             " blood points"
         printTimedToPlayer(msg, 15, _p)
-        _p.addLumber(armyPoints)
+        _p.addLumber(armyPoints + roundBloodPoints)
         totalBloodPoints += armyPoints + roundBloodPoints
         bpPerRound.push(armyPoints + roundBloodPoints)
 
