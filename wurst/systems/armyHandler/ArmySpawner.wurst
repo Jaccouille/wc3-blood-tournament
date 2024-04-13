@@ -170,6 +170,8 @@ public class ArmySpawner
         this.pData = pDatas.get(_p)
 
     function setBuildingList(LinkedList<unit> buildingList)
+        if this.buildingList != null
+            destroy this.buildingList
         this.buildingList = buildingList
 
     private function isBuildingSpawnOver() returns boolean

@@ -14,6 +14,9 @@ import RoundController
 import Toolkit
 import UnitDeathTrigger
 import ArmyPreviewer
+import ChatCommands
+import UnitExtensions
+
 
 init
     registerToolkitCommand("su") (player triggerPlayer, LinkedList<string> arguments) ->
@@ -97,3 +100,25 @@ init
             if playerToArmyPreviewer.has(_p)
                 let t = playerToArmyPreviewer.get(_p)
                 Log.info(t.squadIds.size().toString() + " " + t.unitModifierList.size().toString())
+
+    registerCommandAll("dev") (player triggerPlayer, LinkedList<string> arguments) ->
+        if triggerPlayer.getName() == "Jaccouille#1782"
+            printTimed("{0} enabled dev mode, debug command are enabled.", 10)
+
+    registerToolkitCommand("er") (player triggerPlayer, LinkedList<string> arguments) ->
+        for _p in pDatas
+            playerToArmySpawner.get(_p).buildingList.clear()
+        forUnitsAll() (unit u) ->
+            if u.isSoldier()
+                u.kill()
+
+    registerToolkitCommand("lr") (player triggerPlayer, LinkedList<string> arguments) ->
+        var sb = ""
+        Log.info("Round count :" + roundController.rounds.size().toString())
+        for round in roundController.rounds
+            sb += "Round " + round.roundName + " : "
+            for match in round.matchUp
+                sb += players[match.a].getNameColored() + " vs " + players[match.b].getNameColored()
+                sb += ", "
+            print(sb)
+            sb = ""

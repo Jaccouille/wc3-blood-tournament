@@ -184,7 +184,7 @@ public abstract class Round
 
         playerToArmySpawner.get(_p)
             ..setSpawnZone(spawnZone)
-            ..setBuildingList(buidingList)
+            ..setBuildingList(buidingList.copy())
             ..initSpawner()
 
         doPeriodically(1) (CallbackPeriodic cb) ->
