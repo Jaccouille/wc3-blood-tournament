@@ -316,6 +316,7 @@ public function initRoundController()
                 printTimed(round.winner.getNameColored() + " gets "
                     + altarEntity.bloodPointCounter.toString().color(COLOR_RED)
                     + " bonus blood points for winning the round" , 15)
+                pDatas.get(round.winner).addRoundBloodPoints(altarEntity.bloodPointCounter)
             doAfter(6) ->
                 if round.goldReward > 0
                     printTimed("You get " + round.goldReward.toString().color(COLOR_GOLD) + " golds from round income", 15)
