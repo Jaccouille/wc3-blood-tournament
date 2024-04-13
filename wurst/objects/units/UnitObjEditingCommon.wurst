@@ -33,6 +33,7 @@ function BTUnitDefinition.setCommonAttr()
     this.setRace(Race.Human)
     this.setCanFlee(true)
     this.setHitPointsRegenerationType("always")
+    this.setHitPointsRegenerationRate(0)
     this.setDeathType(3)
     this.setLevel(1)
     this.setAttacksEnabled(AttacksEnabled.AttackOneOnly.toObjectInt())
@@ -68,6 +69,7 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
         ..setRequirements("")
         ..setPlacementRequires(commaList("unwalkable"))
         ..setSelectionScale(1.0)
+        ..setAttacksEnabled(1)
         ..setShadowTextureBuilding("ShadowCrates")
 
 
@@ -191,6 +193,13 @@ public class BTUnitDefinition extends UnitDefinition
         this.setAttack1DamageNumberofDice(nbDice)
         this.setAttack1DamageSidesperDie(sidePerDice)
 
+        if buildingDef != null
+            buildingDef.setAttack1DamageBase(damage)
+            buildingDef.setAttack1AttackType(attackType)
+            buildingDef.setAttack1CooldownTime(attackCooldown)
+            buildingDef.setAttack1DamageNumberofDice(nbDice)
+            buildingDef.setAttack1DamageSidesperDie(sidePerDice)
+
         let min = damage + nbDice
         let max = damage + nbDice * sidePerDice
         let averageDamage = min + nbDice * (sidePerDice + 1) / 2
@@ -223,6 +232,10 @@ public class BTUnitDefinition extends UnitDefinition
         var dataStr = data.toObjectString()
         def.setString("udty", dataStr)
         def.setInt("udef", defenseAmount)
+
+        if buildingDef != null
+            buildingDef.setArmorType(data)
+            buildingDef.setDefenseBase(defenseAmount)
         if dataStr == "divine"
             dataStr = "spectral"
         // 0.06 being a map constant
@@ -247,6 +260,8 @@ public class BTUnitDefinition extends UnitDefinition
     override function setAttack1Range(int data)
         def.setInt("ua1r", data)
         addTooltipProperty("Range", data)
+        if buildingDef != null
+            buildingDef.setAttack1Range(data)
 
     function setMana(int data)
         def.setInt("umpm", data)
