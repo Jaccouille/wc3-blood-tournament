@@ -11,6 +11,7 @@ import GameStates
 import Players
 import RoundController
 import Vote
+import BuilderAI
 
 public function voteReady(player triggerPlayer)
     if roundController.currentRound.hasStarted
@@ -21,7 +22,7 @@ public function voteReady(player triggerPlayer)
         else
             var count = 0
             for _p in ALL_PLAYERS
-                if _p.isHuman()
+                if _p.isHuman() and not playerToBuilderAI.get(_p).isEnabled
                     count++
             let voteInstance = new Vote("Start round", 60., count)
             voteInstance.addAction() () ->
