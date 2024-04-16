@@ -1,0 +1,46 @@
+package Hints
+
+import PlayerData
+import ChatCommands
+import LocalObjectIDs
+import HashMap
+
+let playerToHintMap = new HashMap<player, Hint>()
+
+class Hint
+    texttag hintTag
+    rect buildingRect
+    boolean isShown = true
+
+    construct(texttag hintTag, rect buildingRect)
+        this.hintTag = hintTag
+        this.buildingRect = buildingRect
+
+    function hide()
+        SetDoodadAnimationRect(buildingRect, DOODAD_ARROW, "hide", false)
+        hintTag.setVisibility(false)
+
+    function show()
+        SetDoodadAnimationRect(buildingRect, DOODAD_ARROW, "show", false)
+        hintTag.setVisibility(true)
+
+    function toggle()
+        if isShown
+            hide()
+        else
+            show()
+        isShown = not isShown
+
+constant HINT = "Units spawn from top right in a vertical direction. " +
+    "Refers to the previewer on the minimap to understand the spawn system." +
+    "Type -h to hide this hint."
+
+public function initHints()
+    for _p in pDatas
+        let pos = pDatas.get(_p).buildingRect.getRightTop() - vec2(350, 0)
+        let hintTag = createTTEx(pos.withZ(200), HINT, 10, colorA(255, 255, 255, 255), _p)
+        playerToHintMap.put(_p, new Hint(hintTag, pDatas.get(_p).buildingRect))
+
+init
+    registerCommandAll("h") (triggerPlayer, args) ->
+        playerToHintMap.get(triggerPlayer).toggle()

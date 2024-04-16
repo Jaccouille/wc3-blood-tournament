@@ -15,6 +15,7 @@ import LocalObjectIDs
 import RoundController
 import ScoreBoard
 import UnitDeathTrigger
+import Hints
 
 // A timer for the core gameplay.
 public constant GAME_TIMER = CreateTimer()
@@ -74,6 +75,7 @@ init
         initUnitDeathTrigger()
         initArmySpawner()
         initScoreBoard()
+        initHints()
         ForForce(bj_FORCE_ALL_PLAYERS) ->
             CreateFogModifierRect(
                 GetEnumPlayer(),

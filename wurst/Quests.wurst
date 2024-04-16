@@ -32,7 +32,7 @@ let credits = asList(
     "Billy-Jack/Baal:|r For making Star Wars Blood tournament which inspired Jacc to make this map".color(GENERAL_COLOR),
     "Quazz:|r For introducing Jacc to Warcraft 3 modding".color(GENERAL_COLOR),
     "Frotty, Wurst community:|r For making Wurstscript and answering Jacc dumb questions".color(GENERAL_COLOR),
-    "General Frank and Ujimasa Hojo for models".color(GENERAL_COLOR),
+    "General Frank, Ujimasa Hojo and stan0033 for models".color(GENERAL_COLOR),
     "Hiveworkshop.com:|r".color(GENERAL_COLOR) + " for hosting a massive amount of information on modding"
 ).joinBy("\n")
 

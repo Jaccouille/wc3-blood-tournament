@@ -402,5 +402,6 @@ public let UPGD_ELIMINATION = compiletime(UPGD_ID_GEN.next())
 
 public let DOODAD_PORTAL = 'D001'
 public let DOODAD_ELIM_PORTAL = 'D002'
+public let DOODAD_ARROW = 'D003'
 public let DESC_BRIDGES_VERTICAL = 'YT44'
 public let DESC_BRIDGES_HORIZONTAL = 'YT46'

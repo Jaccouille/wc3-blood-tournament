@@ -194,7 +194,7 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_Frontrank_EN = Rect( 4608.0, 1504.0, 5760.0, 2816.0 )
     set gg_rct_Frontrank_NW = Rect( -1792.0, 5632.0, -512.0, 6784.0 )
     set gg_rct_Frontrank_WS = Rect( -5760.0, -768.0, -4608.0, 512.0 )
-    set gg_rct_Red = Rect( 3584.0, 5568.0, 5120.0, 6176.0 )
+    set gg_rct_Red = Rect( 3584.0, 5600.0, 5120.0, 6208.0 )
     set gg_rct_Blue = Rect( 5120.0, 4576.0, 6656.0, 5184.0 )
     set gg_rct_Teal = Rect( 4608.0, -3232.0, 6144.0, -2656.0 )
     set gg_rct_Purple = Rect( 3584.0, -4768.0, 5120.0, -4192.0 )
