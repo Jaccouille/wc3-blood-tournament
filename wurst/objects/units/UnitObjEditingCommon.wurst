@@ -99,7 +99,7 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
         ..setAnimationCastPoint(0)
         ..setFoodCost(1)
         ..setTooltipExtended("")
-        ..setRequirements(commaList(UPGD_RACE_PICK, UPGD_ALL_RANDOM))
+        ..setRequirements(commaList(UPGD_RACE_PICK, UPGD_ALL_RANDOM, UPGD_RANDOM))
 
 
 /** Configure this variable to `false` if you don't want the

@@ -398,6 +398,7 @@ public let ITEM_WAND_OF_ILLUSION        = compiletime(ITEM_ID_GEN.next())
 public let ITEM_REJUVENATION            = compiletime(ITEM_ID_GEN.next())
 
 public let UPGD_RACE_PICK   = compiletime(UPGD_ID_GEN.next())
+public let UPGD_RANDOM      = compiletime(UPGD_ID_GEN.next())
 public let UPGD_ALL_RANDOM  = compiletime(UPGD_ID_GEN.next())
 public let UPGD_ELIMINATION = compiletime(UPGD_ID_GEN.next())
 

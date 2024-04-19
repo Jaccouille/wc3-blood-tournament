@@ -14,3 +14,7 @@ import LocalObjectIDs
     new UpgradeDefinition(UPGD_ALL_RANDOM)
         ..setName(1, "All random disabled")
         ..setTooltip(1, "All random disabled")
+
+    new UpgradeDefinition(UPGD_RANDOM)
+        ..setName(1, "Cannot repick after random")
+        ..setTooltip(1, "Cannot repick after random")

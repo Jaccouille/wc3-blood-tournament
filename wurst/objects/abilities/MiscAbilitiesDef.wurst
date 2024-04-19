@@ -45,7 +45,7 @@ let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
         ..setIconNormal(Icons.bTNSelectHeroOn)
         ..setIconResearch(Icons.bTNSelectHeroOn)
         ..setIconTurnOff(Icons.bTNSelectHeroOn)
-        ..setRequirements(UPGD_RACE_PICK.toRawCode())
+        ..setRequirements(commaList(UPGD_RACE_PICK, UPGD_RANDOM))
         ..setCheckDependencies(true)
 
     new ChannelAbilityPreset(ABIL_REPICK, 1, true)
@@ -59,7 +59,7 @@ let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
         ..setIconNormal(Icons.bTNPatrol)
         ..setIconResearch(Icons.bTNPatrol)
         ..setIconTurnOff(Icons.bTNPatrol)
-        ..setRequirements(UPGD_RACE_PICK.toRawCode())
+        ..setRequirements(commaList(UPGD_RACE_PICK, UPGD_RANDOM))
         ..setCheckDependencies(true)
 
 
