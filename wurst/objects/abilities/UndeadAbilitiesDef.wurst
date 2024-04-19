@@ -443,9 +443,9 @@ let DEATH_COIL_TARGET_COUNT = 3
 
     abilTooltipMap.put(ABIL_AFFLICTION, tgen.generateFullTooltip())
 
-
+    let abomCount = BTBuildingData.getUnitCount(BUILDING_ABOMINATION)
     itm = createBasicItem(ITEM_SPAWN_GUT_CRAWLER)
-        ..setItemCost(0, 200, 1, 1, 1)
+        ..setItemCost(0, 750, abomCount, 1, 1)
         ..setNameEnhance("Z", "Add Spawn Gut Crawlers")
         ..setInterfaceIcon(Icons.bTNGhoul)
 

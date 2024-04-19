@@ -433,10 +433,10 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 130, 10, 4, 2.5)
+        ..setAttack1Data(AttackType.Normal, 80, 10, 4, 2.5)
 
         ..setArmorData(ArmorType.Small, 4)
-        ..setHitPointsMaximumBase(2400)
+        ..setHitPointsMaximumBase(1400)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -445,7 +445,7 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("S", "Abomination")
         ..tooltipStopListen(true)
-        ..setScalingValue(1.1)
+        ..setScalingValue(1.0)
 
         ..setBuildingUnitsTrained(commaList(
             UNIT_ABOMINATION,
