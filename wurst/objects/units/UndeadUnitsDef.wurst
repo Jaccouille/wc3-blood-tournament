@@ -108,7 +108,7 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_BURNING_ARCHER, UnitIds.burningarcher)
         ..setRace(Race.Undead)
         ..registerItemDef(itmBurning, ItemModifierType.Replace)
-        ..setNormalAbilities(commaList(ABIL_BURNING_ARROW))
+        ..setNormalAbilities(commaList(ABIL_BURNING_ARROW, ABIL_DMG_MINUS_7))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -121,7 +121,7 @@ import UnitTooltipGenerator
 
         ..setSpeedBase(270)
         ..setSizeSmall()
-        ..setItemCostReplacement(0, 100, 1, skeletalArcherCount, skeletalArcherCount, BUILDING_SKELETAL_ARCHER)
+        ..setItemCostReplacement(0, 1000, 10, 1, 1, BUILDING_SKELETAL_ARCHER)
 
         ..setNameEnhance("Z", "Burning Archer")
         ..tooltipStopListen(true, itmBurning)

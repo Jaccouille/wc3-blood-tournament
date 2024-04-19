@@ -120,7 +120,7 @@ function initItemStockData()
 
     // ================ UNDEAD =============
     // unitItemSold.put(BUILDING_ZOMBIE, asList(ITEM_PLAGUE_BEARER                  ))
-    unitItemSold.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_FROST_ARCHER                  ))
+    unitItemSold.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER                  ))
     unitItemSold.put(BUILDING_BANSHEE        , asList(ITEM_UNHOLY_FRENZY, ITEM_FROST_ARMOR                    ))
     unitItemSold.put(BUILDING_NECROMANCER        , asList(ITEM_LICH                                       ))
     unitItemSold.put(BUILDING_SPECTRAL_SAGE        , asList(ITEM_LICH                                       ))

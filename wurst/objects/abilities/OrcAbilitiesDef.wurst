@@ -10,11 +10,11 @@ import AbilityObjEditingCommons
 import ArmySpawner
 import BTAbilities
 import BTAbilityTooltipGenerator
-import ColorUtils
 import ItemObjEditingCommon
 import LocalObjectIDs
 import TooltipsUtils
 import UnitObjEditingCommon
+import LocalAssets
 
 @compiletime function orcAbilities()
     var tgen = new BTAbilityTooltipGenerator(
@@ -113,7 +113,7 @@ import UnitObjEditingCommon
         "Reduces the effectiveness of healing and regeneration on enemy units.")
     new AbilityDefinitionHealReductionBonus(ABIL_BURNING_BLADE_100)
         ..setCheckDependencies(false)
-        ..setArtTarget("Environment\\SmallBuildingFire\\SmallBuildingFire2.mdl")
+        ..setArtTarget(LocalAbilities.sweepFireLarge)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..setHealingMultiplier(1, 1)

@@ -217,6 +217,15 @@ function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraW
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
     return abilDef
 
+// Used to compensate healing reduction orb hard coded damage
+function createBonusDamage(int abilId, int value) returns AbilityDefinitionAttackBonus
+    let abilDef = new AbilityDefinitionAttackBonus(abilId)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..setAttackBonus(1, value)
+        ..setName("Damage Bonus " + value.toString())
+    return abilDef
+
 @compiletime function createCleaveAbilities()
     createCleave(ABIL_CLEAVE_10, 0.10, 150.)
     createCleave(ABIL_CLEAVE_20, 0.20, 150.)
@@ -276,6 +285,10 @@ function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraW
 @compiletime function createRangedAuraAbilities()
     createRangedAura(ABIL_RANGED_AURA_15, 0.15)
     createRangedAura(ABIL_RANGED_AURA_25, 0.25)
+
+@compiletime function createBonusDamageAbilities()
+    createBonusDamage(ABIL_DMG_BONUS_13, 13)
+    createBonusDamage(ABIL_DMG_MINUS_7, -7)
 
 @compiletime function createArrowAbilites()
     var tgen = new BTAbilityTooltipGenerator("Add Spell damage.")

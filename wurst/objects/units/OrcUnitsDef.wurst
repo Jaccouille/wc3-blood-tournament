@@ -133,7 +133,9 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.forestTroll)
 
 @compiletime function createRaider()
-    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_CLEAVE_20))
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_CLEAVE_20)
+        )
     createSpawnedUnit(UNIT_RAIDER, UnitIds.wolfrider, BUILDING_RAIDER)
         ..setNormalAbilities(commaList(ABIL_CLEAVE_20))
         ..registerTooltipGenerator(tooltip)
@@ -160,12 +162,12 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_CLEAVE_20) + "\n\n" +
-        abilTooltipMap.get(ABIL_CRITICAL_STRIKE_20)
+        abilTooltipMap.get(ABIL_BURNING_BLADE_100)
         )
     createSpawnedUnit(UNIT_MARAUDER, UnitIds.chaoswolfrider, BUILDING_MARAUDER)
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
-        ..setNormalAbilities(commaList(ABIL_CLEAVE_20, ABIL_CRITICAL_STRIKE_20))
+        ..setNormalAbilities(commaList(ABIL_CLEAVE_20, ABIL_BURNING_BLADE_100, ABIL_DMG_BONUS_13))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 

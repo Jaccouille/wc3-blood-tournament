@@ -197,6 +197,8 @@ public let ABIL_MAGIC_ARMOR_50     = compiletime(ABIL_ID_GEN.next())
 public let ABIL_DEFLECT_30         = compiletime(ABIL_ID_GEN.next())
 public let ABIL_DEFLECT_75         = compiletime(ABIL_ID_GEN.next())
 public let ABIL_MANA_SHIELD        = compiletime(ABIL_ID_GEN.next())
+public let ABIL_DMG_BONUS_13       = compiletime(ABIL_ID_GEN.next())
+public let ABIL_DMG_MINUS_7        = compiletime(ABIL_ID_GEN.next())
 
 // ==================== HUMAN ABILITIES =================
 public let ABIL_HEAL                  = compiletime(ABIL_ID_GEN.next())
