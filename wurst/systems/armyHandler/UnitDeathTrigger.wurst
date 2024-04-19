@@ -18,6 +18,11 @@ import SpawnZone
 import UnitExtensions
 import TextTagUtils
 
+function fu() returns unit
+    return GetFilterUnit()
+
+unit tempUnit = null
+
 function customAction(unit killer, unit dyingUnit, PlayerData pData)
 
     if (dyingUnit.getTypeId() == UNIT_PALADIN_1
@@ -56,16 +61,6 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
         flashEffect(Abilities.replenishManaCaster, killer, "origin")
         killer.addMana(manaRestored)
 
-    else if killer.getTypeId() == UNIT_VAMPIRE and killer.isAlive()
-        let hpBonus = (dyingUnit.getMaxHP() / 10).toInt()
-        killer.setMaxHP(killer.getMaxHP().toInt() + hpBonus, true)
-        flashEffect(Abilities.aIsmTarget, killer, "origin")
-
-    else if killer.getTypeId() == UNIT_VAMPIRE_LORD and killer.isAlive()
-        let hpBonus = (dyingUnit.getMaxHP() / 20).toInt()
-        killer.setMaxHP(killer.getMaxHP().toInt() + hpBonus, true)
-        flashEffect(Abilities.aIsmTarget, killer, "origin")
-
     else if dyingUnit.getTypeId() == UNIT_WISP
         flashEffect(Units.wispExplode, dyingUnit.getPos())
 
@@ -92,6 +87,28 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
             killer.setAbilityLevel(ABIL_KILLING_SPREE, 1)
         killer.issueImmediateOrderById(OrderIds.roar)
         killer.incAbilityLevel(ABIL_KILLING_SPREE)
+
+    if IsUnitRace(dyingUnit, RACE_UNDEAD)
+        and killer.getOwner() != ALTAR_PLAYER
+        and BlzGetUnitBooleanField(dyingUnit, UNIT_BF_RAISABLE)
+        tempUnit = dyingUnit
+        forNearestUnit(dyingUnit.getPos(), 500,
+            Filter(() -> (fu().getTypeId() == UNIT_VAMPIRE or fu().getTypeId() == UNIT_VAMPIRE_LORD)
+            and fu().getAbilityLevel(ABIL_BLOOD_HARVEST) < 41
+            and fu().isAlive()
+            and fu().isAllyOf(tempUnit)
+        )) u ->
+            let bounty = dyingUnit.getPointValue()
+            let lvl = u.getAbilityLevel(ABIL_BLOOD_HARVEST)
+            let newLvl = min(bounty div 5 + lvl, 41)
+            let newColor = max((-3.97 * newLvl + 258.97).toInt(), 0)
+            u.setVertexColor(255, newColor, newColor, 255)
+            let baseHP = u.getTypeId() == UNIT_VAMPIRE ? 1600 : 2000
+            u.setMaxHP(baseHP + (newLvl - 1) * 50, true)
+            u.setScale(0.0051 * newLvl + 0.9949)
+            Log.info(u.getName())
+            u.setAbilityLevel(ABIL_BLOOD_HARVEST, newLvl)
+            flashEffect(Abilities.aIsmTarget, u, "origin")
 
 function getBounty(unit dyingUnit) returns int
     return (dyingUnit.getPointValue() * gameConfig.getBountyMultiplier()).toInt()

@@ -16,6 +16,7 @@ import BTAbilityTooltipGenerator
 import ItemObjEditingCommon
 import LocalObjectIDs
 import TooltipsUtils
+import LocalAssets
 import UnitObjEditingCommon
 
 let DEATH_COIL_AOE = 150.
@@ -476,6 +477,30 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Gains attack damage and health points from nearby dying allied units." +
+        "Bonus is based on dying unit bounty. Doesn't work on spectral and skeleton units." +
+        "Benefits 1 vampire at a time."
+        )
+    new AbilityDefinitionAttackBonus(ABIL_BLOOD_HARVEST)
+        ..setCheckDependencies(false)
+        ..setLevels(41)
+        ..presetIcon(Icons.bTNDeathPact)
+        ..setArtTarget(LocalAbilities.sweepBloodLarge)
+        ..setTargetAttachmentPoint("hand,right")
+        ..setTargetAttachmentPoint1("hand,left")
+        ..setTargetAttachments(2)
+        ..registerTooltipGenerator(tgen)
+        ..presetAttackBonus(lvl -> (lvl - 1) * 5)
+        ..tooltipStartListen()
+        ..addTooltipProperty("Max Bonus Damage", _ -> (40 * 5).toString())
+        ..addTooltipProperty("Max Bonus Health", _ -> (40 * 50).toString())
+        ..presetAreaofEffect(_ -> 500)
+        ..setNameEnhance("Z", "Blood Harvest")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_BLOOD_HARVEST, tgen.generateFullTooltip())
 
 
 init
