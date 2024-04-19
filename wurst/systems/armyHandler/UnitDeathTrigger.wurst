@@ -5,6 +5,7 @@ import Assets
 import ClosureForGroups
 import ClosureTimers
 import OrderIds
+import DummyRecycler
 
 // Local imports:
 import ArmyPreviewer
@@ -227,7 +228,7 @@ public function initUnitDeathTrigger()
             pData.subArmyPoints(BTBuildingData.unitIdToDataMap.get(dyingUnit.getTypeId()).buildingArmyPoints)
             pData.buildingList.remove(dyingUnit)
 
-            if killer == pData.builder
+            if killer == pData.builder or killer.getTypeId() == DUMMY_UNIT_ID
                 var goldAmount = dyingUnit.getMaxHP().toInt() - 100
                 var bloodAmount = dyingUnit.getMaxMana().toInt()
                 for t in dyingUnit.getInventory()

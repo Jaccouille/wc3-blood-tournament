@@ -107,7 +107,7 @@ public abstract class Round
 
     function doBeforeSpawn()
         for _p in pDatas
-            pDatas.get(_p).builder.removeAbility(ABIL_SELL_BUILDING)
+            SetPlayerTechResearchedSwap(UPGD_UNAVAILABLE_DURING_ROUND, 0, _p)
         forUnitsAll() (unit u) ->
             if IsUnitDeadBJ(u)
                 u.remove()
@@ -152,8 +152,7 @@ public abstract class Round
                     preventOrder = true
                     orderBlocker.enable()
                 for _p in pDatas
-                    pDatas.get(_p).builder.addAbility(ABIL_UNSTUCK_UNIT)
-                    pDatas.get(_p).builder.addAbility(ABIL_ORDER_UNIT)
+                    SetPlayerTechResearchedSwap(UPGD_AVAILABLE_DURING_ROUND, 1, _p)
 
             else if setupTime < 6
                 printTimed(setupTime.toString() + "...", 5)

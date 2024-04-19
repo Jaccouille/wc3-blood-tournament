@@ -70,6 +70,7 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
         ..setPlacementRequires(commaList("unwalkable"))
         ..setSelectionScale(1.0)
         ..setAttacksEnabled(1)
+        ..setAttack1ShowUI(false)
         ..setShadowTextureBuilding("ShadowCrates")
 
 
@@ -79,6 +80,9 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
             AbilityIds.invulnerable,
             ABIL_START_ROUND,
             ABIL_SELL_BUILDING,
+            ABIL_SELL_ALL,
+            ABIL_UNSTUCK_UNIT,
+            ABIL_ORDER_UNIT,
             ABIL_TRADE_GOLD,
             AbilityIds.inventory
             ))

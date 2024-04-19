@@ -130,6 +130,8 @@ let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
             ..setIconTurnOff(Icons.bTNNagaUnBurrow)
             ..presetOption(Option.TARGETIMAGE, true)
             ..setAreaofEffect(1, 200)
+            ..setRequirements(commaList(UPGD_AVAILABLE_DURING_ROUND))
+            ..setCheckDependencies(true)
             ..setOrderStringActivate("blizzard")
             ..setBaseOrderID(1, "blizzard")
 
@@ -151,6 +153,8 @@ let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
             ..setIconNormal(Icons.bTNMirrorImage)
             ..setIconResearch(Icons.bTNMirrorImage)
             ..setIconTurnOff(Icons.bTNMirrorImage)
+            ..setRequirements(commaList(UPGD_AVAILABLE_DURING_ROUND))
+            ..setCheckDependencies(true)
             ..setOrderStringActivate("hex")
             ..setBaseOrderID(1, "hex")
 
@@ -205,14 +209,17 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
             TargetsAllowed.invulnerable,
             TargetsAllowed.nonancient
         ))
+        ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
+        ..setCheckDependencies(true)
         ..setNameEnhance("X", "Sell building")
         ..presetTooltipNormalExtended(lvl -> "Sell the building and get 100% of its cost back.\n")
 
     createStandardChannelAbility(ABIL_SELL_ALL)
-        ..setNameEnhance("C", "Sell All")
+        ..setNameEnhance("R", "Sell All")
         ..setTooltipNormalExtended(1, "Sell all sellable buildings.\n")
         ..setIconNormal(Icons.bTNChestOfGold)
-
+        ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
+        ..setCheckDependencies(true)
 
 init
     GameStates.modesSelection.onExit() (state) ->
@@ -226,6 +233,10 @@ init
             TOOLTIP_TRADE_BLOOD_POINT.format(
                 goldEx.toString().color(COLOR_GOLD), bpEx.toString().color(COLOR_RED)),
             0)
+
+        for _p in pDatas
+            SetPlayerTechResearchedSwap(UPGD_AVAILABLE_DURING_ROUND, 0, _p)
+            SetPlayerTechResearchedSwap(UPGD_UNAVAILABLE_DURING_ROUND, 1, _p)
 
     EventListener.onCast(ABIL_START_ROUND) (unit caster) ->
         let owner = caster.getOwner()
@@ -263,7 +274,7 @@ init
                     ..owner(caster.getOwner())
                     ..origin(caster.getPos())
                     ..castTarget(ABIL_SELL_BUILDING, 1, Orders.transmute, u)
-                    ..delay(1)
+                    ..delay(5)
                 // BlzQueueTargetOrderById(caster, OrderIds.transmute, u)
                 // caster.issueTargetOrderById(OrderIds.transmute, u)
 

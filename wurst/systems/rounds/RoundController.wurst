@@ -299,9 +299,8 @@ public function initRoundController()
         altarEntity.getOrbUnit().pause()
         altarEntity.getArenaMaster().setAnimation("Stand")
         for _p in pDatas
-            pDatas.get(_p).builder.removeAbility(ABIL_UNSTUCK_UNIT)
-            pDatas.get(_p).builder.removeAbility(ABIL_ORDER_UNIT)
-            pDatas.get(_p).builder.addAbility(ABIL_SELL_BUILDING)
+            SetPlayerTechResearchedSwap(UPGD_AVAILABLE_DURING_ROUND, 0, _p)
+            SetPlayerTechResearchedSwap(UPGD_UNAVAILABLE_DURING_ROUND, 1, _p)
         // Remove speed boost banner
         forUnitsAll() (unit u) ->
             if u.getTypeId() == UNIT_SPEED_BANNER
@@ -318,7 +317,7 @@ public function initRoundController()
                 altarEntity.hideCounter()
                 printTimed(round.winner.getNameColored() + " gets "
                     + altarEntity.bloodPointCounter.toString().color(COLOR_RED)
-                    + " bonus blood points for winning the round" , 15)
+                    + " bonus kill points for winning the round" , 15)
                 pDatas.get(round.winner).addRoundBloodPoints(altarEntity.bloodPointCounter)
             doAfter(6) ->
                 if round.goldReward > 0
