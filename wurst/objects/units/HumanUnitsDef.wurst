@@ -271,6 +271,7 @@ import UnitTooltipGenerator
         ..setNormalAbilities(commaList(
             ABIL_MAGIC_ARMOR_50,
             ABIL_HOLY_BLADE,
+            ABIL_BASH_30,
             ABIL_HOLY_BLADE_VISUAL
             ))
         ..setDefaultActiveAbility(commaList(ABIL_HOLY_BLADE))

@@ -274,7 +274,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 65, 5, 10, 1.5)
 
         ..setArmorData(ArmorType.Small, 4)
-        ..setHitPointsMaximumBase(2400)
+        ..setHitPointsMaximumBase(2000)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -290,28 +290,27 @@ import UnitTooltipGenerator
         ..setIconGameInterfaceExt(Icons.bTNBearForm)
 
     tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_HOWL_OF_TERROR) + "\n\n" +
-        abilTooltipMap.get(ABIL_CLEAVE_30) + "\n\n" +
+        abilTooltipMap.get(ABIL_DRUID_FRENZY) + "\n\n" +
+        abilTooltipMap.get(ABIL_CLEAVE_20) + "\n\n" +
         abilTooltipMap.get(ABIL_HARDENED_SKIN_10)
         )
     itm = createBasicItem(ITEM_OWLBEAR)
     createSpawnedUnit(UNIT_OWLBEAR, UnitIds.owlbear, BUILDING_OWLBEAR)
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..setNormalAbilities(commaList(
-            ABIL_HOWL_OF_TERROR,
-            ABIL_CLEAVE_30,
-            // ABIL_AUTOCAST_HOWL_OF_TERROR,
+            ABIL_DRUID_FRENZY,
+            ABIL_CLEAVE_20,
             ABIL_HARDENED_SKIN_10
             ))
-        // ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_HOWL_OF_TERROR))
+        ..setDefaultActiveAbility(commaList(ABIL_DRUID_FRENZY))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Siege, 65, 5, 5, 1.2)
 
         ..setArmorData(ArmorType.Large, 2)
-        ..setHitPointsMaximumBase(2400)
-        ..setMana(200)
+        ..setHitPointsMaximumBase(1700)
+        ..setMana(0)
 
         ..setSpeedBase(270)
 
