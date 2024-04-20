@@ -169,7 +169,8 @@ class RoundController
             startRound()
 
     function stopRoundTimer()
-        destroy portalDisplayCb
+        if portalDisplayCb != null
+            destroy portalDisplayCb
         roundInterludeTimer.destr()
 
     function startRound()

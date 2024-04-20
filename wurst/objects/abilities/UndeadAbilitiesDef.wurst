@@ -286,18 +286,19 @@ let DEATH_COIL_TARGET_COUNT = 3
 
     tgen = new BTAbilityTooltipGenerator(
         "Regenerate nearby friendly units hitpoints every seconds.")
-    new AbilityDefinitionAuraRegenerationStatue(ABIL_UNHOLY_AURA)
+    new AbilityDefinitionAuraRegenerationHealingWard(ABIL_UNHOLY_AURA)
         ..presetDurationNormal(_ -> 0)
         ..setPercentage(1, true)
         ..setCheckDependencies(false)
         ..presetCooldown(_ -> 0)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..setAmountofHitPointsRegenerated(1, 0.02)
-        ..addTooltipProperty("Amount of Hit Points Regenerated", _ -> 0.02.toPercent())
+        ..setAmountofHitPointsRegenerated(1, 0.01)
+        ..addTooltipProperty("Amount of Hit Points Regenerated", _ -> 0.01.toPercent())
         ..presetAreaofEffect(_ -> 1200)
         ..setNameEnhance("Z", "Unholy Aura")
         ..tooltipStopListen(true)
+        ..setBuffs(1, BUFF_UNHOLY_AURA.toRawCode())
         ..setArtTarget(Abilities.unholyAura)
 
     tgen.applyToDefItem(itm)
@@ -308,7 +309,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setArtSpecial(1, Abilities.unholyAura)
         ..setTooltipNormal(1, "Unholy Aura")
         ..setArtTarget("")
-        ..setTooltipNormalExtended(1, "This unit is affected by Unholy Aura; it regains 2% health point per second.")
+        ..setTooltipNormalExtended(1, "This unit is affected by Unholy Aura; it regains 1% health point per second.")
 
     new AbilityDefinitionUnholyAuracreep(ABIL_UNHOLY_AURA_VISUAL)
         ..setLevels(1)

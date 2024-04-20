@@ -44,10 +44,14 @@ init
                 flashEffect(Abilities.aIilTarget, pData.builder.getPos3Real())
                 pData.builder.remove()
             if not pData.racePicker.issueImmediateOrder(UnitId2String(gameConfig.getBuilderList().getRandomElement()))
+                // This happens when randoming with existing builder
                 nullTimer() ->
                     pData.racePicker.issueImmediateOrder(UnitId2String(gameConfig.getBuilderList().getRandomElement()))
-            pData.hasRandomed = true
-            SetPlayerTechResearchedSwap(UPGD_RANDOM, 0, owner)
+                    pData.hasRandomed = true
+                    SetPlayerTechResearchedSwap(UPGD_RANDOM, 0, owner)
+            else
+                pData.hasRandomed = true
+                SetPlayerTechResearchedSwap(UPGD_RANDOM, 0, owner)
             // SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 0, owner)
 
     EventListener.onCast(ABIL_REPICK) (unit caster) ->

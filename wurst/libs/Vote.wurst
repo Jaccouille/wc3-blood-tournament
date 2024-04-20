@@ -38,7 +38,7 @@ public class Vote
     function castVote(player _p)
         if not hasVoted.has(_p)
             hasVoted.push(_p)
-            let remainingVote = amountToPass - hasVoted.size()
+            let remainingVote = max(amountToPass - hasVoted.size(), 0)
             let msg = _p.getNameColored(true) +
                 " has voted for " + this.name.color(SPECIAL_COLOR) +
                 ", " + remainingVote.toString() + " vote remaining"

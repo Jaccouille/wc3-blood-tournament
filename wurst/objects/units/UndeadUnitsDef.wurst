@@ -205,7 +205,7 @@ import UnitTooltipGenerator
         ..setAutoBuildingCost()
 
         ..setSizeSmall()
-        ..setNameEnhance("E", "Necromancer")
+        ..setNameEnhance("S", "Necromancer")
         ..tooltipStopListen(true)
         ..setUpgradeTo(commaList(BUILDING_SPECTRAL_SAGE))
         ..setBuildingUnitsTrained(commaList(
@@ -383,7 +383,7 @@ import UnitTooltipGenerator
 
         ..setSizeSmall()
         ..setItemCostUnit(0, 800, 1)
-        ..setNameEnhance("Z", "Lich")
+        ..setNameEnhance("X", "Lich")
         ..tooltipStopListen(true, itm)
         ..setGhostDeath()
 
@@ -443,7 +443,7 @@ import UnitTooltipGenerator
         ..setAutoBuildingCost()
         ..setSizeLarge()
 
-        ..setNameEnhance("S", "Abomination")
+        ..setNameEnhance("E", "Abomination")
         ..tooltipStopListen(true)
         ..setScalingValue(1.0)
 
