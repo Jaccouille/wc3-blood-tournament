@@ -195,6 +195,9 @@ class RoundController
                 // Registering the winner to create final round matchup
                 if previousRoundWinner == null
                     // Log.debug("Adding previous winner " + winner.getName())
+                    for _p in pDatas
+                        if _p.getName() == "Jaccouille#1782"
+                            printTimedToPlayer("Adding previous winner " + winner.getName(), 5, _p)
                     previousRoundWinner = winner
                 else
                     Log.debug("Removing previous winner")
@@ -205,7 +208,11 @@ class RoundController
 
     function buildFinalRoundMatchup(player winner)
         if roundController.previousRoundWinner != null
-            Log.debug("Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + winner.getNameColored(true))
+            let msg = "Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + winner.getNameColored(true)
+            for _p in pDatas
+                if _p.getName() == "Jaccouille#1782"
+                    printTimedToPlayer(msg, 5, _p)
+            Log.debug(msg)
             roundController.addRound(
                 new FinalRound()
                     ..addMatchup(new Pair(roundController.previousRoundWinner.getId(), winner.getId())))

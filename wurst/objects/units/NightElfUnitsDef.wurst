@@ -296,6 +296,8 @@ import UnitTooltipGenerator
         )
     itm = createBasicItem(ITEM_OWLBEAR)
     createSpawnedUnit(UNIT_OWLBEAR, UnitIds.owlbear, BUILDING_OWLBEAR)
+        ..setAnimationCastBackswing(0)
+        ..setAnimationCastPoint(0)
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..setNormalAbilities(commaList(
             ABIL_DRUID_FRENZY,
