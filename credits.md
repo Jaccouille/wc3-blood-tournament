@@ -18,3 +18,4 @@ Venix, honeyBadger, theShadow, Chiller, ovalbomb12, Gonzalo, DarkAssassin
 
 Models :
 -Directional Arrows by stan0033, https://www.hiveworkshop.com/threads/directional-arrows.348487/
+-Sweep Blood/Fire Small/Large by Hate, https://www.hiveworkshop.com/threads/sweep-attachments.333560/
