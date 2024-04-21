@@ -24,6 +24,9 @@ public let playerToBuilderAI = new HashMap<player, BuilderAI>
 let botEnabled = compiletime(createDummyBuffObject("Bot enabled", "This player is being controlled by a bot",
      Icons.bTNMagicalSentry, Abilities.magicSentryCaster, "overhead"))
 
+
+constant TOOLTIP = "You are controlled by a bot, type -bot to disable it."
+
 let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
     ..put(UNIT_HUMAN_BUILDER, asList(
         BUILDING_FOOTMAN,
@@ -79,11 +82,14 @@ class BuilderAI
     CallbackPeriodic cb
     boolean isEnabled = false
     boolean enableForHumanPlayer = false
+    texttag tooltip
 
     construct(player _player)
         this._player = _player
         playerToBuilderAI.put(_player, this)
         pData = pDatas.get(_player)
+        tooltip = createTTEx(pData.racePicker.getPos().withZ(200), TOOLTIP, 10, colorA(255, 255, 255, 255), _player)
+        tooltip.setVisibility(false)
 
     function pickBuilder()
         if pData.builder == null
@@ -111,6 +117,7 @@ class BuilderAI
     function startAI()
         isEnabled = true
         pData.racePicker.addAbility(botEnabled.abilId)
+        tooltip.setVisibility(true)
         pickBuilder()
 
         cb = doPeriodically(2) (CallbackPeriodic cb) ->
@@ -153,6 +160,7 @@ class BuilderAI
 
     function stopAI()
         pData.racePicker.removeAbility(botEnabled.abilId)
+        tooltip.setVisibility(false)
         BlzUnitForceStopOrder(pData.builder, true)
         isEnabled = false
 
