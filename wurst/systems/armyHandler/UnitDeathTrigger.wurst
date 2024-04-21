@@ -198,6 +198,8 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
 
 
             else if roundController.currentRound instanceof FinalRound
+                // Clear the reinforcement list of the winner since the round is over
+                playerToArmySpawner.get(matchUpWinner).buildingList.clear()
                 (roundController.currentRound castTo FinalRound).looser = pData._p
 
         roundController.currentRound.roundParticipant.remove(pData._p)
