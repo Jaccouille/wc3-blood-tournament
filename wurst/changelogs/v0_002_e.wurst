@@ -26,7 +26,7 @@ init
         ..add("(UN) Added burning archer back")
         ..add("(UN) Increased abom count 1 -> 5, gold cost 100 -> 300, HP 2400 -> 1400, damage 130 - 170 -> 80 -> 120")
         ..add("(UN) Increased range on all raise skeleton abilities 750 -> 1000")
-        ..add("Add "-ready" command to start round (-r already existed but ppl were typing ready)")
+        ..add("Add \"-ready\" command to start round (-r already existed but ppl were typing ready)")
         ..add("Added afk detector, player that haven't moved during 30 seconds after beginning of a pre-round phase will be controlled by a bot")
         ..add("Added back Sell All to builder")
         ..add("Blood points are now given after round end to avoid people upgrading building during the round")
