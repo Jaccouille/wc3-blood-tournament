@@ -102,6 +102,7 @@ init
                 Log.info(t.squadIds.size().toString() + " " + t.unitModifierList.size().toString())
 
     registerCommandAll("dev") (player triggerPlayer, LinkedList<string> arguments) ->
+        Log.info(triggerPlayer.getName())
         if triggerPlayer.getName() == "Jaccouille#1782"
             printTimed("{0} enabled dev mode, debug command are enabled.", 10)
 
