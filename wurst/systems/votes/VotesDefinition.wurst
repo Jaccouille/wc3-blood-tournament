@@ -25,7 +25,7 @@ public function voteReady(player triggerPlayer)
                 // Only count human players and no afk
                 if _p.isHuman() and not playerToBuilderAI.get(_p).isEnabled
                     count++
-            let voteInstance = new Vote("Start round", 60., count)
+            let voteInstance = new Vote("Start round", gameConfig.getRoundInterludeTime(), count)
             voteInstance.addAction() () ->
                 if not roundController.currentRound.hasStarted
                     if gameConfig.isDisplayPortalEnabled()
