@@ -435,7 +435,7 @@ import UnitTooltipGenerator
 
         ..setAttack1Data(AttackType.Normal, 80, 10, 4, 2.5)
 
-        ..setArmorData(ArmorType.Small, 4)
+        ..setArmorData(ArmorType.Small, 0)
         ..setHitPointsMaximumBase(1400)
 
         ..setSpeedBase(270)

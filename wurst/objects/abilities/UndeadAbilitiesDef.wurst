@@ -470,7 +470,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setDurationofPlagueWard(1, 1)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..presetDamageperSecond(_ -> 20)
+        ..presetDamageperSecond(_ -> 15)
         ..presetAreaofEffect(_ -> 300)
         ..addTooltipProperty("Duration", _ -> "6")
         ..setNameEnhance("Z", "Disease Cloud")
