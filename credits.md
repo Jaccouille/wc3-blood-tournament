@@ -14,7 +14,7 @@
 - imForFun (straw hat)
 
 Testing:
-Venix, honeyBadger, theShadow, Chiller, ovalbomb12, Gonzalo, DarkAssassin
+Venix, honeyBadger, theShadow, Chiller, ovalbomb12, Gonzalo, DarkAssassin, Klasker, pokedya, Corke
 
 Models :
 -Directional Arrows by stan0033, https://www.hiveworkshop.com/threads/directional-arrows.348487/

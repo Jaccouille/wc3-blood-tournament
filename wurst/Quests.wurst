@@ -34,7 +34,8 @@ let credits = asList(
     "Frotty, Wurst community:|r For making Wurstscript and answering Jacc dumb questions".color(GENERAL_COLOR),
     "General Frank, Hate, Ujimasa Hojo and stan0033 for models".color(GENERAL_COLOR),
     "Hiveworkshop.com:|r".color(GENERAL_COLOR) + " for hosting a massive amount of information on modding",
-    "Thanks for testing the map and giving feedback:|r".color(GENERAL_COLOR) + "\nVenix, honeyBadger, theShadow, Chiller, ovalbomb12, Gonzalo, DarkAssassin"
+    "Thanks for testing the map and giving feedback:|r".color(GENERAL_COLOR) +
+    "\nVenix, honeyBadger, theShadow, Chiller, ovalbomb12, Gonzalo, DarkAssassin, Klasker, pokedya, Corke"
 ).joinBy("\n")
 
 let commands = asList(
