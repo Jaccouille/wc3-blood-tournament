@@ -38,6 +38,8 @@ globals
     rect                    gg_rct_StoCenter           = null
     rect                    gg_rct_EtoCenter           = null
     rect                    gg_rct_WtoCenter           = null
+    rect                    gg_rct_ManagerTower        = null
+    rect                    gg_rct_ManagerTowerFinal   = null
 endglobals
 
 function InitGlobals takes nothing returns nothing
@@ -208,6 +210,8 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_StoCenter = Rect( -512.0, -5120.0, 512.0, -4992.0 )
     set gg_rct_EtoCenter = Rect( 6016.0, 640.0, 6144.0, 1408.0 )
     set gg_rct_WtoCenter = Rect( -6144.0, 640.0, -6016.0, 1408.0 )
+    set gg_rct_ManagerTower = Rect( -3744.0, 3552.0, -3136.0, 4256.0 )
+    set gg_rct_ManagerTowerFinal = Rect( -320.0, 2720.0, 352.0, 3424.0 )
 endfunction
 
 //***************************************************************************
