@@ -100,17 +100,20 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
             and fu().isAlive()
             and fu().isAllyOf(tempUnit)
         )) u ->
-            let bounty = dyingUnit.getPointValue()
-            let lvl = u.getAbilityLevel(ABIL_BLOOD_HARVEST)
-            let newLvl = min(bounty div 5 + lvl, 41)
-            let newColor = max((-3.97 * newLvl + 258.97).toInt(), 0)
-            u.setVertexColor(255, newColor, newColor, 255)
-            let baseHP = u.getTypeId() == UNIT_VAMPIRE ? 1600 : 2000
-            u.setMaxHP(baseHP + (newLvl - 1) * 50, true)
-            u.setScale(0.0051 * newLvl + 0.9949)
-            // Log.info(u.getName() + " " + u.getAbilityLevel(ABIL_BLOOD_HARVEST).toString())
-            u.setAbilityLevel(ABIL_BLOOD_HARVEST, newLvl)
-            flashEffect(Abilities.aIsmTarget, u, "origin")
+            if u != null
+                let bounty = dyingUnit.getPointValue()
+                let lvl = u.getAbilityLevel(ABIL_BLOOD_HARVEST)
+                let newLvl = min(bounty div 5 + lvl, 41)
+                // Ask chat gpt for a linear equation, max value is 100
+                let newColor = max((-3.97 * newLvl + 258.97).toInt(), 0)
+                u.setVertexColor(255, newColor, newColor, 255)
+                let baseHP = u.getTypeId() == UNIT_VAMPIRE ? 1600 : 2000
+                u.setMaxHP(baseHP + (newLvl - 1) * 50, true)
+                // Ask chat gpt for a linear equation, max value is 1.2
+                u.setScale(0.0051 * newLvl + 0.9949)
+                // Log.info(u.getName() + " " + u.getAbilityLevel(ABIL_BLOOD_HARVEST).toString())
+                u.setAbilityLevel(ABIL_BLOOD_HARVEST, newLvl)
+                flashEffect(Abilities.aIsmTarget, u, "origin")
             tempUnit = null
 
 function getBounty(unit dyingUnit) returns int
@@ -136,8 +139,39 @@ function computeSpeedBannerPos(SpawnZone sp1, SpawnZone sp2) returns vec2
     let middle = pos1.polarOffset(direction, dist)
     return middle
 
+function groupOrder(player _p, vec2 middle)
+    nullTimer() ->
+        // Group order works on 12 units max
+        let orderUnitCount = 12
+        let spawnedUnits = _p.getPlayerData().spawnedUnits
+        let grpList = new LinkedList<group>()
+        let grpNbr = (spawnedUnits.size() / orderUnitCount).toInt() + 1
+
+        for i = 0 to grpNbr
+            grpList.push(CreateGroup())
+
+        var grp = grpList.get(0)
+        var grpIdx = 0
+        for u in spawnedUnits
+            if u.isSoldier() and u.isAlive()
+                grp.add(u)
+            if (spawnedUnits.indexOf(u) % (orderUnitCount - 1) == 0 and spawnedUnits.indexOf(u) > 0)
+                or spawnedUnits.indexOf(u) == spawnedUnits.size() - 1
+                grp.pointOrderById(OrderIds.attack, middle)
+                doAfter(4) ->
+                    grp.pointOrderById(OrderIds.attack, CENTER)
+                    if grpList != null
+                        grpList.remove(grp)
+                    grp.close()
+                    if grpList.isEmpty()
+                        destroy grpList
+                grpIdx += 1
+                grp = grpList.get(grpIdx)
+
+
 public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
     if pData.spawnedUnits.isEmpty()
+        Log.debug(EventData.getKillingUnit().getName() + " killed " + EventData.getDyingUnit().getName())
         let matchUpWinner = roundController.currentRound.getOpponent(pData._p)
         if matchUpWinner != null
             // Trying to fix taunted units being stuck
@@ -166,37 +200,7 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
                         armySpawner.spawnZone = spawnZones.get(secondRectIdx)
                         armySpawner.pos = armySpawner.spawnZone.spawnRect.getCenter()
                         armySpawner.spawnZone.openPortal()
-
-
-                nullTimer() ->
-                    // Group order works on 12 units max
-                    let orderUnitCount = 12
-                    let spawnedUnits = matchUpWinner.getPlayerData().spawnedUnits
-                    let grpList = new LinkedList<group>()
-                    let grpNbr = (spawnedUnits.size() / orderUnitCount).toInt() + 1
-
-                    for i = 0 to grpNbr
-                        grpList.push(CreateGroup())
-
-                    var grp = grpList.get(0)
-                    var grpIdx = 0
-                    for u in spawnedUnits
-                        if u.isSoldier() and u.isAlive()
-                            grp.add(u)
-                        if (spawnedUnits.indexOf(u) % (orderUnitCount - 1) == 0 and spawnedUnits.indexOf(u) > 0)
-                            or spawnedUnits.indexOf(u) == spawnedUnits.size() - 1
-                            grp.pointOrderById(OrderIds.attack, middle)
-                            doAfter(4) ->
-                                grp.pointOrderById(OrderIds.attack, CENTER)
-                                if grpList != null
-                                    grpList.remove(grp)
-                                grp.close()
-                                if grpList.isEmpty()
-                                    destroy grpList
-                            grpIdx += 1
-                            grp = grpList.get(grpIdx)
-
-
+                groupOrder(matchUpWinner, middle)
             else if roundController.currentRound instanceof FinalRound
                 // Clear the reinforcement list of the winner since the round is over
                 playerToArmySpawner.get(matchUpWinner).buildingList.clear()
