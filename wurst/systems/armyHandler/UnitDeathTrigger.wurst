@@ -104,12 +104,12 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
                 let bounty = dyingUnit.getPointValue()
                 let lvl = u.getAbilityLevel(ABIL_BLOOD_HARVEST)
                 let newLvl = min(bounty div 5 + lvl, 41)
-                // Ask chat gpt for a linear equation, max value is 100
+                // Asked chat gpt for a linear equation, max value is 100
                 let newColor = max((-3.97 * newLvl + 258.97).toInt(), 0)
                 u.setVertexColor(255, newColor, newColor, 255)
                 let baseHP = u.getTypeId() == UNIT_VAMPIRE ? 1600 : 2000
                 u.setMaxHP(baseHP + (newLvl - 1) * 50, true)
-                // Ask chat gpt for a linear equation, max value is 1.2
+                // Asked chat gpt for a linear equation, max value is 1.2
                 u.setScale(0.0051 * newLvl + 0.9949)
                 // Log.info(u.getName() + " " + u.getAbilityLevel(ABIL_BLOOD_HARVEST).toString())
                 u.setAbilityLevel(ABIL_BLOOD_HARVEST, newLvl)

@@ -104,6 +104,33 @@ let SLOW_TARGET_COUNT = 2
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_WEAPON_BLESSING, tgen.generateFullTooltip())
 
+    tgen = new BTAbilityTooltipGenerator(
+        "Basic attack on summoned units make the Priest cast abolish magic on them, " +
+        "dealing bonus damage to them."
+        )
+    let abilIdAbolishMagic = ABIL_ID_GEN.next()
+    new AbilityDefinitionOrbofLightning(ABIL_ABOLISH_MAGIC_ORB)
+        ..setMissileArt(Abilities.priestMissile)
+        ..setEnabledAttackIndex(1, 0)
+        ..presetChanceToHitUnits(_ -> 0)
+        ..presetChanceToHitSummons(_ -> 100)
+        ..setArtTarget("")
+        ..setEffectAbility(1, abilIdAbolishMagic.toRawCode())
+        ..setDamageBonus(1, 0)
+
+    new AbilityDefinitionAbolishMagic(abilIdAbolishMagic)
+        ..setCheckDependencies(false)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetSummonedUnitDamage(_ -> 150)
+        ..presetManaCost(_ -> 0)
+        ..presetCooldown(_ -> 4)
+        ..presetCastRange(_ -> 900)
+        ..setNameEnhance("Z", "Abolish Magic")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_ABOLISH_MAGIC_ORB, tgen.generateFullTooltip())
+
 
     tgen = new BTAbilityTooltipGenerator(
         "Slows a target enemy unit's attack rate and movement speed." +

@@ -172,11 +172,12 @@ import UnitTooltipGenerator
 
 @compiletime function createPriest()
     var tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_HEAL)
+        abilTooltipMap.get(ABIL_HEAL) + "\n\n" +
+        abilTooltipMap.get(ABIL_ABOLISH_MAGIC_ORB)
     )
 
     createSpawnedUnit(UNIT_PRIEST, UnitIds.priest, BUILDING_PRIEST)
-        ..setNormalAbilities(commaList(ABIL_HEAL))
+        ..setNormalAbilities(commaList(ABIL_HEAL, ABIL_ABOLISH_MAGIC_ORB))
         ..setDefaultActiveAbility(commaList(ABIL_HEAL))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
