@@ -8,17 +8,14 @@ import ClosureTimers
 import HashMap
 import LinkedListModule
 import TerrainUtils
-import Reflection
 
 // Local imports:
 import ChatCommands
 import GameConfig
 import GameStates
-import IDListConstant
 import ItemStockHandler
 import LocalObjectIDs
 import Players
-import Round
 import initlater RoundController
 
 public let playerToBuilderAI = new HashMap<player, BuilderAI>
@@ -26,7 +23,7 @@ let botEnabled = compiletime(createDummyBuffObject("Bot enabled", "This player i
      Icons.bTNMagicalSentry, Abilities.magicSentryCaster, "overhead"))
 
 
-constant TOOLTIP = "You are controlled by a bot, type -bot to disable it."
+constant TOOLTIP = "You are controlled by a bot, type -bot or move the builder around to disable it."
 
 let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
     ..put(UNIT_HUMAN_BUILDER, asList(
@@ -126,36 +123,37 @@ class BuilderAI
                 destroy cb
 
             // Try to upgrade existing units
-            if pData._p.getLumber() >= 50 and pData.buildingList.size() > 0
-                let buildingList = pData.buildingList.copy()
+            else
+                if pData._p.getLumber() >= 50 and pData.buildingList.size() > 0
+                    let buildingList = pData.buildingList.copy()
 
-                // Get existing building that can be upgraded
-                let upgradableBuildings = new LinkedList<unit>
-                for building in buildingList
-                    if UPGRADE_OPTIONS.has(building.getTypeId())
-                        upgradableBuildings.push(building)
+                    // Get existing building that can be upgraded
+                    let upgradableBuildings = new LinkedList<unit>
+                    for building in buildingList
+                        if UPGRADE_OPTIONS.has(building.getTypeId())
+                            upgradableBuildings.push(building)
 
-                // Try to upgrade building, if not, try to buy items
-                if upgradableBuildings.size() > 0
-                    let unitToUpgrade = upgradableBuildings.getRandomElement()
-                    let upgradeChoice = UPGRADE_OPTIONS.get(unitToUpgrade.getTypeId()).getRandomElement()
+                    // Try to upgrade building, if not, try to buy items
+                    if upgradableBuildings.size() > 0
+                        let unitToUpgrade = upgradableBuildings.getRandomElement()
+                        let upgradeChoice = UPGRADE_OPTIONS.get(unitToUpgrade.getTypeId()).getRandomElement()
 
-                    if OrderId2StringBJ(upgradeChoice)  != ""
-                        unitToUpgrade.issueImmediateOrder(OrderId2StringBJ(upgradeChoice))
-                else
-                    tryToBuyItems(buildingList)
-                destroy upgradableBuildings
-                destroy buildingList
+                        if OrderId2StringBJ(upgradeChoice)  != ""
+                            unitToUpgrade.issueImmediateOrder(OrderId2StringBJ(upgradeChoice))
+                    else
+                        tryToBuyItems(buildingList)
+                    destroy upgradableBuildings
+                    destroy buildingList
 
-            if pData.builder != null and pData._p.getGold() >= 100
-                let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()
-                var pos = pData.buildingRect.randomPoint()
-                while pos.isTerrainPathable(PATHING_TYPE_BUILDABILITY)
-                    pos = pData.buildingRect.randomPoint()
-                BlzQueueBuildOrderById(pData.builder, unitToBuild, pos.x, pos.y)
-            // trade blood points for gold
-            else if pData.builder != null and pData._p.getLumber() >= 1500
-                pData.builder.issueImmediateOrder("berserk")
+                if pData.builder != null and pData._p.getGold() >= 100
+                    let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()
+                    var pos = pData.buildingRect.randomPoint()
+                    while pos.isTerrainPathable(PATHING_TYPE_BUILDABILITY)
+                        pos = pData.buildingRect.randomPoint()
+                    BlzQueueBuildOrderById(pData.builder, unitToBuild, pos.x, pos.y)
+                // trade blood points for gold
+                else if pData.builder != null and pData._p.getLumber() >= 1500
+                    pData.builder.issueImmediateOrder("berserk")
 
 
 
