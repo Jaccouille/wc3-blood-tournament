@@ -365,8 +365,9 @@ init
 
     let unholyAuraAction = new ItemModifierAction()
         ..addAction() (unit u) ->
-        u.addAbility(ABIL_UNHOLY_AURA)
+        u.addAbility(ABIL_UNHOLY_AURA_PERCENT)
         u.addAbility(ABIL_UNHOLY_AURA_VISUAL)
+        u.addAbility(ABIL_UNHOLY_AURA_FLAT)
 
     itemModifyUnitMap.put(ITEM_UNHOLY_AURA, unholyAuraAction)
 
