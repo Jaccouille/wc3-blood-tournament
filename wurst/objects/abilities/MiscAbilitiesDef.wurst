@@ -181,17 +181,23 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
         ..setTooltipNormalExtended(1, TOOLTIP_TRADE_GOLD)
         ..setIconNormal(Icons.bTNLGExchange)
         ..setBaseOrderID(1, "berserk")
+        ..setCheckDependencies(true)
+        ..setRequirements(commaList(UPGD_AVAILABLE_DURING_ROUND))
 
     createStandardChannelAbility(ABIL_TRADE_BLOOD_POINT)
         ..setNameEnhance("F", "Trade Blood Points")
         ..setTooltipNormalExtended(1, TOOLTIP_TRADE_BLOOD_POINT)
         ..setIconNormal(Icons.bTNCorpseExplode)
+        ..setCheckDependencies(true)
+        ..setRequirements(commaList(UPGD_AVAILABLE_DURING_ROUND))
 
 @compiletime function createReadyAbility()
     createStandardChannelAbility(ABIL_START_ROUND)
         ..setNameEnhance("F", "Ready")
         ..setTooltipNormalExtended(1, "Vote to start round.")
         ..setIconNormal(Icons.bTNReplay_Play)
+        ..setCheckDependencies(true)
+        ..setRequirements(commaList(UPGD_AVAILABLE_DURING_ROUND))
         ..setBaseOrderID(1, OrderIds.immolation.toRawCode())
 
 @compiletime function createSellBuilderAbility()
