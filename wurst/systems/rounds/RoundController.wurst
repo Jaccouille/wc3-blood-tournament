@@ -358,6 +358,7 @@ public function initRoundController()
         StopMusic(false)
         ClearMapMusic()
         PlayMusic(Sounds.credits)
+        orderBlocker.disable()
         if roundController.previousRoundWinner != null
             GameStates.gameplay.exit()
             print(roundController.previousRoundWinner.getNameColored() + " is the " + "Blood tournament".color(COLOR_RED) + " champion!")

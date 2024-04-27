@@ -25,31 +25,29 @@
 - Wrong winner in final
 - wrong round winner
 - nerf abom
+- Explain vampire blood harvest computing in tooltip
+- move order disables bot
+- allows multiple mode on 1 line
+- unholy regen 5 + 1%
 
 ## to add
-- Fire arrow (potm)
+- Convert orb of blood to mdx
+- Review all tooltip, set a norm to respect
 
-- Stop reinforcement on final round
-
-- Explain vampire blood harvest computing in tooltip
 - Display abilities data somewhere on unit so ppl can learn by selecting them
 
 
 - Elim Dummy player
 
-- Convert orb of blood to mdx
-- Review all tooltip, set a norm to respect
+- Unit info panel
+- Make a save load army template in a textbook
 
 - Study autocast behavior priority
-- Priest dispell summoned
-- move order disables bot
-- bot controller during final, dont display message
 
 ## Not important
-- Make a save load army template in a textbook
+- Fire arrow (potm)
 - Compute lvl similar to what power is in heroes of might and magic
 - Fix necro, null damage + skeleton pushes item to lich
-- allows multiple mode on 1 line
 - Random unit mode
 - compute item tooltitp charge "Add 1 xx"
 - suffix player name with bot when AI on

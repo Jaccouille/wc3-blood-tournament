@@ -21,6 +21,11 @@ This version features multiple game modes to add some degree of replayability.
 Red player has 60 seconds to choose the mode from the following list.
 ![24-03-10-18-23-31](https://github.com/Jaccouille/wc3-blood-tournament/assets/7768858/7a368477-17c1-4d2c-86c9-e1c82f1d8d40)
 
+Mode can be set in one line using the following syntax
+```
+-r 0 -hm 0.5 -dm 2 -sg 10000 -sb 100000 -d
+```
+
 ### Upgrade through items
 This version features an upgrade system using items bought by the building, you can :
 - Add/replace an ability on a unit
