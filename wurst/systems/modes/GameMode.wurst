@@ -6,6 +6,7 @@ import ClosureTimers
 import HashMap
 import LinkedList
 import TimerUtils
+import StringUtils
 
 // Third party imports:
 import Lodash
@@ -228,3 +229,24 @@ public class GameMode
 init
     GameStates.modesSelection.onEnter() states ->
         GameMode.initialize()
+
+    // Quickly made this implementation, should be refactored into
+    // the GameMode class.
+    let t = CreateTrigger()
+        ..addCondition(Condition(() -> GameStates.modesSelection.active))
+        ..addCondition(Condition(() -> GetTriggerPlayer() == GameMode.modePlayer))
+
+    t.registerPlayerChatEvent(GameMode.modePlayer, "-", false)
+
+    t.addAction() ->
+        let triggerPlayer = GetTriggerPlayer()
+        let possibleModes = GetEventPlayerChatString().substring(1).split("-")
+        for mode in possibleModes
+            let args = mode.split(" ")
+            let modeName = args.get(0)
+
+            let modeObj = GameMode.find(modeName)
+            if modeObj != null
+                modeObj.enable(args)
+            else
+                printTimedToPlayer("Invalid mode: " + modeName, 5, triggerPlayer)
