@@ -25,10 +25,10 @@ init
         gameConfig.getRoundGoldIncome().getFirst().toString() + ", min : 100") (mode, args) ->
         if (args.size() > 1)
             let roundGoldIncomes = args.drop(1).map(e -> max(e.toInt(), 100))
-            var msg = "Round gold income set to : ".color(LABEL_COLOR)
+            var msg = "Round gold income set to : ".color(GOLD_COLOR)
             msg += roundGoldIncomes.map(e -> e.toString().color(VALUE_COLOR)).join(", ")
 
-            msg += "\nRemaining round gold income set to :".color(LABEL_COLOR)
+            msg += "\nRemaining round gold income set to : ".color(GOLD_COLOR)
                 + roundGoldIncomes.getLast().toString().color(VALUE_COLOR)
             mode.message(msg)
             gameConfig.setRoundGoldIncome(roundGoldIncomes)
