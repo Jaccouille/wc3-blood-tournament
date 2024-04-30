@@ -1,0 +1,21 @@
+package v0_002_f
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 2, 'f')
+        ..add("(HU) Priest now dispels summoned unit upon attack for 150 damage")
+        ..add("(NE) Increased frenzy movement speed boost 30 -> 80%")
+        ..add("(NE) Reduced entagling root movement speed slow 70% -> 50%")
+        ..add("(UN) Changed Vampire price from 100 gold -> 50 gold + 500 blood points")
+        ..add("(UN) Fixed bug where non vampire unit would get the blood harvest bonus HP/Damage")
+        ..add("(UN) Reduced abomination armor 4 -> 0")
+        ..add("(UN) Reduced abomination disease cloud damage 20 -> 15")
+        ..add("(UN) Unholy aura heal increased from 1% max hp to 5 flat + 1% max hp")
+        ..add("Added tooltip when player is being controlled by bot")
+        ..add("Bot can be disabled by clicking around")
+        ..add("Can now put mode in a single line e.g \"-r 0 -hm 0.5 -dm 2 -sg 10000 -sb 100000\"")
+        ..add("Fixed bug with wrong round winner")
+        ..add("Increased start round vote duration so it doesn't expire after 60 seconds")
+        ..add("Made trade gold & start round unavailable during round")
+        ..add("Tournament manager now moves nearby center for final round")
