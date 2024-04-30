@@ -96,6 +96,7 @@ init
     ..addAction() ->
         let u = GetOrderedUnit()
         if not isValid() and preventOrder
+            and not u.getOwner() == players[PLAYER_NEUTRAL_AGGRESSIVE]
             preventOrder = false
             // print(OrderId2StringBJ(GetIssuedOrderIdBJ()))
             u.issuePointOrder("attack", CENTER)

@@ -52,7 +52,8 @@ public class GameMode
 
         createModeBoard()
         createModeQuests()
-        registerAll(modePlayer)
+        // Commented to avoid conflict with the trigger from init
+        // registerAll(modePlayer)
 
         clock.doAfter(MODES_TIME_LIMIT) ->
             endModeSelection()
