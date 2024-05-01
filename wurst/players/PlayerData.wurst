@@ -88,9 +88,9 @@ public class PlayerData
     function giveBloodPointsReward()
         let msg = "You acquired " +
             armyPoints.toString().color(COLOR_RED) +
-            " + " +
+            " army points + " +
             roundBloodPoints.toString().color(COLOR_RED) +
-            " blood points"
+            " kill points"
         printTimedToPlayer(msg, 15, _p)
         _p.addLumber(armyPoints + roundBloodPoints)
         totalBloodPoints += armyPoints + roundBloodPoints

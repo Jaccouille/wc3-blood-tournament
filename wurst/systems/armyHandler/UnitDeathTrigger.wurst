@@ -72,7 +72,7 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
     else if dyingUnit.getTypeId() == UNIT_MOUNTAIN_GIANT
         // Log.debug("MG DEAD")
         forUnitsInRange(dyingUnit.getPos(), 1500) (unit u) ->
-            if u.isAlive() and u.isEnemyOf(dyingUnit)
+            if u.isAlive() and u.isEnemyOf(dyingUnit) and u.isSoldier()
                 // Log.debug("Reordering " + u.getName())
                 u.issuePointOrder("attack", CENTER)
 
@@ -173,12 +173,6 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
     if pData.spawnedUnits.isEmpty()
         Log.debug(EventData.getKillingUnit().getName() + " killed " + EventData.getDyingUnit().getName())
         let matchUpWinner = roundController.currentRound.getOpponent(pData._p)
-        if matchUpWinner != null
-            // Trying to fix taunted units being stuck
-            // nullTimer() ->
-            //     forUnitsOfPlayer(matchUpWinner) (unit u) ->
-            //         if not u.isType(UNIT_TYPE_PEON) and not u.isType(UNIT_TYPE_STRUCTURE)
-            //             u.issuePointOrder("attack", CENTER)
 
         if matchUpWinner == killerOwner
             if roundController.currentRound instanceof NormalRound
@@ -203,7 +197,7 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
                 groupOrder(matchUpWinner, middle)
             else if roundController.currentRound instanceof FinalRound
                 // Clear the reinforcement list of the winner since the round is over
-                playerToArmySpawner.get(matchUpWinner).buildingList.clear()
+                // playerToArmySpawner.get(matchUpWinner).buildingList.clear()
                 (roundController.currentRound castTo FinalRound).looser = pData._p
 
         roundController.currentRound.roundParticipant.remove(pData._p)

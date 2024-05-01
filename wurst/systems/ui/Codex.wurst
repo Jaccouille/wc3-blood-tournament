@@ -23,7 +23,8 @@ let nightElfUnitsUpgrades     = new PaletteSection("Units Upgrade"     , NIGHT_E
 let nightElfAbilitiesUpgrades = new PaletteSection("Abilities Upgrade" , NIGHT_ELF_ABIL_UPGD)
 
 let DOC_TEXT = "" +
-"Click to show/hide the codex panel."
+"Click to show/hide the codex panel. " +
+"This panel contains information on all units in the game."
 
 class PaletteSection
     string header
@@ -100,7 +101,7 @@ init
 
         createFrame("ScriptDialogButton", GAME_UI, 0, 0)
         ..setSize(0.12, 0.025)
-        // ..createToolTipFrame("Documentation", DOC_TEXT)
+        ..createToolTipFrame("Documentation", DOC_TEXT)
         ..setPoint(FRAMEPOINT_TOP, baseFrame, FRAMEPOINT_TOP, 0.0, 0.02)
         ..onClick() ->
             if baseFrame.isVisible()

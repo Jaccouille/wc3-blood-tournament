@@ -194,8 +194,8 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setInterfaceIcon(Icons.bTNEntanglingRoots)
 
     tgen = new BTAbilityTooltipGenerator(
-        "Causes roots to burst from the ground, immobilizing, " +
-        "disarming and damaging a target enemy temporarily."
+        "Causes roots to burst from the ground, reducing " +
+        "movement and attack speed of nearby enemies."
         )
 
     let BUFF_ROOT_SLOW_ID = compiletime(BUFF_ID_GEN.next())
@@ -379,7 +379,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..presetDamageDealttoAttackers(_ -> 0.4)
         ..tooltipStartListen()
         ..addTooltipProperty("Damage returned", _ -> 0.4.toPercent())
-        ..presetAreaofEffect(_ -> 900)
+        ..presetAreaofEffect(_ -> 1200)
         ..setNameEnhance("X", "Thorn Aura")
         ..tooltipStopListen(true)
 
