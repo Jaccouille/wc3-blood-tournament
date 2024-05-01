@@ -86,8 +86,7 @@ function showFrame(framehandle baseFrame, string frameName)
         if childFrame.getName() == frameName
             childFrame.show()
 
-
-init
+public function initCodexUI()
     // if (loadTOCFile("Templates.toc" )) == false
     //     print("Loading Templates Toc file failed")
     doAfter(1) ->

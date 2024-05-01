@@ -16,6 +16,7 @@ import RoundController
 import ScoreBoard
 import UnitDeathTrigger
 import Hints
+import Codex
 
 // A timer for the core gameplay.
 public constant GAME_TIMER = CreateTimer()
@@ -84,6 +85,8 @@ init
                 true,
                 false
             ).start()
+        initCodexUI()
+
     GameStates.modesSelection.onExit() (state) ->
         playGameInitSound()
         let msg = "Game Started!\nChoose a builder from the tavern and build!"

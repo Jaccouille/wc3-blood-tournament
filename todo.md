@@ -29,20 +29,32 @@
 - move order disables bot
 - allows multiple mode on 1 line
 - unholy regen 5 + 1%
+- tourny manager position
+- Enable builder abil round 1
+- entangling root
+- building mana
 
 ## to add
 - Convert orb of blood to mdx
 - Review all tooltip, set a norm to respect
+- Adding abilities should add army pts
 
 - Display abilities data somewhere on unit so ppl can learn by selecting them
 
-
 - Elim Dummy player
+
+- bug vote
+
+- Try to display unit in final
 
 - Unit info panel
 - Make a save load army template in a textbook
 
 - Study autocast behavior priority
+- REwork spellbreaker
+
+-r 0 -hm 0 -dm 2 -sb 10000 -sg 100000 -d
+
 
 ## Not important
 - Fire arrow (potm)
@@ -76,3 +88,11 @@
 - Chen
 - Beastmaster
 - BEAST KING KING KONG JUMP AND BOOM BLOOD SPLASH
+
+## Cool abilities
+
+- Inflict damage upon death
+- Clone unit every X attack
+- Boost DPS the longer it stays in battle
+- Each attack increase damage
+- Duelist : consecutive damage stack
