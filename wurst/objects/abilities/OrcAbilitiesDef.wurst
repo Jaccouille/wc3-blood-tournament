@@ -321,12 +321,6 @@ import LocalAssets
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_ORB_LIGHTNING, tgen.generateFullTooltip())
 
-
-    itm = createBasicItem(ITEM_SPIRIT_WOLF1)
-        ..setItemCost(0, 50, 1, shamanCount, shamanCount)
-        ..setNameEnhance("Z", "Add 1 Summon Spirit Wolf")
-        ..setInterfaceIcon(Icons.bTNSpiritWolf)
-
     tgen = new BTAbilityTooltipGenerator(
         "Summons a Spirit Wolf."
     )
@@ -344,7 +338,6 @@ import LocalAssets
         ..setNameEnhance("Z", "Summon Spirit Wolf")
         ..tooltipStopListen(true)
 
-    tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_SUMMON_SPIRIT_WOLF1, tgen.generateFullTooltip())
 
 

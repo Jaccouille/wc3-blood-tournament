@@ -1,7 +1,9 @@
+---
 projectName: Blood Tournamenet Reloaded
 dependencies:
 - https://github.com/wurstscript/wurstStdlib2
 - https://github.com/theQuazz/wurst-lodash
+- https://github.com/Frotty/wurst-table-layout
 buildMapData:
   name: '|cffff5436Blood Tournament Reloaded v0.2f'
   fileName: Blood.Tournament.Reloaded.v0.2f
@@ -14,8 +16,10 @@ buildMapData:
     loadingScreen:
       title: Jaccouille presents
       subTitle: '|cffff5436Blood Tournament Reloaded v0.2f'
-      text: "Choose a faction amongst Human, Orc, Undead or Night Elf.\n  Experiment\
-        \ and find the optimal army composition.\n  Enjoy the mayhem!"
+      text: |-
+        Choose a faction amongst Human, Orc, Undead or Night Elf.
+          Experiment and find the optimal army composition.
+          Enjoy the mayhem!
   optionsFlags:
     forcesFixed: true
   players:

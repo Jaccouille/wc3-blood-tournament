@@ -92,12 +92,12 @@ import UnitTooltipGenerator
     tooltip = new UnitTooltipGenerator(
         "Decent ranged pierce unit, has small splash."
     )
-    var itm = createBasicItem(ITEM_EXPLOSIVE_AMMO)
-    createSpawnedUnit(UNIT_RIFLEMAN_EXPLOSIVE_AMMO, UnitIds.rifleman)
+    var itm = createBasicItem(ITEM_GRENADIER)
+    createSpawnedUnit(UNIT_GRENADIER, UnitIds.rifleman)
         ..setAttack1WeaponType(WeaponType.MissileSplash)
         ..setAttack1ProjectileArt(Abilities.cannonTowerMissile)
         ..setAttack1ProjectileSpeed(1600)
-        ..setNormalAbilities(commaList(ABIL_EXPLOSIVE_AMMO_VISUAL))
+        ..setNormalAbilities(commaList(ABIL_GRENADIER_VISUAL))
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -112,7 +112,7 @@ import UnitTooltipGenerator
         ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
 
         ..setSizeSmall()
-        ..setNameEnhance("X", "Rifleman Explosive Ammo")
+        ..setNameEnhance("X", "Grenadier")
         ..tooltipStopListen(true, itm)
 
         ..setIconGameInterfaceExt(Icons.bTNHumanMissileUpThree)

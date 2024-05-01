@@ -67,12 +67,12 @@ init
     itemAddUnitMap.put(ITEM_CAPTAIN, captainAction)
 
 
-    let explosiveAmmoAction = new ItemAddUnit()
+    let grenadierAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_RIFLEMAN, UNIT_RIFLEMAN_EXPLOSIVE_AMMO)
+            replaceUnit(unitToSpawn, UNIT_RIFLEMAN, UNIT_GRENADIER)
 
-    itemAddUnitMap.put(ITEM_EXPLOSIVE_AMMO, explosiveAmmoAction)
+    itemAddUnitMap.put(ITEM_GRENADIER, grenadierAction)
 
 
     let sniperAction = new ItemAddUnit()
@@ -88,15 +88,6 @@ init
         for i = 1 to count
             unitTospawn.push(UNIT_MORTAR)
     itemAddUnitMap.put(ITEM_MORTAR, mortarAction)
-
-
-    let crusaderAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
-        for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_KNIGHT, UNIT_CRUSADER)
-
-    itemAddUnitMap.put(ITEM_CRUSADER, crusaderAction)
-
 
     let marshallAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitTospawn, int count) ->
@@ -191,11 +182,6 @@ init
 
 
     // ========================= ORC =========================
-    let spiritWolfAction = new ItemModifierAction()
-        ..addAction() (unit u) ->
-        u.addAbility(ABIL_SUMMON_SPIRIT_WOLF1)
-    itemModifyUnitMap.put(ITEM_SPIRIT_WOLF1, spiritWolfAction)
-
     let orbLightningAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ORB_LIGHTNING)

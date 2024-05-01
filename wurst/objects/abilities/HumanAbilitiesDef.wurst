@@ -55,6 +55,7 @@ let SLOW_TARGET_COUNT = 2
     tgen = new BTAbilityTooltipGenerator("Increases armor.")
     new AbilityDefinitionInnerFireCreep(ABIL_ARMOR_BLESSING)
         ..registerTooltipGenerator(tgen)
+        ..setIconNormal(Icons.bTNBarkSkin)
         ..setLevels(1)
         ..tooltipStartListen()
         ..setDamageIncrease(1, 0)
@@ -88,6 +89,7 @@ let SLOW_TARGET_COUNT = 2
     tgen = new BTAbilityTooltipGenerator("Increases damage.")
     new AbilityDefinitionInnerFireCreep(ABIL_WEAPON_BLESSING)
         ..registerTooltipGenerator(tgen)
+        ..setIconNormal(Icons.bTNTransmute)
         ..setLevels(1)
         ..presetDefenseIncrease(_ -> 0)
         ..tooltipStartListen()
@@ -421,36 +423,7 @@ let SLOW_TARGET_COUNT = 2
 
     abilTooltipMap.put(ABIL_HOLY_BLADE, tgen.generateFullTooltip())
 
-
-    // tgen = new BTAbilityTooltipGenerator(
-    //     "Add splash damage."
-    // )
-    // let riflemanCount = BTBuildingData.getUnitCount(BUILDING_RIFLEMAN)
-    // itm = createBasicItem(ITEM_EXPLOSIVE_AMMO)
-    //     ..setItemCost(0, 50, 1, riflemanCount, riflemanCount)
-    //     ..setNameEnhance("X", "Add 1 Explosive Ammo")
-    //     ..setInterfaceIcon(Icons.bTNHumanMissileUpThree)
-
-    // new AbilityDefinitionOrbofAnnihilation(ABIL_EXPLOSIVE_AMMO)
-    //     ..setCastRange(1, 0)
-    //     ..setManaCost(1, 0)
-    //     ..presetDamageBonus(_ -> 0)
-    //     ..setFullDamageRadius(1, 25)
-    //     ..setHalfDamageRadius(1, 100)
-    //     ..setAreaofEffect(1, 150)
-    //     ..setMediumDamageFactor(1, 0.4)
-    //     ..setSmallDamageFactor(1, 0.1)
-    //     ..setArtSpecial("")
-    //     ..setSpecialAttachmentPoint("")
-    //     ..setMissileArt(Abilities.cannonTowerMissile)
-    //     ..setArtTarget(Abilities.cannonTowerMissile)
-    //     ..tooltipStartListen()
-    //     ..setNameEnhance("Z", "Explosive Ammo Visual")
-
-    // tgen.applyToDefItem(itm)
-    // abilTooltipMap.put(ABIL_EXPLOSIVE_AMMO, tgen.generateFullTooltip())
-
-    createVisualAbility(ABIL_EXPLOSIVE_AMMO_VISUAL)
+    createVisualAbility(ABIL_GRENADIER_VISUAL)
         ..setTargetAttachments(1)
         ..setTargetAttachmentPoint("weapon")
         ..setArtTarget(Abilities.cannonTowerMissile)
