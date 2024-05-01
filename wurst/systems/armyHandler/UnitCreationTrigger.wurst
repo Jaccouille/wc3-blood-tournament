@@ -87,9 +87,12 @@ init
         EventListener.add(EVENT_PLAYER_UNIT_UPGRADE_FINISH) ->
             let u = EventData.getTriggerUnit()
             let pData = pDatas.get(u.getOwner())
+            if not gameConfig.isSellableUpgradeEnabled()
+                u.addType(UNIT_TYPE_ANCIENT)
             BlzShowUnitTeamGlow(u, false)
             pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(u.getTypeId()).upgradeBonusArmyPoints)
             updatePreviewer(u.getOwner())
+            u.setMana(u.getMaxMana())
 
         EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
             let newBuilding = EventData.getTriggerUnit()

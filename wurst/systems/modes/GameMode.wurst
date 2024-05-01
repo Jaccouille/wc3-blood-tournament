@@ -31,6 +31,9 @@ let DISPLAY_STRING = compiletime(
 public interface GameModeHandler
     function run(GameMode mode, LinkedList<string> args)
 
+/**
+ * Author: Quazz
+ */
 public class GameMode
     static let list = new OwnedLinkedList<thistype>()
     static let modeboard = CreateMultiboard()
@@ -102,7 +105,7 @@ public class GameMode
 
         modeboard
             ..setColumnCount(2)
-            ..setRowCount(displayableModes.size())
+            ..setRowCount(displayableModes.size() + 3)
             ..setTitle("Modes - 00:{0}".format(MODES_TIME_LIMIT.toString(0)))
             ..setItemsStyle(true, false)
             ..display(true)
@@ -114,13 +117,28 @@ public class GameMode
 
             modeboard.getItem(row, 1)
                 ..setValue(mode.description)
-                ..setWidth(.60)
+                ..setWidth(.45)
                 ..release()
 
             modeboard.getItem(row, 0)
                 ..setValue(mode.getDisplayString())
                 ..setWidth(.15)
                 ..release()
+
+        modeboard.getItem( displayableModes.size(), 0)
+            ..setValue("===================================================================================")
+            ..setWidth(.60)
+            ..release()
+
+        modeboard.getItem(displayableModes.size() + 1, 0)
+            ..setWidth(.60)
+            ..setValue("You can multiple mode on 1 line, example: -f -r 0 -sb 1500 -rg 600 500 400")
+            ..release()
+
+        modeboard.getItem(displayableModes.size() + 2, 0)
+            ..setWidth(.60)
+            ..setValue("Pro tips: Save your favorite modes in a text file and copy paste them in the chat box!")
+            ..release()
 
         doPeriodically(1.0) cb ->
             let remaining = clock.getRemaining()

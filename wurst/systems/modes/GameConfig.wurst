@@ -28,6 +28,7 @@ class GameConfig
     private let banList = new LinkedList<int>()
     private let builderList = BUILDER_LIST.copy()
     private var bloodDonation = true
+    private var sellableUpgrade = true
 
     function setTestMode(boolean value)
         testMode = value
@@ -158,5 +159,11 @@ class GameConfig
 
     function isBloodDonationEnabled() returns boolean
         return bloodDonation
+
+    function setSellableUpgrade(boolean value)
+        sellableUpgrade = value
+
+    function isSellableUpgradeEnabled() returns boolean
+        return sellableUpgrade
 
 public constant gameConfig = new GameConfig()

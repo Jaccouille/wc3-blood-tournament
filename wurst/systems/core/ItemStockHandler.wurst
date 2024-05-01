@@ -14,6 +14,7 @@ import ClosuresForItems
 import LocalObjectIDs
 import PlayerExtension
 import ScoreBoard
+import GameConfig
 
 public HashMap<int, LinkedList<int>> unitItemSold = new HashMap<int, LinkedList<int>>
 
@@ -167,6 +168,11 @@ init
             if i != null and canBuy(itemId, building.getOwner())
                 building.addItemById(itemId)
                 ItemStockHandler.unitToItemStockMap.get(building).reduceStock(itemId, 1)
+
+                if not building.isType(UNIT_TYPE_ANCIENT)
+                    and not gameConfig.isSellableUpgradeEnabled()
+                    building.addType(UNIT_TYPE_ANCIENT)
+
 
                 // Item who doesn't give any blood point got 1 hp
                 let bloodPoint = i.getLife().toInt()
