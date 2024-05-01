@@ -89,6 +89,7 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_KNIGHT       , 200, 0   , genList(UNIT_KNIGHT          , 5))
     new BTBuildingData(BUILDING_KNIGHT, BUILDING_CRUSADER     , 0  , 1000, genList(UNIT_CRUSADER        , 5))
     new BTBuildingData(BUILDING_PRIEST       , 200, 0   , genList(UNIT_PRIEST          , 5))
+    new BTBuildingData(BUILDING_PRIEST, BUILDING_SPELL_BREAKER     , 0  , 500, genList(UNIT_SPELL_BREAKER        , 5))
     new BTBuildingData(BUILDING_SORCERESS    , 150, 0   , genList(UNIT_SORCERESS       , 3))
     new BTBuildingData(BUILDING_PALADIN      , 0  , 1000, asList (UNIT_PALADIN_1))
 

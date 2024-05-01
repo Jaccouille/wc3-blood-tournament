@@ -4,7 +4,6 @@ package UnitCreationTrigger
 import ClosureEvents
 import HashMap
 import LinkedList
-import Assets
 
 // Local imports:
 import ArmyPreviewer
@@ -16,6 +15,8 @@ import LocalObjectIDs
 import PlayerData
 import PlayerExtension
 import GameConfig
+import UnitExtensions
+import TextTagUtils
 
 public function insertBuilding(LinkedList<unit> buildingList, unit newBuilding)
     // Remove the building so we can re insert it in the list
@@ -85,14 +86,50 @@ init
     GameStates.gameplay.onEnter() state ->
 
         EventListener.add(EVENT_PLAYER_UNIT_UPGRADE_FINISH) ->
-            let u = EventData.getTriggerUnit()
-            let pData = pDatas.get(u.getOwner())
+            let upgradedBuilding = EventData.getTriggerUnit()
+            let pData = pDatas.get(upgradedBuilding.getOwner())
             if not gameConfig.isSellableUpgradeEnabled()
-                u.addType(UNIT_TYPE_ANCIENT)
-            BlzShowUnitTeamGlow(u, false)
-            pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(u.getTypeId()).upgradeBonusArmyPoints)
-            updatePreviewer(u.getOwner())
-            u.setMana(u.getMaxMana())
+                upgradedBuilding.addType(UNIT_TYPE_ANCIENT)
+            BlzShowUnitTeamGlow(upgradedBuilding, false)
+            pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(upgradedBuilding.getTypeId()).upgradeBonusArmyPoints)
+            updatePreviewer(upgradedBuilding.getOwner())
+            upgradedBuilding.setMana(upgradedBuilding.getMaxMana())
+
+            var goldAmount = 0
+            var bloodAmount = 0
+            if upgradedBuilding.getTypeId() == BUILDING_SPELL_BREAKER
+                for t in upgradedBuilding.getInventory()
+                    if t != null
+                        let goldCost = getItemGoldCost(t.getTypeId()) * (t.getCharges() / BlzGetItemIntegerField(t, ITEM_IF_PRIORITY)).toInt()
+                        goldAmount += goldCost
+                        let lumberCost = getItemLumberCost(t.getTypeId()) *  (t.getCharges() / BlzGetItemIntegerField(t, ITEM_IF_PRIORITY)).toInt()
+                        bloodAmount += lumberCost
+                    upgradedBuilding.removeItem(t)
+
+                var pos = upgradedBuilding.getPos3Real()
+                if goldAmount > 0
+                    pData._p.addGold(goldAmount)
+                    createGoldTag(pos, "+" + goldAmount.toString(), 12, pData._p)
+                    pos = pos.add(0, 50, 0)
+                if bloodAmount > 0
+                    pData._p.addLumber(bloodAmount)
+                    createBloodPointTag(pos, "+" + bloodAmount.toString(), 12, pData._p)
+
+                upgradedBuilding.removeItemFromStock(ITEM_WEAPON_BLESSING)
+                upgradedBuilding.removeItemFromStock(ITEM_ARMOR_BLESSING)
+                if ItemStockHandler.hasUnit(upgradedBuilding)
+                    destroy ItemStockHandler.unitToItemStockMap.get(upgradedBuilding)
+
+                // Add stock items
+                if unitItemSold.has(upgradedBuilding.getTypeId())
+                    let itemStockHandler = new ItemStockHandler(upgradedBuilding)
+                    unitItemSold.get(upgradedBuilding.getTypeId()).forEach() (integer t) ->
+                        let itm = createItem(t, vec2(0, 0))
+                        let maxStock = itm.getLevel()
+                        AddItemToStock(upgradedBuilding, t, maxStock, maxStock)
+                        itemStockHandler.addItem(itm.getTypeId(), maxStock)
+                        itm.remove()
+
 
         EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
             let newBuilding = EventData.getTriggerUnit()

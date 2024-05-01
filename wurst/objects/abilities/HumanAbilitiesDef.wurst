@@ -373,12 +373,43 @@ let SLOW_TARGET_COUNT = 2
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 3)
-        ..presetManaCost(_ -> 100)
+        ..presetManaCost(_ -> 75)
         ..presetCastRange(_ -> 700)
         ..setNameEnhance("Z", "Spell Steal")
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_SPELL_STEAL, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Reduces magic damage. Can reflect magic missile back to the attacker."
+    )
+    let spellbreakerCount = BTBuildingData.getUnitCount(BUILDING_SPELL_BREAKER)
+    itm = createBasicItem(ITEM_MAGIC_DEFEND)
+        ..setItemCost(0, 300, spellbreakerCount, 1, 1)
+        ..setNameEnhance("Z", "Add Magic Defend ability")
+        ..setInterfaceIcon(Icons.bTNSpellBreakerMagicDefend)
+
+    new AbilityDefinitionDefend(ABIL_MAGIC_DEFEND)
+        ..setCheckDependencies(false)
+        ..registerTooltipGenerator(tgen)
+        ..presetChancetoDeflect(_ -> 60)
+        ..presetDamageDealt(_ -> 1)
+        ..presetDamageTaken(_ -> 1)
+        ..presetMovementSpeedFactor(_ -> 0.0)
+        ..presetMagicDamageReduction(_ -> 0.35)
+        ..presetDeflectDamageTakenPiercing(_ -> 1.0)
+        ..presetDeflectDamageTakenSpells(_ -> 0.0)
+        ..tooltipStartListen()
+        ..addTooltipProperty("Chance to Deflect", _ -> "60%")
+        ..addTooltipProperty("Damage Returned", _ -> "100%")
+        ..addTooltipProperty("Damage Taken", _ -> "35%")
+        // ..addTooltipProperty("Movement Speed Reduced", _ -> "30%")
+        ..setNameEnhance("Z", "Magic Defend")
+        ..tooltipStopListen(true)
+
+    tgen.applyToDefItem(itm)
+    abilTooltipMap.put(ABIL_MAGIC_DEFEND, tgen.generateFullTooltip())
 
 
     tgen = new BTAbilityTooltipGenerator(

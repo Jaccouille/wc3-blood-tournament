@@ -195,6 +195,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..setNameEnhance("A", "Priest")
+        ..setUpgradeTo(commaList(BUILDING_SPELL_BREAKER))
 
         ..tooltipStopListen(true)
 
@@ -204,13 +205,11 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_SPELL_STEAL) + "\n\n" +
-        abilTooltipMap.get(ABIL_MAGIC_ARMOR_30) + "\n"
+        "Note: Priest items will be refunded as this unit only cast spell steal.".color(GENERAL_COLOR)
         )
-    let itm = createBasicItem(ITEM_SPELL_BREAKER)
-    createSpawnedUnit(UNIT_SPELL_BREAKER, UnitIds.spellbreaker)
-        ..setNormalAbilities(commaList(ABIL_SPELL_STEAL, ABIL_MAGIC_ARMOR_30))
+    createSpawnedUnit(UNIT_SPELL_BREAKER, UnitIds.spellbreaker, BUILDING_SPELL_BREAKER)
+        ..setNormalAbilities(commaList(ABIL_SPELL_STEAL))
         ..setDefaultActiveAbility(commaList(ABIL_SPELL_STEAL))
-        ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -225,13 +224,17 @@ import UnitTooltipGenerator
         ..setSpeedBase(270)
 
         ..setAutoPointValue()
-        ..setItemCostUnit(0, 1500, 5, 1, 5)
-        ..tooltipStopListen(true, itm)
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
 
         ..setSizeSmall()
         ..setNameEnhance("Z", "Spell Breaker")
+        ..setBuildingScalingValue(0.85)
 
+        ..setModelFileExt(Units.bloodElfSpellThief)
         ..setIconGameInterfaceExt(Icons.bTNSpellBreaker)
+        ..setUnitSoundSetExt(Soundsets.bloodElfSpellThief)
+
 
 @compiletime function createKnight()
     var tooltip = new UnitTooltipGenerator(

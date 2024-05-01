@@ -123,13 +123,6 @@ init
     itemModifyUnitMap.put(ITEM_INSPIRE, inspireAction)
 
 
-    let spellBreakerAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
-        for i = 0 to count
-            unitToSpawn.push(UNIT_SPELL_BREAKER)
-    itemAddUnitMap.put(ITEM_SPELL_BREAKER, spellBreakerAction)
-
-
     let armorBlessingAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ARMOR_BLESSING)
@@ -144,6 +137,11 @@ init
 
     itemModifyUnitMap.put(ITEM_WEAPON_BLESSING, weaponBlessingAction)
 
+    let magicDefendAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_MAGIC_DEFEND)
+        u.issueImmediateOrderById(OrderIds.defend)
+    itemModifyUnitMap.put(ITEM_MAGIC_DEFEND, magicDefendAction)
 
     let darkMageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
