@@ -50,6 +50,10 @@ function replaceUnit(LinkedList<int> unitToSpawn, int oldUnit, int newUnit)
     if unitToSpawn.replace(oldUnit, newUnit)
         unitToSpawn.shuffle()
 
+function addAtMiddle(LinkedList<int> unitToSpawn, int newUnit)
+    unitToSpawn.addAt(newUnit, (unitToSpawn.size() div 2))
+
+
 init
 
     // ========================= HUMANS =========================
@@ -63,7 +67,7 @@ init
     let captainAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitTospawn, int count) ->
         for i = 1 to count
-            unitTospawn.push(UNIT_CAPTAIN)
+            addAtMiddle(unitTospawn, UNIT_CAPTAIN)
     itemAddUnitMap.put(ITEM_CAPTAIN, captainAction)
 
 
@@ -86,13 +90,13 @@ init
     let mortarAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitTospawn, int count) ->
         for i = 1 to count
-            unitTospawn.push(UNIT_MORTAR)
+            addAtMiddle(unitTospawn, UNIT_MORTAR)
     itemAddUnitMap.put(ITEM_MORTAR, mortarAction)
 
     let marshallAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitTospawn, int count) ->
         for i = 1 to count
-            unitTospawn.push(UNIT_MARSHALL)
+            addAtMiddle(unitTospawn, UNIT_MARSHALL)
     itemAddUnitMap.put(ITEM_MARSHALL, marshallAction)
 
 
@@ -174,7 +178,7 @@ init
     let courtEnchantressAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitTospawn, int count) ->
         for i = 1 to count
-            unitTospawn.push(UNIT_COURT_ENCHANTRESS)
+            addAtMiddle(unitTospawn, UNIT_COURT_ENCHANTRESS)
 
     itemAddUnitMap.put(ITEM_COURT_ENCHANTRESS, courtEnchantressAction)
 
@@ -188,7 +192,7 @@ init
     let farseerAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitTospawn, int count) ->
         for i = 1 to count
-            unitTospawn.push(UNIT_FARSEER)
+            addAtMiddle(unitTospawn, UNIT_FARSEER)
 
     itemAddUnitMap.put(ITEM_FARSEER, farseerAction)
 
@@ -239,13 +243,13 @@ init
     let packLeaderAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_PACK_LEADER)
+            addAtMiddle(unitToSpawn, UNIT_PACK_LEADER)
     itemAddUnitMap.put(ITEM_PACK_LEADER, packLeaderAction)
 
     let kodoAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_KODO)
+            addAtMiddle(unitToSpawn, UNIT_KODO)
     itemAddUnitMap.put(ITEM_KODO, kodoAction)
 
     let armoredOgreAction = new ItemAddUnit()
@@ -332,7 +336,7 @@ init
     let lichAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_LICH)
+            addAtMiddle(unitToSpawn, UNIT_LICH)
     itemAddUnitMap.put(ITEM_LICH, lichAction)
 
     let vampireLordAction = new ItemAddUnit()
@@ -360,13 +364,13 @@ init
     let priestOfTheMoonAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_PRIESTESS_OF_THE_MOON)
+            addAtMiddle(unitToSpawn, UNIT_PRIESTESS_OF_THE_MOON)
     itemAddUnitMap.put(ITEM_PRIESTESS_OF_THE_MOON, priestOfTheMoonAction)
 
     let archdruidAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_ARCHDRUID)
+            addAtMiddle(unitToSpawn, UNIT_ARCHDRUID)
     itemAddUnitMap.put(ITEM_ARCHDRUID, archdruidAction)
 
     let rejuvenationAction = new ItemModifierAction()
@@ -396,7 +400,7 @@ init
     let keeperOfTheGroveAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_KEEPER_OF_THE_GROVE)
+            addAtMiddle(unitToSpawn, UNIT_KEEPER_OF_THE_GROVE)
     itemAddUnitMap.put(ITEM_KEEPER_OF_THE_GROVE, keeperOfTheGroveAction)
 
     let bearAction = new ItemAddUnit()
@@ -414,5 +418,5 @@ init
     let avatarOfVengeanceAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_AVATAR_OF_VENGEANCE)
+            addAtMiddle(unitToSpawn, UNIT_AVATAR_OF_VENGEANCE)
     itemAddUnitMap.put(ITEM_AVATAR_OF_VENGEANCE, avatarOfVengeanceAction)
