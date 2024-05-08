@@ -15,6 +15,7 @@ class GameConfig
     private var roundCount = 7
     private var roundInterludeTime = 120.
     private var spawnCap = 60
+    private var spawnCapElim = 140
     private var bountyMultiplier = 1.
     private var armyPointsMultiplier = 1.
     private var damageMultiplier = 1.
@@ -78,6 +79,12 @@ class GameConfig
 
     function getSpawnCap() returns int
         return spawnCap
+
+    function setSpawnCapElim(int value)
+        spawnCapElim = value
+
+    function getSpawnCapElim() returns int
+        return spawnCapElim
 
     function setBountyMultiplier(real value)
         bountyMultiplier = value

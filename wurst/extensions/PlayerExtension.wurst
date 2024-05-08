@@ -14,5 +14,5 @@ public function player.getDummyPlayer(int idx) returns player
 
 public function player.getTruePlayerFromDummy() returns player
     if this != players[PLAYER_NEUTRAL_AGGRESSIVE]
-        return players[this.getId() mod 8]
+        return dummyToTruePlayerMap.get(this)
     return this

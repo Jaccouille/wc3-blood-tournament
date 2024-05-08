@@ -2,7 +2,6 @@ package QuestLogFrame
 
 
 init
-    Log.info("Connard")
     BlzFrameClick(BlzGetFrameByName("UpperButtonBarQuestsButton", 0))
     BlzFrameClick(BlzGetFrameByName("QuestAcceptButton", 0))
     BlzFrameSetSize(BlzGetFrameByName("QuestItemListContainer", 0), 0.01, 0.01)

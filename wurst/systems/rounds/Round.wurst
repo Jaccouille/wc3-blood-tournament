@@ -26,11 +26,6 @@ import public PlayerData
 @configurable constant FORMATION_WIDTH = 120.
 @configurable constant FORMATION_HEIGHT = 80.
 
-// Max number of unit per line
-@configurable constant UNIT_PER_LINE = 4
-
-@configurable constant UNIT_CAP = 80
-
 
 interface LastArmyRemaining
     abstract function execute()
@@ -260,6 +255,31 @@ public class FinalRound extends Round
     override function spawnPortals()
         SetDoodadAnimationRect(boundRect, DOODAD_ELIM_PORTAL, "show", false)
         SetDoodadAnimationRect(boundRect, DOODAD_ELIM_PORTAL, "birth", false)
+
+    override function doBeforeSpawn()
+        for _p in pDatas
+            SetPlayerTechResearchedSwap(UPGD_UNAVAILABLE_DURING_ROUND, 0, _p)
+            pDatas.get(_p).removeDummyPlayers()
+        forUnitsAll() (unit u) ->
+            if IsUnitDeadBJ(u)
+                u.remove()
+        hasStarted = true
+        for pair in matchUp
+            // Ugly and quick way to allocate multiple dummy players for each
+            // round participant, this way we can spawn more units
+            let pData1 = pDatas.get(players[pair.a])
+            pData1.removeDummyPlayers()
+            pData1.addDummyPlayer(players[8])
+            pData1.addDummyPlayer(players[9])
+            pData1.addDummyPlayer(players[10])
+            let pData2 = pDatas.get(players[pair.b])
+            pData2.removeDummyPlayers()
+            pData2.addDummyPlayer(players[11])
+            pData2.addDummyPlayer(players[12])
+            pData2.addDummyPlayer(players[13])
+
+            setDummyAlliance(players[pair.a], players[pair.b], true)
+
 
     override function spawnArmies()
         for contestantPair in matchUp

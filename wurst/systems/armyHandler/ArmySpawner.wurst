@@ -327,7 +327,7 @@ public class ArmySpawner
 
                 squadIdx++
                 spawnCount++
-            if pData.spawnedUnits.size() < spawnZone.unitLimit
+            if pData.spawnedUnits.size() <= spawnZone.unitLimit
                 and squadIdx >= squadUnitIds.size()
                 squadIdx = 0
                 squadUnitIds.clear()
@@ -402,7 +402,7 @@ init
         let dyingOwner = dying.getOwner().getTruePlayerFromDummy()
         let armySpawner = playerToArmySpawner.get(dyingOwner)
         let pData = pDatas.get(dyingOwner)
-        let spawnCapacity= armySpawner.spawnZone.unitLimit
+        let spawnCapacity = armySpawner.spawnZone.unitLimit
         if not armySpawner.hasSpawnFinished
             and dying.getPointValue() > 0
             and pData.spawnedUnits.size() < spawnCapacity

@@ -91,6 +91,13 @@ init
             mode.message("Spawn capacity set to ".color(LABEL_COLOR) + spawnCap.toString().color(VALUE_COLOR))
             gameConfig.setSpawnCap(spawnCap)
 
+    new GameMode("spawn-capacity-elim", "sce", "Set max unit spawn capacity in elimination round, default : " +
+        gameConfig.getSpawnCapElim().toString() + ", max : 200, min : 100") (mode, args) ->
+        if (args.size() > 1)
+            let spawnCapElim = max(min(args.get(1).toInt(), 200), 100)
+            mode.message("Elimination spawn capacity set to ".color(LABEL_COLOR) + spawnCapElim.toString().color(VALUE_COLOR))
+            gameConfig.setSpawnCapElim(spawnCapElim)
+
     new GameMode("bounty-multiplier", "bm", "Set blood points bounty multiplier, default : " +
         gameConfig.getBountyMultiplier().toString(1) + ", max : 10.0, min : 0") (mode, args) ->
         if (args.size() > 1)

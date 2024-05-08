@@ -9,8 +9,6 @@ import GameConfig
 import GameStates
 import LocalObjectIDs
 
-constant FINAL_ROUND_SPAWN_LIMIT = 140
-
 public class SpawnZone
     rect spawnRect
     angle angle
@@ -57,8 +55,8 @@ init
             ..add(new SpawnZone(gg_rct_Frontrank_WS, gg_rct_Frontrank_WS.getLeftTop(), 90..asAngleDegrees(), gameConfig.getSpawnCap()))
             ..add(new SpawnZone(gg_rct_Frontrank_WN, gg_rct_Frontrank_WN.getLeftBot(), 270..asAngleDegrees(), gameConfig.getSpawnCap()))
 
-            ..add(new SpawnZone(gg_rct_Final_Round_West, gg_rct_Final_Round_West.getRightBot(), 0..asAngleDegrees(), FINAL_ROUND_SPAWN_LIMIT))
-            ..add(new SpawnZone(gg_rct_Final_Round_East, gg_rct_Final_Round_East.getLeftBot(), 180..asAngleDegrees(), FINAL_ROUND_SPAWN_LIMIT))
+            ..add(new SpawnZone(gg_rct_Final_Round_West, gg_rct_Final_Round_West.getRightBot(), 0..asAngleDegrees(), gameConfig.getSpawnCapElim()))
+            ..add(new SpawnZone(gg_rct_Final_Round_East, gg_rct_Final_Round_East.getLeftBot(), 180..asAngleDegrees(), gameConfig.getSpawnCapElim()))
 
             ..add(new SpawnZone(gg_rct_StoCenter, gg_rct_StoCenter.getLeftBot(), 90..asAngleDegrees(), gameConfig.getSpawnCap()))
             ..add(new SpawnZone(gg_rct_NtoCenter, gg_rct_NtoCenter.getLeftTop(), 270..asAngleDegrees(), gameConfig.getSpawnCap()))
