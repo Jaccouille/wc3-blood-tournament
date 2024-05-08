@@ -208,7 +208,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("S", "Necromancer")
         ..tooltipStopListen(true)
         ..setUpgradeTo(commaList(BUILDING_SPECTRAL_SAGE))
-        ..setBuildingUnitsTrained(commaList(
+        ..setBuildingUnitsSold(commaList(
             UNIT_NECROMANCER,
             UNIT_SKELETON,
             UNIT_SKELETON_ORC,

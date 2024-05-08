@@ -358,6 +358,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
             ..setSpeedBase(270)
 
             ..setSizeSmall()
+            ..setLumberCost(1000)
             ..setPointValue(0, 1000, 1)
             ..addTooltipProperty("Army points", "100")
             ..tooltipStopListen(true)
@@ -420,7 +421,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     let buildingDef = createBuildingUnit(BUILDING_PALADIN)
         ..setNameEnhance("R", "Paladin x1")
         ..setUnitsTrained(commaList(UNIT_PALADIN_1, UNIT_GHOST_PALADIN))
-        ..setHitPointsMaximumBase(200)
+        ..setHitPointsMaximumBase(100)
         ..setLumberCost(1000)
         ..setManaMaximum(1000)
         ..setManaInitialAmount(1000)
@@ -455,7 +456,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAutoBuildingCost()
 
         ..tooltipStopListen(true)
-        ..setBuildingUnitsTrained(commaList(UNIT_SORCERESS, UNIT_GHOST))
+        ..setBuildingUnitsSold(commaList(UNIT_SORCERESS, UNIT_GHOST))
 
         ..setSizeSmall()
         ..setNameEnhance("S", "Sorceress")

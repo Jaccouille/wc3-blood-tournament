@@ -25,7 +25,8 @@ function BTUnitDefinition.setCommonAttr()
     this.setAcquisitionRange(2300)
     this.setRequirements("")
     this.setUpgradesUsed("")
-    this.setGoldCost(9999999)
+    this.setGoldCost(0)
+    this.setStockMaximum(0)
     this.setFoodCost(0)
     this.setButtonPositionX(0)
     this.setButtonPositionY(2)
@@ -36,6 +37,7 @@ function BTUnitDefinition.setCommonAttr()
     this.setHitPointsRegenerationRate(0)
     this.setDeathType(3)
     this.setLevel(1)
+    this.setStockStartDelay(0)
     this.setAttacksEnabled(AttacksEnabled.AttackOneOnly.toObjectInt())
 
 public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinition
@@ -131,7 +133,7 @@ public class BTUnitDefinition extends UnitDefinition
     construct(int newId, int origId, int buildingId)
         super(newId, origId)
         buildingDef = createBuildingUnit(buildingId)
-            ..setUnitsTrained(commaList(newId))
+            ..setUnitsSold(commaList(newId))
         buildingData = BTBuildingData.unitIdToDataMap.get(buildingId)
         spawnCount = buildingData.unitToSpawn.size()
 
@@ -294,6 +296,9 @@ public class BTUnitDefinition extends UnitDefinition
     function setBuildingUnitsTrained(string data)
         buildingDef.setUnitsTrained(data)
 
+    function setBuildingUnitsSold(string data)
+        buildingDef.setUnitsSold(data)
+
     function setBuildingRequirement(string data)
         buildingDef.setRequirements(data)
 
@@ -310,6 +315,15 @@ public class BTUnitDefinition extends UnitDefinition
         setBuildingGoldCost(buildingData.goldCost)
         setBuildingLumberCost(buildingData.lumberCost)
 
+        var goldCost = buildingData.goldCost
+        var lumberCost = buildingData.lumberCost
+
+        if buildingData.upgradeFrom != null
+            goldCost += buildingData.upgradeFrom.goldCost
+            lumberCost += buildingData.upgradeFrom.lumberCost
+        this.setGoldCost(goldCost)
+        this.setLumberCost(lumberCost)
+
     function setItemCost(int gold, int lumber, int charges)
         setItemCost(gold, lumber, charges, charges, charges)
 
@@ -321,6 +335,7 @@ public class BTUnitDefinition extends UnitDefinition
     /** Used to define unit addition, it adds army points on spawn */
     function setItemCostUnit(int gold, int lumber, int charges)
         setItemCostUnit(gold, lumber, charges, charges, charges)
+
 
     /** Used to define unit addition, it adds army points on spawn
         Assume max charges/stock is the spawnCount
@@ -337,6 +352,8 @@ public class BTUnitDefinition extends UnitDefinition
         itemDef.setHitPoints(armyPoints)
         itemDef.setItemCost(gold, lumber, charges, maxStack, maxStock)
         setPointValue(gold, lumber, charges)
+        this.setGoldCost(gold)
+        this.setLumberCost(lumber)
         this.charges = charges
 
     /** Used to define unit replacement, it adds army points on spawn
@@ -352,6 +369,8 @@ public class BTUnitDefinition extends UnitDefinition
         itemDef.setHitPoints(armyPoints)
         itemDef.setItemCost(gold, lumber, charges, maxStack, maxStock)
 
+        this.setGoldCost(gold + BTBuildingData.getUnitGoldCost(srcUnitId))
+        this.setLumberCost(lumber + BTBuildingData.getUnitLumberCost(srcUnitId))
         this.charges = charges
 
     /** Use for unit linked to a building (not items one) **/

@@ -1,10 +1,14 @@
-package Codex
+package Wiki
 
 import TableLayout
 import ClosureTimers
 import LinkedList
 import IDListConstant
 import ColorUtils
+import ObjectIds
+import ItemStockHandler
+import Textures
+import FramehandleNames
 
 let humanUnit              = new PaletteSection("Units"             , HUMAN_UNITS    )
 let humanUnitsUpgrades     = new PaletteSection("Units Upgrade"     , HUMAN_UNIT_UPGD)
@@ -25,6 +29,9 @@ let nightElfAbilitiesUpgrades = new PaletteSection("Abilities Upgrade" , NIGHT_E
 let DOC_TEXT = "" +
 "Click to show/hide the codex panel. " +
 "This panel contains information on all units in the game."
+
+constant GOLD_ICON = Textures.toolTipGoldIcon
+constant LUMBER_ICON = Textures.toolTipLumberIcon
 
 class PaletteSection
     string header
@@ -50,27 +57,67 @@ function TableLayout.addPaletteSection(PaletteSection content, int maxCell)
         if content.idsList.indexOf(elem) % maxCell == 0
             this..row()
         let btnFrame = imgBtn(BlzGetAbilityIcon(elem))
-        btnFrame.createToolTipFrame(GetAbilityName(elem), BlzGetAbilityExtendedTooltip(elem, 1))
+
+        btnFrame.createToolTipFrame(elem)
         this.add(btnFrame)
 
 
-function framehandle.createToolTipFrame(string title, string textContent)
-    let tooltip = createFrame("BoxedText", GAME_UI, 0, 0)
-    tooltip.setWidth(0.3)
-    let text = tooltip.getChild(1)
+function framehandle.createToolTipFrame(int elem)
+    let title = GetAbilityName(elem)
+    let textContent = BlzGetAbilityExtendedTooltip(elem, 1)
 
-    tooltip.getChild(0).setText(title.color(SPECIAL_COLOR))
+    let tooltipBackdrop = createFrame("BoxedText", GAME_UI, 0, 0)
+    tooltipBackdrop.setWidth(0.3)
 
-    text..setText(textContent)
-        ..setSize(0.3, 0)
-        ..setPoint(FRAMEPOINT_TOPRIGHT, this, FRAMEPOINT_TOPLEFT, 0.25, -0.052)
+    let textTitle = getFrame("BoxedTextTitle", 0)
+        ..setText(title.color(SPECIAL_COLOR))
+        ..setSize(0.24, 0)
+        // ..setPoint(FRAMEPOINT_TOPLEFT, this, FRAMEPOINT_TOPRIGHT, vec2(0.002, 0))
+        ..disable()
+
+    let goldCost = toRawCode(elem).startsWith("x") ? GetUnitGoldCost(elem) : getItemGoldCost(elem)
+    let lumberCost = toRawCode(elem).startsWith("x") ? GetUnitWoodCost(elem) : getItemLumberCost(elem)
+
+    framehandle goldIconText = null
+    if goldCost > 0
+        let goldIcon = createFrame(FramehandleTypeNames.backdrop, "", tooltipBackdrop, "", 0)
+        ..setSize(0.01, 0.01)
+        ..setTexture(GOLD_ICON, 0, false)
+        ..setPoint(FRAMEPOINT_TOPLEFT, textTitle, FRAMEPOINT_BOTTOMLEFT, vec2(0, -0.002))
+        ..disable()
+
+        goldIconText = createFrame(FramehandleTypeNames.text, "", tooltipBackdrop, "", 0)
+        ..setText(goldCost.toString())
+        ..setPoint(FRAMEPOINT_LEFT, goldIcon, FRAMEPOINT_RIGHT, vec2(0.003, 0))
+        ..disable()
+
+    if lumberCost > 0
+        let lumberIcon = createFrame(FramehandleTypeNames.backdrop, "", tooltipBackdrop, "", 0)
+        ..setSize(0.01, 0.01)
+        ..setTexture(LUMBER_ICON, 0, false)
+        ..setPoint(goldIconText != null ? FRAMEPOINT_LEFT : FRAMEPOINT_TOPLEFT,
+                    goldIconText != null ? goldIconText : textTitle,
+                    goldIconText != null ? FRAMEPOINT_RIGHT : FRAMEPOINT_BOTTOMLEFT,
+                    goldIconText != null ? vec2(0.006, 0) : vec2(0, -0.002))
+        ..disable()
+
+        createFrame(FramehandleTypeNames.text, "", tooltipBackdrop, "", 0)
+        ..setText(lumberCost.toString())
+        ..setPoint(FRAMEPOINT_LEFT, lumberIcon, FRAMEPOINT_RIGHT, vec2(0.003, 0))
+        ..disable()
+
+    let text = getFrame("BoxedTextValue", 0)
+        ..setText(textContent)
+        ..setSize(0.24, 0)
+        ..setPoint(FRAMEPOINT_TOPLEFT, this, FRAMEPOINT_BOTTOMLEFT, 0.035, -0.005)
+        ..disable()
 
     // tooltip.clearAllPoints()
     // tooltip.setPoint(FRAMEPOINT_TOPLEFT, text, FRAMEPOINT_TOPLEFT, 0, 0)
 
-    tooltip.setPoint(FRAMEPOINT_TOPLEFT, text, FRAMEPOINT_TOPLEFT, 0.01, 0.01)
-    tooltip.setPoint(FRAMEPOINT_BOTTOMRIGHT, text, FRAMEPOINT_BOTTOMRIGHT, 0.01, -0.025)
-    this.setTooltip(tooltip)
+    tooltipBackdrop.setPoint(FRAMEPOINT_TOPLEFT, this, FRAMEPOINT_TOPLEFT, 0.03, 0.005)
+    tooltipBackdrop.setPoint(FRAMEPOINT_BOTTOMRIGHT, text, FRAMEPOINT_BOTTOMRIGHT,  0.04, -0.005)
+    this.setTooltip(tooltipBackdrop)
 
 function createFrameTemplate(string name, vec2 size, vec2 pos, framehandle parent) returns framehandle
     return createFrame("FRAME", name, parent, "", 0)
@@ -79,14 +126,16 @@ function createFrameTemplate(string name, vec2 size, vec2 pos, framehandle paren
             ..hide()
 
 function showFrame(framehandle baseFrame, string frameName)
+    let _p = GetTriggerPlayer()
     for idx = 0 to baseFrame.getChildrenCount()
         let childFrame = baseFrame.getChild(idx)
         if childFrame.getName().startsWith("contentFrame")
-            childFrame.hide()
+            childFrame.hide(_p)
         if childFrame.getName() == frameName
-            childFrame.show()
+            childFrame.show(_p)
 
 public function initCodexUI()
+    loadTOCFile("Templates.toc")
     // if (loadTOCFile("Templates.toc" )) == false
     //     print("Loading Templates Toc file failed")
     doAfter(1) ->
@@ -100,16 +149,17 @@ public function initCodexUI()
 
         createFrame("ScriptDialogButton", GAME_UI, 0, 0)
         ..setSize(0.12, 0.025)
-        ..createToolTipFrame("Documentation", DOC_TEXT)
+        // ..createToolTipFrame("Documentation", DOC_TEXT)
         ..setPoint(FRAMEPOINT_TOP, baseFrame, FRAMEPOINT_TOP, 0.0, 0.02)
         ..onClick() ->
-            if baseFrame.isVisible()
-                baseFrame.hide()
+            let p = GetTriggerPlayer()
+            if baseFrame.isVisible(p)
+                baseFrame.hide(p)
             else
-                baseFrame.show()
+                baseFrame.show(p)
 
         getFrame("ScriptDialogButtonText", 0)
-            ..setText("Codex")
+            ..setText("Wiki")
 
         let headerFrame = createFrame("FRAME", "headerFrame", baseFrame, "", 0)
             ..setPoint(FRAMEPOINT_TOP, baseFrame, FRAMEPOINT_TOP)

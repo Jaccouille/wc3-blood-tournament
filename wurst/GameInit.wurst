@@ -16,7 +16,7 @@ import RoundController
 import ScoreBoard
 import UnitDeathTrigger
 import Hints
-import Codex
+import Wiki
 
 // A timer for the core gameplay.
 public constant GAME_TIMER = CreateTimer()

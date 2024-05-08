@@ -343,7 +343,7 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("S", "Shaman")
         ..tooltipStopListen(true)
-        ..setBuildingUnitsTrained(commaList(
+        ..setBuildingUnitsSold(commaList(
             UNIT_SHAMAN,
             UNIT_SPIRIT_WOLF1,
             UNIT_FARSEER

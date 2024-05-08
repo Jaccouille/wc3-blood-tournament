@@ -34,6 +34,12 @@ public class BTBuildingData
     static function getUnitPointValue(int unitId) returns int
         return unitIdToDataMap.get(unitId).unitPointValue
 
+    static function getUnitGoldCost(int unitId) returns int
+        return unitIdToDataMap.get(unitId).goldCost
+
+    static function getUnitLumberCost(int unitId) returns int
+        return unitIdToDataMap.get(unitId).lumberCost
+
     static function getBuildingArmyPoints(int unitId) returns int
         return unitIdToDataMap.get(unitId).buildingArmyPoints
 
