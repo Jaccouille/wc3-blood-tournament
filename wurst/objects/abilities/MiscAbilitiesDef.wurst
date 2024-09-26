@@ -221,7 +221,9 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
         ..presetTooltipNormalExtended(lvl -> "Sell the building and get 100% of its cost back.\n")
 
     createStandardChannelAbility(ABIL_SELL_ALL)
-        ..setNameEnhance("R", "Sell All")
+        ..setName("Sell All")
+        ..setHotkeyNormal("")
+        ..presetButtonPosNormal(3, 0)
         ..setTooltipNormalExtended(1, "Sell all sellable buildings.\n")
         ..setIconNormal(Icons.bTNChestOfGold)
         ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
