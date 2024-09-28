@@ -272,17 +272,21 @@ init
         else
             simError(caster.getOwner(), "Not enough gold for exchange")
 
+    // see UnitDeathTrigger.wurst for the refund part of the sell building
     EventListener.onCast(ABIL_SELL_ALL) (unit caster) ->
         let bRect = pDatas.get(caster.getOwner()).buildingRect
+        let dummyCast = new DummyCaster()
+            ..owner(caster.getOwner())
+            ..origin(caster.getPos())
+            ..delay(5)
+
         forUnitsInRect(bRect) (unit u) ->
             if u.isType(UNIT_TYPE_STRUCTURE)
                 and not u.isType(UNIT_TYPE_ANCIENT)
                 and u.getTypeId() != UNIT_RACE_PICKER
-                new DummyCaster()
-                    ..owner(caster.getOwner())
-                    ..origin(caster.getPos())
-                    ..castTarget(ABIL_SELL_BUILDING, 1, Orders.transmute, u)
-                    ..delay(5)
+
+                dummyCast.castTarget(ABIL_SELL_BUILDING, 1, Orders.transmute, u)
+
                 // BlzQueueTargetOrderById(caster, OrderIds.transmute, u)
                 // caster.issueTargetOrderById(OrderIds.transmute, u)
 

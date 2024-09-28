@@ -75,4 +75,5 @@ init
             printTimedToPlayer("AFK detector already started for {0}, {1}".format(
             players[pIndx].getNameColored(), playerToAfkDetector.get(players[pIndx]).cb.getRemaining().toInt().toString()
             ) , 5, triggerPlayer)
-        new AfkDetector(players[pIndx], true)
+        else
+            new AfkDetector(players[pIndx], true)
