@@ -115,7 +115,8 @@ class BuilderAI
     function startAI()
         isEnabled = true
         pData.racePicker.addAbility(botEnabled.abilId)
-        tooltip.setVisibility(true)
+        if (GetLocalPlayer() == _player)
+            tooltip.setVisibility(true)
         pickBuilder()
 
         cb = doPeriodically(2) (CallbackPeriodic cb) ->
