@@ -236,7 +236,7 @@ import LocalAssets
     new BuffDefinition(BUFF_ID, BuffIds.brillianceAura)
         ..setIcon(Icons.bTNHealingWard)
         ..setArtTarget(Abilities.aNrlTarget)
-        ..setTargetAttachmentPoint0(1, "chest")
+        ..setTargetAttachmentPoint0(1, "origin")
         ..setTooltipNormal(1, "Mana Ward")
         ..setTooltipNormalExtended(1, "This unit's mana is being restored " +
             " by a nearby ward")
@@ -250,7 +250,7 @@ import LocalAssets
         ..presetAmountRegenerated(_ -> 0.04)
         ..tooltipStartListen()
         ..addTooltipProperty("Mana Regeneration", _ -> "4%")
-        ..setTargetsAllowed(1, commaList(TargetsAllowed.allies))
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.ground, TargetsAllowed.organic, TargetsAllowed.friend))
         ..presetAreaofEffect(_ -> 500)
         ..setNameEnhance("C", "Mana Ward Aura")
         ..tooltipStopListen(false)
