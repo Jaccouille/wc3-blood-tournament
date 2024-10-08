@@ -32,7 +32,7 @@ let credits = asList(
     "Billy-Jack/Baal:|r For making Star Wars Blood tournament which inspired Jacc to make this map".color(ENERGY_COLOR),
     "Quazz:|r For introducing Jacc to Warcraft 3 modding".color(ENERGY_COLOR),
     "Frotty, Wurst community:|r For making Wurstscript and answering Jacc dumb questions".color(ENERGY_COLOR),
-    "General Frank, Hate, imForFun, Ujimasa Hojo and stan0033 for models".color(ENERGY_COLOR),
+    "General Frank, Hate, imForFun, Ujimasa Hojo, stan0033".color(ENERGY_COLOR) + " for models",
     "Hiveworkshop.com:|r".color(ENERGY_COLOR) + " for hosting a massive amount of information on modding",
     "Thanks for testing the map and giving feedback:|r".color(ENERGY_COLOR) +
     "\nVenix, honeyBadger, theShadow, Chiller, ovalbomb12, Gonzalo, DarkAssassin, Klasker, pokedya, Corke"
@@ -50,6 +50,7 @@ let commands = asList(
 let community = asList(
     "You can give your feedback/suggestion to Jaccouille, reachable on :",
     "Blood tournament Discord: ".color(HIGHLIGHT_COLOR) + "https://discord.gg/xhQQzMWnPG",
+    "Hiveworkshop: ".color(HIGHLIGHT_COLOR) + "https://www.hiveworkshop.com/threads/blood-tournament-reloaded.353051/",
     "GitHub: ".color(HIGHLIGHT_COLOR) + "https://github.com/Jaccouille/wc3-blood-tournament"
 ).joinBy("\n")
 

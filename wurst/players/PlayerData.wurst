@@ -44,6 +44,8 @@ public class PlayerData
 
         dummyPlayers.forEach() (player t) ->
             SetPlayerAlliance(dummyPlayer, t, ALLIANCE_PASSIVE, true)
+            SetPlayerAlliance(dummyPlayer, t, ALLIANCE_SHARED_VISION, true)
+            SetPlayerAlliance(t, dummyPlayer, ALLIANCE_SHARED_VISION, true)
             SetPlayerAlliance(t, dummyPlayer, ALLIANCE_PASSIVE, true)
         dummyPlayers.push(dummyPlayer)
 
