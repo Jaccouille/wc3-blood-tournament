@@ -7,6 +7,7 @@ import OrderIds
 
 // Local imports:
 import LocalObjectIDs
+import initlater ItemStockHandler
 
 public let itemAddUnitMap = new HashMap<int, ItemAddUnit>
 public let itemModifyUnitMap = new HashMap<int, ItemModifierAction>
@@ -54,6 +55,18 @@ function addAtMiddle(LinkedList<int> unitToSpawn, int newUnit)
     unitToSpawn.addAt(newUnit, (unitToSpawn.size() div 2))
 
 
+function computeUnitPointValue(int goldCost, int lumberCost, int unitCount) returns int
+    var pointValue = 0
+    pointValue += (goldCost / unitCount).toInt()
+    pointValue += (lumberCost / unitCount / 10).toInt()
+    return pointValue
+
+function increaseUnitBounty(unit u, int itemId)
+    let lvl = (computeUnitPointValue(getItemGoldCost(itemId), getItemLumberCost(itemId), 1)
+         div getItemCharges(itemId)) div 5
+    u.addAbility(ABIL_BOUNTY_BONUS, lvl)
+
+
 init
 
     // ========================= HUMANS =========================
@@ -61,6 +74,7 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_DEFEND)
         u.issueImmediateOrderById(OrderIds.defend)
+        increaseUnitBounty(u, ITEM_DEFEND)
     itemModifyUnitMap.put(ITEM_DEFEND, defendAction)
 
 
@@ -123,7 +137,7 @@ init
         u.issueImmediateOrderById(OrderIds.curseon)
         u.setMaxMana(200)
         u.setMana(200)
-
+        increaseUnitBounty(u, ITEM_INSPIRE)
     itemModifyUnitMap.put(ITEM_INSPIRE, inspireAction)
 
 
@@ -131,26 +145,27 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ARMOR_BLESSING)
         u.issueImmediateOrderById(OrderIds.innerfireon)
-
+        increaseUnitBounty(u, ITEM_ARMOR_BLESSING)
     itemModifyUnitMap.put(ITEM_ARMOR_BLESSING, armorBlessingAction)
 
     let weaponBlessingAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_WEAPON_BLESSING)
         u.issueImmediateOrderById(OrderIds.innerfireon)
-
+        increaseUnitBounty(u, ITEM_WEAPON_BLESSING)
     itemModifyUnitMap.put(ITEM_WEAPON_BLESSING, weaponBlessingAction)
 
     let magicDefendAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_MAGIC_DEFEND)
         u.issueImmediateOrderById(OrderIds.defend)
+        increaseUnitBounty(u, ITEM_MAGIC_DEFEND)
     itemModifyUnitMap.put(ITEM_MAGIC_DEFEND, magicDefendAction)
 
     let darkMageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ORB_DARKNESS)
-
+        increaseUnitBounty(u, ITEM_DARK_MAGE)
     itemModifyUnitMap.put(ITEM_DARK_MAGE, darkMageAction)
 
 
@@ -161,7 +176,7 @@ init
         u.addAbility(ABIL_AUTOCAST_SOUL_BURN)
         u.addAbility(ABIL_SOUL_BURN)
         u.issueImmediateOrderById(OrderIds.curseon)
-
+        increaseUnitBounty(u, ITEM_FIRE_MAGE)
     itemModifyUnitMap.put(ITEM_FIRE_MAGE, fireMageAction)
 
 
@@ -171,7 +186,7 @@ init
         u.addAbility(ABIL_AUTOCAST_FROST_NOVA)
         u.addAbility(ABIL_FROST_NOVA)
         u.issueImmediateOrderById(OrderIds.curseon)
-
+        increaseUnitBounty(u, ITEM_ICE_MAGE)
     itemModifyUnitMap.put(ITEM_ICE_MAGE, iceMageAction)
 
 
@@ -187,6 +202,8 @@ init
     let orbLightningAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ORB_LIGHTNING)
+        increaseUnitBounty(u, ITEM_ORB_LIGHTNING)
+
     itemModifyUnitMap.put(ITEM_ORB_LIGHTNING, orbLightningAction)
 
     let farseerAction = new ItemAddUnit()
@@ -201,7 +218,7 @@ init
         u.addAbility(ABIL_HEALING_WAVE)
         u.addAbility(ABIL_AUTOCAST_HEALING_WAVE)
         u.issueImmediateOrderById(OrderIds.innerfireon)
-
+        increaseUnitBounty(u, ITEM_HEALING_WAVE)
     itemModifyUnitMap.put(ITEM_HEALING_WAVE, healingWaveAction)
 
     let acidBombAction = new ItemModifierAction()
@@ -209,7 +226,7 @@ init
         u.addAbility(ABIL_ACID_BOMB)
         u.addAbility(ABIL_AUTOCAST_ACID_BOMB)
         u.issueImmediateOrderById(OrderIds.curseon)
-
+        increaseUnitBounty(u, ITEM_ACID_BOMB)
     itemModifyUnitMap.put(ITEM_ACID_BOMB, acidBombAction)
 
     let manaWardAction = new ItemModifierAction()
@@ -217,7 +234,7 @@ init
         u.addAbility(ABIL_MANA_WARD)
         u.addAbility(ABIL_AUTOCAST_MANA_WARD)
         u.issueImmediateOrderById(OrderIds.rechargeon)
-
+        increaseUnitBounty(u, ITEM_MANA_WARD)
     itemModifyUnitMap.put(ITEM_MANA_WARD, manaWardAction)
 
     let drunkenHazeAction = new ItemModifierAction()
@@ -225,13 +242,13 @@ init
         u.addAbility(ABIL_DRUNKEN_HAZE)
         u.addAbility(ABIL_AUTOCAST_DRUNKEN_HAZE)
         u.issueImmediateOrderById(OrderIds.parasiteon)
-
+        increaseUnitBounty(u, ITEM_DRUNKEN_HAZE)
     itemModifyUnitMap.put(ITEM_DRUNKEN_HAZE, drunkenHazeAction)
 
     let burningBladeAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_BURNING_BLADE_100)
-
+        increaseUnitBounty(u, ITEM_BURNING_BLADE)
     itemModifyUnitMap.put(ITEM_BURNING_BLADE, burningBladeAction)
 
     let berserkerAction = new ItemAddUnit()
@@ -268,7 +285,7 @@ init
     let rampageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_RAMPAGE)
-
+        increaseUnitBounty(u, ITEM_RAMPAGE)
     itemModifyUnitMap.put(ITEM_RAMPAGE, rampageAction)
 
 
@@ -299,7 +316,7 @@ init
         u.addAbility(ABIL_AUTOCAST_UNHOLY_FRENZY)
         u.addAbility(ABIL_UNHOLY_FRENZY)
         u.issueImmediateOrderById(OrderIds.innerfireon)
-
+        increaseUnitBounty(u, ITEM_UNHOLY_FRENZY)
     itemModifyUnitMap.put(ITEM_UNHOLY_FRENZY, unholyFrenzyAction)
 
     let frostArmorAction = new ItemModifierAction()
@@ -308,7 +325,7 @@ init
         u.removeAbility(ABIL_ANTI_MAGIC_SHELL)
         u.addAbility(ABIL_FROST_ARMOR)
         u.issueImmediateOrderById(OrderIds.frostarmoron)
-
+        increaseUnitBounty(u, ITEM_FROST_ARMOR)
     itemModifyUnitMap.put(ITEM_FROST_ARMOR, frostArmorAction)
 
     let raiseSkeletonMageAction = new ItemModifierAction()
@@ -316,7 +333,7 @@ init
         u.removeAbility(ABIL_RAISE_SKELETON)
         u.addAbility(ABIL_RAISE_SKELETON_MAGE)
         u.issueImmediateOrderById(OrderIds.raisedeadon)
-
+        increaseUnitBounty(u, ITEM_RAISE_SKELETON_MAGE)
     itemModifyUnitMap.put(ITEM_RAISE_SKELETON_MAGE, raiseSkeletonMageAction)
 
     let raiseSkeletonOrcAction = new ItemModifierAction()
@@ -324,13 +341,13 @@ init
         u.removeAbility(ABIL_RAISE_SKELETON)
         u.addAbility(ABIL_RAISE_SKELETON_ORC)
         u.issueImmediateOrderById(OrderIds.raisedeadon)
-
+        increaseUnitBounty(u, ITEM_RAISE_SKELETON_ORC)
     itemModifyUnitMap.put(ITEM_RAISE_SKELETON_ORC, raiseSkeletonOrcAction)
 
     let crippleAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_CRIPPLE_ORB)
-
+        increaseUnitBounty(u, ITEM_CRIPPLE)
     itemModifyUnitMap.put(ITEM_CRIPPLE, crippleAction)
 
     let lichAction = new ItemAddUnit()
@@ -348,7 +365,7 @@ init
     let spawnGutCrawlerAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_SPAWN_GUT_CRAWLER)
-
+        increaseUnitBounty(u, ITEM_SPAWN_GUT_CRAWLER)
     itemModifyUnitMap.put(ITEM_SPAWN_GUT_CRAWLER, spawnGutCrawlerAction)
 
     let unholyAuraAction = new ItemModifierAction()
@@ -356,7 +373,7 @@ init
         u.addAbility(ABIL_UNHOLY_AURA_PERCENT)
         u.addAbility(ABIL_UNHOLY_AURA_VISUAL)
         u.addAbility(ABIL_UNHOLY_AURA_FLAT)
-
+        increaseUnitBounty(u, ITEM_UNHOLY_AURA)
     itemModifyUnitMap.put(ITEM_UNHOLY_AURA, unholyAuraAction)
 
 
@@ -378,7 +395,7 @@ init
         u.addAbility(ABIL_REJUVENATION)
         u.addAbility(ABIL_AUTOCAST_REJUVENATION)
         u.issueImmediateOrderById(OrderIds.healon)
-
+        increaseUnitBounty(u, ITEM_REJUVENATION)
     itemModifyUnitMap.put(ITEM_REJUVENATION, rejuvenationAction)
 
     let entanglingRootAction = new ItemModifierAction()
@@ -386,7 +403,7 @@ init
         u.addAbility(ABIL_ENTANGLING_ROOT)
         u.addAbility(ABIL_AUTOCAST_ENTANGLING_ROOT)
         u.issueImmediateOrderById(OrderIds.curseon)
-
+        increaseUnitBounty(u, ITEM_ENTANGLING_ROOT)
     itemModifyUnitMap.put(ITEM_ENTANGLING_ROOT, entanglingRootAction)
 
     let wandOfIllusionAction = new ItemModifierAction()
@@ -394,7 +411,7 @@ init
         u.addAbility(ABIL_WAND_OF_ILLUSION)
         u.addAbility(ABIL_AUTOCAST_WAND_OF_ILLUSION)
         u.issueImmediateOrderById(OrderIds.innerfireon)
-
+        increaseUnitBounty(u, ITEM_WAND_OF_ILLUSION)
     itemModifyUnitMap.put(ITEM_WAND_OF_ILLUSION, wandOfIllusionAction)
 
     let keeperOfTheGroveAction = new ItemAddUnit()

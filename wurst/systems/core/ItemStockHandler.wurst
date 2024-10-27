@@ -21,6 +21,7 @@ public HashMap<int, LinkedList<int>> unitItemSold = new HashMap<int, LinkedList<
 public HashMap<int, LinkedList<int>> sharedStocksMap = new HashMap<int, LinkedList<int>>
 public constant itemGoldCost = compiletime(InitHashtable())
 public constant itemLumberCost = compiletime(InitHashtable())
+public constant itemCharges = compiletime(InitHashtable())
 
 public class ItemCost
     int gold
@@ -151,9 +152,13 @@ public function getItemGoldCost(int itemId) returns int
 public function getItemLumberCost(int itemId) returns int
     return itemLumberCost.loadInt(itemId, itemId)
 
+public function getItemCharges(int itemId) returns int
+    return itemCharges.loadInt(itemId, itemId)
+
 
 init
     initItemStockData()
+    // Event when a player buy an item
     EventListener.add(EVENT_PLAYER_UNIT_ISSUED_ORDER) ->
         let building = EventData.getTriggerUnit()
 

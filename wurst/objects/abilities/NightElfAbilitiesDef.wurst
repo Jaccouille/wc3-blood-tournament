@@ -188,8 +188,10 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_FAERIE_FIRE, tgen.generateFullTooltip())
 
     let druidTalonCount = BTBuildingData.getUnitCount(BUILDING_DRUID_TALON)
+    var goldCost = 0
+    var lumberCost = 200
     var itm = createBasicItem(ITEM_ENTANGLING_ROOT)
-        ..setItemCost(0, 200, 1, 1, 1)
+        ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("Z", "Replace 1 Faerie Fire with 1 Entangling Root")
         ..setInterfaceIcon(Icons.bTNEntanglingRoots)
 
@@ -246,6 +248,8 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..presetCooldown(_ -> 5)
         ..presetManaCost(_ -> 120)
         ..presetCastRange(_ -> 700)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     new UnitDefinition(UNIT_ENTANGLING_ROOT, UnitIds.healingward)
@@ -258,8 +262,10 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_ENTANGLING_ROOT, tgen.generateFullTooltip())
 
+    goldCost = 0
+    lumberCost = 75
     itm = createBasicItem(ITEM_WAND_OF_ILLUSION)
-        ..setItemCost(0, 75, 1, druidTalonCount, druidTalonCount)
+        ..setItemCost(goldCost, lumberCost, 1, druidTalonCount, druidTalonCount)
         ..setNameEnhance("Z", "Replace 1 Faerie Fire with 1 Wand of Illusion")
         ..setInterfaceIcon(Icons.bTNWand)
 
@@ -283,6 +289,8 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..presetCooldown(_ -> 3)
         ..presetManaCost(_ -> 60)
         ..presetCastRange(_ -> 600)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
@@ -388,8 +396,10 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
 
     let dryadCount = BTBuildingData.getUnitCount(BUILDING_DRYAD)
+    goldCost = 0
+    lumberCost = 50
     itm = createBasicItem(ITEM_REJUVENATION)
-        ..setItemCost(0, 50, 1, dryadCount, dryadCount)
+        ..setItemCost(goldCost, lumberCost, 1, dryadCount, dryadCount)
         ..setNameEnhance("Z", "Replace 1 Abolish Magic with 1 Rejuvenation")
         ..setInterfaceIcon(Icons.bTNRejuvenation)
 
@@ -412,6 +422,8 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetCooldown(_ -> 4)
         ..presetManaCost(_ -> 60)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
         ..presetCastRange(_ -> 900)
 

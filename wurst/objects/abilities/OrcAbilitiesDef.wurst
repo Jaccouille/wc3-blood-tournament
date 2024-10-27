@@ -104,8 +104,10 @@ import LocalAssets
     abilTooltipMap.put(ABIL_BURNING_BLADE_50, tgen.generateFullTooltip())
 
     let raiderCount = BTBuildingData.getUnitCount(BUILDING_RAIDER)
+    var goldCost = 0
+    var lumberCost = 200
     var itm = createBasicItem(ITEM_BURNING_BLADE)
-        ..setItemCost(0, 200, raiderCount, 1, 1)
+        ..setItemCost(goldCost, lumberCost, raiderCount, 1, 1)
         ..setNameEnhance("X", "Add Burning Blades")
         ..setInterfaceIcon(Icons.bTNArcaniteMelee)
 
@@ -121,6 +123,8 @@ import LocalAssets
         ..addTooltipProperty("Heal Reduction", _ -> "100%")
         ..presetDurationNormal(_ -> 4)
         ..setNameEnhance("Z", "Burning Blade")
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost) div raiderCount)
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
@@ -128,8 +132,10 @@ import LocalAssets
 
 
     let witchDoctorCount = BTBuildingData.getUnitCount(BUILDING_WITCH_DOCTOR)
+    goldCost = 0
+    lumberCost = 100
     itm = createBasicItem(ITEM_HEALING_WAVE)
-        ..setItemCost(0, 100, 1, witchDoctorCount, witchDoctorCount)
+        ..setItemCost(goldCost, lumberCost, 1, witchDoctorCount, witchDoctorCount)
         ..setNameEnhance("X", "Add 1 Healing Wave")
         ..setInterfaceIcon(Icons.bTNHealingWave)
 
@@ -153,12 +159,16 @@ import LocalAssets
         ..tooltipStartListen()
         ..registerTooltipGenerator(tgen)
         ..presetCooldown(_ -> 6)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_HEALING_WAVE, tgen.generateFullTooltip())
 
+    goldCost = 0
+    lumberCost = 150
     itm = createBasicItem(ITEM_ACID_BOMB)
-        ..setItemCost(0, 150, 1, 1, 1)
+        ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("X", "Replace 1 Healing Wave with 1 Acid Bomb")
         ..setInterfaceIcon(Icons.bTNAcidBomb)
 
@@ -185,13 +195,17 @@ import LocalAssets
         ..presetManaCost(_ -> 100)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 8)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
 
 
+    goldCost = 0
+    lumberCost = 150
     itm = createBasicItem(ITEM_DRUNKEN_HAZE)
-        ..setItemCost(0, 150, 1, 1, 1)
+        ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("Z", "Replace 1 Healing Wave with 1 Drunken Haze")
         ..setInterfaceIcon(Icons.bTNStrongDrink)
 
@@ -218,13 +232,17 @@ import LocalAssets
         ..presetManaCost(_ -> 100)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 6)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_DRUNKEN_HAZE, tgen.generateFullTooltip())
 
+    goldCost = 0
+    lumberCost = 250
     itm = createBasicItem(ITEM_MANA_WARD)
-        ..setItemCost(0, 250, 1, 1, 1)
+        ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("C", "Replace 1 Healing Wave with 1 Mana Ward")
         ..setInterfaceIcon(Icons.bTNHealingWard)
 
@@ -274,6 +292,8 @@ import LocalAssets
         ..presetManaCost(_ -> 200)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 10)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     new UnitDefinition(UNIT_MANA_WARD, UnitIds.healingward)
@@ -288,8 +308,10 @@ import LocalAssets
 
 
     let shamanCount = BTBuildingData.getUnitCount(BUILDING_SHAMAN)
+    goldCost = 0
+    lumberCost = 200
     itm = createBasicItem(ITEM_ORB_LIGHTNING)
-        ..setItemCost(0, 200, shamanCount, 1, 1)
+        ..setItemCost(goldCost, lumberCost, shamanCount, 1, 1)
         ..setNameEnhance("Z", "Add 4 Lightning Orb")
         ..setInterfaceIcon(Icons.bTNOrbOfLightning)
 
@@ -316,6 +338,8 @@ import LocalAssets
         ..presetUnitPauseDuration(_ -> 1.5)
         ..presetDurationNormal(_ -> 5)
         ..setNameEnhance("Z", "Orb of Lightning")
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
@@ -358,7 +382,6 @@ import LocalAssets
         ..setNameEnhance("Z", "Summon Spirit Wolf Pack")
         ..tooltipStopListen(true)
 
-    tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_SUMMON_SPIRIT_WOLF2, tgen.generateFullTooltip())
 
 
@@ -514,8 +537,10 @@ import LocalAssets
         ..setTooltipNormalExtended(1, "This unit has rampage;" +
             " its attack damage has been increased.")
 
+    goldCost = 0
+    lumberCost = 500
     itm = createBasicItem(ITEM_RAMPAGE)
-        ..setItemCost(0, 500, 1, 1, 1)
+        ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("Z", "Add Rampage ability")
         ..setInterfaceIcon(Icons.bTNBerserk)
     tgen = new BTAbilityTooltipGenerator(
@@ -536,6 +561,8 @@ import LocalAssets
         ..presetAreaofEffect(lvl -> 200. + 25 * lvl)
         ..presetDurationNormal(lvl -> 5)
         ..setNameEnhance("Z", "Rampage")
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
         ..presetBuffs(_ -> BUFF_RAMPAGE.toRawCode())
         ..presetManaCost(lvl -> 0)

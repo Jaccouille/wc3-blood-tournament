@@ -96,7 +96,10 @@ public class BTAbilityTooltipGenerator implements TooltipGenerator
                 for i = 1 to levels
                     tmp += fixValue(propMap.get(key).run(i)) + (i < levels ? "/" : "")
 
-            s += TITLE_COLOR + key + ":|r " + colorLevelValue(tmp, 1, levels) + "\n"
+            if key == ""
+                s += "\n"
+            else
+                s += TITLE_COLOR + key + ":|r " + colorLevelValue(tmp, 1, levels) + "\n"
         if propMap.size() > 0
             s += "\n"
         s += buildDescription(description)

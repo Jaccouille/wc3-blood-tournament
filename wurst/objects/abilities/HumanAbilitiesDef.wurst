@@ -14,7 +14,6 @@ import AbilityObjEditingCommons
 import ArmySpawner
 import BTAbilities
 import BTAbilityTooltipGenerator
-import ColorUtils
 import ItemObjEditingCommon
 import LocalObjectIDs
 import TooltipsUtils
@@ -47,8 +46,10 @@ let SLOW_TARGET_COUNT = 2
         ..setArtTarget(1, Abilities.aIdaTarget)
 
     let priestCount = BTBuildingData.getUnitCount(BUILDING_PRIEST)
+    var goldCost = 0
+    var lumberCost = 50
     var itm = createBasicItem(ITEM_ARMOR_BLESSING)
-        ..setItemCost(0, 50, 1, priestCount, priestCount)
+        ..setItemCost(goldCost, lumberCost, 1, priestCount, priestCount)
         ..setNameEnhance("X", "Replace 1 Heal with 1 Armor Blessing")
         ..setInterfaceIcon(Icons.bTNBarkSkin)
 
@@ -65,6 +66,8 @@ let SLOW_TARGET_COUNT = 2
         ..presetCooldown(_ -> 2)
         ..presetManaCost(_ -> 50)
         ..presetCastRange(_ -> 700)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..setBuffs(1, ARMOR_BLESSING_BUFF.toRawCode())
         ..tooltipStopListen(true)
 
@@ -81,8 +84,10 @@ let SLOW_TARGET_COUNT = 2
         ..setTargetAttachmentPoint0("weapon")
         ..setTargetAttachments(1)
 
+    goldCost = 0
+    lumberCost = 50
     itm = createBasicItem(ITEM_WEAPON_BLESSING)
-        ..setItemCost(0, 50, 1, priestCount, priestCount)
+        ..setItemCost(goldCost, lumberCost, 1, priestCount, priestCount)
         ..setNameEnhance("C", "Replace 1 Heal with 1 Weapon Blessing")
         ..setInterfaceIcon(Icons.bTNTransmute)
 
@@ -101,6 +106,8 @@ let SLOW_TARGET_COUNT = 2
         ..presetManaCost(_ -> 50)
         ..presetCastRange(_ -> 700)
         ..setBuffs(1, WEAPON_BLESSING_BUFF.toRawCode())
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
@@ -164,8 +171,10 @@ let SLOW_TARGET_COUNT = 2
 
 
     let sorceressCount = BTBuildingData.getUnitCount(BUILDING_SORCERESS)
+    goldCost = 0
+    lumberCost = 100
     itm = createBasicItem(ITEM_DARK_MAGE)
-        ..setItemCost(0, 100, 1, sorceressCount, sorceressCount)
+        ..setItemCost(goldCost, lumberCost, 1, sorceressCount, sorceressCount)
         ..setNameEnhance("Z", "Add 1 Orb of Darkness")
         ..setInterfaceIcon(Icons.bTNOrbOfDarkness)
 
@@ -185,14 +194,18 @@ let SLOW_TARGET_COUNT = 2
         ..presetDamageBonus(_ -> 30)
         ..presetNumberofSummonedUnits(_ -> 1)
         ..setNameEnhance("Z", "Orb of Darkness")
+        ..addTooltipProperty("", _ -> "")
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_ORB_DARKNESS, tgen.generateFullTooltip())
 
 
+    lumberCost = 100
     itm = createBasicItem(ITEM_FIRE_MAGE)
-        ..setItemCost(0, 100, 1, sorceressCount, sorceressCount)
+        ..setItemCost(goldCost, lumberCost, 1, sorceressCount, sorceressCount)
         ..setNameEnhance("X", "Add 1 Fire Orb")
         ..setInterfaceIcon(Icons.bTNOrbOfFire)
 
@@ -242,13 +255,17 @@ let SLOW_TARGET_COUNT = 2
         ..presetManaCost(_ -> 80)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 5)
+        ..addTooltipProperty("", _ -> "")
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tooltip += "\n\n" + tgen.generateFullTooltipItem()
     itm.setTooltipExtended(tooltip)
 
+    lumberCost = 100
     itm = createBasicItem(ITEM_ICE_MAGE)
-        ..setItemCost(0, 100, 1, sorceressCount, sorceressCount)
+        ..setItemCost(goldCost, lumberCost, 1, sorceressCount, sorceressCount)
         ..setNameEnhance("C", "Add 1 Frost Orb")
         ..setInterfaceIcon(Icons.bTNOrbOfFrost)
 
@@ -293,6 +310,9 @@ let SLOW_TARGET_COUNT = 2
         ..presetManaCost(_ -> 125)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 5)
+        ..addTooltipProperty("", _ -> "")
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tooltip += "\n\n" + tgen.generateFullTooltipItem()
@@ -337,8 +357,11 @@ let SLOW_TARGET_COUNT = 2
     )
 
     let footmanCount = BTBuildingData.getUnitCount(BUILDING_FOOTMAN) + 1
+
+    goldCost = 0
+    lumberCost = 300
     itm = createBasicItem(ITEM_DEFEND)
-        ..setItemCost(0, 300, footmanCount, 1, 1)
+        ..setItemCost(goldCost, lumberCost, footmanCount, 1, 1)
         ..setNameEnhance("X", "Add Defend ability")
         ..setInterfaceIcon(Icons.bTNDefend)
 
@@ -353,6 +376,10 @@ let SLOW_TARGET_COUNT = 2
         ..addTooltipProperty("Chance to Deflect", _ -> "60%")
         ..addTooltipProperty("Damage Returned", _ -> "100%")
         ..addTooltipProperty("Damage Taken", _ -> "35%")
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost) div footmanCount)
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+
+
         // ..addTooltipProperty("Movement Speed Reduced", _ -> "30%")
         ..setNameEnhance("Z", "Defend")
         ..tooltipStopListen(true)
@@ -385,8 +412,10 @@ let SLOW_TARGET_COUNT = 2
         "Reduces magic damage. Can reflect magic missile back to the attacker."
     )
     let spellbreakerCount = BTBuildingData.getUnitCount(BUILDING_SPELL_BREAKER)
+    goldCost = 0
+    lumberCost = 300
     itm = createBasicItem(ITEM_MAGIC_DEFEND)
-        ..setItemCost(0, 300, spellbreakerCount, 1, 1)
+        ..setItemCost(goldCost, lumberCost, spellbreakerCount, 1, 1)
         ..setNameEnhance("Z", "Add Magic Defend ability")
         ..setInterfaceIcon(Icons.bTNSpellBreakerMagicDefend)
 
@@ -489,8 +518,10 @@ let SLOW_TARGET_COUNT = 2
         ..setTargetAttachmentPoint0(1, "chest")
         ..setArtTarget(1, Abilities.staff_Sanctuary_Target)
 
+    goldCost = 0
+    lumberCost = 500
     itm = createBasicItem(ITEM_INSPIRE)
-        ..setItemCost(0, 500, 1, 1, 1)
+        ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("X", "Add Inspire ability")
         ..setInterfaceIcon(Icons.bTNInnerFire)
     tgen = new BTAbilityTooltipGenerator(
@@ -520,6 +551,8 @@ let SLOW_TARGET_COUNT = 2
         ..presetManaCost(_ -> 100)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 20)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)

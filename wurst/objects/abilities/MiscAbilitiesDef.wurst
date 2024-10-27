@@ -229,6 +229,14 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
         ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
         ..setCheckDependencies(true)
 
+@compiletime function createBountyBonusAbility()
+    // This ability is used to increase the bounty of a unit
+    // We need it just to store a integer value used to compute the bonus
+    // Is used in itemCallbackDefinition.wurst when we add an ability to a unit
+    new AbilityDefinitionChaosPeon(ABIL_BOUNTY_BONUS)
+        ..setLevels(20)
+        ..setName("Bounty Bonus")
+
 init
     GameStates.modesSelection.onExit() (state) ->
         let goldEx = gameConfig.getGoldExchange()

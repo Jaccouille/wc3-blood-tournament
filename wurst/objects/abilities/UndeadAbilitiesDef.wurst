@@ -25,8 +25,11 @@ let DEATH_COIL_TARGET_COUNT = 3
 
 @compiletime function createUndeadAbilities()
     let bansheeCount = BTBuildingData.getUnitCount(BUILDING_BANSHEE)
+
+    var goldCost = 0
+    var lumberCost = 100
     var itm = createBasicItem(ITEM_UNHOLY_FRENZY)
-        ..setItemCost(0, 100, 1, bansheeCount, bansheeCount)
+        ..setItemCost(goldCost, lumberCost, 1, bansheeCount, bansheeCount)
         ..setNameEnhance("Z", "Replace 1 Anti-Magic Shell with 1 Unholy Frenzy")
         ..setInterfaceIcon(Icons.bTNUnholyFrenzy)
 
@@ -52,6 +55,8 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetCooldown(_ -> 3)
         ..presetCastRange(_ -> 700)
         ..presetDurationNormal(_ -> 45)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
         ..setIconNormal(Icons.bTNUnholyFrenzy)
         ..setIconTurnOff(Icons.bTNUnholyFrenzy)
@@ -89,8 +94,11 @@ let DEATH_COIL_TARGET_COUNT = 3
 
     abilTooltipMap.put(ABIL_ANTI_MAGIC_SHELL, tgen.generateFullTooltip())
 
+
+    goldCost = 0
+    lumberCost = 50
     itm = createBasicItem(ITEM_FROST_ARMOR)
-        ..setItemCost(0, 50, 1, bansheeCount, bansheeCount)
+        ..setItemCost(goldCost, lumberCost, 1, bansheeCount, bansheeCount)
         ..setNameEnhance("X", "Replace 1 Anti-Magic Shell with 1 Frost Armor")
         ..setInterfaceIcon(Icons.bTNFrostArmor)
 
@@ -110,6 +118,8 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetCooldown(_ -> 4)
         ..presetManaCost(_ -> 50)
         ..setNameEnhance("X", "Frost Armor")
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
@@ -133,8 +143,11 @@ let DEATH_COIL_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_RAISE_SKELETON, tgen.generateFullTooltip())
 
     let necromancerCount = BTBuildingData.getUnitCount(BUILDING_NECROMANCER)
+
+    goldCost = 0
+    lumberCost = 200
     itm = createBasicItem(ITEM_RAISE_SKELETON_MAGE)
-        ..setItemCost(0, 200, 1, necromancerCount, necromancerCount)
+        ..setItemCost(goldCost, lumberCost, 1, necromancerCount, necromancerCount)
         ..setNameEnhance("Z", "Replace Skeleton Warrior by Skeletal Mage")
         ..setInterfaceIcon(Icons.bTNSkeletonMage)
 
@@ -152,16 +165,21 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetCooldown(_ -> 12)
         ..presetDurationNormal(_ -> 40)
         ..setNameEnhance("Z", "Raise Dead")
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_RAISE_SKELETON_MAGE, tgen.generateFullTooltip())
 
+
+    goldCost = 0
+    lumberCost = 150
     itm = createBasicItem(ITEM_RAISE_SKELETON_ORC)
-        ..setItemCost(0, 150, 1, necromancerCount, necromancerCount)
+        ..setItemCost(goldCost, lumberCost, 1, necromancerCount, necromancerCount)
         ..setNameEnhance("Z", "Replace Skeleton Warrior by Skeletal Orc")
         ..setInterfaceIcon(Icons.bTNSkeletalOrc)
 
-    tgen = new BTAbilityTooltipGenerator("Raises skeleton grunts from a corpse.")
+    tgen = new BTAbilityTooltipGenerator("Raises skeleton orc from a corpse.")
     new AbilityDefinitionRaiseDeadCreep(ABIL_RAISE_SKELETON_ORC)
         ..registerTooltipGenerator(tgen)
         ..presetAreaofEffect(_ -> 1000)
@@ -207,8 +225,11 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setEnabledAttackIndex(1, 0)
         ..presetEffectAbility(_ -> commaList(ABIL_CRIPPLE))
 
+
+    goldCost = 0
+    lumberCost = 100
     itm = createBasicItem(ITEM_CRIPPLE)
-        ..setItemCost(0, 100, 1, necromancerCount, necromancerCount)
+        ..setItemCost(goldCost, lumberCost, 1, necromancerCount, necromancerCount)
         ..setNameEnhance("X", "Add 1 Cripple")
         ..setInterfaceIcon(Icons.bTNCripple)
 
@@ -231,8 +252,11 @@ let DEATH_COIL_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_CRIPPLE, tgen.generateFullTooltip())
 
 
+
+    goldCost = 0
+    lumberCost = 400
     itm = createBasicItem(ITEM_DEATH_COIL)
-        ..setItemCost(0, 400, 1, 1, 1)
+        ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("Z", "Add Death Coil ability")
         ..setInterfaceIcon(Icons.bTNDeathCoil)
 
@@ -280,8 +304,11 @@ let DEATH_COIL_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_DEATH_COIL, tgen.generateFullTooltip())
 
 
+
+    goldCost = 0
+    lumberCost = 500
     itm = createBasicItem(ITEM_UNHOLY_AURA)
-        ..setItemCost(0, 500, 1, 1, 1)
+        ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("Z", "Add Unholy Aura")
         ..setInterfaceIcon(Icons.bTNUnholyAura)
 
@@ -313,6 +340,8 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetAreaofEffect(_ -> 1200)
         ..setNameEnhance("Z", "Unholy Aura")
         ..setEditorSuffix("Percent")
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
         ..setBuffs(1, BUFF_UNHOLY_AURA.toRawCode())
         ..setArtTarget(Abilities.unholyAura)
@@ -464,8 +493,11 @@ let DEATH_COIL_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_AFFLICTION, tgen.generateFullTooltip())
 
     let abomCount = BTBuildingData.getUnitCount(BUILDING_ABOMINATION)
+
+    goldCost = 0
+    lumberCost = 750
     itm = createBasicItem(ITEM_SPAWN_GUT_CRAWLER)
-        ..setItemCost(0, 750, abomCount, 1, 1)
+        ..setItemCost(goldCost, lumberCost, abomCount, 1, 1)
         ..setNameEnhance("Z", "Add Spawn Gut Crawlers")
         ..setInterfaceIcon(Icons.bTNGhoul)
 
