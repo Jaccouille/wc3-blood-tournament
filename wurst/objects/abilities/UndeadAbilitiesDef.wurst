@@ -500,7 +500,7 @@ let DEATH_COIL_TARGET_COUNT = 3
 
     tgen = new BTAbilityTooltipGenerator(
         "Gains attack damage and health points from nearby dying allied units.\n" +
-        "Bonus is based on dying unit bounty (1 bp = 1 damage/10hp). Doesn't work on spectral and skeleton units.\n" +
+        "Bonus is based on dying unit bounty (1 bp = +1 damage and +10hp). Doesn't work on spectral and skeleton units.\n" +
         "Benefits only 1 vampire at a time.".color(ENERGY_COLOR)
         )
     new AbilityDefinitionAttackBonus(ABIL_BLOOD_HARVEST)
