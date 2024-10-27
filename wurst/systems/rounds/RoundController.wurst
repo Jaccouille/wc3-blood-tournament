@@ -324,6 +324,7 @@ public function initRoundController()
             printTimed(round.winner.getNameColored() + " has eliminated " + looser.getNameColored() , 3)
             scoreBoardEntries.get("PlayerName").setEntryColor(looser, COLOR_GRAY)
         else
+            roundController.currentRound.playRoundEndSound()
             printTimed("{0} finished!".format(round.roundName).color(GOLD_COLOR), 15)
             doAfter(3) ->
                 altarEntity.hideCounter()
