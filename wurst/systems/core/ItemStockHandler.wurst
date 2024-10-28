@@ -98,7 +98,7 @@ public class ItemStockHandler
 function initItemStockData()
     // ================ HUMAN =============
     unitItemSold.put(BUILDING_FOOTMAN   , asList(ITEM_CAPTAIN           , ITEM_DEFEND                                        ))
-    unitItemSold.put(BUILDING_RIFLEMAN  , asList(ITEM_MORTAR            , ITEM_SNIPER         , ITEM_GRENADIER          ))
+    unitItemSold.put(BUILDING_RIFLEMAN  , asList(ITEM_MORTAR))
     unitItemSold.put(BUILDING_PRIEST    , asList(ITEM_ARMOR_BLESSING , ITEM_WEAPON_BLESSING         ))
     unitItemSold.put(BUILDING_SPELL_BREAKER    , asList(ITEM_MAGIC_DEFEND         ))
     unitItemSold.put(BUILDING_KNIGHT    , asList(ITEM_MARSHALL                                      ))
@@ -123,7 +123,7 @@ function initItemStockData()
 
     // ================ UNDEAD =============
     // unitItemSold.put(BUILDING_ZOMBIE, asList(ITEM_PLAGUE_BEARER                  ))
-    unitItemSold.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER                  ))
+    // unitItemSold.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER                  ))
     unitItemSold.put(BUILDING_BANSHEE        , asList(ITEM_UNHOLY_FRENZY, ITEM_FROST_ARMOR                    ))
     unitItemSold.put(BUILDING_NECROMANCER        , asList(ITEM_LICH                                       ))
     unitItemSold.put(BUILDING_SPECTRAL_SAGE        , asList(ITEM_LICH                                       ))

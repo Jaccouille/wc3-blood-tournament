@@ -102,12 +102,12 @@ import UnitTooltipGenerator
 
 
 @compiletime function createSkeletalArcher()
-    let skeletalArcherCount = BTBuildingData.getUnitCount(BUILDING_SKELETAL_ARCHER)
+    // let skeletalArcherCount = BTBuildingData.getUnitCount(BUILDING_SKELETAL_ARCHER)
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_BURNING_ARROW))
-    let itmBurning = createBasicItem(ITEM_BURNING_ARCHER)
-    createSpawnedUnit(UNIT_BURNING_ARCHER, UnitIds.burningarcher)
+    // let itmBurning = createBasicItem(ITEM_BURNING_ARCHER)
+    createSpawnedUnit(UNIT_BURNING_ARCHER, UnitIds.burningarcher, BUILDING_BURNING_ARCHER)
         ..setRace(Race.Undead)
-        ..registerItemDef(itmBurning, ItemModifierType.Replace)
+        // ..registerItemDef(itmBurning, ItemModifierType.Replace)
         ..setNormalAbilities(commaList(ABIL_BURNING_ARROW, ABIL_DMG_MINUS_7))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -121,19 +121,23 @@ import UnitTooltipGenerator
 
         ..setSpeedBase(270)
         ..setSizeSmall()
-        ..setItemCostReplacement(0, 1000, 10, 1, 1, BUILDING_SKELETAL_ARCHER)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        // ..setItemCostReplacement(0, 1000, 10, 1, 1, BUILDING_SKELETAL_ARCHER)
 
         ..setNameEnhance("Z", "Burning Archer")
-        ..tooltipStopListen(true, itmBurning)
+        // ..tooltipStopListen(true, itmBurning)
         ..setMana(0)
         ..setIconGameInterfaceExt(Icons.bTNFlamingArrows)
+        ..setModelFileExt(Units.burningArcher, 255, 100, 150)
+        ..setUnitSoundSetExt(Soundsets.skeleton)
         ..setGhostDeath()
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_FROST_ARROW))
-    let itmFrost = createBasicItem(ITEM_FROST_ARCHER)
-    createSpawnedUnit(UNIT_FROST_ARCHER, UnitIds.skeletalmarksman)
+    // let itmFrost = createBasicItem(ITEM_FROST_ARCHER)
+    createSpawnedUnit(UNIT_FROST_ARCHER, UnitIds.skeletalmarksman, BUILDING_FROST_ARCHER)
         ..setRace(Race.Undead)
-        ..registerItemDef(itmFrost, ItemModifierType.Replace)
+        // ..registerItemDef(itmFrost, ItemModifierType.Replace)
         ..setDefaultActiveAbility(commaList(ABIL_FROST_ARROW))
         ..setNormalAbilities(commaList(ABIL_FROST_ARROW))
         ..registerTooltipGenerator(tooltip)
@@ -148,12 +152,17 @@ import UnitTooltipGenerator
 
         ..setSpeedBase(270)
         ..setSizeSmall()
-        ..setItemCostReplacement(0, 1000, 10, 1, 1, BUILDING_SKELETAL_ARCHER)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        // ..setItemCostReplacement(0, 1000, 10, 1, 1, BUILDING_SKELETAL_ARCHER)
 
         ..setNameEnhance("X", "Frost Archer")
-        ..tooltipStopListen(true, itmFrost)
+
+        // ..tooltipStopListen(true, itmFrost)
         ..setMana(0)
         ..setIconGameInterfaceExt(Icons.bTNColdArrows)
+        ..setModelFileExt(Units.skeletonArcher1, 100, 150, 255)
+        ..setUnitSoundSetExt(Soundsets.skeleton)
         ..setGhostDeath()
 
     tooltip = new UnitTooltipGenerator("Basic ranged unit.")
@@ -175,11 +184,12 @@ import UnitTooltipGenerator
 
         ..setSizeSmall()
         ..setNameEnhance("W", "Skeletal Archer")
+        ..setUpgradeTo(commaList(BUILDING_BURNING_ARCHER, BUILDING_FROST_ARCHER))
         ..tooltipStopListen(true)
 
         ..setModelFileExt(Units.skeletonArcher1)
-        ..setIconGameInterfaceExt(Icons.bTNSkeletonArcher)
         ..setUnitSoundSetExt(Soundsets.skeleton)
+        ..setIconGameInterfaceExt(Icons.bTNSkeletonArcher)
         ..setGhostDeath()
 
 
@@ -280,7 +290,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
 
-    tooltip = new UnitTooltipGenerator("Summoned by Necromancer.")
+    tooltip = new UnitTooltipGenerator("Summoned by Spectral Sage.")
     createSpawnedUnit(UNIT_SKELETON_ORC, UnitIds.skeletalorc)
         ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)

@@ -278,6 +278,9 @@ public class BTUnitDefinition extends UnitDefinition
     function setBuildingScalingValue(real data)
         buildingDef.setScalingValue(data)
 
+    function setBuildingAbilities(string abilityIds)
+        buildingDef.setNormalAbilities(abilityIds)
+
     function setBuildingGoldCost(int data)
         var goldCost = data
         buildingDef.setGoldCost(data)
@@ -405,6 +408,13 @@ public class BTUnitDefinition extends UnitDefinition
     function setModelFileExt(string data)
         this.setModelFile(data)
         this.buildingDef.setModelFile(data)
+
+    function setModelFileExt(string data, int red, int green, int blue)
+        this.setModelFile(data)
+        this.buildingDef.setModelFile(data)
+        this.buildingDef.setTintingColorRed(red)
+        this.buildingDef.setTintingColorGreen(green)
+        this.buildingDef.setTintingColorBlue(blue)
 
     function setRequiredAnimationNamesExt(string data)
         this.setRequiredAnimationNames(data)

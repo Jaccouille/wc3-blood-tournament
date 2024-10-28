@@ -82,23 +82,31 @@ import UnitTooltipGenerator
 
         ..setSizeSmall()
         ..setNameEnhance("W", "Rifleman")
+        ..setUpgradeTo(commaList(BUILDING_GRENADIER, BUILDING_SNIPER))
 
 
         ..setModelFileExt(Units.rifleman1)
         ..setIconGameInterfaceExt(Icons.bTNRifleman)
         ..setUnitSoundSetExt(Soundsets.rifleman)
 
-    let riflemanCount = BTBuildingData.getUnitCount(BUILDING_RIFLEMAN)
     tooltip = new UnitTooltipGenerator(
         "Decent ranged pierce unit, has small splash."
     )
-    var itm = createBasicItem(ITEM_GRENADIER)
-    createSpawnedUnit(UNIT_GRENADIER, UnitIds.rifleman)
+    // var itm = createBasicItem(ITEM_GRENADIER)
+    createSpawnedUnit(UNIT_GRENADIER, UnitIds.rifleman, BUILDING_GRENADIER)
         ..setAttack1WeaponType(WeaponType.MissileSplash)
         ..setAttack1ProjectileArt(Abilities.cannonTowerMissile)
         ..setAttack1ProjectileSpeed(1600)
         ..setNormalAbilities(commaList(ABIL_GRENADIER_VISUAL))
-        ..registerItemDef(itm, ItemModifierType.Replace)
+        ..setBuildingAbilities(commaList(
+            AbilityIds.invulnerable,
+            AbilityIds.inventory,
+            ABIL_SHOP_SHARING,
+            ABIL_GRENADIER_VISUAL,
+            AbilityIds.sellItems,
+            ABIL_MOVE_BUILDING
+        ))
+        // ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setAttack1Data(AttackType.Pierce, 40, 5, 3, 1.7)
@@ -109,23 +117,30 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(290)
 
         ..setSpeedBase(270)
-        ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
+        // ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
 
         ..setSizeSmall()
-        ..setNameEnhance("X", "Grenadier")
-        ..tooltipStopListen(true, itm)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
 
+
+        ..setNameEnhance("X", "Grenadier")
+        ..tooltipStopListen(true)
+        // ..tooltipStopListen(true, itm)
+
+        ..setUnitSoundSetExt(Soundsets.rifleman)
         ..setIconGameInterfaceExt(Icons.bTNHumanMissileUpThree)
+        ..setModelFileExt(Units.rifleman1)
 
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_CRITICAL_STRIKE_40) + "\n\n" +
         "High range unit."
     )
-    itm = createBasicItem(ITEM_SNIPER)
-    createSpawnedUnit(UNIT_SNIPER, UnitIds.rifleman)
+    // itm = createBasicItem(ITEM_SNIPER)
+    createSpawnedUnit(UNIT_SNIPER, UnitIds.rifleman, BUILDING_SNIPER)
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_40))
-        ..registerItemDef(itm, ItemModifierType.Replace)
+        // ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setAttack1Data(AttackType.Pierce, 30, 5, 4, 1.7)
@@ -135,17 +150,23 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(290)
 
         ..setSpeedBase(270)
-        ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
+        // ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
 
         ..setSizeSmall()
-        ..setNameEnhance("C", "Sniper")
-        ..tooltipStopListen(true, itm)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
 
+        ..setNameEnhance("C", "Sniper")
+        ..tooltipStopListen(true)
+        // ..tooltipStopListen(true, itm)
+
+        ..setModelFileExt(Units.rifleman1)
         ..setIconGameInterfaceExt(Icons.bTNHumanMissileUpOne)
+        ..setUnitSoundSetExt(Soundsets.rifleman)
 
     tooltip = new UnitTooltipGenerator("Long range unit with small splash.")
 
-    itm = createBasicItem(ITEM_MORTAR)
+    var itm = createBasicItem(ITEM_MORTAR)
     createSpawnedUnit(UNIT_MORTAR, UnitIds.mortarteam)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
