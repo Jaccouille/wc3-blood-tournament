@@ -249,7 +249,7 @@ public function initUnitDeathTrigger()
                         let lumberCost = getItemLumberCost(t.getTypeId()) *  (t.getCharges() / BlzGetItemIntegerField(t, ITEM_IF_PRIORITY)).toInt()
                         bloodAmount += lumberCost
                         if t.getLife() > 1
-                            itmArmyPts += t.getLife().toInt()
+                            itmArmyPts += t.getLife().toInt() * t.getCharges()
                 pData.subArmyPoints(itmArmyPts)
 
                 // Visual Money and Blood Texttag

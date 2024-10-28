@@ -9,12 +9,12 @@ import OrderIds
 
 // Local imports:
 import ArmyPreviewer
-import ArmySpawner
 import ClosuresForItems
 import LocalObjectIDs
 import PlayerExtension
 import ScoreBoard
 import GameConfig
+import initlater ItemCallbackDefinition
 
 public HashMap<int, LinkedList<int>> unitItemSold = new HashMap<int, LinkedList<int>>
 
@@ -183,13 +183,12 @@ init
                 // Item who doesn't give any blood point got 1 hp
                 let bloodPoint = i.getLife().toInt()
                 if bloodPoint > 1
-                    // If we replace an unit
-                    var bonusArmyPoints = bloodPoint - BTBuildingData.unitIdToDataMap.get(
-                        building.getTypeId()).unitPointValue
-                    // If we add an unit
-                    if i.getName().contains("Add")
-                        bonusArmyPoints = bloodPoint
-                    building.getOwner().getPlayerData().addArmyPoints(bonusArmyPoints)
+                    int _bonusArmyPoints = 0
+                    if itemModifyUnitMap.has(itemId)
+                        _bonusArmyPoints = bloodPoint
+                    else
+                        _bonusArmyPoints = bloodPoint
+                    building.getOwner().getPlayerData().addArmyPoints(_bonusArmyPoints)
                 if playerToArmyPreviewer.has(building.getOwner())
                     playerToArmyPreviewer.get(building.getOwner()).shouldRefresh = true
             i.remove()
