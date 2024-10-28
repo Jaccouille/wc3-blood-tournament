@@ -28,5 +28,6 @@ init
             case UNIT_COURT_ENCHANTRESS
                 src.issueImmediateOrderById(OrderIds.parasiteon)
             case UNIT_OWLBEAR
-                if not target.hasAbility(BuffIds.howlofTerror)
-                    src.issueImmediateOrderById(OrderIds.howlofterror)
+                src.issueImmediateOrderById(OrderIds.frenzyon)
+            case UNIT_DRUID_CLAW
+                src.issueImmediateOrderById(OrderIds.frenzyon)
