@@ -224,6 +224,8 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetChanceToHitSummons(_ -> 100)
         ..setEnabledAttackIndex(1, 0)
         ..presetEffectAbility(_ -> commaList(ABIL_CRIPPLE))
+        ..setArtTarget(Abilities.zigguratMissile)
+        ..setMissileArt(Abilities.zigguratMissile)
 
 
     goldCost = 0

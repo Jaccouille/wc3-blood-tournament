@@ -8,6 +8,8 @@ import ItemObjEditing
 import LinkedList
 import ObjectIds
 
+import Lodash
+
 // Local imports:
 import ArmySpawner
 import GridHotkeyPosition
@@ -307,6 +309,18 @@ public class BTUnitDefinition extends UnitDefinition
 
     function setUpgradeTo(string data)
         buildingDef.setUpgradesTo(data)
+
+    function setUpgradeTo(LinkedList<int> data)
+        var _unitSoldData = ""
+        for id in data
+            let unitToSpawn = BTBuildingData.unitIdToDataMap.get(id).unitToSpawn.copy()
+            let uniq = unitToSpawn.uniq()
+            for t in uniq
+                _unitSoldData +=  "," + t.toRawCode()
+
+        _unitSoldData += "," + this.newId.toRawCode()
+        buildingDef.setUnitsSold(_unitSoldData)
+        buildingDef.setUpgradesTo(commaList(data))
 
     function setBuildingItemsMade(string data)
         buildingDef.setItemsMade(data)

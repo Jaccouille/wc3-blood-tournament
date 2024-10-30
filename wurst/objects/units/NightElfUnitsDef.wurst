@@ -7,11 +7,11 @@ import ChannelAbilityPreset
 // Local imports:
 import ArmySpawner
 import BTAbilities
-import ColorUtils
 import ItemObjEditingCommon
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
+import LinkedList
 
 @compiletime function createTreant()
     var tooltip = new UnitTooltipGenerator("Footman Desc")
@@ -60,7 +60,7 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("Q", "Archer")
         ..tooltipStopListen()
-        ..setUpgradeTo(commaList(BUILDING_NE_RANGER))
+        ..setUpgradeTo(asList(BUILDING_NE_RANGER))
 
         ..setModelFileExt(Units.archer)
         ..setIconGameInterfaceExt(Icons.bTNArcher)
@@ -90,6 +90,7 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.shandris1)
         ..setIconGameInterfaceExt(Icons.bTNShandris)
         ..setUnitSoundSetExt(Soundsets.shandris)
+        ..setButtonPositionX(1)
 
 @compiletime function createDryad()
     var tooltip = new UnitTooltipGenerator(
@@ -304,7 +305,7 @@ import UnitTooltipGenerator
             ABIL_CLEAVE_20,
             ABIL_HARDENED_SKIN_10
             ))
-        ..setDefaultActiveAbility(commaList(ABIL_DRUID_FRENZY))
+        // ..setDefaultActiveAbility(commaList(ABIL_DRUID_FRENZY))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 

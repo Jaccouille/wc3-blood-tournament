@@ -4,7 +4,6 @@ package HumanUnitsDef
 import Assets
 
 // Local imports:
-import ArmySpawner
 import BTAbilities
 import BTAbilityTooltipGenerator
 import ColorUtils
@@ -13,6 +12,7 @@ import LocalAssets
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
+import LinkedList
 
 @compiletime function createFootman()
     var tooltip = new UnitTooltipGenerator("Basic melee unit")
@@ -82,7 +82,7 @@ import UnitTooltipGenerator
 
         ..setSizeSmall()
         ..setNameEnhance("W", "Rifleman")
-        ..setUpgradeTo(commaList(BUILDING_GRENADIER, BUILDING_SNIPER))
+        ..setUpgradeTo(asList(BUILDING_GRENADIER, BUILDING_SNIPER))
 
 
         ..setModelFileExt(Units.rifleman1)
@@ -131,7 +131,7 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.rifleman)
         ..setIconGameInterfaceExt(Icons.bTNHumanMissileUpThree)
         ..setModelFileExt(Units.rifleman1)
-
+        ..setButtonPositionX(1)
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_CRITICAL_STRIKE_40) + "\n\n" +
@@ -163,6 +163,7 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.rifleman1)
         ..setIconGameInterfaceExt(Icons.bTNHumanMissileUpOne)
         ..setUnitSoundSetExt(Soundsets.rifleman)
+        ..setButtonPositionX(2)
 
     tooltip = new UnitTooltipGenerator("Long range unit with small splash.")
 
@@ -216,7 +217,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..setNameEnhance("A", "Priest")
-        ..setUpgradeTo(commaList(BUILDING_SPELL_BREAKER))
+        ..setUpgradeTo(asList(BUILDING_SPELL_BREAKER))
 
         ..tooltipStopListen(true)
 
@@ -255,6 +256,7 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.bloodElfSpellThief)
         ..setIconGameInterfaceExt(Icons.bTNSpellBreaker)
         ..setUnitSoundSetExt(Soundsets.bloodElfSpellThief)
+        ..setButtonPositionX(1)
 
 
 @compiletime function createKnight()
@@ -280,7 +282,7 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("E", "Knight")
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_CRUSADER))
+        ..setUpgradeTo(asList(BUILDING_CRUSADER))
 
         ..setModelFileExt(Units.knight1)
         ..setIconGameInterfaceExt(Icons.bTNKnight)
@@ -325,6 +327,7 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.banditLord1)
         ..setIconGameInterfaceExt(Icons.bTNBanditLord)
         ..setUnitSoundSetExt(Soundsets.knight)
+        ..setButtonPositionX(1)
 
 
     tooltip = new UnitTooltipGenerator(

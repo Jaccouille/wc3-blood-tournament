@@ -35,7 +35,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("Q", "Zombie")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_PLAGUE_BEARER))
+        ..setUpgradeTo(asList(BUILDING_PLAGUE_BEARER))
 
         ..setModelFileExt(Units.zombie)
         ..setIconGameInterfaceExt(Icons.bTNZombie)
@@ -73,6 +73,7 @@ import UnitTooltipGenerator
         ..setIconGameInterfaceExt(Icons.bTNDalaranMutant)
         ..setModelFileExt(Units.dalaranMutant)
         ..setUnitSoundSetExt(Soundsets.zombie)
+        ..setButtonPositionX(1)
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_LIFESTEAL_75))
     createSpawnedUnit(UNIT_GHOUL, UnitIds.ghoul, BUILDING_GHOUL)
@@ -132,6 +133,7 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.burningArcher, 255, 100, 150)
         ..setUnitSoundSetExt(Soundsets.skeleton)
         ..setGhostDeath()
+        ..setButtonPositionX(1)
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_FROST_ARROW))
     // let itmFrost = createBasicItem(ITEM_FROST_ARCHER)
@@ -164,6 +166,7 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.skeletonArcher1, 100, 150, 255)
         ..setUnitSoundSetExt(Soundsets.skeleton)
         ..setGhostDeath()
+        ..setButtonPositionX(2)
 
     tooltip = new UnitTooltipGenerator("Basic ranged unit.")
     createSpawnedUnit(UNIT_SKELETAL_ARCHER, UnitIds.skeletalarcher, BUILDING_SKELETAL_ARCHER)
@@ -184,7 +187,7 @@ import UnitTooltipGenerator
 
         ..setSizeSmall()
         ..setNameEnhance("W", "Skeletal Archer")
-        ..setUpgradeTo(commaList(BUILDING_BURNING_ARCHER, BUILDING_FROST_ARCHER))
+        ..setUpgradeTo(asList(BUILDING_BURNING_ARCHER, BUILDING_FROST_ARCHER))
         ..tooltipStopListen(true)
 
         ..setModelFileExt(Units.skeletonArcher1)
@@ -217,18 +220,20 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setNameEnhance("S", "Necromancer")
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_SPECTRAL_SAGE))
+        ..setUpgradeTo(asList(BUILDING_SPECTRAL_SAGE))
         ..setBuildingUnitsSold(commaList(
             UNIT_NECROMANCER,
             UNIT_SKELETON,
             UNIT_SKELETON_ORC,
-            UNIT_REVENANT
+            UNIT_REVENANT,
+            UNIT_SPECTRAL_SAGE
             ))
 
 
         ..setModelFileExt(Units.necromancer1)
         ..setIconGameInterfaceExt(Icons.bTNNecromancer)
         ..setUnitSoundSetExt(Soundsets.necromancer)
+        ..setButtonPositionX(1)
 
 
     tooltip = new UnitTooltipGenerator(
@@ -257,7 +262,7 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setNameEnhance("Z", "Spectral Sage")
         ..tooltipStopListen(true)
-        ..setBuildingUnitsTrained(commaList(
+        ..setBuildingUnitsSold(commaList(
             UNIT_SPECTRAL_SAGE,
             UNIT_SKELETON_ORC,
             UNIT_REVENANT
@@ -425,7 +430,6 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setNameEnhance("A", "Banshee")
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(""))
 
         ..setModelFileExt(Units.banshee1)
         ..setIconGameInterfaceExt(Icons.bTNBanshee)
@@ -516,7 +520,7 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setGhostDeath()
         ..setBuildingScalingValue(0.8)
-        ..setUpgradeTo(commaList(BUILDING_VAMPIRE_LORD))
+        ..setUpgradeTo(asList(BUILDING_VAMPIRE_LORD))
 
         ..setModelFileExt(Units.heroDreadLord)
         ..setIconGameInterfaceExt(Icons.bTNHeroDreadLord)
@@ -556,6 +560,7 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.tichondrius1)
         ..setIconGameInterfaceExt(Icons.bTNTichondrius)
         ..setUnitSoundSetExt(Soundsets.tichondrius)
+        ..setButtonPositionX(1)
 
 @compiletime function createDeathKnight()
     var tooltip = new UnitTooltipGenerator(
