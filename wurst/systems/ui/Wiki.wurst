@@ -67,11 +67,10 @@ function framehandle.createToolTipFrame(int elem)
     let textContent = BlzGetAbilityExtendedTooltip(elem, 1)
 
     let tooltipBackdrop = createFrame("BoxedText", GAME_UI, 0, 0)
-    tooltipBackdrop.setWidth(0.3)
 
     let textTitle = getFrame("BoxedTextTitle", 0)
         ..setText(title.color(SPECIAL_COLOR))
-        ..setSize(0.24, 0)
+        ..setSize(0.28, 0)
         // ..setPoint(FRAMEPOINT_TOPLEFT, this, FRAMEPOINT_TOPRIGHT, vec2(0.002, 0))
         ..disable()
 
