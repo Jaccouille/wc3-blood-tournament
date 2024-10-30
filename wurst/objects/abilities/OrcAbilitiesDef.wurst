@@ -166,7 +166,7 @@ import LocalAssets
     abilTooltipMap.put(ABIL_HEALING_WAVE, tgen.generateFullTooltip())
 
     goldCost = 0
-    lumberCost = 150
+    lumberCost = 100
     itm = createBasicItem(ITEM_ACID_BOMB)
         ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("X", "Replace 1 Healing Wave with 1 Acid Bomb")
@@ -203,7 +203,7 @@ import LocalAssets
 
 
     goldCost = 0
-    lumberCost = 150
+    lumberCost = 100
     itm = createBasicItem(ITEM_DRUNKEN_HAZE)
         ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("Z", "Replace 1 Healing Wave with 1 Drunken Haze")

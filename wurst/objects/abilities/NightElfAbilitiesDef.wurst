@@ -263,7 +263,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_ENTANGLING_ROOT, tgen.generateFullTooltip())
 
     goldCost = 0
-    lumberCost = 75
+    lumberCost = 100
     itm = createBasicItem(ITEM_WAND_OF_ILLUSION)
         ..setItemCost(goldCost, lumberCost, 1, druidTalonCount, druidTalonCount)
         ..setNameEnhance("Z", "Replace 1 Faerie Fire with 1 Wand of Illusion")
