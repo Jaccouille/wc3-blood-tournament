@@ -40,7 +40,9 @@ public class PlayerData
 
     function addDummyPlayer(player dummyPlayer)
         SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_PASSIVE, true)
-        SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_SHARED_VISION, true)
+        // SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_SHARED_VISION, true)
+        SetPlayerAlliance(dummyPlayer, _p, ALLIANCE_PASSIVE, true)
+        SetPlayerAlliance(dummyPlayer, _p, ALLIANCE_SHARED_VISION, true)
 
         dummyPlayers.forEach() (player t) ->
             SetPlayerAlliance(dummyPlayer, t, ALLIANCE_PASSIVE, true)
@@ -50,7 +52,8 @@ public class PlayerData
         dummyPlayers.push(dummyPlayer)
 
         dummyPlayer.setColor(_p.getColor())
-        dummyPlayer.setName(_p.getName() + " " + dummyPlayer.getId().toString())
+        dummyPlayer.setName(_p.getName())
+        // dummyPlayer.setName(_p.getName() + " " + dummyPlayer.getId().toString())
         dummyToTruePlayerMap.put(dummyPlayer, _p)
 
     function removeDummyPlayers()
