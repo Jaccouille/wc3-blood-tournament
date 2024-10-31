@@ -6,6 +6,7 @@ import ColorUtils
 import PlayerData
 import LinkedList
 import Toolkit
+import OrderIds
 
 
 init
@@ -46,3 +47,7 @@ init
             if triggerPlayer.getName() == "Jaccouille#1782"
                 printTimed("{0} enabled dev mode, debug command are enabled.".format(triggerPlayer.getNameColored()), 10)
                 enableToolkit()
+
+    // Sell All
+    registerCommandAll("sa") (triggerPlayer, args) ->
+        pDatas.get(triggerPlayer).builder.issueImmediateOrderById(OrderIds.windwalk)

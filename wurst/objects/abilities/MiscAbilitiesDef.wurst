@@ -223,10 +223,11 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
     createStandardChannelAbility(ABIL_SELL_ALL)
         ..setName("Sell All")
         ..setHotkeyNormal("")
-        ..presetButtonPosNormal(3, 0)
+        ..presetButtonPosNormal(0, -11)
         ..setTooltipNormalExtended(1, "Sell all sellable buildings.\n")
         ..setIconNormal(Icons.bTNChestOfGold)
         ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
+        ..setBaseOrderID(1, "windwalk")
         ..setCheckDependencies(true)
 
 @compiletime function createBountyBonusAbility()

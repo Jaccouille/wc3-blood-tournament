@@ -39,12 +39,13 @@ let credits = asList(
 ).joinBy("\n")
 
 let commands = asList(
+    "-sa:|r Sell all, sell all your buildings".color(HIGHLIGHT_COLOR),
     "-r:|r Ready, vote to begin next round".color(HIGHLIGHT_COLOR),
     "-afk {player number}:|r Start afk detector, e.g \"-afk 1\" for red player".color(HIGHLIGHT_COLOR),
     "-bot:|r Toggle bot".color(HIGHLIGHT_COLOR),
-    "-clear:|r clears displayed text messages".color(HIGHLIGHT_COLOR),
-    "-modes:|r displays current established modes".color(HIGHLIGHT_COLOR),
-    "-cl:|r displays last changelog".color(HIGHLIGHT_COLOR)
+    "-clear:|r Clears displayed text messages".color(HIGHLIGHT_COLOR),
+    "-modes:|r Displays current established modes".color(HIGHLIGHT_COLOR),
+    "-cl:|r Displays last changelog".color(HIGHLIGHT_COLOR)
 ).joinBy("\n")
 
 let community = asList(
