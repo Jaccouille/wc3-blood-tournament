@@ -187,6 +187,13 @@ import LocalAssets
         ..presetManaCost(_ -> 100)
         ..presetAreaofEffect(_ -> 200)
         ..setNameEnhance("Z", "Acid Bomb")
+        ..presetTargetsAllowed(_ -> commaList(
+            TargetsAllowed.enemies,
+            TargetsAllowed.ground,
+            TargetsAllowed.air,
+            TargetsAllowed.organic
+            )
+        )
         ..tooltipStopListen(false)
 
     createAutoCastedEnemyAbility(ABIL_AUTOCAST_ACID_BOMB)
