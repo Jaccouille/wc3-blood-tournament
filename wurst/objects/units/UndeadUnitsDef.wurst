@@ -407,11 +407,11 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.heroLich)
 
 @compiletime function createBanshee()
-    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_ANTI_MAGIC_SHELL))
+    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_FROST_ARMOR))
     createSpawnedUnit(UNIT_BANSHEE, UnitIds.banshee, BUILDING_BANSHEE)
         ..setRace(Race.Undead)
-        ..setNormalAbilities(commaList(ABIL_ANTI_MAGIC_SHELL, ABIL_AUTOCAST_ANTI_MAGIC_SHELL))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_ANTI_MAGIC_SHELL))
+        ..setNormalAbilities(commaList(ABIL_FROST_ARMOR))
+        ..setDefaultActiveAbility(commaList(ABIL_FROST_ARMOR))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 

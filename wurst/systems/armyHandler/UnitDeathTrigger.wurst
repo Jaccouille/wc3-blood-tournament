@@ -31,16 +31,17 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
         or dyingUnit.getTypeId() == UNIT_PALADIN_3)
         and killer.getOwner() != players[PLAYER_NEUTRAL_AGGRESSIVE]
         doAfter(1) ->
-            // if roundController.currentRound.
-            flashEffect(Abilities.resurrecttarget, dyingUnit.getPos())
-            let u = createUnit(dyingUnit.getOwner(), UNIT_GHOST_PALADIN,
-                dyingUnit.getPos(), dyingUnit.getFacingAngle())
-            ..issuePointOrder("attack", CENTER)
-            if u == null
-                Log.debug("Unknown unit spawned for" +
-                dyingUnit.getOwner().getTruePlayerFromDummy().getName())
-            else
-                pData.spawnedUnits.push(u)
+            // Only way I found to detect death by incinerate (unit explode)
+            if dyingUnit.getPos() != vec2(0, 0)
+                flashEffect(Abilities.resurrecttarget, dyingUnit.getPos())
+                let u = createUnit(dyingUnit.getOwner(), UNIT_GHOST_PALADIN,
+                    dyingUnit.getPos(), dyingUnit.getFacingAngle())
+                ..issuePointOrder("attack", CENTER)
+                if u == null
+                    Log.debug("Unknown unit spawned for" +
+                    dyingUnit.getOwner().getTruePlayerFromDummy().getName())
+                else
+                    pData.spawnedUnits.push(u)
 
     else if dyingUnit.getTypeId() == UNIT_GHOST_PALADIN
         flashEffect(Abilities.holyBoltSpecialArt, dyingUnit.getPos())

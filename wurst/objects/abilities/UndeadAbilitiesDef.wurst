@@ -30,7 +30,7 @@ let DEATH_COIL_TARGET_COUNT = 3
     var lumberCost = 100
     var itm = createBasicItem(ITEM_UNHOLY_FRENZY)
         ..setItemCost(goldCost, lumberCost, 1, bansheeCount, bansheeCount)
-        ..setNameEnhance("Z", "Replace 1 Anti-Magic Shell with 1 Unholy Frenzy")
+        ..setNameEnhance("Z", "Replace 1 Frost Armor with 1 Unholy Frenzy")
         ..setInterfaceIcon(Icons.bTNUnholyFrenzy)
 
     var tgen = new BTAbilityTooltipGenerator("Increases the attack rate of a " +
@@ -65,6 +65,14 @@ let DEATH_COIL_TARGET_COUNT = 3
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_UNHOLY_FRENZY, tgen.generateFullTooltip())
 
+
+    goldCost = 0
+    lumberCost = 50
+    itm = createBasicItem(ITEM_ANTI_MAGIC_SHELL)
+        ..setItemCost(goldCost, lumberCost, 1, bansheeCount, bansheeCount)
+        ..setNameEnhance("X", "Replace 1 Frost Armor with 1 Anti-Magic Shell")
+        ..setInterfaceIcon(Icons.bTNAntiMagicShell)
+
     tgen = new BTAbilityTooltipGenerator("Creates a barrier that block spell " +
         "and magic damage from affecting a target unit.")
     new AbilityDefinitionAntimagicShieldcreep(ABIL_ANTI_MAGIC_SHELL)
@@ -85,6 +93,8 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetCooldown(_ -> 2)
         ..presetDurationNormal(_ -> 90)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
         ..presetCastRange(_ -> 500)
         ..setNameEnhance("X", "Anti-Magic Shell")
@@ -92,6 +102,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setIconNormal(Icons.bTNAntiMagicShell)
         ..setIconTurnOff(Icons.bTNAntiMagicShell)
 
+    tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_ANTI_MAGIC_SHELL, tgen.generateFullTooltip())
 
 
@@ -110,7 +121,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..presetArmorBonus(_ -> 4)
+        ..presetArmorBonus(_ -> 3)
         ..presetArmorDuration(_ -> 30)
         ..addTooltipProperty("Attack Speed Reduction", _ -> "25%")
         ..addTooltipProperty("Movement Speed Reduction", _ -> "50%")
@@ -118,8 +129,8 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetCooldown(_ -> 4)
         ..presetManaCost(_ -> 50)
         ..setNameEnhance("X", "Frost Armor")
-        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
-        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        // ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        // ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)

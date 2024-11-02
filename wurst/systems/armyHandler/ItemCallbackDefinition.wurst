@@ -328,6 +328,15 @@ init
         increaseUnitBounty(u, ITEM_FROST_ARMOR)
     itemModifyUnitMap.put(ITEM_FROST_ARMOR, frostArmorAction)
 
+    let antiMagicShellAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.removeAbility(ABIL_FROST_ARMOR)
+        u.addAbility(ABIL_AUTOCAST_ANTI_MAGIC_SHELL)
+        u.addAbility(ABIL_ANTI_MAGIC_SHELL)
+        u.issueImmediateOrderById(OrderIds.innerfireon)
+        increaseUnitBounty(u, ITEM_ANTI_MAGIC_SHELL)
+    itemModifyUnitMap.put(ITEM_ANTI_MAGIC_SHELL, antiMagicShellAction)
+
     let raiseSkeletonMageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.removeAbility(ABIL_RAISE_SKELETON)
