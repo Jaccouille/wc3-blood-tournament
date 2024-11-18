@@ -11,7 +11,7 @@ buildMapData:
   scenarioData:
     description: "Released on 30 April 2024\n    A Blood tournament map featuring\
       \ Human, Orc, Undead and Night Elf faction.      \nCan be played solo against\
-      \ bots.\nSee more on https://www.hiveworkshop.com/threads/blood-tournament-reloaded.353051/"
+      \ bots.\n    See more on |cffffd700https://www.hiveworkshop.com/threads/blood-tournament-reloaded.353051/"
     suggestedPlayers: '8'
     loadingScreen:
       title: Jaccouille presents
