@@ -1,62 +1,43 @@
 # TODO
-- Unit replace army pts (check all)
 
 ## to validate
+- Adding vote to change gameconfig
+
+- Uther respawn effect in middle???
 - Ready vote failed, don't display message when round start
-- End game bot controller
-- Round mode doesn't work
-- Mountain giant
-- vote to put afk player to bot
-- check if player has ordered race picker or builder after x seconds
-- Thx for playing message + feedback on hiveworkshop...
-- Building copy unit stats
-- Give blood at round end
-- Frenzy to owlbear
-- Remove fortified armor
-- Arrow + textag to explain spawn position
-- Use upgrade to disable abilities
-- Gut crawler
-- Attack icon on building
-- Healing reduction data pointer
-- Vampire too weak
-- Unholy aura rege
-- adjust damage table
-- Displace unit
-- Wrong winner in final
-- wrong round winner
-- nerf abom
-- Explain vampire blood harvest computing in tooltip
-- move order disables bot
-- allows multiple mode on 1 line
-- unholy regen 5 + 1%
-- tourny manager position
-- Enable builder abil round 1
-- entangling root
-- building mana
+
+- Custom abilities UI
+    - Retour a la ligne
+    - tooltip padding
 
 ## to add
-- Convert orb of blood to mdx
 - Review all tooltip, set a norm to respect
-- Adding abilities should add army pts
+- There's a typo in the knockout stage it says "Demi Finals" not sure if intended.
+- Display some unit information like "Ghost unit" on the front panel
 
-- Display abilities data somewhere on unit so ppl can learn by selecting them
+
+- Banshee first ability frost armor
+- Paladin death rework
 
 - Elim Dummy player
-
+- bug elim round
 - bug vote
 
-- Try to display unit in final
 
-- Unit info panel
 - Make a save load army template in a textbook
 
-- Study autocast behavior priority
-- REwork spellbreaker
+-r 5 -hm 0 -dm 2 -sb 100000 -sg 100000 -d
 
--r 0 -hm 0 -dm 2 -sb 10000 -sg 100000 -d
-
+-mb -sb 10000 -sg 100000 -d
 
 ## Not important
+
+- Convert orb of blood to mdx
+- Study autocast behavior priority
+- Try to display unit in final - Impossible
+- tourny manager position
+
+
 - Fire arrow (potm)
 - Compute lvl similar to what power is in heroes of might and magic
 - Fix necro, null damage + skeleton pushes item to lich
