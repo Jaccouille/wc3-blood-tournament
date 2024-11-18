@@ -17,6 +17,7 @@ import ItemObjEditingCommon
 import LocalObjectIDs
 import TooltipsUtils
 import UnitTooltipGenerator
+import BTAbilities
 
 public constant STANDARD_PROJECTILE_SPEED = 1500
 
@@ -444,6 +445,14 @@ public class BTUnitDefinition extends UnitDefinition
     function setUnitSoundSetExt(string data)
         this.setUnitSoundSet(data)
         this.buildingDef.setUnitSoundSet(data)
+
+    function registerCustomPanelAbilityTooltip(int abilId)
+        abilTooltipToDisplay.saveInt(this.newId, 0, abilId)
+
+    function registerCustomPanelAbilityTooltip(LinkedList<int> abilityIds)
+        for idx = 0 to abilityIds.size() - 1
+            let abilId = abilityIds.get(idx)
+            abilTooltipToDisplay.saveInt(this.newId, idx, abilId)
 
 
 public function UnitOrBuildingOrHeroDefinition.setNameEnhance(string hotkey, string name)

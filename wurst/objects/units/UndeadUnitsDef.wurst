@@ -48,6 +48,7 @@ import UnitTooltipGenerator
         ..setRace(Race.Undead)
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
+        ..registerCustomPanelAbilityTooltip(ABIL_INFECTION)
         ..setNormalAbilities(commaList(ABIL_INFECTION))
         ..tooltipStartListen()
 
@@ -109,6 +110,7 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_BURNING_ARCHER, UnitIds.burningarcher, BUILDING_BURNING_ARCHER)
         ..setRace(Race.Undead)
         // ..registerItemDef(itmBurning, ItemModifierType.Replace)
+        ..registerCustomPanelAbilityTooltip(ABIL_BURNING_ARROW)
         ..setNormalAbilities(commaList(ABIL_BURNING_ARROW, ABIL_DMG_MINUS_7))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -127,6 +129,7 @@ import UnitTooltipGenerator
         // ..setItemCostReplacement(0, 1000, 10, 1, 1, BUILDING_SKELETAL_ARCHER)
 
         ..setNameEnhance("Z", "Burning Archer")
+        ..tooltipStopListen()
         // ..tooltipStopListen(true, itmBurning)
         ..setMana(0)
         ..setIconGameInterfaceExt(Icons.bTNFlamingArrows)
@@ -140,6 +143,7 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_FROST_ARCHER, UnitIds.skeletalmarksman, BUILDING_FROST_ARCHER)
         ..setRace(Race.Undead)
         // ..registerItemDef(itmFrost, ItemModifierType.Replace)
+        ..registerCustomPanelAbilityTooltip(ABIL_FROST_ARROW)
         ..setDefaultActiveAbility(commaList(ABIL_FROST_ARROW))
         ..setNormalAbilities(commaList(ABIL_FROST_ARROW))
         ..registerTooltipGenerator(tooltip)
@@ -159,6 +163,7 @@ import UnitTooltipGenerator
         // ..setItemCostReplacement(0, 1000, 10, 1, 1, BUILDING_SKELETAL_ARCHER)
 
         ..setNameEnhance("X", "Frost Archer")
+        ..tooltipStopListen()
 
         // ..tooltipStopListen(true, itmFrost)
         ..setMana(0)
@@ -201,6 +206,7 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_NECROMANCER, UnitIds.necromancer, BUILDING_NECROMANCER)
         ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
+        ..registerCustomPanelAbilityTooltip(ABIL_RAISE_SKELETON)
         ..setNormalAbilities(commaList(ABIL_RAISE_SKELETON))
         ..setDefaultActiveAbility(commaList(ABIL_RAISE_SKELETON))
         ..tooltipStartListen()
@@ -237,10 +243,12 @@ import UnitTooltipGenerator
 
 
     tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_RAISE_SKELETON_ORC))
+        abilTooltipMap.get(ABIL_RAISE_SKELETON_ORC)  + "\n\n" +
+        abilTooltipMap.get(ABIL_CRIPPLE))
     createSpawnedUnit(UNIT_SPECTRAL_SAGE, UnitIds.kelthuzadnecro, BUILDING_SPECTRAL_SAGE)
         ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_RAISE_SKELETON_ORC, ABIL_CRIPPLE_ORB))
         ..setNormalAbilities(commaList(ABIL_RAISE_SKELETON_ORC, ABIL_CRIPPLE_ORB))
         ..setDefaultActiveAbility(commaList(ABIL_RAISE_SKELETON_ORC))
         ..tooltipStartListen()
@@ -383,6 +391,7 @@ import UnitTooltipGenerator
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_RAISE_REVENANT, ABIL_ORB_CORRUPTION, ABIL_BRILLANCE_AURA_2))
         ..setNormalAbilities(commaList(ABIL_RAISE_REVENANT, ABIL_ORB_CORRUPTION, ABIL_BRILLANCE_AURA_2))
         ..setDefaultActiveAbility(commaList(ABIL_RAISE_REVENANT))
 
@@ -410,6 +419,7 @@ import UnitTooltipGenerator
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_FROST_ARMOR))
     createSpawnedUnit(UNIT_BANSHEE, UnitIds.banshee, BUILDING_BANSHEE)
         ..setRace(Race.Undead)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_FROST_ARMOR, ABIL_ANTI_MAGIC_SHELL, ABIL_UNHOLY_FRENZY))
         ..setNormalAbilities(commaList(ABIL_FROST_ARMOR))
         ..setDefaultActiveAbility(commaList(ABIL_FROST_ARMOR))
         ..registerTooltipGenerator(tooltip)
@@ -443,6 +453,7 @@ import UnitTooltipGenerator
         )
     createSpawnedUnit(UNIT_ABOMINATION, UnitIds.abomination, BUILDING_ABOMINATION)
         ..setRace(Race.Undead)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_DISEASE_CLOUD, ABIL_CLEAVE_20))
         ..setNormalAbilities(commaList(ABIL_DISEASE_CLOUD, ABIL_CLEAVE_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -473,6 +484,7 @@ import UnitTooltipGenerator
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_CLEAVE_10))
     createSpawnedUnit(UNIT_GUT_CRAWLER, UnitIds.ghoul)
         ..setRace(Race.Undead)
+        ..registerCustomPanelAbilityTooltip(ABIL_CLEAVE_10)
         ..setNormalAbilities(commaList(ABIL_CLEAVE_10))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -501,6 +513,7 @@ import UnitTooltipGenerator
     )
     createSpawnedUnit(UNIT_VAMPIRE, UnitIds.dreadlord, BUILDING_VAMPIRE)
         ..setRace(Race.Undead)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_EVASION_10, ABIL_BLOOD_HARVEST))
         ..setNormalAbilities(commaList(ABIL_EVASION_10, ABIL_BLOOD_HARVEST))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -535,6 +548,8 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_VAMPIRE_LORD, UnitIds.dreadlord, BUILDING_VAMPIRE_LORD)
         ..setRace(Race.Undead)
         // ..registerItemDef(itm, ItemModifierType.Addition)
+
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CARRION_SWARM, ABIL_EVASION_20, ABIL_BLOOD_HARVEST))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_CARRION_SWARM))
         ..setNormalAbilities(commaList(ABIL_CARRION_SWARM, ABIL_AUTOCAST_CARRION_SWARM, ABIL_BLOOD_HARVEST, ABIL_EVASION_20))
         ..registerTooltipGenerator(tooltip)
@@ -570,6 +585,7 @@ import UnitTooltipGenerator
     )
     createSpawnedUnit(UNIT_DEATH_KNIGHT, UnitIds.deathknight, BUILDING_DEATH_KNIGHT)
         ..setRace(Race.Undead)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_AFFLICTION, ABIL_UNHOLY_AURA_PERCENT))
         ..setNormalAbilities(commaList(
             ABIL_AFFLICTION,
             ABIL_AUTOCAST_AFFLICTION

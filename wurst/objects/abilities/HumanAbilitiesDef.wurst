@@ -66,6 +66,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetCooldown(_ -> 2)
         ..presetManaCost(_ -> 50)
         ..presetCastRange(_ -> 700)
+        ..applyTooltip()
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..setBuffs(1, ARMOR_BLESSING_BUFF.toRawCode())
@@ -106,6 +107,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetManaCost(_ -> 50)
         ..presetCastRange(_ -> 700)
         ..setBuffs(1, WEAPON_BLESSING_BUFF.toRawCode())
+        ..applyTooltip()
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
@@ -118,24 +120,27 @@ let SLOW_TARGET_COUNT = 2
         "dealing bonus damage to them."
         )
     let abilIdAbolishMagic = ABIL_ID_GEN.next()
-    new AbilityDefinitionOrbofLightning(ABIL_ABOLISH_MAGIC_ORB)
+    let abilAbolishMagicOrb = new AbilityDefinitionOrbofLightning(ABIL_ABOLISH_MAGIC_ORB)
         ..setMissileArt(Abilities.priestMissile)
         ..setEnabledAttackIndex(1, 0)
         ..presetChanceToHitUnits(_ -> 0)
         ..presetChanceToHitSummons(_ -> 100)
         ..setArtTarget("")
         ..setEffectAbility(1, abilIdAbolishMagic.toRawCode())
+        ..setIconNormal(Icons.bTNDispelMagic)
         ..setDamageBonus(1, 0)
+        ..setNameEnhance("Z", "Abolish Magic")
 
     new AbilityDefinitionAbolishMagic(abilIdAbolishMagic)
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
+        ..presetManaCost(_ -> 0)
+        ..presetCastRange(_ -> 900)
         ..tooltipStartListen()
         ..presetSummonedUnitDamage(_ -> 150)
-        ..presetManaCost(_ -> 0)
         ..presetCooldown(_ -> 4)
-        ..presetCastRange(_ -> 900)
         ..setNameEnhance("Z", "Abolish Magic")
+        ..applyTooltip(abilAbolishMagicOrb)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_ABOLISH_MAGIC_ORB, tgen.generateFullTooltip())
@@ -182,10 +187,11 @@ let SLOW_TARGET_COUNT = 2
         "by the mage will spawn a Ghost."
         )
     let abilId = ABIL_ID_GEN.next()
-    new AbilityDefinitionOrbofDarkness(ABIL_ORB_DARKNESS)
+    let abilOrbDarkness = new AbilityDefinitionOrbofDarkness(ABIL_ORB_DARKNESS)
         ..setEnabledAttackIndex(1, 0)
         ..setEffectAbility(1, abilId.toRawCode())
         ..setDamageBonus(1, 30)
+        ..setNameEnhance("Z", "Orb of Darkness")
 
     new AbilityDefinitionOrbofDarknessBlackArrow(abilId)
         ..registerTooltipGenerator(tgen)
@@ -194,6 +200,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetDamageBonus(_ -> 30)
         ..presetNumberofSummonedUnits(_ -> 1)
         ..setNameEnhance("Z", "Orb of Darkness")
+        ..applyTooltip(abilOrbDarkness)
         ..addTooltipProperty("", _ -> "")
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
@@ -236,7 +243,7 @@ let SLOW_TARGET_COUNT = 2
     + "which cause damage over time, prevent the casting of spells, "
     + "and reduce attack damage. Replaces slow."
     )
-    new AbilityDefinitionFirelordSoulBurn(ABIL_SOUL_BURN)
+    let abilSoulBurn = new AbilityDefinitionFirelordSoulBurn(ABIL_SOUL_BURN)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
         ..setDummyAbility()
@@ -255,6 +262,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetManaCost(_ -> 80)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 5)
+        ..applyTooltip(abilSoulBurn)
         ..addTooltipProperty("", _ -> "")
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
@@ -289,7 +297,7 @@ let SLOW_TARGET_COUNT = 2
     "Blasts enemy units around a target enemy unit with a " +
     "wave of damaging frost that slows movement and attack rate. Replaces slow."
     )
-    new AbilityDefinitionFrostNovacreep(ABIL_FROST_NOVA)
+    let abilFrostNova = new AbilityDefinitionFrostNovacreep(ABIL_FROST_NOVA)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
         ..setDummyAbility()
@@ -310,6 +318,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetManaCost(_ -> 125)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 5)
+        ..applyTooltip(abilFrostNova)
         ..addTooltipProperty("", _ -> "")
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
@@ -323,7 +332,7 @@ let SLOW_TARGET_COUNT = 2
         "in a target area. Does not stack with other blizzard."
     )
 
-    new AbilityDefinitionBlizzardcreep(ABIL_BLIZZARD)
+    let abilBlizzard = new AbilityDefinitionBlizzardcreep(ABIL_BLIZZARD)
         ..setAnimationNames("stand,victory")
         ..setHeroAbility(false)
         ..setLevels(1)
@@ -348,6 +357,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetCastRange(_ -> 800)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 30)
+        ..applyTooltip(abilBlizzard)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_BLIZZARD, tgen.generateFullTooltip())
@@ -435,6 +445,7 @@ let SLOW_TARGET_COUNT = 2
         ..addTooltipProperty("Damage Taken", _ -> "35%")
         // ..addTooltipProperty("Movement Speed Reduced", _ -> "30%")
         ..setNameEnhance("Z", "Magic Defend")
+        ..setIconNormal(Icons.bTNSpellBreakerMagicDefend)
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
@@ -478,6 +489,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetDurationNormal(_ -> 5)
         ..setNameEnhance("Z", "Holy Blade")
         ..tooltipStopListen(true)
+        ..setIconNormal(Icons.bTNArcaniteMelee)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.ground))
         ..setBuffs(1, commaList(BUFF_BURN_ID_STACK, BUFF_BURN_ID_NON_STACK))
 
@@ -528,7 +540,7 @@ let SLOW_TARGET_COUNT = 2
         "Inspires nearby troops, regenerating their hit points every " +
         "seconds over the duration."
     )
-    new AbilityDefinitionRoar(ABIL_INSPIRE)
+    let inspire = new AbilityDefinitionRoar(ABIL_INSPIRE)
         ..setHeroAbility(false)
         ..setLevels(1)
         ..setDamageIncrease(1, 0)
@@ -543,6 +555,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetCooldown(_ -> 0)
         ..setBuffs(1, BUFF_INSPIRE_ID.toRawCode())
         ..setNameEnhance("Z", "Inspire")
+        ..setIconNormal(Icons.bTNInnerFire)
         ..tooltipStopListen(false)
 
     createAutoCastedEnemyAbility(ABIL_AUTOCAST_INSPIRE)
@@ -551,6 +564,7 @@ let SLOW_TARGET_COUNT = 2
         ..presetManaCost(_ -> 100)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 20)
+        ..applyTooltip(inspire)
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)

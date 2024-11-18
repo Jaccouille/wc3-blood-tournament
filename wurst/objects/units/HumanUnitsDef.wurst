@@ -17,6 +17,7 @@ import LinkedList
 @compiletime function createFootman()
     var tooltip = new UnitTooltipGenerator("Basic melee unit")
     createSpawnedUnit(UNIT_FOOTMAN, UnitIds.footman, BUILDING_FOOTMAN)
+        ..registerCustomPanelAbilityTooltip(ABIL_DEFEND)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -42,6 +43,7 @@ import LinkedList
     )
     let itm = createBasicItem(ITEM_CAPTAIN)
     createSpawnedUnit(UNIT_CAPTAIN, UnitIds.thecaptain)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_DEFEND, ABIL_MELEE_AURA_FLAT_10))
         ..setNormalAbilities(commaList(ABIL_MELEE_AURA_FLAT_10))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
@@ -139,6 +141,7 @@ import LinkedList
     )
     // itm = createBasicItem(ITEM_SNIPER)
     createSpawnedUnit(UNIT_SNIPER, UnitIds.rifleman, BUILDING_SNIPER)
+        ..registerCustomPanelAbilityTooltip(ABIL_CRITICAL_STRIKE_40)
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_40))
         // ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
@@ -199,6 +202,11 @@ import LinkedList
     )
 
     createSpawnedUnit(UNIT_PRIEST, UnitIds.priest, BUILDING_PRIEST)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_HEAL,
+            ABIL_ABOLISH_MAGIC_ORB,
+            ABIL_WEAPON_BLESSING,
+            ABIL_ARMOR_BLESSING))
         ..setNormalAbilities(commaList(ABIL_HEAL, ABIL_ABOLISH_MAGIC_ORB))
         ..setDefaultActiveAbility(commaList(ABIL_HEAL))
         ..registerTooltipGenerator(tooltip)
@@ -230,6 +238,7 @@ import LinkedList
         "Note: Priest items will be refunded as this unit only cast spell steal.".color(GENERAL_COLOR)
         )
     createSpawnedUnit(UNIT_SPELL_BREAKER, UnitIds.spellbreaker, BUILDING_SPELL_BREAKER)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_SPELL_STEAL, ABIL_MAGIC_DEFEND))
         ..setNormalAbilities(commaList(ABIL_SPELL_STEAL))
         ..setDefaultActiveAbility(commaList(ABIL_SPELL_STEAL))
         ..registerTooltipGenerator(tooltip)
@@ -265,6 +274,7 @@ import LinkedList
     )
 
     createSpawnedUnit(UNIT_KNIGHT, UnitIds.knight, BUILDING_KNIGHT)
+        ..registerCustomPanelAbilityTooltip(ABIL_BASH_20)
         ..setNormalAbilities(commaList(ABIL_BASH_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -295,6 +305,11 @@ import LinkedList
     )
     // var itm = createBasicItem(ITEM_CRUSADER)
     createSpawnedUnit(UNIT_CRUSADER, UnitIds.knight, BUILDING_CRUSADER)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_MAGIC_ARMOR_50,
+            ABIL_HOLY_BLADE,
+            ABIL_BASH_30
+        ))
         ..setNormalAbilities(commaList(
             ABIL_MAGIC_ARMOR_50,
             ABIL_HOLY_BLADE,
@@ -337,6 +352,7 @@ import LinkedList
 
     let itm = createBasicItem(ITEM_MARSHALL)
     createSpawnedUnit(UNIT_MARSHALL, UnitIds.lordgarithos)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CLEAVE_30, ABIL_MAGIC_ARMOR_50))
         ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_MAGIC_ARMOR_50))
         ..setDefaultActiveAbility(commaList(""))
         ..registerItemDef(itm, ItemModifierType.Addition)
@@ -370,6 +386,11 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     )
     return createSpawnedUnit(paladinId, UnitIds.paladin)
             ..registerTooltipGenerator(tooltip)
+            ..registerCustomPanelAbilityTooltip(asList(
+                ABIL_BASH_30,
+                ABIL_DEVOTION_AURA_2,
+                ABIL_INSPIRE
+            ))
             // ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_DEVOTION_AURA_2))
             ..setNormalAbilities(commaList(ABIL_BASH_30, ABIL_DEVOTION_AURA_2))
             ..tooltipStartListen()
@@ -461,6 +482,14 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     )
 
     createSpawnedUnit(UNIT_SORCERESS, UnitIds.sorceress, BUILDING_SORCERESS)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_SLOW,
+            ABIL_ORB_FROST,
+            ABIL_FROST_NOVA,
+            ABIL_INCINERATE,
+            ABIL_SOUL_BURN,
+            ABIL_ORB_DARKNESS
+            ))
         ..setNormalAbilities(commaList(ABIL_SLOW))
         ..setDefaultActiveAbility(commaList(ABIL_SLOW))
         ..registerTooltipGenerator(tooltip)
@@ -497,6 +526,10 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     )
     let itm = createBasicItem(ITEM_COURT_ENCHANTRESS)
     createSpawnedUnit(UNIT_COURT_ENCHANTRESS, UnitIds.jaina)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_BLIZZARD,
+            ABIL_BRILLANCE_AURA_2,
+            ABIL_MANA_SHIELD))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..setNormalAbilities(commaList(
             ABIL_AUTOCAST_BLIZZARD,

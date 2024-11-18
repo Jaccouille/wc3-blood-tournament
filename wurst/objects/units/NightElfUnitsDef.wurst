@@ -14,7 +14,7 @@ import UnitTooltipGenerator
 import LinkedList
 
 @compiletime function createTreant()
-    var tooltip = new UnitTooltipGenerator("Footman Desc")
+    var tooltip = new UnitTooltipGenerator("")
     createSpawnedUnit(UNIT_TREANT, UnitIds.forceofnature, BUILDING_TREANT)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -68,6 +68,7 @@ import LinkedList
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_MULTISHOT_1))
     createSpawnedUnit(UNIT_NE_RANGER, UnitIds.shandris, BUILDING_NE_RANGER)
+        ..registerCustomPanelAbilityTooltip(ABIL_MULTISHOT_1)
         ..setNormalAbilities(commaList(ABIL_MULTISHOT_1))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -99,6 +100,7 @@ import LinkedList
         )
     createSpawnedUnit(UNIT_DRYAD, UnitIds.dryad, BUILDING_DRYAD)
         ..registerTooltipGenerator(tooltip)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_POISON_SPEAR, ABIL_ABOLISH_MAGIC, ABIL_REJUVENATION))
         ..setNormalAbilities(commaList(
             ABIL_POISON_SPEAR,
             ABIL_ABOLISH_MAGIC
@@ -134,6 +136,7 @@ import LinkedList
     let itm = createBasicItem(ITEM_KEEPER_OF_THE_GROVE)
     createSpawnedUnit(UNIT_KEEPER_OF_THE_GROVE, UnitIds.keeperofthegrove)
         ..registerItemDef(itm, ItemModifierType.Addition)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_PARASITE_SEED, ABIL_THORN_AURA))
         ..setNormalAbilities(commaList(
             ABIL_PARASITE_SEED,
             ABIL_THORN_AURA
@@ -197,6 +200,7 @@ import LinkedList
     )
     createSpawnedUnit(UNIT_DRUID_TALON, UnitIds.druidofthetalon, BUILDING_DRUID_TALON)
         ..registerTooltipGenerator(tooltip)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_FAERIE_FIRE, ABIL_WAND_OF_ILLUSION, ABIL_ENTANGLING_ROOT))
         ..setNormalAbilities(commaList(ABIL_FAERIE_FIRE))
         ..setDefaultActiveAbility(commaList(ABIL_FAERIE_FIRE))
         ..tooltipStartListen()
@@ -232,6 +236,7 @@ import LinkedList
     createSpawnedUnit(UNIT_DRUID_CLAW, UnitIds.druidoftheclaw, BUILDING_DRUID_CLAW)
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_DRUID_FRENZY, ABIL_CLEAVE_10))
         ..setNormalAbilities(commaList(ABIL_DRUID_FRENZY, ABIL_CLEAVE_10))
         // ..setDefaultActiveAbility(commaList(ABIL_DRUID_FRENZY))
         ..registerTooltipGenerator(tooltip)
@@ -266,6 +271,7 @@ import LinkedList
     var itm = createBasicItem(ITEM_BEAR)
     createSpawnedUnit(UNIT_BEAR, UnitIds.druidoftheclawmorphed)
         ..registerItemDef(itm, ItemModifierType.Replace)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_ROAR, ABIL_BASH_20, ABIL_HARDENED_SKIN_15))
         ..setNormalAbilities(commaList(ABIL_ROAR, ABIL_AUTOCAST_ROAR, ABIL_BASH_20, ABIL_HARDENED_SKIN_15))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_ROAR))
         ..setRequiredAnimationNames("alternate")
@@ -300,6 +306,7 @@ import LinkedList
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
         ..registerItemDef(itm, ItemModifierType.Replace)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_DRUID_FRENZY, ABIL_CLEAVE_20, ABIL_HARDENED_SKIN_10))
         ..setNormalAbilities(commaList(
             ABIL_DRUID_FRENZY,
             ABIL_CLEAVE_20,
@@ -313,7 +320,6 @@ import LinkedList
 
         ..setArmorData(ArmorType.Large, 2)
         ..setHitPointsMaximumBase(1700)
-        ..setMana(0)
 
         ..setSpeedBase(270)
 
@@ -322,6 +328,7 @@ import LinkedList
         ..setNameEnhance("X", "Owlbear Form")
 
         ..tooltipStopListen(true, itm)
+        ..setMana(0)
 
         ..setModelFileExt(Units.owlbear)
         ..setIconGameInterfaceExt(Icons.bTNOwlBear)
@@ -333,6 +340,7 @@ import LinkedList
         abilTooltipMap.get(ABIL_CLEAVE_20)
         )
     createSpawnedUnit(UNIT_MOUNTAIN_GIANT, UnitIds.mountaingiant, BUILDING_MOUNTAIN_GIANT)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_TAUNT, ABIL_CLEAVE_20))
         ..setNormalAbilities(commaList(
             ABIL_TAUNT,
             ABIL_CLEAVE_20,
@@ -367,6 +375,7 @@ import LinkedList
 @compiletime function createWarden()
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_TERRIFY_ORB))
     createSpawnedUnit(UNIT_SPECTRE, UnitIds.vengeance, BUILDING_SPECTRE)
+        ..registerCustomPanelAbilityTooltip(ABIL_TERRIFY_ORB)
         ..setNormalAbilities(commaList(ABIL_TERRIFY_ORB))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -397,6 +406,7 @@ import LinkedList
     let itm = createBasicItem(ITEM_AVATAR_OF_VENGEANCE)
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_TERROR_AURA))
     createSpawnedUnit(UNIT_AVATAR_OF_VENGEANCE, UnitIds.spiritofvengeance, BUILDING_AVATAR_OF_VENGEANCE)
+        ..registerCustomPanelAbilityTooltip(ABIL_TERROR_AURA)
         ..setNormalAbilities(commaList(ABIL_TERROR_AURA))
         ..setDefaultActiveAbility(commaList(ABIL_TERROR_AURA))
         ..registerItemDef(itm, ItemModifierType.Addition)
@@ -437,6 +447,7 @@ import LinkedList
     let itm = createBasicItem(ITEM_PRIESTESS_OF_THE_MOON)
     createSpawnedUnit(UNIT_PRIESTESS_OF_THE_MOON, UnitIds.priestessofthemoon, BUILDING_PRIESTESS_OF_THE_MOON)
         ..registerItemDef(itm, ItemModifierType.Addition)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_STARFALL, ABIL_RANGED_AURA_15))
         ..setNormalAbilities(commaList(
             ABIL_RANGED_AURA_15,
             ABIL_AUTOCAST_STARFALL,
@@ -474,6 +485,7 @@ import LinkedList
 
     let itm = createBasicItem(ITEM_ARCHDRUID)
     createSpawnedUnit(UNIT_ARCHDRUID, UnitIds.furion)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_SUMMON_WISP, ABIL_BRILLANCE_AURA_2))
         ..setNormalAbilities(commaList(ABIL_SUMMON_WISP, ABIL_AUTOCAST_SUMMON_WISP, ABIL_BRILLANCE_AURA_2))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_SUMMON_WISP))
         ..registerItemDef(itm, ItemModifierType.Addition)
@@ -507,6 +519,7 @@ import LinkedList
         )
 
     createSpawnedUnit(UNIT_WISP, UnitIds.wisp)
+        ..registerCustomPanelAbilityTooltip(ABIL_WISP_EXPLODE)
         ..setNormalAbilities(commaList(ABIL_WISP_EXPLODE))
         ..setDefaultActiveAbility(commaList(ABIL_WISP_EXPLODE))
         ..registerTooltipGenerator(tooltip)

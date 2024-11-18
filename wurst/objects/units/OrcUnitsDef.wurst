@@ -46,6 +46,7 @@ import LinkedList
     createSpawnedUnit(UNIT_BERSERKER, UnitIds.chaosgrunt, BUILDING_BERSERKER)
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
+        ..registerCustomPanelAbilityTooltip(ABIL_CRITICAL_STRIKE_30)
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_30))
         // ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
@@ -108,6 +109,7 @@ import LinkedList
         abilTooltipMap.get(ABIL_BERSERK)
     )
     createSpawnedUnit(UNIT_TRAPPER, UnitIds.foresttrolltrapper, BUILDING_TRAPPER)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_ENSNARE, ABIL_BERSERK))
         ..setNormalAbilities(commaList(ABIL_BERSERK, ABIL_ENSNARE))
         ..setDefaultActiveAbility(commaList(ABIL_ENSNARE))
         ..registerTooltipGenerator(tooltip)
@@ -139,6 +141,7 @@ import LinkedList
         abilTooltipMap.get(ABIL_CLEAVE_20)
         )
     createSpawnedUnit(UNIT_RAIDER, UnitIds.wolfrider, BUILDING_RAIDER)
+        ..registerCustomPanelAbilityTooltip(ABIL_CLEAVE_20)
         ..setNormalAbilities(commaList(ABIL_CLEAVE_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -169,6 +172,7 @@ import LinkedList
     createSpawnedUnit(UNIT_MARAUDER, UnitIds.chaoswolfrider, BUILDING_MARAUDER)
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CLEAVE_20, ABIL_BURNING_BLADE_100))
         ..setNormalAbilities(commaList(ABIL_CLEAVE_20, ABIL_BURNING_BLADE_100, ABIL_DMG_BONUS_13))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -202,6 +206,7 @@ import LinkedList
         )
     let itm = createBasicItem(ITEM_PACK_LEADER)
     createSpawnedUnit(UNIT_PACK_LEADER, UnitIds.thrall, BUILDING_PACK_LEADER)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_MAGIC_ARMOR_50, ABIL_MELEE_AURA_FLAT_20, ABIL_BASH_30))
         ..setNormalAbilities(commaList(ABIL_MELEE_AURA_FLAT_20, ABIL_MAGIC_ARMOR_50, ABIL_BASH_30))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
@@ -233,6 +238,7 @@ import LinkedList
         abilTooltipMap.get(ABIL_DEFLECT_30)
         )
     createSpawnedUnit(UNIT_WARMONGER, UnitIds.gromhellscream, BUILDING_WARMONGER)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CRITICAL_STRIKE_60, ABIL_DEFLECT_30, ABIL_RAMPAGE))
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_60, ABIL_DEFLECT_30))
@@ -266,6 +272,7 @@ import LinkedList
         )
     let itm = createBasicItem(ITEM_KODO)
     createSpawnedUnit(UNIT_KODO, UnitIds.kotobeast)
+        ..registerCustomPanelAbilityTooltip(ABIL_DAMAGE_AURA_25)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..setNormalAbilities(commaList(ABIL_DAMAGE_AURA_25))
         ..setDefaultActiveAbility(commaList(""))
@@ -293,9 +300,15 @@ import LinkedList
 
 @compiletime function creatWitchDoctor()
     let tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_HEALING_WAVE) + "\n\n"
+        abilTooltipMap.get(ABIL_HEALING_WAVE)
         )
     createSpawnedUnit(UNIT_WITCH_DOCTOR, UnitIds.witchdoctor, BUILDING_WITCH_DOCTOR)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_HEALING_WAVE,
+            ABIL_DRUNKEN_HAZE,
+            ABIL_ACID_BOMB,
+            ABIL_MANA_WARD
+            ))
         ..setNormalAbilities(commaList(ABIL_HEALING_WAVE, ABIL_AUTOCAST_HEALING_WAVE))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_HEALING_WAVE))
         ..registerTooltipGenerator(tooltip)
@@ -326,6 +339,7 @@ import LinkedList
 @compiletime function createShaman()
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_BLOODLUST))
     createSpawnedUnit(UNIT_SHAMAN, UnitIds.shaman, BUILDING_SHAMAN)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_BLOODLUST, ABIL_ORB_LIGHTNING))
         ..setNormalAbilities(commaList(ABIL_BLOODLUST))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -362,6 +376,7 @@ import LinkedList
         abilTooltipMap.get(ABIL_EVASION_20)
     )
     createSpawnedUnit(UNIT_SPIRIT_WOLF1, UnitIds.spiritwolf2)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CRITICAL_STRIKE_30, ABIL_EVASION_20))
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_30, ABIL_EVASION_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -388,6 +403,7 @@ import LinkedList
         abilTooltipMap.get(ABIL_EVASION_30)
         )
     createSpawnedUnit(UNIT_SPIRIT_WOLF2, UnitIds.spiritwolf2)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CRITICAL_STRIKE_50, ABIL_EVASION_30))
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_50, ABIL_EVASION_30))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -416,6 +432,7 @@ import LinkedList
     )
     let itm = createBasicItem(ITEM_FARSEER)
     createSpawnedUnit(UNIT_FARSEER, UnitIds.farseer, BUILDING_FARSEER)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CHAIN_LIGHTNING, ABIL_SUMMON_SPIRIT_WOLF2, ABIL_BRILLANCE_AURA_1))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..setNormalAbilities(commaList(
             ABIL_AUTOCAST_CHAIN_LIGHTNING,
@@ -452,9 +469,10 @@ import LinkedList
 
 @compiletime function createOgre()
     var tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_OGRE_SWING) + "\n\n"
+        abilTooltipMap.get(ABIL_OGRE_SWING)
     )
     createSpawnedUnit(UNIT_OGRE, UnitIds.ogre1, BUILDING_OGRE)
+        ..registerCustomPanelAbilityTooltip(ABIL_OGRE_SWING)
         ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
         ..setNormalAbilities(commaList(ABIL_OGRE_SWING))
         ..registerTooltipGenerator(tooltip)
@@ -489,6 +507,7 @@ import LinkedList
     let ogreCount = BTBuildingData.getUnitCount(BUILDING_OGRE)
     var itm = createBasicItem(ITEM_OGRE_ARMORED)
     createSpawnedUnit(UNIT_OGRE_ARMORED, UnitIds.ogre1, BUILDING_OGRE_ARMORED)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_OGRE_SWING, ABIL_HARDENED_SKIN_10))
         ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
         ..setNormalAbilities(commaList(ABIL_OGRE_SWING, ABIL_HARDENED_SKIN_10))
         ..registerItemDef(itm, ItemModifierType.Replace)
@@ -522,6 +541,7 @@ import LinkedList
     itm = createBasicItem(ITEM_OGRE_MAGI)
     createSpawnedUnit(UNIT_OGRE_MAGI, UnitIds.ogremagi)
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_FIREBOLT))
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_MAGIC_ARMOR_50, ABIL_FIREBOLT, ABIL_HARDENED_SKIN_5))
         ..setNormalAbilities(commaList(ABIL_FIREBOLT, ABIL_AUTOCAST_FIREBOLT, ABIL_MAGIC_ARMOR_50, ABIL_HARDENED_SKIN_5))
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)

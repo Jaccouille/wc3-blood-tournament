@@ -144,6 +144,7 @@ init
     let armorBlessingAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ARMOR_BLESSING)
+        u.removeAbility(ABIL_HEAL)
         u.issueImmediateOrderById(OrderIds.innerfireon)
         increaseUnitBounty(u, ITEM_ARMOR_BLESSING)
     itemModifyUnitMap.put(ITEM_ARMOR_BLESSING, armorBlessingAction)
@@ -151,6 +152,7 @@ init
     let weaponBlessingAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_WEAPON_BLESSING)
+        u.removeAbility(ABIL_HEAL)
         u.issueImmediateOrderById(OrderIds.innerfireon)
         increaseUnitBounty(u, ITEM_WEAPON_BLESSING)
     itemModifyUnitMap.put(ITEM_WEAPON_BLESSING, weaponBlessingAction)
@@ -175,6 +177,7 @@ init
         u.addAbility(ABIL_INCINERATE_VISUAL)
         u.addAbility(ABIL_AUTOCAST_SOUL_BURN)
         u.addAbility(ABIL_SOUL_BURN)
+        u.removeAbility(ABIL_SLOW)
         u.issueImmediateOrderById(OrderIds.curseon)
         increaseUnitBounty(u, ITEM_FIRE_MAGE)
     itemModifyUnitMap.put(ITEM_FIRE_MAGE, fireMageAction)
@@ -185,6 +188,7 @@ init
         u.addAbility(ABIL_ORB_FROST)
         u.addAbility(ABIL_AUTOCAST_FROST_NOVA)
         u.addAbility(ABIL_FROST_NOVA)
+        u.removeAbility(ABIL_SLOW)
         u.issueImmediateOrderById(OrderIds.curseon)
         increaseUnitBounty(u, ITEM_ICE_MAGE)
     itemModifyUnitMap.put(ITEM_ICE_MAGE, iceMageAction)
@@ -225,6 +229,7 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ACID_BOMB)
         u.addAbility(ABIL_AUTOCAST_ACID_BOMB)
+        u.removeAbility(ABIL_HEALING_WAVE)
         u.issueImmediateOrderById(OrderIds.curseon)
         increaseUnitBounty(u, ITEM_ACID_BOMB)
     itemModifyUnitMap.put(ITEM_ACID_BOMB, acidBombAction)
@@ -233,6 +238,7 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_MANA_WARD)
         u.addAbility(ABIL_AUTOCAST_MANA_WARD)
+        u.removeAbility(ABIL_HEALING_WAVE)
         u.issueImmediateOrderById(OrderIds.rechargeon)
         increaseUnitBounty(u, ITEM_MANA_WARD)
     itemModifyUnitMap.put(ITEM_MANA_WARD, manaWardAction)
@@ -241,6 +247,7 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_DRUNKEN_HAZE)
         u.addAbility(ABIL_AUTOCAST_DRUNKEN_HAZE)
+        u.removeAbility(ABIL_HEALING_WAVE)
         u.issueImmediateOrderById(OrderIds.parasiteon)
         increaseUnitBounty(u, ITEM_DRUNKEN_HAZE)
     itemModifyUnitMap.put(ITEM_DRUNKEN_HAZE, drunkenHazeAction)
@@ -311,8 +318,7 @@ init
 
     let unholyFrenzyAction = new ItemModifierAction()
         ..addAction() (unit u) ->
-        u.removeAbility(ABIL_AUTOCAST_ANTI_MAGIC_SHELL)
-        u.removeAbility(ABIL_ANTI_MAGIC_SHELL)
+        u.removeAbility(ABIL_FROST_ARMOR)
         u.addAbility(ABIL_AUTOCAST_UNHOLY_FRENZY)
         u.addAbility(ABIL_UNHOLY_FRENZY)
         u.issueImmediateOrderById(OrderIds.innerfireon)
@@ -401,6 +407,7 @@ init
 
     let rejuvenationAction = new ItemModifierAction()
         ..addAction() (unit u) ->
+        u.removeAbility(ABIL_ABOLISH_MAGIC)
         u.addAbility(ABIL_REJUVENATION)
         u.addAbility(ABIL_AUTOCAST_REJUVENATION)
         u.issueImmediateOrderById(OrderIds.healon)
@@ -409,6 +416,7 @@ init
 
     let entanglingRootAction = new ItemModifierAction()
         ..addAction() (unit u) ->
+        u.removeAbility(ABIL_FAERIE_FIRE)
         u.addAbility(ABIL_ENTANGLING_ROOT)
         u.addAbility(ABIL_AUTOCAST_ENTANGLING_ROOT)
         u.issueImmediateOrderById(OrderIds.curseon)
@@ -417,6 +425,7 @@ init
 
     let wandOfIllusionAction = new ItemModifierAction()
         ..addAction() (unit u) ->
+        u.removeAbility(ABIL_FAERIE_FIRE)
         u.addAbility(ABIL_WAND_OF_ILLUSION)
         u.addAbility(ABIL_AUTOCAST_WAND_OF_ILLUSION)
         u.issueImmediateOrderById(OrderIds.innerfireon)

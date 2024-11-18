@@ -83,6 +83,7 @@ import LocalAssets
         ..presetCastRange(_ -> 700)
         ..setNameEnhance("Z", "Ensnare")
         ..tooltipStopListen(true)
+        ..setIconNormal(Icons.bTNEnsnare)
         ..setBuffs(1, commaList(BuffIds.ensnareAir, BuffIds.ensnareGround))
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
@@ -141,7 +142,7 @@ import LocalAssets
 
     tgen = new BTAbilityTooltipGenerator(
         "Calls forth a wave of healing energy that bounces.")
-    new AbilityDefinitionHealingWaveCreep(ABIL_HEALING_WAVE)
+    let healingWave = new AbilityDefinitionHealingWaveCreep(ABIL_HEALING_WAVE)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
         ..setDummyAbility()
@@ -159,6 +160,7 @@ import LocalAssets
         ..tooltipStartListen()
         ..registerTooltipGenerator(tgen)
         ..presetCooldown(_ -> 6)
+        ..applyTooltip(healingWave)
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
@@ -174,7 +176,7 @@ import LocalAssets
 
     tgen = new BTAbilityTooltipGenerator(
         "Decreases armor of the target and nearby enemy units.")
-    new AbilityDefinitionAlchemistAcidBomb(ABIL_ACID_BOMB)
+    let acidBomb = new AbilityDefinitionAlchemistAcidBomb(ABIL_ACID_BOMB)
         ..setLevels(1)
         ..setDummyAbility()
         ..setCheckDependencies(false)
@@ -202,6 +204,7 @@ import LocalAssets
         ..presetManaCost(_ -> 100)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 8)
+        ..applyTooltip(acidBomb)
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
@@ -218,7 +221,7 @@ import LocalAssets
 
     tgen = new BTAbilityTooltipGenerator(
         "Drenches enemy units in alcohol, silencing them and causing their attack to miss.")
-    new AbilityDefinitionBrewmasterDrunkenHaze(ABIL_DRUNKEN_HAZE)
+    let drunkenHaze = new AbilityDefinitionBrewmasterDrunkenHaze(ABIL_DRUNKEN_HAZE)
         ..setLevels(1)
         ..setDummyAbility()
         ..setCheckDependencies(false)
@@ -239,6 +242,7 @@ import LocalAssets
         ..presetManaCost(_ -> 100)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 6)
+        ..applyTooltip(drunkenHaze)
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
@@ -280,7 +284,7 @@ import LocalAssets
         ..setNameEnhance("C", "Mana Ward Aura")
         ..tooltipStopListen(false)
 
-    new AbilityDefinitionHealingWard(ABIL_MANA_WARD)
+    let manaWard = new AbilityDefinitionHealingWard(ABIL_MANA_WARD)
         ..setLevels(1)
         ..setWardUnitType(1, commaList(UNIT_MANA_WARD))
         ..presetCooldown(_ -> 0)
@@ -299,6 +303,7 @@ import LocalAssets
         ..presetManaCost(_ -> 200)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 10)
+        ..applyTooltip(manaWard)
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
@@ -327,12 +332,13 @@ import LocalAssets
         "Deals damage to summoned units."
         )
     let abilId = ABIL_ID_GEN.next()
-    new AbilityDefinitionOrbofLightning(ABIL_ORB_LIGHTNING)
+    let orbOfLightning = new AbilityDefinitionOrbofLightning(ABIL_ORB_LIGHTNING)
         ..setEnabledAttackIndex(1, 0)
         ..presetChanceToHitUnits(_ -> 30)
         ..presetChanceToHitSummons(_ -> 60)
         ..setEffectAbility(1, abilId.toRawCode())
         ..setDamageBonus(1, 30)
+        ..setNameEnhance("Z", "Orb of Lightning")
 
     new AbilityDefinitionPurgeorb(abilId)
         ..presetCastRange(_ -> 700)
@@ -345,6 +351,7 @@ import LocalAssets
         ..presetUnitPauseDuration(_ -> 1.5)
         ..presetDurationNormal(_ -> 5)
         ..setNameEnhance("Z", "Orb of Lightning")
+        ..applyTooltip(orbOfLightning)
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
@@ -381,9 +388,9 @@ import LocalAssets
         ..setAreaofEffect(1, 100)
         ..registerTooltipGenerator(tgen)
         ..setSummonedUnit(1, commaList(UNIT_SPIRIT_WOLF1))
+        ..presetManaCost(_ -> 0)
         ..tooltipStartListen()
         ..setNumberofSummonedUnits(1, 3)
-        ..presetManaCost(_ -> 0)
         ..presetDurationNormal(_ -> 45)
         ..presetCooldown(_ -> 45)
         ..setNameEnhance("Z", "Summon Spirit Wolf Pack")
@@ -394,7 +401,7 @@ import LocalAssets
 
     tgen = new BTAbilityTooltipGenerator(
         "Calls forth a bolt of lightning that deals damage and bounce.")
-    new AbilityDefinitionFarseerChainLightning(ABIL_CHAIN_LIGHTNING)
+    let chainLightning = new AbilityDefinitionFarseerChainLightning(ABIL_CHAIN_LIGHTNING)
         ..setHeroAbility(false)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
@@ -415,6 +422,7 @@ import LocalAssets
         ..presetCastRange(_ -> 700)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 5)
+        ..applyTooltip(chainLightning)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_CHAIN_LIGHTNING, tgen.generateFullTooltip())
@@ -463,7 +471,7 @@ import LocalAssets
         ..addTooltipProperty("Movement Speed Reduction", _ -> 0.5.toPercent())
         ..presetAreaofEffect(_ -> 250)
         ..presetDurationNormal(_ -> 3.)
-        ..tooltipStopListen(true)
+        ..tooltipStopListen(false)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies, TargetsAllowed.self))
         ..setName("Ogre Slam")
 
@@ -474,6 +482,7 @@ import LocalAssets
         ..tooltipStartListen()
         ..presetCooldown(_ -> 20)
         ..setNameEnhance("Z", "Ogre Swing")
+        ..setIconNormal(Icons.bTNGrabTree)
         ..tooltipStopListen(true)
         ..setTargetsAllowed(1, commaList(
             TargetsAllowed.enemies,

@@ -176,6 +176,7 @@ function createMagicResistance(int abilId, real value) returns AbilityDefinition
         ..setDeflectDamageTakenSpells(1, 0)
         ..tooltipStartListen()
         ..setName("Magic Resistance " + value.toPercent())
+        ..setIconNormal(Icons.bTNGenericSpellImmunity)
         ..tooltipStopListen()
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
     return abilDef
@@ -332,6 +333,7 @@ function createBonusDamage(int abilId, int value) returns AbilityDefinitionAttac
         ..presetDurationNormal(_ -> 4)
         ..setNameEnhance("Z", "Burning Arrow")
         ..tooltipStopListen(true)
+        ..setIconNormal(Icons.bTNFlamingArrows)
         ..presetManaCost(_ -> 0)
     abilTooltipMap.put(ABIL_BURNING_ARROW, tgen.generateFullTooltip())
 

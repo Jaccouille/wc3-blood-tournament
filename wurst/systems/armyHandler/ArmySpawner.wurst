@@ -6,9 +6,6 @@ import ClosureEvents
 import HashMap
 import LinkedList
 
-// Third party imports:
-import Lodash
-
 // Local imports:
 import GameConfig
 import GameConstants

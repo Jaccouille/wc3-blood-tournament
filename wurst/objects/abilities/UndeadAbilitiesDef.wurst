@@ -35,7 +35,7 @@ let DEATH_COIL_TARGET_COUNT = 3
 
     var tgen = new BTAbilityTooltipGenerator("Increases the attack rate of a " +
         "target unit but drains hit points.")
-    new AbilityDefinitionUnholyFrenzycreep(ABIL_UNHOLY_FRENZY)
+    let unholyFrenzy = new AbilityDefinitionUnholyFrenzycreep(ABIL_UNHOLY_FRENZY)
         ..setCheckDependencies(false)
         ..setDummyAbility()
         ..registerTooltipGenerator(tgen)
@@ -55,6 +55,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetCooldown(_ -> 3)
         ..presetCastRange(_ -> 700)
         ..presetDurationNormal(_ -> 45)
+        ..applyTooltip(unholyFrenzy)
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
@@ -75,7 +76,7 @@ let DEATH_COIL_TARGET_COUNT = 3
 
     tgen = new BTAbilityTooltipGenerator("Creates a barrier that block spell " +
         "and magic damage from affecting a target unit.")
-    new AbilityDefinitionAntimagicShieldcreep(ABIL_ANTI_MAGIC_SHELL)
+    let ams = new AbilityDefinitionAntimagicShieldcreep(ABIL_ANTI_MAGIC_SHELL)
         ..setDummyAbility()
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
@@ -93,6 +94,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetCooldown(_ -> 2)
         ..presetDurationNormal(_ -> 90)
+        ..applyTooltip(ams)
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
@@ -204,6 +206,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetCooldown(_ -> 12)
         ..presetDurationNormal(_ -> 40)
         ..setNameEnhance("Z", "Raise Skeletal Orc")
+        ..setIconNormal(Icons.bTNSkeletalOrc)
         ..tooltipStopListen(true)
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_RAISE_SKELETON_ORC, tgen.generateFullTooltip())
@@ -221,6 +224,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetCastRange(_ -> 1500)
         ..presetCooldown(_ -> 10)
         ..presetDurationNormal(_ -> 40)
+        ..setIconNormal(Icons.bTNRevenant)
         ..setNameEnhance("Z", "Raise Revenant")
         ..tooltipStopListen(true)
     abilTooltipMap.put(ABIL_RAISE_REVENANT, tgen.generateFullTooltip())
@@ -228,7 +232,7 @@ let DEATH_COIL_TARGET_COUNT = 3
     tgen = new BTAbilityTooltipGenerator(
         "Reduces attack rate and movement speed of target units. " +
         "This is an Orb effect, necromancer will still cast raise skeleton.")
-    new AbilityDefinitionOrbofSpells(ABIL_CRIPPLE_ORB)
+    let crippleOrb = new AbilityDefinitionOrbofSpells(ABIL_CRIPPLE_ORB)
         ..registerTooltipGenerator(tgen)
         ..presetDamageBonus(_ -> 0)
         ..presetChanceToHitUnits(_ -> 100)
@@ -237,6 +241,8 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetEffectAbility(_ -> commaList(ABIL_CRIPPLE))
         ..setArtTarget(Abilities.zigguratMissile)
         ..setMissileArt(Abilities.zigguratMissile)
+        ..setIconNormal(Icons.bTNCripple)
+        ..setNameEnhance("Z", "Cripple")
 
 
     goldCost = 0
@@ -256,11 +262,13 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setDamageReduction(1, 0.40)
         ..addTooltipProperty("Damage Reduction", _ -> 0.40.toPercent())
         ..presetDurationNormal(_ -> 5)
+        ..applyTooltip(crippleOrb)
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Cripple")
         ..setCooldown(1, 0)
         ..setManaCost(1, 0)
         ..setBuffs(1, commaList(BuffIds.cripple))
+
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_CRIPPLE, tgen.generateFullTooltip())
 
@@ -346,6 +354,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetDurationNormal(_ -> 0)
         ..setPercentage(1, true)
         ..setCheckDependencies(false)
+        ..setIconNormal(Icons.bTNUnholyAura)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..setAmountofHitPointsRegenerated(1, 0.01)
@@ -409,7 +418,7 @@ let DEATH_COIL_TARGET_COUNT = 3
             + " zombie upon death.")
 
     let abilId = ABIL_ID_GEN.next()
-    new AbilityDefinitionOrbofDarkness(ABIL_INFECTION)
+    let infection = new AbilityDefinitionOrbofDarkness(ABIL_INFECTION)
         ..setEnabledAttackIndex(1, 0)
         ..setEffectAbility(1, abilId.toRawCode())
         ..setTargetsAllowed(1, commaList(
@@ -418,6 +427,8 @@ let DEATH_COIL_TARGET_COUNT = 3
             ))
         ..setDamageBonus(1, 0)
         ..setTargetAttachmentPoint1("chest")
+        ..setIconNormal(Icons.bTNDalaranMutant)
+        ..setNameEnhance("Z", "Infection")
         ..setArtTarget(Units.plagueCloudTarget)
 
     new AbilityDefinitionOrbofDarknessBlackArrow(abilId)
@@ -429,6 +440,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..setDurationNormal(1, 6)
         ..setNameEnhance("Z", "Infection")
+        ..applyTooltip(infection)
         ..tooltipStopListen(true)
         ..setBuffs(1, BUFF_INFECTION.toRawCode())
 
@@ -436,7 +448,7 @@ let DEATH_COIL_TARGET_COUNT = 3
 
     tgen = new BTAbilityTooltipGenerator(
         "Sends a horde of bats to deal damage to each enemy unit in a cone.")
-    new AbilityDefinitionCarrionSwarmcreep(ABIL_CARRION_SWARM)
+    let carrionSwarm = new AbilityDefinitionCarrionSwarmcreep(ABIL_CARRION_SWARM)
         ..setCheckDependencies(false)
         ..setDummyAbility()
         ..registerTooltipGenerator(tgen)
@@ -455,6 +467,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetManaCost(_ -> 125)
         ..presetCooldown(_ -> 8)
         ..presetCastRange(_ -> 600)
+        ..applyTooltip(carrionSwarm)
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Carrion Swarm")
         ..setIconNormal(Icons.bTNCarrionSwarm)
@@ -469,7 +482,7 @@ let DEATH_COIL_TARGET_COUNT = 3
 
     tgen = new BTAbilityTooltipGenerator(
         "Sends a curse to a target that inflict damage over time and reduces attack speed.")
-    new AbilityDefinitionAlchemistAcidBomb(ABIL_AFFLICTION)
+    let affliction = new AbilityDefinitionAlchemistAcidBomb(ABIL_AFFLICTION)
         ..setLevels(1)
         ..setCheckDependencies(false)
         ..setDummyAbility()
@@ -487,6 +500,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setBuffs(1, BUFF_AFFLICTION.toRawCode())
         ..presetSecondaryDamage(_ -> 10)
         ..presetAreaofEffect(_ -> 300)
+        ..setIconNormal(Icons.bTNCurse)
         ..presetDurationNormal(_ -> 5)
         ..setNameEnhance("Z", "Affliction")
 
@@ -498,6 +512,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..presetManaCost(_ -> 125)
         ..presetCooldown(_ -> 4)
         ..presetCastRange(_ -> 800)
+        ..applyTooltip(affliction)
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Affliction")
         ..setIconNormal(Icons.bTNCurse)
@@ -517,11 +532,14 @@ let DEATH_COIL_TARGET_COUNT = 3
     tgen = new BTAbilityTooltipGenerator(
         "Spawn 2 Gut Crawlers upon death.")
     new AbilityDefinitionSpawnHydraHatchling(ABIL_SPAWN_GUT_CRAWLER)
+        ..registerTooltipGenerator(tgen)
         ..setCheckDependencies(false)
         // We create the unit through the unitDeathTrigger.wurst package
         // because we want the gut crawler to leave a corpse
+        ..tooltipStartListen()
         ..setNumberofUnits(1, 0)
         ..setUnitType(1, commaList(UNIT_GUT_CRAWLER))
+        ..tooltipStopListen()
         ..setNameEnhance("Z", "Gut Crawlers")
 
     tgen.applyToDefItem(itm)
@@ -545,7 +563,7 @@ let DEATH_COIL_TARGET_COUNT = 3
 
     tgen = new BTAbilityTooltipGenerator(
         "Gains attack damage and health points from nearby dying allied units.\n" +
-        "Bonus is based on dying unit bounty (1 bp = +1 damage and +10hp). Doesn't work on spectral and skeleton units.\n" +
+        "Bonus is based on dying unit bounty (1 bp = +1 damage and +10hp).\nDoesn't work on spectral and skeleton units.\n" +
         "Benefits only 1 vampire at a time.".color(ENERGY_COLOR)
         )
     new AbilityDefinitionAttackBonus(ABIL_BLOOD_HARVEST)
