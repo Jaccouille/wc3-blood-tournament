@@ -58,3 +58,4 @@ public function ItemDefinition.setItemCost(int goldCost, int lumberCost, int cha
     itemGoldCost.saveInt(this.getNewId(), this.getNewId(), goldCost)
     itemLumberCost.saveInt(this.getNewId(), this.getNewId(), lumberCost)
     itemCharges.saveInt(this.getNewId(), this.getNewId(), charges)
+    itemMaxStock.saveInt(this.getNewId(), this.getNewId(), maxStock)

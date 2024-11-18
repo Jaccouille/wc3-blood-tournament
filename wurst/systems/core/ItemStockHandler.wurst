@@ -22,6 +22,7 @@ public HashMap<int, LinkedList<int>> sharedStocksMap = new HashMap<int, LinkedLi
 public constant itemGoldCost = compiletime(InitHashtable())
 public constant itemLumberCost = compiletime(InitHashtable())
 public constant itemCharges = compiletime(InitHashtable())
+public constant itemMaxStock = compiletime(InitHashtable())
 
 public class ItemCost
     int gold
@@ -132,7 +133,7 @@ function initItemStockData()
     unitItemSold.put(BUILDING_ABOMINATION , asList(ITEM_SPAWN_GUT_CRAWLER ))
     unitItemSold.put(BUILDING_DEATH_KNIGHT , asList(ITEM_UNHOLY_AURA ))
     // sharedStocksMap.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER                  ))
-    sharedStocksMap.put(BUILDING_BANSHEE, asList(ITEM_UNHOLY_FRENZY, ITEM_FROST_ARMOR, ITEM_ANTI_MAGIC_SHELL ))
+    sharedStocksMap.put(BUILDING_BANSHEE, asList(ITEM_UNHOLY_FRENZY, ITEM_ANTI_MAGIC_SHELL ))
 
     // ================ NIGHT ELF =============
     unitItemSold   .put(BUILDING_DRYAD       , asList(ITEM_REJUVENATION         , ITEM_KEEPER_OF_THE_GROVE                    ))
@@ -156,6 +157,9 @@ public function getItemLumberCost(int itemId) returns int
 
 public function getItemCharges(int itemId) returns int
     return itemCharges.loadInt(itemId, itemId)
+
+public function getItemMaxStock(int itemId) returns int
+    return itemMaxStock.loadInt(itemId, itemId)
 
 
 init

@@ -86,7 +86,7 @@ function framehandle.createToolTipFrame(int elem)
         ..disable()
 
         goldIconText = createFrame(FramehandleTypeNames.text, "", tooltipBackdrop, "", 0)
-        ..setText(goldCost.toString())
+        ..setText(goldCost.toString().color(GOLD_COLOR))
         ..setPoint(FRAMEPOINT_LEFT, goldIcon, FRAMEPOINT_RIGHT, vec2(0.003, 0))
         ..disable()
 
@@ -101,14 +101,14 @@ function framehandle.createToolTipFrame(int elem)
         ..disable()
 
         createFrame(FramehandleTypeNames.text, "", tooltipBackdrop, "", 0)
-        ..setText(lumberCost.toString())
+        ..setText(lumberCost.toString().color(GOLD_COLOR))
         ..setPoint(FRAMEPOINT_LEFT, lumberIcon, FRAMEPOINT_RIGHT, vec2(0.003, 0))
         ..disable()
 
     let text = getFrame("BoxedTextValue", 0)
         ..setText(textContent)
         ..setSize(0.24, 0)
-        ..setPoint(FRAMEPOINT_TOPLEFT, this, FRAMEPOINT_BOTTOMLEFT, 0.035, -0.005)
+        ..setPoint(FRAMEPOINT_TOPLEFT, this, FRAMEPOINT_BOTTOMLEFT, 0.035, -0.003)
         ..disable()
 
     // tooltip.clearAllPoints()

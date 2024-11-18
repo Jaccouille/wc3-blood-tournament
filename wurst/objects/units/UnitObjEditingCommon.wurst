@@ -386,8 +386,8 @@ public class BTUnitDefinition extends UnitDefinition
         itemDef.setHitPoints(armyPoints)
         itemDef.setItemCost(gold, lumber, charges, maxStack, maxStock)
 
-        this.setGoldCost(gold + BTBuildingData.getUnitGoldCost(srcUnitId))
-        this.setLumberCost(lumber + BTBuildingData.getUnitLumberCost(srcUnitId))
+        this.setGoldCost(gold * maxStock + BTBuildingData.getUnitGoldCost(srcUnitId))
+        this.setLumberCost(lumber * maxStock + BTBuildingData.getUnitLumberCost(srcUnitId))
         this.charges = charges
 
     /** Use for unit linked to a building (not items one) **/
