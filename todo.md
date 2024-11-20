@@ -14,10 +14,13 @@
 - Review all tooltip, set a norm to respect
 - There's a typo in the knockout stage it says "Demi Finals" not sure if intended.
 - Display some unit information like "Ghost unit" on the front panel
+- remove movement speed tooltip
 
-
-- Banshee first ability frost armor
 - Paladin death rework
+- Naga charm special effect not as unit attachment
+- Fix naga charm unit ownership transfert
+- Change hydra to one unit, artillery like with acid fx as burning oil
+- Change turtle a bit...?
 
 - Elim Dummy player
 - bug elim round
