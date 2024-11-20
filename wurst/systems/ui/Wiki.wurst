@@ -26,6 +26,10 @@ let nightElfUnit              = new PaletteSection("Units"             , NIGHT_E
 let nightElfUnitsUpgrades     = new PaletteSection("Units Upgrade"     , NIGHT_ELF_UNIT_UPGD)
 let nightElfAbilitiesUpgrades = new PaletteSection("Abilities Upgrade" , NIGHT_ELF_ABIL_UPGD)
 
+let nagaUnit              = new PaletteSection("Units"             , NAGA_UNITS    )
+let nagaUnitsUpgrades     = new PaletteSection("Units Upgrade"     , NAGA_UNIT_UPGD)
+let nagaAbilitiesUpgrades = new PaletteSection("Abilities Upgrade" , NAGA_ABIL_UPGD)
+
 let DOC_TEXT = "" +
 "Click to show/hide the codex panel. " +
 "This panel contains information on all units in the game."
@@ -46,7 +50,7 @@ constant SECTION_TOP_SPACING = 0.0045
 constant SECTION_BOTTOM_SPACING = 0.0025
 constant FRAME_SIZE = vec2(0.32, 0.28)
 constant MAX_CELL = 10
-constant CONTENT_FRAME_SIZE = vec2(0.005, -0.05)
+constant CONTENT_FRAME_SIZE = vec2(0.005, -0.08)
 
 function TableLayout.addPaletteSection(PaletteSection content, int maxCell)
     this.padBot(0.01)
@@ -149,7 +153,7 @@ public function initCodexUI()
         createFrame("ScriptDialogButton", GAME_UI, 0, 0)
         ..setSize(0.12, 0.025)
         // ..createToolTipFrame("Documentation", DOC_TEXT)
-        ..setPoint(FRAMEPOINT_TOP, baseFrame, FRAMEPOINT_TOP, 0.0, 0.02)
+        ..setAbsPoint(FRAMEPOINT_TOP, vec2(0.1, 0.17))
         ..onClick() ->
             let p = GetTriggerPlayer()
             if baseFrame.isVisible(p)
@@ -178,6 +182,8 @@ public function initCodexUI()
             ..add(btn("Orc")     ..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(1).getName()) ) )
             ..add(btn("Undead")  ..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(2).getName()) ) )
             ..add(btn("Night Elf")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(3).getName()) ) )
+            ..row()
+            ..add(btn("Naga")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(4).getName()) ) )
             ..applyTo(headerFrame)
 
         // Human Frame
@@ -207,3 +213,10 @@ public function initCodexUI()
             ..addPaletteSection(nightElfUnitsUpgrades     , MAX_CELL)
             ..addPaletteSection(nightElfAbilitiesUpgrades     , MAX_CELL)
             ..applyTo(contentFrames.get(3))
+
+        // Naga Frame
+        new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
+            ..addPaletteSection(nagaUnit     , MAX_CELL)
+            ..addPaletteSection(nagaUnitsUpgrades     , MAX_CELL)
+            ..addPaletteSection(nagaAbilitiesUpgrades     , MAX_CELL)
+            ..applyTo(contentFrames.get(4))

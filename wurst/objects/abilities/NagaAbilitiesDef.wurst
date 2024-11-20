@@ -27,11 +27,13 @@ import UnitObjEditingCommon
         "Deal damage per second and slow target movement and " +
         "attack speed.")
     new AbilityDefinitionSlowPoison(ABIL_POISON_SPIT)
+        ..presetAttackSpeedFactor(_ -> 0.20)
+        ..presetMovementSpeedFactor(_ -> 0.30)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetDamagePerSecond(_ -> 15)
-        ..presetAttackSpeedFactor(_ -> 0.20)
-        ..presetMovementSpeedFactor(_ -> 0.30)
+        ..addTooltipProperty("Attack Speed Reduction",_ -> 0.2.toPercent())
+        ..addTooltipProperty("Movement Speed Reduction",_ -> 0.3.toPercent())
         ..presetDurationNormal(_ -> 5)
         ..setNameEnhance("Z", "Poison Spit")
         ..tooltipStopListen(true)
@@ -86,30 +88,30 @@ import UnitObjEditingCommon
         ..setMissileArt(Abilities.redDragonMissile)
         ..setMissileSpeed(STANDARD_PROJECTILE_SPEED)
         ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
         ..presetFullDamageDealt(_ -> 40)
         ..presetFullDamageInterval(_ -> 0.5)
         ..presetHalfDamageDealt(_ -> 20)
         ..presetHalfDamageInterval(_ -> 1)
         ..presetAreaofEffect(_ -> 150)
-        ..tooltipStartListen()
-        ..presetDurationHero(_ -> 3)
         ..presetDurationNormal(_ -> 3)
         ..setNameEnhance("Z", "Burning Breath")
-        ..tooltipStopListen(false)
+        ..tooltipStopListen(true)
+        ..presetDurationHero(_ -> 3)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
     abilTooltipMap.put(ABIL_BURNING_BREATH, tgen.generateFullTooltip())
 
-    tgen = new BTAbilityTooltipGenerator("Attack light the ground on fire and burn enemy units.")
+    tgen = new BTAbilityTooltipGenerator("Attack slow enemies in a small area.")
     new AbilityDefinition(ABIL_GLACIAL_BREATH, AbilityIds.frostBreath)
         ..setCheckDependencies(false)
         ..setMissileArt(Abilities.frostWyrmMissile)
         ..setMissileSpeed(STANDARD_PROJECTILE_SPEED)
         ..registerTooltipGenerator(tgen)
-        ..presetDurationNormal(_ -> 3)
+        ..tooltipStartListen()
         ..addTooltipProperty("Attack Speed Reduction", _ -> "25%")
         ..addTooltipProperty("Movement Speed Reduction", _ -> "50%")
-        ..tooltipStartListen()
+        ..presetDurationNormal(_ -> 3)
         ..setNameEnhance("Z", "Frost Breath")
         ..tooltipStopListen(true)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
@@ -147,8 +149,10 @@ import UnitObjEditingCommon
 
     abilTooltipMap.put(ABIL_FROST_BOLT, tgen.generateFullTooltip())
 
+    var goldCost = 0
+    var lumberCost = 100
     var itm = createBasicItem(ITEM_RAY_OF_DISRUPTION)
-        ..setItemCost(0, 100, 1, sirenCount, sirenCount)
+        ..setItemCost(goldCost, lumberCost, 1, sirenCount, sirenCount)
         ..setNameEnhance("Z", "Replace 1 Frost Bolt with Ray of Disruption")
         ..setInterfaceIcon(Icons.bTNWandOfNeutralization)
     tgen = new BTAbilityTooltipGenerator(
@@ -178,27 +182,42 @@ import UnitObjEditingCommon
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_DISRUPTION_RAY, tgen.generateFullTooltip())
 
+    goldCost = 0
+    lumberCost = 150
     itm = createBasicItem(ITEM_CHARM)
-        ..setItemCost(0, 150, 1, sirenCount, sirenCount)
+        ..setItemCost(goldCost, lumberCost, 1, sirenCount, sirenCount)
         ..setNameEnhance("Z", "Add 10% chance to cast charm")
         ..setInterfaceIcon(Icons.bTNCharm)
 
     tgen = new BTAbilityTooltipGenerator(
         "Takes control of a target enemy unit.\nHas 10% chance to proc on hit.")
+
+    let abilId = ABIL_ID_GEN.next()
+    let orbOfCharm = new AbilityDefinitionOrbofLightning(ABIL_ORB_CHARM)
+        ..setEnabledAttackIndex(1, 0)
+        ..presetChanceToHitUnits(_ -> 10)
+        ..presetChanceToHitSummons(_ -> 10)
+        ..setEffectAbility(1, abilId.toRawCode())
+        ..setDamageBonus(1, 10)
+        ..setNameEnhance("Z", "Orb of charm")
+
     new AbilityDefinitionCharm(ABIL_CHARM)
         ..setLevels(1)
         ..setCheckDependencies(false)
         ..setDummyAbility()
         ..setMaximumCreepLevel(1, 10)
         ..registerTooltipGenerator(tgen)
-        ..tooltipStartListen()
         ..setArtTarget(Objects.nagaDeath)
-        ..setTargetAttachmentPoint("chest")
+        ..tooltipStartListen()
+        ..setTargetAttachmentPoint("origin")
         ..setNameEnhance("Z", "Charm")
+        ..applyTooltip(orbOfCharm)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
-    abilTooltipMap.put(ABIL_CHARM, tgen.generateFullTooltip())
+    abilTooltipMap.put(ABIL_ORB_CHARM, tgen.generateFullTooltip())
 
 
     tgen = new BTAbilityTooltipGenerator(
@@ -211,7 +230,7 @@ import UnitObjEditingCommon
         ..tooltipStartListen()
         ..presetDamage(_ -> 100)
         ..presetDistance(_ -> 800)
-        ..presetMaxDamage(_ -> 1500)
+        ..presetMaxDamage(_ -> 3000)
         ..setNameEnhance("Z", "Crushing Wave")
         ..tooltipStopListen(false)
 

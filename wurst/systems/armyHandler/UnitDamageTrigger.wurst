@@ -35,12 +35,3 @@ init
                 src.issueImmediateOrderById(OrderIds.frenzyon)
             case UNIT_DRUID_CLAW
                 src.issueImmediateOrderById(OrderIds.frenzyon)
-            case UNIT_SIREN
-                if src.hasAbility(ABIL_CHARM)
-                    if GetRandomInt(0, 100) <= 10
-                        // Log.info("Removing " + target.getName())
-                        // if not pDatas.get(target.getOwner().getTruePlayerFromDummy()).spawnedUnits.remove(target)
-                            // Log.info("merde")
-                        InstantDummyCaster.castTarget(
-                            src.getOwner(), ABIL_CHARM, 1, OrderIds.charm, target)
-                        pDatas.get(src.getOwner().getTruePlayerFromDummy()).spawnedUnits.add(target)

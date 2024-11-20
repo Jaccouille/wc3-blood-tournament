@@ -14,16 +14,16 @@ import ItemObjEditingCommon
 import ArmySpawner
 
 @compiletime function createNagaUnitsDef()
-    var tooltip = new UnitTooltipGenerator("Cannon fodder.")
+    var tooltip = new UnitTooltipGenerator("Cheap meat.")
     createSpawnedUnit(UNIT_MURLOC, UnitIds.murloctiderunner, BUILDING_MURLOC)
         ..setNormalAbilities(commaList(ABIL_EVASION_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 22, 1, 4, 1.3)
+        ..setAttack1Data(AttackType.Normal, 10, 5, 2, 1.3)
 
         ..setArmorData(ArmorType.Small, 0)
-        ..setHitPointsMaximumBase(150)
+        ..setHitPointsMaximumBase(300)
 
         ..setSpeedBase(290)
         ..setAutoPointValue()
@@ -40,7 +40,7 @@ import ArmySpawner
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_SLOW) + "\n\n" +
-        "Can add Bloodlust, Frost Armor, and Faerie Fire for free."
+        "Can switch to Bloodlust, Frost Armor, and Faerie Fire for free."
     )
     createSpawnedUnit(UNIT_MURGUL_WARLOCK, UnitIds.murgulsnarecaster, BUILDING_MURGUL_WARLOCK)
         ..setNormalAbilities(commaList(ABIL_SLOW))
@@ -48,12 +48,12 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 20, 4, 4, 1.4)
-        ..setAttack1Range(400)
+        ..setAttack1Data(AttackType.Magic, 20, 5, 5, 1.6)
+        ..setAttack1Range(650)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Small, 0)
-        ..setHitPointsMaximumBase(160)
+        ..setHitPointsMaximumBase(320)
         ..setMana(200)
 
         ..setSpeedBase(290)
@@ -77,12 +77,12 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 22, 4, 4, 1.6)
+        ..setAttack1Data(AttackType.Pierce, 15, 5, 5, 1.6)
         ..setAttack1Range(500)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 3)
-        ..setHitPointsMaximumBase(180)
+        ..setHitPointsMaximumBase(360)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -94,7 +94,7 @@ import ArmySpawner
         ..setSizeSmall()
 
         ..setScalingValue(0.9)
-        ..setBuildingScalingValue(0.9)
+        ..setBuildingScalingValue(0.8)
         ..setModelFileExt(Units.snapDragon1)
         ..setIconGameInterfaceExt(Icons.bTNSnapDragon)
         ..setUnitSoundSetExt(Soundsets.snapDragon)
@@ -107,10 +107,10 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 45, 7, 4, 2)
+        ..setAttack1Data(AttackType.Pierce, 45, 5, 4, 2)
 
         ..setArmorData(ArmorType.Medium, 5)
-        ..setHitPointsMaximumBase(400)
+        ..setHitPointsMaximumBase(800)
         ..setAttack1Range(500)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
@@ -140,7 +140,7 @@ import ArmySpawner
         ..setAttack1Data(AttackType.Normal, 56, 4, 6, 2)
 
         ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(750)
+        ..setHitPointsMaximumBase(1500)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -150,6 +150,7 @@ import ArmySpawner
         ..setNameEnhance("E", "Myrmidon")
         ..setSizeSmall()
 
+        ..setBuildingScalingValue(0.8)
         ..setModelFileExt(Units.nagaMyrmidon1)
         ..setIconGameInterfaceExt(Icons.bTNNagaMyrmidon)
         ..setUnitSoundSetExt(Soundsets.nagaMyrmidon)
@@ -167,10 +168,10 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 99, 7, 9, 2)
+        ..setAttack1Data(AttackType.Normal, 100, 20, 4, 2)
 
         ..setArmorData(ArmorType.Large, 8)
-        ..setHitPointsMaximumBase(1800)
+        ..setHitPointsMaximumBase(3600)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -200,13 +201,13 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 90, 7, 7, 1.6)
+        ..setAttack1Data(AttackType.Pierce, 90, 10, 5, 1.6)
         ..setAttack1Range(600)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setAttack1ProjectileArt(Abilities.arrowMissile1)
 
         ..setArmorData(ArmorType.Medium, 5)
-        ..setHitPointsMaximumBase(400)
+        ..setHitPointsMaximumBase(800)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -234,13 +235,13 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Siege, 90, 6, 9, 2)
+        ..setAttack1Data(AttackType.Siege, 84, 6, 10, 2)
         ..setAttack1Range(350)
         ..setAttack1ProjectileArt(Abilities.ancientProtectorMissile)
         ..setAttack1ProjectileSpeed(900)
 
         ..setArmorData(ArmorType.Large, 8)
-        ..setHitPointsMaximumBase(1000)
+        ..setHitPointsMaximumBase(2000)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -269,12 +270,12 @@ import ArmySpawner
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Siege, 90, 6, 9, 2)
+        ..setAttack1Data(AttackType.Siege, 84, 6, 10, 2)
         ..setAttack1Range(350)
         ..setAttack1ProjectileSpeed(900)
 
         ..setArmorData(ArmorType.Large, 8)
-        ..setHitPointsMaximumBase(1000)
+        ..setHitPointsMaximumBase(2000)
 
         ..setSpeedBase(270)
         ..setItemCostReplacement(0, 200, 1, turtleCount, turtleCount, BUILDING_GIANT_TURTLE)
@@ -284,7 +285,7 @@ import ArmySpawner
         ..tooltipStopListen(true, itm)
         ..setModelFile(Units.dragonSeaTurtle1)
 
-        ..setIconGameInterfaceExt(Icons.bTNSeaTurtleRed)
+        ..setIconGameInterfaceExt(Icons.bTNFireBolt)
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_SPIKED_CARAPACE_50) + "\n\n" +
@@ -299,13 +300,13 @@ import ArmySpawner
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Siege, 90, 6, 9, 2)
+        ..setAttack1Data(AttackType.Siege, 84, 6, 10, 2)
         ..setAttack1Range(350)
         ..setSmallSplash()
         ..setAttack1ProjectileSpeed(900)
 
         ..setArmorData(ArmorType.Large, 8)
-        ..setHitPointsMaximumBase(1000)
+        ..setHitPointsMaximumBase(2000)
 
         ..setSpeedBase(270)
         ..setItemCostReplacement(0, 200, 1, turtleCount, turtleCount, BUILDING_GIANT_TURTLE)
@@ -319,7 +320,7 @@ import ArmySpawner
         ..setModelFile(Units.seaTurtleRange)
         ..setAttack1WeaponType(WeaponType.MissileSplash)
 
-        ..setIconGameInterfaceExt(Icons.bTNSeaTurtleGreen)
+        ..setIconGameInterfaceExt(Icons.bTNBreathOfFrost)
 
 
     tooltip = new UnitTooltipGenerator(
@@ -331,13 +332,13 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 25, 4, 7, 1.6)
+        ..setAttack1Data(AttackType.Magic, 25, 5, 6, 1.6)
         ..setAttack1Range(650)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setAttack1ProjectileArt(Abilities.bansheeMissile)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(100)
+        ..setHitPointsMaximumBase(200)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()

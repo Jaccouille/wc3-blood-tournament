@@ -482,6 +482,7 @@ init
 
     let charmAction = new ItemModifierAction()
         ..addAction() (unit u) ->
+        u.addAbility(ABIL_ORB_CHARM)
         u.addAbility(ABIL_CHARM)
 
     itemModifyUnitMap.put(ITEM_CHARM, charmAction)

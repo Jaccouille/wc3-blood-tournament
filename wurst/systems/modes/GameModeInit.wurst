@@ -71,11 +71,11 @@ init
             mode.message("Interlude time set to ".color(LABEL_COLOR) + interludeTime.toString().color(VALUE_COLOR))
             gameConfig.setRoundInterludeTime(interludeTime.toReal())
 
-    new GameMode("ban", "b", "General", "Ban faction, separated by space, up to {0} ban, e.g : HU OR UN"
+    new GameMode("ban", "b", "General", "Ban faction, separated by space, up to {0} ban, choices : HU OR UN NE NA"
         .format((BUILDER_LIST.size() - 1).toString())) (mode, args) ->
         if (args.size() > 1)
             let factionNames = args.drop(1).map(e -> e)
-            let banList = factionNames.map(e -> BAN_MAP.get(e.toUpperCase()))
+            let banList = factionNames.map(e -> BAN_MAP.get(e.replace(",", "").toUpperCase()))
             if banList.size() >= BUILDER_LIST.size()
                 banList.pop()
             gameConfig.setBanList(banList)

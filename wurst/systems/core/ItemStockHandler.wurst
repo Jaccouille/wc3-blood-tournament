@@ -154,16 +154,6 @@ function initItemStockData()
     sharedStocksMap.put(BUILDING_SIREN, asList(ITEM_RAY_OF_DISRUPTION, ITEM_CHARM))
 
 
-    // ================ NAGA =============
-    unitItemSold.put(BUILDING_MURGUL_WARLOCK , asList(ITEM_FREE_BLOOD_LUST, ITEM_FREE_FROST_ARMOR, ITEM_FREE_FAERIE_FIRE))
-    unitItemSold.put(BUILDING_MYRMIDON , asList(ITEM_DEPTH_COMMANDER))
-    unitItemSold.put(BUILDING_GIANT_TURTLE , asList(ITEM_FIRE_TURTLE, ITEM_FROST_TURTLE))
-    unitItemSold.put(BUILDING_SIREN , asList(ITEM_RAY_OF_DISRUPTION, ITEM_CHARM))
-    sharedStocksMap.put(BUILDING_MURGUL_WARLOCK, asList(ITEM_FREE_BLOOD_LUST, ITEM_FREE_FROST_ARMOR, ITEM_FREE_FAERIE_FIRE))
-    sharedStocksMap.put(BUILDING_GIANT_TURTLE, asList(ITEM_FIRE_TURTLE, ITEM_FROST_TURTLE))
-    sharedStocksMap.put(BUILDING_SIREN, asList(ITEM_RAY_OF_DISRUPTION, ITEM_CHARM))
-
-
 function canBuy(int itemId, player _p) returns boolean
     let goldCost = itemGoldCost.loadInt(itemId, itemId)
     let lumberCost = itemLumberCost.loadInt(itemId, itemId)

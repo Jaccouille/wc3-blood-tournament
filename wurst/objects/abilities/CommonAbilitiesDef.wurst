@@ -306,6 +306,19 @@ function createSpikedCarapace(int abilId, real value) returns AbilityDefinitionC
     createRangedAura(ABIL_RANGED_AURA_15, 0.15)
     createRangedAura(ABIL_RANGED_AURA_25, 0.25)
 
+@compiletime function createSpikedCarapaceAbilities()
+    let BUFF_ID = compiletime(BUFF_ID_GEN.next())
+    new BuffDefinition(BUFF_ID, BuffIds.spikedCarapace)
+        ..setArtTarget(1, "")
+        ..setName(1, "Spiked Carapace")
+        ..setTooltipNormal(1, "Spiked Carapace")
+        ..setTooltipNormalExtended(1, "This unit returns damage to melee attackers.")
+
+    createSpikedCarapace(ABIL_SPIKED_CARAPACE_30, 0.3)
+        ..setBuffs(1, BUFF_ID.toRawCode())
+    createSpikedCarapace(ABIL_SPIKED_CARAPACE_50, 0.5)
+        ..setBuffs(1, BUFF_ID.toRawCode())
+
 @compiletime function createArrowAbilites()
     var tgen = new BTAbilityTooltipGenerator("Add Spell damage.")
     new AbilityDefinitionSearingArrowscreep(ABIL_FIRE_ARROW)

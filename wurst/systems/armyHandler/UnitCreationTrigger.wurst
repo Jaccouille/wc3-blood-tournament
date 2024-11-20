@@ -132,15 +132,15 @@ init
                 if ItemStockHandler.hasUnit(upgradedBuilding)
                     destroy ItemStockHandler.unitToItemStockMap.get(upgradedBuilding)
 
-                // Add stock items
-                if unitItemSold.has(upgradedBuilding.getTypeId())
-                    let itemStockHandler = new ItemStockHandler(upgradedBuilding)
-                    unitItemSold.get(upgradedBuilding.getTypeId()).forEach() (integer t) ->
-                        let itm = createItem(t, vec2(0, 0))
-                        let maxStock = itm.getLevel()
-                        AddItemToStock(upgradedBuilding, t, maxStock, maxStock)
-                        itemStockHandler.addItem(itm.getTypeId(), maxStock)
-                        itm.remove()
+            // Add stock items
+            if unitItemSold.has(upgradedBuilding.getTypeId())
+                let itemStockHandler = new ItemStockHandler(upgradedBuilding)
+                unitItemSold.get(upgradedBuilding.getTypeId()).forEach() (integer t) ->
+                    let itm = createItem(t, vec2(0, 0))
+                    let maxStock = itm.getLevel()
+                    AddItemToStock(upgradedBuilding, t, maxStock, maxStock)
+                    itemStockHandler.addItem(itm.getTypeId(), maxStock)
+                    itm.remove()
 
 
         EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
