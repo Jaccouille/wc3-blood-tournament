@@ -19,6 +19,22 @@ import UnitExtensions
 
 
 init
+    registerToolkitCommand("help") (player triggerPlayer, LinkedList<string> arguments) ->
+        string msg = "" +
+        "su : SpawnedUnits size" +
+        "show-indexes : display army spawner indexes" +
+        "al : roundParticipant size" +
+        "lu [playerId] : List current units of playerId" +
+        "clean : Kill every spawned units" +
+        "attack : Order every unit to attack move center" +
+        "order : Display current order of selected units" +
+        "ci : display item on the ground count" +
+        "ps : Log object instances > 0" +
+        "psa : Log object instances > 100" +
+        "er : end round" +
+        "lr : list round"
+        printTimedToPlayer(msg, 15, triggerPlayer)
+
     registerToolkitCommand("su") (player triggerPlayer, LinkedList<string> arguments) ->
         pDatas.forEach() (player key, PlayerData pData) ->
             Log.info("SpawnedUnits size : " + pData.spawnedUnits.size().toString() + " for " + key.getNameColored(true))
@@ -94,12 +110,6 @@ init
             if instanceCount(i) > 100
                 Log.info(typeIdToTypeName(i) + " " + instanceCount(i).toString() + " " + maxInstanceCount(i).toString())
         Log.info("Max type id : " + maxTypeId().toString())
-
-    registerToolkitCommand("psb") (player triggerPlayer, LinkedList<string> arguments) ->
-        for _p in pDatas
-            if playerToArmyPreviewer.has(_p)
-                let t = playerToArmyPreviewer.get(_p)
-                Log.info(t.squadIds.size().toString() + " " + t.unitModifierList.size().toString())
 
     registerToolkitCommand("er") (player triggerPlayer, LinkedList<string> arguments) ->
         for _p in pDatas

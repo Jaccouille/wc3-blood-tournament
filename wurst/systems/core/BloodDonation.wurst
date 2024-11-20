@@ -38,7 +38,7 @@ public class BloodDonation
             if pData.totalBloodPoints > highestBloodPoints
                 highestBloodPoints = pData.totalBloodPoints
         if gameConfig.isTestModeEnabled()
-            Log.info("Highest Blood Points: " + highestBloodPoints.toString())
+            Log.debug("Highest Blood Points: " + highestBloodPoints.toString())
         pDatas.forEach() (player _p, PlayerData pData) ->
             bloodDeficits.add(
                 new BloodDeficit(_p, highestBloodPoints - pData.totalBloodPoints, pData.totalBloodPoints))
@@ -127,7 +127,7 @@ init
                 msg += " donation: {0}".format(bloodDonationAmount.toString().color(colorA(255, 0, 0, 255)))
                 msg += " Sum : {0}".format((bloodDonationAmount + bloodDeficit.totalBloodPoints).toString().color(colorA(255, 0, 0, 255)))
                 if gameConfig.isTestModeEnabled()
-                    Log.info(msg)
+                    Log.debug(msg)
                 if bloodDonationAmount > 0
                     let msgplayer = "You get a blood donation of {0} blood points from the tournament manager".format(bloodDonationAmount.toString().color(colorA(255, 0, 0, 255)))
                     printTimedToPlayer(msgplayer, 10, bloodDeficit._p)
