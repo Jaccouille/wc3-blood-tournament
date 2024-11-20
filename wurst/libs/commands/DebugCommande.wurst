@@ -17,7 +17,7 @@ import UnitExtensions
 
 init
     registerToolkitCommand("help") (player triggerPlayer, LinkedList<string> arguments) ->
-        string msg = "" +
+        let msg = "" +
         "su : SpawnedUnits size" +
         "show-indexes : display army spawner indexes" +
         "al : roundParticipant size" +

@@ -416,7 +416,7 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.heroLich)
 
 @compiletime function createBanshee()
-    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_FROST_ARMOR))
+    let tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_FROST_ARMOR))
     createSpawnedUnit(UNIT_BANSHEE, UnitIds.banshee, BUILDING_BANSHEE)
         ..setRace(Race.Undead)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_FROST_ARMOR, ABIL_ANTI_MAGIC_SHELL, ABIL_UNHOLY_FRENZY))
@@ -578,7 +578,7 @@ import UnitTooltipGenerator
         ..setButtonPositionX(1)
 
 @compiletime function createDeathKnight()
-    var tooltip = new UnitTooltipGenerator(
+    let tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_AFFLICTION) + "\n\n" +
         "Dark Ritual\n".color(SPECIAL_COLOR) +
         "Replenish 10% of target maximum health as mana on kill."

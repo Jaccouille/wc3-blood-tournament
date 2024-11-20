@@ -89,26 +89,26 @@ class OgreSwing
             target.setFlyHeight(target.getDefaultFlyHeight(), HEIGHT_CHANGE_RATE)
             target.setTimeScale(1)
 
-            var spellTarget = target
+            var _spellTarget = target
 
             if not target.isAlive()
                 forUnitsInRange(target.getPos(), 120) (unit u) ->
                     if u.isEnemyOf(caster.getOwner()) and u.isAlive() and u.isSoldier()
-                        spellTarget = u
+                        _spellTarget = u
 
             new DummyCaster()
                 ..origin(target.getPos())
                 ..owner(caster.getOwner())
                 ..delay(1)
-                ..castTarget(ABIL_OGRE_SWING_SLAM, 1, OrderIds.acidbomb, spellTarget)
+                ..castTarget(ABIL_OGRE_SWING_SLAM, 1, OrderIds.acidbomb, _spellTarget)
                 // ..castImmediate(ABIL_OGRE_SWING_SLAM, 1,  OrderIds.thunderclap)
             flashEffect(Abilities.thunderclapCaster, target.getPos())
             let maxDamage = 600
-            var damageSum = 0
+            var _damageSum = 0
             forUnitsInRange(target.getPos(), 250) (unit u) ->
                 if u.isEnemyOf(caster.getOwner()) and u.isAlive() and u.isSoldier()
-                    and damageSum < maxDamage
-                    damageSum += 60
+                    and _damageSum < maxDamage
+                    _damageSum += 60
                     caster.damageTarget(u, 60, true, true,
                         ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS)
 

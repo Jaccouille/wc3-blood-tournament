@@ -170,7 +170,7 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator("Long range unit with small splash.")
 
-    var itm = createBasicItem(ITEM_MORTAR)
+    let itm = createBasicItem(ITEM_MORTAR)
     createSpawnedUnit(UNIT_MORTAR, UnitIds.mortarteam)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
@@ -564,7 +564,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setIconGameInterfaceExt(Icons.bTNJaina)
 
 @compiletime function createMage()
-    var tooltip = new UnitTooltipGenerator("Spawn upon unit death.")
+    let tooltip = new UnitTooltipGenerator("Spawn upon unit death.")
     createSpawnedUnit(UNIT_GHOST, UnitIds.lesservoidwalker)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()

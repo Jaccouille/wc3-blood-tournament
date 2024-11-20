@@ -41,7 +41,7 @@ import UnitTooltipGenerator
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_CRITICAL_STRIKE_30)
         )
-    let itm = createBasicItem(ITEM_BERSERKER)
+    let _itm = createBasicItem(ITEM_BERSERKER)
     // let gruntCount = BTBuildingData.getUnitCount(BUILDING_GRUNT)
     createSpawnedUnit(UNIT_BERSERKER, UnitIds.chaosgrunt, BUILDING_BERSERKER)
         ..setAnimationCastBackswing(0)

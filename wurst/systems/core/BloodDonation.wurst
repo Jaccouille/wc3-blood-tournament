@@ -109,7 +109,7 @@ function launchCorpse(int bloodPoints, player target)
 init
     giveBloodDonation = (Round round) ->
         if gameConfig.isBloodDonationEnabled()
-            var count = 1
+            var _count = 1
             let bloodDonation = new BloodDonation()
             bloodDonation.bloodDeficits.sortWith((o1, o2) -> (o2.totalBloodPoints - o1.totalBloodPoints))
             bloodDonation.bloodDeficits.forEach() (BloodDeficit bloodDeficit) ->
@@ -134,8 +134,8 @@ init
                     let msgplayer = "You get a blood donation of {0} blood points from the tournament manager".format(bloodDonationAmount.toString().color(colorA(255, 0, 0, 255)))
                     printTimedToPlayer(msgplayer, 10, bloodDeficit._p)
                 if bloodDonationAmount > 0
-                    doAfter(count * 0.810) ->
+                    doAfter(_count * 0.810) ->
                         launchCorpse(bloodDonationAmount, bloodDeficit._p)
-                    count++
+                    _count++
                 else
                     pDatas.get(bloodDeficit._p).addDonation(0)

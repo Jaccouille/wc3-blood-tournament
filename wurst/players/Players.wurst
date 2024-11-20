@@ -2,7 +2,6 @@ package Players
 
 // Standard libs imports:
 import ClosureEvents
-import ClosureTimers
 import public LinkedList
 
 /** A list of all players that are still in the game */

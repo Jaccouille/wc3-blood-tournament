@@ -173,6 +173,7 @@ import UnitObjEditingCommon
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
+    tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_HEALING_WAVE, tgen.generateFullTooltip())
 
     goldCost = 0

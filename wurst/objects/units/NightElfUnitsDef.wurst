@@ -14,7 +14,7 @@ import UnitObjEditingCommon
 import UnitTooltipGenerator
 
 @compiletime function createTreant()
-    var tooltip = new UnitTooltipGenerator("")
+    let tooltip = new UnitTooltipGenerator("")
     createSpawnedUnit(UNIT_TREANT, UnitIds.forceofnature, BUILDING_TREANT)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()

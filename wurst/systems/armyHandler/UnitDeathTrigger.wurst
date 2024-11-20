@@ -188,12 +188,12 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
                 let sp1 = playerToArmySpawner.get(matchUpWinner).spawnZone
                 let sp2 = playerToArmySpawner.get(pData._p).spawnZone
                 let middle = computeSpeedBannerPos(sp1, sp2)
-                var hasSpawned = false
+                var _hasSpawned = false
                 // TODO: probably doesn't work
                 forUnitsInRange(middle, 500) (unit u) ->
                     if u.getTypeId() == UNIT_SPEED_BANNER
-                        hasSpawned = true
-                if not hasSpawned
+                        _hasSpawned = true
+                if not _hasSpawned
                     spawnSpeedBanner(middle, matchUpWinner)
                     let armySpawner = playerToArmySpawner.get(matchUpWinner)
                     let secondRectIdx = spawnZones.indexOf(armySpawner.spawnZone) div 2 + 10
