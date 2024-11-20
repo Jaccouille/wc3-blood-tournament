@@ -4,8 +4,8 @@ package UnitDeathTrigger
 import Assets
 import ClosureForGroups
 import ClosureTimers
-import OrderIds
 import DummyRecycler
+import OrderIds
 
 // Local imports:
 import ArmyPreviewer
@@ -16,8 +16,8 @@ import LocalObjectIDs
 import PlayerExtension
 import RoundController
 import SpawnZone
-import UnitExtensions
 import TextTagUtils
+import UnitExtensions
 
 function fu() returns unit
     return GetFilterUnit()

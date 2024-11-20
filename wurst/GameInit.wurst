@@ -10,12 +10,12 @@ import Sounds
 import AltarEntity
 import ArmySpawner
 import GameStates
+import Hints
 import Indicators
 import LocalObjectIDs
 import RoundController
 import ScoreBoard
 import UnitDeathTrigger
-import Hints
 import Wiki
 
 // A timer for the core gameplay.

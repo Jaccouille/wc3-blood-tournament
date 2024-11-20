@@ -2,16 +2,15 @@ package VotesDefinition
 
 // Standard libs imports:
 import HashMap
-import MapBounds
 
 // Local imports:
+import BuilderAI
 import ChatCommands
 import GameConfig
 import GameStates
 import Players
 import RoundController
 import Vote
-import BuilderAI
 
 public function voteReady(player triggerPlayer)
     if roundController.currentRound.hasStarted

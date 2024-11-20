@@ -1,13 +1,15 @@
 package AfkDetector
 
-import PlayerData
-
+// Standard libs imports:
 import ClosureEvents
 import ClosureTimers
-import public BuilderAI
-import ChatCommands
 import HashMap
+
+// Local imports:
+import ChatCommands
 import ColorUtils
+import PlayerData
+import public BuilderAI
 
 @configurable constant AFK_TIMER = 30.
 

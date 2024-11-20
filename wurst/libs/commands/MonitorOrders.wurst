@@ -7,9 +7,9 @@ import HashSet
 import RegisterEvents
 
 // Local imports:
-import Toolkit
 import GameConfig
 import GameStates
+import Toolkit
 
 // Standard library imports:
 

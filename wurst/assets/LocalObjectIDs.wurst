@@ -3,7 +3,6 @@ package LocalObjectIDs
 // Standard libs imports:
 import ObjectIdGenerator
 
-
 // ==================== ID GENERATORS =================
 // ==================== Human =================
 public let UNIT_FOOTMAN                 = compiletime(UNIT_ID_GEN.next())

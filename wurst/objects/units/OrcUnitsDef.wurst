@@ -2,6 +2,7 @@ package OrcUnitsDef
 
 // Standard libs imports:
 import Assets
+import LinkedList
 
 // Local imports:
 import ArmySpawner
@@ -11,7 +12,6 @@ import ItemObjEditingCommon
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
-import LinkedList
 
 @compiletime function createGrunt()
     var tooltip = new UnitTooltipGenerator("Basic melee unit.")

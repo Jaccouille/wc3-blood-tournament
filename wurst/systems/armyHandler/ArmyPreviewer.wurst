@@ -1,27 +1,22 @@
 package ArmyPreviewer
 
 // Standard libs imports:
-import Assets
 import ClosureEvents
 import ClosureForGroups
 import ClosureTimers
 import HashMap
 import LinkedList
 
-// Third party imports:
-import Lodash
-
 // Local imports:
 import ArmySpawner
 import GameConfig
-import GameConstants
 import ItemCallbackDefinition
 import LocalObjectIDs
+import PingMinimap
 import PlayerData
 import PlayerExtension
 import SpawnZone
 import UnitExtensions
-import PingMinimap
 
 // Distance between units positioned in formation mode
 @configurable constant FORMATION_WIDTH = 120.

@@ -7,14 +7,14 @@ import ClosureTimers
 import OrderIds
 
 // Local imports:
+import BuilderAI
 import ColorUtils
 import GameConfig
 import GameStates
-import LocalObjectIDs
 import LocalAssets
+import LocalObjectIDs
 import RoundController
 import ScoreBoard
-import BuilderAI
 
 function hasBuildings(player _p) returns boolean
     let pData = pDatas.get(_p)

@@ -1,17 +1,11 @@
 package UnitDamageTrigger
 
 // Standard libs imports:
-import BuffIds
-import ClosureTimers
 import DamageEvent
 import OrderIds
-import InstantDummyCaster
 
 // Local imports:
 import LocalObjectIDs
-import PlayerData
-import PlayerExtension
-
 
 init
     DamageEvent.addListener() ->

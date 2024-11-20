@@ -1,5 +1,6 @@
 package UnitIndexer_config
 
+// Local imports:
 import LocalObjectIDs
 
 @config public function shouldIndex(unit _u) returns boolean

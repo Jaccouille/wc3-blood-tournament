@@ -1,14 +1,19 @@
 package Wiki
 
-import TableLayout
+// Standard libs imports:
 import ClosureTimers
-import LinkedList
-import IDListConstant
-import ColorUtils
-import ObjectIds
-import ItemStockHandler
-import Textures
 import FramehandleNames
+import LinkedList
+import ObjectIds
+import Textures
+
+// Third party imports:
+import TableLayout
+
+// Local imports:
+import ColorUtils
+import IDListConstant
+import ItemStockHandler
 
 let humanUnit              = new PaletteSection("Units"             , HUMAN_UNITS    )
 let humanUnitsUpgrades     = new PaletteSection("Units Upgrade"     , HUMAN_UNIT_UPGD)

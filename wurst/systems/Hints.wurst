@@ -1,9 +1,12 @@
 package Hints
 
-import PlayerData
+// Standard libs imports:
+import HashMap
+
+// Local imports:
 import ChatCommands
 import LocalObjectIDs
-import HashMap
+import PlayerData
 
 let playerToHintMap = new HashMap<player, Hint>()
 

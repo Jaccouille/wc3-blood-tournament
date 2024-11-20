@@ -5,8 +5,8 @@ import Assets
 import ClosureTimers
 import HashMap
 import LinkedList
-import TimerUtils
 import StringUtils
+import TimerUtils
 
 // Third party imports:
 import Lodash

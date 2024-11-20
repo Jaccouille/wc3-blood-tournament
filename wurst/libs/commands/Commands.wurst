@@ -1,13 +1,14 @@
 package Commands
 
+// Standard libs imports:
+import LinkedList
+import OrderIds
+
 // Local imports:
 import ChatCommands
 import ColorUtils
 import PlayerData
-import LinkedList
 import Toolkit
-import OrderIds
-
 
 init
     registerCommandAll("clear") (triggerPlayer, args) ->

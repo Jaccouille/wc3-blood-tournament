@@ -1,13 +1,15 @@
 package BloodDonation
 
+// Standard libs imports:
+import Assets
+import ClosureTimers
 import HashMap
+
+// Local imports:
 import AltarEntity
 import CustomProjectile
-import ClosureTimers
-import Assets
 import GameConfig
 import Round
-
 import TextTagUtils
 
 interface BloodDonationCallBack

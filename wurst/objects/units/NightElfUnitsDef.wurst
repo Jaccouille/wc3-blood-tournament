@@ -3,6 +3,7 @@ package NightElfUnitsDef
 // Standard libs imports:
 import Assets
 import ChannelAbilityPreset
+import LinkedList
 
 // Local imports:
 import ArmySpawner
@@ -11,7 +12,6 @@ import ItemObjEditingCommon
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
-import LinkedList
 
 @compiletime function createTreant()
     var tooltip = new UnitTooltipGenerator("")

@@ -11,10 +11,10 @@ import ArmySpawner
 import BTAbilities
 import BTAbilityTooltipGenerator
 import ItemObjEditingCommon
+import LocalAssets
 import LocalObjectIDs
 import TooltipsUtils
 import UnitObjEditingCommon
-import LocalAssets
 
 @compiletime function orcAbilities()
 

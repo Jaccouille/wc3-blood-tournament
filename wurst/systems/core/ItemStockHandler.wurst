@@ -10,10 +10,10 @@ import OrderIds
 // Local imports:
 import ArmyPreviewer
 import ClosuresForItems
+import GameConfig
 import LocalObjectIDs
 import PlayerExtension
 import ScoreBoard
-import GameConfig
 import initlater ItemCallbackDefinition
 
 public HashMap<int, LinkedList<int>> unitItemSold = new HashMap<int, LinkedList<int>>

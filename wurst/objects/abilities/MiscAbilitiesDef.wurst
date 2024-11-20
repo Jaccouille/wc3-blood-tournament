@@ -18,13 +18,13 @@ import GameConfig
 import GameConstants
 import GameStates
 import LocalObjectIDs
+import OrderBlocker
 import PlayerData
 import SimError
-import UnitExtensions
 import TooltipsUtils
 import UnitCreationTrigger
+import UnitExtensions
 import VotesDefinition
-import OrderBlocker
 
 let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
 

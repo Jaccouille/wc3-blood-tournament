@@ -2,6 +2,7 @@ package HumanUnitsDef
 
 // Standard libs imports:
 import Assets
+import LinkedList
 
 // Local imports:
 import BTAbilities
@@ -12,7 +13,6 @@ import LocalAssets
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
-import LinkedList
 
 @compiletime function createFootman()
     var tooltip = new UnitTooltipGenerator("Basic melee unit")

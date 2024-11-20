@@ -5,13 +5,12 @@ import Assets
 import ChannelAbilityPreset
 
 // Local imports:
+import ArmySpawner
+import BTAbilities
+import ItemObjEditingCommon
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
-import BTAbilities
-import NagaAbilitiesDef
-import ItemObjEditingCommon
-import ArmySpawner
 
 @compiletime function createNagaUnitsDef()
     var tooltip = new UnitTooltipGenerator("Cheap meat.")

@@ -9,8 +9,10 @@ import Sounds
 import TimerUtils
 
 // Local imports:
+import AfkDetector
 import AltarEntity
 import ArmyPreviewer
+import BloodDonation
 import ColorUtils
 import GameConfig
 import GameStates
@@ -20,8 +22,6 @@ import Players
 import ScoreBoard
 import SpawnZone
 import public Round
-import BloodDonation
-import AfkDetector
 
 public constant roundController = new RoundController()
 
