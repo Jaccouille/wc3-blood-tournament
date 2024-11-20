@@ -4,6 +4,7 @@ package RaceSelection
 import Assets
 import ClosureEvents
 import ClosureTimers
+import OrderIds
 
 // Local imports:
 import ColorUtils
@@ -13,6 +14,7 @@ import LocalObjectIDs
 import LocalAssets
 import RoundController
 import ScoreBoard
+import BuilderAI
 
 function hasBuildings(player _p) returns boolean
     let pData = pDatas.get(_p)
@@ -29,6 +31,7 @@ init
     EventListener.add(EVENT_PLAYER_UNIT_TRAIN_CANCEL) ->
         if EventData.getTriggerUnit().getTypeId() == UNIT_RACE_PICKER
             SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 1, EventData.getTriggerUnit().getOwner())
+            SetPlayerTechResearchedSwap(UPGD_RANDOM, 1, EventData.getTriggerUnit().getOwner())
             pDatas.get(EventData.getTriggerUnit().getOwner()).hasRandomed = false
 
     EventListener.onCast(ABIL_RANDOM_RACE) (unit caster) ->
@@ -43,9 +46,15 @@ init
                 flashEffect(Abilities.aIilTarget, pData.builder.getPos3Real())
                 pData.builder.remove()
             if not pData.racePicker.issueImmediateOrder(UnitId2String(gameConfig.getBuilderList().getRandomElement()))
+                // This happens when randoming with existing builder
                 nullTimer() ->
                     pData.racePicker.issueImmediateOrder(UnitId2String(gameConfig.getBuilderList().getRandomElement()))
-            pData.hasRandomed = true
+                    pData.hasRandomed = true
+                    SetPlayerTechResearchedSwap(UPGD_RANDOM, 0, owner)
+            else
+                pData.hasRandomed = true
+                SetPlayerTechResearchedSwap(UPGD_RANDOM, 0, owner)
+            // SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 0, owner)
 
     EventListener.onCast(ABIL_REPICK) (unit caster) ->
         let owner = caster.getOwner()
@@ -80,6 +89,7 @@ init
                 SetPlayerTechMaxAllowed(_p, builderId, 0)
 
             SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 1, _p)
+            SetPlayerTechResearchedSwap(UPGD_RANDOM, 1, _p)
             if gameConfig.isAllRandomEnabled()
                 pData.builder = createUnit(_p, gameConfig.getBuilderList().getRandomElement(), pData.racePicker.getPos())
                 pData.racePicker.removeAbility(ABIL_REPICK)
@@ -91,7 +101,8 @@ init
         if not gameConfig.isMultipleBuilderEnabled()
             pDatas.forEach() (player _p, PlayerData pData) ->
                 if pData.builder == null
-                    pData.builder = createUnit(_p, gameConfig.getBuilderList().getRandomElement(), pData.racePicker.getPos())
+                    pData.racePicker.issueImmediateOrder(UnitId2String(gameConfig.getBuilderList().getRandomElement()))
+                    // pData.builder = createUnit(_p, gameConfig.getBuilderList().getRandomElement(), pData.racePicker.getPos())
                 SetPlayerTechResearchedSwap(UPGD_ALL_RANDOM, 0, _p)
                 SetPlayerTechResearchedSwap(UPGD_RACE_PICK, 0, _p)
 
@@ -105,3 +116,9 @@ init
         if pDatas.get(builder.getOwner()).hasRandomed
             addEffect(LocalAbilities.strawHat, builder, "head")
         scoreBoardEntries.get("PlayerName").setEntryIcon(builder.getOwner(), builder.getIcon())
+
+        EventListener.add(builder, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER) ->
+            let aiInstance = playerToBuilderAI.get(builder.getOwner())
+            if EventData.getIssuedOrderId() == OrderIds.smart and aiInstance.isEnabled
+                builder.abortOrder()
+                aiInstance.toggleAI()

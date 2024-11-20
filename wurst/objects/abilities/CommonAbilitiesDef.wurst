@@ -60,6 +60,7 @@ function createBash(int abilId, real value) returns AbilityDefinitionBashcreep
     let abilDef = new AbilityDefinitionBashcreep(abilId)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
+        ..presetDurationNormal(_ -> 1)
         ..setName("Bash " + value.toPercent())
         ..tooltipStopListen()
         ..presetDamageBonus(_ -> 0)
@@ -80,14 +81,15 @@ function createLifeSteal(int abilId, real value) returns AbilityDefinitionVampir
     return abilDef
 
 function createHardenedSkin(int abilId, real value) returns AbilityDefinitionHardenedSkin
-    let tgen = new BTAbilityTooltipGenerator(
-        "Reduces all attacks damage.")
+    let tgen = new BTAbilityTooltipGenerator("Reduces all attacks damage by {0}."
+        .format(value.toInt().toString()))
     let abilDef = new AbilityDefinitionHardenedSkin(abilId)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..presetChancetoReduceDamage(_ -> 100)
-        ..tooltipStartListen()
         ..presetIgnoredDamage(_ -> value)
         ..presetMinimumDamage(_ -> 3)
+        ..tooltipStartListen()
         ..setName("Hardened Skin " + value.toString(0))
         ..tooltipStopListen()
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
@@ -175,6 +177,7 @@ function createMagicResistance(int abilId, real value) returns AbilityDefinition
         ..setDeflectDamageTakenSpells(1, 0)
         ..tooltipStartListen()
         ..setName("Magic Resistance " + value.toPercent())
+        ..setIconNormal(Icons.bTNGenericSpellImmunity)
         ..tooltipStopListen()
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
     return abilDef
@@ -216,6 +219,15 @@ function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraW
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
     return abilDef
 
+// Used to compensate healing reduction orb hard coded damage
+function createBonusDamage(int abilId, int value) returns AbilityDefinitionAttackBonus
+    let abilDef = new AbilityDefinitionAttackBonus(abilId)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..setAttackBonus(1, value)
+        ..setName("Damage Bonus " + value.toString())
+    return abilDef
+
 
 function createSpikedCarapace(int abilId, real value) returns AbilityDefinitionCryptLordSpikedCarapace
 
@@ -253,9 +265,9 @@ function createSpikedCarapace(int abilId, real value) returns AbilityDefinitionC
     createEvasion(ABIL_EVASION_30, 0.30)
 
 @compiletime function createBashAbilities()
-    createBash(ABIL_BASH_10, 0.10)
-    createBash(ABIL_BASH_20, 0.20)
-    createBash(ABIL_BASH_30, 0.30)
+    createBash(ABIL_BASH_10, 10.)
+    createBash(ABIL_BASH_20, 20.)
+    createBash(ABIL_BASH_30, 30.)
 
 @compiletime function createLifeStealAbilities()
     createLifeSteal(ABIL_LIFESTEAL_50, 0.50)
@@ -294,21 +306,6 @@ function createSpikedCarapace(int abilId, real value) returns AbilityDefinitionC
     createRangedAura(ABIL_RANGED_AURA_15, 0.15)
     createRangedAura(ABIL_RANGED_AURA_25, 0.25)
 
-
-@compiletime function createSpikedCarapaceAbilities()
-    let BUFF_ID = compiletime(BUFF_ID_GEN.next())
-    new BuffDefinition(BUFF_ID, BuffIds.spikedCarapace)
-        ..setArtTarget(1, "")
-        ..setName(1, "Spiked Carapace")
-        ..setTooltipNormal(1, "Spiked Carapace")
-        ..setTooltipNormalExtended(1, "This unit returns damage to melee attackers.")
-
-    createSpikedCarapace(ABIL_SPIKED_CARAPACE_30, 0.3)
-        ..setBuffs(1, BUFF_ID.toRawCode())
-    createSpikedCarapace(ABIL_SPIKED_CARAPACE_50, 0.5)
-        ..setBuffs(1, BUFF_ID.toRawCode())
-
-
 @compiletime function createArrowAbilites()
     var tgen = new BTAbilityTooltipGenerator("Add Spell damage.")
     new AbilityDefinitionSearingArrowscreep(ABIL_FIRE_ARROW)
@@ -342,7 +339,7 @@ function createSpikedCarapace(int abilId, real value) returns AbilityDefinitionC
         "Reduces the effectiveness of healing and regeneration on enemy units.")
     new AbilityDefinitionHealReductionBonus(ABIL_BURNING_ARROW)
         ..registerTooltipGenerator(tgen)
-        ..setEnabledAttackIndex(1, 0)
+        // ..setEnabledAttackIndex(1, 0)
         ..setArtTarget(Abilities.flameStrikeEmbers)
         ..setMissileArt(Abilities.flamingArrowMissile)
         ..tooltipStartListen()
@@ -351,6 +348,7 @@ function createSpikedCarapace(int abilId, real value) returns AbilityDefinitionC
         ..presetDurationNormal(_ -> 4)
         ..setNameEnhance("Z", "Burning Arrow")
         ..tooltipStopListen(true)
+        ..setIconNormal(Icons.bTNFlamingArrows)
         ..presetManaCost(_ -> 0)
     abilTooltipMap.put(ABIL_BURNING_ARROW, tgen.generateFullTooltip())
 

@@ -10,11 +10,11 @@ import AbilityObjEditingCommons
 import ArmySpawner
 import BTAbilities
 import BTAbilityTooltipGenerator
-import ColorUtils
 import ItemObjEditingCommon
 import LocalObjectIDs
 import TooltipsUtils
 import UnitObjEditingCommon
+import LocalAssets
 
 @compiletime function orcAbilities()
 
@@ -91,6 +91,7 @@ import UnitObjEditingCommon
         ..presetCastRange(_ -> 700)
         ..setNameEnhance("Z", "Ensnare")
         ..tooltipStopListen(true)
+        ..setIconNormal(Icons.bTNEnsnare)
         ..setBuffs(1, commaList(BuffIds.ensnareAir, BuffIds.ensnareGround))
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
@@ -112,8 +113,10 @@ import UnitObjEditingCommon
     abilTooltipMap.put(ABIL_BURNING_BLADE_50, tgen.generateFullTooltip())
 
     let raiderCount = BTBuildingData.getUnitCount(BUILDING_RAIDER)
+    var goldCost = 0
+    var lumberCost = 200
     var itm = createBasicItem(ITEM_BURNING_BLADE)
-        ..setItemCost(0, 200, raiderCount, 1, 1)
+        ..setItemCost(goldCost, lumberCost, raiderCount, 1, 1)
         ..setNameEnhance("X", "Add Burning Blades")
         ..setInterfaceIcon(Icons.bTNArcaniteMelee)
 
@@ -121,7 +124,7 @@ import UnitObjEditingCommon
         "Reduces the effectiveness of healing and regeneration on enemy units.")
     new AbilityDefinitionHealReductionBonus(ABIL_BURNING_BLADE_100)
         ..setCheckDependencies(false)
-        ..setArtTarget("Environment\\SmallBuildingFire\\SmallBuildingFire2.mdl")
+        ..setArtTarget(LocalAbilities.sweepFireLarge)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..setHealingMultiplier(1, 1)
@@ -129,6 +132,8 @@ import UnitObjEditingCommon
         ..addTooltipProperty("Heal Reduction", _ -> "100%")
         ..presetDurationNormal(_ -> 4)
         ..setNameEnhance("Z", "Burning Blade")
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost) div raiderCount)
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
@@ -136,21 +141,23 @@ import UnitObjEditingCommon
 
 
     let witchDoctorCount = BTBuildingData.getUnitCount(BUILDING_WITCH_DOCTOR)
+    goldCost = 0
+    lumberCost = 100
     itm = createBasicItem(ITEM_HEALING_WAVE)
-        ..setItemCost(0, 100, 1, witchDoctorCount, witchDoctorCount)
+        ..setItemCost(goldCost, lumberCost, 1, witchDoctorCount, witchDoctorCount)
         ..setNameEnhance("X", "Add 1 Healing Wave")
         ..setInterfaceIcon(Icons.bTNHealingWave)
 
     tgen = new BTAbilityTooltipGenerator(
         "Calls forth a wave of healing energy that bounces.")
-    new AbilityDefinitionHealingWaveCreep(ABIL_HEALING_WAVE)
+    let healingWave = new AbilityDefinitionHealingWaveCreep(ABIL_HEALING_WAVE)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
         ..setDummyAbility()
         ..tooltipStartListen()
         ..setNameEnhance("X", "Healing Wave")
-        ..setDamageperTarget(1, 75)
-        ..addTooltipProperty("Heal by target", _ -> "75")
+        ..setDamageperTarget(1, 150)
+        ..addTooltipProperty("Heal by target", _ -> "150")
         ..presetNumberofTargetsHit(_ -> 4)
         ..presetManaCost(_ -> 75)
         ..tooltipStopListen(false)
@@ -161,30 +168,42 @@ import UnitObjEditingCommon
         ..tooltipStartListen()
         ..registerTooltipGenerator(tgen)
         ..presetCooldown(_ -> 6)
+        ..applyTooltip(healingWave)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_HEALING_WAVE, tgen.generateFullTooltip())
 
+    goldCost = 0
+    lumberCost = 100
     itm = createBasicItem(ITEM_ACID_BOMB)
-        ..setItemCost(0, 150, 1, 1, 1)
+        ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("X", "Replace 1 Healing Wave with 1 Acid Bomb")
         ..setInterfaceIcon(Icons.bTNAcidBomb)
 
     tgen = new BTAbilityTooltipGenerator(
         "Decreases armor of the target and nearby enemy units.")
-    new AbilityDefinitionAlchemistAcidBomb(ABIL_ACID_BOMB)
+    let acidBomb = new AbilityDefinitionAlchemistAcidBomb(ABIL_ACID_BOMB)
         ..setLevels(1)
         ..setDummyAbility()
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetArmorPenalty(_ -> 4)
-        ..presetPrimaryDamage(_ -> 15)
-        ..presetSecondaryDamage(_ -> 10)
+        ..presetPrimaryDamage(_ -> 30)
+        ..presetSecondaryDamage(_ -> 20)
         ..presetDurationNormal(_ -> 6)
         ..presetManaCost(_ -> 100)
         ..presetAreaofEffect(_ -> 200)
         ..setNameEnhance("Z", "Acid Bomb")
+        ..presetTargetsAllowed(_ -> commaList(
+            TargetsAllowed.enemies,
+            TargetsAllowed.ground,
+            TargetsAllowed.air,
+            TargetsAllowed.organic
+            )
+        )
         ..tooltipStopListen(false)
 
     createAutoCastedEnemyAbility(ABIL_AUTOCAST_ACID_BOMB)
@@ -193,19 +212,24 @@ import UnitObjEditingCommon
         ..presetManaCost(_ -> 100)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 8)
+        ..applyTooltip(acidBomb)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
 
 
+    goldCost = 0
+    lumberCost = 100
     itm = createBasicItem(ITEM_DRUNKEN_HAZE)
-        ..setItemCost(0, 150, 1, 1, 1)
+        ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("Z", "Replace 1 Healing Wave with 1 Drunken Haze")
         ..setInterfaceIcon(Icons.bTNStrongDrink)
 
     tgen = new BTAbilityTooltipGenerator(
         "Drenches enemy units in alcohol, silencing them and causing their attack to miss.")
-    new AbilityDefinitionBrewmasterDrunkenHaze(ABIL_DRUNKEN_HAZE)
+    let drunkenHaze = new AbilityDefinitionBrewmasterDrunkenHaze(ABIL_DRUNKEN_HAZE)
         ..setLevels(1)
         ..setDummyAbility()
         ..setCheckDependencies(false)
@@ -226,13 +250,18 @@ import UnitObjEditingCommon
         ..presetManaCost(_ -> 100)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 6)
+        ..applyTooltip(drunkenHaze)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_DRUNKEN_HAZE, tgen.generateFullTooltip())
 
+    goldCost = 0
+    lumberCost = 250
     itm = createBasicItem(ITEM_MANA_WARD)
-        ..setItemCost(0, 250, 1, 1, 1)
+        ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("C", "Replace 1 Healing Wave with 1 Mana Ward")
         ..setInterfaceIcon(Icons.bTNHealingWard)
 
@@ -244,7 +273,7 @@ import UnitObjEditingCommon
     new BuffDefinition(BUFF_ID, BuffIds.brillianceAura)
         ..setIcon(Icons.bTNHealingWard)
         ..setArtTarget(Abilities.aNrlTarget)
-        ..setTargetAttachmentPoint0(1, "chest")
+        ..setTargetAttachmentPoint0(1, "origin")
         ..setTooltipNormal(1, "Mana Ward")
         ..setTooltipNormalExtended(1, "This unit's mana is being restored " +
             " by a nearby ward")
@@ -258,12 +287,12 @@ import UnitObjEditingCommon
         ..presetAmountRegenerated(_ -> 0.04)
         ..tooltipStartListen()
         ..addTooltipProperty("Mana Regeneration", _ -> "4%")
-        ..setTargetsAllowed(1, commaList(TargetsAllowed.allies))
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.ground, TargetsAllowed.organic, TargetsAllowed.friend))
         ..presetAreaofEffect(_ -> 500)
         ..setNameEnhance("C", "Mana Ward Aura")
         ..tooltipStopListen(false)
 
-    new AbilityDefinitionHealingWard(ABIL_MANA_WARD)
+    let manaWard = new AbilityDefinitionHealingWard(ABIL_MANA_WARD)
         ..setLevels(1)
         ..setWardUnitType(1, commaList(UNIT_MANA_WARD))
         ..presetCooldown(_ -> 0)
@@ -282,6 +311,9 @@ import UnitObjEditingCommon
         ..presetManaCost(_ -> 200)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 10)
+        ..applyTooltip(manaWard)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     new UnitDefinition(UNIT_MANA_WARD, UnitIds.healingward)
@@ -296,9 +328,11 @@ import UnitObjEditingCommon
 
 
     let shamanCount = BTBuildingData.getUnitCount(BUILDING_SHAMAN)
+    goldCost = 0
+    lumberCost = 200
     itm = createBasicItem(ITEM_ORB_LIGHTNING)
-        ..setItemCost(0, 50, 1, shamanCount, shamanCount)
-        ..setNameEnhance("X", "Add 1 Lightning Orb")
+        ..setItemCost(goldCost, lumberCost, shamanCount, 1, 1)
+        ..setNameEnhance("Z", "Add 4 Lightning Orb")
         ..setInterfaceIcon(Icons.bTNOrbOfLightning)
 
     tgen = new BTAbilityTooltipGenerator(
@@ -306,12 +340,13 @@ import UnitObjEditingCommon
         "Deals damage to summoned units."
         )
     let abilId = ABIL_ID_GEN.next()
-    new AbilityDefinitionOrbofLightning(ABIL_ORB_LIGHTNING)
+    let orbOfLightning = new AbilityDefinitionOrbofLightning(ABIL_ORB_LIGHTNING)
         ..setEnabledAttackIndex(1, 0)
         ..presetChanceToHitUnits(_ -> 30)
         ..presetChanceToHitSummons(_ -> 60)
         ..setEffectAbility(1, abilId.toRawCode())
         ..setDamageBonus(1, 30)
+        ..setNameEnhance("Z", "Orb of Lightning")
 
     new AbilityDefinitionPurgeorb(abilId)
         ..presetCastRange(_ -> 700)
@@ -320,20 +355,17 @@ import UnitObjEditingCommon
         ..addTooltipProperty("Chance to hit units", _ ->  0.3.toPercent())
         ..addTooltipProperty("Chance to hit summons", _ ->  0.6.toPercent())
         ..addTooltipProperty("Damage Bonus", _ -> "30")
-        ..presetSummonedUnitDamage(_ -> 200)
+        ..presetSummonedUnitDamage(_ -> 400)
         ..presetUnitPauseDuration(_ -> 1.5)
         ..presetDurationNormal(_ -> 5)
         ..setNameEnhance("Z", "Orb of Lightning")
+        ..applyTooltip(orbOfLightning)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_ORB_LIGHTNING, tgen.generateFullTooltip())
-
-
-    itm = createBasicItem(ITEM_SPIRIT_WOLF1)
-        ..setItemCost(0, 50, 1, shamanCount, shamanCount)
-        ..setNameEnhance("Z", "Add 1 Summon Spirit Wolf")
-        ..setInterfaceIcon(Icons.bTNSpiritWolf)
 
     tgen = new BTAbilityTooltipGenerator(
         "Summons a Spirit Wolf."
@@ -352,7 +384,6 @@ import UnitObjEditingCommon
         ..setNameEnhance("Z", "Summon Spirit Wolf")
         ..tooltipStopListen(true)
 
-    tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_SUMMON_SPIRIT_WOLF1, tgen.generateFullTooltip())
 
 
@@ -365,28 +396,27 @@ import UnitObjEditingCommon
         ..setAreaofEffect(1, 100)
         ..registerTooltipGenerator(tgen)
         ..setSummonedUnit(1, commaList(UNIT_SPIRIT_WOLF1))
+        ..presetManaCost(_ -> 0)
         ..tooltipStartListen()
         ..setNumberofSummonedUnits(1, 3)
-        ..presetManaCost(_ -> 0)
-        ..presetDurationNormal(_ -> 30)
-        ..presetCooldown(_ -> 30)
+        ..presetDurationNormal(_ -> 45)
+        ..presetCooldown(_ -> 45)
         ..setNameEnhance("Z", "Summon Spirit Wolf Pack")
         ..tooltipStopListen(true)
 
-    tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_SUMMON_SPIRIT_WOLF2, tgen.generateFullTooltip())
 
 
     tgen = new BTAbilityTooltipGenerator(
         "Calls forth a bolt of lightning that deals damage and bounce.")
-    new AbilityDefinitionFarseerChainLightning(ABIL_CHAIN_LIGHTNING)
+    let chainLightning = new AbilityDefinitionFarseerChainLightning(ABIL_CHAIN_LIGHTNING)
         ..setHeroAbility(false)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
         ..presetDamageReductionperTarget(_ -> 0)
         ..presetCooldown(_ -> 0)
         ..tooltipStartListen()
-        ..presetDamageperTarget(_ -> 150)
+        ..presetDamageperTarget(_ -> 300)
         ..presetNumberofTargetsHit(_ -> 6)
         ..presetManaCost(_ -> 200)
         ..presetCastRange(_ -> 700)
@@ -400,6 +430,7 @@ import UnitObjEditingCommon
         ..presetCastRange(_ -> 700)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 5)
+        ..applyTooltip(chainLightning)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_CHAIN_LIGHTNING, tgen.generateFullTooltip())
@@ -440,15 +471,16 @@ import UnitObjEditingCommon
         ..presetSecondaryDamage(_ -> 0)
         ..presetArmorPenalty(_ -> 0)
         ..tooltipStartListen()
-        ..addTooltipProperty("Damage", _ -> "30")
-        ..addTooltipProperty("Max damage", _ -> "300")
+        ..addTooltipProperty("Damage", _ -> "60")
+        ..addTooltipProperty("Max damage", _ -> "600")
         ..setAttackSpeedReduction(1, -0.4)
         ..addTooltipProperty("Attack Speed Reduction", _ -> 0.4.toPercent())
         ..setMovementSpeedReduction(1, -0.5)
         ..addTooltipProperty("Movement Speed Reduction", _ -> 0.5.toPercent())
         ..presetAreaofEffect(_ -> 250)
         ..presetDurationNormal(_ -> 3.)
-        ..tooltipStopListen(true)
+        ..tooltipStopListen(false)
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies, TargetsAllowed.self))
         ..setName("Ogre Slam")
 
     createAutoCastedEnemyAbility(ABIL_OGRE_SWING)
@@ -456,8 +488,9 @@ import UnitObjEditingCommon
         ..setAnimationNames("attack,slam")
         ..setCastRange(1, 150)
         ..tooltipStartListen()
-        ..presetCooldown(_ -> 30)
+        ..presetCooldown(_ -> 20)
         ..setNameEnhance("Z", "Ogre Swing")
+        ..setIconNormal(Icons.bTNGrabTree)
         ..tooltipStopListen(true)
         ..setTargetsAllowed(1, commaList(
             TargetsAllowed.enemies,
@@ -466,6 +499,33 @@ import UnitObjEditingCommon
             ))
 
     abilTooltipMap.put(ABIL_OGRE_SWING, tgen.generateFullTooltip())
+
+    // let BUFF_FIREBOLT_ID = compiletime(BUFF_ID_GEN.next())
+    // new BuffDefinition(BUFF_FIREBOLT_ID, BuffIds.acidBomb)
+    //     ..setIcon(Icons.bTNFire)
+    //     ..setArtTarget(1, Abilities.flameStrikeDamageTarget)
+    //     ..setName(1, "Firebolt")
+    //     ..setTooltipNormal(1, "Firebolt")
+    //     ..setTooltipNormalExtended(1, "This has been hit by a firebolt; is it taking damage over time")
+
+    // tgen = new BTAbilityTooltipGenerator(
+    //     "Hurls a fiery bolt that stuns a target enemy unit.")
+    // new AbilityDefinitionAlchemistAcidBomb(ABIL_FIREBOLT)
+    //     ..setHeroAbility(false)
+    //     ..setMissileArc(0)
+    //     ..setMissileArt(Abilities.phoenix_Missile)
+    //     ..registerTooltipGenerator(tgen)
+    //     ..setBuffs(1, commaList(BUFF_FIREBOLT_ID))
+    //     ..setDummyAbility()
+    //     ..setArmorPenalty(1, 0)
+    //     ..tooltipStartListen()
+    //     ..presetPrimaryDamage(_ -> 30)
+    //     ..presetSecondaryDamage(_ -> 15)
+    //     ..presetAreaofEffect(_ -> 200)
+    //     ..presetDurationNormal(_ -> 5)
+    //     ..presetManaCost(_ -> 125)
+    //     ..setNameEnhance("Z", "Firebolt")
+    //     ..tooltipStopListen(false)
 
 
     tgen = new BTAbilityTooltipGenerator(
@@ -476,7 +536,7 @@ import UnitObjEditingCommon
         ..registerTooltipGenerator(tgen)
         ..setDummyAbility()
         ..tooltipStartListen()
-        ..presetDamage(_ -> 180)
+        ..presetDamage(_ -> 360)
         ..presetDurationNormal(_ -> 2)
         ..presetManaCost(_ -> 75)
         ..setNameEnhance("Z", "Firebolt")
@@ -501,8 +561,10 @@ import UnitObjEditingCommon
         ..setTooltipNormalExtended(1, "This unit has rampage;" +
             " its attack damage has been increased.")
 
+    goldCost = 0
+    lumberCost = 500
     itm = createBasicItem(ITEM_RAMPAGE)
-        ..setItemCost(0, 500, 1, 1, 1)
+        ..setItemCost(goldCost, lumberCost, 1, 1, 1)
         ..setNameEnhance("Z", "Add Rampage ability")
         ..setInterfaceIcon(Icons.bTNBerserk)
     tgen = new BTAbilityTooltipGenerator(
@@ -523,6 +585,8 @@ import UnitObjEditingCommon
         ..presetAreaofEffect(lvl -> 200. + 25 * lvl)
         ..presetDurationNormal(lvl -> 5)
         ..setNameEnhance("Z", "Rampage")
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
         ..presetBuffs(_ -> BUFF_RAMPAGE.toRawCode())
         ..presetManaCost(lvl -> 0)
@@ -545,7 +609,7 @@ import UnitObjEditingCommon
         "when the buff expires."
     )
     new AbilityDefinitionRoar(ABIL_KILLING_SPREE)
-        ..setAnimationNames("")
+        ..setAnimationNames("attack")
         ..setHeroAbility(false)
         ..presetAreaofEffect(lvl -> 1)
         ..presetDefenseIncrease(lvl -> 0)

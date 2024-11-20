@@ -15,6 +15,8 @@ import LocalObjectIDs
 import RoundController
 import ScoreBoard
 import UnitDeathTrigger
+import Hints
+import Wiki
 
 // A timer for the core gameplay.
 public constant GAME_TIMER = CreateTimer()
@@ -59,21 +61,22 @@ init
 
     // register altar callback indicator before replacing it
     initAltar()
-    initPlayers()
 
     SetTimeOfDayScale(0)
     SetTimeOfDay(12)
 
-    registerIndicatorCallback(UNIT_RACE_PICKER) (unit target) ->
-        let pData = pDatas.get(target.getOwner())
-        pData.racePicker = target
-    replaceIndicator()
 
     nullTimer() ->
+        initPlayerDatas()
+        registerIndicatorCallback(UNIT_RACE_PICKER) (unit target) ->
+            let pData = pDatas.get(target.getOwner())
+            pData.racePicker = target
+        replaceIndicator()
         initRoundController()
         initUnitDeathTrigger()
         initArmySpawner()
         initScoreBoard()
+        initHints()
         ForForce(bj_FORCE_ALL_PLAYERS) ->
             CreateFogModifierRect(
                 GetEnumPlayer(),
@@ -82,6 +85,8 @@ init
                 true,
                 false
             ).start()
+        initCodexUI()
+
     GameStates.modesSelection.onExit() (state) ->
         playGameInitSound()
         let msg = "Game Started!\nChoose a builder from the tavern and build!"

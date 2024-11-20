@@ -8,6 +8,8 @@ import ItemObjEditing
 import LinkedList
 import ObjectIds
 
+import Lodash
+
 // Local imports:
 import ArmySpawner
 import GridHotkeyPosition
@@ -15,27 +17,30 @@ import ItemObjEditingCommon
 import LocalObjectIDs
 import TooltipsUtils
 import UnitTooltipGenerator
+import BTAbilities
 
 public constant STANDARD_PROJECTILE_SPEED = 1500
 
 function BTUnitDefinition.setCommonAttr()
     this.setBuildTime(1)
-    this.setAttack2DamageSidesperDie(1)
-    this.setAttack2DamageNumberofDice(1)
     this.setLumberBountyAwardedBase(1)
     this.setLumberCost(0)
-    this.setAcquisitionRange(2000)
+    this.setAcquisitionRange(2300)
     this.setRequirements("")
     this.setUpgradesUsed("")
-    this.setGoldCost(9999999)
+    this.setGoldCost(0)
+    this.setStockMaximum(0)
     this.setFoodCost(0)
     this.setButtonPositionX(0)
     this.setButtonPositionY(2)
     this.setNormalAbilities("")
-    this.setRace(Race.Creeps)
+    this.setRace(Race.Human)
+    this.setCanFlee(true)
     this.setHitPointsRegenerationType("always")
+    this.setHitPointsRegenerationRate(0)
     this.setDeathType(3)
     this.setLevel(1)
+    this.setStockStartDelay(0)
     this.setAttacksEnabled(AttacksEnabled.AttackOneOnly.toObjectInt())
 
 public function createSpawnedUnit(int newId, int origId) returns BTUnitDefinition
@@ -69,6 +74,8 @@ public function createBuildingUnit(int newId) returns BuildingDefinition
         ..setRequirements("")
         ..setPlacementRequires(commaList("unwalkable"))
         ..setSelectionScale(1.0)
+        ..setAttacksEnabled(1)
+        ..setAttack1ShowUI(false)
         ..setShadowTextureBuilding("ShadowCrates")
 
 
@@ -76,11 +83,12 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
     return new UnitDefinition(newId, origId)
         ..setNormalAbilities(commaList(
             AbilityIds.invulnerable,
-            ABIL_ORDER_UNIT,
             ABIL_START_ROUND,
             ABIL_SELL_BUILDING,
-            ABIL_TRADE_GOLD,
             ABIL_SELL_ALL,
+            ABIL_UNSTUCK_UNIT,
+            ABIL_ORDER_UNIT,
+            ABIL_TRADE_GOLD,
             AbilityIds.inventory
             ))
         ..setAttacksEnabled(AttacksEnabled.None.toObjectInt())
@@ -100,7 +108,7 @@ public function createBuilder(int newId, int origId) returns UnitDefinition
         ..setAnimationCastPoint(0)
         ..setFoodCost(1)
         ..setTooltipExtended("")
-        ..setRequirements(commaList(UPGD_RACE_PICK, UPGD_ALL_RANDOM))
+        ..setRequirements(commaList(UPGD_RACE_PICK, UPGD_ALL_RANDOM, UPGD_RANDOM))
 
 
 /** Configure this variable to `false` if you don't want the
@@ -128,7 +136,7 @@ public class BTUnitDefinition extends UnitDefinition
     construct(int newId, int origId, int buildingId)
         super(newId, origId)
         buildingDef = createBuildingUnit(buildingId)
-            ..setUnitsTrained(commaList(newId))
+            ..setUnitsSold(commaList(newId))
         buildingData = BTBuildingData.unitIdToDataMap.get(buildingId)
         spawnCount = buildingData.unitToSpawn.size()
 
@@ -194,14 +202,22 @@ public class BTUnitDefinition extends UnitDefinition
         this.setAttack1DamageNumberofDice(nbDice)
         this.setAttack1DamageSidesperDie(sidePerDice)
 
-        let min = damage
+        if buildingDef != null
+            buildingDef.setAttack1DamageBase(damage)
+            buildingDef.setAttack1AttackType(attackType)
+            buildingDef.setAttack1CooldownTime(attackCooldown)
+            buildingDef.setAttack1DamageNumberofDice(nbDice)
+            buildingDef.setAttack1DamageSidesperDie(sidePerDice)
+
+        let min = damage + nbDice
         let max = damage + nbDice * sidePerDice
+        let averageDamage = min + nbDice * (sidePerDice + 1) / 2
         let tooltip = attackTypeStr.firstUpper() +
              " | " + min.toString() + " - " + max.toString() +
              " | " + attackCooldown.toString()
-        addTooltipProperty("Damage", tooltip)
+        addTooltipProperty("Damage", tooltip + " seconds")
         // TODO: find a better formula, doesn't take the dice into acccount?
-        let dps = (min + max / 2) / attackCooldown
+        let dps = averageDamage / attackCooldown
         addTooltipProperty("DPS", dps.toInt().toString())
 
     override function setAttack1MaximumNumberofTargets(int data)
@@ -225,6 +241,10 @@ public class BTUnitDefinition extends UnitDefinition
         var dataStr = data.toObjectString()
         def.setString("udty", dataStr)
         def.setInt("udef", defenseAmount)
+
+        if buildingDef != null
+            buildingDef.setArmorType(data)
+            buildingDef.setDefenseBase(defenseAmount)
         if dataStr == "divine"
             dataStr = "spectral"
         // 0.06 being a map constant
@@ -249,6 +269,8 @@ public class BTUnitDefinition extends UnitDefinition
     override function setAttack1Range(int data)
         def.setInt("ua1r", data)
         addTooltipProperty("Range", data)
+        if buildingDef != null
+            buildingDef.setAttack1Range(data)
 
     function setMana(int data)
         def.setInt("umpm", data)
@@ -259,20 +281,47 @@ public class BTUnitDefinition extends UnitDefinition
     function setBuildingScalingValue(real data)
         buildingDef.setScalingValue(data)
 
+    function setBuildingAbilities(string abilityIds)
+        buildingDef.setNormalAbilities(abilityIds)
+
     function setBuildingGoldCost(int data)
+        var goldCost = data
         buildingDef.setGoldCost(data)
+        if buildingData.upgradeFrom != null
+            goldCost += buildingData.upgradeFrom.goldCost
+        buildingDef.setHitPointsMaximumBase(goldCost + 100)
 
     function setBuildingLumberCost(int data)
+        var bpCost = data
         buildingDef.setLumberCost(data)
+        if buildingData.upgradeFrom != null
+            bpCost += buildingData.upgradeFrom.lumberCost
+        buildingDef.setManaMaximum(bpCost)
+        buildingDef.setManaInitialAmount(bpCost)
 
     function setBuildingUnitsTrained(string data)
         buildingDef.setUnitsTrained(data)
+
+    function setBuildingUnitsSold(string data)
+        buildingDef.setUnitsSold(data)
 
     function setBuildingRequirement(string data)
         buildingDef.setRequirements(data)
 
     function setUpgradeTo(string data)
         buildingDef.setUpgradesTo(data)
+
+    function setUpgradeTo(LinkedList<int> data)
+        var _unitSoldData = ""
+        for id in data
+            let unitToSpawn = BTBuildingData.unitIdToDataMap.get(id).unitToSpawn.copy()
+            let uniq = unitToSpawn.uniq()
+            for t in uniq
+                _unitSoldData +=  "," + t.toRawCode()
+
+        _unitSoldData += "," + this.newId.toRawCode()
+        buildingDef.setUnitsSold(_unitSoldData)
+        buildingDef.setUpgradesTo(commaList(data))
 
     function setBuildingItemsMade(string data)
         buildingDef.setItemsMade(data)
@@ -283,6 +332,15 @@ public class BTUnitDefinition extends UnitDefinition
     function setAutoBuildingCost()
         setBuildingGoldCost(buildingData.goldCost)
         setBuildingLumberCost(buildingData.lumberCost)
+
+        var goldCost = buildingData.goldCost
+        var lumberCost = buildingData.lumberCost
+
+        if buildingData.upgradeFrom != null
+            goldCost += buildingData.upgradeFrom.goldCost
+            lumberCost += buildingData.upgradeFrom.lumberCost
+        this.setGoldCost(goldCost)
+        this.setLumberCost(lumberCost)
 
     function setItemCost(int gold, int lumber, int charges)
         setItemCost(gold, lumber, charges, charges, charges)
@@ -295,6 +353,7 @@ public class BTUnitDefinition extends UnitDefinition
     /** Used to define unit addition, it adds army points on spawn */
     function setItemCostUnit(int gold, int lumber, int charges)
         setItemCostUnit(gold, lumber, charges, charges, charges)
+
 
     /** Used to define unit addition, it adds army points on spawn
         Assume max charges/stock is the spawnCount
@@ -311,6 +370,8 @@ public class BTUnitDefinition extends UnitDefinition
         itemDef.setHitPoints(armyPoints)
         itemDef.setItemCost(gold, lumber, charges, maxStack, maxStock)
         setPointValue(gold, lumber, charges)
+        this.setGoldCost(gold)
+        this.setLumberCost(lumber)
         this.charges = charges
 
     /** Used to define unit replacement, it adds army points on spawn
@@ -326,6 +387,8 @@ public class BTUnitDefinition extends UnitDefinition
         itemDef.setHitPoints(armyPoints)
         itemDef.setItemCost(gold, lumber, charges, maxStack, maxStock)
 
+        this.setGoldCost(gold * maxStock + BTBuildingData.getUnitGoldCost(srcUnitId))
+        this.setLumberCost(lumber * maxStock + BTBuildingData.getUnitLumberCost(srcUnitId))
         this.charges = charges
 
     /** Use for unit linked to a building (not items one) **/
@@ -361,6 +424,13 @@ public class BTUnitDefinition extends UnitDefinition
         this.setModelFile(data)
         this.buildingDef.setModelFile(data)
 
+    function setModelFileExt(string data, int red, int green, int blue)
+        this.setModelFile(data)
+        this.buildingDef.setModelFile(data)
+        this.buildingDef.setTintingColorRed(red)
+        this.buildingDef.setTintingColorGreen(green)
+        this.buildingDef.setTintingColorBlue(blue)
+
     function setRequiredAnimationNamesExt(string data)
         this.setRequiredAnimationNames(data)
         this.buildingDef.setRequiredAnimationNames(data)
@@ -375,6 +445,14 @@ public class BTUnitDefinition extends UnitDefinition
     function setUnitSoundSetExt(string data)
         this.setUnitSoundSet(data)
         this.buildingDef.setUnitSoundSet(data)
+
+    function registerCustomPanelAbilityTooltip(int abilId)
+        abilTooltipToDisplay.saveInt(this.newId, 0, abilId)
+
+    function registerCustomPanelAbilityTooltip(LinkedList<int> abilityIds)
+        for idx = 0 to abilityIds.size() - 1
+            let abilId = abilityIds.get(idx)
+            abilTooltipToDisplay.saveInt(this.newId, idx, abilId)
 
 
 public function UnitOrBuildingOrHeroDefinition.setNameEnhance(string hotkey, string name)

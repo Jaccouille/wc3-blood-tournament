@@ -12,3 +12,12 @@
     https://www.hiveworkshop.com/threads/modify-item-sold-made-stock.350087/
 
 - imForFun (straw hat)
+
+Testing:
+Venix, honeyBadger, theShadow, Chiller, ovalbomb12, Gonzalo, DarkAssassin, Klasker, pokedya, Corke
+
+Models :
+-Directional Arrows by stan0033, https://www.hiveworkshop.com/threads/directional-arrows.348487/
+-Sweep Blood/Fire Small/Large by Hate, https://www.hiveworkshop.com/threads/sweep-attachments.333560/
+
+- imForFun (straw hat) https://www.hiveworkshop.com/members/imforfun.205582/

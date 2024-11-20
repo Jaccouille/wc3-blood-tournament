@@ -6,7 +6,7 @@ public constant BAR              = " | ".color(color(184, 134, 11))
 
 public constant ENERGY_COLOR       = color(100, 149, 237)
 public constant GENERAL_COLOR      = color(194, 232, 235)
-public constant GOLD_COLOR         = color(255, 215,   0)
+public constant GOLD_COLOR         = color(255, 215, 0)
 public constant GRAY_COLOR         = color(160, 160, 160)
 public constant GREEN_COLOR        = color(  0, 223,   0)
 public constant HIGHLIGHT_COLOR    = color(222, 184, 135)

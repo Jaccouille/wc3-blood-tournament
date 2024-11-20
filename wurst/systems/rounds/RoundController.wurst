@@ -21,6 +21,7 @@ import ScoreBoard
 import SpawnZone
 import public Round
 import BloodDonation
+import AfkDetector
 
 public constant roundController = new RoundController()
 
@@ -41,6 +42,7 @@ class RoundController
     player previousRoundWinner = null
     timerdialog tdialog
     timer roundInterludeTimer
+    CallbackSingle portalDisplayCb
 
     Round currentRound = null
 
@@ -49,6 +51,7 @@ class RoundController
 
     function addRounds(LinkedList<Round> rounds)
         this.rounds.addAll(rounds.copy())
+        destroy rounds
 
     function buildScoreBoardForFinals(string roundPhase)
         // Get all round from the same phase
@@ -68,6 +71,9 @@ class RoundController
         destroy roundParticipants
 
     private function initPreviewer(player _p, int zoneIdx)
+        // Don't show previewer for computer player
+        if not _p.isHuman()
+            return
         if not playerToArmyPreviewer.has(_p)
             playerToArmyPreviewer.put(_p, new ArmyPreviewer(_p))
         let ap = playerToArmyPreviewer.get(_p)
@@ -85,6 +91,7 @@ class RoundController
         // TODO: Maybe move board update to scoreboard package?
         BOARD_TITLE_PREFIX = currentRound.roundName
         if currentRound instanceof NormalRound
+            ScoreBoardColumnEntries.loadRoundLayout(currentRound.roundParticipant)
             // Init previewer for each player
             var zoneIdx = 0
             for contestantPair in currentRound.matchUp
@@ -95,6 +102,11 @@ class RoundController
                     initPreviewer(p1, zoneIdx)
                     initPreviewer(p2, zoneIdx + 1)
                 zoneIdx += 2
+
+            // Start Afk detector for human player
+            for _p in ALL_PLAYERS
+                if _p.isHuman() and not playerToBuilderAI.get(_p).isEnabled
+                    new AfkDetector(_p, false)
 
             doAfter(9) ->
                 ALL_PLAYERS.forEach() (player _p) ->
@@ -108,14 +120,16 @@ class RoundController
             if currentRound.roundName == "Quarter Final" and not hasQuarterStarted
                 buildScoreBoardForFinals("Quarter Final")
                 hasQuarterStarted = true
+                altarEntity.moveTo(gg_rct_ManagerTowerFinal.getCenter())
+                altarEntity.getArenaMaster().setFacing(altarEntity.getArenaMaster().getPos().angleTo(CENTER))
+                showFinalTowerDoodad()
+
             else if currentRound.roundName == "Demi Final" and not hasDemiStarted
                 buildScoreBoardForFinals("Demi Final")
                 hasDemiStarted = true
             else if currentRound.roundName == "Final"
                 buildScoreBoardForFinals("Final")
 
-        else
-            ScoreBoardColumnEntries.loadRoundLayout(currentRound.roundParticipant)
 
         roundInterludeTimer = getTimer()
         tdialog = roundInterludeTimer.createTimerDialog()
@@ -131,7 +145,7 @@ class RoundController
             else
                 // Allow builder to construct
                 disableOrderBlocker()
-                interludeTime = 120.
+                interludeTime = 240.
                 hasFinalStarted = true
                 if not currentRound.hasStarted
                     if gameConfig.isDisplayPortalEnabled()
@@ -148,7 +162,7 @@ class RoundController
             interludeTime = gameConfig.getRoundInterludeTime()
 
             // Visual effect before round start
-            doAfter(interludeTime - 10.) ->
+            portalDisplayCb = doAfter(interludeTime - 10.) ->
                 if not currentRound.hasStarted
                     if gameConfig.isDisplayPortalEnabled()
                         currentRound.spawnPortals()
@@ -159,6 +173,8 @@ class RoundController
             startRound()
 
     function stopRoundTimer()
+        if portalDisplayCb != null and not currentRound instanceof FinalRound
+            destroy portalDisplayCb
         roundInterludeTimer.destr()
 
     function startRound()
@@ -168,13 +184,13 @@ class RoundController
                 .stopPreview()
         tdialog.destr()
         hasRoundStarted = true
-        pDatas.forEach() (player _, PlayerData pData) ->
-            pData.roundBloodPoints = 0
         if not currentRound.hasStarted
             forUnitsAll() (unit u) ->
                 if u.isType(UNIT_TYPE_STRUCTURE)
                     u.setAnimation("stand")
             currentRound.start()
+            pDatas.forEach() (player _, PlayerData pData) ->
+                pData.roundBloodPoints = 0
 
     function checkIfCurrentroundDone(player winner)
         if currentRound != null
@@ -183,16 +199,24 @@ class RoundController
                 // Registering the winner to create final round matchup
                 if previousRoundWinner == null
                     // Log.debug("Adding previous winner " + winner.getName())
+                    for _p in pDatas
+                        if _p.getName() == "Jaccouille#1782"
+                            printTimedToPlayer("Adding previous winner " + winner.getName(), 5, _p)
                     previousRoundWinner = winner
                 else
                     Log.debug("Removing previous winner")
                     previousRoundWinner = null
+            destroy currentRound
             currentRound = null
             preRoundPhaseStart()
 
     function buildFinalRoundMatchup(player winner)
         if roundController.previousRoundWinner != null
-            Log.debug("Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + winner.getNameColored(true))
+            let msg = "Adding " + roundController.previousRoundWinner.getNameColored(true) + " vs " + winner.getNameColored(true)
+            for _p in pDatas
+                if _p.getName() == "Jaccouille#1782"
+                    printTimedToPlayer(msg, 5, _p)
+            Log.debug(msg)
             roundController.addRound(
                 new FinalRound()
                     ..addMatchup(new Pair(roundController.previousRoundWinner.getId(), winner.getId())))
@@ -238,10 +262,10 @@ function generateMatchups() returns LinkedList<LinkedList<Pair<int, int>>>
     return roundParticipantList
 
 function generateRounds()
-    let roundParticipantList = generateMatchups()
+    let possiblePair = generateMatchups()
     int idx = 0
     while idx < gameConfig.getRoundCount()
-        let matchUps = roundParticipantList.get(idx mod 7)
+        let matchUps = possiblePair.get(idx mod 7).copy()
         let round = new NormalRound()
                 ..addMatchup(matchUps.dequeue())
                 ..addMatchup(matchUps.dequeue())
@@ -254,6 +278,7 @@ function generateRounds()
         round.setRewards(gold, 0)
         roundController.addRound(round)
         idx++
+    destroy possiblePair
 
 function generateFinalRounds()
     let matches = generateMatchups().getRandomElement()
@@ -285,7 +310,9 @@ public function initRoundController()
         Log.debug(round.roundName + " finished")
         altarEntity.getOrbUnit().pause()
         altarEntity.getArenaMaster().setAnimation("Stand")
-
+        for _p in pDatas
+            SetPlayerTechResearchedSwap(UPGD_AVAILABLE_DURING_ROUND, 0, _p)
+            SetPlayerTechResearchedSwap(UPGD_UNAVAILABLE_DURING_ROUND, 1, _p)
         // Remove speed boost banner
         forUnitsAll() (unit u) ->
             if u.getTypeId() == UNIT_SPEED_BANNER
@@ -297,12 +324,14 @@ public function initRoundController()
             printTimed(round.winner.getNameColored() + " has eliminated " + looser.getNameColored() , 3)
             scoreBoardEntries.get("PlayerName").setEntryColor(looser, COLOR_GRAY)
         else
+            roundController.currentRound.playRoundEndSound()
             printTimed("{0} finished!".format(round.roundName).color(GOLD_COLOR), 15)
             doAfter(3) ->
                 altarEntity.hideCounter()
                 printTimed(round.winner.getNameColored() + " gets "
                     + altarEntity.bloodPointCounter.toString().color(COLOR_RED)
-                    + " bonus blood points for winning the round" , 15)
+                    + " bonus kill points for winning the round" , 15)
+                pDatas.get(round.winner).addRoundBloodPoints(altarEntity.bloodPointCounter)
             doAfter(6) ->
                 if round.goldReward > 0
                     printTimed("You get " + round.goldReward.toString().color(COLOR_GOLD) + " golds from round income", 15)
@@ -321,6 +350,8 @@ public function initRoundController()
             StopMusic(false)
             ClearMapMusic()
             PlayMusic(Sounds.pH1)
+            for _p in pDatas
+                pDatas.get(_p).builder.removeAbility(ABIL_START_ROUND)
 
 
     onAllroundsFinished = () ->
@@ -328,10 +359,14 @@ public function initRoundController()
         StopMusic(false)
         ClearMapMusic()
         PlayMusic(Sounds.credits)
+        orderBlocker.disable()
         if roundController.previousRoundWinner != null
             GameStates.gameplay.exit()
             print(roundController.previousRoundWinner.getNameColored() + " is the " + "Blood tournament".color(COLOR_RED) + " champion!")
-            doAfter(3) ->
+            doAfter(6) ->
+                print("Thank you for playing, map feedback on hiveworkshop.com are appreciated!")
+
+            doAfter(4) ->
                 var bloodSpilled = 0
                 for _p in pDatas
                     bloodSpilled += pDatas.get(_p).totalBloodPoints

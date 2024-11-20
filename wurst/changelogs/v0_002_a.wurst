@@ -1,0 +1,18 @@
+package v0_002_a
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 2, 'a')
+        ..add("(HU) Reduced Slow duration from 15 to 12 seconds")
+        ..add("(NE) Reduced moutain giant freeze after taunt cast")
+        ..add("(NE) Reduced starfall max damage from 600 to 400")
+        ..add("(UN) Increased carrion swarm cooldown from 6 to 10")
+        ..add("Added minimap ping on army preview position")
+        ..add("Can now sell upgraded buildings & buildings containing items")
+        ..add("Doubled unit HP, increased most ability damage")
+        ..add("Fixed Health Multiplier mode")
+        ..add("Removed bridge to smooth up army movement")
+        ..add("Removed sell all, added unstuck unit ability to builder")
+        ..add("Removed sheep sound on building move cast")
+        ..add("Smoothed up army movement to center")

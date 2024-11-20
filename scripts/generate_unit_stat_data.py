@@ -1,6 +1,33 @@
+"""
+This script extracts unit attributes from Warcraft 3 unit definition files and generates a CSV and Excel file with the extracted data.
+
+The script performs the following steps:
+1. Reads the unit definition files and extracts unit attributes using regular expressions.
+2. Matches the extracted attributes with building data obtained from another file.
+3. Calculates additional attributes such as power, esperanceDps, esperanceReductionPercent, and esperance_hitpoint.
+4. Cleans the extracted data and creates a pandas DataFrame.
+5. Performs data analysis on the DataFrame, including descriptive statistics and grouping by armor type and faction.
+6. Writes the unit attributes to a CSV and Excel file.
+
+Note: This script requires the openpyxl and pandas libraries to be installed.
+Note2: This script is pure garbage don't try to find logic int
+
+"""
+
 import re
 import csv
 from pathlib import Path
+from openpyxl import load_workbook
+import pandas as pd
+from IPython.display import display
+
+# Rest of the code...
+import re
+import csv
+from pathlib import Path
+from openpyxl import load_workbook
+
+
 
 
 with open(str(Path("wurst/systems/armyHandler/ArmySpawner.wurst")), "r") as file:
@@ -133,8 +160,7 @@ if __name__ == "__main__":
     read_unit_attributes("wurst/objects/units/UndeadUnitsDef.wurst")
     unit_attributes_list.append({**{"UnitId": "NightElf"}, **race_dict})
     read_unit_attributes("wurst/objects/units/NightElfUnitsDef.wurst")
-    # Define the CSV file and header
-    csv_file = "unit_attributes.csv"
+
 
     # all_attribute_names = set()
     # for attributes in unit_attributes_list:
@@ -152,8 +178,6 @@ if __name__ == "__main__":
         goldCost = row.get("goldCost", 0)
         lumberCost = row.get("lumberCost", 0)
         unitCount = row.get("unitCount", 1)
-        # esperance_value =
-        # TODO: faire la médianne pour faire plez a stéphane
         esperance_dps = sum(unit_attr.get('dps', 0) for unit_attr in unit_attributes_list) / (len(unit_attributes_list) - 4)
         esperance_reductionPercent = sum(unit_attr.get('reductionPercent', 0) for unit_attr in unit_attributes_list) / (len(unit_attributes_list) - 4)
         esperance_hitpoint = sum(int(unit_attr.get('setHitPointsMaximumBase', 0)) for unit_attr in unit_attributes_list) / (len(unit_attributes_list) - 4)
@@ -198,7 +222,7 @@ if __name__ == "__main__":
     # display(df)
 
     # Code to add the Faction as a new column
-    threshold_values = ['Human', 'Orc', 'Undead', 'NightElf']
+    faction_list = ['Human', 'Orc', 'Undead', 'NightElf']
     currentFaction = ''
     def calculate_new_column_value(row, thresholds):
         global currentFaction
@@ -207,16 +231,50 @@ if __name__ == "__main__":
             return f"None"
         else:
             return f"{currentFaction}"
-    df['Faction'] = df.apply(calculate_new_column_value, args=(threshold_values,), axis=1)
+    df['Faction'] = df.apply(calculate_new_column_value, args=(faction_list,), axis=1)
 
-    # Finish cleaning of the Dataframe and removing the archmage because it is the only row with Nan values
+    # Finish cleaning of the Dataframe
     df = df.loc[df["Faction"] != 'None']
     df['UnitId'] = df['UnitId'].str[5:]
     df = df.rename(columns= {'UnitId': 'Unit', 'setHitPointsMaximumBase': 'HitPoints'})
     df = df.rename(columns= {'setHitPointsMaximumBase': 'HitPoints'})
-    df = df.loc[df["Unit"] != 'ARCHMAGE']
     df = df.astype({"Unit":'category', "dps":'float64', "attackType":'category', "reductionPercent":'float64', "unitCount":'int64', "goldCost":'int64', "HitPoints":'int64', "lumberCost":'int64',
                     "armorType":'category', "Faction":'category'})
+
+    attack_type_weight = {
+        "Normal": 1,
+        "Pierce": 0.75,
+        "Siege": 1.25,
+        "Magic": 1.75,
+    }
+
+    defense_type_weight = {
+        "Unarmored": 0.5,
+        "Medium": 0.75,
+        "Small": 0.75,
+        "Large": 1,
+        "Fortified": 1.25,
+        "Divine": 2,
+    }
+
+    def calculate_offensive_power(dps, attackType):
+        return dps * attack_type_weight[attackType]
+    df['OffensivePower'] = df.apply(lambda row: calculate_offensive_power(row["dps"], row["attackType"]), axis=1)
+
+    def calculate_defensive_power(hitPoints, armorType, reductionPercent):
+        return hitPoints * (1 + reductionPercent / 100) * defense_type_weight[armorType]
+    df['DefensivePower'] = df.apply(lambda row: calculate_defensive_power(row["HitPoints"], row["armorType"], row["reductionPercent"]), axis=1)
+
+    def calculate_power_level(offPower, defPower, goldCost, lumberCost, unitCount):
+        return round((1 * offPower + defPower * 0.1) / (goldCost + lumberCost) * unitCount, 2)
+    df['PowerLevel'] = df.apply(lambda row: calculate_power_level(
+        row["OffensivePower"],
+        row["DefensivePower"],
+        row["goldCost"],
+        row["lumberCost"],
+        row["unitCount"]),
+                                axis=1)
+
 
     # Analyses
     df.describe(include='all')
@@ -228,6 +286,9 @@ if __name__ == "__main__":
     ############################################################
     # TIS I #
     ############################################################
+    # Define the CSV file and header
+    csv_file = "unit_attributes.csv"
+    excel_file = "unit_attributes.xlsx"
 
     # Write unit attributes to the CSV file
     with open(csv_file, "w", newline="") as csv_file:
@@ -236,4 +297,7 @@ if __name__ == "__main__":
         # csv_writer.writeheader()
         # csv_writer.writerows(unit_attributes_list)
 
-    print(f"Unit attributes saved to {csv_file}")
+    df.to_excel(excel_file)
+
+    # print(f"Unit attributes saved to {Path(csv_file).resolve()}")
+    # print(f"Unit attributes saved to {Path(excel_file).resolve()}")

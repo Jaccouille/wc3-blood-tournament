@@ -4,7 +4,6 @@ package HumanUnitsDef
 import Assets
 
 // Local imports:
-import ArmySpawner
 import BTAbilities
 import BTAbilityTooltipGenerator
 import ColorUtils
@@ -13,17 +12,19 @@ import LocalAssets
 import LocalObjectIDs
 import UnitObjEditingCommon
 import UnitTooltipGenerator
+import LinkedList
 
 @compiletime function createFootman()
     var tooltip = new UnitTooltipGenerator("Basic melee unit")
     createSpawnedUnit(UNIT_FOOTMAN, UnitIds.footman, BUILDING_FOOTMAN)
+        ..registerCustomPanelAbilityTooltip(ABIL_DEFEND)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 14, 1, 2, 1.4)
+        ..setAttack1Data(AttackType.Normal, 14, 1, 6, 1.4)
 
         ..setArmorData(ArmorType.Large, 3)
-        ..setHitPointsMaximumBase(200)
+        ..setHitPointsMaximumBase(400)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -42,15 +43,16 @@ import UnitTooltipGenerator
     )
     let itm = createBasicItem(ITEM_CAPTAIN)
     createSpawnedUnit(UNIT_CAPTAIN, UnitIds.thecaptain)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_DEFEND, ABIL_MELEE_AURA_FLAT_10))
         ..setNormalAbilities(commaList(ABIL_MELEE_AURA_FLAT_10))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 44, 2, 4, 1.3)
+        ..setAttack1Data(AttackType.Normal, 44, 1, 16, 1.3)
 
         ..setArmorData(ArmorType.Large, 7)
-        ..setHitPointsMaximumBase(750)
+        ..setHitPointsMaximumBase(1500)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -68,13 +70,13 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_RIFLEMAN, UnitIds.rifleman, BUILDING_RIFLEMAN)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Pierce, 24, 4, 3, 1.7)
+        ..setAttack1Data(AttackType.Pierce, 20, 5, 3, 1.7)
         ..setAttack1Range(450)
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(220)
+        ..setHitPointsMaximumBase(290)
 
-        ..setSpeedBase(240)
+        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 
@@ -82,84 +84,107 @@ import UnitTooltipGenerator
 
         ..setSizeSmall()
         ..setNameEnhance("W", "Rifleman")
+        ..setUpgradeTo(asList(BUILDING_GRENADIER, BUILDING_SNIPER))
 
 
         ..setModelFileExt(Units.rifleman1)
         ..setIconGameInterfaceExt(Icons.bTNRifleman)
         ..setUnitSoundSetExt(Soundsets.rifleman)
 
-    let riflemanCount = BTBuildingData.getUnitCount(BUILDING_RIFLEMAN)
     tooltip = new UnitTooltipGenerator(
         "Decent ranged pierce unit, has small splash."
     )
-    var itm = createBasicItem(ITEM_EXPLOSIVE_AMMO)
-    createSpawnedUnit(UNIT_RIFLEMAN_EXPLOSIVE_AMMO, UnitIds.rifleman)
+    // var itm = createBasicItem(ITEM_GRENADIER)
+    createSpawnedUnit(UNIT_GRENADIER, UnitIds.rifleman, BUILDING_GRENADIER)
         ..setAttack1WeaponType(WeaponType.MissileSplash)
         ..setAttack1ProjectileArt(Abilities.cannonTowerMissile)
         ..setAttack1ProjectileSpeed(1600)
-        ..setNormalAbilities(commaList(ABIL_EXPLOSIVE_AMMO_VISUAL))
-        ..registerItemDef(itm, ItemModifierType.Replace)
+        ..setNormalAbilities(commaList(ABIL_GRENADIER_VISUAL))
+        ..setBuildingAbilities(commaList(
+            AbilityIds.invulnerable,
+            AbilityIds.inventory,
+            ABIL_SHOP_SHARING,
+            ABIL_GRENADIER_VISUAL,
+            AbilityIds.sellItems,
+            ABIL_MOVE_BUILDING
+        ))
+        // ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Pierce, 40, 3, 4, 1.7)
+        ..setAttack1Data(AttackType.Pierce, 40, 5, 3, 1.7)
         ..setAttack1Range(450)
         ..setSmallSplash()
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(220)
+        ..setHitPointsMaximumBase(290)
 
-        ..setSpeedBase(240)
-        ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
+        ..setSpeedBase(270)
+        // ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
 
         ..setSizeSmall()
-        ..setNameEnhance("X", "Rifleman Explosive Ammo")
-        ..tooltipStopListen(true, itm)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
 
+
+        ..setNameEnhance("X", "Grenadier")
+        ..tooltipStopListen(true)
+        // ..tooltipStopListen(true, itm)
+
+        ..setUnitSoundSetExt(Soundsets.rifleman)
         ..setIconGameInterfaceExt(Icons.bTNHumanMissileUpThree)
-
+        ..setModelFileExt(Units.rifleman1)
+        ..setButtonPositionX(1)
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_CRITICAL_STRIKE_40) + "\n\n" +
         "High range unit."
     )
-    itm = createBasicItem(ITEM_SNIPER)
-    createSpawnedUnit(UNIT_SNIPER, UnitIds.rifleman)
+    // itm = createBasicItem(ITEM_SNIPER)
+    createSpawnedUnit(UNIT_SNIPER, UnitIds.rifleman, BUILDING_SNIPER)
+        ..registerCustomPanelAbilityTooltip(ABIL_CRITICAL_STRIKE_40)
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_40))
-        ..registerItemDef(itm, ItemModifierType.Replace)
+        // ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Pierce, 32, 4, 6, 1.7)
+        ..setAttack1Data(AttackType.Pierce, 30, 5, 4, 1.7)
         ..setAttack1Range(900)
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(220)
+        ..setHitPointsMaximumBase(290)
 
-        ..setSpeedBase(240)
-        ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
+        ..setSpeedBase(270)
+        // ..setItemCostReplacement(0, 100, 1, riflemanCount, riflemanCount, BUILDING_RIFLEMAN)
 
         ..setSizeSmall()
-        ..setNameEnhance("C", "Sniper")
-        ..tooltipStopListen(true, itm)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
 
+        ..setNameEnhance("C", "Sniper")
+        ..tooltipStopListen(true)
+        // ..tooltipStopListen(true, itm)
+
+        ..setModelFileExt(Units.rifleman1)
         ..setIconGameInterfaceExt(Icons.bTNHumanMissileUpOne)
+        ..setUnitSoundSetExt(Soundsets.rifleman)
+        ..setButtonPositionX(2)
 
     tooltip = new UnitTooltipGenerator("Long range unit with small splash.")
 
-    itm = createBasicItem(ITEM_MORTAR)
+    var itm = createBasicItem(ITEM_MORTAR)
     createSpawnedUnit(UNIT_MORTAR, UnitIds.mortarteam)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Siege, 66, 6, 7, 2.5)
+        ..setAttack1Data(AttackType.Siege, 95, 5, 10, 2.5)
         ..setSmallSplash()
         ..setAttack1Range(1000)
         ..setAttack1ProjectileSpeed(1000)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(150)
+        ..setHitPointsMaximumBase(300)
 
-        ..setSpeedBase(220)
+        ..setSpeedBase(270)
         ..setAutoPointValue()
 
         ..setItemCostUnit(0, 500, 1)
@@ -172,21 +197,27 @@ import UnitTooltipGenerator
 
 @compiletime function createPriest()
     var tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_HEAL)
+        abilTooltipMap.get(ABIL_HEAL) + "\n\n" +
+        abilTooltipMap.get(ABIL_ABOLISH_MAGIC_ORB)
     )
 
     createSpawnedUnit(UNIT_PRIEST, UnitIds.priest, BUILDING_PRIEST)
-        ..setNormalAbilities(commaList(ABIL_HEAL))
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_HEAL,
+            ABIL_ABOLISH_MAGIC_ORB,
+            ABIL_WEAPON_BLESSING,
+            ABIL_ARMOR_BLESSING))
+        ..setNormalAbilities(commaList(ABIL_HEAL, ABIL_ABOLISH_MAGIC_ORB))
         ..setDefaultActiveAbility(commaList(ABIL_HEAL))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 14, 2, 3, 1.75)
+        ..setAttack1Data(AttackType.Magic, 15, 5, 2, 1.75)
         ..setAttack1Range(650)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 2)
-        ..setHitPointsMaximumBase(70)
+        ..setHitPointsMaximumBase(220)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -194,6 +225,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..setNameEnhance("A", "Priest")
+        ..setUpgradeTo(asList(BUILDING_SPELL_BREAKER))
 
         ..tooltipStopListen(true)
 
@@ -203,34 +235,38 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_SPELL_STEAL) + "\n\n" +
-        abilTooltipMap.get(ABIL_MAGIC_ARMOR_30) + "\n"
+        "Note: Priest items will be refunded as this unit only cast spell steal.".color(GENERAL_COLOR)
         )
-    let itm = createBasicItem(ITEM_SPELL_BREAKER)
-    createSpawnedUnit(UNIT_SPELL_BREAKER, UnitIds.spellbreaker)
-        ..setNormalAbilities(commaList(ABIL_SPELL_STEAL, ABIL_MAGIC_ARMOR_30))
+    createSpawnedUnit(UNIT_SPELL_BREAKER, UnitIds.spellbreaker, BUILDING_SPELL_BREAKER)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_SPELL_STEAL, ABIL_MAGIC_DEFEND))
+        ..setNormalAbilities(commaList(ABIL_SPELL_STEAL))
         ..setDefaultActiveAbility(commaList(ABIL_SPELL_STEAL))
-        ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 35, 4, 5, 1.4)
+        ..setAttack1Data(AttackType.Normal, 30, 5, 4, 1.4)
         ..setAttack1Range(300)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 4)
-        ..setHitPointsMaximumBase(500)
+        ..setHitPointsMaximumBase(750)
         ..setMana(200)
 
         ..setSpeedBase(270)
 
         ..setAutoPointValue()
-        ..setItemCostUnit(0, 1500, 5, 1, 5)
-        ..tooltipStopListen(true, itm)
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
 
         ..setSizeSmall()
         ..setNameEnhance("Z", "Spell Breaker")
+        ..setBuildingScalingValue(0.85)
 
+        ..setModelFileExt(Units.bloodElfSpellThief)
         ..setIconGameInterfaceExt(Icons.bTNSpellBreaker)
+        ..setUnitSoundSetExt(Soundsets.bloodElfSpellThief)
+        ..setButtonPositionX(1)
+
 
 @compiletime function createKnight()
     var tooltip = new UnitTooltipGenerator(
@@ -238,14 +274,15 @@ import UnitTooltipGenerator
     )
 
     createSpawnedUnit(UNIT_KNIGHT, UnitIds.knight, BUILDING_KNIGHT)
+        ..registerCustomPanelAbilityTooltip(ABIL_BASH_20)
         ..setNormalAbilities(commaList(ABIL_BASH_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 40, 3, 4, 1.4)
+        ..setAttack1Data(AttackType.Normal, 35, 5, 4, 1.4)
 
         ..setArmorData(ArmorType.Large, 5)
-        ..setHitPointsMaximumBase(500)
+        ..setHitPointsMaximumBase(1000)
 
         ..setSpeedBase(350)
 
@@ -255,7 +292,7 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("E", "Knight")
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_CRUSADER))
+        ..setUpgradeTo(asList(BUILDING_CRUSADER))
 
         ..setModelFileExt(Units.knight1)
         ..setIconGameInterfaceExt(Icons.bTNKnight)
@@ -268,9 +305,15 @@ import UnitTooltipGenerator
     )
     // var itm = createBasicItem(ITEM_CRUSADER)
     createSpawnedUnit(UNIT_CRUSADER, UnitIds.knight, BUILDING_CRUSADER)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_MAGIC_ARMOR_50,
+            ABIL_HOLY_BLADE,
+            ABIL_BASH_30
+        ))
         ..setNormalAbilities(commaList(
             ABIL_MAGIC_ARMOR_50,
             ABIL_HOLY_BLADE,
+            ABIL_BASH_30,
             ABIL_HOLY_BLADE_VISUAL
             ))
         ..setDefaultActiveAbility(commaList(ABIL_HOLY_BLADE))
@@ -278,10 +321,10 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 80, 4, 6, 1.4)
+        ..setAttack1Data(AttackType.Normal, 80, 5, 5, 1.4)
 
         ..setArmorData(ArmorType.Large, 6)
-        ..setHitPointsMaximumBase(800)
+        ..setHitPointsMaximumBase(1300)
 
         ..setSpeedBase(350)
 
@@ -299,6 +342,7 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.banditLord1)
         ..setIconGameInterfaceExt(Icons.bTNBanditLord)
         ..setUnitSoundSetExt(Soundsets.knight)
+        ..setButtonPositionX(1)
 
 
     tooltip = new UnitTooltipGenerator(
@@ -308,16 +352,17 @@ import UnitTooltipGenerator
 
     let itm = createBasicItem(ITEM_MARSHALL)
     createSpawnedUnit(UNIT_MARSHALL, UnitIds.lordgarithos)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CLEAVE_30, ABIL_MAGIC_ARMOR_50))
         ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_MAGIC_ARMOR_50))
         ..setDefaultActiveAbility(commaList(""))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 120, 7, 8, 1.5)
+        ..setAttack1Data(AttackType.Normal, 110, 10, 6, 1.5)
 
         ..setArmorData(ArmorType.Large, 10)
-        ..setHitPointsMaximumBase(1300)
+        ..setHitPointsMaximumBase(2600)
 
         ..setSpeedBase(330)
         ..setSizeLarge()
@@ -341,18 +386,24 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     )
     return createSpawnedUnit(paladinId, UnitIds.paladin)
             ..registerTooltipGenerator(tooltip)
+            ..registerCustomPanelAbilityTooltip(asList(
+                ABIL_BASH_30,
+                ABIL_DEVOTION_AURA_2,
+                ABIL_INSPIRE
+            ))
             // ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_DEVOTION_AURA_2))
             ..setNormalAbilities(commaList(ABIL_BASH_30, ABIL_DEVOTION_AURA_2))
             ..tooltipStartListen()
 
-            ..setAttack1Data(AttackType.Siege, 120, 5, 7, 1.3)
+            ..setAttack1Data(AttackType.Siege, 110, 5, 10, 1.3)
 
             ..setArmorData(ArmorType.Large, 6)
-            ..setHitPointsMaximumBase(1000)
+            ..setHitPointsMaximumBase(2000)
 
-            ..setSpeedBase(300)
+            ..setSpeedBase(270)
 
             ..setSizeSmall()
+            ..setLumberCost(1000)
             ..setPointValue(0, 1000, 1)
             ..addTooltipProperty("Army points", "100")
             ..tooltipStopListen(true)
@@ -371,14 +422,14 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setNormalAbilities(commaList(""))
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 120, 5, 7, 1.3)
+        ..setAttack1Data(AttackType.Magic, 110, 5, 10, 1.3)
 
         ..setArmorData(ArmorType.Divine, 4)
-        ..setHitPointsMaximumBase(450)
+        ..setHitPointsMaximumBase(900)
         ..setHitPointsRegenerationRate(-15)
         ..setSummonedUnit()
 
-        ..setSpeedBase(300)
+        ..setSpeedBase(270)
         ..setPointValue(60)
         ..tooltipStopListen(true)
 
@@ -414,8 +465,11 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     // TODO: lumber cost shoud match armyspawner automatically
     let buildingDef = createBuildingUnit(BUILDING_PALADIN)
         ..setNameEnhance("R", "Paladin x1")
-        ..setUnitsTrained(commaList(UNIT_PALADIN_1, UNIT_GHOST_PALADIN))
+        ..setUnitsSold(commaList(UNIT_PALADIN_1, UNIT_GHOST_PALADIN))
+        ..setHitPointsMaximumBase(100)
         ..setLumberCost(1000)
+        ..setManaMaximum(1000)
+        ..setManaInitialAmount(1000)
         ..setModelFile(Units.heroPaladin)
         ..setIconGameInterface(Icons.bTNHeroPaladin)
         ..setUnitSoundSet(Soundsets.uther)
@@ -428,17 +482,25 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     )
 
     createSpawnedUnit(UNIT_SORCERESS, UnitIds.sorceress, BUILDING_SORCERESS)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_SLOW,
+            ABIL_ORB_FROST,
+            ABIL_FROST_NOVA,
+            ABIL_INCINERATE,
+            ABIL_SOUL_BURN,
+            ABIL_ORB_DARKNESS
+            ))
         ..setNormalAbilities(commaList(ABIL_SLOW))
         ..setDefaultActiveAbility(commaList(ABIL_SLOW))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 34, 3, 7, 1.9)
+        ..setAttack1Data(AttackType.Magic, 35, 5, 3, 1.9)
         ..setAttack1Range(550)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(80)
+        ..setHitPointsMaximumBase(160)
         ..setMana(300)
 
         ..setSpeedBase(270)
@@ -447,7 +509,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setAutoBuildingCost()
 
         ..tooltipStopListen(true)
-        ..setBuildingUnitsTrained(commaList(UNIT_SORCERESS, UNIT_GHOST))
+        ..setBuildingUnitsSold(commaList(UNIT_SORCERESS, UNIT_GHOST))
 
         ..setSizeSmall()
         ..setNameEnhance("S", "Sorceress")
@@ -464,6 +526,10 @@ function createPaladin(int paladinId) returns BTUnitDefinition
     )
     let itm = createBasicItem(ITEM_COURT_ENCHANTRESS)
     createSpawnedUnit(UNIT_COURT_ENCHANTRESS, UnitIds.jaina)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_BLIZZARD,
+            ABIL_BRILLANCE_AURA_2,
+            ABIL_MANA_SHIELD))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..setNormalAbilities(commaList(
             ABIL_AUTOCAST_BLIZZARD,
@@ -475,13 +541,13 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 70, 3, 9, 1.75)
+        ..setAttack1Data(AttackType.Magic, 70, 10, 3, 1.75)
         ..setAttack1Range(650)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setSmallSplash()
 
         ..setArmorData(ArmorType.Unarmored, 0)
-        ..setHitPointsMaximumBase(120)
+        ..setHitPointsMaximumBase(240)
         ..setMana(800)
 
         ..setSpeedBase(270)
@@ -504,12 +570,12 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..tooltipStartListen()
         ..setNormalAbilities("")
 
-        ..setAttack1Data(AttackType.Magic, 12, 3, 3, 1.6)
+        ..setAttack1Data(AttackType.Magic, 12, 3, 5, 1.6)
         ..setAttack1Range(300)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Divine, 2)
-        ..setHitPointsMaximumBase(80)
+        ..setHitPointsMaximumBase(160)
         ..setHitPointsRegenerationRate(-5)
         ..setSummonedUnit()
 
@@ -519,63 +585,6 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..tooltipStopListen(true)
         ..setNameEnhance("W", "Ghost")
         ..setGhostDeath()
-
-
-@compiletime function createSwordMaster()
-    let tooltip = new UnitTooltipGenerator("Sword Master Desc")
-
-    createSpawnedUnit(UNIT_SWORD_MASTER, UnitIds.arthaswithfrostmourne, BUILDING_SWORD_MASTER)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-
-        ..setAttack1Data(AttackType.Magic, 250, 5, 14, 0.8)
-
-        ..setArmorData(ArmorType.Large, 10)
-        ..setHitPointsMaximumBase(1800)
-
-        ..setSpeedBase(300)
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setPriority(2)
-        ..setSizeSmall()
-        ..setNameEnhance("Z", "SwordMaster")
-        ..setBuildingLumberCost(3000)
-        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-
-        ..setModelFileExt(Units.arthaswithSword)
-        ..setIconGameInterfaceExt(Icons.bTNArthas)
-        ..setUnitSoundSetExt(Soundsets.arthas)
-
-
-@compiletime function createElvenMage()
-    let tooltip = new UnitTooltipGenerator("Elven Mage Desc")
-
-    createSpawnedUnit(UNIT_ELVEN_MAGE, UnitIds.bloodmage, BUILDING_ELVEN_MAGE)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-
-        ..setAttack1Data(AttackType.Magic, 200, 5, 8, 1.5)
-        ..setAttack1Range(450)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Medium, 6)
-        ..setHitPointsMaximumBase(600)
-
-        ..setMana(1400)
-        ..setManaMaximum(1400)
-        ..setSpeedBase(280)
-
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setSizeSmall()
-        ..setNameEnhance("C", "Elven Mage")
-        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-
-        ..setModelFileExt(Units.kael)
-        ..setIconGameInterfaceExt(Icons.bTNHeroBloodElfPrince)
-        ..setUnitSoundSetExt(Soundsets.kael)
 
 
 @compiletime function createBuilder()

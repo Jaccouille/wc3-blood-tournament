@@ -25,10 +25,10 @@ init
         gameConfig.getRoundGoldIncome().getFirst().toString() + ", min : 100") (mode, args) ->
         if (args.size() > 1)
             let roundGoldIncomes = args.drop(1).map(e -> max(e.toInt(), 100))
-            var msg = "Round gold income set to : ".color(LABEL_COLOR)
+            var msg = "Round gold income set to : ".color(GOLD_COLOR)
             msg += roundGoldIncomes.map(e -> e.toString().color(VALUE_COLOR)).join(", ")
 
-            msg += "\nRemaining round gold income set to :".color(LABEL_COLOR)
+            msg += "\nRemaining round gold income set to : ".color(GOLD_COLOR)
                 + roundGoldIncomes.getLast().toString().color(VALUE_COLOR)
             mode.message(msg)
             gameConfig.setRoundGoldIncome(roundGoldIncomes)
@@ -85,11 +85,18 @@ init
 
 
     new GameMode("spawn-capacity", "sc", "Set max unit spawn capacity, default : " +
-        gameConfig.getSpawnCap().toString() + ", max : 120, min : 60") (mode, args) ->
+        gameConfig.getSpawnCap().toString() + ", max : 100, min : 60") (mode, args) ->
         if (args.size() > 1)
-            let spawnCap = max(min(args.get(1).toInt(), 120), 60)
+            let spawnCap = max(min(args.get(1).toInt(), 100), 60)
             mode.message("Spawn capacity set to ".color(LABEL_COLOR) + spawnCap.toString().color(VALUE_COLOR))
             gameConfig.setSpawnCap(spawnCap)
+
+    new GameMode("spawn-capacity-elim", "sce", "Set max unit spawn capacity in elimination round, default : " +
+        gameConfig.getSpawnCapElim().toString() + ", max : 200, min : 100") (mode, args) ->
+        if (args.size() > 1)
+            let spawnCapElim = max(min(args.get(1).toInt(), 200), 100)
+            mode.message("Elimination spawn capacity set to ".color(LABEL_COLOR) + spawnCapElim.toString().color(VALUE_COLOR))
+            gameConfig.setSpawnCapElim(spawnCapElim)
 
     new GameMode("bounty-multiplier", "bm", "Set blood points bounty multiplier, default : " +
         gameConfig.getBountyMultiplier().toString(1) + ", max : 10.0, min : 0") (mode, args) ->
@@ -112,7 +119,7 @@ init
             mode.message("Damage multiplier set to ".color(LABEL_COLOR) + "x{0}".color(VALUE_COLOR).format(damageMultiplier.toString(2)))
             gameConfig.setDamageMultiplier(damageMultiplier)
 
-    new GameMode("health-multiplier", "hm", "Set blood points health multiplier, default : " +
+    new GameMode("health-multiplier", "hm", "Set unit health multiplier, default : " +
         gameConfig.getHealthMultiplier().toString(1) + ", max : 2.0, min : 0.5") (mode, args) ->
         if (args.size() > 1)
             let healthMultiplier = min(max(args.get(1).toReal(), 0.5), 2.0)
@@ -143,13 +150,21 @@ init
             mode.message("Fog of war disabled, player's building zones are exposed".color(LABEL_COLOR))
             gameConfig.setFogOfWar(false)
 
-    new GameMode("blood-compensation", "bc", "Enable blood donation, players get a blood points donation after each round") (mode, args) ->
+    new GameMode("blood-donation", "bd", "Disable blood donation, players get a blood points donation after each round") (mode, args) ->
         if not gameConfig.isBloodDonationEnabled()
             mode.message("Blood donation enabled, players get a blood points donation after each round".color(LABEL_COLOR))
             gameConfig.setBloodDonation(true)
         else
             mode.message("Blood donation disabled".color(LABEL_COLOR))
             gameConfig.setBloodDonation(false)
+
+    new GameMode("sellable-upgrade", "su", "Disable upgrade selling, building that have been upgraded/bought item cannot be sold") (mode, args) ->
+        if not gameConfig.isSellableUpgradeEnabled()
+            mode.message("Upgrade selling enabled, players can sell building that have been upgraded/bought item".color(LABEL_COLOR))
+            gameConfig.setSellableUpgrade(true)
+        else
+            mode.message("Upgrade selling disabled".color(LABEL_COLOR))
+            gameConfig.setSellableUpgrade(false)
 
     new GameMode("set-exchange-rate", "ser", "General", "Set gold/blood points exchange rates, default : " +
         gameConfig.getGoldExchange().toString() + " gold for " + gameConfig.getBloodPointExchange().toString() +

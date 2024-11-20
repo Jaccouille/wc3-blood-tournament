@@ -34,6 +34,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetMaximumNumberofTargets(_ -> 1)
         ..setNameEnhance("Z", "Multishot 1")
+        ..setIconNormal(Icons.bTNImprovedBows)
         ..tooltipStopListen(true)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
@@ -50,6 +51,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetMaximumNumberofTargets(_ -> 4)
         ..setNameEnhance("Z", "Multishot 4")
+        ..setIconNormal(Icons.bTNImprovedBows)
         ..tooltipStopListen(true)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
@@ -105,14 +107,14 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
     tgen = new BTAbilityTooltipGenerator(
         "The closest enemies are forced to attack this unit.")
-    new AbilityDefinitionTaunt(ABIL_TAUNT)
+    let taunt = new AbilityDefinitionTaunt(ABIL_TAUNT)
         ..setHeroAbility(false)
         ..setCheckDependencies(false)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
         ..presetCooldown(_ -> 0)
         ..tooltipStartListen()
-        ..presetPreferHostiles(_ -> 40)
+        ..presetPreferHostiles(_ -> 30)
         ..presetAreaofEffect(_ -> 600)
         ..setNameEnhance("Z", "Taunt")
         ..tooltipStopListen(false)
@@ -120,8 +122,9 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     createAutoCastedEnemyAbility(ABIL_AUTOCAST_TAUNT)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 250)
+        ..applyTooltip(taunt)
         ..tooltipStartListen()
-        ..presetCooldown(_ -> 12)
+        ..presetCooldown(_ -> 15)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_TAUNT, tgen.generateFullTooltip())
@@ -133,7 +136,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     tgen = new BTAbilityTooltipGenerator(
         "Calls down waves of falling stars; " +
         "each wave deals damage to units in an area. Does not stack with other starfall.")
-    new AbilityDefinitionArchMageBlizzard(ABIL_STARFALL)
+    let starFall = new AbilityDefinitionArchMageBlizzard(ABIL_STARFALL)
         ..setHeroAbility(false)
         ..setBuffs(1, "")
         ..setAnimationNames("spell")
@@ -143,13 +146,14 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..presetCooldown(_ -> 0)
         ..presetCastRange(_ -> 9999)
         ..presetDamage(_ -> 60)
-        ..presetMaximumDamageperWave(_ -> 600)
+        ..presetMaximumDamageperWave(_ -> 800)
         ..presetNumberofShards(_ -> 8)
         ..presetNumberofWaves(_ -> 3)
         ..presetManaCost(_ -> 100)
         ..presetAreaofEffect(_ -> 300)
-        ..setNameEnhance("Z", "Star fall")
+        ..setNameEnhance("Z", "Star Fall")
         ..tooltipStopListen(false)
+        ..setIconNormal(Icons.bTNStarFall)
         ..setEffects(1, commaList(STARFALL_EFFECT))
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
@@ -158,6 +162,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetCastRange(_ -> 800)
         ..presetCooldown(_ -> 30)
+        ..applyTooltip(starFall)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_STARFALL, tgen.generateFullTooltip())
@@ -174,7 +179,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     )
     new AbilityDefinitionFaerieFire(ABIL_DUMMY_CAST_FAERIE_FIRE)
         ..presetDefenseReduction(_ -> 4)
-        ..presetDurationNormal(_ -> 40)
+        ..presetDurationNormal(_ -> 15)
         ..setDummyAbility()
         ..setNameEnhance("Z", "Faerie Fire Dummy")
 
@@ -183,7 +188,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..registerTooltipGenerator(tgen)
         ..presetDefenseReduction(_ -> 4)
-        ..presetDurationNormal(_ -> 40)
+        ..presetDurationNormal(_ -> 15)
         ..addTooltipProperty("Target limit", _ -> FAERIE_FIRE_TARGET_COUNT.toString())
         ..presetAreaofEffect(_ -> FAERIE_FIRE_AOE)
         ..presetManaCost(_ -> 60)
@@ -196,26 +201,58 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_FAERIE_FIRE, tgen.generateFullTooltip())
 
     let druidTalonCount = BTBuildingData.getUnitCount(BUILDING_DRUID_TALON)
+    var goldCost = 0
+    var lumberCost = 200
     var itm = createBasicItem(ITEM_ENTANGLING_ROOT)
-        ..setItemCost(0, 100, 1, druidTalonCount, druidTalonCount)
+        ..setItemCost(goldCost, lumberCost, 1, 3, 3)
         ..setNameEnhance("Z", "Replace 1 Faerie Fire with 1 Entangling Root")
         ..setInterfaceIcon(Icons.bTNEntanglingRoots)
 
     tgen = new BTAbilityTooltipGenerator(
-        "Causes roots to burst from the ground, immobilizing, " +
-        "disarming and damaging a target enemy temporarily."
+        "Causes roots to burst from the ground, reducing " +
+        "movement and attack speed of nearby enemies."
         )
-    new AbilityDefinitionEntanglingRootscreep(ABIL_ENTANGLING_ROOT)
+
+    let BUFF_ROOT_SLOW_ID = compiletime(BUFF_ID_GEN.next())
+    new BuffDefinition(BUFF_ROOT_SLOW_ID, BuffIds.enduranceAura)
+        ..setIcon(Icons.bTNEntanglingRoots)
+        ..setArtTarget(Abilities.stasisTotemTarget)
+        ..setTargetAttachments(1, 1)
+        ..setTargetAttachmentPoint0(1, "overhead")
+        ..setName(1, "Entangling Root")
+        ..setIcon(Icons.bTNEntanglingRoots)
+        ..setTooltipNormal(1, "Entangling Root")
+        ..setTooltipNormalExtended(1, "This unit is being slowed by a nearby " +
+            " entangling root")
+
+    let ABIL_ROOT_SLOW = compiletime(ABIL_ID_GEN.next())
+    new AbilityDefinitionAuraEnduranceCreep(ABIL_ROOT_SLOW)
+        ..setLevels(1)
+        ..setCheckDependencies(false)
+        ..setArtTarget("")
+        ..presetBuffs(_ -> commaList(BUFF_ROOT_SLOW_ID))
+        ..registerTooltipGenerator(tgen)
+        ..setMovementSpeedIncrease(1, -0.5)
+        ..setAttackSpeedIncrease(1, -0.3)
+        ..tooltipStartListen()
+        ..addTooltipProperty("Movement Speed Reduction", _ -> "50%")
+        ..addTooltipProperty("Attack Speed Reduction", _ -> "30%")
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
+        ..presetAreaofEffect(_ -> 300)
+        ..setNameEnhance("C", "Entangling Root Aura")
+        ..tooltipStopListen(false)
+
+    let entanglingRoot = new AbilityDefinitionHealingWard(ABIL_ENTANGLING_ROOT)
         ..setHeroAbility(false)
+        ..setWardUnitType(1, commaList(UNIT_ENTANGLING_ROOT))
         ..setDummyAbility()
         ..setCheckDependencies(false)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
-        ..presetCooldown(_ -> 80)
         ..tooltipStartListen()
-        ..presetDamageperSecond(_ -> 20)
-        ..presetDurationNormal(_ -> 4)
-        ..presetManaCost(_ -> 80)
+        ..presetDurationNormal(_ -> 6)
+        ..presetManaCost(_ -> 125)
+        ..presetCastRange(_ -> 700)
         ..setNameEnhance("W", "Entangling Root")
         ..tooltipStopListen(false)
 
@@ -223,21 +260,33 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 5)
-        ..presetManaCost(_ -> 80)
+        ..presetManaCost(_ -> 120)
         ..presetCastRange(_ -> 700)
+        ..applyTooltip(entanglingRoot)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
+
+    new UnitDefinition(UNIT_ENTANGLING_ROOT, UnitIds.healingward)
+        ..setModelFile(Abilities.entanglingRootsTarget)
+        ..setNormalAbilities(commaList(ABIL_ROOT_SLOW))
+        ..setScalingValue(1.5)
+        ..setHitPointsMaximumBase(100)
+        ..setName("Entangling Root")
 
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_ENTANGLING_ROOT, tgen.generateFullTooltip())
 
+    goldCost = 0
+    lumberCost = 100
     itm = createBasicItem(ITEM_WAND_OF_ILLUSION)
-        ..setItemCost(0, 75, 1, druidTalonCount, druidTalonCount)
+        ..setItemCost(goldCost, lumberCost, 1, druidTalonCount, druidTalonCount)
         ..setNameEnhance("Z", "Replace 1 Faerie Fire with 1 Wand of Illusion")
         ..setInterfaceIcon(Icons.bTNWand)
 
     tgen = new BTAbilityTooltipGenerator(
         "Create an illusion of an allied unit, takes 2x damage.")
-    new AbilityDefinitionItemIllusion(ABIL_WAND_OF_ILLUSION)
+    let woi = new AbilityDefinitionItemIllusion(ABIL_WAND_OF_ILLUSION)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 500)
         ..presetCooldown(_ -> 0)
@@ -255,6 +304,9 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..presetCooldown(_ -> 3)
         ..presetManaCost(_ -> 60)
         ..presetCastRange(_ -> 600)
+        ..applyTooltip(woi)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
@@ -282,7 +334,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
     tgen = new BTAbilityTooltipGenerator(
         "Summon Wisps that explode on target.")
-    new AbilityDefinitionSummonSeaElemental(ABIL_SUMMON_WISP)
+    let summonWisp = new AbilityDefinitionSummonSeaElemental(ABIL_SUMMON_WISP)
         ..registerTooltipGenerator(tgen)
         ..presetCooldown(_ -> 0)
         ..presetManaCost(_ -> 100)
@@ -291,6 +343,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetSummonedUnitCount(_ -> 3)
         ..presetDurationNormal(_ -> 40)
+        ..setIconNormal(Icons.bTNWisp)
         ..setNameEnhance("Z", "Summon Wisp")
         ..tooltipStopListen(false)
 
@@ -299,6 +352,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetCooldown(_ -> 10)
         ..presetManaCost(_ -> 100)
+        ..applyTooltip(summonWisp)
         ..tooltipStopListen(true)
         ..presetCastRange(_ -> 600)
 
@@ -309,10 +363,12 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "attack speed.")
     new AbilityDefinitionSlowPoison(ABIL_POISON_SPEAR)
         ..registerTooltipGenerator(tgen)
-        ..tooltipStartListen()
-        ..presetDamagePerSecond(_ -> 10)
         ..presetAttackSpeedFactor(_ -> 0.20)
         ..presetMovementSpeedFactor(_ -> 0.30)
+        ..tooltipStartListen()
+        ..presetDamagePerSecond(_ -> 20)
+        ..addTooltipProperty("Attack Speed Reduction",_ -> 0.2.toPercent())
+        ..addTooltipProperty("Movement Speed Reduction",_ -> 0.3.toPercent())
         ..presetDurationNormal(_ -> 5)
         ..setNameEnhance("Z", "Poison Spear")
         ..tooltipStopListen(true)
@@ -328,7 +384,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     new AbilityDefinitionParasite(ABIL_PARASITE_SEED)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..presetDamageperSecond(_ -> 40)
+        ..presetDamageperSecond(_ -> 80)
         ..presetSummonedUnitCount(_ -> 2)
         ..presetSummonedUnitDuration(_ -> 80)
         ..presetCooldown(_ -> 2)
@@ -348,10 +404,11 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     )
     new AbilityDefinitionKeeperoftheGroveThornsAura(ABIL_THORN_AURA)
         ..registerTooltipGenerator(tgen)
+        ..setHeroAbility(false)
         ..presetDamageDealttoAttackers(_ -> 0.4)
         ..tooltipStartListen()
         ..addTooltipProperty("Damage returned", _ -> 0.4.toPercent())
-        ..presetAreaofEffect(_ -> 900)
+        ..presetAreaofEffect(_ -> 1200)
         ..setNameEnhance("X", "Thorn Aura")
         ..tooltipStopListen(true)
 
@@ -360,15 +417,17 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
 
     let dryadCount = BTBuildingData.getUnitCount(BUILDING_DRYAD)
+    goldCost = 0
+    lumberCost = 250
     itm = createBasicItem(ITEM_REJUVENATION)
-        ..setItemCost(0, 50, 1, dryadCount, dryadCount)
-        ..setNameEnhance("Z", "Replace 1 Abolish Magic with 1 Rejuvenation")
+        ..setItemCost(goldCost, lumberCost, dryadCount, 1, 1)
+        ..setNameEnhance("Z", "Replace Abolish Magic by Rejuvenation")
         ..setInterfaceIcon(Icons.bTNRejuvenation)
 
     tgen = new BTAbilityTooltipGenerator(
         "Heals a target friendly unit over the duration."
     )
-    new AbilityDefinitionRejuvinationcreep(ABIL_REJUVENATION)
+    let rejuvenation = new AbilityDefinitionRejuvinationcreep(ABIL_REJUVENATION)
         ..setDummyAbility()
         ..registerTooltipGenerator(tgen)
         ..presetManaCost(_ -> 60)
@@ -384,6 +443,9 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetCooldown(_ -> 4)
         ..presetManaCost(_ -> 60)
+        ..applyTooltip(rejuvenation)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
         ..presetCastRange(_ -> 900)
 
@@ -398,11 +460,11 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..setScalingFactor(1, 0)
         ..tooltipStartListen()
-        ..setAttackSpeedIncrease(1, 0.4)
-        ..addTooltipProperty("Attack Speed Increase", _ -> 0.4.toPercent())
+        ..setAttackSpeedIncrease(1, 0.5)
+        ..addTooltipProperty("Attack Speed Increase", _ -> 0.5.toPercent())
         ..setMovementSpeedIncrease(1, 0.3)
         ..addTooltipProperty("Movement Speed Increase", _ -> 0.3.toPercent())
-        ..presetDurationNormal(_ -> 6)
+        ..presetDurationNormal(_ -> 4)
         ..presetCooldown(_ -> 20)
         ..setNameEnhance("Z", "Frenzy")
         ..tooltipStopListen(true)
@@ -458,12 +520,12 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_SPIRIT_OF_VENGEANCE, tgen.generateFullTooltip())
 
 
-    let BUFF_HAUNT = compiletime(BUFF_ID_GEN.next())
-    new BuffDefinition(BUFF_HAUNT, BuffIds.shadowStrike)
+    new BuffDefinition(BUFF_HAUNTED, BuffIds.shadowStrike)
         // ..setIcon(Icons.bTNCurse)
         // ..setArtTarget(1, Abilities.curseTarget)
         // ..setTargetAttachmentPoint0("overhead")
         ..setTooltipNormal(1, "Haunted")
+        ..setIcon(Icons.bTNPossession)
         ..setTooltipNormalExtended(1, "This unit is haunted; it cannot fight.")
 
 
@@ -471,20 +533,22 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "Haunts a target, making it unable to attack."
         )
     let abilId = ABIL_ID_GEN.next()
-    new AbilityDefinitionOrbofLightning(ABIL_TERRIFY_ORB)
+    let terrifyOrb = new AbilityDefinitionOrbofLightning(ABIL_TERRIFY_ORB)
         ..setMissileArt(Abilities.vengeanceMissile)
         ..setArtTarget("")
         ..setEnabledAttackIndex(1, 0)
         ..presetChanceToHitUnits(_ -> 20)
         ..presetChanceToHitSummons(_ -> 20)
         ..setEffectAbility(1, abilId.toRawCode())
+        ..setIconNormal(Icons.bTNPossession)
         ..setDamageBonus(1, 0)
+        ..setNameEnhance("Z", "Haunts")
 
     new AbilityDefinitionBrewmasterDrunkenHaze(abilId)
         ..setIconNormal(Icons.bTNCurse)
         ..presetCastRange(_ -> 700)
         ..setAreaofEffect(1, 0)
-        ..setBuffs(1, BUFF_HAUNT.toRawCode())
+        ..setBuffs(1, BUFF_HAUNTED.toRawCode())
         ..setLevels(1)
         ..setManaCost(1, 0)
         ..setMissileArc(0)
@@ -498,10 +562,11 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..addTooltipProperty("Chance to hit units", _ ->  0.2.toPercent())
         ..setMovementSpeedModifier(1, 0.75)
-        ..addTooltipProperty("Movement speed reduction", _ -> 0.75.toPercent())
-        ..presetDurationNormal(_ -> 5)
-        ..presetCooldown(_ -> 10)
+        ..addTooltipProperty("Movement speed reduction", _ -> 0.8.toPercent())
+        ..presetDurationNormal(_ -> 4)
+        ..presetCooldown(_ -> 15)
         ..setNameEnhance("Z", "Haunts")
+        ..applyTooltip(terrifyOrb)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_TERRIFY_ORB, tgen.generateFullTooltip())
@@ -509,7 +574,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
     let BUFF_TERROR = compiletime(BUFF_ID_GEN.next())
     new BuffDefinition(BUFF_TERROR, BuffIds.enduranceAura)
-        ..setIcon(Icons.bTNPossession)
+        ..setIcon(Icons.bTNAuraOfDarkness)
         ..setArtTarget(1, Abilities.orbCorruptionSpecialArt)
         ..setTargetAttachmentPoint0(1, "chest")
         ..setTooltipNormal(1, "Terror Aura")
@@ -531,6 +596,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..setAttackSpeedIncrease(1, -0.3)
+        ..setIconNormal(Icons.bTNAuraOfDarkness)
         ..addTooltipProperty("Attack Speed Decrease", _ -> 0.3.toPercent())
         ..presetAreaofEffect(_ -> 600)
         ..setName("Terror Aura")
@@ -541,7 +607,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
     tgen = new BTAbilityTooltipGenerator(
         "Gives bonus damage to nearby friendly units.")
-    new AbilityDefinitionRoar(ABIL_ROAR)
+    let roar = new AbilityDefinitionRoar(ABIL_ROAR)
         ..setLevels(1)
         ..setHeroAbility(false)
         ..registerTooltipGenerator(tgen)
@@ -561,6 +627,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetManaCost(_ -> 125)
         ..presetCooldown(_ -> 15)
+        ..applyTooltip(roar)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_ROAR, tgen.generateFullTooltip())
@@ -583,6 +650,8 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_ABOLISH_MAGIC, tgen.generateFullTooltip())
+
+
 
 
 init

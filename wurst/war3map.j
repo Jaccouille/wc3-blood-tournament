@@ -34,6 +34,12 @@ globals
     rect                    gg_rct_Pink                = null
     rect                    gg_rct_Final_Round_West    = null
     rect                    gg_rct_Final_Round_East    = null
+    rect                    gg_rct_NtoCenter           = null
+    rect                    gg_rct_StoCenter           = null
+    rect                    gg_rct_EtoCenter           = null
+    rect                    gg_rct_WtoCenter           = null
+    rect                    gg_rct_ManagerTower        = null
+    rect                    gg_rct_ManagerTowerFinal   = null
 endglobals
 
 function InitGlobals takes nothing returns nothing
@@ -190,8 +196,8 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_Frontrank_EN = Rect( 4608.0, 1504.0, 5760.0, 2816.0 )
     set gg_rct_Frontrank_NW = Rect( -1792.0, 5632.0, -512.0, 6784.0 )
     set gg_rct_Frontrank_WS = Rect( -5760.0, -768.0, -4608.0, 512.0 )
-    set gg_rct_Red = Rect( 3584.0, 5568.0, 5120.0, 6176.0 )
-    set gg_rct_Blue = Rect( 5120.0, 4544.0, 6528.0, 5184.0 )
+    set gg_rct_Red = Rect( 3584.0, 5600.0, 5120.0, 6208.0 )
+    set gg_rct_Blue = Rect( 5120.0, 4576.0, 6656.0, 5184.0 )
     set gg_rct_Teal = Rect( 4608.0, -3232.0, 6144.0, -2656.0 )
     set gg_rct_Purple = Rect( 3584.0, -4768.0, 5120.0, -4192.0 )
     set gg_rct_Yellow = Rect( -4864.0, -4768.0, -3328.0, -4192.0 )
@@ -200,6 +206,12 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_Pink = Rect( -4864.0, 5600.0, -3328.0, 6176.0 )
     set gg_rct_Final_Round_West = Rect( -1536.0, -128.0, -512.0, 2304.0 )
     set gg_rct_Final_Round_East = Rect( 512.0, -128.0, 1536.0, 2304.0 )
+    set gg_rct_NtoCenter = Rect( -512.0, 7040.0, 512.0, 7168.0 )
+    set gg_rct_StoCenter = Rect( -512.0, -5120.0, 512.0, -4992.0 )
+    set gg_rct_EtoCenter = Rect( 6016.0, 640.0, 6144.0, 1408.0 )
+    set gg_rct_WtoCenter = Rect( -6144.0, 640.0, -6016.0, 1408.0 )
+    set gg_rct_ManagerTower = Rect( -3744.0, 3552.0, -3136.0, 4256.0 )
+    set gg_rct_ManagerTowerFinal = Rect( -320.0, 2720.0, 352.0, 3424.0 )
 endfunction
 
 //***************************************************************************

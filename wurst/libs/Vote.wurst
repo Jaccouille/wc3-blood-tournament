@@ -30,7 +30,7 @@ public class Vote
         voteInstanceMap.put(name, this)
         doAfter(timeRemaining) ->
             if voteInstanceMap.has(name)
-                this.endVote()
+                this.endVote(true)
 
     function addAction(VoteCallback cb)
         this.cb = cb
@@ -38,23 +38,23 @@ public class Vote
     function castVote(player _p)
         if not hasVoted.has(_p)
             hasVoted.push(_p)
-            let remainingVote = amountToPass - hasVoted.size()
+            let remainingVote = max(amountToPass - hasVoted.size(), 0)
             let msg = _p.getNameColored(true) +
                 " has voted for " + this.name.color(SPECIAL_COLOR) +
                 ", " + remainingVote.toString() + " vote remaining"
             printTimed(msg, 7)
             if hasVoted.size() >= amountToPass
-                this.endVote()
+                this.endVote(false)
         else
             printTimedToPlayer("You already voted for " + this.name, 5, _p)
 
-    function endVote()
+    function endVote(boolean displayFailed)
         if voteInstanceMap.has(this.name)
             voteInstanceMap.remove(this.name)
         if hasVoted.size() >= amountToPass
             printTimed(this.name + " vote passed!", 5)
             cb.execute()
-        else
+        else if displayFailed
             printTimed(this.name + " vote failed!", 5)
         destroy cb
         destroy hasVoted

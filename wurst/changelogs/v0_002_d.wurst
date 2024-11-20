@@ -1,0 +1,18 @@
+package v0_002_d
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 2, 'd')
+        ..add("(HU) Reduced spell breaker HP from 1000 to 750")
+        ..add("(OR) Added Maurauder, upgrades from raider, gains critical strike")
+        ..add("(OR) Changed grunt & berserk armor type from large to Small")
+        ..add("(OR) Removed killing spree from berserker, reduced DPS, reduced HP 1000 -> 800")
+        ..add("(UN) Added spectral sage, upgrades from necromancer")
+        ..add("(UN) Reduced Vampire armor 4 -> 2, HP 1800 -> 1600")
+        ..add("(UN) Reduced Vampire attack speed 1.0 -> 1.2")
+        ..add("(UN) Reduced Vampire lord armor 8 -> 5, HP 2400 -> 2000")
+        ..add("(UN) Removed lifesteal from vampire & vampire lord")
+        ..add("Fixed bash ability")
+        ..add("Fixed damage & hit point multiplier mode for summoned units")
+        ..add("Hide sell building during round phase")

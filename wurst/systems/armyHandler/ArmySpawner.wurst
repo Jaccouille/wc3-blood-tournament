@@ -6,9 +6,6 @@ import ClosureEvents
 import HashMap
 import LinkedList
 
-// Third party imports:
-import Lodash
-
 // Local imports:
 import GameConfig
 import GameConstants
@@ -34,6 +31,12 @@ public class BTBuildingData
     static function getUnitPointValue(int unitId) returns int
         return unitIdToDataMap.get(unitId).unitPointValue
 
+    static function getUnitGoldCost(int unitId) returns int
+        return unitIdToDataMap.get(unitId).goldCost
+
+    static function getUnitLumberCost(int unitId) returns int
+        return unitIdToDataMap.get(unitId).lumberCost
+
     static function getBuildingArmyPoints(int unitId) returns int
         return unitIdToDataMap.get(unitId).buildingArmyPoints
 
@@ -48,7 +51,8 @@ public class BTBuildingData
     int unitPointValue = 0
     int goldCost = 0
     int lumberCost = 0
-    boolean isAnUpgrade = false
+    BTBuildingData upgradeFrom
+
 
     construct(int buildingId, int goldCost, int lumberCost, LinkedList<int> unitToSpawn)
         unitIdToDataMap.put(buildingId, this)
@@ -66,7 +70,7 @@ public class BTBuildingData
         unitPointValue = computeUnitPointValue(goldCost, lumberCost, unitToSpawn.size())
         upgradeBonusArmyPoints += unitPointValue * unitToSpawn.size()
         if unitIdToDataMap.get(upgradeFrom) != null
-            this.isAnUpgrade = true
+            this.upgradeFrom = unitIdToDataMap.get(upgradeFrom)
             unitPointValue += unitIdToDataMap.get(upgradeFrom).unitPointValue
             buildingArmyPoints = upgradeBonusArmyPoints + unitIdToDataMap.get(upgradeFrom).buildingArmyPoints
         else
@@ -82,57 +86,46 @@ function genList(int unitId, int count) returns LinkedList<int>
 @compiletime function setupBuildingData()
     // TODO: refactor, spawn count should be located in the unit definition files
     // Issue: Can't map an int to a linked list at compile time
-    new BTBuildingData(BUILDING_FOOTMAN      , 100, 0   , genList(UNIT_FOOTMAN         , 10))
-    new BTBuildingData(BUILDING_CAPTAIN  , 0  , 500 , genList(UNIT_CAPTAIN     , 10))
-    new BTBuildingData(BUILDING_RIFLEMAN     , 100, 0   , genList(UNIT_RIFLEMAN        , 5))
-    new BTBuildingData(BUILDING_ELVEN_ARCHER , 150, 0   , genList(UNIT_ELVEN_ARCHER    , 10))
-    new BTBuildingData(BUILDING_RANGER       , 0  , 700 , genList(UNIT_RANGER          , 5))
-    new BTBuildingData(BUILDING_KNIGHT       , 200, 0   , genList(UNIT_KNIGHT          , 5))
-    new BTBuildingData(BUILDING_KNIGHT, BUILDING_CRUSADER     , 0  , 1000, genList(UNIT_CRUSADER        , 5))
-    new BTBuildingData(BUILDING_PRIEST       , 200, 0   , genList(UNIT_PRIEST          , 5))
-    new BTBuildingData(BUILDING_SORCERESS    , 150, 0   , genList(UNIT_SORCERESS       , 3))
-    new BTBuildingData(BUILDING_MAGE         , 300, 0   , genList(UNIT_MAGE            , 3))
-    new BTBuildingData(BUILDING_SWORD_MASTER , 0  , 3000, genList(UNIT_SWORD_MASTER    , 4))
-    new BTBuildingData(BUILDING_ELVEN_MAGE   , 0  , 3000, genList(UNIT_ELVEN_MAGE      , 3))
-    new BTBuildingData(BUILDING_PALADIN      , 0  , 1500, asList (UNIT_PALADIN_1))
-    new BTBuildingData(BUILDING_ARCHMAGE     , 0  , 2000, asList (UNIT_WATER_ELEMENTAL , UNIT_WATER_ELEMENTAL, UNIT_ARCHMAGE))
+    new BTBuildingData(BUILDING_FOOTMAN   ,                          100 , 0    , genList (UNIT_FOOTMAN       , 10))
+    new BTBuildingData(BUILDING_CAPTAIN   ,                          0   , 500  , genList (UNIT_CAPTAIN       , 10))
+    new BTBuildingData(BUILDING_RIFLEMAN  ,                          100 , 0    , genList (UNIT_RIFLEMAN      , 5 ))
+    new BTBuildingData(BUILDING_RIFLEMAN  , BUILDING_GRENADIER ,     0   , 500  , genList (UNIT_GRENADIER     , 5 ))
+    new BTBuildingData(BUILDING_RIFLEMAN  , BUILDING_SNIPER ,        0   , 500  , genList (UNIT_SNIPER        , 5 ))
+    new BTBuildingData(BUILDING_KNIGHT    ,                          200 , 0    , genList (UNIT_KNIGHT        , 5 ))
+    new BTBuildingData(BUILDING_KNIGHT    , BUILDING_CRUSADER ,      0   , 1000 , genList (UNIT_CRUSADER      , 5 ))
+    new BTBuildingData(BUILDING_PRIEST    ,                          200 , 0    , genList (UNIT_PRIEST        , 5 ))
+    new BTBuildingData(BUILDING_PRIEST    , BUILDING_SPELL_BREAKER , 0   , 500  , genList (UNIT_SPELL_BREAKER , 5 ))
+    new BTBuildingData(BUILDING_SORCERESS ,                          150 , 0    , genList (UNIT_SORCERESS     , 3 ))
+    new BTBuildingData(BUILDING_PALADIN   ,                          0   , 1000 , asList  (UNIT_PALADIN_1         ))
 
     new BTBuildingData(BUILDING_GRUNT                ,                      100 , 0    , genList(UNIT_GRUNT                , 5  ))
     new BTBuildingData(BUILDING_GRUNT                , BUILDING_BERSERKER , 0   , 500  , genList(UNIT_BERSERKER            , 5  ))
     new BTBuildingData(BUILDING_HEADHUNTER           ,                      150 , 0    , genList(UNIT_HEADHUNTER           , 10 ))
     new BTBuildingData(BUILDING_HEADHUNTER           , BUILDING_TRAPPER ,   0   , 1000 , genList(UNIT_TRAPPER              , 10 ))
     new BTBuildingData(BUILDING_RAIDER               ,                      250 , 0    , genList(UNIT_RAIDER               , 5  ))
+    new BTBuildingData(BUILDING_RAIDER                , BUILDING_MARAUDER , 0   , 1000  , genList(UNIT_MARAUDER            , 5  ))
     new BTBuildingData(BUILDING_WITCH_DOCTOR         ,                      150 , 0    , genList(UNIT_WITCH_DOCTOR         , 3  ))
     new BTBuildingData(BUILDING_SHAMAN               ,                      200 , 0    , genList(UNIT_SHAMAN               , 4  ))
     new BTBuildingData(BUILDING_OGRE                 ,                      300 , 0    , genList(UNIT_OGRE                 , 3  ))
-    new BTBuildingData(BUILDING_WARLOCK              ,                      200 , 0    , genList(UNIT_WARLOCK              , 5  ))
-    new BTBuildingData(BUILDING_TAUREN               ,                      200 , 0    , genList(UNIT_TAUREN               , 4  ))
     new BTBuildingData(BUILDING_OGRE_ARMORED         ,                      0   , 1200 , genList(UNIT_OGRE_ARMORED         , 3  ))
     new BTBuildingData(BUILDING_PACK_LEADER          ,                      0   , 800  , genList(UNIT_PACK_LEADER          , 7  ))
     new BTBuildingData(BUILDING_WARMONGER            ,                      0   , 1000 , genList(UNIT_WARMONGER            , 1  ))
     new BTBuildingData(BUILDING_FARSEER              ,                      0   , 1200 , genList(UNIT_FARSEER              , 1  ))
-    new BTBuildingData(BUILDING_OCCULTIST            ,                      0   , 900  , genList(UNIT_OCCULTIST            , 5  ))
-    new BTBuildingData(BUILDING_BLADE_MASTER         ,                      0   , 3000 , genList(UNIT_BLADE_MASTER         , 4  ))
-    new BTBuildingData(BUILDING_SHADOW_HUNTER        ,                      0   , 3000 , genList(UNIT_SHADOW_HUNTER        , 3  ))
-    new BTBuildingData(BUILDING_DEMOLISHER           ,                      0   , 3000 , genList(UNIT_DEMOLISHER           , 3  ))
 
-    new BTBuildingData(BUILDING_ZOMBIE         , 50  , 0   , genList(UNIT_ZOMBIE          , 10 ))
-    new BTBuildingData(BUILDING_ZOMBIE, BUILDING_PLAGUE_BEARER , 0   , 500 , genList(UNIT_PLAGUE_BEARER           , 10 ))
-    new BTBuildingData(BUILDING_ZOMBIE, BUILDING_GHOUL          , 0   , 600 , genList(UNIT_GHOUL           , 10 ))
-    new BTBuildingData(BUILDING_SKELETAL_ARCHER, 100 , 0   , genList(UNIT_SKELETAL_ARCHER , 10 ))
-    new BTBuildingData(BUILDING_CRYPT_FIEND    , 150 , 0   , genList(UNIT_CRYPT_FIEND     , 5  ))
-    new BTBuildingData(BUILDING_NERUBIAN       , 0   , 800 , genList(UNIT_NERUBIAN        , 5  ))
-    new BTBuildingData(BUILDING_NECROMANCER    , 200 , 0   , genList(UNIT_NECROMANCER     , 5  ))
-    new BTBuildingData(BUILDING_LICH           , 0   , 1000, genList(UNIT_LICH            , 1  ))
-    new BTBuildingData(BUILDING_DEATH_KNIGHT   , 0   , 1200, genList(UNIT_DEATH_KNIGHT    , 1  ))
-    new BTBuildingData(BUILDING_BANSHEE        , 150 , 0   , genList(UNIT_BANSHEE         , 3  ))
-    new BTBuildingData(BUILDING_ABOMINATION    , 100 , 0   , genList(UNIT_ABOMINATION     , 1  ))
-    new BTBuildingData(BUILDING_FLESH_GOLEM    , 0   , 1400, genList(UNIT_FLESH_GOLEM     , 4  ))
-    new BTBuildingData(BUILDING_VAMPIRE        , 300 , 0   , genList(UNIT_VAMPIRE         , 3  ))
-    new BTBuildingData(BUILDING_VAMPIRE_LORD   , 0   , 1000, genList(UNIT_VAMPIRE_LORD    , 1  ))
-    new BTBuildingData(BUILDING_CRYPT_LORD     , 0   , 3000, genList(UNIT_CRYPT_LORD      , 3  ))
-    new BTBuildingData(BUILDING_DARK_RANGER    , 0   , 3000, genList(UNIT_DARK_RANGER     , 5  ))
-    new BTBuildingData(BUILDING_ARCHIMONDE     , 0   , 3000, genList(UNIT_ARCHIMONDE      , 1  ))
+    new BTBuildingData(BUILDING_ZOMBIE          ,                          50  , 0    , genList(UNIT_ZOMBIE          , 10 ))
+    new BTBuildingData(BUILDING_ZOMBIE          , BUILDING_PLAGUE_BEARER , 0   , 500  , genList(UNIT_PLAGUE_BEARER   , 10 ))
+    new BTBuildingData(BUILDING_ZOMBIE          , BUILDING_GHOUL ,         0   , 600  , genList(UNIT_GHOUL           , 10 ))
+    new BTBuildingData(BUILDING_SKELETAL_ARCHER ,                          100 , 0    , genList(UNIT_SKELETAL_ARCHER , 10 ))
+    new BTBuildingData(BUILDING_SKELETAL_ARCHER , BUILDING_BURNING_ARCHER, 0   , 1000 , genList(UNIT_BURNING_ARCHER  , 10 ))
+    new BTBuildingData(BUILDING_SKELETAL_ARCHER , BUILDING_FROST_ARCHER,   0   , 1000 , genList(UNIT_FROST_ARCHER    , 10 ))
+    new BTBuildingData(BUILDING_NECROMANCER     ,                          200 , 0    , genList(UNIT_NECROMANCER     , 5  ))
+    new BTBuildingData(BUILDING_NECROMANCER     , BUILDING_SPECTRAL_SAGE , 0   , 2000 , genList(UNIT_SPECTRAL_SAGE   , 5  ))
+    new BTBuildingData(BUILDING_LICH            ,                          0   , 1000 , genList(UNIT_LICH            , 1  ))
+    new BTBuildingData(BUILDING_DEATH_KNIGHT    ,                          0   , 1200 , genList(UNIT_DEATH_KNIGHT    , 1  ))
+    new BTBuildingData(BUILDING_BANSHEE         ,                          150 , 0    , genList(UNIT_BANSHEE         , 3  ))
+    new BTBuildingData(BUILDING_ABOMINATION     ,                          300 , 0    , genList(UNIT_ABOMINATION     , 5  ))
+    new BTBuildingData(BUILDING_VAMPIRE         ,                          50  , 500  , genList(UNIT_VAMPIRE         , 1  ))
+    new BTBuildingData(BUILDING_VAMPIRE         , BUILDING_VAMPIRE_LORD ,  0   , 1500 , genList(UNIT_VAMPIRE_LORD    , 1  ))
 
     new BTBuildingData(BUILDING_TREANT                , 100 , 0   , genList(UNIT_TREANT                , 10 ))
     new BTBuildingData(BUILDING_ARCHER                , 100 , 0   , genList(UNIT_ARCHER                , 10  ))
@@ -142,14 +135,9 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_DRUID_CLAW            , 250 , 0   , genList(UNIT_DRUID_CLAW            , 5  ))
     new BTBuildingData(BUILDING_OWLBEAR               , 0   , 1400, genList(UNIT_OWLBEAR               , 4  ))
     new BTBuildingData(BUILDING_DRYAD                 , 200 , 0   , genList(UNIT_DRYAD                 , 5  ))
-    new BTBuildingData(BUILDING_ANCIENT_PROTECTOR     , 0   , 1600, genList(UNIT_ANCIENT_PROTECTOR     , 4  ))
-    new BTBuildingData(BUILDING_MOUNTAIN_GIANT        , 300 , 0   , genList(UNIT_MOUNTAIN_GIANT        , 1  ))
-    new BTBuildingData(BUILDING_SENTRY                , 150 , 0   , genList(UNIT_SENTRY                , 10 ))
+    new BTBuildingData(BUILDING_MOUNTAIN_GIANT        , 200 , 0   , genList(UNIT_MOUNTAIN_GIANT        , 1  ))
     new BTBuildingData(BUILDING_SPECTRE               , 150   , 1000 , genList(UNIT_SPECTRE               , 10 ))
-    new BTBuildingData(BUILDING_WARDEN                , 0   , 1500, genList(UNIT_WARDEN                , 3  ))
     new BTBuildingData(BUILDING_AVATAR_OF_VENGEANCE   , 0   , 2100, genList(UNIT_AVATAR_OF_VENGEANCE   , 3  ))
-    new BTBuildingData(BUILDING_BALLISTA              , 0   , 3000, genList(UNIT_BALLISTA              , 2  ))
-    new BTBuildingData(BUILDING_DAEMON_HUNTER         , 0   , 3000, genList(UNIT_DAEMON_HUNTER         , 3  ))
     new BTBuildingData(BUILDING_PRIESTESS_OF_THE_MOON , 0   , 3000, genList(UNIT_PRIESTESS_OF_THE_MOON , 3  ))
 
     new BTBuildingData(BUILDING_GNOLL         , 0, 0, asList (UNIT_GNOLL          , UNIT_RAZORMAN, UNIT_WOLF, UNIT_FURBOLG, UNIT_SASQUATCH                                ))
@@ -199,7 +187,7 @@ public class ArmySpawner
     int unitPerLine
     PlayerData pData
     EventListener reinforcementListener
-    boolean spawnFinished = false
+    boolean hasSpawnFinished = false
     // List of units spawned by a building
     LinkedList<int> squadUnitIds = new LinkedList<int>
 
@@ -208,9 +196,10 @@ public class ArmySpawner
     construct(player _p)
         this._p = _p
         this.pData = pDatas.get(_p)
-        this.initReinforcementListener()
 
     function setBuildingList(LinkedList<unit> buildingList)
+        if this.buildingList != null
+            destroy this.buildingList
         this.buildingList = buildingList
 
     private function isBuildingSpawnOver() returns boolean
@@ -244,6 +233,7 @@ public class ArmySpawner
             if itemModifyUnitMap.has(itm.getTypeId())
                 unitModifierList.push(new ItemModifier(itemModifyUnitMap.get(itm.getTypeId()), itm.getCharges()))
             // Log.debug("BitemModifyUnit :" + unitModifierList.size().toString())
+        destroy inv
 
     private function executeUnitModifier(unit newUnit)
         // a being the callback defined in ItemCallbackDefinition.wurst
@@ -266,7 +256,7 @@ public class ArmySpawner
         count += 1
         // Log.debug("Unit spawned " +  count.toString())
         if gameConfig.getHealthMultiplier() != 1.
-            newUnit.setHP(newUnit.getHP() * gameConfig.getHealthMultiplier())
+            newUnit.setMaxHP((newUnit.getMaxHP() * gameConfig.getHealthMultiplier()).toInt(), true)
         if gameConfig.getDamageMultiplier() != 1.
             newUnit.setBaseDamage(
                 (newUnit.getBaseDamage(0) * gameConfig.getDamageMultiplier()).toInt() , 0)
@@ -281,6 +271,10 @@ public class ArmySpawner
             else
                 executeUnitModifier(newUnit)
 
+        if newUnit.hasAbility(ABIL_DRUID_FRENZY)
+            newUnit.setAbilityCooldown(ABIL_DRUID_FRENZY, 1, 3)
+
+
         BlzShowUnitTeamGlow(newUnit, false)
         if newUnit.getName() == null
             Log.debug("Unknown unit spawned for " + _p.getDummyPlayer(dummyPlayerIdx).getName() + " id : " + newUnit.getTypeId().toString())
@@ -292,7 +286,7 @@ public class ArmySpawner
         squadUnitIds.clear()
         buildingIdx = 0
         squadIdx = 0
-        spawnFinished = false
+        hasSpawnFinished = false
 
 
         // TODO: Add to gameConfig?
@@ -358,7 +352,7 @@ public class ArmySpawner
 
                 squadIdx++
                 spawnCount++
-            if pData.spawnedUnits.size() < spawnZone.unitLimit
+            if pData.spawnedUnits.size() <= spawnZone.unitLimit
                 and squadIdx >= squadUnitIds.size()
                 squadIdx = 0
                 squadUnitIds.clear()
@@ -369,7 +363,7 @@ public class ArmySpawner
                 SetDoodadAnimationRect(this.pData.buildingRect, DOODAD_PORTAL, "death", false)
                 spawnZone.closePortal()
 
-            spawnFinished = true
+            hasSpawnFinished = true
 
         // Set position to the reinforcement spawn point
         if not spawnFromPortal
@@ -398,7 +392,7 @@ public class ArmySpawner
             // horizontal
             return pos + vec2(0, GetRandomReal(-offset, offset))
 
-    private function spawnReinforcement()
+    protected function spawnReinforcement()
         if squadUnitIds.isEmpty()
             let building = buildingList.get(buildingIdx)
             squadUnitIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
@@ -415,19 +409,10 @@ public class ArmySpawner
             buildingIdx++
             squadUnitIds.clear()
             if isBuildingSpawnOver()
-                spawnFinished = true
+                hasSpawnFinished = true
                 if gameConfig.isDisplayPortalEnabled()
                     SetDoodadAnimationRect(this.pData.buildingRect, DOODAD_PORTAL, "death", false)
                     spawnZone.closePortal()
-
-    private function initReinforcementListener()
-        reinforcementListener = EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
-            let dying = EventData.getDyingUnit()
-            let dyingOwner = dying.getOwner().getTruePlayerFromDummy()
-            if dyingOwner == this._p
-                and not spawnFinished
-                and dying.getPointValue() > 0
-                spawnReinforcement()
 
 
 // TODO: replace with gamestate functional interface just like in ITTs
@@ -435,3 +420,15 @@ public function initArmySpawner()
     setupBuildingData()
     for i = 0 to 7
         playerToArmySpawner.put(players[i], new ArmySpawner(players[i]))
+
+init
+    EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
+        let dying = EventData.getDyingUnit()
+        let dyingOwner = dying.getOwner().getTruePlayerFromDummy()
+        let armySpawner = playerToArmySpawner.get(dyingOwner)
+        let pData = pDatas.get(dyingOwner)
+        let spawnCapacity = armySpawner.spawnZone.unitLimit
+        if not armySpawner.hasSpawnFinished
+            and dying.getPointValue() > 0
+            and pData.spawnedUnits.size() < spawnCapacity
+            armySpawner.spawnReinforcement()

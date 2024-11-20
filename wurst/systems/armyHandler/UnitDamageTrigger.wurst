@@ -22,14 +22,6 @@ init
             and target.isType(UNIT_TYPE_SUMMONED)
             src.issueTargetOrderById(OrderIds.autodispel, target)
 
-
-        switch target.getTypeId()
-            case UNIT_WARDEN
-                if target.getPos().distanceTo(src.getPos()) > 200
-                    BlzQueuePointOrderById(target, OrderIds.blink, src.getPos().x, src.getPos().y)
-                    doAfter(0.9) ->
-                        BlzQueueImmediateOrderById(target, OrderIds.fanofknives)
-
         switch src.getTypeId()
             case UNIT_SHAMAN
                 if src.getAbilityCooldownRemaining(ABIL_SUMMON_SPIRIT_WOLF1) <= 0
@@ -40,8 +32,9 @@ init
             case UNIT_COURT_ENCHANTRESS
                 src.issueImmediateOrderById(OrderIds.parasiteon)
             case UNIT_OWLBEAR
-                if not target.hasAbility(BuffIds.howlofTerror)
-                    src.issueImmediateOrderById(OrderIds.howlofterror)
+                src.issueImmediateOrderById(OrderIds.frenzyon)
+            case UNIT_DRUID_CLAW
+                src.issueImmediateOrderById(OrderIds.frenzyon)
             case UNIT_SIREN
                 if src.hasAbility(ABIL_CHARM)
                     if GetRandomInt(0, 100) <= 10

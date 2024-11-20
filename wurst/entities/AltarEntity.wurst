@@ -56,6 +56,27 @@ class AltarEntity
     function getArenaMaster() returns unit
         return theUnit
 
+    function moveTo(vec2 pos)
+        theUnit.setPos(pos)
+        bloodOrb.setPos(pos)
+        this.bloodPointCounterTag.setPos(pos.withRealZ(theUnit).op_plus(vec3(-10, 0, -500)))
+
+
+public function hideFinalTowerDoodad()
+    SetDoodadAnimationRect(gg_rct_ManagerTowerFinal,DOODAD_TOWER, "hide", false)
+    SetDoodadAnimationRect(gg_rct_ManagerTowerFinal,DOODAD_CORPSE_IMPALED, "hide", false)
+    SetDoodadAnimationRect(gg_rct_ManagerTowerFinal,DOODAD_CAGE, "hide", false)
+    SetDoodadAnimationRect(gg_rct_ManagerTowerFinal,DOODAD_REMAINS_SCORCHED, "hide", false)
+    SetDoodadAnimationRect(gg_rct_ManagerTowerFinal,DOODAD_CAMERA_PROPS, "hide", false)
+
+public function showFinalTowerDoodad()
+    SetDoodadAnimationRect(gg_rct_ManagerTowerFinal,DOODAD_TOWER, "show", false)
+    SetDoodadAnimationRect(gg_rct_ManagerTowerFinal,DOODAD_CORPSE_IMPALED, "show", false)
+    SetDoodadAnimationRect(gg_rct_ManagerTowerFinal,DOODAD_CAGE, "show", false)
+    SetDoodadAnimationRect(gg_rct_ManagerTowerFinal,DOODAD_REMAINS_SCORCHED, "show", false)
+    SetDoodadAnimationRect(gg_rct_ManagerTowerFinal,DOODAD_CAMERA_PROPS, "show", false)
+
 public function initAltar()
     registerIndicatorCallback(UNIT_ARENA_MASTER) (unit target) ->
         new AltarEntity(target)
+    hideFinalTowerDoodad()

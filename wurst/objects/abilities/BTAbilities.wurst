@@ -3,4 +3,6 @@ package BTAbilities
 // Standard libs imports:
 import HashMap
 
+// Used to store ability tooltips
 public let abilTooltipMap = compiletime(new HashMap<int, string>)
+public let abilTooltipToDisplay = compiletime(InitHashtable())

@@ -1,0 +1,6 @@
+package UnitIndexer_config
+
+import LocalObjectIDs
+
+@config public function shouldIndex(unit _u) returns boolean
+	return _u.isType(UNIT_TYPE_PEON) or _u.getTypeId() == UNIT_RACE_PICKER

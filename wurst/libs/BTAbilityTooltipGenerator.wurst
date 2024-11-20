@@ -55,7 +55,9 @@ public class BTAbilityTooltipGenerator implements TooltipGenerator
 
     override function applyToDef(AbilityDefinition def)
         levels = propMap.has("Levels") ? fixValue(propMap.getAndRemove("Levels").run(0)).toInt() : 1
-        name = propMap.has("Name") ? propMap.getAndRemove("Name").run(0) : "unnamed"
+        if name == ""
+            name = propMap.has("Name") ? propMap.getAndRemove("Name").run(0) : "unnamed"
+        // name = propMap.has("Name") ? propMap.get("Name").run(0) : "unnamed"
         hotkey = propMap.has("Hotkey") ? propMap.get("Hotkey").run(0) : "Q"
         targettype = propMap.has("Target Type") ? propMap.get("Target Type").run(0).toInt() castTo Targettype : targettype
         def..setTooltipLearn(generateTooltipLearn())
@@ -96,7 +98,10 @@ public class BTAbilityTooltipGenerator implements TooltipGenerator
                 for i = 1 to levels
                     tmp += fixValue(propMap.get(key).run(i)) + (i < levels ? "/" : "")
 
-            s += TITLE_COLOR + key + ":|r " + colorLevelValue(tmp, 1, levels) + "\n"
+            if key == ""
+                s += "\n"
+            else
+                s += TITLE_COLOR + key + ":|r " + colorLevelValue(tmp, 1, levels) + "\n"
         if propMap.size() > 0
             s += "\n"
         s += buildDescription(description)

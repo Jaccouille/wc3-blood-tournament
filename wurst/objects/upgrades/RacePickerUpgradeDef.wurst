@@ -14,3 +14,15 @@ import LocalObjectIDs
     new UpgradeDefinition(UPGD_ALL_RANDOM)
         ..setName(1, "All random disabled")
         ..setTooltip(1, "All random disabled")
+
+    new UpgradeDefinition(UPGD_RANDOM)
+        ..setName(1, "Cannot repick after random")
+        ..setTooltip(1, "Cannot repick after random")
+
+    new UpgradeDefinition(UPGD_AVAILABLE_DURING_ROUND)
+        ..setName(1, "Only available during round")
+        ..setTooltip(1, "Only available during round")
+
+    new UpgradeDefinition(UPGD_UNAVAILABLE_DURING_ROUND)
+        ..setName(1, "Unavailable during round")
+        ..setTooltip(1, "Unavailable during round")

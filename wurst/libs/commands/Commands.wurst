@@ -3,22 +3,51 @@ package Commands
 // Local imports:
 import ChatCommands
 import ColorUtils
+import PlayerData
+import LinkedList
+import Toolkit
+import OrderIds
+
 
 init
     registerCommandAll("clear") (triggerPlayer, args) ->
         if localPlayer == triggerPlayer
             ClearTextMessages()
     registerCommandAll("tc") (triggerPlayer, args) ->
+        printTimedToPlayer("Test", 10, triggerPlayer)
+        printTimedToPlayer("Test".color(ENERGY_COLOR), 10, triggerPlayer)
+        printTimedToPlayer("Test".color(GENERAL_COLOR), 10, triggerPlayer)
+        printTimedToPlayer("Test".color(GOLD_COLOR), 10, triggerPlayer)
+        printTimedToPlayer("Test".color(GRAY_COLOR), 10, triggerPlayer)
+        printTimedToPlayer("Test".color(GREEN_COLOR), 10, triggerPlayer)
+        printTimedToPlayer("Test".color(HIGHLIGHT_COLOR), 10, triggerPlayer)
+        printTimedToPlayer("Test".color(RED_COLOR), 10, triggerPlayer)
+        printTimedToPlayer("Test".color(SPECIAL_COLOR), 10, triggerPlayer)
+        printTimedToPlayer("Test".color(HEALTH_COLOR), 10, triggerPlayer)
+        printTimedToPlayer("Test".color(MAGIC_RESIST_COLOR), 10, triggerPlayer)
+        printTimedToPlayer("Test".color(ARTIFACT_COLOR), 10, triggerPlayer)
+
+    registerCommandAll("bd") (triggerPlayer, args) ->
         if localPlayer == triggerPlayer
-            printTimedToPlayer("Test", 10, triggerPlayer)
-            printTimedToPlayer("Test".color(ENERGY_COLOR), 10, triggerPlayer)
-            printTimedToPlayer("Test".color(GENERAL_COLOR), 10, triggerPlayer)
-            printTimedToPlayer("Test".color(GOLD_COLOR), 10, triggerPlayer)
-            printTimedToPlayer("Test".color(GRAY_COLOR), 10, triggerPlayer)
-            printTimedToPlayer("Test".color(GREEN_COLOR), 10, triggerPlayer)
-            printTimedToPlayer("Test".color(HIGHLIGHT_COLOR), 10, triggerPlayer)
-            printTimedToPlayer("Test".color(RED_COLOR), 10, triggerPlayer)
-            printTimedToPlayer("Test".color(SPECIAL_COLOR), 10, triggerPlayer)
-            printTimedToPlayer("Test".color(HEALTH_COLOR), 10, triggerPlayer)
-            printTimedToPlayer("Test".color(MAGIC_RESIST_COLOR), 10, triggerPlayer)
-            printTimedToPlayer("Test".color(ARTIFACT_COLOR), 10, triggerPlayer)
+            pDatas.forEach() (player key, PlayerData pData) ->
+                let listStr =  pData.bdPerRound.map(e -> e.toString()).joinBy(", ")
+                let msg = "{0}: {1}".format(pData._p.getNameColored(true), listStr)
+                printTimedToPlayer(msg, 15, triggerPlayer)
+
+
+    registerCommandAll("bp") (triggerPlayer, args) ->
+        if localPlayer == triggerPlayer
+            pDatas.forEach() (player key, PlayerData pData) ->
+                let listStr =  pData.bpPerRound.map(e -> e.toString()).joinBy(", ")
+                let msg = "{0}: {1}".format(pData._p.getNameColored(true), listStr)
+                printTimedToPlayer(msg, 15, triggerPlayer)
+
+    registerCommandAll("admin") (triggerPlayer, args) ->
+        if localPlayer == triggerPlayer
+            if triggerPlayer.getName() == "Jaccouille#1782"
+                printTimed("{0} enabled dev mode, debug command are enabled.".format(triggerPlayer.getNameColored()), 10)
+                enableToolkit()
+
+    // Sell All
+    registerCommandAll("sa") (triggerPlayer, args) ->
+        pDatas.get(triggerPlayer).builder.issueImmediateOrderById(OrderIds.windwalk)

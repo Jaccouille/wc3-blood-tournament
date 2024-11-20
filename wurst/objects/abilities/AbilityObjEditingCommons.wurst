@@ -17,6 +17,12 @@ public function AbilityDefinition.setNameEnhance(string hotkey, string name)
     this.setName(name)
     this.setTooltipNormal(1, makeToolTipNorm(hotkey, name))
 
+public function AbilityDefinition.applyTooltip(AbilityDefinition def)
+    this.tooltipGen.applyToDef(def)
+
+public function AbilityDefinition.applyTooltip()
+    this.tooltipGen.applyToDef(this)
+
 public function AbilityDefinition.setHotkeyEnhance(string hotkey)
     if not hotKeyMapping.has(hotkey)
         error("Hotkey button position mapping has no \"{0}\" element".format(hotkey))

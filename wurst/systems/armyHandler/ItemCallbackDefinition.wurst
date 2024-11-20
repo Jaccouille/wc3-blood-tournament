@@ -7,12 +7,13 @@ import OrderIds
 
 // Local imports:
 import LocalObjectIDs
+import initlater ItemStockHandler
 
 public let itemAddUnitMap = new HashMap<int, ItemAddUnit>
 public let itemModifyUnitMap = new HashMap<int, ItemModifierAction>
 
 interface AddUnitCallbackListener
-    function execute(LinkedList<int> unitTospawn, int count)
+    function execute(LinkedList<int> unitToSpawn, int count)
 
 interface ActionCallbackListener
     function execute(unit u)
@@ -23,8 +24,8 @@ public class ItemAddUnit
     function addAction(AddUnitCallbackListener listener)
         this.listener = listener
 
-    function execute(LinkedList<int> unitTospawn, int count)
-        this.listener.execute(unitTospawn, count)
+    function execute(LinkedList<int> unitToSpawn, int count)
+        this.listener.execute(unitToSpawn, count)
 
 public class ItemModifier
     ItemModifierAction action
@@ -50,6 +51,22 @@ function replaceUnit(LinkedList<int> unitToSpawn, int oldUnit, int newUnit)
     if unitToSpawn.replace(oldUnit, newUnit)
         unitToSpawn.shuffle()
 
+function addAtMiddle(LinkedList<int> unitToSpawn, int newUnit)
+    unitToSpawn.addAt(newUnit, (unitToSpawn.size() div 2))
+
+
+function computeUnitPointValue(int goldCost, int lumberCost, int unitCount) returns int
+    var pointValue = 0
+    pointValue += (goldCost / unitCount).toInt()
+    pointValue += (lumberCost / unitCount / 10).toInt()
+    return pointValue
+
+function increaseUnitBounty(unit u, int itemId)
+    let lvl = (computeUnitPointValue(getItemGoldCost(itemId), getItemLumberCost(itemId), 1)
+         div getItemCharges(itemId)) div 5
+    u.addAbility(ABIL_BOUNTY_BONUS, lvl)
+
+
 init
 
     // ========================= HUMANS =========================
@@ -57,22 +74,23 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_DEFEND)
         u.issueImmediateOrderById(OrderIds.defend)
+        increaseUnitBounty(u, ITEM_DEFEND)
     itemModifyUnitMap.put(ITEM_DEFEND, defendAction)
 
 
     let captainAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitTospawn, int count) ->
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitTospawn.push(UNIT_CAPTAIN)
+            addAtMiddle(unitToSpawn, UNIT_CAPTAIN)
     itemAddUnitMap.put(ITEM_CAPTAIN, captainAction)
 
 
-    let explosiveAmmoAction = new ItemAddUnit()
+    let grenadierAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_RIFLEMAN, UNIT_RIFLEMAN_EXPLOSIVE_AMMO)
+            replaceUnit(unitToSpawn, UNIT_RIFLEMAN, UNIT_GRENADIER)
 
-    itemAddUnitMap.put(ITEM_EXPLOSIVE_AMMO, explosiveAmmoAction)
+    itemAddUnitMap.put(ITEM_GRENADIER, grenadierAction)
 
 
     let sniperAction = new ItemAddUnit()
@@ -84,39 +102,30 @@ init
 
 
     let mortarAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitTospawn, int count) ->
-        for i = 1 to count
-            unitTospawn.push(UNIT_MORTAR)
-    itemAddUnitMap.put(ITEM_MORTAR, mortarAction)
-
-
-    let crusaderAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_KNIGHT, UNIT_CRUSADER)
-
-    itemAddUnitMap.put(ITEM_CRUSADER, crusaderAction)
-
+            unitToSpawn.push(UNIT_MORTAR)
+    itemAddUnitMap.put(ITEM_MORTAR, mortarAction)
 
     let marshallAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitTospawn, int count) ->
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitTospawn.push(UNIT_MARSHALL)
+            addAtMiddle(unitToSpawn, UNIT_MARSHALL)
     itemAddUnitMap.put(ITEM_MARSHALL, marshallAction)
 
 
     let paladinBlackHairAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitTospawn, int count) ->
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            replaceUnit(unitTospawn, UNIT_PALADIN_1, UNIT_PALADIN_2)
+            replaceUnit(unitToSpawn, UNIT_PALADIN_1, UNIT_PALADIN_2)
 
     itemAddUnitMap.put(ITEM_PALADIN_SKIN_BLACK, paladinBlackHairAction)
 
 
     let paladinWhiteHairAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitTospawn, int count) ->
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            replaceUnit(unitTospawn, UNIT_PALADIN_1, UNIT_PALADIN_3)
+            replaceUnit(unitToSpawn, UNIT_PALADIN_1, UNIT_PALADIN_3)
 
     itemAddUnitMap.put(ITEM_PALADIN_SKIN_WHITE, paladinWhiteHairAction)
 
@@ -128,42 +137,37 @@ init
         u.issueImmediateOrderById(OrderIds.curseon)
         u.setMaxMana(200)
         u.setMana(200)
-
+        increaseUnitBounty(u, ITEM_INSPIRE)
     itemModifyUnitMap.put(ITEM_INSPIRE, inspireAction)
-
-
-    let rangerAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
-        for i = 0 to count
-            unitToSpawn.push(UNIT_RANGER)
-    itemAddUnitMap.put(ITEM_RANGER, rangerAction)
-
-    let spellBreakerAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
-        for i = 0 to count
-            unitToSpawn.push(UNIT_SPELL_BREAKER)
-    itemAddUnitMap.put(ITEM_SPELL_BREAKER, spellBreakerAction)
 
 
     let armorBlessingAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ARMOR_BLESSING)
+        u.removeAbility(ABIL_HEAL)
         u.issueImmediateOrderById(OrderIds.innerfireon)
-
+        increaseUnitBounty(u, ITEM_ARMOR_BLESSING)
     itemModifyUnitMap.put(ITEM_ARMOR_BLESSING, armorBlessingAction)
 
     let weaponBlessingAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_WEAPON_BLESSING)
+        u.removeAbility(ABIL_HEAL)
         u.issueImmediateOrderById(OrderIds.innerfireon)
-
+        increaseUnitBounty(u, ITEM_WEAPON_BLESSING)
     itemModifyUnitMap.put(ITEM_WEAPON_BLESSING, weaponBlessingAction)
 
+    let magicDefendAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_MAGIC_DEFEND)
+        u.issueImmediateOrderById(OrderIds.defend)
+        increaseUnitBounty(u, ITEM_MAGIC_DEFEND)
+    itemModifyUnitMap.put(ITEM_MAGIC_DEFEND, magicDefendAction)
 
     let darkMageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ORB_DARKNESS)
-
+        increaseUnitBounty(u, ITEM_DARK_MAGE)
     itemModifyUnitMap.put(ITEM_DARK_MAGE, darkMageAction)
 
 
@@ -173,8 +177,9 @@ init
         u.addAbility(ABIL_INCINERATE_VISUAL)
         u.addAbility(ABIL_AUTOCAST_SOUL_BURN)
         u.addAbility(ABIL_SOUL_BURN)
+        u.removeAbility(ABIL_SLOW)
         u.issueImmediateOrderById(OrderIds.curseon)
-
+        increaseUnitBounty(u, ITEM_FIRE_MAGE)
     itemModifyUnitMap.put(ITEM_FIRE_MAGE, fireMageAction)
 
 
@@ -183,34 +188,32 @@ init
         u.addAbility(ABIL_ORB_FROST)
         u.addAbility(ABIL_AUTOCAST_FROST_NOVA)
         u.addAbility(ABIL_FROST_NOVA)
+        u.removeAbility(ABIL_SLOW)
         u.issueImmediateOrderById(OrderIds.curseon)
-
+        increaseUnitBounty(u, ITEM_ICE_MAGE)
     itemModifyUnitMap.put(ITEM_ICE_MAGE, iceMageAction)
 
 
     let courtEnchantressAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitTospawn, int count) ->
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitTospawn.push(UNIT_COURT_ENCHANTRESS)
+            unitToSpawn.push(UNIT_COURT_ENCHANTRESS)
 
     itemAddUnitMap.put(ITEM_COURT_ENCHANTRESS, courtEnchantressAction)
 
 
     // ========================= ORC =========================
-    let spiritWolfAction = new ItemModifierAction()
-        ..addAction() (unit u) ->
-        u.addAbility(ABIL_SUMMON_SPIRIT_WOLF1)
-    itemModifyUnitMap.put(ITEM_SPIRIT_WOLF1, spiritWolfAction)
-
     let orbLightningAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ORB_LIGHTNING)
+        increaseUnitBounty(u, ITEM_ORB_LIGHTNING)
+
     itemModifyUnitMap.put(ITEM_ORB_LIGHTNING, orbLightningAction)
 
     let farseerAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitTospawn, int count) ->
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitTospawn.push(UNIT_FARSEER)
+            unitToSpawn.push(UNIT_FARSEER)
 
     itemAddUnitMap.put(ITEM_FARSEER, farseerAction)
 
@@ -219,37 +222,40 @@ init
         u.addAbility(ABIL_HEALING_WAVE)
         u.addAbility(ABIL_AUTOCAST_HEALING_WAVE)
         u.issueImmediateOrderById(OrderIds.innerfireon)
-
+        increaseUnitBounty(u, ITEM_HEALING_WAVE)
     itemModifyUnitMap.put(ITEM_HEALING_WAVE, healingWaveAction)
 
     let acidBombAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_ACID_BOMB)
         u.addAbility(ABIL_AUTOCAST_ACID_BOMB)
+        u.removeAbility(ABIL_HEALING_WAVE)
         u.issueImmediateOrderById(OrderIds.curseon)
-
+        increaseUnitBounty(u, ITEM_ACID_BOMB)
     itemModifyUnitMap.put(ITEM_ACID_BOMB, acidBombAction)
 
     let manaWardAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_MANA_WARD)
         u.addAbility(ABIL_AUTOCAST_MANA_WARD)
+        u.removeAbility(ABIL_HEALING_WAVE)
         u.issueImmediateOrderById(OrderIds.rechargeon)
-
+        increaseUnitBounty(u, ITEM_MANA_WARD)
     itemModifyUnitMap.put(ITEM_MANA_WARD, manaWardAction)
 
     let drunkenHazeAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_DRUNKEN_HAZE)
         u.addAbility(ABIL_AUTOCAST_DRUNKEN_HAZE)
+        u.removeAbility(ABIL_HEALING_WAVE)
         u.issueImmediateOrderById(OrderIds.parasiteon)
-
+        increaseUnitBounty(u, ITEM_DRUNKEN_HAZE)
     itemModifyUnitMap.put(ITEM_DRUNKEN_HAZE, drunkenHazeAction)
 
     let burningBladeAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_BURNING_BLADE_100)
-
+        increaseUnitBounty(u, ITEM_BURNING_BLADE)
     itemModifyUnitMap.put(ITEM_BURNING_BLADE, burningBladeAction)
 
     let berserkerAction = new ItemAddUnit()
@@ -261,13 +267,13 @@ init
     let packLeaderAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_PACK_LEADER)
+            addAtMiddle(unitToSpawn, UNIT_PACK_LEADER)
     itemAddUnitMap.put(ITEM_PACK_LEADER, packLeaderAction)
 
     let kodoAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_KODO)
+            addAtMiddle(unitToSpawn, UNIT_KODO)
     itemAddUnitMap.put(ITEM_KODO, kodoAction)
 
     let armoredOgreAction = new ItemAddUnit()
@@ -286,7 +292,7 @@ init
     let rampageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_RAMPAGE)
-
+        increaseUnitBounty(u, ITEM_RAMPAGE)
     itemModifyUnitMap.put(ITEM_RAMPAGE, rampageAction)
 
 
@@ -312,12 +318,11 @@ init
 
     let unholyFrenzyAction = new ItemModifierAction()
         ..addAction() (unit u) ->
-        u.removeAbility(ABIL_AUTOCAST_ANTI_MAGIC_SHELL)
-        u.removeAbility(ABIL_ANTI_MAGIC_SHELL)
+        u.removeAbility(ABIL_FROST_ARMOR)
         u.addAbility(ABIL_AUTOCAST_UNHOLY_FRENZY)
         u.addAbility(ABIL_UNHOLY_FRENZY)
         u.issueImmediateOrderById(OrderIds.innerfireon)
-
+        increaseUnitBounty(u, ITEM_UNHOLY_FRENZY)
     itemModifyUnitMap.put(ITEM_UNHOLY_FRENZY, unholyFrenzyAction)
 
     let frostArmorAction = new ItemModifierAction()
@@ -326,15 +331,24 @@ init
         u.removeAbility(ABIL_ANTI_MAGIC_SHELL)
         u.addAbility(ABIL_FROST_ARMOR)
         u.issueImmediateOrderById(OrderIds.frostarmoron)
-
+        increaseUnitBounty(u, ITEM_FROST_ARMOR)
     itemModifyUnitMap.put(ITEM_FROST_ARMOR, frostArmorAction)
+
+    let antiMagicShellAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.removeAbility(ABIL_FROST_ARMOR)
+        u.addAbility(ABIL_AUTOCAST_ANTI_MAGIC_SHELL)
+        u.addAbility(ABIL_ANTI_MAGIC_SHELL)
+        u.issueImmediateOrderById(OrderIds.innerfireon)
+        increaseUnitBounty(u, ITEM_ANTI_MAGIC_SHELL)
+    itemModifyUnitMap.put(ITEM_ANTI_MAGIC_SHELL, antiMagicShellAction)
 
     let raiseSkeletonMageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.removeAbility(ABIL_RAISE_SKELETON)
         u.addAbility(ABIL_RAISE_SKELETON_MAGE)
         u.issueImmediateOrderById(OrderIds.raisedeadon)
-
+        increaseUnitBounty(u, ITEM_RAISE_SKELETON_MAGE)
     itemModifyUnitMap.put(ITEM_RAISE_SKELETON_MAGE, raiseSkeletonMageAction)
 
     let raiseSkeletonOrcAction = new ItemModifierAction()
@@ -342,13 +356,13 @@ init
         u.removeAbility(ABIL_RAISE_SKELETON)
         u.addAbility(ABIL_RAISE_SKELETON_ORC)
         u.issueImmediateOrderById(OrderIds.raisedeadon)
-
+        increaseUnitBounty(u, ITEM_RAISE_SKELETON_ORC)
     itemModifyUnitMap.put(ITEM_RAISE_SKELETON_ORC, raiseSkeletonOrcAction)
 
     let crippleAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_CRIPPLE_ORB)
-
+        increaseUnitBounty(u, ITEM_CRIPPLE)
     itemModifyUnitMap.put(ITEM_CRIPPLE, crippleAction)
 
     let lichAction = new ItemAddUnit()
@@ -366,14 +380,15 @@ init
     let spawnGutCrawlerAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_SPAWN_GUT_CRAWLER)
-
+        increaseUnitBounty(u, ITEM_SPAWN_GUT_CRAWLER)
     itemModifyUnitMap.put(ITEM_SPAWN_GUT_CRAWLER, spawnGutCrawlerAction)
 
     let unholyAuraAction = new ItemModifierAction()
         ..addAction() (unit u) ->
-        u.addAbility(ABIL_UNHOLY_AURA)
+        u.addAbility(ABIL_UNHOLY_AURA_PERCENT)
         u.addAbility(ABIL_UNHOLY_AURA_VISUAL)
-
+        u.addAbility(ABIL_UNHOLY_AURA_FLAT)
+        increaseUnitBounty(u, ITEM_UNHOLY_AURA)
     itemModifyUnitMap.put(ITEM_UNHOLY_AURA, unholyAuraAction)
 
 
@@ -381,7 +396,7 @@ init
     let priestOfTheMoonAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_PRIESTESS_OF_THE_MOON)
+            addAtMiddle(unitToSpawn, UNIT_PRIESTESS_OF_THE_MOON)
     itemAddUnitMap.put(ITEM_PRIESTESS_OF_THE_MOON, priestOfTheMoonAction)
 
     let archdruidAction = new ItemAddUnit()
@@ -392,26 +407,29 @@ init
 
     let rejuvenationAction = new ItemModifierAction()
         ..addAction() (unit u) ->
+        u.removeAbility(ABIL_ABOLISH_MAGIC)
         u.addAbility(ABIL_REJUVENATION)
         u.addAbility(ABIL_AUTOCAST_REJUVENATION)
         u.issueImmediateOrderById(OrderIds.healon)
-
+        increaseUnitBounty(u, ITEM_REJUVENATION)
     itemModifyUnitMap.put(ITEM_REJUVENATION, rejuvenationAction)
 
     let entanglingRootAction = new ItemModifierAction()
         ..addAction() (unit u) ->
+        u.removeAbility(ABIL_FAERIE_FIRE)
         u.addAbility(ABIL_ENTANGLING_ROOT)
         u.addAbility(ABIL_AUTOCAST_ENTANGLING_ROOT)
         u.issueImmediateOrderById(OrderIds.curseon)
-
+        increaseUnitBounty(u, ITEM_ENTANGLING_ROOT)
     itemModifyUnitMap.put(ITEM_ENTANGLING_ROOT, entanglingRootAction)
 
     let wandOfIllusionAction = new ItemModifierAction()
         ..addAction() (unit u) ->
+        u.removeAbility(ABIL_FAERIE_FIRE)
         u.addAbility(ABIL_WAND_OF_ILLUSION)
         u.addAbility(ABIL_AUTOCAST_WAND_OF_ILLUSION)
         u.issueImmediateOrderById(OrderIds.innerfireon)
-
+        increaseUnitBounty(u, ITEM_WAND_OF_ILLUSION)
     itemModifyUnitMap.put(ITEM_WAND_OF_ILLUSION, wandOfIllusionAction)
 
     let keeperOfTheGroveAction = new ItemAddUnit()
@@ -435,7 +453,7 @@ init
     let avatarOfVengeanceAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_AVATAR_OF_VENGEANCE)
+            addAtMiddle(unitToSpawn, UNIT_AVATAR_OF_VENGEANCE)
     itemAddUnitMap.put(ITEM_AVATAR_OF_VENGEANCE, avatarOfVengeanceAction)
 
 

@@ -17,13 +17,14 @@ import UnitTooltipGenerator
 @compiletime function createZombie()
     var tooltip = new UnitTooltipGenerator("Cheap meat shield.")
     createSpawnedUnit(UNIT_ZOMBIE, UnitIds.zombie, BUILDING_ZOMBIE)
+        ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 10, 1, 2, 1.4)
+        ..setAttack1Data(AttackType.Normal, 5, 5, 2, 1.4)
 
         ..setArmorData(ArmorType.Small, 2)
-        ..setHitPointsMaximumBase(120)
+        ..setHitPointsMaximumBase(240)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -34,7 +35,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("Q", "Zombie")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_PLAGUE_BEARER))
+        ..setUpgradeTo(asList(BUILDING_PLAGUE_BEARER))
 
         ..setModelFileExt(Units.zombie)
         ..setIconGameInterfaceExt(Icons.bTNZombie)
@@ -44,15 +45,17 @@ import UnitTooltipGenerator
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_INFECTION))
     let itm = createBasicItem(ITEM_PLAGUE_BEARER)
     createSpawnedUnit(UNIT_PLAGUE_BEARER, UnitIds.dalaranmutant, BUILDING_PLAGUE_BEARER)
+        ..setRace(Race.Undead)
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
+        ..registerCustomPanelAbilityTooltip(ABIL_INFECTION)
         ..setNormalAbilities(commaList(ABIL_INFECTION))
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 16, 3, 3, 1.4)
+        ..setAttack1Data(AttackType.Normal, 15, 5, 3, 1.4)
 
         ..setArmorData(ArmorType.Small, 3)
-        ..setHitPointsMaximumBase(200)
+        ..setHitPointsMaximumBase(400)
 
         ..setSpeedBase(270)
         ..setItemCostReplacement(0, 100, 1, zombieCount, zombieCount, BUILDING_ZOMBIE)
@@ -71,9 +74,11 @@ import UnitTooltipGenerator
         ..setIconGameInterfaceExt(Icons.bTNDalaranMutant)
         ..setModelFileExt(Units.dalaranMutant)
         ..setUnitSoundSetExt(Soundsets.zombie)
+        ..setButtonPositionX(1)
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_LIFESTEAL_75))
     createSpawnedUnit(UNIT_GHOUL, UnitIds.ghoul, BUILDING_GHOUL)
+        ..setRace(Race.Undead)
         ..setNormalAbilities(commaList(ABIL_LIFESTEAL_75))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -81,7 +86,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Normal, 20, 4, 2, 1.0)
 
         ..setArmorData(ArmorType.Small, 3)
-        ..setHitPointsMaximumBase(240)
+        ..setHitPointsMaximumBase(480)
 
         ..setSpeedBase(330)
         ..setAutoPointValue()
@@ -99,69 +104,87 @@ import UnitTooltipGenerator
 
 
 @compiletime function createSkeletalArcher()
-    let skeletalArcherCount = BTBuildingData.getUnitCount(BUILDING_SKELETAL_ARCHER)
+    // let skeletalArcherCount = BTBuildingData.getUnitCount(BUILDING_SKELETAL_ARCHER)
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_BURNING_ARROW))
-    let itmBurning = createBasicItem(ITEM_BURNING_ARCHER)
-    createSpawnedUnit(UNIT_BURNING_ARCHER, UnitIds.burningarcher)
-        ..registerItemDef(itmBurning, ItemModifierType.Replace)
-        ..setNormalAbilities(commaList(ABIL_BURNING_ARROW))
+    // let itmBurning = createBasicItem(ITEM_BURNING_ARCHER)
+    createSpawnedUnit(UNIT_BURNING_ARCHER, UnitIds.burningarcher, BUILDING_BURNING_ARCHER)
+        ..setRace(Race.Undead)
+        // ..registerItemDef(itmBurning, ItemModifierType.Replace)
+        ..registerCustomPanelAbilityTooltip(ABIL_BURNING_ARROW)
+        ..setNormalAbilities(commaList(ABIL_BURNING_ARROW, ABIL_DMG_MINUS_7))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 26, 4, 4, 1.3)
+        ..setAttack1Data(AttackType.Pierce, 25, 5, 3, 1.3)
         ..setAttack1Range(600)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(140)
+        ..setHitPointsMaximumBase(280)
 
         ..setSpeedBase(270)
         ..setSizeSmall()
-        ..setItemCostReplacement(0, 100, 1, skeletalArcherCount, skeletalArcherCount, BUILDING_SKELETAL_ARCHER)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        // ..setItemCostReplacement(0, 1000, 10, 1, 1, BUILDING_SKELETAL_ARCHER)
 
         ..setNameEnhance("Z", "Burning Archer")
-        ..tooltipStopListen(true, itmBurning)
+        ..tooltipStopListen()
+        // ..tooltipStopListen(true, itmBurning)
         ..setMana(0)
         ..setIconGameInterfaceExt(Icons.bTNFlamingArrows)
+        ..setModelFileExt(Units.burningArcher, 255, 100, 150)
+        ..setUnitSoundSetExt(Soundsets.skeleton)
         ..setGhostDeath()
+        ..setButtonPositionX(1)
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_FROST_ARROW))
-    let itmFrost = createBasicItem(ITEM_FROST_ARCHER)
-    createSpawnedUnit(UNIT_FROST_ARCHER, UnitIds.skeletalmarksman)
-        ..registerItemDef(itmFrost, ItemModifierType.Replace)
+    // let itmFrost = createBasicItem(ITEM_FROST_ARCHER)
+    createSpawnedUnit(UNIT_FROST_ARCHER, UnitIds.skeletalmarksman, BUILDING_FROST_ARCHER)
+        ..setRace(Race.Undead)
+        // ..registerItemDef(itmFrost, ItemModifierType.Replace)
+        ..registerCustomPanelAbilityTooltip(ABIL_FROST_ARROW)
         ..setDefaultActiveAbility(commaList(ABIL_FROST_ARROW))
         ..setNormalAbilities(commaList(ABIL_FROST_ARROW))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 26, 4, 4, 1.3)
+        ..setAttack1Data(AttackType.Pierce, 25, 5, 3, 1.3)
         ..setAttack1Range(600)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(140)
+        ..setHitPointsMaximumBase(280)
 
         ..setSpeedBase(270)
         ..setSizeSmall()
-        ..setItemCostReplacement(0, 100, 1, skeletalArcherCount, skeletalArcherCount, BUILDING_SKELETAL_ARCHER)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        // ..setItemCostReplacement(0, 1000, 10, 1, 1, BUILDING_SKELETAL_ARCHER)
 
         ..setNameEnhance("X", "Frost Archer")
-        ..tooltipStopListen(true, itmFrost)
+        ..tooltipStopListen()
+
+        // ..tooltipStopListen(true, itmFrost)
         ..setMana(0)
         ..setIconGameInterfaceExt(Icons.bTNColdArrows)
+        ..setModelFileExt(Units.skeletonArcher1, 100, 150, 255)
+        ..setUnitSoundSetExt(Soundsets.skeleton)
         ..setGhostDeath()
+        ..setButtonPositionX(2)
 
     tooltip = new UnitTooltipGenerator("Basic ranged unit.")
     createSpawnedUnit(UNIT_SKELETAL_ARCHER, UnitIds.skeletalarcher, BUILDING_SKELETAL_ARCHER)
+        ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 14, 2, 2, 1.5)
+        ..setAttack1Data(AttackType.Pierce, 10, 5, 2, 1.5)
         ..setAttack1Range(500)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(100)
+        ..setHitPointsMaximumBase(200)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -169,122 +192,31 @@ import UnitTooltipGenerator
 
         ..setSizeSmall()
         ..setNameEnhance("W", "Skeletal Archer")
+        ..setUpgradeTo(asList(BUILDING_BURNING_ARCHER, BUILDING_FROST_ARCHER))
         ..tooltipStopListen(true)
 
         ..setModelFileExt(Units.skeletonArcher1)
-        ..setIconGameInterfaceExt(Icons.bTNSkeletonArcher)
         ..setUnitSoundSetExt(Soundsets.skeleton)
+        ..setIconGameInterfaceExt(Icons.bTNSkeletonArcher)
         ..setGhostDeath()
 
-
-@compiletime function createCryptFiend()
-    var tooltip = new UnitTooltipGenerator("Crypt Fiend Desc")
-    createSpawnedUnit(UNIT_CRYPT_FIEND, UnitIds.cryptfiend, BUILDING_CRYPT_FIEND)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Pierce, 18, 2, 2, 1.5)
-        ..setAttack1Range(400)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(200)
-
-        ..setSpeedBase(270)
-
-        ..setAttack1ProjectileSpeed(900)
-        ..setAttack1TargetsAllowed(commaList(
-            TargetsAllowed.ground,
-            TargetsAllowed.structure,
-            TargetsAllowed.debris,
-            TargetsAllowed.air,
-            TargetsAllowed.item_t,
-            TargetsAllowed.ward
-        ))
-        ..setSizeSmall()
-        ..setNameEnhance("Q", "Crypt Fiend")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_NERUBIAN))
-        ..setBuildingGoldCost(150)
-
-        ..setModelFileExt(Units.cryptFiend1)
-        ..setIconGameInterfaceExt(Icons.bTNCryptFiend)
-        ..setUnitSoundSetExt(Soundsets.cryptFiend)
-
-    tooltip = new UnitTooltipGenerator("Nerubian Queen Desc")
-    let itm = createBasicItem(ITEM_NERUBIAN_QUEEN)
-    createSpawnedUnit(UNIT_NERUBIAN_QUEEN, UnitIds.nerubianqueen)
-        ..setNormalAbilities(commaList(""))
-        ..registerItemDef(itm, ItemModifierType.Addition)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Pierce, 70, 8, 4, 1.5)
-        ..setAttack1Range(500)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Medium, 6)
-        ..setHitPointsMaximumBase(200)
-
-        ..setSpeedBase(270)
-
-        ..setAttack1ProjectileSpeed(900)
-        ..setSizeSmall()
-        ..setNameEnhance("X", "Nerubian Queen")
-        ..setItemCostUnit(0, 50, 1)
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-
-    tooltip = new UnitTooltipGenerator("Nerubian Desc")
-    createSpawnedUnit(UNIT_NERUBIAN, UnitIds.nerubianseer, BUILDING_NERUBIAN)
-        ..registerTooltipGenerator(tooltip)
-        ..setNormalAbilities("")
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Pierce, 37, 8, 2, 1.3)
-        ..setAttack1Range(400)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Large, 3)
-        ..setHitPointsMaximumBase(300)
-
-        ..setSpeedBase(270)
-
-        ..setAttack1ProjectileSpeed(600)
-        ..setAttack1TargetsAllowed(commaList(
-            TargetsAllowed.ground,
-            TargetsAllowed.structure,
-            TargetsAllowed.debris,
-            TargetsAllowed.air,
-            TargetsAllowed.item_t,
-            TargetsAllowed.ward
-        ))
-        ..setSizeSmall()
-        ..setNameEnhance("Z", "Nerubian")
-        ..setAttack1ProjectileArt(Abilities.chimaeraAcidMissile)
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingLumberCost(800)
-
-        ..setModelFileExt(Units.nerubian1)
-        ..setIconGameInterfaceExt(Icons.bTNNerubian)
-        ..setUnitSoundSetExt(Soundsets.cryptFiend)
 
 @compiletime function createNecromancer()
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_RAISE_SKELETON))
     createSpawnedUnit(UNIT_NECROMANCER, UnitIds.necromancer, BUILDING_NECROMANCER)
+        ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
+        ..registerCustomPanelAbilityTooltip(ABIL_RAISE_SKELETON)
         ..setNormalAbilities(commaList(ABIL_RAISE_SKELETON))
         ..setDefaultActiveAbility(commaList(ABIL_RAISE_SKELETON))
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 14, 5, 3, 1.75)
+        ..setAttack1Data(AttackType.Magic, 15, 5, 3, 1.75)
         ..setAttack1Range(700)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Unarmored, 2)
-        ..setHitPointsMaximumBase(50)
+        ..setHitPointsMaximumBase(100)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -292,30 +224,74 @@ import UnitTooltipGenerator
         ..setAutoBuildingCost()
 
         ..setSizeSmall()
-        ..setNameEnhance("E", "Necromancer")
+        ..setNameEnhance("S", "Necromancer")
         ..tooltipStopListen(true)
-        ..setBuildingUnitsTrained(commaList(
+        ..setUpgradeTo(asList(BUILDING_SPECTRAL_SAGE))
+        ..setBuildingUnitsSold(commaList(
             UNIT_NECROMANCER,
             UNIT_SKELETON,
             UNIT_SKELETON_ORC,
-            UNIT_REVENANT
+            UNIT_REVENANT,
+            UNIT_SPECTRAL_SAGE
             ))
 
 
         ..setModelFileExt(Units.necromancer1)
         ..setIconGameInterfaceExt(Icons.bTNNecromancer)
         ..setUnitSoundSetExt(Soundsets.necromancer)
+        ..setButtonPositionX(1)
+
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_RAISE_SKELETON_ORC)  + "\n\n" +
+        abilTooltipMap.get(ABIL_CRIPPLE))
+    createSpawnedUnit(UNIT_SPECTRAL_SAGE, UnitIds.kelthuzadnecro, BUILDING_SPECTRAL_SAGE)
+        ..setRace(Race.Undead)
+        ..registerTooltipGenerator(tooltip)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_RAISE_SKELETON_ORC, ABIL_CRIPPLE_ORB))
+        ..setNormalAbilities(commaList(ABIL_RAISE_SKELETON_ORC, ABIL_CRIPPLE_ORB))
+        ..setDefaultActiveAbility(commaList(ABIL_RAISE_SKELETON_ORC))
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 40, 5, 7, 1.6)
+        ..setAttack1Range(750)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Divine, 2)
+        ..setHitPointsMaximumBase(150)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..setArmorSoundType(ArmorSoundType.Ethereal)
+        ..setGhostDeath()
+
+        ..setSizeSmall()
+        ..setNameEnhance("Z", "Spectral Sage")
+        ..tooltipStopListen(true)
+        ..setBuildingUnitsSold(commaList(
+            UNIT_SPECTRAL_SAGE,
+            UNIT_SKELETON_ORC,
+            UNIT_REVENANT
+            ))
+
+        ..setModelFileExt(Units.kelthuzadGhost)
+        ..setIconGameInterfaceExt(Icons.bTNKelThuzad)
+        ..setUnitSoundSetExt(Soundsets.kelThuzadNecro)
+
 
     tooltip = new UnitTooltipGenerator("Summoned by Necromancer.")
     createSpawnedUnit(UNIT_SKELETON, UnitIds.skeleton)
+        ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setNormalAbilities("")
 
-        ..setAttack1Data(AttackType.Normal, 20, 2, 2, 1.6)
+        ..setAttack1Data(AttackType.Normal, 20, 5, 2, 1.6)
 
         ..setArmorData(ArmorType.Large, 2)
-        ..setHitPointsMaximumBase(150)
+        ..setHitPointsMaximumBase(300)
 
         ..setSpeedBase(270)
         ..setPointValue(5)
@@ -327,16 +303,17 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..tooltipStopListen(true)
 
-    tooltip = new UnitTooltipGenerator("Summoned by Necromancer.")
+    tooltip = new UnitTooltipGenerator("Summoned by Spectral Sage.")
     createSpawnedUnit(UNIT_SKELETON_ORC, UnitIds.skeletalorc)
+        ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setNormalAbilities("")
 
-        ..setAttack1Data(AttackType.Normal, 26, 2, 6, 1.4)
+        ..setAttack1Data(AttackType.Normal, 30, 5, 4, 1.4)
 
         ..setArmorData(ArmorType.Medium, 4)
-        ..setHitPointsMaximumBase(300)
+        ..setHitPointsMaximumBase(600)
 
         ..setSpeedBase(270)
         ..setPointValue(15)
@@ -350,6 +327,7 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator("Summoned by Necromancer.")
     createSpawnedUnit(UNIT_SKELETON_MAGE, UnitIds.skeletalmage)
+        ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..setAttack1AreaofEffectFullDamage(400)
         ..tooltipStartListen()
@@ -362,7 +340,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 2)
-        ..setHitPointsMaximumBase(150)
+        ..setHitPointsMaximumBase(300)
 
         ..setSpeedBase(270)
         ..setPointValue(5)
@@ -376,13 +354,14 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator("Summoned by Lich.")
     createSpawnedUnit(UNIT_REVENANT, UnitIds.firerevenant)
+        ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 72, 8, 3, 1.3)
+        ..setAttack1Data(AttackType.Magic, 50, 10, 3, 1.3)
 
         ..setArmorData(ArmorType.Divine, 4)
-        ..setHitPointsMaximumBase(400)
+        ..setHitPointsMaximumBase(800)
 
         ..setSpeedBase(270)
         ..setPointValue(40)
@@ -408,25 +387,27 @@ import UnitTooltipGenerator
     )
     let itm = createBasicItem(ITEM_LICH)
     createSpawnedUnit(UNIT_LICH, UnitIds.lich, BUILDING_LICH)
+        ..setRace(Race.Undead)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_RAISE_REVENANT, ABIL_ORB_CORRUPTION, ABIL_BRILLANCE_AURA_2))
         ..setNormalAbilities(commaList(ABIL_RAISE_REVENANT, ABIL_ORB_CORRUPTION, ABIL_BRILLANCE_AURA_2))
         ..setDefaultActiveAbility(commaList(ABIL_RAISE_REVENANT))
 
-        ..setAttack1Data(AttackType.Magic, 115, 4, 9, 1.75)
+        ..setAttack1Data(AttackType.Magic, 90, 10, 3, 1.75)
         ..setAttack1Range(700)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Divine, 4)
-        ..setHitPointsMaximumBase(260)
+        ..setHitPointsMaximumBase(520)
         ..setMana(600)
 
         ..setSpeedBase(270)
 
         ..setSizeSmall()
         ..setItemCostUnit(0, 800, 1)
-        ..setNameEnhance("Z", "Lich")
+        ..setNameEnhance("X", "Lich")
         ..tooltipStopListen(true, itm)
         ..setGhostDeath()
 
@@ -435,19 +416,21 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.heroLich)
 
 @compiletime function createBanshee()
-    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_ANTI_MAGIC_SHELL))
+    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_FROST_ARMOR))
     createSpawnedUnit(UNIT_BANSHEE, UnitIds.banshee, BUILDING_BANSHEE)
-        ..setNormalAbilities(commaList(ABIL_ANTI_MAGIC_SHELL, ABIL_AUTOCAST_ANTI_MAGIC_SHELL))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_ANTI_MAGIC_SHELL))
+        ..setRace(Race.Undead)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_FROST_ARMOR, ABIL_ANTI_MAGIC_SHELL, ABIL_UNHOLY_FRENZY))
+        ..setNormalAbilities(commaList(ABIL_FROST_ARMOR))
+        ..setDefaultActiveAbility(commaList(ABIL_FROST_ARMOR))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 20, 4, 6, 1.75)
+        ..setAttack1Data(AttackType.Magic, 20, 5, 6, 1.75)
         ..setAttack1Range(400)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Divine, 2)
-        ..setHitPointsMaximumBase(65)
+        ..setHitPointsMaximumBase(130)
         ..setMana(200)
 
         ..setSpeedBase(270)
@@ -457,58 +440,37 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setNameEnhance("A", "Banshee")
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(""))
 
         ..setModelFileExt(Units.banshee1)
         ..setIconGameInterfaceExt(Icons.bTNBanshee)
         ..setUnitSoundSetExt(Soundsets.banshee)
         ..setGhostDeath()
 
-    tooltip = new UnitTooltipGenerator("Dark Ranger Desc")
-    createSpawnedUnit(UNIT_DARK_RANGER, UnitIds.darkranger, BUILDING_DARK_RANGER)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Pierce, 66, 7, 3, 1.3)
-        ..setAttack1Range(650)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-
-        ..setArmorData(ArmorType.Small, 4)
-        ..setHitPointsMaximumBase(180)
-        ..setMana(200)
-
-        ..setSpeedBase(300)
-        ..setAutoPointValue()
-        ..setAutoBuildingCost()
-
-        ..setSizeSmall()
-        ..setNameEnhance("Z", "Dark Ranger")
-        ..tooltipStopListen(true)
-
-        ..setModelFileExt(Units.bansheeRanger1)
-        ..setIconGameInterfaceExt(Icons.bTNBansheeRanger)
-        ..setUnitSoundSetExt(Soundsets.bansheeRanger)
-
 @compiletime function createAbomination()
-    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_CLEAVE_30))
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_DISEASE_CLOUD) + "\n\n" +
+        abilTooltipMap.get(ABIL_CLEAVE_20)
+        )
     createSpawnedUnit(UNIT_ABOMINATION, UnitIds.abomination, BUILDING_ABOMINATION)
-        ..setNormalAbilities(commaList(ABIL_CLEAVE_30))
+        ..setRace(Race.Undead)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_DISEASE_CLOUD, ABIL_CLEAVE_20))
+        ..setNormalAbilities(commaList(ABIL_DISEASE_CLOUD, ABIL_CLEAVE_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 134, 6, 6, 2.5)
+        ..setAttack1Data(AttackType.Normal, 80, 10, 4, 2.5)
 
-        ..setArmorData(ArmorType.Small, 4)
-        ..setHitPointsMaximumBase(1200)
+        ..setArmorData(ArmorType.Small, 0)
+        ..setHitPointsMaximumBase(1400)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..setSizeLarge()
 
-        ..setNameEnhance("S", "Abomination")
+        ..setNameEnhance("E", "Abomination")
         ..tooltipStopListen(true)
-        ..setScalingValue(1.1)
+        ..setScalingValue(1.0)
 
         ..setBuildingUnitsTrained(commaList(
             UNIT_ABOMINATION,
@@ -521,17 +483,19 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_CLEAVE_10))
     createSpawnedUnit(UNIT_GUT_CRAWLER, UnitIds.ghoul)
+        ..setRace(Race.Undead)
+        ..registerCustomPanelAbilityTooltip(ABIL_CLEAVE_10)
         ..setNormalAbilities(commaList(ABIL_CLEAVE_10))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 34, 3, 6, 1.3)
+        ..setAttack1Data(AttackType.Normal, 35, 5, 5, 1.3)
 
         ..setArmorData(ArmorType.Small, 2)
-        ..setHitPointsMaximumBase(400)
+        ..setHitPointsMaximumBase(550)
 
         ..setSpeedBase(300)
-        ..setPointValue(20)
+        ..setPointValue(25)
 
         ..setNameEnhance("S", "Gut Crawler")
         ..tooltipStopListen(true)
@@ -544,20 +508,20 @@ import UnitTooltipGenerator
 
 @compiletime function createVampire()
     var tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_LIFESTEAL_50) + "\n\n" +
         abilTooltipMap.get(ABIL_EVASION_10) + "\n\n" +
-        "Absord Life Essence\n".color(SPECIAL_COLOR) +
-        "Permanently gain 10% of enemy max health point as health point upon kill."
+        abilTooltipMap.get(ABIL_BLOOD_HARVEST)
     )
     createSpawnedUnit(UNIT_VAMPIRE, UnitIds.dreadlord, BUILDING_VAMPIRE)
-        ..setNormalAbilities(commaList(ABIL_LIFESTEAL_50))
+        ..setRace(Race.Undead)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_EVASION_10, ABIL_BLOOD_HARVEST))
+        ..setNormalAbilities(commaList(ABIL_EVASION_10, ABIL_BLOOD_HARVEST))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 61, 4, 4, 1.0)
+        ..setAttack1Data(AttackType.Pierce, 55, 5, 5, 1.2)
 
-        ..setArmorData(ArmorType.Large, 4)
-        ..setHitPointsMaximumBase(900)
+        ..setArmorData(ArmorType.Large, 2)
+        ..setHitPointsMaximumBase(1600)
 
         ..setSpeedBase(300)
         ..setAutoPointValue()
@@ -569,66 +533,49 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setGhostDeath()
         ..setBuildingScalingValue(0.8)
+        ..setUpgradeTo(asList(BUILDING_VAMPIRE_LORD))
 
         ..setModelFileExt(Units.heroDreadLord)
         ..setIconGameInterfaceExt(Icons.bTNHeroDreadLord)
         ..setUnitSoundSetExt(Soundsets.heroDreadLord)
 
     tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_LIFESTEAL_75) + "\n\n" +
         abilTooltipMap.get(ABIL_CARRION_SWARM) + "\n\n" +
-        "Absord Life Essence\n".color(SPECIAL_COLOR) +
-        "Permanently gain 20% of enemy max health point as health point upon kill."
+        abilTooltipMap.get(ABIL_EVASION_20) + "\n\n" +
+        abilTooltipMap.get(ABIL_BLOOD_HARVEST)
     )
-    let itm = createBasicItem(ITEM_VAMPIRE_LORD)
+    // let itm = createBasicItem(ITEM_VAMPIRE_LORD)
     createSpawnedUnit(UNIT_VAMPIRE_LORD, UnitIds.dreadlord, BUILDING_VAMPIRE_LORD)
-        ..registerItemDef(itm, ItemModifierType.Addition)
+        ..setRace(Race.Undead)
+        // ..registerItemDef(itm, ItemModifierType.Addition)
+
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CARRION_SWARM, ABIL_EVASION_20, ABIL_BLOOD_HARVEST))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_CARRION_SWARM))
-        ..setNormalAbilities(commaList(ABIL_LIFESTEAL_75, ABIL_CARRION_SWARM, ABIL_AUTOCAST_CARRION_SWARM))
+        ..setNormalAbilities(commaList(ABIL_CARRION_SWARM, ABIL_AUTOCAST_CARRION_SWARM, ABIL_BLOOD_HARVEST, ABIL_EVASION_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 154, 7, 7, 1.0)
+        ..setAttack1Data(AttackType.Pierce, 100, 10, 4, 1.0)
 
-        ..setArmorData(ArmorType.Large, 8)
-        ..setHitPointsMaximumBase(1200)
+        ..setArmorData(ArmorType.Large, 5)
+        ..setHitPointsMaximumBase(2000)
         ..setMana(200)
 
         ..setSpeedBase(270)
-        ..setItemCostUnit(0, 1500, 1)
+        ..setAutoBuildingCost()
+        ..setAutoPointValue()
+        // ..setItemCostUnit(0, 1500, 1)
 
         ..setSizeSmall()
         ..setNameEnhance("Z", "Vampire Lord")
-        ..tooltipStopListen(true, itm)
+        ..tooltipStopListen(true)
+        // ..tooltipStopListen(true, itm)
         ..setGhostDeath()
 
         ..setModelFileExt(Units.tichondrius1)
         ..setIconGameInterfaceExt(Icons.bTNTichondrius)
         ..setUnitSoundSetExt(Soundsets.tichondrius)
-
-@compiletime function createCryptLord()
-    let tooltip = new UnitTooltipGenerator("Crypt Lord Desc")
-    createSpawnedUnit(UNIT_CRYPT_LORD, UnitIds.cryptlord, BUILDING_CRYPT_LORD)
-        ..registerTooltipGenerator(tooltip)
-        ..tooltipStartListen()
-
-        ..setAttack1Data(AttackType.Normal, 140, 2, 19, 1.4)
-
-        ..setArmorData(ArmorType.Large, 2)
-        ..setHitPointsMaximumBase(2400)
-
-        ..setSpeedBase(270)
-
-        ..setSizeSmall()
-        ..setNameEnhance("Z", "Crypt Lord")
-        ..setAutoPointValue()
-        ..tooltipStopListen(true)
-        ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-        ..setBuildingLumberCost(3000)
-
-        ..setModelFileExt(Units.heroCryptLord1)
-        ..setIconGameInterfaceExt(Icons.bTNHeroCryptLord)
-        ..setUnitSoundSetExt(Soundsets.heroCryptLord)
+        ..setButtonPositionX(1)
 
 @compiletime function createDeathKnight()
     var tooltip = new UnitTooltipGenerator(
@@ -637,6 +584,8 @@ import UnitTooltipGenerator
         "Replenish 10% of target maximum health as mana on kill."
     )
     createSpawnedUnit(UNIT_DEATH_KNIGHT, UnitIds.deathknight, BUILDING_DEATH_KNIGHT)
+        ..setRace(Race.Undead)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_AFFLICTION, ABIL_UNHOLY_AURA_PERCENT))
         ..setNormalAbilities(commaList(
             ABIL_AFFLICTION,
             ABIL_AUTOCAST_AFFLICTION
@@ -645,10 +594,10 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 122, 3, 17, 1.5)
+        ..setAttack1Data(AttackType.Normal, 115, 10, 7, 1.5)
 
         ..setArmorData(ArmorType.Large, 5)
-        ..setHitPointsMaximumBase(1400)
+        ..setHitPointsMaximumBase(2800)
         ..setMana(200)
 
         ..setSpeedBase(350)
@@ -667,30 +616,6 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.heroDeathKnight)
         ..setIconGameInterfaceExt(Icons.bTNHeroDeathKnight)
         ..setUnitSoundSetExt(Soundsets.heroDeathKnight)
-
-    // tooltip = new UnitTooltipGenerator("Archimonde Desc")
-    // createSpawnedUnit(UNIT_ARCHIMONDE, UnitIds.archimonde, BUILDING_ARCHIMONDE)
-    //     ..registerTooltipGenerator(tooltip)
-    //     ..tooltipStartListen()
-
-    //     ..setAttack1Data(AttackType.Chaos, 550, 16, 16, 1.5)
-    //     ..setAttack1Range(550)
-
-    //     ..setArmorData(ArmorType.Large, 5)
-    //     ..setHitPointsMaximumBase(1600)
-
-    //     ..setSpeedBase(270)
-
-    //     ..setSizeSmall()
-    //     ..setNameEnhance("C", "Archimonde")
-    //     ..setAutoPointValue()
-    //     ..tooltipStopListen(true)
-    //     ..setBuildingRequirement(commaList(UPGD_ELIMINATION))
-    //     ..setBuildingLumberCost(5000)
-
-    //     ..setModelFileExt(Units.warlock)
-    //     ..setIconGameInterfaceExt(Icons.bTNArchimonde)
-    //     ..setUnitSoundSetExt(Soundsets.warlock)
 
 
 @compiletime function createBuilder()

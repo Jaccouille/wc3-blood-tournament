@@ -5,6 +5,7 @@ wurst.dependencies
 
 */venv
 /temp
+compiled.j.txt
 
 # unit stat file
 *.csv

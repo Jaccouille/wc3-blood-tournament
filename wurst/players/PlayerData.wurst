@@ -10,11 +10,16 @@ import GameStates
 import Players
 
 public constant pDatas = new IterableMap<player, PlayerData>
+public constant dummyToTruePlayerMap = new HashMap<player, player>
 
 public class PlayerData
     // let army = new LinkedList<LinkedList<int>>
     let buildingList = new LinkedList<unit>
     let spawnedUnits = new LinkedList<unit>
+
+    let bpPerRound = new LinkedList<int>
+    let bdPerRound = new LinkedList<int>
+
     rect buildingRect = null
     player _p
     int roundBloodPoints = 0
@@ -30,29 +35,40 @@ public class PlayerData
         this.buildingRect = buildingRect
         pDatas.put(p, this)
         // TODO: replace 8 by human player size
-        initDummyPlayer(_p.getId() + 8)
-        initDummyPlayer(_p.getId() + 16)
+        addDummyPlayer(players[_p.getId() + 8])
+        addDummyPlayer(players[_p.getId() + 16])
 
-    function initDummyPlayer(int playerId)
-        let dummyPlayer = players[playerId]
-
-        // SetPlayerAllianceStateBJ(_p, dummyPlayer, bj_ALLIANCE_ALLIED_VISION)
+    function addDummyPlayer(player dummyPlayer)
         SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_PASSIVE, true)
-        SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_SHARED_VISION, true)
-        // SetPlayerAlliance(dummyPlayer, _p, ALLIANCE_SHARED_ADVANCED_CONTROL, true)
-        // SetPlayerAlliance(dummyPlayer, _p, ALLIANCE_SHARED_CONTROL, true)
-        // SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_SHARED_ADVANCED_CONTROL, true)
-        // SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_SHARED_CONTROL, true)
-        // For army previewer
-        SetPlayerAlliance(dummyPlayer, _p, ALLIANCE_SHARED_VISION_FORCED, true)
+        // SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_SHARED_VISION, true)
+        SetPlayerAlliance(dummyPlayer, _p, ALLIANCE_PASSIVE, true)
+        SetPlayerAlliance(dummyPlayer, _p, ALLIANCE_SHARED_VISION, true)
+
         dummyPlayers.forEach() (player t) ->
-            SetPlayerAllianceStateBJ(t, dummyPlayer, bj_ALLIANCE_ALLIED_VISION)
-            SetPlayerAllianceStateBJ(dummyPlayer, t, bj_ALLIANCE_ALLIED_VISION)
+            SetPlayerAlliance(dummyPlayer, t, ALLIANCE_PASSIVE, true)
+            SetPlayerAlliance(dummyPlayer, t, ALLIANCE_SHARED_VISION, true)
+            SetPlayerAlliance(t, dummyPlayer, ALLIANCE_SHARED_VISION, true)
+            SetPlayerAlliance(t, dummyPlayer, ALLIANCE_PASSIVE, true)
+        dummyPlayers.push(dummyPlayer)
 
         dummyPlayer.setColor(_p.getColor())
-        dummyPlayers.push(dummyPlayer)
-        // dummyPlayer.setName(_p.getName() + " " + dummyPlayers.size().toString())
         dummyPlayer.setName(_p.getName())
+        // dummyPlayer.setName(_p.getName() + " " + dummyPlayer.getId().toString())
+        dummyToTruePlayerMap.put(dummyPlayer, _p)
+
+    function removeDummyPlayers()
+        dummyPlayers.forEach() (player dummyPlayer) ->
+            removeDummyPlayer(dummyPlayer)
+
+    function removeDummyPlayer(player dummyPlayer)
+        SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_PASSIVE, false)
+        SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_SHARED_VISION, false)
+
+        dummyPlayers.remove(dummyPlayer)
+        dummyPlayers.forEach() (player t) ->
+            SetPlayerAlliance(dummyPlayer, t, ALLIANCE_PASSIVE, false)
+            SetPlayerAlliance(t, dummyPlayer, ALLIANCE_PASSIVE, false)
+        dummyToTruePlayerMap.remove(dummyPlayer)
 
     function renameDummyPlayer()
         for dummyPlayer in dummyPlayers
@@ -63,8 +79,16 @@ public class PlayerData
         // return this._p
         return dummyPlayers.get(idx)
 
+    function addRoundBloodPoints(int value)
+        roundBloodPoints += value
+
     function addBounty(int value)
         roundBloodPoints += value
+        _p.addLumber(value)
+
+    function addDonation(int value)
+        bdPerRound.push(value)
+        totalBloodPoints += value
         _p.addLumber(value)
 
     function addArmyPoints(int value)
@@ -76,15 +100,16 @@ public class PlayerData
     function giveBloodPointsReward()
         let msg = "You acquired " +
             armyPoints.toString().color(COLOR_RED) +
-            " + " +
+            " army points + " +
             roundBloodPoints.toString().color(COLOR_RED) +
-            " blood points"
+            " kill points"
         printTimedToPlayer(msg, 15, _p)
-        _p.addLumber(armyPoints)
+        _p.addLumber(armyPoints + roundBloodPoints)
         totalBloodPoints += armyPoints + roundBloodPoints
+        bpPerRound.push(armyPoints + roundBloodPoints)
 
 
-public function initPlayers()
+public function initPlayerDatas()
     // TODO: refactor for release
     new PlayerData(players[0], gg_rct_Red)
     new PlayerData(players[1], gg_rct_Blue)

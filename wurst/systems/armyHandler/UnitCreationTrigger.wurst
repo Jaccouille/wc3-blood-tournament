@@ -14,6 +14,9 @@ import ItemStockHandler
 import LocalObjectIDs
 import PlayerData
 import PlayerExtension
+import GameConfig
+import UnitExtensions
+import TextTagUtils
 
 public function insertBuilding(LinkedList<unit> buildingList, unit newBuilding)
     // Remove the building so we can re insert it in the list
@@ -69,31 +72,76 @@ init
         if summonedUnit == null
             Log.debug("Unknown unit spawned for " + EventData.getTriggerPlayer().getName())
         else
+            if gameConfig.getDamageMultiplier() != 1.0
+                summonedUnit.setBaseDamage((summonedUnit.getBaseDamage(0) * gameConfig.getDamageMultiplier()).toInt(), 0)
+            if gameConfig.getHealthMultiplier() != 1.0
+                summonedUnit.setMaxHP((summonedUnit.getMaxHP() * gameConfig.getHealthMultiplier()).toInt(), true)
+
             pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).spawnedUnits.push(summonedUnit)
             // To reduce pathing lag, assign the new unit to the last dummy player
             let newOwner = pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).dummyPlayers.getLast()
-            summonedUnit.setOwner(newOwner, false)
+            // TODO: Mana ward ability doesn't work on allied for some reason
+            if summonedUnit.getTypeId() != UNIT_MANA_WARD
+                summonedUnit.setOwner(newOwner, false)
             summonedUnit.issuePointOrder("attack", CENTER)
 
     GameStates.gameplay.onEnter() state ->
 
         EventListener.add(EVENT_PLAYER_UNIT_UPGRADE_FINISH) ->
-            let newBuilding = EventData.getTriggerUnit()
-            let pData = pDatas.get(newBuilding.getOwner())
-            newBuilding.addType(UNIT_TYPE_ANCIENT)
-            BlzShowUnitTeamGlow(newBuilding, false)
-            pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(newBuilding.getTypeId()).upgradeBonusArmyPoints)
-            updatePreviewer(newBuilding.getOwner())
+            let upgradedBuilding = EventData.getTriggerUnit()
+            let pData = pDatas.get(upgradedBuilding.getOwner())
 
-            // Add stock items
-            if unitItemSold.has(newBuilding.getTypeId())
-                let itemStockHandler = new ItemStockHandler(newBuilding)
-                unitItemSold.get(newBuilding.getTypeId()).forEach() (integer t) ->
-                    let itm = createItem(t, vec2(0, 0))
-                    let maxStock = itm.getLevel()
-                    AddItemToStock(newBuilding, t, maxStock, maxStock)
-                    itemStockHandler.addItem(itm.getTypeId(), maxStock)
-                    itm.remove()
+            // Add ancient type to prevent se
+            if not gameConfig.isSellableUpgradeEnabled()
+                upgradedBuilding.addType(UNIT_TYPE_ANCIENT)
+
+            // Hide team glow on hero models
+            BlzShowUnitTeamGlow(upgradedBuilding, false)
+
+            pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(upgradedBuilding.getTypeId()).upgradeBonusArmyPoints)
+
+            // Mana value is used to compute the upgraded building total price
+            upgradedBuilding.setMana(upgradedBuilding.getMaxMana())
+
+            updatePreviewer(upgradedBuilding.getOwner())
+
+            var goldAmount = 0
+            var bloodAmount = 0
+
+            // Edge case for spellbreaker because the upgrade may already have bought items
+            if upgradedBuilding.getTypeId() == BUILDING_SPELL_BREAKER
+                for t in upgradedBuilding.getInventory()
+                    if t != null
+                        let goldCost = getItemGoldCost(t.getTypeId()) * (t.getCharges() / BlzGetItemIntegerField(t, ITEM_IF_PRIORITY)).toInt()
+                        goldAmount += goldCost
+                        let lumberCost = getItemLumberCost(t.getTypeId()) *  (t.getCharges() / BlzGetItemIntegerField(t, ITEM_IF_PRIORITY)).toInt()
+                        bloodAmount += lumberCost
+                    upgradedBuilding.removeItem(t)
+
+                var pos = upgradedBuilding.getPos3Real()
+                if goldAmount > 0
+                    pData._p.addGold(goldAmount)
+                    createGoldTag(pos, "+" + goldAmount.toString(), 12, pData._p)
+                    pos = pos.add(0, 50, 0)
+                if bloodAmount > 0
+                    pData._p.addLumber(bloodAmount)
+                    createBloodPointTag(pos, "+" + bloodAmount.toString(), 12, pData._p)
+
+                upgradedBuilding.removeItemFromStock(ITEM_WEAPON_BLESSING)
+                upgradedBuilding.removeItemFromStock(ITEM_ARMOR_BLESSING)
+                if ItemStockHandler.hasUnit(upgradedBuilding)
+                    destroy ItemStockHandler.unitToItemStockMap.get(upgradedBuilding)
+
+                // Add stock items
+                if unitItemSold.has(upgradedBuilding.getTypeId())
+                    let itemStockHandler = new ItemStockHandler(upgradedBuilding)
+                    unitItemSold.get(upgradedBuilding.getTypeId()).forEach() (integer t) ->
+                        let itm = createItem(t, vec2(0, 0))
+                        let maxStock = itm.getLevel()
+                        AddItemToStock(upgradedBuilding, t, maxStock, maxStock)
+                        itemStockHandler.addItem(itm.getTypeId(), maxStock)
+                        itm.remove()
+
 
         EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_FINISH) ->
             let newBuilding = EventData.getTriggerUnit()

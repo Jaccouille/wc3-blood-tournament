@@ -49,6 +49,7 @@ description_template = Template(
 """Released on {{ release_date }}
     A Blood tournament map featuring Human, Orc, Undead and Night Elf faction.\
       \nCan be played solo against bots.
+    See more on https://www.hiveworkshop.com/threads/blood-tournament-reloaded.353051/
 """
 )
 
@@ -65,14 +66,14 @@ ARMORTIP_SMALL=Damage received from:|n|cff00FF00Pierce: 200%|r|n|cffFFFFFFMagic:
 ARMORTIP_MEDIUM=Damage received from:|n|cff00FF00Normal: 175%|r|n|cff00FF00Siege: 150%|r|n|cffFFFF00Magic: 75%|r|n|cffFFFF00Pierce: 75%|r
 ARMORTIP_LARGE=Damage received from:|n|cff00FF00Magic: 200%|r|n|cffFFFFFFNormal: 100%|r|n|cffFFFFFFPierce: 100%|r|n|cffFFFFFFSiege: 100%|r
 ARMORTIP_FORT=Damage received from:|n|cff00FF00Siege: 200%|r|n|cffFFFFFFNormal: 100%|r|n|cffFF0000Magic: 35%|r|n|cffFF0000Pierce: 35%|r
-ARMORTIP_DIVINE=Damage received from:|n|cff00FF00Magic: 200%|r|n|cffFF0000Normal: 20%|r|n|cffFF0000Pierce: 10%|r|n|cffFF0000Siege: 10%|r
+ARMORTIP_DIVINE=Damage received from:|n|cff00FF00Magic: 200%|r|n|cffFF0000Normal: 50%|r|n|cffFF0000Siege: 50%|r|n|cffFF0000Pierce: 20%|r
 ARMORTIP_NONE=Damage received from:|n|cff00FF00Siege: 200%|r|n|cff00FF00Magic: 150%|r|n|cff00FF00Normal: 150%|r|n|cff00FF00Pierce: 150%|r
 ARMOR_DIVINE=Type: |Cffffcc00Spectral|R
 
-DAMAGETIP_MAGIC=Damage against:|n|cff00FF00Large: 200%|r|n|cff00FF00Spectral: 200%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFSmall: 100%|r|n|cffFFFF00Medium: 75%|r|n|cffFF0000Fort: 35%|r
-DAMAGETIP_MELEE=Damage against:|n|cff00FF00Medium: 175%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFLarge: 100%|r|n|cffFFFFFFFort: 100%|r|n|cffFFFF00Small: 75%|r|n|cffFF0000Spectral: 20%|r
-DAMAGETIP_PIERCE=Damage against:|n|cff00FF00Small: 200%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFLarge: 100%|r|n|cffFFFF00Medium: 75%|r|n|cffFF0000Fort: 35%|r|n|cffFF0000Spectral: 10%|r
-DAMAGETIP_SIEGE=Damage against:|n|cff00FF00Fort: 200%|r|n|cff00FF00Unarmored: 200%|r|n|cff00FF00Medium: 150%|r|n|cffFFFFFFSmall: 100%|r|n|cffFFFFFFLarge: 100%|r|n|cffFF0000Spectral: 10%|r
+DAMAGETIP_MAGIC=Damage against:|n|cff00FF00Large: 200%|r|n|cff00FF00Spectral: 200%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFSmall: 100%|r|n|cffFFFF00Medium: 75%|r
+DAMAGETIP_MELEE=Damage against:|n|cff00FF00Medium: 175%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFLarge: 100%|r|n|cffFFFF00Small: 75%|r|n|cffFF0000Spectral: 50%|r
+DAMAGETIP_PIERCE=Damage against:|n|cff00FF00Small: 200%|r|n|cff00FF00Unarmored: 150%|r|n|cffFFFFFFLarge: 100%|r|n|cffFFFF00Medium: 75%|r|n|cffFF0000Spectral: 20%|r
+DAMAGETIP_SIEGE=Damage against:|n|cff00FF00Unarmored: 200%|r|n|cff00FF00Medium: 150%|r|n|cffFFFFFFSmall: 100%|r|n|cffFFFFFFLarge: 100%|r|n|cffFF0000Spectral: 50%|r
 
 COLON_LUMBER=Blood points:
 QUESTSOPTIONAL=Available Modes
@@ -170,7 +171,7 @@ def update_build(version):
     # Look up the previous name of the map.
     name = build["buildMapData"]["name"]
     description = build["buildMapData"]["scenarioData"]["description"]
-    description = description_template.render({"release_date": date.today().strftime("%d/%m/%Y")})
+    description = description_template.render({"release_date": date.today().strftime("%d %B %Y")})
     build["buildMapData"]["scenarioData"].update(
         {
             "description": description

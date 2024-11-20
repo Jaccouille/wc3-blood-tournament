@@ -69,7 +69,6 @@ import UnitObjEditingCommon
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
         ..setScalingValue(1)
-        ..setSpeedBase(0)
         ..setSelectionScale(2.0)
         ..setAcquisitionRange(2000)
         ..setAttack1AnimationBackswingPoint(0)

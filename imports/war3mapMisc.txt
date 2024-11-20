@@ -1,12 +1,13 @@
 [Misc]
 ConstructionRefundRate=1.0
 DamageBonusMagic=1.0,0.75,2.0,0.35,1.0,0.5,2.0,1.5
-DamageBonusNormal=0.75,1.75,1.0,1.0,1.0,1.0,0.2,1.5
-DamageBonusPierce=2.0,0.75,1.0,0.35,1.0,0.5,0.1,1.5
-DamageBonusSiege=1.0,1.5,1.0,2.0,1.0,0.5,0.1,2.0
+DamageBonusNormal=0.75,1.75,1.0,1.0,1.0,1.0,0.5,1.5
+DamageBonusPierce=2.0,0.75,1.0,0.35,1.0,0.5,0.2,1.5
+DamageBonusSiege=1.0,1.5,1.0,2.0,1.0,0.5,0.5,2.0
 
 DamageBonusSpells=1.00,1.00,1.00,1.00,1.00,0.75,1.00,1.00
 MaxUnitSpeed=522.0
+MinUnitSpeed=50.0
 UpgradeRefundRate=1.0
 ItemStackingEnabled=1
 DefendDeflection=1

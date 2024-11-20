@@ -37,12 +37,25 @@ function createBasicItem(int newId, int oldId) returns ItemDefinition
         ..setCanBeSoldToMerchants(false)
         ..setModelUsed("")
 
-public function ItemDefinition.setItemCost(int gold, int lumber, int charges, int maxStack, int maxStock)
-    this.setGoldCost(gold)
-    this.setLevel(maxStock)
-    this.setLumberCost(lumber)
+
+public function computeItemPointValue(int goldCost, int lumberCost) returns int
+    var pointValue = 0
+    pointValue += goldCost
+    pointValue += lumberCost div 10
+    return pointValue
+
+public function ItemDefinition.setItemCost(int goldCost, int lumberCost, int charges, int maxStack, int maxStock)
+    this.setGoldCost(goldCost)
+    this.setLumberCost(lumberCost)
     this.setMaxStack(maxStack)
+    // For refund price computation
+    this.setPriority(charges)
     this.setNumberofCharges(charges)
+    // For item stock handler
+    this.setLevel(maxStock)
     this.setStockMaximum(maxStock)
-    itemGoldCost.saveInt(this.getNewId(), this.getNewId(), gold)
-    itemLumberCost.saveInt(this.getNewId(), this.getNewId(), lumber)
+    this.setHitPoints(computeItemPointValue(goldCost, lumberCost))
+    itemGoldCost.saveInt(this.getNewId(), this.getNewId(), goldCost)
+    itemLumberCost.saveInt(this.getNewId(), this.getNewId(), lumberCost)
+    itemCharges.saveInt(this.getNewId(), this.getNewId(), charges)
+    itemMaxStock.saveInt(this.getNewId(), this.getNewId(), maxStock)

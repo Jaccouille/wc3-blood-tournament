@@ -6,8 +6,8 @@ Following are the default enabled arguments:
 
 -runcompiletimefunctions
 -injectobjects
-stacktraces
--lua
+-stacktraces
+lua
 
 Optimization arguments (default disabled):
 

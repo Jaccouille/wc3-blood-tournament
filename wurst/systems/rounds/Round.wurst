@@ -26,11 +26,6 @@ import public PlayerData
 @configurable constant FORMATION_WIDTH = 120.
 @configurable constant FORMATION_HEIGHT = 80.
 
-// Max number of unit per line
-@configurable constant UNIT_PER_LINE = 4
-
-@configurable constant UNIT_CAP = 80
-
 
 interface LastArmyRemaining
     abstract function execute()
@@ -106,6 +101,8 @@ public abstract class Round
         // Log.debug(this.roundName + " doAfterSpawn")
 
     function doBeforeSpawn()
+        for _p in pDatas
+            SetPlayerTechResearchedSwap(UPGD_UNAVAILABLE_DURING_ROUND, 0, _p)
         forUnitsAll() (unit u) ->
             if IsUnitDeadBJ(u)
                 u.remove()
@@ -118,6 +115,22 @@ public abstract class Round
             for dummyB in p2.getPlayerData().dummyPlayers
                 dummyA.setPlayerAlliance(dummyB, ALLIANCE_PASSIVE, isAllied)
                 dummyB.setPlayerAlliance(dummyA, ALLIANCE_PASSIVE, isAllied)
+
+    function playRoundEndSound()
+        KillSoundWhenDone(
+            CreateSound(
+                Sounds.questCompleted,
+                false,
+                false,
+                false,
+                10,
+                10,
+                ""
+            )
+        ..setPitch(1.)
+        ..setVolume(127)
+        ..play()
+        )
 
     function playTickSound()
         KillSoundWhenDone(
@@ -149,6 +162,8 @@ public abstract class Round
                 nullTimer() ->
                     preventOrder = true
                     orderBlocker.enable()
+                for _p in pDatas
+                    SetPlayerTechResearchedSwap(UPGD_AVAILABLE_DURING_ROUND, 1, _p)
 
             else if setupTime < 6
                 printTimed(setupTime.toString() + "...", 5)
@@ -179,14 +194,14 @@ public abstract class Round
 
         playerToArmySpawner.get(_p)
             ..setSpawnZone(spawnZone)
-            ..setBuildingList(buidingList)
+            ..setBuildingList(buidingList.copy())
             ..initSpawner()
 
         doPeriodically(1) (CallbackPeriodic cb) ->
             playerToArmySpawner.get(_p)
                 ..spawnArmy(true)
             if _p.getPlayerData().spawnedUnits.size() >= spawnZone.unitLimit
-                or playerToArmySpawner.get(_p).spawnFinished
+                or playerToArmySpawner.get(_p).hasSpawnFinished
                 playerToArmySpawner.get(_p).setReinforcementPos()
                 destroy cb
 
@@ -201,6 +216,10 @@ public abstract class Round
         p1.panCameraToTimed(computeCameraPos(spawnZone1, spawnZone2), 0)
         p2.panCameraToTimed(computeCameraPos(spawnZone1, spawnZone2), 0)
 
+    ondestroy
+        destroy matchUp
+        destroy roundParticipant
+
 
 public class NormalRound extends Round
     static int counter = 0
@@ -211,8 +230,11 @@ public class NormalRound extends Round
         this.roundName = "Round " + counter.toString()
 
     override function spawnPortals()
-        SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "show", false)
-        SetDoodadAnimationRect(boundRect, DOODAD_PORTAL, "birth", false)
+        for zoneIdx = 0 to 7
+            SetDoodadAnimationRect(pDatas.get(players[zoneIdx]).buildingRect, DOODAD_PORTAL, "show", false)
+            SetDoodadAnimationRect(pDatas.get(players[zoneIdx]).buildingRect, DOODAD_PORTAL, "birth", false)
+            spawnZones.get(zoneIdx).openPortal()
+
         forUnitsAll() (unit u) ->
             if u.isType(UNIT_TYPE_STRUCTURE)
                 u.setAnimation("Stand Victory")
@@ -249,6 +271,31 @@ public class FinalRound extends Round
     override function spawnPortals()
         SetDoodadAnimationRect(boundRect, DOODAD_ELIM_PORTAL, "show", false)
         SetDoodadAnimationRect(boundRect, DOODAD_ELIM_PORTAL, "birth", false)
+
+    override function doBeforeSpawn()
+        for _p in pDatas
+            SetPlayerTechResearchedSwap(UPGD_UNAVAILABLE_DURING_ROUND, 0, _p)
+            pDatas.get(_p).removeDummyPlayers()
+        forUnitsAll() (unit u) ->
+            if IsUnitDeadBJ(u)
+                u.remove()
+        hasStarted = true
+        for pair in matchUp
+            // Ugly and quick way to allocate multiple dummy players for each
+            // round participant, this way we can spawn more units
+            let pData1 = pDatas.get(players[pair.a])
+            pData1.removeDummyPlayers()
+            pData1.addDummyPlayer(players[8])
+            pData1.addDummyPlayer(players[9])
+            pData1.addDummyPlayer(players[10])
+            let pData2 = pDatas.get(players[pair.b])
+            pData2.removeDummyPlayers()
+            pData2.addDummyPlayer(players[11])
+            pData2.addDummyPlayer(players[12])
+            pData2.addDummyPlayer(players[13])
+
+            setDummyAlliance(players[pair.a], players[pair.b], true)
+
 
     override function spawnArmies()
         for contestantPair in matchUp

@@ -13,15 +13,17 @@ import TerrainUtils
 import ChatCommands
 import GameConfig
 import GameStates
-import IDListConstant
 import ItemStockHandler
 import LocalObjectIDs
 import Players
-import Round
+import initlater RoundController
 
-let playerToBuilderAI = new HashMap<player, BuilderAI>
+public let playerToBuilderAI = new HashMap<player, BuilderAI>
 let botEnabled = compiletime(createDummyBuffObject("Bot enabled", "This player is being controlled by a bot",
      Icons.bTNMagicalSentry, Abilities.magicSentryCaster, "overhead"))
+
+
+constant TOOLTIP = "You are controlled by a bot, type -bot or move the builder around to disable it."
 
 let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
     ..put(UNIT_HUMAN_BUILDER, asList(
@@ -41,6 +43,7 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
         BUILDING_OGRE,
         BUILDING_WARMONGER
     ))
+
     ..put(UNIT_UNDEAD_BUILDER, asList(
         BUILDING_ZOMBIE,
         BUILDING_SKELETAL_ARCHER,
@@ -70,10 +73,14 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
 
 public let UPGRADE_OPTIONS = new HashMap<int, LinkedList<int>>
     ..put(BUILDING_KNIGHT, asList(BUILDING_CRUSADER))
+    ..put(BUILDING_RIFLEMAN, asList(BUILDING_GRENADIER, BUILDING_SNIPER))
     ..put(BUILDING_GRUNT, asList(BUILDING_BERSERKER))
+    ..put(BUILDING_RAIDER, asList(BUILDING_MARAUDER))
+    ..put(BUILDING_SKELETAL_ARCHER, asList(BUILDING_BURNING_ARCHER, BUILDING_FROST_ARCHER))
+    ..put(BUILDING_NECROMANCER, asList(BUILDING_SPECTRAL_SAGE))
     ..put(BUILDING_HEADHUNTER, asList(BUILDING_TRAPPER))
     ..put(BUILDING_ZOMBIE, asList(BUILDING_PLAGUE_BEARER))
-    ..put(BUILDING_CRYPT_FIEND, asList(BUILDING_NERUBIAN))
+    ..put(BUILDING_VAMPIRE, asList(BUILDING_VAMPIRE_LORD))
     ..put(BUILDING_ARCHER, asList(BUILDING_NE_RANGER))
     ..put(BUILDING_MURLOC, asList(BUILDING_MURGUL_WARLOCK))
     ..put(BUILDING_SNAP_DRAGON, asList(BUILDING_HYDRA))
@@ -85,35 +92,43 @@ class BuilderAI
     CallbackPeriodic cb
     boolean isEnabled = false
     boolean enableForHumanPlayer = false
+    texttag tooltip
 
     construct(player _player)
         this._player = _player
         playerToBuilderAI.put(_player, this)
         pData = pDatas.get(_player)
+        tooltip = createTTEx(pData.racePicker.getPos().withZ(200), TOOLTIP, 10, colorA(255, 255, 255, 255), _player)
+        tooltip.setVisibility(false)
 
     function pickBuilder()
         if pData.builder == null
             pData.racePicker.issueImmediateOrder(UnitId2String(gameConfig.getBuilderList().getRandomElement()))
 
     private function tryToBuyItems(LinkedList<unit> buildingList)
-        let buildingWithItemsToBuy = buildingList
-            .lodashFilter(building -> ItemStockHandler.unitToItemStockMap.has(building))
-        if buildingWithItemsToBuy.size() > 0
+        // Get existing building that can be upgraded
+        let buildingWithItemsToBuy = new LinkedList<unit>
+        for building in buildingList
+            if ItemStockHandler.unitToItemStockMap.has(building)
+                buildingWithItemsToBuy.push(building)
+
+        if buildingWithItemsToBuy != null and buildingWithItemsToBuy.size() > 0
             let randomBuilding = buildingWithItemsToBuy.getRandomElement()
             let stockHandler = ItemStockHandler.unitToItemStockMap.get(randomBuilding)
             var choseUpgrade = false
             while not choseUpgrade
-                Log.debug("name = " + randomBuilding.getName() + " for player " + randomBuilding.getOwner().getName())
-                Log.debug("name = " + randomBuilding.getName() + " size: " + " " + unitItemSold.get(randomBuilding.getTypeId()).size().toString())
                 let randomItem = unitItemSold.get(randomBuilding.getTypeId()).getRandomElement()
                 if stockHandler.hasItem(randomItem)
                     randomBuilding.issueImmediateOrderById(randomItem)
                     choseUpgrade = true
+        destroy buildingWithItemsToBuy
 
     // TODO: learn how to do AI
     function startAI()
         isEnabled = true
         pData.racePicker.addAbility(botEnabled.abilId)
+        if (GetLocalPlayer() == _player)
+            tooltip.setVisibility(true)
         pickBuilder()
 
         cb = doPeriodically(2) (CallbackPeriodic cb) ->
@@ -121,38 +136,43 @@ class BuilderAI
                 destroy cb
 
             // Try to upgrade existing units
-            if pData._p.getLumber() >= 50 and pData.buildingList.size() > 0
-                let buildingList = pData.buildingList.copy()
+            else
+                if pData._p.getLumber() >= 50 and pData.buildingList.size() > 0
+                    let buildingList = pData.buildingList.copy()
 
-                // Get existing building that can be upgraded
-                let upgradableBuildings = buildingList
-                    .lodashFilter(building -> UPGRADE_OPTIONS.has(building.getTypeId()))
+                    // Get existing building that can be upgraded
+                    let upgradableBuildings = new LinkedList<unit>
+                    for building in buildingList
+                        if UPGRADE_OPTIONS.has(building.getTypeId())
+                            upgradableBuildings.push(building)
 
-                // Try to upgrade building, if not, try to buy items
-                if upgradableBuildings.size() > 0
-                    let unitToUpgrade = upgradableBuildings.getRandomElement()
-                    let upgradeChoice = UPGRADE_OPTIONS.get(unitToUpgrade.getTypeId()).getRandomElement()
+                    // Try to upgrade building, if not, try to buy items
+                    if upgradableBuildings.size() > 0
+                        let unitToUpgrade = upgradableBuildings.getRandomElement()
+                        let upgradeChoice = UPGRADE_OPTIONS.get(unitToUpgrade.getTypeId()).getRandomElement()
 
-                    if OrderId2StringBJ(upgradeChoice)  != ""
-                        unitToUpgrade.issueImmediateOrder(OrderId2StringBJ(upgradeChoice))
-                else
-                    tryToBuyItems(buildingList)
+                        if OrderId2StringBJ(upgradeChoice)  != ""
+                            unitToUpgrade.issueImmediateOrder(OrderId2StringBJ(upgradeChoice))
+                    else
+                        tryToBuyItems(buildingList)
+                    destroy upgradableBuildings
+                    destroy buildingList
 
-
-            if pData.builder != null and pData._p.getGold() >= 100
-                let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()
-                var pos = pData.buildingRect.randomPoint()
-                while pos.isTerrainPathable(PATHING_TYPE_BUILDABILITY)
-                    pos = pData.buildingRect.randomPoint()
-                BlzQueueBuildOrderById(pData.builder, unitToBuild, pos.x, pos.y)
-            // trade blood points for gold
-            else if pData.builder != null and pData._p.getLumber() >= 1500
-                pData.builder.issueImmediateOrder("berserk")
+                if pData.builder != null and pData._p.getGold() >= 100
+                    let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()
+                    var pos = pData.buildingRect.randomPoint()
+                    while pos.isTerrainPathable(PATHING_TYPE_BUILDABILITY)
+                        pos = pData.buildingRect.randomPoint()
+                    BlzQueueBuildOrderById(pData.builder, unitToBuild, pos.x, pos.y)
+                // trade blood points for gold
+                else if pData.builder != null and pData._p.getLumber() >= 1500
+                    pData.builder.issueImmediateOrder("berserk")
 
 
 
     function stopAI()
         pData.racePicker.removeAbility(botEnabled.abilId)
+        tooltip.setVisibility(false)
         BlzUnitForceStopOrder(pData.builder, true)
         isEnabled = false
 
@@ -189,6 +209,11 @@ function toggleAI()
         if not aiInstance._player.isIngame()
             aiInstance.toggleAI()
 
+public function player.toggleBot()
+    let ai = playerToBuilderAI.get(this)
+    if not ai.isEnabled
+        ai.toggleAI()
+
 
 init
     GameStates.gameplay.onEnter() state ->
@@ -210,8 +235,9 @@ init
 
 
         EventListener.add(EVENT_PLAYER_LEAVE) ->
-            if gameConfig.isBotAIEnabled()
-                playerToBuilderAI.get(GetTriggerPlayer()).toggleAI()
+            if gameConfig.isBotAIEnabled() and GameStates.gameplay.active
+                and not (roundController.hasFinalStarted and roundController.hasRoundStarted)
+                GetTriggerPlayer().toggleBot()
 
     registerCommandAll("bot") (triggerPlayer, args) ->
         // let aiInstance = playerToBuilderAI.get(triggerPlayer)

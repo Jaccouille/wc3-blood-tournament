@@ -9,17 +9,20 @@ import OrderIds
 
 // Local imports:
 import ArmyPreviewer
-import ArmySpawner
 import ClosuresForItems
 import LocalObjectIDs
 import PlayerExtension
 import ScoreBoard
+import GameConfig
+import initlater ItemCallbackDefinition
 
 public HashMap<int, LinkedList<int>> unitItemSold = new HashMap<int, LinkedList<int>>
 
 public HashMap<int, LinkedList<int>> sharedStocksMap = new HashMap<int, LinkedList<int>>
 public constant itemGoldCost = compiletime(InitHashtable())
 public constant itemLumberCost = compiletime(InitHashtable())
+public constant itemCharges = compiletime(InitHashtable())
+public constant itemMaxStock = compiletime(InitHashtable())
 
 public class ItemCost
     int gold
@@ -65,12 +68,15 @@ public class ItemStockHandler
             if sharedStocksMap.has(building.getTypeId())
                 and sharedStocksMap.get(building.getTypeId()).has(itemId)
                 let sharedStock = sharedStocksMap.get(building.getTypeId())
-                sharedStock.forEach() (integer t) ->
-                    if t != itemId
-                        building.addItemToStock(t, currentStock, currentStock)
-                        itemStock.put(t, currentStock)
-                        if currentStock <= 0
-                            itemStock.remove(t)
+                sharedStock.forEach() (integer itmShared) ->
+                    if itmShared != itemId
+                        let itmSharedStock = itemStock.get(itmShared) - value > 0 ? itemStock.get(itmShared) - value : -1
+
+                        building.addItemToStock(itmShared, itmSharedStock, itmSharedStock)
+                        if itmSharedStock <= 0
+                            itemStock.remove(itmShared)
+                        else
+                            itemStock.put(itmShared, itmSharedStock)
 
             // Update triggered item stock
             itemStock.put(itemId, currentStock)
@@ -92,21 +98,26 @@ public class ItemStockHandler
 
 function initItemStockData()
     // ================ HUMAN =============
-    unitItemSold.put(BUILDING_FOOTMAN   , asList(ITEM_CAPTAIN           , ITEM_DEFEND                                        ))
-    unitItemSold.put(BUILDING_RIFLEMAN  , asList(ITEM_MORTAR            , ITEM_SNIPER         , ITEM_EXPLOSIVE_AMMO          ))
-    unitItemSold.put(BUILDING_PRIEST    , asList(ITEM_SPELL_BREAKER     , ITEM_ARMOR_BLESSING , ITEM_WEAPON_BLESSING         ))
-    unitItemSold.put(BUILDING_CRUSADER    , asList(ITEM_MARSHALL                                      ))
-    unitItemSold.put(BUILDING_SORCERESS , asList(ITEM_COURT_ENCHANTRESS , ITEM_DARK_MAGE      , ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
+    unitItemSold.put(BUILDING_FOOTMAN , asList(ITEM_CAPTAIN , ITEM_DEFEND ))
+    unitItemSold.put(BUILDING_RIFLEMAN , asList(ITEM_MORTAR))
+    unitItemSold.put(BUILDING_GRENADIER , asList(ITEM_MORTAR))
+    unitItemSold.put(BUILDING_SNIPER , asList(ITEM_MORTAR))
+    unitItemSold.put(BUILDING_PRIEST , asList(ITEM_ARMOR_BLESSING , ITEM_WEAPON_BLESSING ))
+    unitItemSold.put(BUILDING_SPELL_BREAKER , asList(ITEM_MAGIC_DEFEND ))
+    unitItemSold.put(BUILDING_KNIGHT , asList(ITEM_MARSHALL ))
+    unitItemSold.put(BUILDING_CRUSADER , asList(ITEM_MARSHALL ))
+    unitItemSold.put(BUILDING_SORCERESS , asList(ITEM_COURT_ENCHANTRESS , ITEM_DARK_MAGE , ITEM_FIRE_MAGE, ITEM_ICE_MAGE))
     unitItemSold.put(BUILDING_PALADIN , asList(ITEM_PALADIN_SKIN_BLACK, ITEM_PALADIN_SKIN_WHITE, ITEM_INSPIRE))
     sharedStocksMap.put(BUILDING_PALADIN , asList(ITEM_PALADIN_SKIN_BLACK, ITEM_PALADIN_SKIN_WHITE))
-    sharedStocksMap.put(BUILDING_PRIEST    , asList(ITEM_ARMOR_BLESSING    , ITEM_WEAPON_BLESSING                               ))
-    sharedStocksMap.put(BUILDING_RIFLEMAN  , asList(ITEM_SNIPER            , ITEM_EXPLOSIVE_AMMO                                ))
-    sharedStocksMap.put(BUILDING_SORCERESS , asList(ITEM_DARK_MAGE         , ITEM_FIRE_MAGE      , ITEM_ICE_MAGE                ))
+    sharedStocksMap.put(BUILDING_PRIEST , asList(ITEM_ARMOR_BLESSING , ITEM_WEAPON_BLESSING ))
+    // sharedStocksMap.put(BUILDING_RIFLEMAN  , asList(ITEM_SNIPER            , ITEM_GRENADIER                                ))
+    sharedStocksMap.put(BUILDING_SORCERESS , asList(ITEM_DARK_MAGE , ITEM_FIRE_MAGE , ITEM_ICE_MAGE ))
 
     // ================ ORC =============
     unitItemSold.put(BUILDING_GRUNT        , asList(ITEM_KODO                                            ))
     unitItemSold.put(BUILDING_BERSERKER    , asList(ITEM_KODO                                            ))
-    unitItemSold.put(BUILDING_RAIDER       , asList(ITEM_PACK_LEADER  , ITEM_BURNING_BLADE               ))
+    unitItemSold.put(BUILDING_RAIDER       , asList(ITEM_PACK_LEADER                 ))
+    unitItemSold.put(BUILDING_MARAUDER     , asList(ITEM_PACK_LEADER                 ))
     unitItemSold.put(BUILDING_OGRE         , asList(ITEM_OGRE_ARMORED , ITEM_OGRE_MAGI                   ))
     unitItemSold.put(BUILDING_WITCH_DOCTOR , asList(ITEM_DRUNKEN_HAZE , ITEM_ACID_BOMB, ITEM_MANA_WARD))
     unitItemSold.put(BUILDING_SHAMAN       , asList(ITEM_ORB_LIGHTNING, ITEM_FARSEER                     ))
@@ -115,24 +126,33 @@ function initItemStockData()
 
     // ================ UNDEAD =============
     // unitItemSold.put(BUILDING_ZOMBIE, asList(ITEM_PLAGUE_BEARER                  ))
-    unitItemSold.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER                  ))
-    unitItemSold.put(BUILDING_NECROMANCER    , asList(ITEM_CRIPPLE       , ITEM_RAISE_SKELETON_ORC, ITEM_LICH))
-    unitItemSold.put(BUILDING_BANSHEE        , asList(ITEM_UNHOLY_FRENZY, ITEM_FROST_ARMOR                    ))
-    unitItemSold.put(BUILDING_VAMPIRE        , asList(ITEM_VAMPIRE_LORD                                       ))
-    unitItemSold.put(BUILDING_ABOMINATION        , asList(ITEM_SPAWN_GUT_CRAWLER                                       ))
-    unitItemSold.put(BUILDING_DEATH_KNIGHT   , asList(ITEM_UNHOLY_AURA                                       ))
-    sharedStocksMap.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER                  ))
-    sharedStocksMap.put(BUILDING_NECROMANCER, asList(ITEM_CRIPPLE, ITEM_RAISE_SKELETON_ORC                  ))
-    sharedStocksMap.put(BUILDING_BANSHEE, asList(ITEM_UNHOLY_FRENZY, ITEM_FROST_ARMOR                  ))
+    // unitItemSold.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER                  ))
+    unitItemSold.put(BUILDING_BANSHEE , asList(ITEM_UNHOLY_FRENZY, ITEM_ANTI_MAGIC_SHELL ))
+    unitItemSold.put(BUILDING_NECROMANCER , asList(ITEM_LICH ))
+    unitItemSold.put(BUILDING_SPECTRAL_SAGE , asList(ITEM_LICH ))
+    unitItemSold.put(BUILDING_ABOMINATION , asList(ITEM_SPAWN_GUT_CRAWLER ))
+    unitItemSold.put(BUILDING_DEATH_KNIGHT , asList(ITEM_UNHOLY_AURA ))
+    // sharedStocksMap.put(BUILDING_SKELETAL_ARCHER, asList(ITEM_BURNING_ARCHER, ITEM_FROST_ARCHER                  ))
+    sharedStocksMap.put(BUILDING_BANSHEE, asList(ITEM_UNHOLY_FRENZY, ITEM_ANTI_MAGIC_SHELL ))
 
     // ================ NIGHT ELF =============
-    unitItemSold.put(BUILDING_DRYAD      , asList(ITEM_REJUVENATION, ITEM_KEEPER_OF_THE_GROVE                                               ))
-    unitItemSold.put(BUILDING_HUNTRESS   , asList(ITEM_PRIESTESS_OF_THE_MOON                                             ))
-    unitItemSold.put(BUILDING_DRUID_TALON, asList(ITEM_ARCHDRUID            , ITEM_WAND_OF_ILLUSION, ITEM_ENTANGLING_ROOT))
-    unitItemSold.put(BUILDING_DRUID_CLAW , asList(ITEM_BEAR                 , ITEM_OWLBEAR                               ))
-    unitItemSold.put(BUILDING_SPECTRE , asList(ITEM_AVATAR_OF_VENGEANCE))
-    sharedStocksMap.put(BUILDING_DRUID_TALON, asList(ITEM_WAND_OF_ILLUSION     , ITEM_ENTANGLING_ROOT                       ))
-    sharedStocksMap.put(BUILDING_DRUID_CLAW , asList(ITEM_BEAR                 , ITEM_OWLBEAR                               ))
+    unitItemSold   .put(BUILDING_DRYAD       , asList(ITEM_REJUVENATION         , ITEM_KEEPER_OF_THE_GROVE                    ))
+    unitItemSold   .put(BUILDING_HUNTRESS    , asList(ITEM_PRIESTESS_OF_THE_MOON                                              ))
+    unitItemSold   .put(BUILDING_DRUID_TALON , asList(ITEM_ARCHDRUID             , ITEM_WAND_OF_ILLUSION, ITEM_ENTANGLING_ROOT))
+    unitItemSold   .put(BUILDING_DRUID_CLAW  , asList(ITEM_BEAR                  , ITEM_OWLBEAR                               ))
+    unitItemSold   .put(BUILDING_SPECTRE     , asList(ITEM_AVATAR_OF_VENGEANCE                                                ))
+    sharedStocksMap.put(BUILDING_DRUID_TALON , asList(ITEM_WAND_OF_ILLUSION      , ITEM_ENTANGLING_ROOT                       ))
+    sharedStocksMap.put(BUILDING_DRUID_CLAW  , asList(ITEM_BEAR                  , ITEM_OWLBEAR                               ))
+
+    // ================ NAGA =============
+    unitItemSold.put(BUILDING_MURGUL_WARLOCK , asList(ITEM_FREE_BLOOD_LUST, ITEM_FREE_FROST_ARMOR, ITEM_FREE_FAERIE_FIRE))
+    unitItemSold.put(BUILDING_MYRMIDON , asList(ITEM_DEPTH_COMMANDER))
+    unitItemSold.put(BUILDING_GIANT_TURTLE , asList(ITEM_FIRE_TURTLE, ITEM_FROST_TURTLE))
+    unitItemSold.put(BUILDING_SIREN , asList(ITEM_RAY_OF_DISRUPTION, ITEM_CHARM))
+    sharedStocksMap.put(BUILDING_MURGUL_WARLOCK, asList(ITEM_FREE_BLOOD_LUST, ITEM_FREE_FROST_ARMOR, ITEM_FREE_FAERIE_FIRE))
+    sharedStocksMap.put(BUILDING_GIANT_TURTLE, asList(ITEM_FIRE_TURTLE, ITEM_FROST_TURTLE))
+    sharedStocksMap.put(BUILDING_SIREN, asList(ITEM_RAY_OF_DISRUPTION, ITEM_CHARM))
+
 
     // ================ NAGA =============
     unitItemSold.put(BUILDING_MURGUL_WARLOCK , asList(ITEM_FREE_BLOOD_LUST, ITEM_FREE_FROST_ARMOR, ITEM_FREE_FAERIE_FIRE))
@@ -149,9 +169,22 @@ function canBuy(int itemId, player _p) returns boolean
     let lumberCost = itemLumberCost.loadInt(itemId, itemId)
     return _p.getGold() >= goldCost and _p.getLumber() >= lumberCost
 
+public function getItemGoldCost(int itemId) returns int
+    return itemGoldCost.loadInt(itemId, itemId)
+
+public function getItemLumberCost(int itemId) returns int
+    return itemLumberCost.loadInt(itemId, itemId)
+
+public function getItemCharges(int itemId) returns int
+    return itemCharges.loadInt(itemId, itemId)
+
+public function getItemMaxStock(int itemId) returns int
+    return itemMaxStock.loadInt(itemId, itemId)
+
 
 init
     initItemStockData()
+    // Event when a player buy an item
     EventListener.add(EVENT_PLAYER_UNIT_ISSUED_ORDER) ->
         let building = EventData.getTriggerUnit()
 
@@ -169,18 +202,19 @@ init
                 ItemStockHandler.unitToItemStockMap.get(building).reduceStock(itemId, 1)
 
                 if not building.isType(UNIT_TYPE_ANCIENT)
+                    and not gameConfig.isSellableUpgradeEnabled()
                     building.addType(UNIT_TYPE_ANCIENT)
+
 
                 // Item who doesn't give any blood point got 1 hp
                 let bloodPoint = i.getLife().toInt()
                 if bloodPoint > 1
-                    // If we replace an unit
-                    var bonusArmyPoints = bloodPoint - BTBuildingData.unitIdToDataMap.get(
-                        building.getTypeId()).unitPointValue
-                    // If we add an unit
-                    if i.getName().contains("Add")
-                        bonusArmyPoints = bloodPoint
-                    building.getOwner().getPlayerData().addArmyPoints(bonusArmyPoints)
+                    int _bonusArmyPoints = 0
+                    if itemModifyUnitMap.has(itemId)
+                        _bonusArmyPoints = bloodPoint
+                    else
+                        _bonusArmyPoints = bloodPoint
+                    building.getOwner().getPlayerData().addArmyPoints(_bonusArmyPoints)
                 if playerToArmyPreviewer.has(building.getOwner())
                     playerToArmyPreviewer.get(building.getOwner()).shouldRefresh = true
             i.remove()

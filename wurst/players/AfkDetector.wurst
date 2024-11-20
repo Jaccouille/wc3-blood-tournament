@@ -1,0 +1,79 @@
+package AfkDetector
+
+import PlayerData
+
+import ClosureEvents
+import ClosureTimers
+import public BuilderAI
+import ChatCommands
+import HashMap
+import ColorUtils
+
+@configurable constant AFK_TIMER = 30.
+
+let playerToAfkDetector = new HashMap<player, AfkDetector>
+
+public class AfkDetector
+    player _p
+    unit unitMonitored
+    CallbackSingle cb
+    EventListener listener
+    boolean showMsg
+
+    construct(player _p)
+        initialize(_p, false)
+
+    construct(player _p, boolean showMsg)
+        initialize(_p, showMsg)
+
+    function initialize(player _p, boolean showMsg)
+        this.showMsg = showMsg
+        if showMsg
+            printTimed(("{0} has {1} seconds to use builder to prove he isn't AFK"
+            .format(_p.getNameColored(), AFK_TIMER.toInt().toString())), 10)
+        this._p = _p
+        playerToAfkDetector.put(_p, this)
+
+        unitMonitored = pDatas.get(_p).builder
+        if unitMonitored == null
+            unitMonitored = pDatas.get(_p).racePicker
+
+        if unitMonitored.isType(UNIT_TYPE_PEON)
+            listener = EventListener.add(unitMonitored, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER) ->
+                onOrder()
+        else
+            listener = EventListener.add(unitMonitored, EVENT_PLAYER_UNIT_ISSUED_ORDER) ->
+                onOrder()
+
+        cb = doAfter(AFK_TIMER) ->
+            printTimed(("{0} is AFK, he has to type {1} to retake control".format(
+                this._p.getNameColored(),
+                "-bot".color(GENERAL_COLOR))
+            ), 5)
+            if listener != null
+                destroy listener
+            this._p.toggleBot()
+            destroy this
+
+    function onOrder()
+        if showMsg
+            printTimed("{0} isn't AFK".format(this._p.getNameColored()), 10)
+        if listener != null
+            destroy listener
+        if cb != null
+            destroy cb
+        destroy this
+
+    ondestroy
+        playerToAfkDetector.remove(this._p)
+
+
+init
+    registerCommandAll("afk") (triggerPlayer, args) ->
+        let pIndx = (args.get(1).toInt() - 1) mod 8
+        if playerToAfkDetector.has(players[pIndx])
+            printTimedToPlayer("AFK detector already started for {0}, {1}".format(
+            players[pIndx].getNameColored(), playerToAfkDetector.get(players[pIndx]).cb.getRemaining().toInt().toString()
+            ) , 5, triggerPlayer)
+        else
+            new AfkDetector(players[pIndx], true)

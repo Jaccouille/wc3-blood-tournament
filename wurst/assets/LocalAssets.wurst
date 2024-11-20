@@ -11,3 +11,6 @@ public class LocalUnits
 
 public class LocalAbilities
     static constant strawHat = "Models/Straw Hat.mdx"
+    static constant sweepBloodSmall = "Models/Sweep_Blood_Small.mdx"
+    static constant sweepBloodLarge = "Models/Sweep_Blood_Large.mdx"
+    static constant sweepFireLarge = "Models/Sweep_Fire_Large.mdx"

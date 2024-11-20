@@ -1,0 +1,14 @@
+package v0_001_y
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 1, 'y')
+        ..add("(NE) Fixed huntress bounce reduce damage to 50%, used to not work")
+        ..add("(NE) Reduced Avatar attack speed, armor from 7 to 4")
+        ..add("(NE) Reduced starfall damage from 100 to 60")
+        ..add("(UN) Reduced plague bearer price from 600 to 500 blood points")
+        ..add("Added blood donation, players may get bonus blood points after each round if they are behind in the game")
+        ..add("Added random hat to randomed builder")
+        ..add("Added ready ability on builder so player can start round earlier")
+        ..add("Increased all Aura area of effect from 900 to 1200")

@@ -1,0 +1,9 @@
+package v0_002_c
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 2, 'c')
+        ..add("(HU) Increased Priest hitpoint 140 -> 220")
+        ..add("(UN) Removed burning archer (it was bugged)")
+        ..add("(UN) Vampire lord carrion swarm damage 100 -> 75")

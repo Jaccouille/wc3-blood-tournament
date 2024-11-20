@@ -11,23 +11,26 @@ import GameStates
 import Players
 import RoundController
 import Vote
+import BuilderAI
 
 public function voteReady(player triggerPlayer)
     if roundController.currentRound.hasStarted
         printTimedToPlayer("Vote failed! Round already started!", 3, triggerPlayer)
     else
-        if Vote.voteInstanceMap.has("Ready")
-            Vote.voteInstanceMap.get("Ready").castVote(triggerPlayer)
+        if Vote.voteInstanceMap.has("Start round")
+            Vote.voteInstanceMap.get("Start round").castVote(triggerPlayer)
         else
             var count = 0
             for _p in ALL_PLAYERS
-                if _p.isHuman()
+                // Only count human players and no afk
+                if _p.isHuman() and not playerToBuilderAI.get(_p).isEnabled
                     count++
-            let voteInstance = new Vote("Ready", 60., count)
+            let voteInstance = new Vote("Start round", gameConfig.getRoundInterludeTime(), count)
             voteInstance.addAction() () ->
                 if not roundController.currentRound.hasStarted
                     if gameConfig.isDisplayPortalEnabled()
                         roundController.currentRound.spawnPortals()
+                    roundController.stopRoundTimer()
                     roundController.startRound()
                 else
                     printTimed("Vote failed! Round already started!", 3)
@@ -38,7 +41,9 @@ init
     GameStates.gameplay.onEnter() (state) ->
         registerCommandAll("r") (player triggerPlayer, LinkedList<string> arguments) ->
             voteReady(triggerPlayer)
+        registerCommandAll("ready") (player triggerPlayer, LinkedList<string> arguments) ->
+            voteReady(triggerPlayer)
 
         OnRoundStart.add() (Round round) ->
-            if Vote.voteInstanceMap.has("Ready")
-                Vote.voteInstanceMap.get("Ready").endVote()
+            if Vote.voteInstanceMap.has("Start round")
+                Vote.voteInstanceMap.get("Start round").endVote(false)

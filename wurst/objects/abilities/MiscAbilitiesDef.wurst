@@ -20,9 +20,11 @@ import GameStates
 import LocalObjectIDs
 import PlayerData
 import SimError
+import UnitExtensions
 import TooltipsUtils
 import UnitCreationTrigger
 import VotesDefinition
+import OrderBlocker
 
 let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
 
@@ -43,7 +45,7 @@ let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
         ..setIconNormal(Icons.bTNSelectHeroOn)
         ..setIconResearch(Icons.bTNSelectHeroOn)
         ..setIconTurnOff(Icons.bTNSelectHeroOn)
-        ..setRequirements(UPGD_RACE_PICK.toRawCode())
+        ..setRequirements(commaList(UPGD_RACE_PICK, UPGD_RANDOM))
         ..setCheckDependencies(true)
 
     new ChannelAbilityPreset(ABIL_REPICK, 1, true)
@@ -57,7 +59,7 @@ let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
         ..setIconNormal(Icons.bTNPatrol)
         ..setIconResearch(Icons.bTNPatrol)
         ..setIconTurnOff(Icons.bTNPatrol)
-        ..setRequirements(UPGD_RACE_PICK.toRawCode())
+        ..setRequirements(commaList(UPGD_RACE_PICK, UPGD_RANDOM))
         ..setCheckDependencies(true)
 
 
@@ -119,17 +121,42 @@ let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
             ..setItemAbility(false)
             ..presetTargetTypes(Targettype.POINT)
             ..presetTargetsAllowed(lvl -> TargetsAllowed.ground)
-            ..setHotkeyEnhance("V")
+            ..setHotkeyEnhance("C")
             ..setName("Move unit")
-            ..presetTooltipNormal(lvl -> makeToolTipNorm("V", "Move unit"))
-            ..presetTooltipNormalExtended(lvl -> "Use this to unstuck units (works in round phase).")
+            ..presetTooltipNormal(lvl -> makeToolTipNorm("C", "Move unit"))
+            ..presetTooltipNormalExtended(lvl -> "Use this to move units (works in round phase).")
             ..setIconNormal(Icons.bTNNagaUnBurrow)
             ..setIconResearch(Icons.bTNNagaUnBurrow)
             ..setIconTurnOff(Icons.bTNNagaUnBurrow)
             ..presetOption(Option.TARGETIMAGE, true)
             ..setAreaofEffect(1, 200)
+            ..setRequirements(commaList(UPGD_AVAILABLE_DURING_ROUND))
+            ..setCheckDependencies(true)
             ..setOrderStringActivate("blizzard")
             ..setBaseOrderID(1, "blizzard")
+
+    new ChannelAbilityPreset(ABIL_UNSTUCK_UNIT, 1, true)
+            ..presetManaCost(lvl -> 0)
+            ..presetCooldown(lvl -> 2)
+            ..presetCastRange(_ -> 99999)
+            ..setHeroAbility(false)
+            ..setItemAbility(false)
+            ..presetTargetTypes(Targettype.UNIT)
+            ..presetTargetsAllowed(lvl -> commaList(
+                TargetsAllowed.ground,
+                TargetsAllowed.vulnerable
+            ))
+            ..setHotkeyEnhance("V")
+            ..setName("Unstuck unit")
+            ..presetTooltipNormal(lvl -> makeToolTipNorm("V", "Unstuck unit"))
+            ..presetTooltipNormalExtended(lvl -> "Use this to unstuck 2 collided units (works in round phase).")
+            ..setIconNormal(Icons.bTNMirrorImage)
+            ..setIconResearch(Icons.bTNMirrorImage)
+            ..setIconTurnOff(Icons.bTNMirrorImage)
+            ..setRequirements(commaList(UPGD_AVAILABLE_DURING_ROUND))
+            ..setCheckDependencies(true)
+            ..setOrderStringActivate("hex")
+            ..setBaseOrderID(1, "hex")
 
 
 function createStandardChannelAbility(int abilId) returns ChannelAbilityPreset
@@ -152,19 +179,25 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
     createStandardChannelAbility(ABIL_TRADE_GOLD)
         ..setNameEnhance("D", "Trade Gold")
         ..setTooltipNormalExtended(1, TOOLTIP_TRADE_GOLD)
-        ..setIconNormal(Icons.bTNMGExchange)
+        ..setIconNormal(Icons.bTNLGExchange)
         ..setBaseOrderID(1, "berserk")
+        ..setCheckDependencies(true)
+        ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
 
     createStandardChannelAbility(ABIL_TRADE_BLOOD_POINT)
         ..setNameEnhance("F", "Trade Blood Points")
         ..setTooltipNormalExtended(1, TOOLTIP_TRADE_BLOOD_POINT)
         ..setIconNormal(Icons.bTNCorpseExplode)
+        ..setCheckDependencies(true)
+        ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
 
 @compiletime function createReadyAbility()
     createStandardChannelAbility(ABIL_START_ROUND)
         ..setNameEnhance("F", "Ready")
         ..setTooltipNormalExtended(1, "Vote to start round.")
         ..setIconNormal(Icons.bTNReplay_Play)
+        ..setCheckDependencies(true)
+        ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
         ..setBaseOrderID(1, OrderIds.immolation.toRawCode())
 
 @compiletime function createSellBuilderAbility()
@@ -172,8 +205,8 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
         ..setCastRange(1, 99999)
         ..setManaCost(1, 0)
         ..setCooldown(1, 0)
-        ..setGoldCostFactor(1, 1)
-        ..setLumberCostFactor(1, 1)
+        ..setGoldCostFactor(1, 0)
+        ..setLumberCostFactor(1, 0)
         ..setHeroAbility(false)
         ..setMaxCreepLevel(1, 1)
         ..setTargetsAllowed(1, commaList(
@@ -182,15 +215,28 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
             TargetsAllowed.invulnerable,
             TargetsAllowed.nonancient
         ))
-        ..setName("Sell building")
-        ..presetTooltipNormal(lvl -> makeToolTipNorm("X", "Sell building"))
-        ..presetTooltipNormalExtended(lvl -> "Sell the building and get 100% of its cost back.\nCannot sell upgraded buildings.")
+        ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
+        ..setCheckDependencies(true)
+        ..setNameEnhance("X", "Sell building")
+        ..presetTooltipNormalExtended(lvl -> "Sell the building and get 100% of its cost back.\n")
 
     createStandardChannelAbility(ABIL_SELL_ALL)
-        ..setNameEnhance("C", "Sell All")
-        ..setTooltipNormalExtended(1, "Sell all sellable buildings.\nCannot sell upgraded buildings.")
+        ..setName("Sell All")
+        ..setHotkeyNormal("")
+        ..presetButtonPosNormal(0, -11)
+        ..setTooltipNormalExtended(1, "Sell all sellable buildings.\n")
         ..setIconNormal(Icons.bTNChestOfGold)
+        ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
+        ..setBaseOrderID(1, "windwalk")
+        ..setCheckDependencies(true)
 
+@compiletime function createBountyBonusAbility()
+    // This ability is used to increase the bounty of a unit
+    // We need it just to store a integer value used to compute the bonus
+    // Is used in itemCallbackDefinition.wurst when we add an ability to a unit
+    new AbilityDefinitionChaosPeon(ABIL_BOUNTY_BONUS)
+        ..setLevels(20)
+        ..setName("Bounty Bonus")
 
 init
     GameStates.modesSelection.onExit() (state) ->
@@ -204,6 +250,10 @@ init
             TOOLTIP_TRADE_BLOOD_POINT.format(
                 goldEx.toString().color(COLOR_GOLD), bpEx.toString().color(COLOR_RED)),
             0)
+
+        for _p in pDatas
+            SetPlayerTechResearchedSwap(UPGD_AVAILABLE_DURING_ROUND, 0, _p)
+            SetPlayerTechResearchedSwap(UPGD_UNAVAILABLE_DURING_ROUND, 1, _p)
 
     EventListener.onCast(ABIL_START_ROUND) (unit caster) ->
         let owner = caster.getOwner()
@@ -231,23 +281,27 @@ init
         else
             simError(caster.getOwner(), "Not enough gold for exchange")
 
+    // see UnitDeathTrigger.wurst for the refund part of the sell building
     EventListener.onCast(ABIL_SELL_ALL) (unit caster) ->
         let bRect = pDatas.get(caster.getOwner()).buildingRect
+        let dummyCast = new DummyCaster()
+            ..owner(caster.getOwner())
+            ..origin(caster.getPos())
+            ..delay(5)
+
         forUnitsInRect(bRect) (unit u) ->
             if u.isType(UNIT_TYPE_STRUCTURE)
                 and not u.isType(UNIT_TYPE_ANCIENT)
                 and u.getTypeId() != UNIT_RACE_PICKER
-                new DummyCaster()
-                    ..owner(caster.getOwner())
-                    ..origin(caster.getPos())
-                    ..castTarget(ABIL_SELL_BUILDING, 1, Orders.transmute, u)
-                    ..delay(1)
+
+                dummyCast.castTarget(ABIL_SELL_BUILDING, 1, Orders.transmute, u)
+
                 // BlzQueueTargetOrderById(caster, OrderIds.transmute, u)
                 // caster.issueTargetOrderById(OrderIds.transmute, u)
 
     EventListener.add(EVENT_PLAYER_UNIT_CONSTRUCT_START) ->
         let u = EventData.getConstructingStructure()
-        // When move ability is casted, it creates a unit in middle map
+        // When building move ability is casted, it creates a unit in middle map
         // Following lines remove it
         if not u.getPos().isInRect(pDatas.get(u.getOwner()).buildingRect)
             u.remove()
@@ -257,10 +311,10 @@ init
         // But I am not sure
         caster.abortOrder()
         if target.isInRect(pDatas.get(caster.getOwner()).buildingRect)
-            flashEffect(Abilities.polyMorphTarget, caster.getPos())
+            flashEffect(Abilities.polyMorphDoneGround, caster.getPos())
             caster.setPos(target)
             insertBuilding(pDatas.get(caster.getOwner()).buildingList, caster)
-            flashEffect(Abilities.polyMorphTarget, caster.getPos())
+            flashEffect(Abilities.polyMorphDoneGround, caster.getPos())
         else
             simError(caster.getOwner(), "Cannot move building outside of your building zone")
 
@@ -273,6 +327,21 @@ init
             ..setPermanent(false)
         forUnitsInRange(target, 200) (unit u) ->
             if u.getCurrentOrder() == 0
-                and not u.isType(UNIT_TYPE_PEON)
-                and not u.isType(UNIT_TYPE_STRUCTURE)
+                and u.isSoldier()
                 u.issuePointOrder("attack", CENTER)
+
+    EventListener.onTargetCast(ABIL_UNSTUCK_UNIT) (unit caster, unit target) ->
+        if target.getCurrentOrder() == 0
+            and preventOrder == true
+            and target.isSoldier()
+            target.setPos(target.getPos().moveTowards(CENTER, 50))
+            flashEffect(Abilities.blinkTarget, target.getPos())
+            target.issuePointOrder("attack", CENTER)
+            let msg = caster.getOwner().getNameColored() + " used unstuck unit"
+            createTTEx(target.getPos3Real(), msg, 10)
+                ..setVelocity(0, 0.03)
+                ..setFadepoint(2.)
+                ..setLifespan(3.0)
+                ..setPermanent(false)
+        else
+            printTimedToPlayer("Unit isn't stuck", 3, caster.getOwner())
