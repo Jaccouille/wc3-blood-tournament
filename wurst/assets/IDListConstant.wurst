@@ -12,7 +12,8 @@ public let BUILDER_LIST = asList(
     UNIT_ORC_BUILDER,
     UNIT_UNDEAD_BUILDER,
     UNIT_NIGHT_ELF_BUILDER,
-    UNIT_NAGA_BUILDER
+    UNIT_NAGA_BUILDER,
+    UNIT_BEAST_BUILDER
 )
 
 public let BAN_MAP = new IterableMap<string, int>()
@@ -21,6 +22,7 @@ public let BAN_MAP = new IterableMap<string, int>()
     ..put("UN", UNIT_UNDEAD_BUILDER)
     ..put("NE", UNIT_NIGHT_ELF_BUILDER)
     ..put("NA", UNIT_NAGA_BUILDER)
+    ..put("BE", UNIT_BEAST_BUILDER)
 
 public let RACE_ABBREV = new HashMap<string, string>()
     ..put("HU", "Human")
@@ -28,6 +30,7 @@ public let RACE_ABBREV = new HashMap<string, string>()
     ..put("UN", "Undead")
     ..put("NE", "Night Elf")
     ..put("NA", "Naga")
+    ..put("BE", "Beast")
 
 public let BUILDER_ID_TO_RACE_STR = new HashMap<int, string>()
     ..put(UNIT_HUMAN_BUILDER, "Human")
@@ -35,6 +38,7 @@ public let BUILDER_ID_TO_RACE_STR = new HashMap<int, string>()
     ..put(UNIT_UNDEAD_BUILDER, "Undead")
     ..put(UNIT_NIGHT_ELF_BUILDER, "Night Elf")
     ..put(UNIT_NAGA_BUILDER, "Naga")
+    ..put(UNIT_BEAST_BUILDER, "Beast")
 
 public let HUMAN_UNITS = asList(
     UNIT_FOOTMAN,
@@ -212,4 +216,33 @@ public let NAGA_ABIL_UPGD = asList(
     ITEM_FREE_FAERIE_FIRE,
     ITEM_RAY_OF_DISRUPTION,
     ITEM_CHARM
+)
+
+public let BEAST_UNITS = asList(
+    UNIT_QUILLBOAR,
+    UNIT_DIRE_QUILLBOAR,
+    UNIT_TAUREN,
+    UNIT_CHIEFTAIN,
+    UNIT_THUNDER_LIZARD,
+    UNIT_CORROSIVE_LIZARD,
+    UNIT_SPIRIT_WALKER,
+    UNIT_REXXAR,
+    UNIT_ALCHEMIST
+)
+
+public let BEAST_UNIT_UPGD = asList(
+    BUILDING_DIRE_QUILLBOAR,
+    ITEM_CHIEFTAIN,
+    ITEM_CORROSIVE_LIZARD
+)
+
+public let BEAST_ABIL_UPGD = asList(
+    ITEM_PULVERIZE,
+    ITEM_QUILL_SPRAY,
+    ITEM_SPIRIT_LINK,
+    ITEM_ANCESTRAL_SPIRIT,
+    ITEM_PUTRID_SPRAY,
+    ITEM_FERVOR_POTION,
+    ITEM_DEFENSE_ROAR,
+    ITEM_BATTLE_ROAR
 )

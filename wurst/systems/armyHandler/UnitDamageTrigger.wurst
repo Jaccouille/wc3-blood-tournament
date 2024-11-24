@@ -25,7 +25,9 @@ init
                     src.issueImmediateOrderById(OrderIds.spiritwolf)
             case UNIT_COURT_ENCHANTRESS
                 src.issueImmediateOrderById(OrderIds.parasiteon)
-            case UNIT_OWLBEAR
-                src.issueImmediateOrderById(OrderIds.frenzyon)
-            case UNIT_DRUID_CLAW
-                src.issueImmediateOrderById(OrderIds.frenzyon)
+
+
+            case UNIT_SPIRIT_WALKER
+                if src.hasAbility(ABIL_ANCESTRAL_SPIRIT)
+                    if GetRandomInt(0, 100) <= 10
+                        src.issueImmediateOrderById(OrderIds.ancestralspirit)

@@ -46,11 +46,18 @@ init
         ..put(ABIL_AUTOCAST_MANA_WARD, new BuffTuple(OrderIds.healingward, -1))
         ..put(ABIL_AUTOCAST_CARRION_SWARM, new BuffTuple(OrderIds.carrionswarm, -1))
         ..put(ABIL_AUTOCAST_CRUSHING_WAVE, new BuffTuple(OrderIds.carrionswarm, -1))
+        ..put(ABIL_AUTOCAST_SHOCKWAVE, new BuffTuple(OrderIds.carrionswarm, -1))
         ..put(ABIL_AUTOCAST_AFFLICTION, new BuffTuple(OrderIds.acidbomb, BuffIds.acidBomb))
         ..put(ABIL_AUTOCAST_SOUL_BURN, new BuffTuple(OrderIds.soulburn, BuffIds.soulBurn))
         ..put(ABIL_AUTOCAST_FORKED_LIGHTNING, new BuffTuple(OrderIds.forkedlightning, -1))
         ..put(ABIL_AUTOCAST_FROST_BOLT, new BuffTuple(OrderIds.thunderbolt, -1))
-        ..put(ABIL_AUTOCAST_DISRUPTION_RAY, new BuffTuple(852615, -1))
+        ..put(ABIL_AUTOCAST_DISRUPTION_RAY, new BuffTuple(OrderIds.rayOfDisruption, -1))
+        ..put(ABIL_AUTOCAST_SPIRIT_LINK, new BuffTuple(OrderIds.spiritlink, -1))
+        ..put(ABIL_AUTOCAST_HEALING_SPRAY, new BuffTuple(OrderIds.healingspray, -1))
+        ..put(ABIL_AUTOCAST_PUTRID_SPRAY, new BuffTuple(OrderIds.healingspray, -1))
+        ..put(ABIL_AUTOCAST_FERVOR_POTION, new BuffTuple(OrderIds.acidbomb, -1))
+        ..put(ABIL_AUTOCAST_MANA_POTION, new BuffTuple(OrderIds.acidbomb, -1))
+        ..put(ABIL_AUTOCAST_BANISH, new BuffTuple(OrderIds.banish, BuffIds.banish))
 
     dummyToRealImmediateCastMap
         ..put(ABIL_AUTOCAST_TAUNT, OrderIds.taunt)
@@ -58,6 +65,7 @@ init
         ..put(ABIL_AUTOCAST_HOWL_OF_TERROR, OrderIds.howlofterror)
         ..put(ABIL_AUTOCAST_INSPIRE, OrderIds.roar)
         ..put(ABIL_AUTOCAST_ROAR, OrderIds.roar)
+        ..put(ABIL_AUTOCAST_REXXAR_ROAR, OrderIds.roar)
 
     registerPlayerUnitEvent(EVENT_PLAYER_UNIT_SPELL_CAST) ->
         let abilId = EventData.getSpellAbilityId()
@@ -81,9 +89,12 @@ init
                 else if abilId == ABIL_AUTOCAST_HEALING_WAVE
                     target.removeAbility(ABIL_AUTOCAST_HEALING_WAVE)
                     target.addAbility(ABIL_AUTOCAST_HEALING_WAVE)
+                else if abilId == ABIL_AUTOCAST_HEALING_SPRAY
+                    target.removeAbility(ABIL_AUTOCAST_HEALING_SPRAY)
+                    target.addAbility(ABIL_AUTOCAST_HEALING_SPRAY)
             else
                 caster.issuePointOrder("attack", CENTER)
-                caster.resetAbilityCooldown(abilId)
+                caster.resetCooldown()
 
             // TODO: refactor into previous if condition
         else if dummyToRealImmediateCastMap.has(abilId)

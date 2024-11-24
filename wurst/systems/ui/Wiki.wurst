@@ -35,6 +35,10 @@ let nagaUnit              = new PaletteSection("Units"             , NAGA_UNITS 
 let nagaUnitsUpgrades     = new PaletteSection("Units Upgrade"     , NAGA_UNIT_UPGD)
 let nagaAbilitiesUpgrades = new PaletteSection("Abilities Upgrade" , NAGA_ABIL_UPGD)
 
+let beastUnit              = new PaletteSection("Units"             , BEAST_UNITS    )
+let beastUnitsUpgrades     = new PaletteSection("Units Upgrade"     , BEAST_UNIT_UPGD)
+let beastAbilitiesUpgrades = new PaletteSection("Abilities Upgrade" , BEAST_ABIL_UPGD)
+
 let DOC_TEXT = "" +
 "Click to show/hide the codex panel. " +
 "This panel contains information on all units in the game."
@@ -179,7 +183,8 @@ public function initCodexUI()
             ..add(createFrameTemplate("contentFrameOrc"      , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
             ..add(createFrameTemplate("contentFrameUndead"   , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
             ..add(createFrameTemplate("contentFrameNightElf" , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
-            ..add(createFrameTemplate("contentFrameItem"     , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
+            ..add(createFrameTemplate("contentFrameNaga"     , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
+            ..add(createFrameTemplate("contentFrameBeast"     , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
 
         new TableLayout(FRAME_SIZE.x, 0.07)
             ..row()
@@ -189,6 +194,7 @@ public function initCodexUI()
             ..add(btn("Night Elf")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(3).getName()) ) )
             ..row()
             ..add(btn("Naga")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(4).getName()) ) )
+            ..add(btn("Beast")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(5).getName()) ) )
             ..applyTo(headerFrame)
 
         // Human Frame
@@ -225,3 +231,10 @@ public function initCodexUI()
             ..addPaletteSection(nagaUnitsUpgrades     , MAX_CELL)
             ..addPaletteSection(nagaAbilitiesUpgrades     , MAX_CELL)
             ..applyTo(contentFrames.get(4))
+
+        // Beast Frame
+        new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
+            ..addPaletteSection(beastUnit     , MAX_CELL)
+            ..addPaletteSection(beastUnitsUpgrades     , MAX_CELL)
+            ..addPaletteSection(beastAbilitiesUpgrades     , MAX_CELL)
+            ..applyTo(contentFrames.get(5))

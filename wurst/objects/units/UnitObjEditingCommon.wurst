@@ -285,6 +285,12 @@ public class BTUnitDefinition extends UnitDefinition
     function setBuildingAbilities(string abilityIds)
         buildingDef.setNormalAbilities(abilityIds)
 
+    function setBuildinTinting(int r, int g, int b)
+        buildingDef.setTintingColorRed(r)
+        buildingDef.setTintingColorGreen(g)
+        buildingDef.setTintingColorBlue(b)
+
+
     function setBuildingGoldCost(int data)
         var goldCost = data
         buildingDef.setGoldCost(data)

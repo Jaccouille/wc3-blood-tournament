@@ -513,3 +513,91 @@ init
         u.issueImmediateOrderById(OrderIds.faeriefireon)
 
     itemModifyUnitMap.put(ITEM_FREE_FAERIE_FIRE, faeriefireAction)
+
+    // ========================= BEAST =========================
+
+    let pulverizeAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_PULVERIZE)
+
+    itemModifyUnitMap.put(ITEM_PULVERIZE, pulverizeAction)
+
+
+    let chieftainAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            unitToSpawn.push(UNIT_CHIEFTAIN)
+    itemAddUnitMap.put(ITEM_CHIEFTAIN, chieftainAction)
+
+
+    let quillSprayAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_QUILL_SPRAY)
+
+    itemModifyUnitMap.put(ITEM_SPIRIT_LINK, quillSprayAction)
+
+
+    let ancestralSpiritAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_ANCESTRAL_SPIRIT)
+
+    itemModifyUnitMap.put(ITEM_ANCESTRAL_SPIRIT, ancestralSpiritAction)
+
+
+    let spiritLinkAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_SPIRIT_LINK)
+        u.addAbility(ABIL_AUTOCAST_SPIRIT_LINK)
+        u.issueImmediateOrderById(OrderIds.innerfireon)
+
+    itemModifyUnitMap.put(ITEM_SPIRIT_LINK, spiritLinkAction)
+
+
+    let putridSprayAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_PUTRID_SPRAY)
+        u.addAbility(ABIL_AUTOCAST_PUTRID_SPRAY)
+        u.removeAbility(ABIL_HEALING_SPRAY)
+        u.removeAbility(ABIL_AUTOCAST_HEALING_SPRAY)
+        u.issueImmediateOrderById(OrderIds.parasiteon)
+
+    itemModifyUnitMap.put(ITEM_PUTRID_SPRAY, putridSprayAction)
+
+
+    let fervorPotionAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_FERVOR_POTION)
+        u.addAbility(ABIL_AUTOCAST_FERVOR_POTION)
+        u.removeAbility(ABIL_MANA_POTION)
+        u.removeAbility(ABIL_AUTOCAST_MANA_POTION)
+        u.issueImmediateOrderById(OrderIds.innerfireon)
+
+    itemModifyUnitMap.put(ITEM_FERVOR_POTION, fervorPotionAction)
+
+
+    let stormLizardAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_STORM_BREATH)
+
+    itemModifyUnitMap.put(ITEM_STORM_LIZARD, stormLizardAction)
+
+    let corrosiveLizardAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            replaceUnit(unitToSpawn, UNIT_THUNDER_LIZARD, UNIT_CORROSIVE_LIZARD)
+
+    itemAddUnitMap.put(ITEM_CORROSIVE_LIZARD, corrosiveLizardAction)
+
+
+    let rexxarBattleRoarAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_BATTLE_REXXAR_ROAR)
+
+    itemModifyUnitMap.put(ITEM_BATTLE_ROAR, rexxarBattleRoarAction)
+
+
+    let rexxarDefenseRoarAction = new ItemModifierAction()
+        ..addAction() (unit u) ->
+        u.addAbility(ABIL_DEFENSE_REXXAR_ROAR)
+
+    itemModifyUnitMap.put(ITEM_DEFENSE_ROAR, rexxarDefenseRoarAction)

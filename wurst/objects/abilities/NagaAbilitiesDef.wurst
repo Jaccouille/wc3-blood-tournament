@@ -116,6 +116,7 @@ import UnitObjEditingCommon
         "Throws a magical shard of ice at a target enemy unit, " +
         "dealing damage and stunning the target.")
     new AbilityDefinitionFrostBolt(ABIL_FROST_BOLT)
+        ..setMissileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setLevels(1)
         ..setCheckDependencies(false)
         ..setDummyAbility()
@@ -225,13 +226,14 @@ import UnitObjEditingCommon
         ..presetMaxDamage(_ -> 3000)
         ..setNameEnhance("Z", "Crushing Wave")
         ..tooltipStopListen(false)
+        ..presetManaCost(_ -> 125)
 
     createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_CRUSHING_WAVE)
         ..setAnimationNames("attack,slam")
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetManaCost(_ -> 125)
-        ..presetCooldown(_ -> 6)
+        ..presetCooldown(_ -> 10)
         ..presetCastRange(_ -> 600)
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Crushing Wave")

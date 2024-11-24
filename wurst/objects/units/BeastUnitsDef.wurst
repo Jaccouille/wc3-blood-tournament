@@ -1,0 +1,317 @@
+package BeastUnitsDef
+
+// Standard libs imports:
+import Assets
+import ChannelAbilityPreset
+
+// Local imports:
+import LocalObjectIDs
+import UnitObjEditingCommon
+import UnitTooltipGenerator
+import ItemObjEditingCommon
+import BTAbilities
+import ArmySpawner
+
+@compiletime function createTauren()
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_HARDENED_SKIN_5)
+    )
+    createSpawnedUnit(UNIT_TAUREN, UnitIds.tauren, BUILDING_TAUREN)
+        ..setNormalAbilities(commaList(ABIL_HARDENED_SKIN_5))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Normal, 35, 5, 7, 2)
+
+        ..setArmorData(ArmorType.Large, 0)
+        ..setHitPointsMaximumBase(1300)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("W", "Tauren")
+        ..setSizeLarge()
+
+        ..setModelFileExt(Units.tauren)
+        ..setIconGameInterfaceExt(Icons.bTNTauren)
+        ..setUnitSoundSetExt(Soundsets.tauren)
+
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_SHOCKWAVE) + "\n\n" +
+        abilTooltipMap.get(ABIL_HARDENED_SKIN_15)
+        )
+    var itm = createBasicItem(ITEM_CHIEFTAIN)
+    createSpawnedUnit(UNIT_CHIEFTAIN, UnitIds.taurenchieftain)
+        ..registerItemDef(itm, ItemModifierType.Addition)
+        ..setNormalAbilities(
+            commaList(
+            ABIL_SHOCKWAVE,
+            ABIL_AUTOCAST_SHOCKWAVE,
+            ABIL_HARDENED_SKIN_15)
+            )
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_SHOCKWAVE))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Siege, 120, 10, 9, 2)
+
+        ..setArmorData(ArmorType.Unarmored, 0)
+        ..setHitPointsMaximumBase(4000)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+        ..setItemCostUnit(0, 2000, 1)
+        // ..setAutoPointValue()
+        // ..setAutoBuildingCost()
+
+        ..setNameEnhance("X", "Chieftain")
+        ..tooltipStopListen(true, itm)
+        ..setSizeLarge()
+
+        ..setIconGameInterfaceExt(Icons.bTNHeroTaurenChieftain)
+
+
+@compiletime function createQuillBoar()
+    var tooltip = new UnitTooltipGenerator("Basic ranged unit.")
+    createSpawnedUnit(UNIT_QUILLBOAR, UnitIds.quillboar, BUILDING_QUILLBOAR)
+        ..setAttack1WeaponType(WeaponType.MissileSplash)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setAttack1Data(AttackType.Pierce, 5, 5, 5, 1.7)
+        ..setAttack1Range(450)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Small, 2)
+        ..setHitPointsMaximumBase(220)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+        ..setUpgradeTo(commaList(BUILDING_DIRE_QUILLBOAR))
+
+        ..setNameEnhance("Q", "Quillboar")
+        ..setSizeSmall()
+        ..setTintingColorRed(255)
+        ..setTintingColorGreen(255)
+        ..setTintingColorBlue(255)
+
+        ..setModelFileExt(Units.bristleBack)
+        ..setIconGameInterfaceExt(Icons.bTNRazorback)
+        ..setUnitSoundSetExt(Soundsets.razorMane)
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_QUILL_SPRAY)
+    )
+    createSpawnedUnit(UNIT_DIRE_QUILLBOAR, UnitIds.quillboarhunter, BUILDING_DIRE_QUILLBOAR)
+        ..setNormalAbilities(commaList(ABIL_QUILL_SPRAY))
+        ..setDefaultActiveAbility(commaList(ABIL_QUILL_SPRAY))
+        ..setAttack1WeaponType(WeaponType.MissileSplash)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Pierce, 20, 5, 5, 1.5)
+        ..setAttack1Range(550)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Small, 3)
+        ..setHitPointsMaximumBase(400)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("Z", "Dire Quillboar")
+        ..setSizeSmall()
+
+        ..setModelFileExt(Units.bristleBack)
+        ..setBuildingScalingValue(1.4)
+        ..setBuildinTinting(255, 140, 170)
+        ..setIconGameInterfaceExt(Icons.bTNRazorback)
+        ..setUnitSoundSetExt(Soundsets.razorMane)
+
+@compiletime function createLizard()
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_SHOCK_BREATH)
+    )
+    createSpawnedUnit(UNIT_THUNDER_LIZARD, UnitIds.thunderlizard, BUILDING_THUNDER_LIZARD)
+        ..setAnimationCastBackswing(0)
+        ..setAnimationBlendTimeseconds(0)
+        ..setAnimationCastPoint(0)
+        ..setAttack1WeaponType(WeaponType.Missile)
+        ..setNormalAbilities(commaList(ABIL_SHOCK_BREATH, AbilityIds.lightningAttack))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 40, 5, 6, 2)
+        ..setAttack1Range(300)
+
+        ..setArmorData(ArmorType.Large, 4)
+        ..setHitPointsMaximumBase(1800)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+        ..setMana(0)
+
+        ..setNameEnhance("E", "Thunder Lizard")
+        ..setSizeLarge()
+        ..setScalingValue(1)
+
+        ..setBuildingScalingValue(0.8)
+        ..setModelFileExt(Units.thunderLizard1)
+        ..setIconGameInterfaceExt(Icons.bTNThunderLizard)
+        ..setUnitSoundSetExt(Soundsets.kotoBeast)
+
+    let lizardCount = BTBuildingData.getUnitCount(BUILDING_THUNDER_LIZARD)
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_CORROSIVE_BREATH_ORB)
+    )
+    var itm = createBasicItem(ITEM_CORROSIVE_LIZARD)
+    createSpawnedUnit(UNIT_CORROSIVE_LIZARD, UnitIds.thunderlizard)
+        ..setAttack1WeaponType(WeaponType.Missile)
+        ..setNormalAbilities(commaList(ABIL_CORROSIVE_BREATH_ORB))
+        ..registerItemDef(itm, ItemModifierType.Replace)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 40, 5, 6, 2)
+        ..setAttack1Range(300)
+
+        ..setArmorData(ArmorType.Large, 4)
+        ..setHitPointsMaximumBase(1800)
+
+        ..setSpeedBase(270)
+        ..setItemCostReplacement(0, 200, 1, lizardCount, lizardCount, BUILDING_THUNDER_LIZARD)
+        ..tooltipStopListen(true, itm)
+        ..setMana(0)
+
+        ..setNameEnhance("Z", "Corrosive Lizard")
+        ..setModelFile(Units.thunderLizardSalamander1)
+        ..setSizeLarge()
+        ..setScalingValue(1)
+
+        ..setIconGameInterfaceExt(Icons.bTNThunderLizardSalamander)
+
+
+@compiletime function createSpiritWalker()
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_BANISH)
+    )
+    createSpawnedUnit(UNIT_SPIRIT_WALKER, UnitIds.spiritwalker, BUILDING_SPIRIT_WALKER)
+        ..setNormalAbilities(commaList(ABIL_BANISH, ABIL_AUTOCAST_BANISH))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_BANISH))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 20, 5, 8, 2.0)
+        ..setAttack1Range(600)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Unarmored, 0)
+        ..setHitPointsMaximumBase(300)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("A", "Spirit Walker")
+        ..setSizeSmall()
+        ..setUnitClassification("")
+
+        ..setModelFileExt(Units.spiritWalker)
+        ..setIconGameInterfaceExt(Icons.bTNSpiritWalker)
+        ..setUnitSoundSetExt(Soundsets.spiritWalker)
+
+@compiletime function createBeastMaster()
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_ENDURANCE_AURA_25)
+    )
+    createSpawnedUnit(UNIT_REXXAR, UnitIds.rexxar, BUILDING_REXXAR)
+        ..setNormalAbilities(commaList(ABIL_ENDURANCE_AURA_25))
+        ..registerTooltipGenerator(tooltip)
+        ..setAttack1WeaponType(WeaponType.Missile)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Normal, 60, 10, 8, 1.6)
+        ..setAttack1Range(600)
+        ..setAttack1ProjectileSpeed(900)
+        ..setAttack1ProjectileArt(Abilities.rexxarMissile)
+
+        ..setArmorData(ArmorType.Unarmored, 0)
+        ..setHitPointsMaximumBase(1800)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("R", "Beast Master")
+        ..setSizeSmall()
+
+        ..setModelFileExt(Units.rexxar1)
+        ..setIconGameInterfaceExt(Icons.bTNBeastMaster)
+        ..setUnitSoundSetExt(Soundsets.beastmaster)
+
+
+@compiletime function createAlchemist()
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_HEALING_SPRAY) + "\n\n" +
+        abilTooltipMap.get(ABIL_MANA_POTION)
+    )
+    createSpawnedUnit(UNIT_ALCHEMIST, UnitIds.rexxar, BUILDING_ALCHEMIST)
+        ..setNormalAbilities(commaList(
+            ABIL_MANA_POTION,
+            ABIL_HEALING_SPRAY,
+            ABIL_AUTOCAST_HEALING_SPRAY,
+            ABIL_AUTOCAST_MANA_POTION
+            ))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_HEALING_SPRAY))
+        ..registerTooltipGenerator(tooltip)
+        ..setAttack1WeaponType(WeaponType.Missile)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 25, 5, 3, 1.8)
+        ..setAttack1Range(500)
+        ..setAttack1ProjectileSpeed(900)
+        ..setAttack1ProjectileArt(Abilities.batTrollMissile)
+
+        ..setArmorData(ArmorType.Unarmored, 0)
+        ..setHitPointsMaximumBase(1200)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("S", "Exiled Alchemist")
+        ..setSizeSmall()
+
+        ..setBuildingScalingValue(0.85)
+        ..setModelFileExt(Units.heroGoblinAlchemist)
+        ..setIconGameInterfaceExt(Icons.bTNHeroAlchemist)
+        ..setUnitSoundSetExt(Soundsets.heroGoblinAlchemist)
+
+
+@compiletime function createBuilder()
+    createBuilder(UNIT_BEAST_BUILDER, UnitIds.peasant)
+        ..setNameEnhance("S", "Beast Builder")
+        ..setModelFile(Units.razorMane)
+        ..setIconGameInterface(Icons.bTNRazorback)
+        ..setUnitSoundSet(Soundsets.razorMane)
+        ..setStructuresBuilt(commaList(
+            BUILDING_TAUREN,
+            BUILDING_QUILLBOAR,
+            BUILDING_SPIRIT_WALKER,
+            BUILDING_THUNDER_LIZARD,
+            BUILDING_ALCHEMIST,
+            BUILDING_REXXAR
+        ))

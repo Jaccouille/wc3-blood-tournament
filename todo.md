@@ -61,10 +61,8 @@
 
 
 
-
 ## Faction
 ### Beast Kingdom
-#### Units
 - shitty pigs, minotaur, spirit walker,
 - Lizard -> Thunder/Fire Salamander
 - Centaur -> Centar Axe thrower
@@ -72,6 +70,15 @@
 - Chen
 - Beastmaster
 - BEAST KING KING KONG JUMP AND BOOM BLOOD SPLASH
+
+### Demons
+- fel hound -> fel stalker
+- Fel Guard
+- succubus -> curse
+- pit lord
+- eredar
+- satyr
+- summoner
 
 ## Cool abilities
 
