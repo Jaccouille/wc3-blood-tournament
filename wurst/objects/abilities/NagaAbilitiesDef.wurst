@@ -185,7 +185,7 @@ import UnitObjEditingCommon
     tgen = new BTAbilityTooltipGenerator(
         "Takes control of a target enemy unit.\nHas 10% chance to proc on hit.")
 
-    let abilId = ABIL_ID_GEN.next()
+    var abilId = ABIL_ID_GEN.next()
     let orbOfCharm = new AbilityDefinitionOrbofLightning(ABIL_ORB_CHARM)
         ..setEnabledAttackIndex(1, 0)
         ..presetChanceToHitUnits(_ -> 10)
@@ -241,3 +241,40 @@ import UnitObjEditingCommon
         ..setIconTurnOff(Icons.bTNCrushingWave)
 
     abilTooltipMap.put(ABIL_CRUSHING_WAVE, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Reduces enemies armor and damage them over time upon basic attack hit."
+        )
+    abilId = ABIL_ID_GEN.next()
+    new AbilityDefinitionOrbofLightning(ABIL_ACID_SPIT_ORB)
+        ..setMissileArt("")
+        ..setArtTarget(Abilities.bottleImpact)
+        ..setTargetAttachmentPoint1("weapon")
+        ..setEnabledAttackIndex(1, 0)
+        ..presetChanceToHitUnits(_ -> 100)
+        ..presetChanceToHitSummons(_ -> 100)
+        ..setEffectAbility(1, abilId.toRawCode())
+        ..setNameEnhance("Z", "Acid Spit Orb")
+        ..setDamageBonus(1, 0)
+
+    new AbilityDefinitionAlchemistAcidBomb(abilId)
+        ..registerTooltipGenerator(tgen)
+        ..setCheckDependencies(false)
+        ..setMissileArt("")
+        ..setMissileSpeed(900)
+        ..setDummyAbility()
+        ..tooltipStartListen()
+        ..presetArmorPenalty(_ -> 4)
+        ..presetPrimaryDamage(_ -> 40)
+        ..presetSecondaryDamage(_ -> 20)
+        ..presetAreaofEffect(_ -> 125)
+        ..presetDurationNormal(_ -> 4)
+        ..setNameEnhance("Z", "Acid Spit")
+        ..setBuffs(1, BuffIds.corrosiveBreath.toRawCode())
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.enemies
+            ))
+        ..tooltipStopListen(true)
+        ..setIconNormal(Icons.bTNCorrosiveBreath)
+
+    abilTooltipMap.put(ABIL_ACID_SPIT_ORB, tgen.generateFullTooltip())

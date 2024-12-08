@@ -425,7 +425,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
     abilTooltipMap.put(ABIL_SHOCK_BREATH, tgen.generateFullTooltip())
 
     tgen = new BTAbilityTooltipGenerator(
-        "Reduces enemies armor upon basic attack hit. "
+        "Reduces enemies armor and damage them over time upon basic attack hit."
         )
     var abilId = ABIL_ID_GEN.next()
     new AbilityDefinitionOrbofLightning(ABIL_CORROSIVE_BREATH_ORB)
@@ -487,7 +487,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
 
     createVisualAbility(ABIL_STORM_BREATH_VISUAL)
         ..setArtTarget(Abilities.purgeBuffTarget)
-        ..setTargetAttachmentPoint1("head")
+        ..setTargetAttachmentPoint("head")
         ..setTargetAttachments(1)
 
 

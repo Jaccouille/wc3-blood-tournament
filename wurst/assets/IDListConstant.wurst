@@ -13,8 +13,8 @@ public let BUILDER_LIST = asList(
     UNIT_UNDEAD_BUILDER,
     UNIT_NIGHT_ELF_BUILDER,
     UNIT_NAGA_BUILDER,
-    UNIT_BEAST_BUILDER,
-    UNIT_DEMON_BUILDER
+    UNIT_BEAST_BUILDER
+    // UNIT_DEMON_BUILDER
 )
 
 public let BAN_MAP = new IterableMap<string, int>()

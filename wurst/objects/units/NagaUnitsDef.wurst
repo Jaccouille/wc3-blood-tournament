@@ -99,19 +99,21 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.snapDragon)
 
     tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_MULTISHOT_2)
+        abilTooltipMap.get(ABIL_ACID_SPIT_ORB)
         )
-    createSpawnedUnit(UNIT_HYDRA, UnitIds.hydrahatchling, BUILDING_HYDRA)
-        ..setNormalAbilities(commaList(ABIL_MULTISHOT_2))
+    createSpawnedUnit(UNIT_HYDRA, UnitIds.hydra, BUILDING_HYDRA)
+        ..setNormalAbilities(commaList(ABIL_ACID_SPIT_ORB))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 45, 5, 4, 2)
+        ..setAttack1Data(AttackType.Pierce, 75, 5, 5, 2)
 
-        ..setArmorData(ArmorType.Medium, 5)
-        ..setHitPointsMaximumBase(800)
+        ..setArmorData(ArmorType.Medium, 6)
+        ..setHitPointsMaximumBase(1600)
         ..setAttack1Range(500)
-        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+        ..setAttack1ProjectileSpeed(900)
+        // ..setAttack1ProjectileArt("")
+        ..setAttack1AnimationDamagePoint(0.4)
 
         ..setSpeedBase(270)
         ..setAutoPointValue()
@@ -119,10 +121,9 @@ import UnitTooltipGenerator
         ..tooltipStopListen(true)
 
         ..setNameEnhance("Z", "Hydra")
-        ..setSizeSmall()
+        ..setSizeLarge()
 
         ..setTintingColorBlue(255)
-        ..setScalingValue(0.8)
         ..setBuildingScalingValue(0.8)
         ..setModelFileExt(Units.hydra)
         ..setIconGameInterfaceExt(Icons.bTNHydra)
