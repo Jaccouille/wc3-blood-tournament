@@ -285,7 +285,7 @@ public class BTUnitDefinition extends UnitDefinition
     function setBuildingAbilities(string abilityIds)
         buildingDef.setNormalAbilities(abilityIds)
 
-    function setBuildinTinting(int r, int g, int b)
+    function setBuildingTinting(int r, int g, int b)
         buildingDef.setTintingColorRed(r)
         buildingDef.setTintingColorGreen(g)
         buildingDef.setTintingColorBlue(b)
@@ -429,11 +429,15 @@ public class BTUnitDefinition extends UnitDefinition
 
     function setModelFileExt(string data)
         this.setModelFile(data)
+        this.setPortraitModelFile(data.replace(".mdx", "_portrait"))
         this.buildingDef.setModelFile(data)
+        this.buildingDef.setPortraitModelFile(data.replace(".mdx", "_portrait"))
 
     function setModelFileExt(string data, int red, int green, int blue)
         this.setModelFile(data)
+        this.setPortraitModelFile(data.replace(".mdx", "_portrait"))
         this.buildingDef.setModelFile(data)
+        this.buildingDef.setPortraitModelFile(data.replace(".mdx", "_portrait"))
         this.buildingDef.setTintingColorRed(red)
         this.buildingDef.setTintingColorGreen(green)
         this.buildingDef.setTintingColorBlue(blue)

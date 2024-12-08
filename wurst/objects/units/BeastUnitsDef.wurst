@@ -130,7 +130,7 @@ import ArmySpawner
 
         ..setModelFileExt(Units.bristleBack)
         ..setBuildingScalingValue(1.4)
-        ..setBuildinTinting(255, 140, 170)
+        ..setBuildingTinting(255, 140, 170)
         ..setIconGameInterfaceExt(Icons.bTNRazorback)
         ..setUnitSoundSetExt(Soundsets.razorMane)
 

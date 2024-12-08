@@ -13,7 +13,8 @@ public let BUILDER_LIST = asList(
     UNIT_UNDEAD_BUILDER,
     UNIT_NIGHT_ELF_BUILDER,
     UNIT_NAGA_BUILDER,
-    UNIT_BEAST_BUILDER
+    UNIT_BEAST_BUILDER,
+    UNIT_DEMON_BUILDER
 )
 
 public let BAN_MAP = new IterableMap<string, int>()
@@ -23,6 +24,7 @@ public let BAN_MAP = new IterableMap<string, int>()
     ..put("NE", UNIT_NIGHT_ELF_BUILDER)
     ..put("NA", UNIT_NAGA_BUILDER)
     ..put("BE", UNIT_BEAST_BUILDER)
+    ..put("DE", UNIT_DEMON_BUILDER)
 
 public let RACE_ABBREV = new HashMap<string, string>()
     ..put("HU", "Human")
@@ -31,6 +33,7 @@ public let RACE_ABBREV = new HashMap<string, string>()
     ..put("NE", "Night Elf")
     ..put("NA", "Naga")
     ..put("BE", "Beast")
+    ..put("DE", "Demon")
 
 public let BUILDER_ID_TO_RACE_STR = new HashMap<int, string>()
     ..put(UNIT_HUMAN_BUILDER, "Human")
@@ -39,6 +42,7 @@ public let BUILDER_ID_TO_RACE_STR = new HashMap<int, string>()
     ..put(UNIT_NIGHT_ELF_BUILDER, "Night Elf")
     ..put(UNIT_NAGA_BUILDER, "Naga")
     ..put(UNIT_BEAST_BUILDER, "Beast")
+    ..put(UNIT_DEMON_BUILDER, "Demon")
 
 public let HUMAN_UNITS = asList(
     UNIT_FOOTMAN,
@@ -245,4 +249,25 @@ public let BEAST_ABIL_UPGD = asList(
     ITEM_FERVOR_POTION,
     ITEM_DEFENSE_ROAR,
     ITEM_BATTLE_ROAR
+)
+
+public let DEMON_UNITS = asList(
+    UNIT_FEL_HOUND,
+    UNIT_FEL_STALKER,
+    UNIT_FEL_GUARD,
+    UNIT_SUCCUBUS,
+    UNIT_PIT_LORD,
+    UNIT_EREDAR_SORCERER,
+    // UNIT_EREDAR_LORD,
+    UNIT_FEL_RITUALIST,
+    UNIT_FEL_CONJURER
+)
+
+public let DEMON_UNIT_UPGD = asList(
+    BUILDING_FEL_STALKER,
+    BUILDING_FEL_CONJURER
+)
+
+public let DEMON_ABIL_UPGD = asList(
+    BUILDING_FEL_CONJURER
 )

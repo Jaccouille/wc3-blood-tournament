@@ -58,6 +58,9 @@ init
         ..put(ABIL_AUTOCAST_FERVOR_POTION, new BuffTuple(OrderIds.acidbomb, -1))
         ..put(ABIL_AUTOCAST_MANA_POTION, new BuffTuple(OrderIds.acidbomb, -1))
         ..put(ABIL_AUTOCAST_BANISH, new BuffTuple(OrderIds.banish, BuffIds.banish))
+        ..put(ABIL_AUTOCAST_RAIN_OF_FIRE, new BuffTuple(OrderIds.rainoffire, -1))
+        ..put(ABIL_AUTOCAST_INFERNO, new BuffTuple(OrderIds.inferno, -1))
+        ..put(ABIL_AUTOCAST_MANA_SHARE, new BuffTuple(OrderIds.drain, -1))
 
     dummyToRealImmediateCastMap
         ..put(ABIL_AUTOCAST_TAUNT, OrderIds.taunt)

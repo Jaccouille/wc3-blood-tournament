@@ -39,6 +39,10 @@ let beastUnit              = new PaletteSection("Units"             , BEAST_UNIT
 let beastUnitsUpgrades     = new PaletteSection("Units Upgrade"     , BEAST_UNIT_UPGD)
 let beastAbilitiesUpgrades = new PaletteSection("Abilities Upgrade" , BEAST_ABIL_UPGD)
 
+let demonUnit              = new PaletteSection("Units"             , DEMON_UNITS    )
+let demonUnitsUpgrades     = new PaletteSection("Units Upgrade"     , DEMON_UNIT_UPGD)
+let demonAbilitiesUpgrades = new PaletteSection("Abilities Upgrade" , DEMON_ABIL_UPGD)
+
 let DOC_TEXT = "" +
 "Click to show/hide the codex panel. " +
 "This panel contains information on all units in the game."
@@ -185,6 +189,7 @@ public function initCodexUI()
             ..add(createFrameTemplate("contentFrameNightElf" , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
             ..add(createFrameTemplate("contentFrameNaga"     , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
             ..add(createFrameTemplate("contentFrameBeast"     , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
+            // ..add(createFrameTemplate("contentFrameDemon"     , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
 
         new TableLayout(FRAME_SIZE.x, 0.07)
             ..row()
@@ -195,6 +200,7 @@ public function initCodexUI()
             ..row()
             ..add(btn("Naga")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(4).getName()) ) )
             ..add(btn("Beast")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(5).getName()) ) )
+            // ..add(btn("Demon")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(6).getName()) ) )
             ..applyTo(headerFrame)
 
         // Human Frame
@@ -238,3 +244,10 @@ public function initCodexUI()
             ..addPaletteSection(beastUnitsUpgrades     , MAX_CELL)
             ..addPaletteSection(beastAbilitiesUpgrades     , MAX_CELL)
             ..applyTo(contentFrames.get(5))
+
+        // Demon Frame
+        // new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
+        //     ..addPaletteSection(demonUnit     , MAX_CELL)
+        //     ..addPaletteSection(demonUnitsUpgrades     , MAX_CELL)
+        //     ..addPaletteSection(demonAbilitiesUpgrades     , MAX_CELL)
+        //     ..applyTo(contentFrames.get(6))

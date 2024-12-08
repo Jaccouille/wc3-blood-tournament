@@ -16,6 +16,10 @@
 - Display some unit information like "Ghost unit" on the front panel
 - remove movement speed tooltip
 
+- Eredar base unit spell + AoE burning damage on attack for upgrades
+- Succubus spell + first tier unit, succubus boss having silence
+- Felhound moved to summons
+
 - Paladin death rework
 - Naga charm special effect not as unit attachment
 - Fix naga charm unit ownership transfert
@@ -74,11 +78,16 @@
 ### Demons
 - fel hound -> fel stalker
 - Fel Guard
-- succubus -> curse
-- pit lord
-- eredar
+- succubus -> curse, hex, silence to succubus boss
+- pit lord -> Cleave
+- Draenei slave
+- eredar + high eredar
 - satyr
-- summoner
+- summoner -> high summoner
+
+- Doom Guard
+- Infernal
+- Void walker
 
 ## Cool abilities
 

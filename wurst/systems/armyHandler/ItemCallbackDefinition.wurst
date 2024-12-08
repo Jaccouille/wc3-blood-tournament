@@ -104,7 +104,7 @@ init
     let mortarAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_MORTAR)
+            addAtMiddle(unitToSpawn, UNIT_MORTAR)
     itemAddUnitMap.put(ITEM_MORTAR, mortarAction)
 
     let marshallAction = new ItemAddUnit()
@@ -601,3 +601,10 @@ init
         u.addAbility(ABIL_DEFENSE_REXXAR_ROAR)
 
     itemModifyUnitMap.put(ITEM_DEFENSE_ROAR, rexxarDefenseRoarAction)
+
+    // ========================= DEMON =========================
+    let overlordAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            addAtMiddle(unitToSpawn, UNIT_OVERLORD)
+    itemAddUnitMap.put(ITEM_OVERLORD, overlordAction)

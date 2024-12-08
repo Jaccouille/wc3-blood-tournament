@@ -473,7 +473,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
 
     tgen = new BTAbilityTooltipGenerator(
-        "The closest enemies are forced to attack this unit.")
+        "Emits a terrifying howl that reduces nearby enemy units' attack damage.")
     new AbilityDefinitionPitLordHowlofTerror(ABIL_HOWL_OF_TERROR)
         ..setLevels(1)
         ..setHeroAbility(false)
@@ -496,6 +496,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..presetManaCost(_ -> 0)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 6)
+        ..setNameEnhance("Z", "Howl Of Terror")
         ..tooltipStopListen(true)
 
     // abilTooltipMap.put(ABIL_HOWL_OF_TERROR, tgen.generateFullTooltip())
