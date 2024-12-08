@@ -78,6 +78,14 @@ let BUILDER_OPTION = new HashMap<int, LinkedList<int>>
         BUILDING_REXXAR,
         BUILDING_ALCHEMIST
     ))
+    ..put(UNIT_DEMON_BUILDER, asList(
+        BUILDING_FEL_HOUND,
+        BUILDING_SUCCUBUS,
+        BUILDING_FEL_GUARD,
+        BUILDING_PIT_LORD
+        // BUILDING_EREDAR_SORCERER,
+        // BUILDING_FEL_RITUALIST
+    ))
 
 public let UPGRADE_OPTIONS = new HashMap<int, LinkedList<int>>
     ..put(BUILDING_KNIGHT, asList(BUILDING_CRUSADER))
@@ -93,6 +101,8 @@ public let UPGRADE_OPTIONS = new HashMap<int, LinkedList<int>>
     ..put(BUILDING_MURLOC, asList(BUILDING_MURGUL_WARLOCK))
     ..put(BUILDING_SNAP_DRAGON, asList(BUILDING_HYDRA))
     ..put(BUILDING_QUILLBOAR, asList(BUILDING_DIRE_QUILLBOAR))
+    ..put(BUILDING_FEL_HOUND, asList(BUILDING_FEL_STALKER))
+    ..put(BUILDING_FEL_RITUALIST, asList(BUILDING_FEL_CONJURER))
 
 class BuilderAI
     use LinkedListModule

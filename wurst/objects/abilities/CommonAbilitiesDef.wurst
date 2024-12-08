@@ -237,6 +237,21 @@ function createEnduranceAura(int abilId, real value) returns AbilityDefinitionAu
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
     return abilDef
 
+function createVampiricAura(int abilId, real value) returns AbilityDefinitionVampiricAuracreep
+    let tgen = new BTAbilityTooltipGenerator(
+        "Nearby friendly melee units gain percentage of their attack damage when they hit enemy units.")
+    let abilDef = new AbilityDefinitionVampiricAuracreep(abilId)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..setAttackDamageStolen(1, value)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetAreaofEffect(_ -> 1200)
+        ..setName("Life Steal " + value.toPercent())
+        ..tooltipStopListen()
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
+
 // Used to compensate healing reduction orb hard coded damage
 function createBonusDamage(int abilId, int value) returns AbilityDefinitionAttackBonus
     let abilDef = new AbilityDefinitionAttackBonus(abilId)
@@ -322,6 +337,9 @@ function createSpikedCarapace(int abilId, real value) returns AbilityDefinitionC
 
 @compiletime function createEnduranceAuraAbilities()
     createEnduranceAura(ABIL_ENDURANCE_AURA_25, 0.25)
+
+@compiletime function createVampiricAuraAbilities()
+    createVampiricAura(ABIL_VAMPIRIC_AURA_20, 0.20)
 
 @compiletime function createRangedAuraAbilities()
     createRangedAura(ABIL_RANGED_AURA_15, 0.15)

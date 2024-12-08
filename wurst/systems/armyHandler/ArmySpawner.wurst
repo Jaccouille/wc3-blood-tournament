@@ -158,6 +158,17 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_REXXAR        , 0, 1000, genList(UNIT_REXXAR         , 1                                                                                     ))
     new BTBuildingData(BUILDING_ALCHEMIST          , 150, 0, genList(UNIT_ALCHEMIST           , 1                                                                                     ))
 
+    new BTBuildingData(BUILDING_FEL_HOUND        ,                             100, 0   , genList(UNIT_FEL_HOUND        , 10))
+    new BTBuildingData(BUILDING_FEL_HOUND        , BUILDING_FEL_STALKER ,      0  , 1000, genList(UNIT_FEL_STALKER      , 10))
+    new BTBuildingData(BUILDING_SUCCUBUS         ,                             200, 0   , genList(UNIT_SUCCUBUS         , 4 ))
+    new BTBuildingData(BUILDING_MANA_SLAVE       ,                             0  , 300 , genList(UNIT_MANA_SLAVE       , 3 ))
+    new BTBuildingData(BUILDING_FEL_GUARD        ,                             200, 0   , genList(UNIT_FEL_GUARD        , 4 ))
+    new BTBuildingData(BUILDING_PIT_LORD         ,                             0  , 1500, genList(UNIT_PIT_LORD         , 1 ))
+    new BTBuildingData(BUILDING_EREDAR_SORCERER  ,                             0  , 1000, genList(UNIT_EREDAR_SORCERER  , 1 ))
+    new BTBuildingData(BUILDING_EREDAR_SORCERER  , BUILDING_EREDAR_DIABOLIST , 0  , 2000, genList(UNIT_EREDAR_DIABOLIST , 1 ))
+    new BTBuildingData(BUILDING_EREDAR_DIABOLIST , BUILDING_EREDAR_WARLOCK ,   0  , 3000, genList(UNIT_EREDAR_WARLOCK   , 1 ))
+    new BTBuildingData(BUILDING_FEL_RITUALIST    ,                             100, 500 , genList(UNIT_FEL_RITUALIST    , 1 ))
+    new BTBuildingData(BUILDING_FEL_RITUALIST    , BUILDING_FEL_CONJURER ,     0  , 1500, genList(UNIT_FEL_CONJURER     , 1 ))
 
 // Distance between units positioned in formation mode
 @configurable constant FORMATION_WIDTH = 120.
@@ -190,6 +201,24 @@ public class ArmySpawner
     LinkedList<int> squadUnitIds = new LinkedList<int>
 
     LinkedList<ItemModifier> unitModifierList = new LinkedList<ItemModifier>
+
+    static function doOnSummonedUnit(unit summonedUnit)
+        ArmySpawner.doOnSoldierSpawn(summonedUnit)
+
+        pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).spawnedUnits.push(summonedUnit)
+        // To reduce pathing lag, assign the new unit to the last dummy player
+        let newOwner = pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).dummyPlayers.getLast()
+        // TODO: Mana ward ability doesn't work on allied for some reason
+        if summonedUnit.getTypeId() != UNIT_MANA_WARD
+            summonedUnit.setOwner(newOwner, false)
+        summonedUnit.issuePointOrder("attack", CENTER)
+
+    static function doOnSoldierSpawn(unit newUnit)
+        if gameConfig.getHealthMultiplier() != 1.
+            newUnit.setMaxHP((newUnit.getMaxHP() * gameConfig.getHealthMultiplier()).toInt(), true)
+        if gameConfig.getDamageMultiplier() != 1.
+            newUnit.setBaseDamage(
+                (newUnit.getBaseDamage(0) * gameConfig.getDamageMultiplier()).toInt() , 0)
 
     construct(player _p)
         this._p = _p
@@ -253,11 +282,7 @@ public class ArmySpawner
         let newUnit = createUnit(_p.getDummyPlayer(dummyPlayerIdx), unitId, spawnPos, spawnZone.angle)
         count += 1
         // Log.debug("Unit spawned " +  count.toString())
-        if gameConfig.getHealthMultiplier() != 1.
-            newUnit.setMaxHP((newUnit.getMaxHP() * gameConfig.getHealthMultiplier()).toInt(), true)
-        if gameConfig.getDamageMultiplier() != 1.
-            newUnit.setBaseDamage(
-                (newUnit.getBaseDamage(0) * gameConfig.getDamageMultiplier()).toInt() , 0)
+        doOnSoldierSpawn(newUnit)
 
         // TODO: handle skin item separately
         // Apply Item modifier

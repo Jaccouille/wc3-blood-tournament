@@ -163,6 +163,9 @@ function initItemStockData()
     sharedStocksMap.put(BUILDING_THUNDER_LIZARD, asList(ITEM_CORROSIVE_LIZARD, ITEM_STORM_LIZARD))
     sharedStocksMap.put(BUILDING_REXXAR, asList(ITEM_DEFENSE_ROAR, ITEM_BATTLE_ROAR))
 
+    // ================ DEMON =============
+    unitItemSold.put(BUILDING_FEL_GUARD , asList(ITEM_OVERLORD))
+
 
 function canBuy(int itemId, player _p) returns boolean
     let goldCost = itemGoldCost.loadInt(itemId, itemId)

@@ -1,0 +1,674 @@
+package DemonUnitsDef
+
+// Standard libs imports:
+import Assets
+import ChannelAbilityPreset
+import LinkedList
+
+// Local imports:
+import ArmySpawner
+import BTAbilities
+import ItemObjEditingCommon
+import LocalObjectIDs
+import UnitObjEditingCommon
+import UnitTooltipGenerator
+
+
+@compiletime function createFelHound()
+    var tooltip = new UnitTooltipGenerator("Basic melee unit.")
+    createSpawnedUnit(UNIT_FEL_HOUND, UnitIds.felstalker, BUILDING_FEL_HOUND)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Pierce, 5, 5, 3, 1.9)
+
+        ..setArmorData(ArmorType.Small, 2)
+        ..setHitPointsMaximumBase(400)
+
+        ..setSpeedBase(270)
+
+        ..setSizeSmall()
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..setNameEnhance("Q", "Felhound")
+        ..tooltipStopListen()
+        ..setUpgradeTo(asList(BUILDING_FEL_STALKER))
+        ..setMana(0)
+
+        ..setScalingValue(0.75)
+        ..setBuildingScalingValue(0.75)
+
+        ..setModelFileExt(Units.felhound)
+        ..setIconGameInterfaceExt(Icons.bTNFelHound)
+        ..setUnitSoundSetExt(Soundsets.felhound)
+
+    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_DEMONIC_FRENZY))
+    createSpawnedUnit(UNIT_FEL_STALKER, UnitIds.purplefelstalker, BUILDING_FEL_STALKER)
+        ..registerCustomPanelAbilityTooltip(ABIL_DEMONIC_FRENZY)
+        ..setNormalAbilities(commaList(ABIL_DEMONIC_FRENZY))
+        ..setDefaultActiveAbility(commaList(ABIL_DEMONIC_FRENZY))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Pierce, 25, 5, 4, 1.4)
+
+        ..setArmorData(ArmorType.Small, 3)
+        ..setHitPointsMaximumBase(675)
+
+        ..setSpeedBase(300)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..setSizeSmall()
+        ..setNameEnhance("Z", "Fel Stalker")
+        ..tooltipStopListen()
+
+        ..setScalingValue(0.9)
+        ..setBuildingScalingValue(0.9)
+        ..setModelFileExt(Units.felstalkerPurple1)
+        ..setIconGameInterfaceExt(Icons.bTNPurpleFelhound)
+        ..setUnitSoundSetExt(Soundsets.felhound)
+        ..setButtonPositionX(1)
+
+
+@compiletime function createSuccubus()
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_CURSE)
+        )
+    createSpawnedUnit(UNIT_SUCCUBUS, UnitIds.succubus, BUILDING_SUCCUBUS)
+        ..registerTooltipGenerator(tooltip)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CURSE))
+        ..setNormalAbilities(commaList(
+            ABIL_CURSE
+        ))
+        ..setDefaultActiveAbility(commaList(ABIL_CURSE))
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 15, 5, 5, 2)
+        ..setAttack1Range(500)
+        ..setAttack1ProjectileArt(Abilities.wingedSerpentMissile)
+        ..setAttack1WeaponType(WeaponType.MissileSplash)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Unarmored, 2)
+        ..setHitPointsMaximumBase(200)
+        ..setMana(200)
+        ..setManaRegeneration(1)
+
+        ..setSpeedBase(270)
+
+        ..setSizeSmall()
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..setNameEnhance("W", "Succubus")
+        ..tooltipStopListen()
+
+        ..setModelFileExt(Units.demoness1)
+        ..setIconGameInterfaceExt(Icons.bTNDemoness)
+        ..setUnitSoundSetExt(Soundsets.demoness)
+
+    tooltip = new UnitTooltipGenerator(
+            abilTooltipMap.get(ABIL_MANA_SHARE)
+            )
+    createSpawnedUnit(UNIT_MANA_SLAVE, UnitIds.draeneidisciple, BUILDING_MANA_SLAVE)
+        ..registerTooltipGenerator(tooltip)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_MANA_SHARE))
+        ..setNormalAbilities(commaList(
+            ABIL_MANA_SHARE, ABIL_AUTOCAST_MANA_SHARE
+        ))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_MANA_SHARE))
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 10, 5, 1, 2)
+        ..setAttack1Range(650)
+        ..setScaleProjectiles(true)
+        ..setAttack1ProjectileArt(Abilities.lightningBoltMissile)
+        ..setAttack1WeaponType(WeaponType.MissileSplash)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Unarmored, 0)
+        ..setHitPointsMaximumBase(100)
+        ..setMana(400)
+        ..setManaRegeneration(1)
+
+        ..setSpeedBase(270)
+
+        ..setSizeSmall()
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..setNameEnhance("F", "Mana Slave")
+        ..tooltipStopListen()
+
+        ..setModelFileExt(Units.dranaiMage)
+        ..setIconGameInterfaceExt(Icons.bTNDranaiMage)
+        ..setUnitSoundSetExt(Soundsets.dranai)
+
+    // tooltip = new UnitTooltipGenerator(
+    //     abilTooltipMap.get(ABIL_PARASITE_SEED) + "\n\n" +
+    //     abilTooltipMap.get(ABIL_THORN_AURA)
+    //     )
+    // let itm = createBasicItem(ITEM_KEEPER_OF_THE_GROVE)
+    // createSpawnedUnit(UNIT_KEEPER_OF_THE_GROVE, UnitIds.keeperofthegrove)
+    //     ..registerItemDef(itm, ItemModifierType.Addition)
+    //     ..registerCustomPanelAbilityTooltip(asList(ABIL_PARASITE_SEED, ABIL_THORN_AURA))
+    //     ..setNormalAbilities(commaList(
+    //         ABIL_PARASITE_SEED,
+    //         ABIL_THORN_AURA
+    //     ))
+    //     ..setDefaultActiveAbility(commaList(ABIL_PARASITE_SEED))
+    //     ..registerTooltipGenerator(tooltip)
+    //     ..tooltipStartListen()
+
+    //     ..setAttack1Data(AttackType.Magic, 95, 5, 8, 1.5)
+    //     ..setAttack1Range(500)
+    //     ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+    //     ..setArmorData(ArmorType.Medium, 5)
+    //     ..setHitPointsMaximumBase(1100)
+    //     ..setMana(200)
+
+    //     ..setSpeedBase(300)
+
+    //     ..setSizeSmall()
+    //     ..setItemCostUnit(0, 1000, 1)
+
+    //     ..tooltipStopListen(true, itm)
+    //     ..setNameEnhance("X", "Keeper of the Grove")
+
+    //     ..setArtSpecial(Objects.nightElfLargeDeathExplode)
+    //     .setIconGameInterfaceExt(Icons.bTNKeeperOfTheGrove)
+
+
+@compiletime function createFelGuard()
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_CLEAVE_20)
+        )
+    createSpawnedUnit(UNIT_FEL_GUARD, UnitIds.felguard, BUILDING_FEL_GUARD)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CLEAVE_20))
+        ..setNormalAbilities(commaList(ABIL_CLEAVE_20))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Normal, 45, 5, 7, 2)
+
+        ..setArmorData(ArmorType.Large, 2)
+        ..setHitPointsMaximumBase(1000)
+
+        ..setSpeedBase(270)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..tooltipStopListen()
+        ..setNameEnhance("E", "Fel Guard")
+
+        ..setSizeSmall()
+
+        ..setModelFileExt(Units.felgaurd)
+        ..setIconGameInterfaceExt(Icons.bTNFelGuard)
+        ..setUnitSoundSetExt(Soundsets.felgaurd)
+
+    let itm = createBasicItem(ITEM_OVERLORD)
+    createSpawnedUnit(UNIT_OVERLORD, UnitIds.overlord)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CLEAVE_30, ABIL_VAMPIRIC_AURA_20))
+        ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_VAMPIRIC_AURA_20))
+        ..setDefaultActiveAbility(commaList(""))
+        ..registerItemDef(itm, ItemModifierType.Addition)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Normal, 90, 10, 10, 2)
+
+        ..setArmorData(ArmorType.Large, 8)
+        ..setHitPointsMaximumBase(2600)
+
+        ..setSpeedBase(270)
+        ..setSizeLarge()
+        ..setItemCostUnit(0, 1500, 1)
+        ..tooltipStopListen(true, itm)
+
+        ..setNameEnhance("X", "Overlord")
+        ..setScalingValue(1.2)
+        ..setMana(0)
+
+        ..setIconGameInterfaceExt(Icons.bTNFelGuardBlue)
+
+
+@compiletime function createRitualist()
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_AUTOCAST_LESSER_DARK_PORTAL)
+    )
+    createSpawnedUnit(UNIT_FEL_RITUALIST, UnitIds.stormreaverapprentice, BUILDING_FEL_RITUALIST)
+        ..registerTooltipGenerator(tooltip)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_AUTOCAST_LESSER_DARK_PORTAL))
+        ..setNormalAbilities(commaList(ABIL_AUTOCAST_LESSER_DARK_PORTAL))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_LESSER_DARK_PORTAL))
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 35, 5, 3, 1.6)
+        ..setAttack1Range(750)
+        ..setAttack1ProjectileArt(Abilities.necromancerMissile)
+        ..setAttack1WeaponType(WeaponType.MissileSplash)
+        ..setScaleProjectiles(true)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Unarmored, 0)
+        ..setHitPointsMaximumBase(300)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+
+        ..setSizeSmall()
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..setNameEnhance("A", "Fel Ritualist")
+
+        ..tooltipStopListen()
+        ..setUpgradeTo(asList(BUILDING_FEL_CONJURER))
+
+        ..setModelFileExt(Units.orcWarlock1)
+        ..setIconGameInterfaceExt(Icons.bTNGuldan)
+        ..setUnitSoundSetExt(Soundsets.orcWarlock)
+
+    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_MULTISHOT_1))
+    createSpawnedUnit(UNIT_FEL_CONJURER, UnitIds.stormreavernecrolyte, BUILDING_FEL_CONJURER)
+        ..setAnimationCastBackswing(1)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_AUTOCAST_GREATER_DARK_PORTAL))
+        ..setNormalAbilities(commaList(ABIL_AUTOCAST_GREATER_DARK_PORTAL, ABIL_VISUAL_ILLIDAN_MISSILE))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_GREATER_DARK_PORTAL))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 55, 5, 7, 1.6)
+        ..setAttack1Range(750)
+        ..setAttack1ProjectileArt(Abilities.illidanMissile)
+        ..setAttack1WeaponType(WeaponType.MissileSplash)
+        ..setScaleProjectiles(true)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Unarmored, 0)
+        ..setHitPointsMaximumBase(600)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+
+        ..setSizeSmall()
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..setNameEnhance("Z", "Fel Conjurer")
+
+        ..tooltipStopListen()
+
+        ..setBuildingScalingValue(1.25)
+        ..setBuildingTinting(100, 200, 200)
+        ..setModelFileExt(Units.orcWarlock1)
+        ..setIconGameInterfaceExt(Icons.bTNGuldan)
+        ..setUnitSoundSetExt(Soundsets.orcWarlock)
+        ..setButtonPositionX(1)
+
+@compiletime function createSummonedDemons()
+    var tooltip = new UnitTooltipGenerator("Summoned by Fel Ritualist.")
+    createSpawnedUnit(UNIT_SATYR, UnitIds.satyr)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setNormalAbilities(commaList(ABIL_FAERIE_FIRE))
+        ..setDefaultActiveAbility(commaList(ABIL_FAERIE_FIRE))
+
+        ..setAttack1Data(AttackType.Magic, 15, 5, 3, 1.6)
+        ..setAttack1Range(300)
+        ..setAttack1ProjectileArt(Abilities.skeletalMageMissile)
+        ..setAttack1WeaponType(WeaponType.MissileSplash)
+        ..setScaleProjectiles(true)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Small, 2)
+        ..setHitPointsMaximumBase(300)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+        ..setPointValue(20)
+        ..setSummonedUnit()
+
+        ..setSizeSmall()
+        ..setNameEnhance("A", "Satyr")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+    tooltip = new UnitTooltipGenerator("Summoned by Fel Conjurer")
+    createSpawnedUnit(UNIT_SATYR_TRICKSTER, UnitIds.satyrtrickster)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setNormalAbilities(commaList(ABIL_SPELL_STEAL))
+        ..setDefaultActiveAbility(commaList(ABIL_SPELL_STEAL))
+
+        ..setAttack1Data(AttackType.Magic, 35, 5, 5, 1.6)
+        ..setAttack1Range(500)
+        ..setAttack1WeaponType(WeaponType.MissileSplash)
+        ..setScaleProjectiles(true)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Small, 3)
+        ..setHitPointsMaximumBase(450)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+        ..setPointValue(35)
+        ..setSummonedUnit()
+
+        ..setSizeSmall()
+        ..setNameEnhance("A", "Satyr Trickster")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+
+    tooltip = new UnitTooltipGenerator("Summoned by Fel Ritualist/Conjurer.")
+    createSpawnedUnit(UNIT_DEMON_PIG, UnitIds.felboar)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setNormalAbilities(commaList(ABIL_HARDENED_SKIN_10))
+
+        ..setAttack1Data(AttackType.Siege, 5, 5, 3, 1.8)
+
+        ..setArmorData(ArmorType.Large, 0)
+        ..setHitPointsMaximumBase(150)
+
+        ..setSpeedBase(270)
+        ..setPointValue(5)
+        ..setSummonedUnit()
+
+        ..setSizeSmall()
+        ..setNameEnhance("Q", "Chaos Piggy")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+
+    tooltip = new UnitTooltipGenerator("Summoned by Fel Conjurer.")
+    createSpawnedUnit(UNIT_DOOM_GUARD, UnitIds.doomguard)
+        ..registerTooltipGenerator(tooltip)
+        ..setAttack1Range(128)
+        ..tooltipStartListen()
+        ..setNormalAbilities(commaList(ABIL_CLEAVE_20))
+
+        ..setAttack1Data(AttackType.Normal, 80, 10, 8, 1.6)
+        ..setAttack1TargetsAllowed(
+            commaList(
+                TargetsAllowed.ground,
+                TargetsAllowed.ward
+            ))
+        ..setAttack1WeaponType(WeaponType.Normal)
+        ..setAttack1WeaponSound(WeaponSound.MetalHeavySlice)
+
+        ..setArmorData(ArmorType.Large, 5)
+        ..setHitPointsMaximumBase(2600)
+
+        ..setSpeedBase(270)
+        ..setPointValue(100)
+        ..setSummonedUnit()
+        ..setScalingValue(1.2)
+
+        ..setSizeLarge()
+        ..setNameEnhance("Q", "Doom Guard")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+
+    tooltip = new UnitTooltipGenerator("Summoned by Fel Ritualist")
+    createSpawnedUnit(UNIT_LESSER_VOID_WALKER, UnitIds.lesservoidwalker)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setNormalAbilities(commaList(ABIL_AUTOCAST_SOUL_BURN, ABIL_SOUL_BURN))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_SOUL_BURN))
+
+        ..setAttack1Data(AttackType.Magic, 15, 5, 3, 1.5)
+        ..setAttack1Range(300)
+        ..setAttack1ProjectileArt(Abilities.voidWalkerMissile)
+        ..setAttack1WeaponType(WeaponType.MissileSplash)
+        ..setScaleProjectiles(true)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Divine, 2)
+        ..setHitPointsMaximumBase(100)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+        ..setPointValue(20)
+        ..setSummonedUnit()
+        ..setGhostDeath()
+
+        ..setSizeSmall()
+        ..setNameEnhance("Q", "Lesser Void Walker")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+
+    tooltip = new UnitTooltipGenerator("Summoned by Fel Conjurer")
+    createSpawnedUnit(UNIT_GREATER_VOID_WALKER, UnitIds.greatervoidwalker)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setNormalAbilities(commaList(ABIL_FORKED_LIGHTNING, ABIL_AUTOCAST_FORKED_LIGHTNING))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_FORKED_LIGHTNING))
+
+        ..setAttack1Data(AttackType.Magic, 55, 5, 6, 1.5)
+        ..setAttack1Range(500)
+        ..setAttack1ProjectileArt(Abilities.voidWalkerMissile)
+        ..setAttack1WeaponType(WeaponType.MissileSplash)
+        ..setScaleProjectiles(true)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Divine, 3)
+        ..setHitPointsMaximumBase(300)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+        ..setPointValue(70)
+        ..setSummonedUnit()
+        ..setGhostDeath()
+
+        ..setSizeLarge()
+        ..setNameEnhance("Q", "Greater Void Walker")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+
+    tooltip = new UnitTooltipGenerator("Summoned by Fel Ritualist.")
+    createSpawnedUnit(UNIT_UNBROKEN, UnitIds.unbrokendarkhunter)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setNormalAbilities(commaList(ABIL_BASH_20, ABIL_HARDENED_SKIN_10))
+
+        ..setAttack1Data(AttackType.Siege, 25, 5, 5, 1.4)
+
+        ..setArmorData(ArmorType.Small, 4)
+        ..setHitPointsMaximumBase(700)
+
+        ..setSpeedBase(270)
+        ..setPointValue(30)
+        ..setSummonedUnit()
+
+        ..setSizeSmall()
+        ..setNameEnhance("Q", "Unbroken")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+
+
+@compiletime function createEredar()
+    var tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_FAERIE_FIRE)
+    )
+    createSpawnedUnit(UNIT_EREDAR_SORCERER, UnitIds.eredarsorceror, BUILDING_EREDAR_SORCERER)
+        ..registerTooltipGenerator(tooltip)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_FAERIE_FIRE, ABIL_WAND_OF_ILLUSION, ABIL_ENTANGLING_ROOT))
+        ..setNormalAbilities(commaList(ABIL_FAERIE_FIRE))
+        ..setDefaultActiveAbility(commaList(ABIL_FAERIE_FIRE))
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 75, 5, 4, 1.6)
+        ..setAttack1Range(600)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Normal, 4)
+        ..setHitPointsMaximumBase(600)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+
+        ..setSizeSmall()
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..setNameEnhance("S", "Eredar Sorcerer")
+        ..setScalingValue(1.2)
+        ..setBuildingScalingValue(1.2)
+        ..setUpgradeTo(commaList(BUILDING_EREDAR_DIABOLIST))
+
+        ..tooltipStopListen()
+
+        ..setModelFileExt(Units.eredarWarlockPurple)
+        ..setIconGameInterfaceExt(Icons.bTNEredarWarlockPurple)
+        ..setUnitSoundSetExt(Soundsets.tichondrius)
+
+
+    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_RAIN_OF_FIRE))
+    createSpawnedUnit(UNIT_EREDAR_DIABOLIST, UnitIds.eredarsorceror, BUILDING_EREDAR_DIABOLIST)
+        ..registerCustomPanelAbilityTooltip(ABIL_RAIN_OF_FIRE)
+        ..setNormalAbilities(commaList(ABIL_RAIN_OF_FIRE, ABIL_AUTOCAST_RAIN_OF_FIRE))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_RAIN_OF_FIRE))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 100, 5, 8, 1.6)
+        ..setAttack1Range(600)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Normal, 2)
+        ..setHitPointsMaximumBase(900)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+
+        ..setSizeSmall()
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..setNameEnhance("Z", "Eredar Diabolist")
+        ..setScalingValue(1.4)
+        ..setBuildingScalingValue(1.4)
+        ..setUpgradeTo(commaList(BUILDING_EREDAR_WARLOCK))
+
+        ..tooltipStopListen()
+
+        ..setModelFileExt(Units.eredarWarlock)
+        ..setIconGameInterfaceExt(Icons.bTNKiljaedin)
+        ..setUnitSoundSetExt(Soundsets.tichondrius)
+        ..setButtonPositionX(1)
+
+    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_INFERNO))
+    createSpawnedUnit(UNIT_EREDAR_WARLOCK, UnitIds.eredarsorceror, BUILDING_EREDAR_WARLOCK)
+        ..registerCustomPanelAbilityTooltip(ABIL_INFERNO)
+        // ..setNormalAbilities(commaList(ABIL_INFERNO, ABIL_AUTOCAST_INFERNO))
+        // ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_INFERNO))
+        ..setNormalAbilities(commaList(""))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 145, 5, 12, 1.6)
+        ..setAttack1Range(600)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+
+        ..setArmorData(ArmorType.Normal, 4)
+        ..setHitPointsMaximumBase(1300)
+        ..setMana(200)
+
+        ..setSpeedBase(270)
+
+        ..setSizeSmall()
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+
+        ..setNameEnhance("Z", "Eredar Warlock")
+        ..setScalingValue(1.6)
+        ..setBuildingScalingValue(1.6)
+
+        ..tooltipStopListen()
+
+        ..setModelFileExt(Units.warlock)
+        ..setIconGameInterfaceExt(Icons.bTNArchimonde)
+        ..setUnitSoundSetExt(Soundsets.tichondrius)
+        ..setButtonPositionX(1)
+
+
+    tooltip = new UnitTooltipGenerator("Summoned by Eredar Warlock.")
+    createSpawnedUnit(UNIT_INFERNAL, UnitIds.infernal)
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+        ..setNormalAbilities(commaList(ABIL_CLEAVE_20, ABIL_IMMOLATION))
+
+        ..setAttack1Data(AttackType.Siege, 85, 5, 6, 1.4)
+
+        ..setArmorData(ArmorType.Large, 6)
+        ..setHitPointsMaximumBase(2200)
+
+        ..setSpeedBase(270)
+        ..setPointValue(120)
+        ..setSummonedUnit()
+        ..setGhostDeath()
+
+        ..setSizeLarge()
+        ..setNameEnhance("Q", "Infernal")
+        ..setAutoPointValue()
+        ..tooltipStopListen(true)
+
+@compiletime function createPitLord()
+    let tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_HOWL_OF_TERROR) + "\n\n" +
+        abilTooltipMap.get(ABIL_CLEAVE_30)
+        )
+    createSpawnedUnit(UNIT_PIT_LORD, UnitIds.pitlord, BUILDING_PIT_LORD)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_HOWL_OF_TERROR, ABIL_CLEAVE_30))
+        ..setNormalAbilities(commaList(
+            ABIL_HOWL_OF_TERROR,
+            ABIL_CLEAVE_30,
+            ABIL_AUTOCAST_HOWL_OF_TERROR
+        ))
+        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_HOWL_OF_TERROR))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Normal, 140, 10, 7, 2)
+
+        ..setArmorData(ArmorType.Large, 6)
+        ..setHitPointsMaximumBase(3000)
+        ..setMana(200)
+
+        ..setSpeedBase(300)
+
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..setSizeLarge()
+
+        ..tooltipStopListen()
+
+        ..setNameEnhance("R", "Pit Lord")
+
+        ..setModelFileExt(Units.heroPitLord)
+        ..setIconGameInterfaceExt(Icons.bTNPitLord)
+        ..setUnitSoundSetExt(Soundsets.pitlord)
+        ..setBuildingScalingValue(0.65)
+
+
+@compiletime function createBuilder()
+    createBuilder(UNIT_DEMON_BUILDER, UnitIds.chaospeon)
+        ..setNameEnhance("D", "Demon Builder")
+        ..setStructuresBuilt(commaList(
+            BUILDING_FEL_HOUND,
+            BUILDING_SUCCUBUS,
+            BUILDING_FEL_GUARD,
+            BUILDING_PIT_LORD,
+            BUILDING_EREDAR_SORCERER,
+            BUILDING_FEL_RITUALIST,
+            BUILDING_MANA_SLAVE
+        ))
