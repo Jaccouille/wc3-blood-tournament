@@ -62,6 +62,7 @@ import UnitTooltipGenerator
         ..tooltipStopListen()
         ..setUpgradeTo(asList(BUILDING_NE_RANGER))
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.archer)
         ..setIconGameInterfaceExt(Icons.bTNArcher)
         ..setUnitSoundSetExt(Soundsets.archer)
@@ -88,6 +89,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("Z", "Night Elf Ranger")
         ..tooltipStopListen()
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.shandris1)
         ..setIconGameInterfaceExt(Icons.bTNShandris)
         ..setUnitSoundSetExt(Soundsets.shandris)
@@ -119,6 +121,7 @@ import UnitTooltipGenerator
 
         ..setSpeedBase(300)
 
+        ..setBuildingScalingValue(0.65)
         ..setSizeSmall()
         ..setAutoPointValue()
         ..setAutoBuildingCost()
@@ -188,6 +191,7 @@ import UnitTooltipGenerator
         ..tooltipStopListen()
 
 
+        ..setBuildingScalingValue(0.55)
         ..setArtSpecial(Objects.nightElfLargeDeathExplode)
         ..setModelFileExt(Units.huntress)
         ..setIconGameInterfaceExt(Icons.bTNHuntress)
@@ -223,6 +227,7 @@ import UnitTooltipGenerator
 
         ..tooltipStopListen()
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.druidoftheTalon)
         ..setIconGameInterfaceExt(Icons.bTNDruidOfTheTalon)
         ..setUnitSoundSetExt(Soundsets.druidOfTheTalon)
@@ -257,6 +262,7 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setMana(0)
 
+        ..setBuildingScalingValue(0.55)
         ..setModelFileExt(Units.druidoftheClaw)
         ..setIconGameInterfaceExt(Icons.bTNDruidOfTheClaw)
         ..setUnitSoundSetExt(Soundsets.druidOfTheClaw)
@@ -367,10 +373,10 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("D", "Mountain Giant")
 
+        ..setBuildingScalingValue(0.35)
         ..setModelFileExt(Units.mountainGiant1)
         ..setIconGameInterfaceExt(Icons.bTNMountainGiant)
         ..setUnitSoundSetExt(Soundsets.mountainGiant)
-        ..setBuildingScalingValue(0.65)
 
 @compiletime function createWarden()
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_TERRIFY_ORB))
@@ -399,6 +405,7 @@ import UnitTooltipGenerator
         ..tooltipStopListen()
         ..setGhostDeath()
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.vengeance)
         ..setIconGameInterfaceExt(Icons.bTNAvengingWatcher)
         ..setUnitSoundSetExt(Soundsets.vengeance)

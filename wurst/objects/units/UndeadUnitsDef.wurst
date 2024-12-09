@@ -71,6 +71,7 @@ import UnitTooltipGenerator
         ..setTintingColorRed(180)
         ..setScalingValue(1.5)
 
+        ..setBuildingScalingValue(0.95)
         ..setIconGameInterfaceExt(Icons.bTNDalaranMutant)
         ..setModelFileExt(Units.dalaranMutant)
         ..setUnitSoundSetExt(Soundsets.zombie)
@@ -131,6 +132,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("Z", "Burning Archer")
         ..tooltipStopListen()
         // ..tooltipStopListen(true, itmBurning)
+        ..setBuildingScalingValue(0.75)
         ..setMana(0)
         ..setIconGameInterfaceExt(Icons.bTNFlamingArrows)
         ..setModelFileExt(Units.burningArcher, 255, 100, 150)
@@ -236,6 +238,7 @@ import UnitTooltipGenerator
             ))
 
 
+        ..setBuildingScalingValue(0.75)
         ..setModelFileExt(Units.necromancer1)
         ..setIconGameInterfaceExt(Icons.bTNNecromancer)
         ..setUnitSoundSetExt(Soundsets.necromancer)
@@ -441,6 +444,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("A", "Banshee")
         ..tooltipStopListen(true)
 
+        ..setBuildingScalingValue(0.75)
         ..setModelFileExt(Units.banshee1)
         ..setIconGameInterfaceExt(Icons.bTNBanshee)
         ..setUnitSoundSetExt(Soundsets.banshee)
@@ -479,7 +483,7 @@ import UnitTooltipGenerator
         ..setModelFileExt(Units.abomination1)
         ..setIconGameInterfaceExt(Icons.bTNAbomination)
         ..setUnitSoundSetExt(Soundsets.abomination)
-        ..setBuildingScalingValue(0.7)
+        ..setBuildingScalingValue(0.5)
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_CLEAVE_10))
     createSpawnedUnit(UNIT_GUT_CRAWLER, UnitIds.ghoul)
@@ -532,7 +536,7 @@ import UnitTooltipGenerator
         ..tooltipStopListen(true)
         ..setSizeSmall()
         ..setGhostDeath()
-        ..setBuildingScalingValue(0.8)
+        ..setBuildingScalingValue(0.6)
         ..setUpgradeTo(asList(BUILDING_VAMPIRE_LORD))
 
         ..setModelFileExt(Units.heroDreadLord)
@@ -572,6 +576,7 @@ import UnitTooltipGenerator
         // ..tooltipStopListen(true, itm)
         ..setGhostDeath()
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.tichondrius1)
         ..setIconGameInterfaceExt(Icons.bTNTichondrius)
         ..setUnitSoundSetExt(Soundsets.tichondrius)
@@ -608,7 +613,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("R", "Death Knight")
         ..tooltipStopListen(true)
         ..setManaRegeneration(1)
-        ..setBuildingScalingValue(0.8)
+        ..setBuildingScalingValue(0.55)
 
 
         ..setArtSpecial(Objects.undeadLargeDeathExplode)

@@ -34,6 +34,7 @@ import ArmySpawner
         ..setNameEnhance("W", "Tauren")
         ..setSizeLarge()
 
+        ..setBuildingScalingValue(0.6)
         ..setModelFileExt(Units.tauren)
         ..setIconGameInterfaceExt(Icons.bTNTauren)
         ..setUnitSoundSetExt(Soundsets.tauren)
@@ -129,7 +130,7 @@ import ArmySpawner
         ..setSizeSmall()
 
         ..setModelFileExt(Units.bristleBack)
-        ..setBuildingScalingValue(1.4)
+        ..setBuildingScalingValue(1)
         ..setBuildingTinting(255, 140, 170)
         ..setIconGameInterfaceExt(Icons.bTNRazorback)
         ..setUnitSoundSetExt(Soundsets.razorMane)
@@ -163,7 +164,7 @@ import ArmySpawner
         ..setSizeLarge()
         ..setScalingValue(1)
 
-        ..setBuildingScalingValue(0.8)
+        ..setBuildingScalingValue(0.5)
         ..setModelFileExt(Units.thunderLizard1)
         ..setIconGameInterfaceExt(Icons.bTNThunderLizard)
         ..setUnitSoundSetExt(Soundsets.kotoBeast)
@@ -225,6 +226,7 @@ import ArmySpawner
         ..setSizeSmall()
         ..setUnitClassification("")
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.spiritWalker)
         ..setIconGameInterfaceExt(Icons.bTNSpiritWalker)
         ..setUnitSoundSetExt(Soundsets.spiritWalker)
@@ -256,6 +258,7 @@ import ArmySpawner
         ..setNameEnhance("R", "Beast Master")
         ..setSizeSmall()
 
+        ..setBuildingScalingValue(0.55)
         ..setModelFileExt(Units.rexxar1)
         ..setIconGameInterfaceExt(Icons.bTNBeastMaster)
         ..setUnitSoundSetExt(Soundsets.beastmaster)
@@ -295,7 +298,7 @@ import ArmySpawner
         ..setNameEnhance("S", "Exiled Alchemist")
         ..setSizeSmall()
 
-        ..setBuildingScalingValue(0.85)
+        ..setBuildingScalingValue(0.45)
         ..setModelFileExt(Units.heroGoblinAlchemist)
         ..setIconGameInterfaceExt(Icons.bTNHeroAlchemist)
         ..setUnitSoundSetExt(Soundsets.heroGoblinAlchemist)

@@ -34,6 +34,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("Q", "Grunt")
         ..tooltipStopListen(true)
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.grunt1)
         ..setIconGameInterfaceExt(Icons.bTNGrunt)
         ..setUnitSoundSetExt(Soundsets.grunt)
@@ -70,6 +71,7 @@ import UnitTooltipGenerator
 
         ..setArtSpecial(Objects.orcLargeDeathExplode)
 
+        ..setBuildingScalingValue(0.7)
         ..setModelFileExt(Units.chaosGrunt1)
         ..setIconGameInterfaceExt(Icons.bTNChaosGrunt)
         ..setUnitSoundSetExt(Soundsets.grunt)
@@ -100,6 +102,7 @@ import UnitTooltipGenerator
 
         ..setUpgradeTo(asList(BUILDING_TRAPPER))
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.headhunter1)
         ..setIconGameInterfaceExt(Icons.bTNHeadhunter)
         ..setUnitSoundSetExt(Soundsets.headHunter)
@@ -131,6 +134,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("Z", "Troll Trapper")
         ..tooltipStopListen(true)
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.forestTrollTrapper1)
         ..setIconGameInterfaceExt(Icons.bTNForestTrollTrapper)
         ..setUnitSoundSetExt(Soundsets.forestTroll)
@@ -161,6 +165,7 @@ import UnitTooltipGenerator
         ..tooltipStopListen(true)
         ..setUpgradeTo(asList(BUILDING_MARAUDER))
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.wolfrider1)
         ..setIconGameInterfaceExt(Icons.bTNRaider)
         ..setUnitSoundSetExt(Soundsets.wolfrider)
@@ -194,6 +199,7 @@ import UnitTooltipGenerator
 
         ..setArtSpecial(Objects.orcLargeDeathExplode)
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.chaosWolfrider1)
         ..setIconGameInterfaceExt(Icons.bTNChaosWolfRider)
         ..setUnitSoundSetExt(Soundsets.wolfrider)
@@ -258,7 +264,7 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("R", "Warmonger")
         ..tooltipStopListen(true)
-        ..setBuildingScalingValue(0.85)
+        ..setBuildingScalingValue(0.55)
 
         ..setArtSpecial(Objects.orcLargeDeathExplode)
 
@@ -331,6 +337,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("A", "Witch Doctor")
         ..tooltipStopListen(true)
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.witchDoctor1)
         ..setIconGameInterfaceExt(Icons.bTNWitchDoctor)
         ..setUnitSoundSetExt(Soundsets.witchDoctor)
@@ -366,6 +373,7 @@ import UnitTooltipGenerator
             UNIT_FARSEER
             ))
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.shaman1)
         ..setIconGameInterfaceExt(Icons.bTNShaman)
         ..setUnitSoundSetExt(Soundsets.shaman)
@@ -496,6 +504,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setScalingValue(1.6)
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.ogre1)
         ..setIconGameInterfaceExt(Icons.bTNOgre)
         ..setUnitSoundSetExt(Soundsets.ogre)

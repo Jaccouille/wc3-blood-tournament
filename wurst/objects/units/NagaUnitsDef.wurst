@@ -93,7 +93,7 @@ import UnitTooltipGenerator
         ..setSizeSmall()
 
         ..setScalingValue(0.9)
-        ..setBuildingScalingValue(0.8)
+        ..setBuildingScalingValue(0.6)
         ..setModelFileExt(Units.snapDragon1)
         ..setIconGameInterfaceExt(Icons.bTNSnapDragon)
         ..setUnitSoundSetExt(Soundsets.snapDragon)
@@ -124,7 +124,7 @@ import UnitTooltipGenerator
         ..setSizeLarge()
 
         ..setTintingColorBlue(255)
-        ..setBuildingScalingValue(0.8)
+        ..setBuildingScalingValue(0.5)
         ..setModelFileExt(Units.hydra)
         ..setIconGameInterfaceExt(Icons.bTNHydra)
         ..setUnitSoundSetExt(Soundsets.hydra)
@@ -150,7 +150,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("E", "Myrmidon")
         ..setSizeSmall()
 
-        ..setBuildingScalingValue(0.8)
+        ..setBuildingScalingValue(0.6)
         ..setModelFileExt(Units.nagaMyrmidon1)
         ..setIconGameInterfaceExt(Icons.bTNNagaMyrmidon)
         ..setUnitSoundSetExt(Soundsets.nagaMyrmidon)
@@ -218,6 +218,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("R", "Sea Witch")
         ..setSizeSmall()
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.heroNagaSeawitch1)
         ..setIconGameInterfaceExt(Icons.bTNNagaSeaWitch)
         ..setUnitSoundSetExt(Soundsets.heroNagaSeawitch)
@@ -235,7 +236,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Siege, 84, 6, 10, 2)
+        ..setAttack1Data(AttackType.Siege, 80, 6, 10, 2)
         ..setAttack1Range(350)
         ..setAttack1ProjectileArt(Abilities.ancientProtectorMissile)
         ..setAttack1ProjectileSpeed(900)
@@ -251,7 +252,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("A", "Giant Turtle")
         ..setSizeLarge()
 
-        ..setBuildingScalingValue(0.65)
+        ..setBuildingScalingValue(0.4)
         ..setModelFileExt(Units.giantSeaTurtle1)
         ..setIconGameInterfaceExt(Icons.bTNSeaTurtleGreen)
         ..setUnitSoundSetExt(Soundsets.giantSeaTurtle)
@@ -270,7 +271,7 @@ import UnitTooltipGenerator
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Siege, 84, 6, 10, 2)
+        ..setAttack1Data(AttackType.Siege, 80, 6, 10, 2)
         ..setAttack1Range(350)
         ..setAttack1ProjectileSpeed(900)
 
@@ -300,7 +301,7 @@ import UnitTooltipGenerator
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Siege, 84, 6, 10, 2)
+        ..setAttack1Data(AttackType.Siege, 80, 6, 10, 2)
         ..setAttack1Range(350)
         ..setSmallSplash()
         ..setAttack1ProjectileSpeed(900)
@@ -348,6 +349,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("S", "Siren")
         ..setSizeSmall()
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.nagaSiren1)
         ..setIconGameInterfaceExt(Icons.bTNSeaWitch)
         ..setUnitSoundSetExt(Soundsets.nagaSiren)

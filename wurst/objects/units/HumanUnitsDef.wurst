@@ -34,6 +34,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("Q", "Footman")
         ..setSizeSmall()
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.footman1)
         ..setIconGameInterfaceExt(Icons.bTNFootman)
         ..setUnitSoundSetExt(Soundsets.footman)
@@ -86,7 +87,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("W", "Rifleman")
         ..setUpgradeTo(asList(BUILDING_GRENADIER, BUILDING_SNIPER))
 
-
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.rifleman1)
         ..setIconGameInterfaceExt(Icons.bTNRifleman)
         ..setUnitSoundSetExt(Soundsets.rifleman)
@@ -130,6 +131,7 @@ import UnitTooltipGenerator
         ..tooltipStopListen(true)
         // ..tooltipStopListen(true, itm)
 
+        ..setBuildingScalingValue(0.65)
         ..setUnitSoundSetExt(Soundsets.rifleman)
         ..setIconGameInterfaceExt(Icons.bTNHumanMissileUpThree)
         ..setModelFileExt(Units.rifleman1)
@@ -163,6 +165,7 @@ import UnitTooltipGenerator
         ..tooltipStopListen(true)
         // ..tooltipStopListen(true, itm)
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.rifleman1)
         ..setIconGameInterfaceExt(Icons.bTNHumanMissileUpOne)
         ..setUnitSoundSetExt(Soundsets.rifleman)
@@ -229,6 +232,7 @@ import UnitTooltipGenerator
 
         ..tooltipStopListen(true)
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.priest1)
         ..setIconGameInterfaceExt(Icons.bTNPriest)
         ..setUnitSoundSetExt(Soundsets.priest)
@@ -260,8 +264,8 @@ import UnitTooltipGenerator
 
         ..setSizeSmall()
         ..setNameEnhance("Z", "Spell Breaker")
-        ..setBuildingScalingValue(0.85)
 
+        ..setBuildingScalingValue(0.55)
         ..setModelFileExt(Units.bloodElfSpellThief)
         ..setIconGameInterfaceExt(Icons.bTNSpellBreaker)
         ..setUnitSoundSetExt(Soundsets.bloodElfSpellThief)
@@ -294,6 +298,7 @@ import UnitTooltipGenerator
         ..tooltipStopListen(true)
         ..setUpgradeTo(asList(BUILDING_CRUSADER))
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.knight1)
         ..setIconGameInterfaceExt(Icons.bTNKnight)
         ..setUnitSoundSetExt(Soundsets.knight)
@@ -339,6 +344,7 @@ import UnitTooltipGenerator
         ..setScalingValue(1.05)
         ..setNameEnhance("Z", "Crusader")
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.banditLord1)
         ..setIconGameInterfaceExt(Icons.bTNBanditLord)
         ..setUnitSoundSetExt(Soundsets.knight)
@@ -473,6 +479,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setModelFile(Units.heroPaladin)
         ..setIconGameInterface(Icons.bTNHeroPaladin)
         ..setUnitSoundSet(Soundsets.uther)
+        ..setScalingValue(0.65)
     unitDef.tooltipGen.applyToDef(buildingDef)
 
 
@@ -514,6 +521,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
         ..setSizeSmall()
         ..setNameEnhance("S", "Sorceress")
 
+        ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.sorceress1)
         ..setIconGameInterfaceExt(Icons.bTNSorceress)
         ..setUnitSoundSetExt(Soundsets.sorceress)
