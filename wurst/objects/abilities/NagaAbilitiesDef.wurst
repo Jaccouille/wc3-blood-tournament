@@ -2,6 +2,7 @@ package NagaAbilitiesDef
 
 // Standard libs imports:
 import Assets
+import ClosureEvents
 import HashMap
 
 // Local imports:
@@ -11,6 +12,8 @@ import BTAbilities
 import BTAbilityTooltipGenerator
 import ItemObjEditingCommon
 import LocalObjectIDs
+import PlayerData
+import PlayerExtension
 import TooltipsUtils
 import UnitObjEditingCommon
 
@@ -179,20 +182,25 @@ import UnitObjEditingCommon
     lumberCost = 150
     itm = createBasicItem(ITEM_CHARM)
         ..setItemCost(goldCost, lumberCost, 1, sirenCount, sirenCount)
-        ..setNameEnhance("Z", "Add 10% chance to cast charm")
+        ..setNameEnhance("X", "Add 10% chance to cast charm")
         ..setInterfaceIcon(Icons.bTNCharm)
 
     tgen = new BTAbilityTooltipGenerator(
         "Takes control of a target enemy unit.\nHas 10% chance to proc on hit.")
 
-    var abilId = ABIL_ID_GEN.next()
+    // See UnitDamageTrigger.wurst for the condition to trigger
+    // Lightning orb ability doesn't dispatch any event on ability effect proc
+    // Therefore we cannot change the unit owner player data after owner switch
     let orbOfCharm = new AbilityDefinitionOrbofLightning(ABIL_ORB_CHARM)
         ..setEnabledAttackIndex(1, 0)
-        ..presetChanceToHitUnits(_ -> 10)
-        ..presetChanceToHitSummons(_ -> 10)
-        ..setEffectAbility(1, abilId.toRawCode())
-        ..setDamageBonus(1, 10)
-        ..setNameEnhance("Z", "Orb of charm")
+        ..presetChanceToHitUnits(_ -> 0)
+        ..presetChanceToHitSummons(_ -> 0)
+        ..setArtTarget(Abilities.manaFlareTarget)
+        ..setMissileArt(Abilities.manaFlareMissile)
+        ..setTargetAttachmentPoint("hand,left")
+        ..setEffectAbility(1, ABIL_CHARM.toRawCode())
+        ..setDamageBonus(1, 0)
+        ..setNameEnhance("X", "Orb of charm")
 
     new AbilityDefinitionCharm(ABIL_CHARM)
         ..setLevels(1)
@@ -203,11 +211,12 @@ import UnitObjEditingCommon
         ..setArtTarget(Objects.nagaDeath)
         ..tooltipStartListen()
         ..setTargetAttachmentPoint("origin")
-        ..setNameEnhance("Z", "Charm")
+        ..presetCooldown(_ -> 8)
+        ..setNameEnhance("X", "Charm")
         ..applyTooltip(orbOfCharm)
         ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
-        ..tooltipStopListen(true)
+        // ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_ORB_CHARM, tgen.generateFullTooltip())
@@ -245,7 +254,7 @@ import UnitObjEditingCommon
     tgen = new BTAbilityTooltipGenerator(
         "Reduces enemies armor and damage them over time upon basic attack hit."
         )
-    abilId = ABIL_ID_GEN.next()
+    let abilId = ABIL_ID_GEN.next()
     new AbilityDefinitionOrbofLightning(ABIL_ACID_SPIT_ORB)
         ..setMissileArt("")
         ..setArtTarget(Abilities.bottleImpact)
@@ -278,3 +287,15 @@ import UnitObjEditingCommon
         ..setIconNormal(Icons.bTNCorrosiveBreath)
 
     abilTooltipMap.put(ABIL_ACID_SPIT_ORB, tgen.generateFullTooltip())
+
+
+init
+    EventListener.onTargetCast(ABIL_CHARM) (unit caster, unit target) ->
+        if target.isAlive() and target.isEnemyOf(caster)
+            let owner = caster.getOwner()
+            let targetOwner = target.getOwner()
+            pDatas.get(owner.getTruePlayerFromDummy()).spawnedUnits.push(target)
+            // To reduce pathing lag, assign the new unit to the last dummy player
+            let optimizedOwner = pDatas.get(target.getOwner().getTruePlayerFromDummy()).dummyPlayers.getLast()
+            target.setOwner(optimizedOwner, true)
+            pDatas.get(targetOwner.getTruePlayerFromDummy()).spawnedUnits.remove(target)

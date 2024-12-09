@@ -327,7 +327,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_FROST_BOLT)
     )
     createSpawnedUnit(UNIT_SIREN, UnitIds.siren, BUILDING_SIREN)
-        ..setNormalAbilities(commaList(ABIL_FROST_BOLT, ABIL_AUTOCAST_FROST_BOLT))
+        ..setNormalAbilities(commaList(ABIL_FROST_BOLT, ABIL_AUTOCAST_FROST_BOLT, ABIL_CHARM))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_FROST_BOLT))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
