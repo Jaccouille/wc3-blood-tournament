@@ -16,6 +16,7 @@ import UnitTooltipGenerator
 @compiletime function createGrunt()
     var tooltip = new UnitTooltipGenerator("Basic melee unit.")
     createSpawnedUnit(UNIT_GRUNT, UnitIds.grunt, BUILDING_GRUNT)
+        ..setSpeedBase(270)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -24,7 +25,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(600)
 
-        ..setSpeedBase(270)
 
         ..setSizeSmall()
         ..setAutoPointValue()
@@ -45,6 +45,7 @@ import UnitTooltipGenerator
     let _itm = createBasicItem(ITEM_BERSERKER)
     // let gruntCount = BTBuildingData.getUnitCount(BUILDING_GRUNT)
     createSpawnedUnit(UNIT_BERSERKER, UnitIds.chaosgrunt, BUILDING_BERSERKER)
+        ..setSpeedBase(270)
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
         ..registerCustomPanelAbilityTooltip(ABIL_CRITICAL_STRIKE_30)
@@ -58,7 +59,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(800)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         // ..setItemCostReplacement(0, 100, 1, gruntCount, gruntCount, BUILDING_GRUNT)
@@ -81,6 +81,7 @@ import UnitTooltipGenerator
     // var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_POISON_SPEAR))
     var tooltip = new UnitTooltipGenerator("Cheap high range unit.")
     createSpawnedUnit(UNIT_HEADHUNTER, UnitIds.headhunter, BUILDING_HEADHUNTER)
+        ..setSpeedBase(270)
         // ..setNormalAbilities(commaList(ABIL_POISON_SPEAR, ABIL_POISON_VISUAL))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -92,7 +93,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Unarmored, 2)
         ..setHitPointsMaximumBase(160)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 
@@ -112,6 +112,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_BERSERK)
     )
     createSpawnedUnit(UNIT_TRAPPER, UnitIds.foresttrolltrapper, BUILDING_TRAPPER)
+        ..setSpeedBase(270)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_ENSNARE, ABIL_BERSERK))
         ..setNormalAbilities(commaList(ABIL_BERSERK, ABIL_ENSNARE))
         ..setDefaultActiveAbility(commaList(ABIL_ENSNARE))
@@ -125,7 +126,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Medium, 4)
         ..setHitPointsMaximumBase(400)
 
-        ..setSpeedBase(270)
 
         ..setSizeSmall()
         ..setAutoPointValue()
@@ -145,6 +145,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_CLEAVE_20)
         )
     createSpawnedUnit(UNIT_RAIDER, UnitIds.wolfrider, BUILDING_RAIDER)
+        ..setSpeedBase(350)
         ..registerCustomPanelAbilityTooltip(ABIL_CLEAVE_20)
         ..setNormalAbilities(commaList(ABIL_CLEAVE_20))
         ..registerTooltipGenerator(tooltip)
@@ -155,7 +156,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Large, 2)
         ..setHitPointsMaximumBase(1200)
 
-        ..setSpeedBase(350)
 
         ..setSizeSmall()
         ..setAutoPointValue()
@@ -175,6 +175,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_BURNING_BLADE_100)
         )
     createSpawnedUnit(UNIT_MARAUDER, UnitIds.chaoswolfrider, BUILDING_MARAUDER)
+        ..setSpeedBase(300)
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_CLEAVE_20, ABIL_BURNING_BLADE_100))
@@ -187,7 +188,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Large, 3)
         ..setHitPointsMaximumBase(1500)
 
-        ..setSpeedBase(300)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 
@@ -212,6 +212,7 @@ import UnitTooltipGenerator
         )
     let itm = createBasicItem(ITEM_PACK_LEADER)
     createSpawnedUnit(UNIT_PACK_LEADER, UnitIds.thrall, BUILDING_PACK_LEADER)
+        ..setSpeedBase(350)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_MAGIC_ARMOR_50, ABIL_MELEE_AURA_FLAT_20, ABIL_BASH_30))
         ..setNormalAbilities(commaList(ABIL_MELEE_AURA_FLAT_20, ABIL_MAGIC_ARMOR_50, ABIL_BASH_30))
         ..registerItemDef(itm, ItemModifierType.Addition)
@@ -223,7 +224,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Large, 7)
         ..setHitPointsMaximumBase(2200)
 
-        ..setSpeedBase(350)
         ..setSizeSmall()
         ..setItemCostUnit(0, 1000, 1)
         ..tooltipStopListen(true, itm)
@@ -244,6 +244,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_DEFLECT_30)
         )
     createSpawnedUnit(UNIT_WARMONGER, UnitIds.gromhellscream, BUILDING_WARMONGER)
+        ..setSpeedBase(270)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_CRITICAL_STRIKE_60, ABIL_DEFLECT_30, ABIL_RAMPAGE))
         ..setAnimationCastBackswing(0)
         ..setAnimationCastPoint(0)
@@ -256,7 +257,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Large, 5)
         ..setHitPointsMaximumBase(2200)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 
@@ -278,6 +278,7 @@ import UnitTooltipGenerator
         )
     let itm = createBasicItem(ITEM_KODO)
     createSpawnedUnit(UNIT_KODO, UnitIds.kotobeast)
+        ..setSpeedBase(270)
         ..registerCustomPanelAbilityTooltip(ABIL_DAMAGE_AURA_25)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..setNormalAbilities(commaList(ABIL_DAMAGE_AURA_25))
@@ -292,7 +293,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Small, 4)
         ..setHitPointsMaximumBase(2000)
 
-        ..setSpeedBase(270)
         ..setItemCostUnit(0, 750, 1)
         ..setSizeLarge()
 
@@ -309,6 +309,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_HEALING_WAVE)
         )
     createSpawnedUnit(UNIT_WITCH_DOCTOR, UnitIds.witchdoctor, BUILDING_WITCH_DOCTOR)
+        ..setSpeedBase(270)
         ..registerCustomPanelAbilityTooltip(asList(
             ABIL_HEALING_WAVE,
             ABIL_DRUNKEN_HAZE,
@@ -328,7 +329,6 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(200)
         ..setMana(250)
 
-        ..setSpeedBase(270)
 
         ..setSizeSmall()
         ..setAutoPointValue()
@@ -346,6 +346,7 @@ import UnitTooltipGenerator
 @compiletime function createShaman()
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_BLOODLUST))
     createSpawnedUnit(UNIT_SHAMAN, UnitIds.shaman, BUILDING_SHAMAN)
+        ..setSpeedBase(270)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_BLOODLUST, ABIL_ORB_LIGHTNING))
         ..setNormalAbilities(commaList(ABIL_BLOODLUST))
         ..registerTooltipGenerator(tooltip)
@@ -359,7 +360,6 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(160)
         ..setMana(200)
 
-        ..setSpeedBase(270)
 
         ..setSizeSmall()
         ..setAutoPointValue()
@@ -384,6 +384,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_EVASION_20)
     )
     createSpawnedUnit(UNIT_SPIRIT_WOLF1, UnitIds.spiritwolf2)
+        ..setSpeedBase(350)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_CRITICAL_STRIKE_30, ABIL_EVASION_20))
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_30, ABIL_EVASION_20))
         ..registerTooltipGenerator(tooltip)
@@ -395,7 +396,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Divine, 2)
         ..setHitPointsMaximumBase(400)
 
-        ..setSpeedBase(350)
         ..setPointValue(20)
         ..setSummonedUnit()
         ..setSizeSmall()
@@ -411,6 +411,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_EVASION_30)
         )
     createSpawnedUnit(UNIT_SPIRIT_WOLF2, UnitIds.spiritwolf2)
+        ..setSpeedBase(350)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_CRITICAL_STRIKE_50, ABIL_EVASION_30))
         ..setNormalAbilities(commaList(ABIL_CRITICAL_STRIKE_50, ABIL_EVASION_30))
         ..registerTooltipGenerator(tooltip)
@@ -422,7 +423,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Divine, 4)
         ..setHitPointsMaximumBase(900)
 
-        ..setSpeedBase(350)
         ..setPointValue(60)
         ..setSummonedUnit()
         ..setSizeSmall()
@@ -440,6 +440,7 @@ import UnitTooltipGenerator
     )
     let itm = createBasicItem(ITEM_FARSEER)
     createSpawnedUnit(UNIT_FARSEER, UnitIds.farseer, BUILDING_FARSEER)
+        ..setSpeedBase(300)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_CHAIN_LIGHTNING, ABIL_SUMMON_SPIRIT_WOLF2, ABIL_BRILLANCE_AURA_1))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..setNormalAbilities(commaList(
@@ -461,7 +462,6 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(880)
         ..setMana(600)
 
-        ..setSpeedBase(300)
 
         ..setSizeSmall()
         ..setAutoPointValue()
@@ -480,6 +480,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_OGRE_SWING)
     )
     createSpawnedUnit(UNIT_OGRE, UnitIds.ogre1, BUILDING_OGRE)
+        ..setSpeedBase(240)
         ..registerCustomPanelAbilityTooltip(ABIL_OGRE_SWING)
         ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
         ..setNormalAbilities(commaList(ABIL_OGRE_SWING))
@@ -491,7 +492,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(3000)
 
-        ..setSpeedBase(240)
 
         ..setAutoPointValue()
         ..setAutoBuildingCost()
@@ -516,6 +516,7 @@ import UnitTooltipGenerator
     let ogreCount = BTBuildingData.getUnitCount(BUILDING_OGRE)
     var itm = createBasicItem(ITEM_OGRE_ARMORED)
     createSpawnedUnit(UNIT_OGRE_ARMORED, UnitIds.ogre1, BUILDING_OGRE_ARMORED)
+        ..setSpeedBase(240)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_OGRE_SWING, ABIL_HARDENED_SKIN_10))
         ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
         ..setNormalAbilities(commaList(ABIL_OGRE_SWING, ABIL_HARDENED_SKIN_10))
@@ -528,7 +529,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Large, 8)
         ..setHitPointsMaximumBase(3400)
 
-        ..setSpeedBase(240)
         ..setItemCostReplacement(0, 200, 1, ogreCount, ogreCount, BUILDING_OGRE)
         ..setSizeLarge()
 
@@ -549,6 +549,7 @@ import UnitTooltipGenerator
     )
     itm = createBasicItem(ITEM_OGRE_MAGI)
     createSpawnedUnit(UNIT_OGRE_MAGI, UnitIds.ogremagi)
+        ..setSpeedBase(240)
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_FIREBOLT))
         ..registerCustomPanelAbilityTooltip(asList(ABIL_MAGIC_ARMOR_50, ABIL_FIREBOLT, ABIL_HARDENED_SKIN_5))
         ..setNormalAbilities(commaList(ABIL_FIREBOLT, ABIL_AUTOCAST_FIREBOLT, ABIL_MAGIC_ARMOR_50, ABIL_HARDENED_SKIN_5))
@@ -564,7 +565,6 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(3000)
         ..setMana(200)
 
-        ..setSpeedBase(240)
         ..setItemCostReplacement(0, 200, 1, ogreCount, ogreCount, BUILDING_OGRE)
         ..setSizeLarge()
 

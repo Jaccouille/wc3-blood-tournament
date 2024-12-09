@@ -17,6 +17,7 @@ import ArmySpawner
         abilTooltipMap.get(ABIL_HARDENED_SKIN_5)
     )
     createSpawnedUnit(UNIT_TAUREN, UnitIds.tauren, BUILDING_TAUREN)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(ABIL_HARDENED_SKIN_5))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -26,7 +27,6 @@ import ArmySpawner
         ..setArmorData(ArmorType.Large, 0)
         ..setHitPointsMaximumBase(1300)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
@@ -46,6 +46,7 @@ import ArmySpawner
         )
     var itm = createBasicItem(ITEM_CHIEFTAIN)
     createSpawnedUnit(UNIT_CHIEFTAIN, UnitIds.taurenchieftain)
+        ..setSpeedBase(270)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..setNormalAbilities(
             commaList(
@@ -63,7 +64,6 @@ import ArmySpawner
         ..setHitPointsMaximumBase(4000)
         ..setMana(200)
 
-        ..setSpeedBase(270)
         ..setItemCostUnit(0, 2000, 1)
         // ..setAutoPointValue()
         // ..setAutoBuildingCost()
@@ -78,6 +78,7 @@ import ArmySpawner
 @compiletime function createQuillBoar()
     var tooltip = new UnitTooltipGenerator("Basic ranged unit.")
     createSpawnedUnit(UNIT_QUILLBOAR, UnitIds.quillboar, BUILDING_QUILLBOAR)
+        ..setSpeedBase(270)
         ..setAttack1WeaponType(WeaponType.MissileSplash)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -88,7 +89,6 @@ import ArmySpawner
         ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(220)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
@@ -108,6 +108,7 @@ import ArmySpawner
         abilTooltipMap.get(ABIL_QUILL_SPRAY)
     )
     createSpawnedUnit(UNIT_DIRE_QUILLBOAR, UnitIds.quillboarhunter, BUILDING_DIRE_QUILLBOAR)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(ABIL_QUILL_SPRAY))
         ..setDefaultActiveAbility(commaList(ABIL_QUILL_SPRAY))
         ..setAttack1WeaponType(WeaponType.MissileSplash)
@@ -121,7 +122,6 @@ import ArmySpawner
         ..setArmorData(ArmorType.Small, 3)
         ..setHitPointsMaximumBase(400)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
@@ -140,6 +140,7 @@ import ArmySpawner
         abilTooltipMap.get(ABIL_SHOCK_BREATH)
     )
     createSpawnedUnit(UNIT_THUNDER_LIZARD, UnitIds.thunderlizard, BUILDING_THUNDER_LIZARD)
+        ..setSpeedBase(270)
         ..setAnimationCastBackswing(0)
         ..setAnimationBlendTimeseconds(0)
         ..setAnimationCastPoint(0)
@@ -154,7 +155,6 @@ import ArmySpawner
         ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(1800)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
@@ -175,6 +175,7 @@ import ArmySpawner
     )
     var itm = createBasicItem(ITEM_CORROSIVE_LIZARD)
     createSpawnedUnit(UNIT_CORROSIVE_LIZARD, UnitIds.thunderlizard)
+        ..setSpeedBase(270)
         ..setAttack1WeaponType(WeaponType.Missile)
         ..setNormalAbilities(commaList(ABIL_CORROSIVE_BREATH_ORB))
         ..registerItemDef(itm, ItemModifierType.Replace)
@@ -187,7 +188,6 @@ import ArmySpawner
         ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(1800)
 
-        ..setSpeedBase(270)
         ..setItemCostReplacement(0, 200, 1, lizardCount, lizardCount, BUILDING_THUNDER_LIZARD)
         ..tooltipStopListen(true, itm)
         ..setMana(0)
@@ -205,6 +205,7 @@ import ArmySpawner
         abilTooltipMap.get(ABIL_BANISH)
     )
     createSpawnedUnit(UNIT_SPIRIT_WALKER, UnitIds.spiritwalker, BUILDING_SPIRIT_WALKER)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(ABIL_BANISH, ABIL_AUTOCAST_BANISH))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_BANISH))
         ..registerTooltipGenerator(tooltip)
@@ -218,7 +219,6 @@ import ArmySpawner
         ..setHitPointsMaximumBase(300)
         ..setMana(200)
 
-        ..setSpeedBase(270)
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
 
@@ -236,6 +236,7 @@ import ArmySpawner
         abilTooltipMap.get(ABIL_ENDURANCE_AURA_25)
     )
     createSpawnedUnit(UNIT_REXXAR, UnitIds.rexxar, BUILDING_REXXAR)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(ABIL_ENDURANCE_AURA_25))
         ..registerTooltipGenerator(tooltip)
         ..setAttack1WeaponType(WeaponType.Missile)
@@ -250,7 +251,6 @@ import ArmySpawner
         ..setHitPointsMaximumBase(1800)
         ..setMana(200)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
@@ -270,6 +270,7 @@ import ArmySpawner
         abilTooltipMap.get(ABIL_MANA_POTION)
     )
     createSpawnedUnit(UNIT_ALCHEMIST, UnitIds.rexxar, BUILDING_ALCHEMIST)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(
             ABIL_MANA_POTION,
             ABIL_HEALING_SPRAY,
@@ -290,7 +291,6 @@ import ArmySpawner
         ..setHitPointsMaximumBase(1200)
         ..setMana(200)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)

@@ -17,6 +17,7 @@ import UnitTooltipGenerator
 @compiletime function createZombie()
     var tooltip = new UnitTooltipGenerator("Cheap meat shield.")
     createSpawnedUnit(UNIT_ZOMBIE, UnitIds.zombie, BUILDING_ZOMBIE)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -26,7 +27,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(240)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 
@@ -45,6 +45,7 @@ import UnitTooltipGenerator
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_INFECTION))
     let itm = createBasicItem(ITEM_PLAGUE_BEARER)
     createSpawnedUnit(UNIT_PLAGUE_BEARER, UnitIds.dalaranmutant, BUILDING_PLAGUE_BEARER)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
@@ -57,7 +58,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Small, 3)
         ..setHitPointsMaximumBase(400)
 
-        ..setSpeedBase(270)
         ..setItemCostReplacement(0, 100, 1, zombieCount, zombieCount, BUILDING_ZOMBIE)
 
         ..setSizeSmall()
@@ -79,6 +79,7 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_LIFESTEAL_75))
     createSpawnedUnit(UNIT_GHOUL, UnitIds.ghoul, BUILDING_GHOUL)
+        ..setSpeedBase(330)
         ..setRace(Race.Undead)
         ..setNormalAbilities(commaList(ABIL_LIFESTEAL_75))
         ..registerTooltipGenerator(tooltip)
@@ -89,7 +90,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Small, 3)
         ..setHitPointsMaximumBase(480)
 
-        ..setSpeedBase(330)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 
@@ -109,6 +109,7 @@ import UnitTooltipGenerator
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_BURNING_ARROW))
     // let itmBurning = createBasicItem(ITEM_BURNING_ARCHER)
     createSpawnedUnit(UNIT_BURNING_ARCHER, UnitIds.burningarcher, BUILDING_BURNING_ARCHER)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         // ..registerItemDef(itmBurning, ItemModifierType.Replace)
         ..registerCustomPanelAbilityTooltip(ABIL_BURNING_ARROW)
@@ -123,7 +124,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(280)
 
-        ..setSpeedBase(270)
         ..setSizeSmall()
         ..setAutoPointValue()
         ..setAutoBuildingCost()
@@ -143,6 +143,7 @@ import UnitTooltipGenerator
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_FROST_ARROW))
     // let itmFrost = createBasicItem(ITEM_FROST_ARCHER)
     createSpawnedUnit(UNIT_FROST_ARCHER, UnitIds.skeletalmarksman, BUILDING_FROST_ARCHER)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         // ..registerItemDef(itmFrost, ItemModifierType.Replace)
         ..registerCustomPanelAbilityTooltip(ABIL_FROST_ARROW)
@@ -158,7 +159,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(280)
 
-        ..setSpeedBase(270)
         ..setSizeSmall()
         ..setAutoPointValue()
         ..setAutoBuildingCost()
@@ -177,6 +177,7 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator("Basic ranged unit.")
     createSpawnedUnit(UNIT_SKELETAL_ARCHER, UnitIds.skeletalarcher, BUILDING_SKELETAL_ARCHER)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -188,7 +189,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(200)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 
@@ -206,6 +206,7 @@ import UnitTooltipGenerator
 @compiletime function createNecromancer()
     var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_RAISE_SKELETON))
     createSpawnedUnit(UNIT_NECROMANCER, UnitIds.necromancer, BUILDING_NECROMANCER)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..registerCustomPanelAbilityTooltip(ABIL_RAISE_SKELETON)
@@ -221,7 +222,6 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(100)
         ..setMana(200)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 
@@ -249,6 +249,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_RAISE_SKELETON_ORC)  + "\n\n" +
         abilTooltipMap.get(ABIL_CRIPPLE))
     createSpawnedUnit(UNIT_SPECTRAL_SAGE, UnitIds.kelthuzadnecro, BUILDING_SPECTRAL_SAGE)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_RAISE_SKELETON_ORC, ABIL_CRIPPLE_ORB))
@@ -264,7 +265,6 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(150)
         ..setMana(200)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..setArmorSoundType(ArmorSoundType.Ethereal)
@@ -286,6 +286,7 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator("Summoned by Necromancer.")
     createSpawnedUnit(UNIT_SKELETON, UnitIds.skeleton)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -296,7 +297,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Large, 2)
         ..setHitPointsMaximumBase(300)
 
-        ..setSpeedBase(270)
         ..setPointValue(5)
         ..setSummonedUnit()
         ..setGhostDeath()
@@ -308,6 +308,7 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator("Summoned by Spectral Sage.")
     createSpawnedUnit(UNIT_SKELETON_ORC, UnitIds.skeletalorc)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -318,7 +319,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Medium, 4)
         ..setHitPointsMaximumBase(600)
 
-        ..setSpeedBase(270)
         ..setPointValue(15)
         ..setSummonedUnit()
         ..setGhostDeath()
@@ -330,6 +330,7 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator("Summoned by Necromancer.")
     createSpawnedUnit(UNIT_SKELETON_MAGE, UnitIds.skeletalmage)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..setAttack1AreaofEffectFullDamage(400)
@@ -345,7 +346,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(300)
 
-        ..setSpeedBase(270)
         ..setPointValue(5)
         ..setSummonedUnit()
         ..setGhostDeath()
@@ -357,6 +357,7 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator("Summoned by Lich.")
     createSpawnedUnit(UNIT_REVENANT, UnitIds.firerevenant)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -366,7 +367,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Divine, 4)
         ..setHitPointsMaximumBase(800)
 
-        ..setSpeedBase(270)
         ..setPointValue(40)
         ..setSummonedUnit()
 
@@ -390,6 +390,7 @@ import UnitTooltipGenerator
     )
     let itm = createBasicItem(ITEM_LICH)
     createSpawnedUnit(UNIT_LICH, UnitIds.lich, BUILDING_LICH)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
@@ -406,7 +407,6 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(520)
         ..setMana(600)
 
-        ..setSpeedBase(270)
 
         ..setSizeSmall()
         ..setItemCostUnit(0, 800, 1)
@@ -421,6 +421,7 @@ import UnitTooltipGenerator
 @compiletime function createBanshee()
     let tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_FROST_ARMOR))
     createSpawnedUnit(UNIT_BANSHEE, UnitIds.banshee, BUILDING_BANSHEE)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_FROST_ARMOR, ABIL_ANTI_MAGIC_SHELL, ABIL_UNHOLY_FRENZY))
         ..setNormalAbilities(commaList(ABIL_FROST_ARMOR))
@@ -436,7 +437,6 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(130)
         ..setMana(200)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 
@@ -456,6 +456,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_CLEAVE_20)
         )
     createSpawnedUnit(UNIT_ABOMINATION, UnitIds.abomination, BUILDING_ABOMINATION)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_DISEASE_CLOUD, ABIL_CLEAVE_20))
         ..setNormalAbilities(commaList(ABIL_DISEASE_CLOUD, ABIL_CLEAVE_20))
@@ -467,7 +468,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Small, 0)
         ..setHitPointsMaximumBase(1400)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..setSizeLarge()
@@ -487,6 +487,7 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_CLEAVE_10))
     createSpawnedUnit(UNIT_GUT_CRAWLER, UnitIds.ghoul)
+        ..setSpeedBase(300)
         ..setRace(Race.Undead)
         ..registerCustomPanelAbilityTooltip(ABIL_CLEAVE_10)
         ..setNormalAbilities(commaList(ABIL_CLEAVE_10))
@@ -498,7 +499,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(550)
 
-        ..setSpeedBase(300)
         ..setPointValue(25)
 
         ..setNameEnhance("S", "Gut Crawler")
@@ -516,6 +516,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_BLOOD_HARVEST)
     )
     createSpawnedUnit(UNIT_VAMPIRE, UnitIds.dreadlord, BUILDING_VAMPIRE)
+        ..setSpeedBase(300)
         ..setRace(Race.Undead)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_EVASION_10, ABIL_BLOOD_HARVEST))
         ..setNormalAbilities(commaList(ABIL_EVASION_10, ABIL_BLOOD_HARVEST))
@@ -527,7 +528,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Large, 2)
         ..setHitPointsMaximumBase(1600)
 
-        ..setSpeedBase(300)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 
@@ -550,6 +550,7 @@ import UnitTooltipGenerator
     )
     // let itm = createBasicItem(ITEM_VAMPIRE_LORD)
     createSpawnedUnit(UNIT_VAMPIRE_LORD, UnitIds.dreadlord, BUILDING_VAMPIRE_LORD)
+        ..setSpeedBase(270)
         ..setRace(Race.Undead)
         // ..registerItemDef(itm, ItemModifierType.Addition)
 
@@ -565,7 +566,6 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(2000)
         ..setMana(200)
 
-        ..setSpeedBase(270)
         ..setAutoBuildingCost()
         ..setAutoPointValue()
         // ..setItemCostUnit(0, 1500, 1)
@@ -589,6 +589,7 @@ import UnitTooltipGenerator
         "Replenish 10% of target maximum health as mana on kill."
     )
     createSpawnedUnit(UNIT_DEATH_KNIGHT, UnitIds.deathknight, BUILDING_DEATH_KNIGHT)
+        ..setSpeedBase(350)
         ..setRace(Race.Undead)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_AFFLICTION, ABIL_UNHOLY_AURA_PERCENT))
         ..setNormalAbilities(commaList(
@@ -605,7 +606,6 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(2800)
         ..setMana(200)
 
-        ..setSpeedBase(350)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
 

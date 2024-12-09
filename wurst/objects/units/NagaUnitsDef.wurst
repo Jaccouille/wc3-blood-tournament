@@ -15,6 +15,7 @@ import UnitTooltipGenerator
 @compiletime function createNagaUnitsDef()
     var tooltip = new UnitTooltipGenerator("Cheap meat.")
     createSpawnedUnit(UNIT_MURLOC, UnitIds.murloctiderunner, BUILDING_MURLOC)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(ABIL_EVASION_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -24,7 +25,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Small, 0)
         ..setHitPointsMaximumBase(300)
 
-        ..setSpeedBase(290)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
@@ -42,6 +42,7 @@ import UnitTooltipGenerator
         "Can switch to Bloodlust, Frost Armor, and Faerie Fire for free."
     )
     createSpawnedUnit(UNIT_MURGUL_WARLOCK, UnitIds.murgulsnarecaster, BUILDING_MURGUL_WARLOCK)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(ABIL_SLOW))
         ..setDefaultActiveAbility(commaList(ABIL_SLOW))
         ..registerTooltipGenerator(tooltip)
@@ -55,7 +56,6 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(320)
         ..setMana(200)
 
-        ..setSpeedBase(290)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
@@ -71,6 +71,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_POISON_SPIT)
         )
     createSpawnedUnit(UNIT_SNAP_DRAGON, UnitIds.snapdragon, BUILDING_SNAP_DRAGON)
+        ..setSpeedBase(270)
         // Poison attack
         ..setNormalAbilities(commaList(ABIL_POISON_SPIT))
         ..registerTooltipGenerator(tooltip)
@@ -83,7 +84,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Medium, 3)
         ..setHitPointsMaximumBase(360)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
@@ -102,6 +102,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_ACID_SPIT_ORB)
         )
     createSpawnedUnit(UNIT_HYDRA, UnitIds.hydra, BUILDING_HYDRA)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(ABIL_ACID_SPIT_ORB))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -115,7 +116,6 @@ import UnitTooltipGenerator
         // ..setAttack1ProjectileArt("")
         ..setAttack1AnimationDamagePoint(0.4)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
@@ -133,6 +133,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_CLEAVE_20)
         )
     createSpawnedUnit(UNIT_MYRMIDON, UnitIds.nagamyrmidon, BUILDING_MYRMIDON)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(ABIL_CLEAVE_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -142,7 +143,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Large, 4)
         ..setHitPointsMaximumBase(1500)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
@@ -162,6 +162,7 @@ import UnitTooltipGenerator
         )
     itm = createBasicItem(ITEM_DEPTH_COMMANDER)
     createSpawnedUnit(UNIT_DEPTH_COMMANDER, UnitIds.nagaroyalguard, BUILDING_DEPTH_COMMANDER)
+        ..setSpeedBase(270)
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_CRUSHING_WAVE, ABIL_AUTOCAST_CRUSHING_WAVE))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_CRUSHING_WAVE))
@@ -174,7 +175,6 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(3600)
         ..setMana(200)
 
-        ..setSpeedBase(270)
         ..setItemCostUnit(0, 1800, 1)
         // ..setAutoPointValue()
         // ..setAutoBuildingCost()
@@ -192,6 +192,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_BRILLANCE_AURA_2)
     )
     createSpawnedUnit(UNIT_SEA_WITCH, UnitIds.seawitch, BUILDING_SEA_WITCH)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(
             ABIL_AUTOCAST_FORKED_LIGHTNING,
             ABIL_FORKED_LIGHTNING,
@@ -210,7 +211,6 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(800)
         ..setMana(200)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
@@ -229,6 +229,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_BASH_30)
     )
     createSpawnedUnit(UNIT_GIANT_TURTLE, UnitIds.giantseaturtle, BUILDING_GIANT_TURTLE)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(
             ABIL_SPIKED_CARAPACE_50,
             ABIL_BASH_30
@@ -244,7 +245,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Large, 8)
         ..setHitPointsMaximumBase(2000)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
@@ -264,6 +264,7 @@ import UnitTooltipGenerator
     let turtleCount = BTBuildingData.getUnitCount(BUILDING_GIANT_TURTLE)
     var itm = createBasicItem(ITEM_FIRE_TURTLE)
     createSpawnedUnit(UNIT_FIRE_TURTLE, UnitIds.giantseaturtle)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(
             ABIL_SPIKED_CARAPACE_50,
             ABIL_BURNING_BREATH
@@ -278,7 +279,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Large, 8)
         ..setHitPointsMaximumBase(2000)
 
-        ..setSpeedBase(270)
         ..setItemCostReplacement(0, 200, 1, turtleCount, turtleCount, BUILDING_GIANT_TURTLE)
 
         ..setSizeLarge()
@@ -294,6 +294,7 @@ import UnitTooltipGenerator
     )
     itm = createBasicItem(ITEM_FROST_TURTLE)
     createSpawnedUnit(UNIT_FROST_TURTLE, UnitIds.giantseaturtle)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(
             ABIL_SPIKED_CARAPACE_50,
             ABIL_GLACIAL_BREATH
@@ -309,7 +310,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Large, 8)
         ..setHitPointsMaximumBase(2000)
 
-        ..setSpeedBase(270)
         ..setItemCostReplacement(0, 200, 1, turtleCount, turtleCount, BUILDING_GIANT_TURTLE)
 
         ..setSizeLarge()
@@ -328,6 +328,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_FROST_BOLT)
     )
     createSpawnedUnit(UNIT_SIREN, UnitIds.siren, BUILDING_SIREN)
+        ..setSpeedBase(270)
         ..setNormalAbilities(commaList(ABIL_FROST_BOLT, ABIL_AUTOCAST_FROST_BOLT, ABIL_CHARM))
         ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_FROST_BOLT))
         ..registerTooltipGenerator(tooltip)
@@ -341,7 +342,6 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(200)
 
-        ..setSpeedBase(270)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
