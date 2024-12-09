@@ -24,51 +24,51 @@ public let dummyToRealImmediateCastMap = new HashMap<int, int>
 
 init
     dummyToRealCastMapTarget
-        ..put(ABIL_AUTOCAST_HEALING_WAVE, new BuffTuple(OrderIds.healingwave, -1))
-        ..put(ABIL_AUTOCAST_ACID_BOMB, new BuffTuple(OrderIds.acidbomb, -1))
-        ..put(ABIL_AUTOCAST_CHAIN_LIGHTNING, new BuffTuple(OrderIds.chainlightning, -1))
-        ..put(ABIL_AUTOCAST_DRUNKEN_HAZE, new BuffTuple(OrderIds.drunkenhaze, -1))
-        ..put(ABIL_AUTOCAST_BLIZZARD, new BuffTuple(OrderIds.blizzard, -1))
-        ..put(ABIL_AUTOCAST_UNHOLY_FRENZY,
+        ..put(ABIL_AC_HEALING_WAVE, new BuffTuple(OrderIds.healingwave, -1))
+        ..put(ABIL_AC_ACID_BOMB, new BuffTuple(OrderIds.acidbomb, -1))
+        ..put(ABIL_AC_CHAIN_LIGHTNING, new BuffTuple(OrderIds.chainlightning, -1))
+        ..put(ABIL_AC_DRUNKEN_HAZE, new BuffTuple(OrderIds.drunkenhaze, -1))
+        ..put(ABIL_AC_BLIZZARD, new BuffTuple(OrderIds.blizzard, -1))
+        ..put(ABIL_AC_UNHOLY_FRENZY,
             new BuffTuple(OrderIds.unholyfrenzy, BuffIds.unholyFrenzy)
         )
-        ..put(ABIL_AUTOCAST_ANTI_MAGIC_SHELL,
+        ..put(ABIL_AC_ANTI_MAGIC_SHELL,
             new BuffTuple(OrderIds.antimagicshell, BuffIds.antiMagicShellExtra)
         )
-        // ..put(ABIL_AUTOCAST_DEATH_COIL, new BuffTuple(OrderIds.firebolt, -1))
-        ..put(ABIL_AUTOCAST_STARFALL, new BuffTuple(OrderIds.blizzard, -1))
-        ..put(ABIL_AUTOCAST_ENTANGLING_ROOT, new BuffTuple(OrderIds.healingward,
+        // ..put(ABIL_AC_DEATH_COIL, new BuffTuple(OrderIds.firebolt, -1))
+        ..put(ABIL_AC_STARFALL, new BuffTuple(OrderIds.blizzard, -1))
+        ..put(ABIL_AC_ENTANGLING_ROOT, new BuffTuple(OrderIds.healingward,
              -1))
-        ..put(ABIL_AUTOCAST_WAND_OF_ILLUSION, new BuffTuple(OrderIds.wandOfIllusion, -1))
-        ..put(ABIL_AUTOCAST_REJUVENATION, new BuffTuple(OrderIds.rejuvination, BuffIds.rejuvenation))
-        ..put(ABIL_AUTOCAST_FROST_NOVA, new BuffTuple(OrderIds.frostnova, -1))
-        ..put(ABIL_AUTOCAST_FIREBOLT, new BuffTuple(OrderIds.firebolt, -1))
-        ..put(ABIL_AUTOCAST_MANA_WARD, new BuffTuple(OrderIds.healingward, -1))
-        ..put(ABIL_AUTOCAST_CARRION_SWARM, new BuffTuple(OrderIds.carrionswarm, -1))
-        ..put(ABIL_AUTOCAST_CRUSHING_WAVE, new BuffTuple(OrderIds.carrionswarm, -1))
-        ..put(ABIL_AUTOCAST_SHOCKWAVE, new BuffTuple(OrderIds.carrionswarm, -1))
-        ..put(ABIL_AUTOCAST_AFFLICTION, new BuffTuple(OrderIds.acidbomb, BuffIds.acidBomb))
-        ..put(ABIL_AUTOCAST_SOUL_BURN, new BuffTuple(OrderIds.soulburn, BuffIds.soulBurn))
-        ..put(ABIL_AUTOCAST_FORKED_LIGHTNING, new BuffTuple(OrderIds.forkedlightning, -1))
-        ..put(ABIL_AUTOCAST_FROST_BOLT, new BuffTuple(OrderIds.thunderbolt, -1))
-        ..put(ABIL_AUTOCAST_DISRUPTION_RAY, new BuffTuple(OrderIds.rayOfDisruption, -1))
-        ..put(ABIL_AUTOCAST_SPIRIT_LINK, new BuffTuple(OrderIds.spiritlink, -1))
-        ..put(ABIL_AUTOCAST_HEALING_SPRAY, new BuffTuple(OrderIds.healingspray, -1))
-        ..put(ABIL_AUTOCAST_PUTRID_SPRAY, new BuffTuple(OrderIds.healingspray, -1))
-        ..put(ABIL_AUTOCAST_FERVOR_POTION, new BuffTuple(OrderIds.acidbomb, -1))
-        ..put(ABIL_AUTOCAST_MANA_POTION, new BuffTuple(OrderIds.acidbomb, -1))
-        ..put(ABIL_AUTOCAST_BANISH, new BuffTuple(OrderIds.banish, BuffIds.banish))
-        ..put(ABIL_AUTOCAST_RAIN_OF_FIRE, new BuffTuple(OrderIds.rainoffire, -1))
-        ..put(ABIL_AUTOCAST_INFERNO, new BuffTuple(OrderIds.inferno, -1))
-        ..put(ABIL_AUTOCAST_MANA_SHARE, new BuffTuple(OrderIds.drain, -1))
+        ..put(ABIL_AC_WAND_OF_ILLUSION, new BuffTuple(OrderIds.wandOfIllusion, -1))
+        ..put(ABIL_AC_REJUVENATION, new BuffTuple(OrderIds.rejuvination, BuffIds.rejuvenation))
+        ..put(ABIL_AC_FROST_NOVA, new BuffTuple(OrderIds.frostnova, -1))
+        ..put(ABIL_AC_FIREBOLT, new BuffTuple(OrderIds.firebolt, -1))
+        ..put(ABIL_AC_MANA_WARD, new BuffTuple(OrderIds.healingward, -1))
+        ..put(ABIL_AC_CARRION_SWARM, new BuffTuple(OrderIds.carrionswarm, -1))
+        ..put(ABIL_AC_CRUSHING_WAVE, new BuffTuple(OrderIds.carrionswarm, -1))
+        ..put(ABIL_AC_SHOCKWAVE, new BuffTuple(OrderIds.carrionswarm, -1))
+        ..put(ABIL_AC_AFFLICTION, new BuffTuple(OrderIds.acidbomb, BuffIds.acidBomb))
+        ..put(ABIL_AC_SOUL_BURN, new BuffTuple(OrderIds.soulburn, BuffIds.soulBurn))
+        ..put(ABIL_AC_FORKED_LIGHTNING, new BuffTuple(OrderIds.forkedlightning, -1))
+        ..put(ABIL_AC_FROST_BOLT, new BuffTuple(OrderIds.thunderbolt, -1))
+        ..put(ABIL_AC_DISRUPTION_RAY, new BuffTuple(OrderIds.rayOfDisruption, -1))
+        ..put(ABIL_AC_SPIRIT_LINK, new BuffTuple(OrderIds.spiritlink, -1))
+        ..put(ABIL_AC_HEALING_SPRAY, new BuffTuple(OrderIds.healingspray, -1))
+        ..put(ABIL_AC_PUTRID_SPRAY, new BuffTuple(OrderIds.healingspray, -1))
+        ..put(ABIL_AC_FERVOR_POTION, new BuffTuple(OrderIds.acidbomb, -1))
+        ..put(ABIL_AC_MANA_POTION, new BuffTuple(OrderIds.acidbomb, -1))
+        ..put(ABIL_AC_BANISH, new BuffTuple(OrderIds.banish, BuffIds.banish))
+        ..put(ABIL_AC_RAIN_OF_FIRE, new BuffTuple(OrderIds.rainoffire, -1))
+        ..put(ABIL_AC_INFERNO, new BuffTuple(OrderIds.inferno, -1))
+        ..put(ABIL_AC_MANA_SHARE, new BuffTuple(OrderIds.drain, -1))
 
     dummyToRealImmediateCastMap
-        ..put(ABIL_AUTOCAST_TAUNT, OrderIds.taunt)
-        ..put(ABIL_AUTOCAST_SUMMON_WISP, OrderIds.waterelemental)
-        ..put(ABIL_AUTOCAST_HOWL_OF_TERROR, OrderIds.howlofterror)
-        ..put(ABIL_AUTOCAST_INSPIRE, OrderIds.roar)
-        ..put(ABIL_AUTOCAST_ROAR, OrderIds.roar)
-        ..put(ABIL_AUTOCAST_REXXAR_ROAR, OrderIds.roar)
+        ..put(ABIL_AC_TAUNT, OrderIds.taunt)
+        ..put(ABIL_AC_SUMMON_WISP, OrderIds.waterelemental)
+        ..put(ABIL_AC_HOWL_OF_TERROR, OrderIds.howlofterror)
+        ..put(ABIL_AC_INSPIRE, OrderIds.roar)
+        ..put(ABIL_AC_ROAR, OrderIds.roar)
+        ..put(ABIL_AC_REXXAR_ROAR, OrderIds.roar)
 
     registerPlayerUnitEvent(EVENT_PLAYER_UNIT_SPELL_CAST) ->
         let abilId = EventData.getSpellAbilityId()
@@ -86,15 +86,15 @@ init
 
                 // Special case for dummy cast spell based on healing
                 // see https://www.hiveworkshop.com/threads/autocast-spell-that-target-injured-ally-apart-from-priest-healing.352970/
-                if abilId == ABIL_AUTOCAST_REJUVENATION
-                    target.removeAbility(ABIL_AUTOCAST_REJUVENATION)
-                    target.addAbility(ABIL_AUTOCAST_REJUVENATION)
-                else if abilId == ABIL_AUTOCAST_HEALING_WAVE
-                    target.removeAbility(ABIL_AUTOCAST_HEALING_WAVE)
-                    target.addAbility(ABIL_AUTOCAST_HEALING_WAVE)
-                else if abilId == ABIL_AUTOCAST_HEALING_SPRAY
-                    target.removeAbility(ABIL_AUTOCAST_HEALING_SPRAY)
-                    target.addAbility(ABIL_AUTOCAST_HEALING_SPRAY)
+                if abilId == ABIL_AC_REJUVENATION
+                    target.removeAbility(ABIL_AC_REJUVENATION)
+                    target.addAbility(ABIL_AC_REJUVENATION)
+                else if abilId == ABIL_AC_HEALING_WAVE
+                    target.removeAbility(ABIL_AC_HEALING_WAVE)
+                    target.addAbility(ABIL_AC_HEALING_WAVE)
+                else if abilId == ABIL_AC_HEALING_SPRAY
+                    target.removeAbility(ABIL_AC_HEALING_SPRAY)
+                    target.addAbility(ABIL_AC_HEALING_SPRAY)
             else
                 caster.issuePointOrder("attack", CENTER)
                 caster.resetCooldown()

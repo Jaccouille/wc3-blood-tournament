@@ -119,7 +119,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setNameEnhance("Z", "Taunt")
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_TAUNT)
+    createAutoCastedEnemyAbility(ABIL_AC_TAUNT)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 250)
         ..applyTooltip(taunt)
@@ -157,7 +157,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setEffects(1, commaList(STARFALL_EFFECT))
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_STARFALL)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_STARFALL)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetCastRange(_ -> 800)
@@ -256,7 +256,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setNameEnhance("W", "Entangling Root")
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_ENTANGLING_ROOT)
+    createAutoCastedEnemyAbility(ABIL_AC_ENTANGLING_ROOT)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 5)
@@ -298,7 +298,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setNameEnhance("W", "Wand of Illusion")
         ..tooltipStopListen(false)
 
-    createAutoCastedAlliedAbility(ABIL_AUTOCAST_WAND_OF_ILLUSION)
+    createAutoCastedAlliedAbility(ABIL_AC_WAND_OF_ILLUSION)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 3)
@@ -347,7 +347,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setNameEnhance("Z", "Summon Wisp")
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_SUMMON_WISP)
+    createAutoCastedEnemyAbility(ABIL_AC_SUMMON_WISP)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetCooldown(_ -> 10)
@@ -437,7 +437,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setNameEnhance("Z", "Rejuvenation")
         ..tooltipStopListen(false)
 
-    createAutoCastedAllieHealdAbility(ABIL_AUTOCAST_REJUVENATION)
+    createAutoCastedAllieHealdAbility(ABIL_AC_REJUVENATION)
         ..registerTooltipGenerator(tgen)
         ..setBuffs(1, BuffIds.rejuvenation.toRawCode())
         ..tooltipStartListen()
@@ -490,7 +490,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
     abilTooltipMap.put(ABIL_HOWL_OF_TERROR, tgen.generateFullTooltip())
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_HOWL_OF_TERROR)
+    createAutoCastedEnemyAbility(ABIL_AC_HOWL_OF_TERROR)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 125)
         ..presetManaCost(_ -> 0)
@@ -622,7 +622,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setNameEnhance("Z", "Roar")
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_ROAR)
+    createAutoCastedEnemyAbility(ABIL_AC_ROAR)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 125)
         ..tooltipStartListen()

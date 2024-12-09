@@ -115,9 +115,9 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_MANA_SHARE))
         ..setNormalAbilities(commaList(
-            ABIL_MANA_SHARE, ABIL_AUTOCAST_MANA_SHARE
+            ABIL_MANA_SHARE, ABIL_AC_MANA_SHARE
         ))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_MANA_SHARE))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_MANA_SHARE))
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Magic, 10, 5, 1, 2)
@@ -237,13 +237,13 @@ import UnitTooltipGenerator
 
 @compiletime function createRitualist()
     var tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_AUTOCAST_LESSER_DARK_PORTAL)
+        abilTooltipMap.get(ABIL_AC_LESSER_DARK_PORTAL)
     )
     createSpawnedUnit(UNIT_FEL_RITUALIST, UnitIds.stormreaverapprentice, BUILDING_FEL_RITUALIST)
         ..registerTooltipGenerator(tooltip)
-        ..registerCustomPanelAbilityTooltip(asList(ABIL_AUTOCAST_LESSER_DARK_PORTAL))
-        ..setNormalAbilities(commaList(ABIL_AUTOCAST_LESSER_DARK_PORTAL))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_LESSER_DARK_PORTAL))
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_AC_LESSER_DARK_PORTAL))
+        ..setNormalAbilities(commaList(ABIL_AC_LESSER_DARK_PORTAL))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_LESSER_DARK_PORTAL))
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Magic, 35, 5, 3, 1.6)
@@ -275,9 +275,9 @@ import UnitTooltipGenerator
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_MULTISHOT_1))
     createSpawnedUnit(UNIT_FEL_CONJURER, UnitIds.stormreavernecrolyte, BUILDING_FEL_CONJURER)
         ..setAnimationCastBackswing(1)
-        ..registerCustomPanelAbilityTooltip(asList(ABIL_AUTOCAST_GREATER_DARK_PORTAL))
-        ..setNormalAbilities(commaList(ABIL_AUTOCAST_GREATER_DARK_PORTAL, ABIL_VISUAL_ILLIDAN_MISSILE))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_GREATER_DARK_PORTAL))
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_AC_GREATER_DARK_PORTAL))
+        ..setNormalAbilities(commaList(ABIL_AC_GREATER_DARK_PORTAL, ABIL_VISUAL_ILLIDAN_MISSILE))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_GREATER_DARK_PORTAL))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -419,8 +419,8 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_LESSER_VOID_WALKER, UnitIds.lesservoidwalker)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setNormalAbilities(commaList(ABIL_AUTOCAST_SOUL_BURN, ABIL_SOUL_BURN))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_SOUL_BURN))
+        ..setNormalAbilities(commaList(ABIL_AC_SOUL_BURN, ABIL_SOUL_BURN))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_SOUL_BURN))
 
         ..setAttack1Data(AttackType.Magic, 15, 5, 3, 1.5)
         ..setAttack1Range(300)
@@ -448,8 +448,8 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_GREATER_VOID_WALKER, UnitIds.greatervoidwalker)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setNormalAbilities(commaList(ABIL_FORKED_LIGHTNING, ABIL_AUTOCAST_FORKED_LIGHTNING))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_FORKED_LIGHTNING))
+        ..setNormalAbilities(commaList(ABIL_FORKED_LIGHTNING, ABIL_AC_FORKED_LIGHTNING))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_FORKED_LIGHTNING))
 
         ..setAttack1Data(AttackType.Magic, 55, 5, 6, 1.5)
         ..setAttack1Range(500)
@@ -535,8 +535,8 @@ import UnitTooltipGenerator
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_RAIN_OF_FIRE))
     createSpawnedUnit(UNIT_EREDAR_DIABOLIST, UnitIds.eredarsorceror, BUILDING_EREDAR_DIABOLIST)
         ..registerCustomPanelAbilityTooltip(ABIL_RAIN_OF_FIRE)
-        ..setNormalAbilities(commaList(ABIL_RAIN_OF_FIRE, ABIL_AUTOCAST_RAIN_OF_FIRE))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_RAIN_OF_FIRE))
+        ..setNormalAbilities(commaList(ABIL_RAIN_OF_FIRE, ABIL_AC_RAIN_OF_FIRE))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_RAIN_OF_FIRE))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -569,8 +569,8 @@ import UnitTooltipGenerator
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_INFERNO))
     createSpawnedUnit(UNIT_EREDAR_WARLOCK, UnitIds.eredarsorceror, BUILDING_EREDAR_WARLOCK)
         ..registerCustomPanelAbilityTooltip(ABIL_INFERNO)
-        // ..setNormalAbilities(commaList(ABIL_INFERNO, ABIL_AUTOCAST_INFERNO))
-        // ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_INFERNO))
+        // ..setNormalAbilities(commaList(ABIL_INFERNO, ABIL_AC_INFERNO))
+        // ..setDefaultActiveAbility(commaList(ABIL_AC_INFERNO))
         ..setNormalAbilities(commaList(""))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -632,9 +632,9 @@ import UnitTooltipGenerator
         ..setNormalAbilities(commaList(
             ABIL_HOWL_OF_TERROR,
             ABIL_CLEAVE_30,
-            ABIL_AUTOCAST_HOWL_OF_TERROR
+            ABIL_AC_HOWL_OF_TERROR
         ))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_HOWL_OF_TERROR))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_HOWL_OF_TERROR))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 

@@ -555,8 +555,8 @@ import UnitTooltipGenerator
         // ..registerItemDef(itm, ItemModifierType.Addition)
 
         ..registerCustomPanelAbilityTooltip(asList(ABIL_CARRION_SWARM, ABIL_EVASION_20, ABIL_BLOOD_HARVEST))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_CARRION_SWARM))
-        ..setNormalAbilities(commaList(ABIL_CARRION_SWARM, ABIL_AUTOCAST_CARRION_SWARM, ABIL_BLOOD_HARVEST, ABIL_EVASION_20))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_CARRION_SWARM))
+        ..setNormalAbilities(commaList(ABIL_CARRION_SWARM, ABIL_AC_CARRION_SWARM, ABIL_BLOOD_HARVEST, ABIL_EVASION_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -594,9 +594,9 @@ import UnitTooltipGenerator
         ..registerCustomPanelAbilityTooltip(asList(ABIL_AFFLICTION, ABIL_UNHOLY_AURA_PERCENT))
         ..setNormalAbilities(commaList(
             ABIL_AFFLICTION,
-            ABIL_AUTOCAST_AFFLICTION
+            ABIL_AC_AFFLICTION
             ))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_AFFLICTION))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_AFFLICTION))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 

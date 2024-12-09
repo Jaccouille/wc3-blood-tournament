@@ -62,7 +62,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..tooltipStopListen(false)
         ..presetManaCost(_ -> 125)
 
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_SHOCKWAVE)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_SHOCKWAVE)
         ..setAnimationNames("attack,slam")
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
@@ -157,7 +157,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..setNameEnhance("Z", "Spirit Link")
         ..tooltipStopListen(false)
 
-    createAutoCastedAlliedAbility(ABIL_AUTOCAST_SPIRIT_LINK)
+    createAutoCastedAlliedAbility(ABIL_AC_SPIRIT_LINK)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetManaCost(_ -> 75)
@@ -190,7 +190,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..setNameEnhance("Z", "Banish")
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_BANISH)
+    createAutoCastedEnemyAbility(ABIL_AC_BANISH)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetManaCost(_ -> 75)
@@ -223,7 +223,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..tooltipStopListen(false)
         ..presetTargetsAllowed(_ -> commaList(TargetsAllowed.friend))
 
-    createAutoCastedAllieHealdAbility(ABIL_AUTOCAST_HEALING_SPRAY)
+    createAutoCastedAllieHealdAbility(ABIL_AC_HEALING_SPRAY)
         ..registerTooltipGenerator(tgen)
         ..presetManaCost(_ -> 75)
         ..tooltipStartListen()
@@ -265,7 +265,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..tooltipStopListen(false)
         ..setIconNormal(Icons.bTNPlagueCloud)
 
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_PUTRID_SPRAY)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_PUTRID_SPRAY)
         ..registerTooltipGenerator(tgen)
         ..presetCooldown(_ -> 8)
         ..presetManaCost(_ -> 75)
@@ -324,7 +324,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..tooltipStopListen(false)
         ..setIconNormal(Icons.bTNReincarnation)
 
-    createAutoCastedAlliedAbility(ABIL_AUTOCAST_FERVOR_POTION)
+    createAutoCastedAlliedAbility(ABIL_AC_FERVOR_POTION)
         ..setAnimationNames("Attack,two,Spell")
         ..registerTooltipGenerator(tgen)
         ..presetCooldown(_ -> 10)
@@ -373,7 +373,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
             ))
         ..setIconNormal(Icons.bTNPotionOfClarity)
 
-    createAutoCastAlliedManaTarget(ABIL_AUTOCAST_MANA_POTION)
+    createAutoCastAlliedManaTarget(ABIL_AC_MANA_POTION)
         ..setAnimationNames("Attack,two,Spell")
         ..registerTooltipGenerator(tgen)
         ..presetManaCost(_ -> 0)
@@ -558,7 +558,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..setNameEnhance("Z", "Battle Roar")
         ..tooltipStopListen(true)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_REXXAR_ROAR)
+    createAutoCastedEnemyAbility(ABIL_AC_REXXAR_ROAR)
         ..setAnimationNames("spell,slam")
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 750)
@@ -579,8 +579,8 @@ init
             if target.isAllyOf(src)
                 InstantDummyCaster.castImmediate(src.getOwner(),
                 ABIL_MANA_REGENERATION, 1, OrderIds.scrollOfRegeneration, target.getPos())
-            else if src.getAbilityCooldownRemaining(ABIL_AUTOCAST_HEALING_SPRAY) <= 0
-                and src.getAbilityManaCost(ABIL_AUTOCAST_HEALING_SPRAY, 0) <= src.getMana()
+            else if src.getAbilityCooldownRemaining(ABIL_AC_HEALING_SPRAY) <= 0
+                and src.getAbilityManaCost(ABIL_AC_HEALING_SPRAY, 0) <= src.getMana()
                 src.issueImmediateOrderById(OrderIds.healon)
         if src.hasAbility(ABIL_SHOCK_BREATH)
             if GetRandomInt(0, 100) <= THUNDER_LIZARD_CAST_CHANCE

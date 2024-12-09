@@ -164,8 +164,8 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_DEPTH_COMMANDER, UnitIds.nagaroyalguard, BUILDING_DEPTH_COMMANDER)
         ..setSpeedBase(270)
         ..registerItemDef(itm, ItemModifierType.Addition)
-        ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_CRUSHING_WAVE, ABIL_AUTOCAST_CRUSHING_WAVE))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_CRUSHING_WAVE))
+        ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_CRUSHING_WAVE, ABIL_AC_CRUSHING_WAVE))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_CRUSHING_WAVE))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -194,11 +194,11 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_SEA_WITCH, UnitIds.seawitch, BUILDING_SEA_WITCH)
         ..setSpeedBase(270)
         ..setNormalAbilities(commaList(
-            ABIL_AUTOCAST_FORKED_LIGHTNING,
+            ABIL_AC_FORKED_LIGHTNING,
             ABIL_FORKED_LIGHTNING,
             ABIL_BRILLANCE_AURA_2
             ))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_FORKED_LIGHTNING))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_FORKED_LIGHTNING))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -329,8 +329,8 @@ import UnitTooltipGenerator
     )
     createSpawnedUnit(UNIT_SIREN, UnitIds.siren, BUILDING_SIREN)
         ..setSpeedBase(270)
-        ..setNormalAbilities(commaList(ABIL_FROST_BOLT, ABIL_AUTOCAST_FROST_BOLT, ABIL_CHARM))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_FROST_BOLT))
+        ..setNormalAbilities(commaList(ABIL_FROST_BOLT, ABIL_AC_FROST_BOLT, ABIL_CHARM))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_FROST_BOLT))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 

@@ -256,7 +256,7 @@ let SLOW_TARGET_COUNT = 2
         ..setNameEnhance("X", "Soul Burn")
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_SOUL_BURN)
+    createAutoCastedEnemyAbility(ABIL_AC_SOUL_BURN)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 750)
         ..presetManaCost(_ -> 80)
@@ -312,7 +312,7 @@ let SLOW_TARGET_COUNT = 2
         ..setNameEnhance("X", "Frost Nova")
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_FROST_NOVA)
+    createAutoCastedEnemyAbility(ABIL_AC_FROST_NOVA)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 750)
         ..presetManaCost(_ -> 125)
@@ -351,7 +351,7 @@ let SLOW_TARGET_COUNT = 2
         ..tooltipStopListen(false)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_BLIZZARD)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_BLIZZARD)
         ..setAnimationNames("stand,victory")
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 800)
@@ -558,7 +558,7 @@ let SLOW_TARGET_COUNT = 2
         ..setIconNormal(Icons.bTNInnerFire)
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_INSPIRE)
+    createAutoCastedEnemyAbility(ABIL_AC_INSPIRE)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 125)
         ..presetManaCost(_ -> 100)

@@ -48,7 +48,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setNameEnhance("Z", "Unholy Frenzy")
         ..tooltipStopListen(false)
 
-    createAutoCastedAlliedAbility(ABIL_AUTOCAST_UNHOLY_FRENZY)
+    createAutoCastedAlliedAbility(ABIL_AC_UNHOLY_FRENZY)
         ..presetManaCost(_ -> 40)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
@@ -88,7 +88,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setBuffs(1, BuffIds.antiMagicShellExtra.toRawCode())
         ..tooltipStopListen(false)
 
-    createAutoCastedAlliedAbility(ABIL_AUTOCAST_ANTI_MAGIC_SHELL)
+    createAutoCastedAlliedAbility(ABIL_AC_ANTI_MAGIC_SHELL)
         ..presetManaCost(_ -> 40)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
@@ -316,7 +316,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setMissileArt(Abilities.deathCoilMissile)
         ..setBuffs(1, BUFF_DEATH_COIL.toRawCode())
 
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_DEATH_COIL)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_DEATH_COIL)
         ..presetDurationNormal(_ -> 0)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
@@ -467,7 +467,7 @@ let DEATH_COIL_TARGET_COUNT = 3
         ..setNameEnhance("Z", "Carrion Swarm")
         ..tooltipStopListen(false)
 
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_CARRION_SWARM)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_CARRION_SWARM)
         ..setAnimationNames("attack,slam")
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
@@ -513,7 +513,7 @@ let DEATH_COIL_TARGET_COUNT = 3
 
         ..tooltipStopListen(false)
 
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_AFFLICTION)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_AFFLICTION)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetManaCost(_ -> 125)
@@ -594,7 +594,7 @@ let DEATH_COIL_TARGET_COUNT = 3
 
 
 init
-    EventListener.onTargetCast(ABIL_AUTOCAST_DEATH_COIL) (unit caster, unit target) ->
+    EventListener.onTargetCast(ABIL_AC_DEATH_COIL) (unit caster, unit target) ->
         if (caster.getTypeId() == UNIT_DEATH_KNIGHT)
             int _count = 0
             let dummy = new DummyCaster()

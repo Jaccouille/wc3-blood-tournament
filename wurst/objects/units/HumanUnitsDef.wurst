@@ -541,7 +541,7 @@ function createPaladin(int paladinId) returns BTUnitDefinition
             ABIL_MANA_SHIELD))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..setNormalAbilities(commaList(
-            ABIL_AUTOCAST_BLIZZARD,
+            ABIL_AC_BLIZZARD,
             ABIL_BLIZZARD,
             ABIL_BRILLANCE_AURA_2,
             ABIL_MANA_SHIELD

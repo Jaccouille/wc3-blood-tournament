@@ -51,10 +51,10 @@ import ArmySpawner
         ..setNormalAbilities(
             commaList(
             ABIL_SHOCKWAVE,
-            ABIL_AUTOCAST_SHOCKWAVE,
+            ABIL_AC_SHOCKWAVE,
             ABIL_HARDENED_SKIN_15)
             )
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_SHOCKWAVE))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_SHOCKWAVE))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -206,8 +206,8 @@ import ArmySpawner
     )
     createSpawnedUnit(UNIT_SPIRIT_WALKER, UnitIds.spiritwalker, BUILDING_SPIRIT_WALKER)
         ..setSpeedBase(270)
-        ..setNormalAbilities(commaList(ABIL_BANISH, ABIL_AUTOCAST_BANISH))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_BANISH))
+        ..setNormalAbilities(commaList(ABIL_BANISH, ABIL_AC_BANISH))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_BANISH))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -274,10 +274,10 @@ import ArmySpawner
         ..setNormalAbilities(commaList(
             ABIL_MANA_POTION,
             ABIL_HEALING_SPRAY,
-            ABIL_AUTOCAST_HEALING_SPRAY,
-            ABIL_AUTOCAST_MANA_POTION
+            ABIL_AC_HEALING_SPRAY,
+            ABIL_AC_MANA_POTION
             ))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_HEALING_SPRAY))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_HEALING_SPRAY))
         ..registerTooltipGenerator(tooltip)
         ..setAttack1WeaponType(WeaponType.Missile)
         ..tooltipStartListen()

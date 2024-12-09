@@ -67,7 +67,7 @@ import UnitObjEditingCommon
         ..setNameEnhance("Z", "Forked Lightning")
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_FORKED_LIGHTNING)
+    createAutoCastedEnemyAbility(ABIL_AC_FORKED_LIGHTNING)
         ..registerTooltipGenerator(tgen)
         ..presetManaCost(_ -> 125)
         ..tooltipStartListen()
@@ -132,7 +132,7 @@ import UnitObjEditingCommon
 
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_FROST_BOLT)
+    createAutoCastedEnemyAbility(ABIL_AC_FROST_BOLT)
         ..registerTooltipGenerator(tgen)
         ..presetManaCost(_ -> 75)
         ..tooltipStartListen()
@@ -167,7 +167,7 @@ import UnitObjEditingCommon
         ..setNameEnhance("Z", "Ray of Disruption")
         ..tooltipStopListen(false)
 
-    createAutoCastDispell(ABIL_AUTOCAST_DISRUPTION_RAY)
+    createAutoCastDispell(ABIL_AC_DISRUPTION_RAY)
         ..registerTooltipGenerator(tgen)
         ..presetManaCost(_ -> 75)
         ..tooltipStartListen()
@@ -237,7 +237,7 @@ import UnitObjEditingCommon
         ..tooltipStopListen(false)
         ..presetManaCost(_ -> 125)
 
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_CRUSHING_WAVE)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_CRUSHING_WAVE)
         ..setAnimationNames("attack,slam")
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()

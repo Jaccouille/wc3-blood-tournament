@@ -95,7 +95,7 @@ import PlayerExtension
         ..tooltipStopListen(false)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_RAIN_OF_FIRE)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_RAIN_OF_FIRE)
         ..setAnimationNames("spell,slam")
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 800)
@@ -132,7 +132,7 @@ import PlayerExtension
         ..tooltipStopListen(false)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_INFERNO)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_INFERNO)
         ..setAnimationNames("spell,slam")
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 800)
@@ -191,7 +191,7 @@ import PlayerExtension
         ..tooltipStopListen(false)
 
 
-    createAutoCastAlliedManaTarget(ABIL_AUTOCAST_MANA_SHARE)
+    createAutoCastAlliedManaTarget(ABIL_AC_MANA_SHARE)
         ..registerTooltipGenerator(tgen)
         ..presetManaCost(_ -> 0)
         ..tooltipStartListen()
@@ -211,7 +211,7 @@ import PlayerExtension
     tgen = new BTAbilityTooltipGenerator(
         "Summons lesser demonic reinforcement."
     )
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_LESSER_DARK_PORTAL)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_LESSER_DARK_PORTAL)
         ..setAnimationNames("stand,channel")
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 800)
@@ -223,12 +223,12 @@ import PlayerExtension
         ..setNameEnhance("Z", "Lesser Dark Portal")
         ..tooltipStopListen(true)
 
-    abilTooltipMap.put(ABIL_AUTOCAST_LESSER_DARK_PORTAL, tgen.generateFullTooltip())
+    abilTooltipMap.put(ABIL_AC_LESSER_DARK_PORTAL, tgen.generateFullTooltip())
 
     tgen = new BTAbilityTooltipGenerator(
         "Summons greater demonic reinforcement."
     )
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_GREATER_DARK_PORTAL)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_GREATER_DARK_PORTAL)
         ..setAnimationNames("stand,channel")
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 800)
@@ -240,7 +240,7 @@ import PlayerExtension
         ..setNameEnhance("Z", "Greater Dark Portal")
         ..tooltipStopListen(true)
 
-    abilTooltipMap.put(ABIL_AUTOCAST_LESSER_DARK_PORTAL, tgen.generateFullTooltip())
+    abilTooltipMap.put(ABIL_AC_LESSER_DARK_PORTAL, tgen.generateFullTooltip())
 
 function genList(int unitId, int count) returns LinkedList<int>
     let unitList = new LinkedList<int>
@@ -250,7 +250,7 @@ function genList(int unitId, int count) returns LinkedList<int>
 
 
 init
-    EventListener.onTargetCast(ABIL_AUTOCAST_LESSER_DARK_PORTAL) (unit caster, unit target) ->
+    EventListener.onTargetCast(ABIL_AC_LESSER_DARK_PORTAL) (unit caster, unit target) ->
         let summonPos = caster.getPos().polarOffset(caster.getFacingAngle(), 150)
         let chance = GetRandomReal(0, 1)
         let unitToSummon = new LinkedList<int>()
@@ -278,7 +278,7 @@ init
                 ArmySpawner.doOnSummonedUnit(summonedUnit)
             destroy unitToSummon
 
-    EventListener.onTargetCast(ABIL_AUTOCAST_GREATER_DARK_PORTAL) (unit caster, unit target) ->
+    EventListener.onTargetCast(ABIL_AC_GREATER_DARK_PORTAL) (unit caster, unit target) ->
         let summonPos = caster.getPos().polarOffset(caster.getFacingAngle(), 150)
         let chance = GetRandomReal(0, 1)
         let unitToSummon = new LinkedList<int>()

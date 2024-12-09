@@ -279,8 +279,8 @@ import UnitTooltipGenerator
         ..setSpeedBase(270)
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_ROAR, ABIL_BASH_20, ABIL_HARDENED_SKIN_15))
-        ..setNormalAbilities(commaList(ABIL_ROAR, ABIL_AUTOCAST_ROAR, ABIL_BASH_20, ABIL_HARDENED_SKIN_15))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_ROAR))
+        ..setNormalAbilities(commaList(ABIL_ROAR, ABIL_AC_ROAR, ABIL_BASH_20, ABIL_HARDENED_SKIN_15))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_ROAR))
         ..setRequiredAnimationNames("alternate")
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -351,10 +351,10 @@ import UnitTooltipGenerator
         ..setNormalAbilities(commaList(
             ABIL_TAUNT,
             ABIL_CLEAVE_20,
-            ABIL_AUTOCAST_TAUNT
+            ABIL_AC_TAUNT
         ))
         ..setAnimationCastBackswing(1.5)
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_TAUNT))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_TAUNT))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -458,10 +458,10 @@ import UnitTooltipGenerator
         ..registerCustomPanelAbilityTooltip(asList(ABIL_STARFALL, ABIL_RANGED_AURA_15))
         ..setNormalAbilities(commaList(
             ABIL_RANGED_AURA_15,
-            ABIL_AUTOCAST_STARFALL,
+            ABIL_AC_STARFALL,
             ABIL_STARFALL
         ))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_STARFALL))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_STARFALL))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -494,8 +494,8 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_ARCHDRUID, UnitIds.furion)
         ..setSpeedBase(270)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_SUMMON_WISP, ABIL_BRILLANCE_AURA_2))
-        ..setNormalAbilities(commaList(ABIL_SUMMON_WISP, ABIL_AUTOCAST_SUMMON_WISP, ABIL_BRILLANCE_AURA_2))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_SUMMON_WISP))
+        ..setNormalAbilities(commaList(ABIL_SUMMON_WISP, ABIL_AC_SUMMON_WISP, ABIL_BRILLANCE_AURA_2))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_SUMMON_WISP))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()

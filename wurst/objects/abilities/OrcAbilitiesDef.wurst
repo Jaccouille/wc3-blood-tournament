@@ -162,7 +162,7 @@ import UnitObjEditingCommon
         ..presetManaCost(_ -> 75)
         ..tooltipStopListen(false)
 
-    createAutoCastedAllieHealdAbility(ABIL_AUTOCAST_HEALING_WAVE)
+    createAutoCastedAllieHealdAbility(ABIL_AC_HEALING_WAVE)
         ..presetCastRange(_ -> 700)
         ..presetManaCost(_ -> 75)
         ..tooltipStartListen()
@@ -207,7 +207,7 @@ import UnitObjEditingCommon
         )
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_ACID_BOMB)
+    createAutoCastedEnemyAbility(ABIL_AC_ACID_BOMB)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 700)
         ..presetManaCost(_ -> 100)
@@ -245,7 +245,7 @@ import UnitObjEditingCommon
         ..setNameEnhance("Z", "Drunken Haze")
         ..tooltipStopListen(false)
 
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_DRUNKEN_HAZE)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_DRUNKEN_HAZE)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 700)
         ..presetManaCost(_ -> 100)
@@ -306,7 +306,7 @@ import UnitObjEditingCommon
         ..setNameEnhance("C", "Mana Ward")
         ..tooltipStopListen(false)
 
-    createAutoCastAlliedManaTarget(ABIL_AUTOCAST_MANA_WARD)
+    createAutoCastAlliedManaTarget(ABIL_AC_MANA_WARD)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 700)
         ..presetManaCost(_ -> 200)
@@ -424,7 +424,7 @@ import UnitObjEditingCommon
         ..setNameEnhance("Z", "Chain Lightning")
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AUTOCAST_CHAIN_LIGHTNING)
+    createAutoCastedEnemyAbility(ABIL_AC_CHAIN_LIGHTNING)
         ..setAnimationNames("spell,chain")
         ..presetManaCost(_ -> 200)
         ..registerTooltipGenerator(tgen)
@@ -543,7 +543,7 @@ import UnitObjEditingCommon
         ..setNameEnhance("Z", "Firebolt")
         ..tooltipStopListen(false)
 
-    createAutoCastedLongRangeEnemyAbility(ABIL_AUTOCAST_FIREBOLT)
+    createAutoCastedLongRangeEnemyAbility(ABIL_AC_FIREBOLT)
         ..presetManaCost(_ -> 75)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()

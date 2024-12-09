@@ -316,8 +316,8 @@ import UnitTooltipGenerator
             ABIL_ACID_BOMB,
             ABIL_MANA_WARD
             ))
-        ..setNormalAbilities(commaList(ABIL_HEALING_WAVE, ABIL_AUTOCAST_HEALING_WAVE))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_HEALING_WAVE))
+        ..setNormalAbilities(commaList(ABIL_HEALING_WAVE, ABIL_AC_HEALING_WAVE))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_HEALING_WAVE))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -444,12 +444,12 @@ import UnitTooltipGenerator
         ..registerCustomPanelAbilityTooltip(asList(ABIL_CHAIN_LIGHTNING, ABIL_SUMMON_SPIRIT_WOLF2, ABIL_BRILLANCE_AURA_1))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..setNormalAbilities(commaList(
-            ABIL_AUTOCAST_CHAIN_LIGHTNING,
+            ABIL_AC_CHAIN_LIGHTNING,
             ABIL_CHAIN_LIGHTNING,
             ABIL_SUMMON_SPIRIT_WOLF2,
             ABIL_BRILLANCE_AURA_1
             ))
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_CHAIN_LIGHTNING))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_CHAIN_LIGHTNING))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -550,9 +550,9 @@ import UnitTooltipGenerator
     itm = createBasicItem(ITEM_OGRE_MAGI)
     createSpawnedUnit(UNIT_OGRE_MAGI, UnitIds.ogremagi)
         ..setSpeedBase(240)
-        ..setDefaultActiveAbility(commaList(ABIL_AUTOCAST_FIREBOLT))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_FIREBOLT))
         ..registerCustomPanelAbilityTooltip(asList(ABIL_MAGIC_ARMOR_50, ABIL_FIREBOLT, ABIL_HARDENED_SKIN_5))
-        ..setNormalAbilities(commaList(ABIL_FIREBOLT, ABIL_AUTOCAST_FIREBOLT, ABIL_MAGIC_ARMOR_50, ABIL_HARDENED_SKIN_5))
+        ..setNormalAbilities(commaList(ABIL_FIREBOLT, ABIL_AC_FIREBOLT, ABIL_MAGIC_ARMOR_50, ABIL_HARDENED_SKIN_5))
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
