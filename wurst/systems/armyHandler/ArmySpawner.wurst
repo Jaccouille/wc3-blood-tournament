@@ -165,8 +165,8 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_FEL_GUARD        ,                             200, 0   , genList(UNIT_FEL_GUARD        , 4 ))
     new BTBuildingData(BUILDING_PIT_LORD         ,                             0  , 1500, genList(UNIT_PIT_LORD         , 1 ))
     new BTBuildingData(BUILDING_EREDAR_SORCERER  ,                             0  , 1000, genList(UNIT_EREDAR_SORCERER  , 1 ))
-    new BTBuildingData(BUILDING_EREDAR_SORCERER  , BUILDING_EREDAR_DIABOLIST , 0  , 2000, genList(UNIT_EREDAR_DIABOLIST , 1 ))
-    new BTBuildingData(BUILDING_EREDAR_DIABOLIST , BUILDING_EREDAR_WARLOCK ,   0  , 3000, genList(UNIT_EREDAR_WARLOCK   , 1 ))
+    new BTBuildingData(BUILDING_EREDAR_SORCERER  , BUILDING_EREDAR_COMMANDER , 0  , 2000, genList(UNIT_EREDAR_COMMANDER , 1 ))
+    new BTBuildingData(BUILDING_EREDAR_SORCERER ,  BUILDING_EREDAR_LORD ,   0  , 5000, genList(UNIT_EREDAR_LORD   , 1 ))
     new BTBuildingData(BUILDING_FEL_RITUALIST    ,                             100, 500 , genList(UNIT_FEL_RITUALIST    , 1 ))
     new BTBuildingData(BUILDING_FEL_RITUALIST    , BUILDING_FEL_CONJURER ,     0  , 1500, genList(UNIT_FEL_CONJURER     , 1 ))
 

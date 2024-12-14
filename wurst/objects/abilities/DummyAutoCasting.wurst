@@ -43,6 +43,7 @@ init
         ..put(ABIL_AC_REJUVENATION, new BuffTuple(OrderIds.rejuvination, BuffIds.rejuvenation))
         ..put(ABIL_AC_FROST_NOVA, new BuffTuple(OrderIds.frostnova, -1))
         ..put(ABIL_AC_FIREBOLT, new BuffTuple(OrderIds.firebolt, -1))
+        ..put(ABIL_AC_HELL_FIREBOLT, new BuffTuple(OrderIds.firebolt, -1))
         ..put(ABIL_AC_MANA_WARD, new BuffTuple(OrderIds.healingward, -1))
         ..put(ABIL_AC_CARRION_SWARM, new BuffTuple(OrderIds.carrionswarm, -1))
         ..put(ABIL_AC_CRUSHING_WAVE, new BuffTuple(OrderIds.carrionswarm, -1))
@@ -61,6 +62,8 @@ init
         ..put(ABIL_AC_RAIN_OF_FIRE, new BuffTuple(OrderIds.rainoffire, -1))
         ..put(ABIL_AC_INFERNO, new BuffTuple(OrderIds.inferno, -1))
         ..put(ABIL_AC_MANA_SHARE, new BuffTuple(OrderIds.drain, -1))
+        ..put(ABIL_AC_MANA_BURN, new BuffTuple(OrderIds.manaburn, -1))
+        ..put(ABIL_AC_SILENCE, new BuffTuple(OrderIds.silence, -1))
 
     dummyToRealImmediateCastMap
         ..put(ABIL_AC_TAUNT, OrderIds.taunt)

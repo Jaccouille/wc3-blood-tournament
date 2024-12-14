@@ -12,6 +12,89 @@ import ObjectIds
 import GridHotkeyPosition
 import TooltipsUtils
 
+/**
+Autocast behavior from https://www.hiveworkshop.com/threads/alternative-uses-of-abilities.354568/
+(not verified)
+
+Slow
+    Autocast: cast in battle. Priority is given to the enemy directly in
+    front of the caster (or the one that is at the smallest angle to the caster).
+    If the angle to the enemy is equal, the closest one is selected.
+    The unit's level and type (hero/non-hero, ground/air, etc.) do not matter.
+    The speed of movement/attack of the enemy also does not matter, as well as
+    whether he moves or stands still.
+
+    Note: I think the logic is to apply the effect to enemies faster (spend less time turning to the target)
+
+SpellSteal
+    Autocast: cast in battle. Priority is given to the farthest target
+    (regardless of whether it is a friend or an enemy, as well as how many
+    buffs/debuffs there are on the target). The buff with the highest priority
+    is stolen and is also transferred to the target furthest from the caster
+    (with the same reservations).
+
+    Note: Presumably, the logic of the AI when choosing the farthest target
+    is that this same target may leave the casting radius, thereby reducing
+    the number of potential targets.
+
+    Note 2: if, for permitted purposes, you expose enemies and yourself,
+    removing friends and allies, then the caster will transfer debuffs
+    only from himself, and buffs only to himself.
+
+Blood Lust/Frenzy
+    Autocast: cast in battle. The farthest ally has priority, but he must be
+    attacked, i.e. between the farthest ally attacking the enemy and the closest
+    ally attacking and being attacked, the caster always chooses the second one.
+    Unit level and unit type (hero/non-hero, ground/air, etc.) do not play a role
+    in choosing a target. Movement/attack speed also does not matter.
+
+    Note: the logic is the same as Spell Steal, but it is unclear why the AI
+    prefers attacked units, since the bloodlast does not provide protection or healing.
+    Note 2: Neutrals have the ability Frenzy, which is identical to Blood Lust,
+    but has its own order ID that does not conflict with bloodlust.
+
+Curse
+    Autocast: cast in battle. Priority is given to the closest enemy.
+    Does not cast on units without attack.
+
+    Note: the reverse logic from spells with the choice of the farthest target -
+    the closest enemy is most likely to enter into battle (or is already in it),
+    so it is necessary that he misses.
+
+Frost Armor
+    Autocast: cast in battle. Applies to a random ally who is attacked by an enemy.
+
+Auto Dispel
+    Autocast: always casts while there are negative effects on allied units
+    or in battle in the presence of buffs/debuffs. Allies with debuffs are
+    given priority; in their absence, enemies with buffs are given priority.
+    For each category, the most distant target is given priority. Cannot be
+    cast on summoned units on autocast (even in the absence of any other
+    buffs/debuffs on the battlefield, it can target the summoner only if there is a buff on it).
+
+    Note: the logic is the same as in Spell Steal. At first glance, the fact
+    that it does not select familiars on autocast seems not very convenient,
+    but this can be used for an alternative cast, for example, to cause damage
+    to the unit that called this familiar.
+
+Recharge
+    Autocast: always casts if there is at least one unit nearby with incomplete
+    mana or health. Priority is given to the unit with the largest number of
+    missing points, i.e. not the most wounded or the most manaburned, but the
+    one who has more missing points (for example, the target of the cast will
+    not be a footman with 20 hit points out of 100, but a hero with 100 points
+    of mana out of 1000).
+
+    Note: It is impossible to properly calculate the mana consumption of this
+    ability, because it doesn’t have a mana cost as such, but it spends mana
+    for each point of health and mana restored to the target, i.e.
+    You can easily lose all your mana for 1 cast.
+
+Parasite
+    Autocast: cast in battle. Always selects the farthest target,
+    regardless of the amount of health.
+*/
+
 public function AbilityDefinition.setNameEnhance(string hotkey, string name)
     this.setHotkeyEnhance(hotkey)
     this.setName(name)
@@ -74,6 +157,20 @@ public function createDummyBuffAllied(int buffId) returns BuffDefinition
         ..setTooltipNormal(1, "Dummy buff")
         ..setTooltipNormalExtended(1, "")
 
+/**
+    From user Kalvin273 on https://www.hiveworkshop.com/threads/alternative-uses-of-abilities.354568/
+    Autocast: cast only in battle, preference is given to the unit with the
+        highest attack (between a peon with 30 attack and a minotaur
+        with 10 attack - the first will always have preference).
+        If the attack value is equal, preference is given to the healthiest unit
+        (in percentage, not quantitative terms, i.e. for a caster, a full peon with
+        250 hit points will have priority over a wounded minotaur with 1200 hits of
+        current health). The unit's level and type (hero/non-hero, ground/air, etc.)
+        do not matter. Does not cast on units that have no attack.
+
+    Note: The AI's logic is most likely to apply the effect to the unit that
+    gets the most out of it (gets more attack and can live longer).
+*/
 public function createAutoCastedAlliedAbility(int abilId) returns AbilityDefinitionInnerFire
     let DUMMY_BUFF = BUFF_ID_GEN.next()
     createDummyBuffAllied(DUMMY_BUFF)
@@ -93,6 +190,33 @@ public function createAutoCastedAlliedAbility(int abilId) returns AbilityDefinit
         ..setLevels(1)
         ..setBuffs(1, DUMMY_BUFF.toRawCode())
 
+public function createAutoCastedEnemyHighestDamageAbility(int abilId) returns AbilityDefinitionInnerFire
+    let DUMMY_BUFF = BUFF_ID_GEN.next()
+    createDummyBuffAllied(DUMMY_BUFF)
+        ..setIcon(Icons.bTNAntiMagicShell)
+        ..setName(1, "Dummy Buff")
+        ..setTooltipNormal(1, "Dummy Buff")
+        ..setTooltipNormalExtended("Used to hide buff art")
+
+    return new AbilityDefinitionInnerFire(abilId)
+        ..setCheckDependencies(false)
+        ..presetManaCost(_ -> 0)
+        ..presetDurationNormal(_ -> 0.01)
+        ..presetDamageIncrease(_ -> 0)
+        ..presetDefenseIncrease(_ -> 0)
+        ..presetBuffs(_ -> "")
+        ..setArtTarget("")
+        ..setLevels(1)
+        ..presetTargetsAllowed(_ -> commaList(
+            TargetsAllowed.enemies,
+            TargetsAllowed.vulnerable
+        ))
+        ..setBuffs(1, DUMMY_BUFF.toRawCode())
+
+/**
+    Autocast: always casts if there is a wounded unit nearby.
+    Selects the most wounded unit first (in percentage).
+*/
 public function createAutoCastedAllieHealdAbility(int abilId) returns AbilityDefinitionHeal
     let DUMMY_BUFF = BUFF_ID_GEN.next()
     createDummyBuffAllied(DUMMY_BUFF)
@@ -128,6 +252,27 @@ public function createAutoCastAlliedManaTarget(int abilId) returns AbilityDefini
         ))
         ..setLevels(1)
 
+/**
+    Use area of effect instead of range
+    Target an enemy that doesn't have full mana
+*/
+public function createAutoCastEnemyManaTarget(int abilId) returns AbilityDefinitionManaBattery
+    return new AbilityDefinitionManaBattery(abilId)
+        ..setCheckDependencies(false)
+        ..setRegenerateOnlyAtNight(1, false)
+        ..setWaterHeight(1, -100)
+        ..presetAutocastRequirement(_ -> 0)
+        ..presetHitPointsGained(_ -> 0)
+        ..presetManaGained(_ -> -1)
+        ..presetManaCost(_ -> 0)
+        ..presetDurationNormal(_ -> 0.01)
+        ..presetBuffs(_ -> "")
+        ..setArtTarget("")
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.enemies
+        ))
+        ..setLevels(1)
+
 public function createAutoCastDispell(int abilId) returns AbilityDefinitionAbolishMagicCreep
     return new AbilityDefinitionAbolishMagicCreep(abilId)
         ..setSummonedUnitDamage(1, 0)
@@ -152,3 +297,11 @@ public function createVisualAbility(int abilId) returns AbilityDefinitionDefense
     return new AbilityDefinitionDefenseBonusPlus1(abilId)
         ..setDefenseBonus(1, 0)
         ..setName("Visual buff ability")
+
+public function createSelfRegenerationAbility(int abilId) returns AbilityDefinitionAuraRegenerationHealingWard
+    return new AbilityDefinitionAuraRegenerationHealingWard(abilId)
+        ..presetAreaofEffect(_ -> 1)
+        ..presetAmountofHitPointsRegenerated(_ -> 0)
+        ..setCheckDependencies(false)
+        ..setArtTarget("")
+        ..presetTargetsAllowed(_ -> commaList(TargetsAllowed.self))

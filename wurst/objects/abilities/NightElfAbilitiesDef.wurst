@@ -473,36 +473,6 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
 
     tgen = new BTAbilityTooltipGenerator(
-        "Emits a terrifying howl that reduces nearby enemy units' attack damage.")
-    new AbilityDefinitionPitLordHowlofTerror(ABIL_HOWL_OF_TERROR)
-        ..setLevels(1)
-        ..setHeroAbility(false)
-        ..registerTooltipGenerator(tgen)
-        ..presetDamageIncrease(_ -> 0.40)
-        ..tooltipStartListen()
-        ..addTooltipProperty("Damage Reduction", _ -> "40%")
-        ..presetDurationNormal(_ -> 6)
-        ..presetAreaofEffect(_ -> 500)
-        ..presetManaCost(_ -> 75)
-        ..presetCooldown(_ -> 6)
-        ..setNameEnhance("Z", "Howl Of Terror")
-        ..tooltipStopListen(false)
-
-    abilTooltipMap.put(ABIL_HOWL_OF_TERROR, tgen.generateFullTooltip())
-
-    createAutoCastedEnemyAbility(ABIL_AC_HOWL_OF_TERROR)
-        ..registerTooltipGenerator(tgen)
-        ..presetCastRange(_ -> 125)
-        ..presetManaCost(_ -> 0)
-        ..tooltipStartListen()
-        ..presetCooldown(_ -> 6)
-        ..setNameEnhance("Z", "Howl Of Terror")
-        ..tooltipStopListen(true)
-
-    // abilTooltipMap.put(ABIL_HOWL_OF_TERROR, tgen.generateFullTooltip())
-
-
-    tgen = new BTAbilityTooltipGenerator(
         "Raises a feral spectre from a corpse."
     )
     new AbilityDefinitionVengeance(ABIL_SPIRIT_OF_VENGEANCE)

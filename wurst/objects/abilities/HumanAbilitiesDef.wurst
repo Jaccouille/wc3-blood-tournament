@@ -269,6 +269,7 @@ let SLOW_TARGET_COUNT = 2
         ..tooltipStopListen(true)
 
     tooltip += "\n\n" + tgen.generateFullTooltipItem()
+    abilTooltipMap.put(ABIL_SOUL_BURN, tgen.generateFullTooltip())
     itm.setTooltipExtended(tooltip)
 
     lumberCost = 100

@@ -223,11 +223,14 @@ public class BTUnitDefinition extends UnitDefinition
 
     override function setAttack1MaximumNumberofTargets(int data)
         def.setInt("utc1", data)
+        this.setAttack1TargetsAllowed("ground,structure,debris,enemy")
+        this.setAttack1AreaofEffectFullDamage(400)
+        this.setAttack1WeaponType(WeaponType.MissileBounce)
         addTooltipProperty("Bounce Count", data)
 
     override function setAttack1DamageLossFactor(real data)
         // Note: Doesn't seem to work, always output 0
-        def.setReal("udl1", data)
+        def.setUnreal("udl1", data)
         addTooltipProperty("Bounce Damage Reduction", (data * 100).percRound())
 
     override function setHitPointsMaximumBase(int data)
@@ -502,6 +505,13 @@ public function BTUnitDefinition.setSummonedUnit()
 public function BTUnitDefinition.setGiant()
     this.addTooltipProperty("Type", "Giant")
     this.setUnitClassification("ancient")
+
+public function BTUnitDefinition.setNoSplash()
+    this.setAttack1AreaofEffectFullDamage(0)
+    this.setAttack1AreaofEffectMediumDamage(0)
+    this.setAttack1AreaofEffectSmallDamage(0)
+    this.setAttack1DamageFactorSmall(0.0)
+    this.setAttack1DamageFactorMedium(0.0)
 
 public function BTUnitDefinition.setSmallSplash()
     this.setAttack1AreaofEffectFullDamage(25)

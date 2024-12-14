@@ -67,7 +67,7 @@ import UnitObjEditingCommon
         ..setNameEnhance("Z", "Forked Lightning")
         ..tooltipStopListen(false)
 
-    createAutoCastedEnemyAbility(ABIL_AC_FORKED_LIGHTNING)
+    createAutoCastedEnemyHighestDamageAbility(ABIL_AC_FORKED_LIGHTNING)
         ..registerTooltipGenerator(tgen)
         ..presetManaCost(_ -> 125)
         ..tooltipStartListen()

@@ -21,6 +21,8 @@ import TooltipsUtils
 import PlayerData
 import UnitObjEditingCommon
 import PlayerExtension
+import GameConfig
+import LocalAssets
 
 
 @compiletime function createDemonAbilities()
@@ -56,12 +58,46 @@ import PlayerExtension
 
     abilTooltipMap.put(ABIL_DEMONIC_FRENZY, tgen.generateFullTooltip())
 
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Sends a bolt of negative energy that burns the target unit's mana. " +
+        "The mana combusts, dealing damage equal to the amount of mana burned."
+    )
+
+    let manaburn = new AbilityDefinitionManaBurndemon(ABIL_MANA_BURN)
+        ..setAnimationNames("attack")
+        ..setCheckDependencies(false)
+        ..registerTooltipGenerator(tgen)
+        ..presetCooldown(_ -> 0)
+        ..tooltipStartListen()
+        ..presetMaxManaDrained(_ -> 125)
+        ..presetManaCost(_ -> 125)
+        ..presetCastRange(_ -> 600)
+        ..setNameEnhance("Z", "Manaburn")
+        ..tooltipStopListen(false)
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
+
+    createAutoCastEnemyManaTarget(ABIL_AC_MANA_BURN)
+        ..registerTooltipGenerator(tgen)
+        ..presetCastRange(_ -> 600)
+        ..presetManaCost(_ -> 125)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 6)
+        ..applyTooltip(manaburn)
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_MANA_BURN, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Curses a target enemy unit, causing it to have a chance to miss on an attack."
+    )
     new AbilityDefinitionCursecreep(ABIL_CURSE)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..setChancetoMiss(1, 0.6)
         ..addTooltipProperty("Chance to miss", _ -> 0.6.toPercent())
-        ..presetDurationNormal(_ -> 6)
+        ..presetDurationNormal(_ -> 12)
         ..presetManaCost(_ -> 40)
         ..presetCooldown(_ -> 3)
         ..presetCastRange(_ -> 700)
@@ -69,6 +105,36 @@ import PlayerExtension
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_CURSE, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Stops all enemies in a target area from casting spells."
+    )
+
+    let silence = new AbilityDefinitionSilenceCreep(ABIL_SILENCE)
+        ..setCheckDependencies(false)
+        ..registerTooltipGenerator(tgen)
+        ..setDummyAbility()
+        ..presetManaCost(_ -> 125)
+        ..tooltipStartListen()
+        ..presetDurationNormal(_ -> 5)
+        ..presetAreaofEffect(_ -> 400)
+        ..setNameEnhance("Z", "Silence")
+        ..tooltipStopListen(false)
+        ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
+
+    createAutoCastEnemyManaTarget(ABIL_AC_SILENCE)
+        ..setAnimationNames("spell,slam")
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetManaCost(_ -> 125)
+        ..presetCastRange(_ -> 800)
+        ..presetCooldown(_ -> 12)
+        ..applyTooltip(silence)
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_SILENCE, tgen.generateFullTooltip())
+
 
     tgen = new BTAbilityTooltipGenerator(
         "Calls down waves of fire that damage units in an area.\n" +
@@ -84,14 +150,14 @@ import PlayerExtension
         ..presetAreaofEffect(_ -> 300)
         ..presetCooldown(_ -> 0)
         ..tooltipStartListen()
-        ..presetDamage(_ -> 50)
-        ..presetDamagePerSecond(_ -> 25)
+        ..presetDamage(_ -> 30)
+        ..presetDamagePerSecond(_ -> 20)
         ..presetMaximumDamageperWave(_ -> 1000)
         ..presetNumberofWaves(_ -> 4)
         ..presetDurationNormal(_ -> 3)
-        ..presetManaCost(_ -> 100)
+        ..presetManaCost(_ -> 125)
         ..presetCastRange(_ -> 800)
-        ..setNameEnhance("Z", "Blizzard")
+        ..setNameEnhance("Z", "Rain of Fire")
         ..tooltipStopListen(false)
         ..setTargetsAllowed(1, commaList(TargetsAllowed.enemies))
 
@@ -100,7 +166,7 @@ import PlayerExtension
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 800)
         ..tooltipStartListen()
-        ..presetCooldown(_ -> 30)
+        ..presetCooldown(_ -> 20)
         ..applyTooltip(rainOfFire)
         ..tooltipStopListen(true)
 
@@ -110,7 +176,6 @@ import PlayerExtension
     tgen = new BTAbilityTooltipGenerator(
         "Calls an Infernal down from the sky, dealing damage and stunning enemy units."
     )
-
 
     let inferno = new AbilityDefinitionInferno(ABIL_INFERNO)
         ..setAnimationNames("spell,slam")
@@ -126,7 +191,7 @@ import PlayerExtension
         ..setDurationNormal(1, 3)
         ..addTooltipProperty("Stun Duration", _ -> "3")
         ..presetAreaofEffect(_ -> 300)
-        ..presetManaCost(_ -> 150)
+        ..presetManaCost(_ -> 175)
         ..presetCastRange(_ -> 800)
         ..setNameEnhance("Z", "Inferno")
         ..tooltipStopListen(false)
@@ -137,7 +202,7 @@ import PlayerExtension
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 800)
         ..tooltipStartListen()
-        ..presetCooldown(_ -> 30)
+        ..presetCooldown(_ -> 25)
         ..applyTooltip(inferno)
         ..tooltipStopListen(true)
 
@@ -170,9 +235,13 @@ import PlayerExtension
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..presetDamageperInterval(_ -> 20)
+        ..presetDamageperInterval(_ -> 60)
         ..presetAreaofEffect(_ -> 200)
         ..setNameEnhance("Z", "Immolation")
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.enemies,
+            TargetsAllowed.ground
+            ))
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_FINGER_OF_DEATH, tgen.generateFullTooltip())
@@ -193,8 +262,8 @@ import PlayerExtension
 
     createAutoCastAlliedManaTarget(ABIL_AC_MANA_SHARE)
         ..registerTooltipGenerator(tgen)
-        ..presetManaCost(_ -> 0)
         ..tooltipStartListen()
+        ..presetManaCost(_ -> 25)
         ..presetCastRange(_ -> 700)
         ..presetCooldown(_ -> 9)
         ..tooltipStopListen(true)
@@ -240,14 +309,218 @@ import PlayerExtension
         ..setNameEnhance("Z", "Greater Dark Portal")
         ..tooltipStopListen(true)
 
-    abilTooltipMap.put(ABIL_AC_LESSER_DARK_PORTAL, tgen.generateFullTooltip())
+    abilTooltipMap.put(ABIL_AC_GREATER_DARK_PORTAL, tgen.generateFullTooltip())
 
+    tgen = new BTAbilityTooltipGenerator(
+        "Hurls a fiery bolt at a target enemy unit, " +
+        "dealing damage and stunning the target.")
+    new AbilityDefinitionFireBolt(ABIL_HELL_FIREBOLT)
+        ..setMissileSpeed(STANDARD_PROJECTILE_SPEED)
+        ..setLevels(1)
+        ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..setMissileArt(Abilities.demonHunterMissile)
+        ..registerTooltipGenerator(tgen)
+        ..tooltipStartListen()
+        ..presetDamage(_ -> 200)
+        ..presetDurationNormal(_ -> 3)
+        ..presetManaCost(_ -> 50)
+        ..setNameEnhance("Z", "Fire Bolt")
+
+        ..tooltipStopListen(false)
+
+    createAutoCastedEnemyAbility(ABIL_AC_HELL_FIREBOLT)
+        ..registerTooltipGenerator(tgen)
+        ..presetManaCost(_ -> 50)
+        ..tooltipStartListen()
+        ..presetCastRange(_ -> 900)
+        ..presetCooldown(_ -> 3)
+        ..tooltipStopListen(true)
+        ..setNameEnhance("Z", "Fire Bolt (autocast)")
+        ..setIconNormal(Icons.bTNFireBolt)
+        ..setIconTurnOff(Icons.bTNFireBolt)
+
+    abilTooltipMap.put(ABIL_HELL_FIREBOLT, tgen.generateFullTooltip())
+
+
+    let BUFF_BURNING_ATTACK_1 = BUFF_ID_GEN.next()
+    new BuffDefinition(BUFF_BURNING_ATTACK_1, BuffIds.innerFire)
+        ..setIcon(Icons.bTNWallOfFire)
+        ..setArtSpecial(1,"")
+        ..setTargetAttachmentPoint0(1, "chest")
+        ..setName(1, "Burning Attack 1")
+        ..setTooltipNormal(1, "Burning Attack 1")
+        ..setTooltipNormalExtended(1, "This unit is burning;takes damage over time")
+        ..setArtTarget(1, Environment.smallbuildingfire2)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Deals area of effect damage over time."
+        )
+    var abilId = ABIL_ID_GEN.next()
+    new AbilityDefinitionOrbofLightning(ABIL_BURNING_ATTACK_1_ORB)
+        ..setMissileArt("")
+        ..setArtTarget(Abilities.aIfbTarget)
+        ..setTargetAttachmentPoint1("weapon")
+        ..setEnabledAttackIndex(1, 0)
+        ..presetChanceToHitUnits(_ -> 100)
+        ..presetChanceToHitSummons(_ -> 100)
+        ..setEffectAbility(1, abilId.toRawCode())
+        ..setNameEnhance("Z", "Burning Attack 1 Orb")
+        ..setDamageBonus(1, 0)
+
+    new AbilityDefinitionAlchemistAcidBomb(abilId)
+        ..registerTooltipGenerator(tgen)
+        ..setCheckDependencies(false)
+        ..setMissileArt("")
+        ..setMissileSpeed(1500)
+        ..setDummyAbility()
+        ..presetArmorPenalty(_ -> 0)
+        ..tooltipStartListen()
+        ..presetPrimaryDamage(_ -> 50)
+        ..presetSecondaryDamage(_ -> 25)
+        ..presetAreaofEffect(_ -> 125)
+        ..presetDurationNormal(_ -> 4)
+        ..setNameEnhance("Z", "Burning Attack 1")
+        ..setBuffs(1, BUFF_BURNING_ATTACK_1.toRawCode())
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.enemies
+            ))
+        ..tooltipStopListen(true)
+        ..setIconNormal(Icons.bTNWallOfFire)
+
+    abilTooltipMap.put(ABIL_BURNING_ATTACK_1_ORB, tgen.generateFullTooltip())
+
+
+    let BUFF_BURNING_ATTACK_2 = BUFF_ID_GEN.next()
+    new BuffDefinition(BUFF_BURNING_ATTACK_2, BuffIds.innerFire)
+        ..setIcon(LocalIcons.bTNFelWallOfFire)
+        ..setArtSpecial(1,"")
+        ..setTargetAttachmentPoint0(1, "chest")
+        ..setName(1, "Burning Attack 2")
+        ..setTooltipNormal(1, "Burning Attack 2")
+        ..setTooltipNormalExtended(1, "This unit is burning;takes damage over time")
+        ..setArtTarget(1, Environment.undeadsmallbuildingfire2)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Deals area of effect damage over time."
+        )
+    abilId = ABIL_ID_GEN.next()
+    new AbilityDefinitionOrbofLightning(ABIL_BURNING_ATTACK_2_ORB)
+        ..setMissileArt("")
+        ..setArtTarget(Abilities.orbVenom)
+        ..setTargetAttachmentPoint1("weapon")
+        ..setEnabledAttackIndex(1, 0)
+        ..presetChanceToHitUnits(_ -> 100)
+        ..presetChanceToHitSummons(_ -> 100)
+        ..setEffectAbility(1, abilId.toRawCode())
+        ..setNameEnhance("Z", "Burning Attack 2 Orb")
+        ..setDamageBonus(1, 0)
+
+    new AbilityDefinitionAlchemistAcidBomb(abilId)
+        ..registerTooltipGenerator(tgen)
+        ..setCheckDependencies(false)
+        ..setMissileArt("")
+        ..setMissileSpeed(1500)
+        ..setDummyAbility()
+        ..presetArmorPenalty(_ -> 0)
+        ..tooltipStartListen()
+        ..presetPrimaryDamage(_ -> 90)
+        ..presetSecondaryDamage(_ -> 60)
+        ..presetAreaofEffect(_ -> 125)
+        ..presetDurationNormal(_ -> 4)
+        ..setNameEnhance("Z", "Burning Attack 2")
+        ..setBuffs(1, BUFF_BURNING_ATTACK_2.toRawCode())
+        ..setTargetsAllowed(1, commaList(
+            TargetsAllowed.enemies
+            ))
+        ..tooltipStopListen(true)
+        ..setIconNormal(LocalIcons.bTNFelWallOfFire)
+
+    abilTooltipMap.put(ABIL_BURNING_ATTACK_2_ORB, tgen.generateFullTooltip())
+
+
+    let BUFF_DEMONIC_ATTRITION = BUFF_ID_GEN.next()
+    new BuffDefinition(BUFF_DEMONIC_ATTRITION, BuffIds.innerFire)
+        ..setIcon(Icons.bTNDoom)
+        ..setArtSpecial(1,"")
+        ..setTargetAttachmentPoint0(1, "origin")
+        ..setName(1, "Demonic Attrition")
+        ..setTooltipNormal(1, "Demonic Attrition")
+        ..setTooltipNormalExtended(1, "This unit doesn't belong here;looses health over time")
+        ..setArtTarget(1, Abilities.doomTarget)
+
+    tgen = new BTAbilityTooltipGenerator(
+        "This unit doesn't belong here, looses health over time."
+        )
+    createSelfRegenerationAbility(ABIL_DEMONIC_ATTRITION)
+        ..registerTooltipGenerator(tgen)
+        ..setCheckDependencies(false)
+        ..setPercentage(1, true)
+        ..presetAmountofHitPointsRegenerated(_ -> -0.02)
+        ..addTooltipProperty("Life Decreased Per Seconds", _ -> 0.02.toPercent())
+        ..tooltipStartListen()
+        ..setNameEnhance("Z", "Demonic Attrition")
+        ..setBuffs(1, BUFF_DEMONIC_ATTRITION.toRawCode())
+        ..setIconNormal(Icons.bTNDoom)
+        ..tooltipStopListen(true)
+
+    new AbilityDefinitionUnholyAuracreep(ABIL_DEMONIC_ATTRITION_VISUAL)
+        ..setLevels(1)
+        ..setMovementSpeedIncrease(1, 0)
+        ..setLifeRegenerationIncrease(1, 0)
+        ..setArtTarget(Abilities.doomTarget)
+        ..setBuffs(1, BUFF_DEMONIC_ATTRITION.toRawCode())
+        ..setAreaofEffect(1, 1)
+
+    abilTooltipMap.put(ABIL_DEMONIC_ATTRITION, tgen.generateFullTooltip())
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Emits a terrifying howl that reduces nearby enemy units' attack damage.")
+    new AbilityDefinitionPitLordHowlofTerror(ABIL_HOWL_OF_TERROR)
+        ..setLevels(1)
+        ..setHeroAbility(false)
+        ..registerTooltipGenerator(tgen)
+        ..presetDamageIncrease(_ -> 0.40)
+        ..tooltipStartListen()
+        ..addTooltipProperty("Damage Reduction", _ -> "40%")
+        ..presetDurationNormal(_ -> 6)
+        ..presetAreaofEffect(_ -> 500)
+        ..presetManaCost(_ -> 75)
+        ..presetCooldown(_ -> 6)
+        ..setNameEnhance("Z", "Howl Of Terror")
+        ..tooltipStopListen(false)
+
+
+    createAutoCastedEnemyAbility(ABIL_AC_HOWL_OF_TERROR)
+        ..registerTooltipGenerator(tgen)
+        ..presetCastRange(_ -> 125)
+        ..presetManaCost(_ -> 0)
+        ..tooltipStartListen()
+        ..presetCooldown(_ -> 6)
+        ..setNameEnhance("Z", "Howl Of Terror")
+        ..tooltipStopListen(true)
+
+    abilTooltipMap.put(ABIL_HOWL_OF_TERROR, tgen.generateFullTooltip())
+
+    // abilTooltipMap.put(ABIL_HOWL_OF_TERROR, tgen.generateFullTooltip())
 function genList(int unitId, int count) returns LinkedList<int>
     let unitList = new LinkedList<int>
     for i = 0 to count * 1 - 1
         unitList.add(unitId)
     return unitList
 
+function roundToNearestMultipleOfFive(int value) returns int
+    return (value div 5) * 5
+
+function getRandomHp(int lowBound, int highBound) returns int
+    let roundedLowBound = (lowBound * gameConfig.getHealthMultiplier()).toInt()
+    let roundedHighBound = (highBound  * gameConfig.getHealthMultiplier()).toInt()
+    return roundToNearestMultipleOfFive(GetRandomInt(roundedLowBound, roundedHighBound))
+
+function getRandomDamage(int lowBound, int highBound) returns int
+    let roundedLowBound = (lowBound * gameConfig.getDamageMultiplier()).toInt()
+    let roundedHighBound = (highBound  * gameConfig.getDamageMultiplier()).toInt()
+    return roundToNearestMultipleOfFive(GetRandomInt(roundedLowBound, roundedHighBound))
 
 init
     EventListener.onTargetCast(ABIL_AC_LESSER_DARK_PORTAL) (unit caster, unit target) ->
@@ -264,9 +537,9 @@ init
             unitToSummon.addAll(genList(UNIT_SATYR, GetRandomInt(2, 4)))
             unitToSummon.addAll(genList(UNIT_LESSER_VOID_WALKER, GetRandomInt(2, 4)))
         else if chance < 0.8
-            unitToSummon.addAll(genList(UNIT_UNBROKEN, GetRandomInt(1, 3)))
+            unitToSummon.addAll(genList(UNIT_LESSER_CHAOS_SPAWN, GetRandomInt(1, 3)))
         else
-            unitToSummon.addAll(genList(UNIT_UNBROKEN, GetRandomInt(1, 3)))
+            unitToSummon.addAll(genList(UNIT_LESSER_CHAOS_SPAWN, GetRandomInt(1, 3)))
             unitToSummon.addAll(genList(UNIT_SATYR, GetRandomInt(1, 3)))
             unitToSummon.addAll(genList(UNIT_LESSER_VOID_WALKER, GetRandomInt(1, 3)))
 
@@ -276,6 +549,31 @@ init
                 let summonedUnit = createUnit(
                     caster.getOwner(), unitId, summonPos, caster.getFacingAngle())
                 ArmySpawner.doOnSummonedUnit(summonedUnit)
+                if summonedUnit.getTypeId() == UNIT_LESSER_CHAOS_SPAWN
+                    let bonusHp = getRandomHp(-200, 200)
+                    let bonusDamage = getRandomDamage(-30, 30)
+                    let bonusArmor = GetRandomInt(-2, 2)
+                    let bonusAttackSpeed = GetRandomReal(-0.5, 0.5)
+
+                    // Calculate normalized values (range: -1 to 1)
+                    let normalizedHp = bonusHp / (200 * gameConfig.getHealthMultiplier()) // Range -1 to 1
+                    let normalizedDamage = bonusDamage / ((30 * gameConfig.getDamageMultiplier()).toInt()) // Range -1 to 1
+                    let normalizedArmor = bonusArmor / 2 // Range -1 to 1
+                    let normalizedAttackSpeed = bonusAttackSpeed / 0.5 // Range -1 to 1
+
+                    // Aggregate and normalize the combined score (average contributions)
+                    var combinedScore = (normalizedHp + normalizedDamage + normalizedArmor + normalizedAttackSpeed) / 4
+
+                    // Map to scaling range 0.8 to 1.5
+                    // Ensure combinedScore is between -1 and 1 for safety
+                    combinedScore = max(-1, min(1, combinedScore))
+                    let scalingValue = 0.6 + ((combinedScore + 1) / 2) * (1 - 0.6) // Shift -1 to 1 => 0 to 1
+
+                    summonedUnit.setBaseDamage(summonedUnit.getBaseDamage(0) + bonusDamage, 0)
+                    summonedUnit.setArmor(summonedUnit.getArmor() + bonusArmor)
+                    summonedUnit.setAttackCooldown(summonedUnit.getAttackCooldown(0) - bonusAttackSpeed, 0)
+                    summonedUnit.setMaxHP(summonedUnit.getMaxHP().toInt() + bonusHp, true)
+                    summonedUnit.setScale(scalingValue)
             destroy unitToSummon
 
     EventListener.onTargetCast(ABIL_AC_GREATER_DARK_PORTAL) (unit caster, unit target) ->
@@ -289,19 +587,45 @@ init
         else if chance < 0.5
             unitToSummon.addAll(genList(UNIT_GREATER_VOID_WALKER, GetRandomInt(1, 2)))
         else if chance < 0.7
-            unitToSummon.addAll(genList(UNIT_SATYR_TRICKSTER, GetRandomInt(2, 4)))
-            unitToSummon.addAll(genList(UNIT_GREATER_VOID_WALKER, GetRandomInt(1, 2)))
+            unitToSummon.addAll(genList(UNIT_GREATER_CHAOS_SPAWN, GetRandomInt(1, 3)))
         else if chance < 0.8
             unitToSummon.addAll(genList(UNIT_DOOM_GUARD, GetRandomInt(1, 2)))
         else
-            unitToSummon.addAll(genList(UNIT_DOOM_GUARD, GetRandomInt(1, 2)))
+            unitToSummon.addAll(genList(UNIT_DOOM_GUARD, 1))
             unitToSummon.addAll(genList(UNIT_SATYR_TRICKSTER, GetRandomInt(1, 4)))
-            unitToSummon.addAll(genList(UNIT_GREATER_VOID_WALKER, GetRandomInt(1, 2)))
+            unitToSummon.addAll(genList(UNIT_GREATER_CHAOS_SPAWN, GetRandomInt(1, 2)))
+            unitToSummon.addAll(genList(UNIT_GREATER_VOID_WALKER, 1))
 
         flashEffect(Abilities.darkPortalTarget, summonPos)
         doAfter(1.3) ->
             for unitId in unitToSummon
                 let summonedUnit = createUnit(
                     caster.getOwner(), unitId, summonPos, caster.getFacingAngle())
+                summonedUnit.damageTarget(summonedUnit, 1)
                 ArmySpawner.doOnSummonedUnit(summonedUnit)
+                if summonedUnit.getTypeId() == UNIT_GREATER_CHAOS_SPAWN
+                    let bonusHp = getRandomHp(-400, 400)
+                    let bonusDamage = getRandomDamage(-60, 60)
+                    let bonusArmor = GetRandomInt(-3, 3)
+                    let bonusAttackSpeed = GetRandomReal(-0.7, 0.7)
+
+                    // Calculate normalized values (range: -1 to 1)
+                    let normalizedHp = bonusHp / (400 * gameConfig.getHealthMultiplier())// Range -1 to 1
+                    let normalizedDamage = bonusDamage / ((60 * gameConfig.getDamageMultiplier()).toInt()) // Range -1 to 1
+                    let normalizedArmor = bonusArmor / 3 // Range -1 to 1
+                    let normalizedAttackSpeed = bonusAttackSpeed / 0.7 // Range -1 to 1
+
+                    // Aggregate and normalize the combined score (average contributions)
+                    var combinedScore = (normalizedHp + normalizedDamage + normalizedArmor + normalizedAttackSpeed) / 4
+
+                    // Map to scaling range 0.8 to 1.5
+                    // Ensure combinedScore is between -1 and 1 for safety
+                    combinedScore = max(-1, min(1, combinedScore))
+                    let scalingValue = 1.2 + ((combinedScore + 1) / 2) * (1.9 - 1.2) // Shift -1 to 1 => 0 to 1
+
+                    summonedUnit.setBaseDamage(summonedUnit.getBaseDamage(0) + bonusDamage, 0)
+                    summonedUnit.setArmor(summonedUnit.getArmor() + bonusArmor)
+                    summonedUnit.setAttackCooldown(summonedUnit.getAttackCooldown(0) - bonusAttackSpeed, 0)
+                    summonedUnit.setMaxHP(summonedUnit.getMaxHP().toInt() + bonusHp, true)
+                    summonedUnit.setScale(scalingValue)
             destroy unitToSummon

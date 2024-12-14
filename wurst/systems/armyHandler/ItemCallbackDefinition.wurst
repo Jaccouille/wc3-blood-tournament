@@ -608,3 +608,9 @@ init
         for i = 1 to count
             addAtMiddle(unitToSpawn, UNIT_OVERLORD)
     itemAddUnitMap.put(ITEM_OVERLORD, overlordAction)
+
+    let maidenOfPainAction = new ItemAddUnit()
+        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        for i = 1 to count
+            addAtMiddle(unitToSpawn, UNIT_MAIDEN_OF_PAIN)
+    itemAddUnitMap.put(ITEM_MAIDEN_OF_PAIN, maidenOfPainAction)

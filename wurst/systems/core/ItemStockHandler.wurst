@@ -165,6 +165,7 @@ function initItemStockData()
 
     // ================ DEMON =============
     unitItemSold.put(BUILDING_FEL_GUARD , asList(ITEM_OVERLORD))
+    unitItemSold.put(BUILDING_SUCCUBUS , asList(ITEM_MAIDEN_OF_PAIN))
 
 
 function canBuy(int itemId, player _p) returns boolean
