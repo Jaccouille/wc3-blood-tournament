@@ -502,7 +502,7 @@ public let BUFF_BOT_ENABLED               = compiletime(BUFF_ID_GEN.next())
 public let BUFF_HAUNTED                   = compiletime(BUFF_ID_GEN.next())
 
 
-// ==================== ITEMS =================
+// ==================== HUMAN ITEMS =================
 public let ITEM_CAPTAIN            = compiletime(ITEM_ID_GEN.next())
 public let ITEM_PALADIN_SKIN_BLACK = compiletime(ITEM_ID_GEN.next())
 public let ITEM_PALADIN_SKIN_WHITE = compiletime(ITEM_ID_GEN.next())
@@ -510,26 +510,6 @@ public let ITEM_MARSHALL           = compiletime(ITEM_ID_GEN.next())
 public let ITEM_MORTAR             = compiletime(ITEM_ID_GEN.next())
 public let ITEM_COURT_ENCHANTRESS  = compiletime(ITEM_ID_GEN.next())
 public let ITEM_SNIPER             = compiletime(ITEM_ID_GEN.next())
-
-public let ITEM_BERSERKER     = compiletime(ITEM_ID_GEN.next())
-public let ITEM_KODO          = compiletime(ITEM_ID_GEN.next())
-public let ITEM_FARSEER       = compiletime(ITEM_ID_GEN.next())
-public let ITEM_PACK_LEADER   = compiletime(ITEM_ID_GEN.next())
-public let ITEM_OGRE_ARMORED  = compiletime(ITEM_ID_GEN.next())
-public let ITEM_OGRE_MAGI     = compiletime(ITEM_ID_GEN.next())
-
-public let ITEM_NERUBIAN_QUEEN       = compiletime(ITEM_ID_GEN.next())
-public let ITEM_LICH                 = compiletime(ITEM_ID_GEN.next())
-public let ITEM_PLAGUE_BEARER        = compiletime(ITEM_ID_GEN.next())
-public let ITEM_VAMPIRE_LORD         = compiletime(ITEM_ID_GEN.next())
-
-public let ITEM_NE_RANGER             = compiletime(ITEM_ID_GEN.next())
-public let ITEM_PRIESTESS_OF_THE_MOON = compiletime(ITEM_ID_GEN.next())
-public let ITEM_ARCHDRUID             = compiletime(ITEM_ID_GEN.next())
-public let ITEM_KEEPER_OF_THE_GROVE   = compiletime(ITEM_ID_GEN.next())
-public let ITEM_BEAR                  = compiletime(ITEM_ID_GEN.next())
-public let ITEM_OWLBEAR               = compiletime(ITEM_ID_GEN.next())
-public let ITEM_AVATAR_OF_VENGEANCE   = compiletime(ITEM_ID_GEN.next())
 
 public let ITEM_ARMOR_BLESSING  = compiletime(ITEM_ID_GEN.next())
 public let ITEM_INSPIRE         = compiletime(ITEM_ID_GEN.next())
@@ -541,6 +521,14 @@ public let ITEM_FIRE_MAGE       = compiletime(ITEM_ID_GEN.next())
 public let ITEM_ICE_MAGE        = compiletime(ITEM_ID_GEN.next())
 public let ITEM_GRENADIER       = compiletime(ITEM_ID_GEN.next())
 
+// ==================== ORC ITEMS =================
+public let ITEM_BERSERKER     = compiletime(ITEM_ID_GEN.next())
+public let ITEM_KODO          = compiletime(ITEM_ID_GEN.next())
+public let ITEM_FARSEER       = compiletime(ITEM_ID_GEN.next())
+public let ITEM_PACK_LEADER   = compiletime(ITEM_ID_GEN.next())
+public let ITEM_OGRE_ARMORED  = compiletime(ITEM_ID_GEN.next())
+public let ITEM_OGRE_MAGI     = compiletime(ITEM_ID_GEN.next())
+
 public let ITEM_RAMPAGE       = compiletime(ITEM_ID_GEN.next())
 public let ITEM_ORB_LIGHTNING = compiletime(ITEM_ID_GEN.next())
 public let ITEM_HEALING_WAVE  = compiletime(ITEM_ID_GEN.next())
@@ -550,9 +538,15 @@ public let ITEM_MANA_WARD     = compiletime(ITEM_ID_GEN.next())
 public let ITEM_DRUNKEN_HAZE  = compiletime(ITEM_ID_GEN.next())
 public let ITEM_BURNING_BLADE = compiletime(ITEM_ID_GEN.next())
 
+// ==================== UNDEAD ITEMS =================
+public let ITEM_NERUBIAN_QUEEN       = compiletime(ITEM_ID_GEN.next())
+public let ITEM_LICH                 = compiletime(ITEM_ID_GEN.next())
+public let ITEM_PLAGUE_BEARER        = compiletime(ITEM_ID_GEN.next())
+public let ITEM_VAMPIRE_LORD         = compiletime(ITEM_ID_GEN.next())
+
 public let ITEM_BURNING_ARCHER       = compiletime(ITEM_ID_GEN.next())
 public let ITEM_FROST_ARCHER         = compiletime(ITEM_ID_GEN.next())
-public let ITEM_RAISE_SKELETON_ORC = compiletime(ITEM_ID_GEN.next())
+public let ITEM_RAISE_SKELETON_ORC   = compiletime(ITEM_ID_GEN.next())
 public let ITEM_RAISE_SKELETON_MAGE  = compiletime(ITEM_ID_GEN.next())
 public let ITEM_CRIPPLE              = compiletime(ITEM_ID_GEN.next())
 public let ITEM_UNHOLY_FRENZY        = compiletime(ITEM_ID_GEN.next())
@@ -563,21 +557,33 @@ public let ITEM_ANTI_MAGIC_SHELL     = compiletime(ITEM_ID_GEN.next())
 public let ITEM_FROST_ARMOR          = compiletime(ITEM_ID_GEN.next())
 public let ITEM_DEATH_COIL           = compiletime(ITEM_ID_GEN.next())
 public let ITEM_UNHOLY_AURA          = compiletime(ITEM_ID_GEN.next())
-public let ITEM_SPAWN_GUT_CRAWLER     = compiletime(ITEM_ID_GEN.next())
+public let ITEM_SPAWN_GUT_CRAWLER    = compiletime(ITEM_ID_GEN.next())
+
+// ==================== NIGHT ELF ITEMS =================
+public let ITEM_NE_RANGER             = compiletime(ITEM_ID_GEN.next())
+public let ITEM_PRIESTESS_OF_THE_MOON = compiletime(ITEM_ID_GEN.next())
+public let ITEM_ARCHDRUID             = compiletime(ITEM_ID_GEN.next())
+public let ITEM_KEEPER_OF_THE_GROVE   = compiletime(ITEM_ID_GEN.next())
+public let ITEM_BEAR                  = compiletime(ITEM_ID_GEN.next())
+public let ITEM_OWLBEAR               = compiletime(ITEM_ID_GEN.next())
+public let ITEM_AVATAR_OF_VENGEANCE   = compiletime(ITEM_ID_GEN.next())
 
 public let ITEM_ENTANGLING_ROOT         = compiletime(ITEM_ID_GEN.next())
 public let ITEM_WAND_OF_ILLUSION        = compiletime(ITEM_ID_GEN.next())
 public let ITEM_REJUVENATION            = compiletime(ITEM_ID_GEN.next())
 
-public let ITEM_FIRE_TURTLE       = compiletime(ITEM_ID_GEN.next())
-public let ITEM_FROST_TURTLE      = compiletime(ITEM_ID_GEN.next())
-public let ITEM_RAY_OF_DISRUPTION = compiletime(ITEM_ID_GEN.next())
-public let ITEM_CHARM             = compiletime(ITEM_ID_GEN.next())
-public let ITEM_DEPTH_COMMANDER   = compiletime(ITEM_ID_GEN.next())
-public let ITEM_FREE_BLOOD_LUST      = compiletime(ITEM_ID_GEN.next())
-public let ITEM_FREE_FROST_ARMOR     = compiletime(ITEM_ID_GEN.next())
-public let ITEM_FREE_FAERIE_FIRE     = compiletime(ITEM_ID_GEN.next())
+// ==================== NAGA ITEMS =================
+public let ITEM_FIRE_TURTLE        = compiletime(ITEM_ID_GEN.next())
+public let ITEM_FROST_TURTLE       = compiletime(ITEM_ID_GEN.next())
+public let ITEM_RAY_OF_DISRUPTION  = compiletime(ITEM_ID_GEN.next())
+public let ITEM_CHARM              = compiletime(ITEM_ID_GEN.next())
+public let ITEM_DEPTH_COMMANDER    = compiletime(ITEM_ID_GEN.next())
+public let ITEM_FREE_BLOOD_LUST    = compiletime(ITEM_ID_GEN.next())
+public let ITEM_FREE_FROST_ARMOR   = compiletime(ITEM_ID_GEN.next())
+public let ITEM_FREE_FAERIE_FIRE   = compiletime(ITEM_ID_GEN.next())
+public let ITEM_MURGUL_ABILITY_MIX = compiletime(ITEM_ID_GEN.next())
 
+// ==================== BEAST ITEMS =================
 public let ITEM_PULVERIZE        = compiletime(ITEM_ID_GEN.next())
 public let ITEM_CHIEFTAIN        = compiletime(ITEM_ID_GEN.next())
 public let ITEM_QUILL_SPRAY      = compiletime(ITEM_ID_GEN.next())
@@ -590,6 +596,7 @@ public let ITEM_CORROSIVE_LIZARD = compiletime(ITEM_ID_GEN.next())
 public let ITEM_DEFENSE_ROAR     = compiletime(ITEM_ID_GEN.next())
 public let ITEM_BATTLE_ROAR      = compiletime(ITEM_ID_GEN.next())
 
+// ==================== DEMON ITEMS =================
 public let ITEM_MANA_SLAVE       = compiletime(ITEM_ID_GEN.next())
 public let ITEM_OVERLORD         = compiletime(ITEM_ID_GEN.next())
 public let ITEM_MAIDEN_OF_PAIN   = compiletime(ITEM_ID_GEN.next())

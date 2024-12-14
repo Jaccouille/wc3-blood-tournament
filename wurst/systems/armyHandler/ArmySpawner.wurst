@@ -141,7 +141,7 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_PRIESTESS_OF_THE_MOON , 0   , 3000, genList(UNIT_PRIESTESS_OF_THE_MOON , 3  ))
 
     new BTBuildingData(BUILDING_MURLOC          ,                           100 , 0    , genList(UNIT_MURLOC          , 10 ))
-    new BTBuildingData(BUILDING_MURLOC          , BUILDING_MURGUL_WARLOCK , 0   , 1500 , genList(UNIT_MURGUL_WARLOCK  , 10 ))
+    new BTBuildingData(BUILDING_MURLOC          , BUILDING_MURGUL_WARLOCK , 0   , 600 , genList(UNIT_MURGUL_WARLOCK  , 4 ))
     new BTBuildingData(BUILDING_SNAP_DRAGON     ,                           150 , 0    , genList(UNIT_SNAP_DRAGON     , 5  ))
     new BTBuildingData(BUILDING_SNAP_DRAGON          , BUILDING_HYDRA ,      0   , 1500 , genList(UNIT_HYDRA       , 1  ))
     new BTBuildingData(BUILDING_MYRMIDON        ,                           300 , 0    , genList(UNIT_MYRMIDON        , 5  ))

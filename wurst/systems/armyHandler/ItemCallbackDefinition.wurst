@@ -592,6 +592,7 @@ init
     let rexxarBattleRoarAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_BATTLE_REXXAR_ROAR)
+        u.setMana(200)
 
     itemModifyUnitMap.put(ITEM_BATTLE_ROAR, rexxarBattleRoarAction)
 
@@ -599,6 +600,7 @@ init
     let rexxarDefenseRoarAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_DEFENSE_REXXAR_ROAR)
+        u.setMana(200)
 
     itemModifyUnitMap.put(ITEM_DEFENSE_ROAR, rexxarDefenseRoarAction)
 

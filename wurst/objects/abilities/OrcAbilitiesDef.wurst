@@ -20,7 +20,7 @@ import UnitObjEditingCommon
 
     let murgulWarlockCount = BTBuildingData.getUnitCount(BUILDING_MURGUL_WARLOCK)
     let itmFree = createBasicItem(ITEM_FREE_BLOOD_LUST)
-        ..setItemCost(0, 0, 1, murgulWarlockCount, murgulWarlockCount)
+        ..setItemCost(0, 0, murgulWarlockCount, 1, 1)
         ..setNameEnhance("Z", "Replace autocasted spell with Bloodlust")
         ..setInterfaceIcon(Icons.bTNBloodLust)
 

@@ -288,6 +288,11 @@ import UnitObjEditingCommon
 
     abilTooltipMap.put(ABIL_ACID_SPIT_ORB, tgen.generateFullTooltip())
 
+    createBasicItem(ITEM_MURGUL_ABILITY_MIX)
+        ..setItemCost(0, 0, 1, 1, 1)
+        ..setTooltipExtended("Assign 1 Slow, 1 Bloodlust, 1 Faerie Fire, 1 Frost Armor")
+        ..setNameEnhance("A", "Murgul Ability Mix")
+        ..setInterfaceIcon(Icons.bTNSpiritLink)
 
 init
     EventListener.onTargetCast(ABIL_CHARM) (unit caster, unit target) ->
