@@ -218,6 +218,102 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
         if roundController.currentRound.roundParticipant.isEmpty()
             onAllUnitDead.execute(winner)
 
+// Handle the death event
+function handleUnitDeath()
+    let killer = EventData.getKillingUnit()
+    let killerOwner = killer.getOwner().getTruePlayerFromDummy()
+    let dyingUnit = EventData.getDyingUnit()
+    let pData = pDatas.get(dyingUnit.getOwner().getTruePlayerFromDummy())
+
+    // Handle building deaths
+    if BTBuildingData.unitIdToDataMap.has(dyingUnit.getTypeId())
+        handleBuildingDeath(dyingUnit, killer, pData)
+    else if dyingUnit.getPointValue() > 0
+        handleUnitDeathBounty(dyingUnit, killer, killerOwner, pData)
+
+// Handle the death of a building
+function handleBuildingDeath(unit dyingUnit, unit killer, PlayerData pData)
+    let buildingData = BTBuildingData.unitIdToDataMap.get(dyingUnit.getTypeId())
+    pData.subArmyPoints(buildingData.buildingArmyPoints)
+    pData.buildingList.remove(dyingUnit)
+
+    // Process resources for builder or dummy unit
+    if killer == pData.builder or killer.getTypeId() == DUMMY_UNIT_ID
+        distributeBuildingResources(dyingUnit, pData)
+
+    // Cleanup related resources
+    if ItemStockHandler.hasUnit(dyingUnit)
+        destroy ItemStockHandler.unitToItemStockMap.get(dyingUnit)
+
+    if playerToArmyPreviewer.has(dyingUnit.getOwner())
+        playerToArmyPreviewer.get(dyingUnit.getOwner()).shouldRefresh = true
+
+// Distribute resources upon building death
+function distributeBuildingResources(unit dyingUnit, PlayerData pData)
+    var goldAmount = dyingUnit.getMaxHP().toInt() - 100
+    var bloodAmount = dyingUnit.getMaxMana().toInt()
+    var itemArmyPoints = 0
+
+    // Process inventory items for resources
+    for itm in dyingUnit.getInventory()
+        if itm != null
+            let chargesFactor = itm.getCharges() div BlzGetItemIntegerField(itm, ITEM_IF_PRIORITY)
+            goldAmount += getItemGoldCost(itm.getTypeId()) * chargesFactor
+            bloodAmount += getItemLumberCost(itm.getTypeId()) * chargesFactor
+            if itm.getLife() > 1
+                itemArmyPoints += itm.getLife().toInt() * itm.getCharges()
+    pData.subArmyPoints(itemArmyPoints)
+
+    // Display resource gain as text tags
+    displayResourceTags(dyingUnit.getPos3Real(), goldAmount, bloodAmount, pData)
+
+// Display gold and blood resource tags
+function displayResourceTags(vec3 _pos, int goldAmount, int bloodAmount, PlayerData pData)
+    var pos = _pos
+    if goldAmount > 0
+        pData._p.addGold(goldAmount)
+        createGoldTag(pos, "+" + goldAmount.toString(), 12, pData._p)
+        pos = pos.add(0, 50, 0)
+
+    if bloodAmount > 0
+        pData._p.addLumber(bloodAmount)
+        createBloodPointTag(pos, "+" + bloodAmount.toString(), 12, pData._p)
+
+// Handle unit death with bounty and related actions
+function handleUnitDeathBounty(unit dyingUnit, unit killer, player killerOwner, PlayerData pData)
+    // Add blood points bounty for eligible kills
+    if dyingUnit.hasAbility(ABIL_DEMONIC_ATTRITION) and killer == dyingUnit
+        dyingUnit.remove()
+        flashEffect(Abilities.doomDeath, dyingUnit.getPos())
+
+        // Remove unit from player's spawned list
+        if pData.spawnedUnits.has(dyingUnit)
+            pData.spawnedUnits.remove(dyingUnit)
+            checkIfPlayerDefeated(pData, killerOwner)
+        else
+            Log.debug("Cannot remove " + dyingUnit.getName())
+        return
+
+    if killerOwner != ALTAR_PLAYER
+        and roundController.currentRound instanceof NormalRound
+        and killerOwner != dyingUnit.getOwner()
+        and not IsUnitIllusion(dyingUnit)
+        if dyingUnit.getPointValue() > 0
+            if dyingUnit.getOwner() != killerOwner and killer != null
+                let bounty = getBounty(dyingUnit)
+                pDatas.get(killerOwner).addRoundBloodPoints(bounty)
+                createBountyTag(dyingUnit, killerOwner)
+
+    // Remove unit from player's spawned list
+    if pData.spawnedUnits.has(dyingUnit)
+        pData.spawnedUnits.remove(dyingUnit)
+        checkIfPlayerDefeated(pData, killerOwner)
+    else
+        Log.debug("Cannot remove " + dyingUnit.getName())
+
+    // Perform custom actions for the killer unit
+    customAction(killer, dyingUnit, pData)
+
 
 public function initUnitDeathTrigger()
     OnRoundStart.add() (Round round) ->
@@ -228,62 +324,4 @@ public function initUnitDeathTrigger()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
     ..addAction() ->
-        let killer = EventData.getKillingUnit()
-        let killerOwner = killer.getOwner().getTruePlayerFromDummy()
-        let dyingUnit = EventData.getDyingUnit()
-
-        let pData = pDatas.get(dyingUnit.getOwner().getTruePlayerFromDummy())
-
-        // Is a building
-        if BTBuildingData.unitIdToDataMap.has(dyingUnit.getTypeId())
-            pData.subArmyPoints(BTBuildingData.unitIdToDataMap.get(dyingUnit.getTypeId()).buildingArmyPoints)
-            pData.buildingList.remove(dyingUnit)
-
-            if killer == pData.builder or killer.getTypeId() == DUMMY_UNIT_ID
-                var goldAmount = dyingUnit.getMaxHP().toInt() - 100
-                var bloodAmount = dyingUnit.getMaxMana().toInt()
-                var itmArmyPts = 0
-                for t in dyingUnit.getInventory()
-                    if t != null
-                        let goldCost = getItemGoldCost(t.getTypeId()) * (t.getCharges() / BlzGetItemIntegerField(t, ITEM_IF_PRIORITY)).toInt()
-                        goldAmount += goldCost
-                        let lumberCost = getItemLumberCost(t.getTypeId()) *  (t.getCharges() / BlzGetItemIntegerField(t, ITEM_IF_PRIORITY)).toInt()
-                        bloodAmount += lumberCost
-                        if t.getLife() > 1
-                            itmArmyPts += t.getLife().toInt() * t.getCharges()
-                pData.subArmyPoints(itmArmyPts)
-
-                // Visual Money and Blood Texttag
-                var pos = dyingUnit.getPos3Real()
-                if goldAmount > 0
-                    pData._p.addGold(goldAmount)
-                    createGoldTag(pos, "+" + goldAmount.toString(), 12, pData._p)
-                    pos = pos.add(0, 50, 0)
-                if bloodAmount > 0
-                    pData._p.addLumber(bloodAmount)
-                    createBloodPointTag(pos, "+" + bloodAmount.toString(), 12, pData._p)
-
-            if ItemStockHandler.hasUnit(dyingUnit)
-                destroy ItemStockHandler.unitToItemStockMap.get(dyingUnit)
-            if playerToArmyPreviewer.has(dyingUnit.getOwner())
-                playerToArmyPreviewer.get(dyingUnit.getOwner()).shouldRefresh = true
-        else if dyingUnit.getPointValue() > 0
-
-            // Add blood points bounty
-            if killerOwner != ALTAR_PLAYER
-                and roundController.currentRound instanceof NormalRound
-                and killerOwner != dyingUnit.getOwner()
-                and not IsUnitIllusion(dyingUnit)
-                if dyingUnit.getPointValue() > 0
-                    if dyingUnit.getOwner() != killerOwner and killer != null
-                        pDatas.get(killerOwner).addRoundBloodPoints(getBounty(dyingUnit))
-                        createBountyTag(dyingUnit, killerOwner)
-
-            if pData.spawnedUnits.has(dyingUnit)
-                pData.spawnedUnits.remove(dyingUnit)
-                checkIfPlayerDefeated(pData, killerOwner)
-            else
-                Log.debug("Cannot remove " + dyingUnit.getName())
-
-            // Custom Action affecting killer unit
-            customAction(killer, dyingUnit, pData)
+        handleUnitDeath()

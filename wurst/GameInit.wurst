@@ -85,7 +85,7 @@ init
                 true,
                 false
             ).start()
-        initCodexUI()
+        initWikiUI()
 
     GameStates.modesSelection.onExit() (state) ->
         playGameInitSound()

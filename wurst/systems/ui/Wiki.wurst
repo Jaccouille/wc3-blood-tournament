@@ -150,104 +150,103 @@ function showFrame(framehandle baseFrame, string frameName)
         if childFrame.getName() == frameName
             childFrame.show(_p)
 
-public function initCodexUI()
+public function initWikiUI()
     loadTOCFile("Templates.toc")
     // if (loadTOCFile("Templates.toc" )) == false
     //     print("Loading Templates Toc file failed")
-    doAfter(1) ->
-        let baseFrame = createFrame("FRAME", "baseFrame", GAME_UI, "", 0)
-            ..setAbsPoint(FRAMEPOINT_TOP, vec2(0.2, 0.535))
-            ..setSize(FRAME_SIZE.x, FRAME_SIZE.y)
-            ..hide()
+    let baseFrame = createFrame("FRAME", "baseFrame", GAME_UI, "", 0)
+        ..setAbsPoint(FRAMEPOINT_TOP, vec2(0.2, 0.535))
+        ..setSize(FRAME_SIZE.x, FRAME_SIZE.y)
+        ..hide()
 
-        createFrame("HeroPickMenuBackdrop", baseFrame, 0, 0)
-            ..setAllPoints(baseFrame)
+    createFrame("HeroPickMenuBackdrop", baseFrame, 0, 0)
+        ..setAllPoints(baseFrame)
 
-        createFrame("ScriptDialogButton", GAME_UI, 0, 0)
-        ..setSize(0.12, 0.025)
-        // ..createToolTipFrame("Documentation", DOC_TEXT)
-        ..setAbsPoint(FRAMEPOINT_TOP, vec2(0.1, 0.17))
-        ..onClick() ->
-            let p = GetTriggerPlayer()
-            if baseFrame.isVisible(p)
-                baseFrame.hide(p)
-            else
-                baseFrame.show(p)
+    createFrame("ScriptDialogButton", GAME_UI, 0, 0)
+    ..setSize(0.12, 0.025)
+    // ..createToolTipFrame("Documentation", DOC_TEXT)
+    ..setAbsPoint(FRAMEPOINT_TOP, vec2(0.1, 0.17))
+    ..onClick() ->
+        let p = GetTriggerPlayer()
+        if baseFrame.isVisible(p)
+            baseFrame.hide(p)
+        else
+            baseFrame.show(p)
 
-        getFrame("ScriptDialogButtonText", 0)
-            ..setText("Wiki")
+    getFrame("ScriptDialogButtonText", 0)
+        ..setText("Wiki")
 
-        let headerFrame = createFrame("FRAME", "headerFrame", baseFrame, "", 0)
-            ..setPoint(FRAMEPOINT_TOP, baseFrame, FRAMEPOINT_TOP)
-            ..setSize(FRAME_SIZE.x, 0.07)
-            ..show()
+    let headerFrame = createFrame("FRAME", "headerFrame", baseFrame, "", 0)
+        ..setPoint(FRAMEPOINT_TOP, baseFrame, FRAMEPOINT_TOP)
+        ..setSize(FRAME_SIZE.x, 0.07)
+        ..show()
 
-        let contentFrames = new LinkedList<framehandle>
-            ..add(createFrameTemplate("contentFrameHuman"    , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame)..show())
-            ..add(createFrameTemplate("contentFrameOrc"      , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
-            ..add(createFrameTemplate("contentFrameUndead"   , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
-            ..add(createFrameTemplate("contentFrameNightElf" , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
-            ..add(createFrameTemplate("contentFrameNaga"     , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
-            ..add(createFrameTemplate("contentFrameBeast"     , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
-            ..add(createFrameTemplate("contentFrameDemon"     , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
+    let contentFrames = new LinkedList<framehandle>
+        ..add(createFrameTemplate("contentFrameHuman"    , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame)..show())
+        ..add(createFrameTemplate("contentFrameOrc"      , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
+        ..add(createFrameTemplate("contentFrameUndead"   , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
+        ..add(createFrameTemplate("contentFrameNightElf" , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
+        ..add(createFrameTemplate("contentFrameNaga"     , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
+        ..add(createFrameTemplate("contentFrameBeast"     , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
+        ..add(createFrameTemplate("contentFrameDemon"     , FRAME_SIZE, CONTENT_FRAME_SIZE, baseFrame))
 
-        new TableLayout(FRAME_SIZE.x, 0.07)
-            ..row()
-            ..add(btn("Human")   ..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(0).getName()) ) )
-            ..add(btn("Orc")     ..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(1).getName()) ) )
-            ..add(btn("Undead")  ..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(2).getName()) ) )
-            ..add(btn("Night Elf")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(3).getName()) ) )
-            ..row()
-            ..add(btn("Naga")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(4).getName()) ) )
-            ..add(btn("Beast")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(5).getName()) ) )
-            ..add(btn("Demon")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(6).getName()) ) )
-            ..applyTo(headerFrame)
+    new TableLayout(FRAME_SIZE.x, 0.07)
+        ..row()
+        ..add(btn("Human")   ..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(0).getName()) ) )
+        ..add(btn("Orc")     ..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(1).getName()) ) )
+        ..add(btn("Undead")  ..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(2).getName()) ) )
+        ..add(btn("Night Elf")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(3).getName()) ) )
+        ..row()
+        ..add(btn("Naga")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(4).getName()) ) )
+        ..add(btn("Beast")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(5).getName()) ) )
+        ..add(btn("Demon")..setWidth(0.07)..onClick(() -> showFrame(baseFrame, contentFrames.get(6).getName()) ) )
+        ..applyTo(headerFrame)
 
-        // Human Frame
-        new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
-            ..addPaletteSection(humanUnit     , MAX_CELL)
-            ..addPaletteSection(humanUnitsUpgrades     , MAX_CELL)
-            ..addPaletteSection(humanAbilitiesUpgrades     , MAX_CELL)
-            ..applyTo(contentFrames.get(0))
+    // Human Frame
+    new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
+        ..addPaletteSection(humanUnit     , MAX_CELL)
+        ..addPaletteSection(humanUnitsUpgrades     , MAX_CELL)
+        ..addPaletteSection(humanAbilitiesUpgrades     , MAX_CELL)
+        ..applyTo(contentFrames.get(0))
 
-        // Orc Frame
-        new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
-            ..addPaletteSection(orcUnit     , MAX_CELL)
-            ..addPaletteSection(orcUnitsUpgrades     , MAX_CELL)
-            ..addPaletteSection(orcAbilitiesUpgrades     , MAX_CELL)
-            ..applyTo(contentFrames.get(1))
+    // Orc Frame
+    new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
+        ..addPaletteSection(orcUnit     , MAX_CELL)
+        ..addPaletteSection(orcUnitsUpgrades     , MAX_CELL)
+        ..addPaletteSection(orcAbilitiesUpgrades     , MAX_CELL)
+        ..applyTo(contentFrames.get(1))
 
-        // Undead Frame
-        new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
-            ..addPaletteSection(undeadUnit     , MAX_CELL)
-            ..addPaletteSection(undeadUnitsUpgrades     , MAX_CELL)
-            ..addPaletteSection(undeadAbilitiesUpgrades     , MAX_CELL)
-            ..applyTo(contentFrames.get(2))
+    // Undead Frame
+    new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
+        ..addPaletteSection(undeadUnit     , MAX_CELL)
+        ..addPaletteSection(undeadUnitsUpgrades     , MAX_CELL)
+        ..addPaletteSection(undeadAbilitiesUpgrades     , MAX_CELL)
+        ..applyTo(contentFrames.get(2))
 
-        // NightElf Frame
-        new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
-            ..addPaletteSection(nightElfUnit     , MAX_CELL)
-            ..addPaletteSection(nightElfUnitsUpgrades     , MAX_CELL)
-            ..addPaletteSection(nightElfAbilitiesUpgrades     , MAX_CELL)
-            ..applyTo(contentFrames.get(3))
+    // NightElf Frame
+    new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
+        ..addPaletteSection(nightElfUnit     , MAX_CELL)
+        ..addPaletteSection(nightElfUnitsUpgrades     , MAX_CELL)
+        ..addPaletteSection(nightElfAbilitiesUpgrades     , MAX_CELL)
+        ..applyTo(contentFrames.get(3))
 
-        // Naga Frame
-        new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
-            ..addPaletteSection(nagaUnit     , MAX_CELL)
-            ..addPaletteSection(nagaUnitsUpgrades     , MAX_CELL)
-            ..addPaletteSection(nagaAbilitiesUpgrades     , MAX_CELL)
-            ..applyTo(contentFrames.get(4))
+    // Naga Frame
+    new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
+        ..addPaletteSection(nagaUnit     , MAX_CELL)
+        ..addPaletteSection(nagaUnitsUpgrades     , MAX_CELL)
+        ..addPaletteSection(nagaAbilitiesUpgrades     , MAX_CELL)
+        ..applyTo(contentFrames.get(4))
 
-        // Beast Frame
-        new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
-            ..addPaletteSection(beastUnit     , MAX_CELL)
-            ..addPaletteSection(beastUnitsUpgrades     , MAX_CELL)
-            ..addPaletteSection(beastAbilitiesUpgrades     , MAX_CELL)
-            ..applyTo(contentFrames.get(5))
+    // Beast Frame
+    new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
+        ..addPaletteSection(beastUnit     , MAX_CELL)
+        ..addPaletteSection(beastUnitsUpgrades     , MAX_CELL)
+        ..addPaletteSection(beastAbilitiesUpgrades     , MAX_CELL)
+        ..applyTo(contentFrames.get(5))
 
-        // Demon Frame
-        new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
-            ..addPaletteSection(demonUnit     , MAX_CELL)
-            ..addPaletteSection(demonUnitsUpgrades     , MAX_CELL)
-            // ..addPaletteSection(demonAbilitiesUpgrades     , MAX_CELL)
-            ..applyTo(contentFrames.get(6))
+    // Demon Frame
+    new TableLayout(FRAME_SIZE.x, FRAME_SIZE.y)
+        ..addPaletteSection(demonUnit     , MAX_CELL)
+        ..addPaletteSection(demonUnitsUpgrades     , MAX_CELL)
+        // ..addPaletteSection(demonAbilitiesUpgrades     , MAX_CELL)
+        ..applyTo(contentFrames.get(6))

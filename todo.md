@@ -14,17 +14,21 @@
 - Review all tooltip, set a norm to respect
 - There's a typo in the knockout stage it says "Demi Finals" not sure if intended.
 - Display some unit information like "Ghost unit" on the front panel
-- remove movement speed tooltip
 
-- Eredar base unit spell + AoE burning damage on attack for upgrades
-- Succubus spell + first tier unit, succubus boss having silence
-- Felhound moved to summons
+- ADd buff for the various acid bomb ability like
+- ADd feeding count (blood point given)
+- Howl of terror animation name
+- Rampage doesn't work
+- Beast lag
+- Abil icon for bounce & inline damage
+
+- rexxar hit in a line
+- rexxar mana when no ability
+- Corrosive lizard buff
+- Piggy splash hit allies
 
 - Paladin death rework
-- Naga charm special effect not as unit attachment
-- Fix naga charm unit ownership transfert
-- Change hydra to one unit, artillery like with acid fx as burning oil
-- Change turtle a bit...?
+- Change turtle a bit...? -> I don't remember
 
 - Elim Dummy player
 - bug elim round
