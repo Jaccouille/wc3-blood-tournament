@@ -13,3 +13,4 @@ ItemStackingEnabled=1
 DefendDeflection=1
 BoneDecayTime=15
 DrainTransfersMana=1
+RelativeUpgradeCost=1

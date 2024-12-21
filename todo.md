@@ -20,11 +20,14 @@
 - Howl of terror animation name
 - Rampage doesn't work
 - Beast lag
-- Abil icon for bounce & inline damage
 
-- rexxar hit in a line
-- rexxar mana when no ability
-- Corrosive lizard buff
+- Selling unfinished building doesn't refund army pts
+
+- Orb Abilities tooltip + Icon
+- Rework officer to replace/promote in the middle
+- Add upgrade to naga siren
+- gameconfig vote
+- Add my custom heart particle as a buff effect to charmed target
 - Piggy splash hit allies
 
 - Paladin death rework
