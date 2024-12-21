@@ -476,6 +476,7 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_DISRUPTION_RAY)
         u.addAbility(ABIL_AC_DISRUPTION_RAY)
+        u.removeAbility(ABIL_FROST_BOLT)
         u.issueImmediateOrderById(OrderIds.autodispelon)
 
     itemModifyUnitMap.put(ITEM_RAY_OF_DISRUPTION, rayOfDisruptionAction)
@@ -496,6 +497,7 @@ init
     let bloodLustAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_BLOODLUST)
+        u.removeAbility(ABIL_SLOW)
         u.issueImmediateOrderById(OrderIds.bloodluston)
 
     itemModifyUnitMap.put(ITEM_FREE_BLOOD_LUST, bloodLustAction)
@@ -503,6 +505,7 @@ init
     let frostArmorAction2 = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_FROST_ARMOR)
+        u.removeAbility(ABIL_SLOW)
         u.issueImmediateOrderById(OrderIds.frostarmoron)
 
     itemModifyUnitMap.put(ITEM_FREE_FROST_ARMOR, frostArmorAction2)
@@ -510,6 +513,7 @@ init
     let faeriefireAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_FAERIE_FIRE)
+        u.removeAbility(ABIL_SLOW)
         u.issueImmediateOrderById(OrderIds.faeriefireon)
 
     itemModifyUnitMap.put(ITEM_FREE_FAERIE_FIRE, faeriefireAction)
@@ -548,6 +552,7 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_SPIRIT_LINK)
         u.addAbility(ABIL_AC_SPIRIT_LINK)
+        u.removeAbility(ABIL_BANISH)
         u.issueImmediateOrderById(OrderIds.innerfireon)
 
     itemModifyUnitMap.put(ITEM_SPIRIT_LINK, spiritLinkAction)
@@ -592,6 +597,7 @@ init
     let rexxarBattleRoarAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_BATTLE_REXXAR_ROAR)
+        u.setMaxMana(200)
         u.setMana(200)
 
     itemModifyUnitMap.put(ITEM_BATTLE_ROAR, rexxarBattleRoarAction)
@@ -600,6 +606,7 @@ init
     let rexxarDefenseRoarAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_DEFENSE_REXXAR_ROAR)
+        u.setMaxMana(200)
         u.setMana(200)
 
     itemModifyUnitMap.put(ITEM_DEFENSE_ROAR, rexxarDefenseRoarAction)

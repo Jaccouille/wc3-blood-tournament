@@ -1,0 +1,124 @@
+package SpellView
+
+import ClosureTimers
+import ColorUtils
+import BTAbilities
+
+framehandle tooltipFrameText
+
+function initTooltipBox() returns framehandle
+    let tooltipBackdrop = createFrame("BoxedText", GAME_UI, 0, 0)
+
+    tooltipFrameText = BlzCreateFrameByType("TEXT", "MyScriptDialogButtonTooltip", tooltipBackdrop, "", 0)
+    BlzFrameSetSize(tooltipFrameText, 0.25, 0)
+    tooltipBackdrop.setPoint(FRAMEPOINT_BOTTOMLEFT, tooltipFrameText, FRAMEPOINT_BOTTOMLEFT, -0.005, -0.006)
+    tooltipBackdrop.setPoint(FRAMEPOINT_TOPRIGHT, tooltipFrameText, FRAMEPOINT_TOPRIGHT, 0.005, 0.005)
+    tooltipFrameText.setAbsPoint(FRAMEPOINT_BOTTOMRIGHT, 0.79, 0.18)
+    tooltipBackdrop.setVisible(false)
+    return tooltipBackdrop
+
+function setTooltipText(int abilId)
+    let text = GetAbilityName(abilId).color(SPECIAL_COLOR) + "\n\n" + BlzGetAbilityExtendedTooltip(abilId, 0)
+    tooltipFrameText.setText(text)
+
+public function initSpellView()
+    if loadTOCFile("TasSpellView.toc") == false
+        print("TasSpellView toc file loading failure")
+
+    let parentFunSimple = GetHandleId(BlzGetFrameByName("CommandBarFrame", 0)) > 0
+        ? BlzGetFrameByName("CommandBarFrame", 0)
+        : BlzGetFrameByName("ConsoleUI", 0)
+
+    let parentSimple = createSimpleFrame("TasSpellViewSimpleFrame",
+        parentFunSimple, 0)
+    let parent = createFrame("FRAME", "TasSpellViewFrame", GAME_UI, "", 0)
+
+    for i = 0 to 11
+        let frame = BlzCreateSimpleFrame("TasSpellViewButton", parentSimple, i)
+        frame.setPoint(FRAMEPOINT_CENTER, getOriginFrame(ORIGIN_FRAME_COMMAND_BUTTON, i), FRAMEPOINT_CENTER)
+        let tooltipFrame = BlzCreateFrameByType("SIMPLEFRAME", "TasSpellViewButtonToolTip", frame, "", i)
+        // let tooltipFrame = createSimpleFrame("TasSpellViewButtonToolTip", frame, i)
+        frame.setLevel(6) // reforged stuff
+        getFrame("TasSpellViewButtonOverLayFrame", i).setLevel(7) // reforged stuff
+        frame.setTooltip(tooltipFrame)
+        tooltipFrame.setVisible(false)
+
+        getFrame("TasSpellViewButtonBackdrop", i).setTexture("", 0, false)
+        createFrame("TasSpellViewButtonCooldown", parent, 0, i).hide()
+
+        // reserve HandleIds
+        BlzGetFrameByName("TasSpellViewButtonBackdrop", i)
+        BlzGetFrameByName("TasSpellViewButtonTextOverLay", i)
+        BlzGetFrameByName("TasSpellViewButtonOverLayFrame", i)
+        BlzGetFrameByName("TasSpellViewButtonChargeBox", i)
+        // BlzGetFrameByName("TasSpellViewButtonChargeText", i)
+
+    let toolTipBox = initTooltipBox()
+
+    if getFrame("TasSpellViewButtonBackdrop", 1).getHandleId() == 0
+        Log.info("TasSpellViewButtonBackdrop not found")
+    parent.hide()
+    parentSimple.hide()
+
+    let showCooldown = true
+    let g = CreateGroup()
+
+    doPeriodically(0.1) (CallbackPeriodic cb) ->
+        GroupEnumUnitsSelected(g, GetLocalPlayer(), null)
+        let u = FirstOfGroup(g)
+        GroupClear(g)
+        var foundTooltip = false
+
+        var hasControl = u.getOwner() == GetLocalPlayer()
+        if not hasControl
+            for i = 0 to 11
+                // Log.info("idx : " + i.toString() + " isVisible : " + getOriginFrame(ORIGIN_FRAME_COMMAND_BUTTON, i).isVisible().toString())
+                if getOriginFrame(ORIGIN_FRAME_COMMAND_BUTTON, i).isVisible()
+                    hasControl = true
+
+        // let showSpellView = not hasControl
+        let showSpellView = true
+        // Log.info("showSpellView : " + showSpellView.toString() + " has control : " + hasControl.toString())
+        parent.setVisible(showSpellView)
+        parentSimple.setVisible(showSpellView)
+        // Log.info("parent : " + parent.isVisible().toString() + " parentSimple : " + parent.isVisible().toString())
+        if showSpellView
+            for i = 0 to 11
+                let btn = BlzGetFrameByName("TasSpellViewButton", i)
+
+                if abilTooltipToDisplay.hasInt(u.getTypeId(), 0)
+                    and u.hasAbility(abilTooltipToDisplay.loadInt(u.getTypeId(), i))
+                    btn.show()
+                    let abilId = abilTooltipToDisplay.loadInt(u.getTypeId(), i)
+                    let abilLevel = GetUnitAbilityLevel(u, abilId)
+
+                    if BlzFrameIsVisible(BlzGetFrameByName("TasSpellViewButtonToolTip", i))
+                        foundTooltip = true
+                        setTooltipText(abilId)
+                        toolTipBox.setVisible(true)
+
+                    if showCooldown
+                        let cdRemain = BlzGetUnitAbilityCooldownRemaining(u, abilId)
+                        if cdRemain > 0
+                            let cdTotal = BlzGetUnitAbilityCooldown(u, abilId, abilLevel - 1)
+                            let cdFrame = getFrame("TasSpellViewButtonCooldown", i)
+                            cdFrame.show()
+                            cdFrame.setValue(100 - (cdRemain / cdTotal) * 100)
+                        else
+                            getFrame("TasSpellViewButtonCooldown", i).hide()
+                    else
+                        getFrame("TasSpellViewButtonCooldown", i).hide()
+                    getFrame("TasSpellViewButtonOverLayFrame", i).show()
+                    // getFrame("TasSpellViewButtonChargeText", i).setText(abilLevel.toString())
+                    let backdrop = getFrame("TasSpellViewButtonBackdrop", i)
+                    backdrop.setTexture(BlzGetAbilityIcon(abilId), 0, false)
+                    // Log.info("Mana : " + u.getMana().toString() + " Cost : " + BlzGetAbilityManaCost(abilId, 0).toString())
+                    if u.getMana() >= BlzGetAbilityManaCost(abilId, abilLevel - 1)
+                        backdrop.setVertexColor(BlzConvertColor(255, 255, 255, 255))
+                    else
+                        backdrop.setVertexColor(BlzConvertColor(255, 75, 75, 255))
+                else
+                    btn.hide()
+                    getFrame("TasSpellViewButtonCooldown", i).hide()
+                if not foundTooltip
+                    toolTipBox.setVisible(false)

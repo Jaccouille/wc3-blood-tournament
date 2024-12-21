@@ -1,0 +1,164 @@
+//TasSpellView
+
+Frame "SIMPLEBUTTON" "TasSpellViewButton" {
+	Width 0.04,
+	Height 0.04,
+	DecorateFileNames,
+	Texture "TasSpellViewButtonBackdrop" { }
+
+	Frame "SIMPLEFRAME" "TasSpellViewButtonOverLayFrame" {
+		SetAllPoints,
+		DecorateFileNames,
+        Layer "ARTWORK" {
+            String "TasSpellViewButtonTextOverLay" {
+                Text "",
+                FontJustificationV JUSTIFYMIDDLE,
+                FontJustificationH JUSTIFYCENTER,
+                Font "MasterFont", 0.02,
+            }
+        }
+	}
+
+}
+
+
+
+Frame "FRAME" "TasSpellViewTooltipFrame" {
+    LayerStyle "IGNORETRACKEVENTS",
+    Frame "BACKDROP" "TasSpellViewTooltipBox" {
+        DecorateFileNames,
+        BackdropTileBackground,
+        BackdropBackground  "ToolTipBackground",
+        BackdropCornerFlags "UL|UR|BL|BR|T|L|B|R",
+        BackdropCornerSize  0.01,
+        BackdropBackgroundSize  0.256,
+        BackdropBackgroundInsets 0.0003 0.0003 0.0003 0.0003,
+        BackdropEdgeFile  "ToolTipBorder",
+        BackdropBlendAll,
+        Frame "TEXT" "TasSpellViewTooltipText"  {
+            FrameFont "InfoPanelTextFont", 0.011, "",
+            FontColor 1.0 1.0 1.0 1.0,
+            FontShadowColor 0.0 0.0 0.0 0.9,
+            FontShadowOffset 0.001 -0.001,
+            LayerStyle "IGNORETRACKEVENTS",
+            Width 0.2,
+            DecorateFileNames,
+        }
+        Frame "BACKDROP" "TasSpellViewTooltipSeperator" {
+            Height 0.001,
+            UseActiveContext,
+            SetPoint BOTTOMLEFT, "TasSpellViewTooltipText", TOPLEFT, 0, 0.005,
+            SetPoint BOTTOMRIGHT, "TasSpellViewTooltipText", TOPRIGHT, 0, 0.005,
+
+            BackdropBackground "replaceabletextures\teamcolor\teamcolor08",
+        }
+        Frame "BACKDROP" "TasSpellViewTooltipManaIcon" {
+            Width 0.015,
+            Height 0.015,
+            UseActiveContext,
+            SetPoint BOTTOMLEFT, "TasSpellViewTooltipSeperator", TOPLEFT, 0, 0.005,
+            DecorateFileNames,
+            BackdropBackground "ToolTipManaIcon",
+            BackdropBlendAll,
+        }
+        Frame "BACKDROP" "TasSpellViewTooltipCooldownIcon" {
+            Width 0.015,
+            Height 0.015,
+            UseActiveContext,
+            SetPoint LEFT, "TasSpellViewTooltipManaIcon", RIGHT, 0.042, 0,
+            BackdropBackground "ui\widgets\battlenet\bnet-tournament-clock",
+            BackdropBlendAll,
+        }
+        Frame "BACKDROP" "TasSpellViewTooltipRangeIcon" {
+            Width 0.015,
+            Height 0.015,
+            UseActiveContext,
+            SetPoint LEFT, "TasSpellViewTooltipCooldownIcon", RIGHT, 0.042, 0,
+            BackdropBackground "replaceabletextures\commandbuttons\btnload",
+            BackdropBlendAll,
+        }
+        Frame "BACKDROP" "TasSpellViewTooltipAreaIcon" {
+            Width 0.015,
+            Height 0.015,
+            UseActiveContext,
+            SetPoint LEFT, "TasSpellViewTooltipRangeIcon", RIGHT, 0.042, 0,
+            BackdropBackground "replaceabletextures\selection\spellareaofeffect_undead",
+            BackdropBlendAll,
+        }
+
+
+        Frame "TEXT" "TasSpellViewTooltipManaText" {
+            FontColor 1.0 1.0 1.0 1.0,
+            FontShadowColor 0.0 0.0 0.0 0.9,
+            FontShadowOffset 0.001 -0.001,
+            LayerStyle "IGNORETRACKEVENTS",
+            UseActiveContext,
+            SetPoint LEFT, "TasSpellViewTooltipManaIcon", RIGHT, 0.005, 0,
+            Text "Mana",
+            DecorateFileNames,
+            FrameFont "InfoPanelTextFont", 0.011, "",
+        }
+        Frame "TEXT" "TasSpellViewTooltipCooldownText" {
+            FontColor 1.0 1.0 1.0 1.0,
+            FontShadowColor 0.0 0.0 0.0 0.9,
+            FontShadowOffset 0.001 -0.001,
+            LayerStyle "IGNORETRACKEVENTS",
+            UseActiveContext,
+            SetPoint LEFT, "TasSpellViewTooltipCooldownIcon", RIGHT, 0.005, 0,
+            DecorateFileNames,
+            FrameFont "InfoPanelTextFont", 0.011, "",
+            Text "Cooldown",
+        }
+        Frame "TEXT" "TasSpellViewTooltipRangeText" {
+            FontColor 1.0 1.0 1.0 1.0,
+            FontShadowColor 0.0 0.0 0.0 0.9,
+            FontShadowOffset 0.001 -0.001,
+            LayerStyle "IGNORETRACKEVENTS",
+            UseActiveContext,
+            SetPoint LEFT, "TasSpellViewTooltipRangeIcon", RIGHT, 0.005, 0,
+            DecorateFileNames,
+            FrameFont "InfoPanelTextFont", 0.011, "",
+            Text "Range",
+        }
+         Frame "TEXT" "TasSpellViewTooltipAreaText" {
+            FontColor 1.0 1.0 1.0 1.0,
+            FontShadowColor 0.0 0.0 0.0 0.9,
+            FontShadowOffset 0.001 -0.001,
+            LayerStyle "IGNORETRACKEVENTS",
+            UseActiveContext,
+            SetPoint LEFT, "TasSpellViewTooltipAreaIcon", RIGHT, 0.005, 0,
+            DecorateFileNames,
+            FrameFont "InfoPanelTextFont", 0.011, "",
+            Text "Range",
+        }
+        Frame "BACKDROP" "TasSpellViewTooltipIcon" {
+            Width 0.035,
+            Height 0.035,
+            UseActiveContext,
+            SetPoint BOTTOMLEFT, "TasSpellViewTooltipSeperator", TOPLEFT, 0, 0.021,
+        }
+        Frame "TEXT" "TasSpellViewTooltipName" {
+            FontColor 1.0 1.0 1.0 1.0,
+            FontShadowColor 0.0 0.0 0.0 0.9,
+            FontShadowOffset 0.001 -0.001,
+            LayerStyle "IGNORETRACKEVENTS",
+            UseActiveContext,
+            SetPoint TOPLEFT, "TasSpellViewTooltipIcon", TOPRIGHT, 0.005, -0.002,
+            SetPoint BOTTOMRIGHT, "TasSpellViewTooltipSeperator", TOPRIGHT, -0.005, 0.021,
+            DecorateFileNames,
+            FontJustificationH JUSTIFYCENTER,
+            FontJustificationV JUSTIFYMIDDLE,
+            FrameFont "InfoPanelTextFont", 0.011, "",
+        }
+    }
+}
+
+Frame "STATUSBAR" "TasSpellViewButtonCooldown" {
+    Width 0.04,
+	Height 0.04,
+	UseActiveContext,
+	SetPoint TOPLEFT, "TasSpellViewButton", TOPLEFT, 0.0, 0.0,
+	DecorateFileNames,
+	StatusBarSprite "CommandButtonCooldown",
+	LayerStyle "IGNORETRACKEVENTS",
+}

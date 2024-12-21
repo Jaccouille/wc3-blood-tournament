@@ -75,14 +75,17 @@ import UnitTooltipGenerator
 
 @compiletime function createSuccubus()
     var tooltip = new UnitTooltipGenerator(
-        abilTooltipMap.get(ABIL_CURSE)
+        abilTooltipMap.get(ABIL_CURSE) + "\n\n" +
+        abilTooltipMap.get(ABIL_BOUNCE_2_50)
         )
     createSpawnedUnit(UNIT_SUCCUBUS, UnitIds.succubus, BUILDING_SUCCUBUS)
         ..setSpeedBase(270)
+        ..setAttack1MaximumNumberofTargets(2)
+        ..setAttack1DamageLossFactor(0.5)
         ..registerTooltipGenerator(tooltip)
-        ..registerCustomPanelAbilityTooltip(asList(ABIL_CURSE))
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CURSE, ABIL_BOUNCE_2_50))
         ..setNormalAbilities(commaList(
-            ABIL_CURSE
+            ABIL_CURSE, ABIL_BOUNCE_2_50
         ))
         ..setDefaultActiveAbility(commaList(ABIL_CURSE))
         ..tooltipStartListen()
@@ -91,9 +94,7 @@ import UnitTooltipGenerator
         ..setAttack1Range(500)
         ..setAttack1ProjectileArt(Abilities.wingedSerpentMissile)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-        ..setAttack1MaximumNumberofTargets(2)
         ..setAttack1WeaponSound(WeaponSound.Nothing)
-        ..setAttack1DamageLossFactor(0.5)
 
         ..setArmorData(ArmorType.Unarmored, 2)
         ..setHitPointsMaximumBase(200)
@@ -113,13 +114,14 @@ import UnitTooltipGenerator
         ..setUnitSoundSetExt(Soundsets.demoness)
 
     tooltip = new UnitTooltipGenerator(
-            abilTooltipMap.get(ABIL_SILENCE)
+            abilTooltipMap.get(ABIL_SILENCE) + "\n\n" +
+            abilTooltipMap.get(ABIL_BOUNCE_4_30)
             )
     let itm = createBasicItem(ITEM_MAIDEN_OF_PAIN)
     createSpawnedUnit(UNIT_MAIDEN_OF_PAIN, UnitIds.maidenofpain)
         ..setSpeedBase(270)
-        ..registerCustomPanelAbilityTooltip(asList(ABIL_SILENCE))
-        ..setNormalAbilities(commaList(ABIL_SILENCE, ABIL_AC_SILENCE))
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_SILENCE, ABIL_BOUNCE_4_30))
+        ..setNormalAbilities(commaList(ABIL_SILENCE, ABIL_AC_SILENCE, ABIL_BOUNCE_4_30))
         ..setDefaultActiveAbility(commaList(ABIL_AC_SILENCE))
         ..registerItemDef(itm, ItemModifierType.Addition)
         ..registerTooltipGenerator(tooltip)
@@ -325,6 +327,7 @@ import UnitTooltipGenerator
         ..setSpeedBase(270)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_FAERIE_FIRE))
         ..setNormalAbilities(commaList(
             ABIL_FAERIE_FIRE
             ))
@@ -356,6 +359,7 @@ import UnitTooltipGenerator
         ..setSpeedBase(270)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_SPELL_STEAL))
         ..setNormalAbilities(commaList(
             ABIL_SPELL_STEAL
             ))
@@ -387,6 +391,7 @@ import UnitTooltipGenerator
         ..setSpeedBase(270)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_HARDENED_SKIN_10))
         ..setNormalAbilities(commaList(
             ABIL_HARDENED_SKIN_10
             ))
@@ -414,6 +419,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..setAttack1Range(128)
         ..tooltipStartListen()
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_DEMONIC_ATTRITION))
         ..setNormalAbilities(commaList(
             ABIL_DEMONIC_ATTRITION,
             ABIL_DEMONIC_ATTRITION_VISUAL
@@ -448,6 +454,7 @@ import UnitTooltipGenerator
         ..setSpeedBase(270)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_SOUL_BURN))
         ..setNormalAbilities(commaList(
             ABIL_AC_SOUL_BURN,
             ABIL_SOUL_BURN
@@ -487,6 +494,10 @@ import UnitTooltipGenerator
         ..setSpeedBase(270)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_FORKED_LIGHTNING,
+            ABIL_DEMONIC_ATTRITION
+            ))
         ..setNormalAbilities(commaList(
             ABIL_FORKED_LIGHTNING,
             ABIL_AC_FORKED_LIGHTNING,
@@ -524,6 +535,10 @@ import UnitTooltipGenerator
         ..setSpeedBase(270)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_BASH_20,
+            ABIL_HARDENED_SKIN_10
+            ))
         ..setNormalAbilities(commaList(
             ABIL_BASH_20,
             ABIL_HARDENED_SKIN_10
@@ -554,6 +569,12 @@ import UnitTooltipGenerator
         ..setMana(0)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_BASH_30,
+            ABIL_HARDENED_SKIN_15,
+            ABIL_MAGIC_ARMOR_30,
+            ABIL_DEMONIC_ATTRITION
+            ))
         ..setNormalAbilities(commaList(
             ABIL_BASH_30,
             ABIL_HARDENED_SKIN_15,
@@ -712,12 +733,16 @@ import UnitTooltipGenerator
         ..setSpeedBase(270)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_CLEAVE_20,
+            ABIL_IMMOLATION
+            ))
         ..setNormalAbilities(commaList(ABIL_CLEAVE_20, ABIL_IMMOLATION))
 
         ..setAttack1Data(AttackType.Siege, 85, 5, 6, 1.4)
 
-        ..setArmorData(ArmorType.Large, 6)
-        ..setHitPointsMaximumBase(2200)
+        ..setArmorData(ArmorType.Large, 5)
+        ..setHitPointsMaximumBase(2000)
 
         ..setPointValue(120)
         ..setSummonedUnit()
@@ -735,7 +760,7 @@ import UnitTooltipGenerator
         )
     createSpawnedUnit(UNIT_PIT_LORD, UnitIds.pitlord, BUILDING_PIT_LORD)
         ..setSpeedBase(270)
-        ..registerCustomPanelAbilityTooltip(asList(ABIL_HOWL_OF_TERROR, ABIL_CLEAVE_30))
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CLEAVE_30, ABIL_HOWL_OF_TERROR))
         ..setNormalAbilities(commaList(
             ABIL_HOWL_OF_TERROR,
             ABIL_CLEAVE_30,

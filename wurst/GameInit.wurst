@@ -17,6 +17,7 @@ import RoundController
 import ScoreBoard
 import UnitDeathTrigger
 import Wiki
+import SpellView
 
 // A timer for the core gameplay.
 public constant GAME_TIMER = CreateTimer()
@@ -77,6 +78,7 @@ init
         initArmySpawner()
         initScoreBoard()
         initHints()
+        initSpellView()
         ForForce(bj_FORCE_ALL_PLAYERS) ->
             CreateFogModifierRect(
                 GetEnumPlayer(),

@@ -36,8 +36,10 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
     new AbilityDefinitionPulverizecreep(ABIL_PULVERIZE)
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
-        ..tooltipStartListen()
         ..presetChancetoStomp(_ -> 30)
+        ..tooltipStartListen()
+        ..setIconNormal(Icons.bTNSmash)
+        ..addTooltipProperty("Chance to Stomp", _ -> "30%")
         ..presetDamageDealt(_ -> 60)
         ..presetFullDamageRadius(_ -> 150)
         ..presetHalfDamageRadius(_ -> 250)
@@ -49,26 +51,26 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
 
     tgen = new BTAbilityTooltipGenerator(
         "A wave of force that ripples out from the unit, causing damage to land units in a line.")
-    new AbilityDefinitionCrushingWave(ABIL_SHOCKWAVE)
+    let shockWave = new AbilityDefinitionCrushingWave(ABIL_SHOCKWAVE)
         ..setMissileArt(Abilities.shockwaveMissile)
         ..setCheckDependencies(false)
-        ..setDummyAbility()
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..presetDamage(_ -> 90)
+        ..presetDamage(_ -> 110)
         ..presetDistance(_ -> 900)
-        ..presetMaxDamage(_ -> 1500)
+        ..presetMaxDamage(_ -> 2000)
         ..setNameEnhance("Z", "Shock Wave")
+        ..setIconNormal(Icons.bTNShockWave)
         ..tooltipStopListen(false)
-        ..presetManaCost(_ -> 125)
 
     createAutoCastedLongRangeEnemyAbility(ABIL_AC_SHOCKWAVE)
         ..setAnimationNames("attack,slam")
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..presetManaCost(_ -> 125)
-        ..presetCooldown(_ -> 10)
-        ..presetCastRange(_ -> 600)
+        ..presetAutoCastCastRange(600, shockWave)
+        ..presetAutoCastManaCost(125, shockWave)
+        ..presetAutoCastCooldown(10, shockWave)
+        ..applyTooltip(shockWave)
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Shock Wave")
         ..setIconNormal(Icons.bTNShockWave)
@@ -84,8 +86,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
             ..setInterfaceIcon(Icons.bTNQuillSpray)
 
     tgen = new BTAbilityTooltipGenerator(
-        "Adds bonus damage to the Quill Beast's attack "
-        + "and causes its attacks to do area of effect damage.")
+        "Adds small splash.")
     new AbilityDefinitionOrbofAnnihilation(ABIL_QUILL_SPRAY)
         ..setCheckDependencies(false)
         ..setIconNormal(Icons.bTNQuillSpray)
@@ -103,6 +104,9 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..setNameEnhance("Z", "Quill Spray")
         ..tooltipStopListen(true)
         ..presetCastRange(_ -> 600)
+        ..presetTargetsAllowed(_ -> commaList(
+            TargetsAllowed.enemies
+            ))
         ..presetManaCost(_ -> 0)
 
     tgen.applyToDefItem(itm)
@@ -133,8 +137,11 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_ANCESTRAL_SPIRIT, tgen.generateFullTooltip())
 
+
+    var goldCost = 0
+    var lumberCost = 100
     itm = createBasicItem(ITEM_SPIRIT_LINK)
-            ..setItemCost(0, 100, 1, spiritWalkerCount, spiritWalkerCount)
+            ..setItemCost(goldCost, lumberCost, 1, spiritWalkerCount, spiritWalkerCount)
             ..setNameEnhance("Z", "Replace 1 Banish with Spirit Link")
             ..setInterfaceIcon(Icons.bTNSpiritLink)
 
@@ -143,7 +150,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
          " will live longer, by distributing the damage they take " +
          "across other Spirit Linked units.")
 
-    new AbilityDefinitionSpiritLink(ABIL_SPIRIT_LINK)
+    let spiritLink = new AbilityDefinitionSpiritLink(ABIL_SPIRIT_LINK)
         ..setCheckDependencies(false)
         ..setDummyAbility()
         ..registerTooltipGenerator(tgen)
@@ -155,6 +162,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..presetAreaofEffect(_ -> 600)
         ..presetDurationNormal(_ -> 60)
         ..setNameEnhance("Z", "Spirit Link")
+        ..presetCooldown(_ -> 5)
         ..tooltipStopListen(false)
 
     createAutoCastedAlliedAbility(ABIL_AC_SPIRIT_LINK)
@@ -163,6 +171,9 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..presetManaCost(_ -> 75)
         ..presetCooldown(_ -> 6)
         ..presetCastRange(_ -> 750)
+        ..applyTooltip(spiritLink)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Spirit Link")
         ..setIconNormal(Icons.bTNSpiritLink)
@@ -178,11 +189,9 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         "spells cast upon them will have a greater effect"
          )
 
-    new AbilityDefinitionBloodMageBanish(ABIL_BANISH)
+    let banish = new AbilityDefinitionBloodMageBanish(ABIL_BANISH)
         ..setCheckDependencies(false)
-        ..setDummyAbility()
         ..registerTooltipGenerator(tgen)
-        ..presetManaCost(_ -> 75)
         ..tooltipStartListen()
         ..setMovementSpeedReduction(1, 0.5)
         ..addTooltipProperty("Movement Speed Reduction", _ -> "50%")
@@ -193,9 +202,10 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
     createAutoCastedEnemyAbility(ABIL_AC_BANISH)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
-        ..presetManaCost(_ -> 75)
-        ..presetCooldown(_ -> 4)
-        ..presetCastRange(_ -> 750)
+        ..presetAutoCastCastRange(750, banish)
+        ..presetAutoCastManaCost(75, banish)
+        ..presetAutoCastCooldown(4, banish)
+        ..applyTooltip(banish)
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Banish")
         ..setIconNormal(Icons.bTNBanish)
@@ -207,9 +217,8 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         "Sprays waves of healing mist; each wave heals all friendly units in an area."
     )
 
-    new AbilityDefinitionAlchemistHealingSpray(ABIL_HEALING_SPRAY)
+    let healingSpray = new AbilityDefinitionAlchemistHealingSpray(ABIL_HEALING_SPRAY)
         ..setCheckDependencies(false)
-        ..setDummyAbility()
         ..registerTooltipGenerator(tgen)
         ..setMissileCount(1, 6)
         ..setMaxDamage(1, 6000)
@@ -218,17 +227,18 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..addTooltipProperty("Healing Amount", _ -> "70")
         ..presetWaveCount(_ -> 4)
         ..presetAreaofEffect(_ -> 250)
-        ..presetManaCost(_ -> 75)
         ..setNameEnhance("Z", "Healing Spray")
         ..tooltipStopListen(false)
+        ..presetCooldown(_ -> 7)
         ..presetTargetsAllowed(_ -> commaList(TargetsAllowed.friend))
 
     createAutoCastedAllieHealdAbility(ABIL_AC_HEALING_SPRAY)
         ..registerTooltipGenerator(tgen)
-        ..presetManaCost(_ -> 75)
         ..tooltipStartListen()
-        ..presetCooldown(_ -> 8)
-        ..presetCastRange(_ -> 750)
+        ..presetAutoCastCastRange(750, healingSpray)
+        ..presetAutoCastManaCost(75, healingSpray)
+        ..presetAutoCastCooldown(8, healingSpray)
+        ..applyTooltip(healingSpray)
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Healing Spray")
         ..setIconNormal(Icons.bTNHealingSpray)
@@ -236,8 +246,10 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
 
     abilTooltipMap.put(ABIL_HEALING_SPRAY, tgen.generateFullTooltip())
 
+    goldCost = 0
+    lumberCost = 500
     itm = createBasicItem(ITEM_PUTRID_SPRAY)
-            ..setItemCost(0, 500, 1, 1, 1)
+            ..setItemCost(goldCost, lumberCost, 1, 1, 1)
             ..setNameEnhance("Z", "Replace Healing Spray with Putrid Spray")
             ..setInterfaceIcon(Icons.bTNPlagueCloud)
 
@@ -245,9 +257,8 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         "Sprays waves of damaging mist; each wave damages all enemy units in an area."
     )
 
-    new AbilityDefinitionAlchemistHealingSpray(ABIL_PUTRID_SPRAY)
+    let putridSpray = new AbilityDefinitionAlchemistHealingSpray(ABIL_PUTRID_SPRAY)
         ..setCheckDependencies(false)
-        ..setDummyAbility()
         ..setMissileArt(Abilities.sludgeMissile)
         ..registerTooltipGenerator(tgen)
         ..setMissileCount(1, 4)
@@ -256,7 +267,6 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..addTooltipProperty("Damage Amount", _ -> "30")
         ..presetWaveCount(_ -> 4)
         ..presetAreaofEffect(_ -> 200)
-        ..presetManaCost(_ -> 75)
         ..setNameEnhance("Z", "Putrid Spray")
         ..setTargetsAllowed(1, commaList(
             TargetsAllowed.enemies,
@@ -267,10 +277,13 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
 
     createAutoCastedLongRangeEnemyAbility(ABIL_AC_PUTRID_SPRAY)
         ..registerTooltipGenerator(tgen)
-        ..presetCooldown(_ -> 8)
-        ..presetManaCost(_ -> 75)
         ..tooltipStartListen()
-        ..presetCastRange(_ -> 750)
+        ..presetAutoCastCastRange(75, putridSpray)
+        ..presetAutoCastManaCost(75, putridSpray)
+        ..presetAutoCastCooldown(8, putridSpray)
+        ..applyTooltip(putridSpray)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Putrid Spray")
         ..setIconNormal(Icons.bTNPlagueCloud)
@@ -279,9 +292,11 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_PUTRID_SPRAY, tgen.generateFullTooltip())
 
+    goldCost = 0
+    lumberCost = 200
     itm = createBasicItem(ITEM_FERVOR_POTION)
-            ..setItemCost(0, 200, 1, 1, 1)
-            ..setNameEnhance("Z", "Replace Mana Potion with Fervor Potion")
+            ..setItemCost(goldCost, lumberCost, 1, 1, 1)
+            ..setNameEnhance("X", "Replace Mana Potion with Fervor Potion")
             ..setInterfaceIcon(Icons.bTNGreaterInvulneralbility)
 
     tgen = new BTAbilityTooltipGenerator(
@@ -301,40 +316,44 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..setTooltipNormalExtended(1, "This unit has been affected by a Fervor Potion; "+
         "it attacks faster but has less armor.")
 
-    new AbilityDefinitionAlchemistAcidBomb(ABIL_FERVOR_POTION)
+    let fervorPotion = new AbilityDefinitionAlchemistAcidBomb(ABIL_FERVOR_POTION)
         ..setAnimationNames("Attack,two,Spell")
         ..setCheckDependencies(false)
-        ..setDummyAbility()
         ..registerTooltipGenerator(tgen)
         ..setBuffs(1, BUFF_FERVOR_POTION.toRawCode())
         ..tooltipStartListen()
-        ..presetArmorPenalty(_ -> 5)
-        ..setAttackSpeedReduction(1, 0.5)
-        ..addTooltipProperty("Damage Amount", _ -> "30")
-        ..setMovementSpeedReduction(1, 0.5)
+        ..presetArmorPenalty(_ -> 3)
         ..setPrimaryDamage(1, 10)
         ..setSecondaryDamage(1, 0)
+        ..addTooltipProperty("Damage Per Seconds", _ -> "10")
+        ..setAttackSpeedReduction(1, 0.75)
+        ..setMovementSpeedReduction(1, 0.5)
+        ..addTooltipProperty("Attack Speed Bonus", _ -> 0.75.toPercent())
+        ..addTooltipProperty("Movement Speed Bonus", _ -> 0.5.toPercent())
+
         ..presetDurationNormal(_ -> 5)
         ..presetAreaofEffect(_ -> 200)
-        ..presetManaCost(_ -> 100)
         ..setNameEnhance("Z", "Fervor Potion")
         ..setTargetsAllowed(1, commaList(
             TargetsAllowed.friend
             ))
         ..tooltipStopListen(false)
-        ..setIconNormal(Icons.bTNReincarnation)
+        ..setIconNormal(Icons.bTNGreaterInvulneralbility)
 
     createAutoCastedAlliedAbility(ABIL_AC_FERVOR_POTION)
         ..setAnimationNames("Attack,two,Spell")
         ..registerTooltipGenerator(tgen)
-        ..presetCooldown(_ -> 10)
-        ..presetManaCost(_ -> 100)
         ..tooltipStartListen()
-        ..presetCastRange(_ -> 750)
+        ..presetAutoCastCastRange(750, fervorPotion)
+        ..presetAutoCastManaCost(100, fervorPotion)
+        ..presetAutoCastCooldown(10, fervorPotion)
+        ..applyTooltip(fervorPotion)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
         ..setNameEnhance("Z", "Fervor Potion")
-        ..setIconNormal(Icons.bTNReincarnation)
-        ..setIconTurnOff(Icons.bTNReincarnation)
+        ..setIconNormal(Icons.bTNGreaterInvulneralbility)
+        ..setIconTurnOff(Icons.bTNGreaterInvulneralbility)
 
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_FERVOR_POTION, tgen.generateFullTooltip())
@@ -357,16 +376,14 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..tooltipStopListen(false)
         ..setItemAbility(false)
 
-    new AbilityDefinitionAlchemistAcidBomb(ABIL_MANA_POTION)
+    let manaPotion = new AbilityDefinitionAlchemistAcidBomb(ABIL_MANA_POTION)
         ..setAnimationNames("Attack,two,Spell")
         ..setCheckDependencies(false)
-        ..setDummyAbility()
         ..presetArmorPenalty(_ -> 0)
         ..setPrimaryDamage(1, 0)
         ..setSecondaryDamage(1, 0)
         ..presetDurationNormal(_ -> 0.01)
         ..presetAreaofEffect(_ -> 1)
-        ..presetManaCost(_ -> 0)
         ..setNameEnhance("Z", "Mana Potion")
         ..setTargetsAllowed(1, commaList(
             TargetsAllowed.friend
@@ -376,10 +393,11 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
     createAutoCastAlliedManaTarget(ABIL_AC_MANA_POTION)
         ..setAnimationNames("Attack,two,Spell")
         ..registerTooltipGenerator(tgen)
-        ..presetManaCost(_ -> 0)
+        ..presetAutoCastManaCost(0, manaPotion)
         ..tooltipStartListen()
-        ..presetCooldown(_ -> 16)
-        ..presetCastRange(_ -> 750)
+        ..presetAutoCastCastRange(750, manaPotion)
+        ..presetAutoCastCooldown(16, manaPotion)
+        ..applyTooltip(manaPotion)
         ..setNameEnhance("Z", "Mana Potion")
         ..tooltipStopListen(true)
         ..setIconNormal(Icons.bTNPotionOfClarity)
@@ -421,14 +439,13 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
             ))
         ..setIconNormal(Icons.bTNPurge)
 
-    tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_SHOCK_BREATH, tgen.generateFullTooltip())
 
     tgen = new BTAbilityTooltipGenerator(
-        "Reduces enemies armor and damage them over time upon basic attack hit."
+        "Reduces enemies armor and damages them over time upon basic attack hit."
         )
-    var abilId = ABIL_ID_GEN.next()
-    new AbilityDefinitionOrbofLightning(ABIL_CORROSIVE_BREATH_ORB)
+    let abilId = ABIL_ID_GEN.next()
+    let orbCorrosiveBreath = new AbilityDefinitionOrbofLightning(ABIL_CORROSIVE_BREATH_ORB)
         ..setMissileArt(Abilities.greenDragonMissile)
         ..setArtTarget(Abilities.bottleImpact)
         ..setTargetAttachmentPoint1("head")
@@ -436,6 +453,9 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..presetChanceToHitUnits(_ -> 100)
         ..presetChanceToHitSummons(_ -> 100)
         ..setEffectAbility(1, abilId.toRawCode())
+        ..setIconNormal(Icons.bTNCorrosiveBreath)
+        ..setNameEnhance("Z", "Corrosive Breath")
+        ..setEditorSuffix("(Orb)")
         ..setDamageBonus(1, 0)
 
     new AbilityDefinitionAlchemistAcidBomb(abilId)
@@ -451,6 +471,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..presetDurationNormal(_ -> 3)
         ..presetAreaofEffect(_ -> 200)
         ..setNameEnhance("Z", "Corrosive Breath")
+        ..applyTooltip(orbCorrosiveBreath)
         ..setTargetsAllowed(1, commaList(
             TargetsAllowed.enemies
             ))
@@ -495,8 +516,10 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
     abilTooltipMap.put(ABIL_STORM_BREATH, tgen.generateFullTooltip())
 
 
+    goldCost = 0
+    lumberCost = 500
     itm = createBasicItem(ITEM_DEFENSE_ROAR)
-            ..setItemCost(0, 500, 1, 1, 1)
+            ..setItemCost(goldCost, lumberCost, 1, 1, 1)
             ..setNameEnhance("X", "Add Defense Roar")
             ..setInterfaceIcon(Icons.bTNArcaniteArmor)
 
@@ -516,17 +539,19 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
     new AbilityDefinitionRoar(ABIL_DEFENSE_REXXAR_ROAR)
         ..setAnimationNames("spell,slam")
         ..setBuffs(1, BUFF_DEFENSE_ROAR.toRawCode())
+        ..setIconNormal(Icons.bTNArcaniteArmor)
         ..setLevels(1)
         ..setHeroAbility(false)
         ..registerTooltipGenerator(tgen)
-        ..presetCooldown(_ -> 0)
         ..presetDamageIncrease(_ -> 0.0)
         ..tooltipStartListen()
         ..presetDefenseIncrease(_ -> 5)
         ..presetDurationNormal(_ -> 7)
         ..presetAreaofEffect(_ -> 900)
         ..presetManaCost(_ -> 125)
-        ..addTooltipProperty("Cooldown", _ -> "15")
+        ..presetCooldown(_ -> 14)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..setNameEnhance("Z", "Defense Roar")
         ..tooltipStopListen(true)
 
@@ -534,8 +559,10 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
     abilTooltipMap.put(ABIL_DEFENSE_REXXAR_ROAR, tgen.generateFullTooltip())
 
 
+    goldCost = 0
+    lumberCost = 500
     itm = createBasicItem(ITEM_BATTLE_ROAR)
-            ..setItemCost(0, 500, 1, 1, 1)
+            ..setItemCost(goldCost, lumberCost, 1, 1, 1)
             ..setNameEnhance("Z", "Add Battle Roar")
             ..setInterfaceIcon(Icons.bTNBattleRoar)
 
@@ -548,27 +575,41 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..setLevels(1)
         ..setHeroAbility(false)
         ..registerTooltipGenerator(tgen)
-        ..presetCooldown(_ -> 0)
         ..presetDamageIncrease(_ -> 0.30)
         ..tooltipStartListen()
         ..addTooltipProperty("Damage Increase", _ -> "30%")
         ..presetDurationNormal(_ -> 7)
         ..presetAreaofEffect(_ -> 900)
-        ..presetManaCost(_ -> 125)
         ..setNameEnhance("Z", "Battle Roar")
         ..tooltipStopListen(true)
 
     createAutoCastedEnemyAbility(ABIL_AC_REXXAR_ROAR)
         ..setAnimationNames("spell,slam")
         ..registerTooltipGenerator(tgen)
-        ..presetCastRange(_ -> 750)
         ..tooltipStartListen()
-        ..presetManaCost(_ -> 125)
-        ..presetCooldown(_ -> 15)
+        ..presetAutoCastCastRange(750, shockWave)
+        ..presetAutoCastManaCost(125, shockWave)
+        ..presetAutoCastCooldown(75, shockWave)
+        ..addTooltipProperty("Bounty Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
+        ..addTooltipProperty("Army Points Bonus", _ -> computeItemPointValue(goldCost, lumberCost))
         ..tooltipStopListen(true)
 
     tgen.applyToDefItem(itm)
     abilTooltipMap.put(ABIL_BATTLE_REXXAR_ROAR, tgen.generateFullTooltip())
+
+
+    tgen = new BTAbilityTooltipGenerator(
+        "Strikes additional units in a line with each attack."
+        )
+    new AbilityDefinition(ABIL_GIANT_AXE, AbilityIds.stormHammers)
+        ..setLevels(1)
+        ..registerTooltipGenerator(tgen)
+        ..setItemAbility(false)
+        ..tooltipStartListen()
+        ..setIconNormal(Icons.bTNOrcMeleeUpThree)
+        ..setName("Giant Axe")
+        ..tooltipStopListen()
+    abilTooltipMap.put(ABIL_GIANT_AXE, tgen.generateFullTooltip())
 
 
 init

@@ -279,6 +279,19 @@ function createSpikedCarapace(int abilId, real value) returns AbilityDefinitionC
     return abilDef
 
 
+function createBounceAbility(int abilId, int value, real reductionFactor) returns AbilityDefinition
+    let tgen = new BTAbilityTooltipGenerator(
+        "Ranged attack strikes {0} additional units, each bounce dealing {1} less damage.".format(value.toString(), reductionFactor.toPercent()))
+    let abilDef = new AbilityDefinition(abilId, AbilityIds.moonGlaive)
+        ..setLevels(1)
+        ..registerTooltipGenerator(tgen)
+        ..setItemAbility(false)
+        ..tooltipStartListen()
+        ..setName("Bounce " + value.toString())
+        ..tooltipStopListen()
+    abilTooltipMap.put(abilId, tgen.generateFullTooltip())
+    return abilDef
+
 @compiletime function createCleaveAbilities()
     createCleave(ABIL_CLEAVE_10, 0.10, 150.)
     createCleave(ABIL_CLEAVE_20, 0.20, 150.)
@@ -344,6 +357,11 @@ function createSpikedCarapace(int abilId, real value) returns AbilityDefinitionC
 @compiletime function createRangedAuraAbilities()
     createRangedAura(ABIL_RANGED_AURA_15, 0.15)
     createRangedAura(ABIL_RANGED_AURA_25, 0.25)
+
+@compiletime function createBounceAbilities()
+    createBounceAbility(ABIL_BOUNCE_2_50, 2, 0.5)
+    createBounceAbility(ABIL_BOUNCE_3_50, 3, 0.5)
+    createBounceAbility(ABIL_BOUNCE_4_30, 4, 0.3)
 
 @compiletime function createSpikedCarapaceAbilities()
     let BUFF_ID = compiletime(BUFF_ID_GEN.next())

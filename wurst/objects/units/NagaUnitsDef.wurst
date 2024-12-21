@@ -3,6 +3,7 @@ package NagaUnitsDef
 // Standard libs imports:
 import Assets
 import ChannelAbilityPreset
+import LinkedList
 
 // Local imports:
 import ArmySpawner
@@ -16,6 +17,7 @@ import UnitTooltipGenerator
     var tooltip = new UnitTooltipGenerator("Cheap meat.")
     createSpawnedUnit(UNIT_MURLOC, UnitIds.murloctiderunner, BUILDING_MURLOC)
         ..setSpeedBase(270)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_EVASION_20))
         ..setNormalAbilities(commaList(ABIL_EVASION_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -43,6 +45,12 @@ import UnitTooltipGenerator
     )
     createSpawnedUnit(UNIT_MURGUL_WARLOCK, UnitIds.murgulsnarecaster, BUILDING_MURGUL_WARLOCK)
         ..setSpeedBase(270)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_SLOW,
+            ABIL_BLOODLUST,
+            ABIL_FAERIE_FIRE,
+            ABIL_FROST_ARMOR
+            ))
         ..setNormalAbilities(commaList(ABIL_SLOW))
         ..setDefaultActiveAbility(commaList(ABIL_SLOW))
         ..registerTooltipGenerator(tooltip)
@@ -73,6 +81,7 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_SNAP_DRAGON, UnitIds.snapdragon, BUILDING_SNAP_DRAGON)
         ..setSpeedBase(270)
         // Poison attack
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_POISON_SPIT))
         ..setNormalAbilities(commaList(ABIL_POISON_SPIT))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -103,11 +112,13 @@ import UnitTooltipGenerator
         )
     createSpawnedUnit(UNIT_HYDRA, UnitIds.hydra, BUILDING_HYDRA)
         ..setSpeedBase(270)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_ACID_SPIT_ORB))
         ..setNormalAbilities(commaList(ABIL_ACID_SPIT_ORB))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 75, 5, 5, 2)
+        ..setAttack1Data(AttackType.Pierce, 95, 5, 7, 2)
+        ..setSmallSplash()
 
         ..setArmorData(ArmorType.Medium, 6)
         ..setHitPointsMaximumBase(1600)
@@ -134,6 +145,7 @@ import UnitTooltipGenerator
         )
     createSpawnedUnit(UNIT_MYRMIDON, UnitIds.nagamyrmidon, BUILDING_MYRMIDON)
         ..setSpeedBase(270)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_CLEAVE_20))
         ..setNormalAbilities(commaList(ABIL_CLEAVE_20))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -164,6 +176,10 @@ import UnitTooltipGenerator
     createSpawnedUnit(UNIT_DEPTH_COMMANDER, UnitIds.nagaroyalguard, BUILDING_DEPTH_COMMANDER)
         ..setSpeedBase(270)
         ..registerItemDef(itm, ItemModifierType.Addition)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_CLEAVE_30,
+            ABIL_CRUSHING_WAVE
+            ))
         ..setNormalAbilities(commaList(ABIL_CLEAVE_30, ABIL_CRUSHING_WAVE, ABIL_AC_CRUSHING_WAVE))
         ..setDefaultActiveAbility(commaList(ABIL_AC_CRUSHING_WAVE))
         ..registerTooltipGenerator(tooltip)
@@ -193,6 +209,10 @@ import UnitTooltipGenerator
     )
     createSpawnedUnit(UNIT_SEA_WITCH, UnitIds.seawitch, BUILDING_SEA_WITCH)
         ..setSpeedBase(270)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_FORKED_LIGHTNING,
+            ABIL_BRILLANCE_AURA_2
+            ))
         ..setNormalAbilities(commaList(
             ABIL_AC_FORKED_LIGHTNING,
             ABIL_FORKED_LIGHTNING,
@@ -230,6 +250,10 @@ import UnitTooltipGenerator
     )
     createSpawnedUnit(UNIT_GIANT_TURTLE, UnitIds.giantseaturtle, BUILDING_GIANT_TURTLE)
         ..setSpeedBase(270)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_SPIKED_CARAPACE_50,
+            ABIL_BASH_30
+            ))
         ..setNormalAbilities(commaList(
             ABIL_SPIKED_CARAPACE_50,
             ABIL_BASH_30
@@ -265,6 +289,10 @@ import UnitTooltipGenerator
     var itm = createBasicItem(ITEM_FIRE_TURTLE)
     createSpawnedUnit(UNIT_FIRE_TURTLE, UnitIds.giantseaturtle)
         ..setSpeedBase(270)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_SPIKED_CARAPACE_50,
+            ABIL_BURNING_BREATH
+            ))
         ..setNormalAbilities(commaList(
             ABIL_SPIKED_CARAPACE_50,
             ABIL_BURNING_BREATH
@@ -295,6 +323,10 @@ import UnitTooltipGenerator
     itm = createBasicItem(ITEM_FROST_TURTLE)
     createSpawnedUnit(UNIT_FROST_TURTLE, UnitIds.giantseaturtle)
         ..setSpeedBase(270)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_SPIKED_CARAPACE_50,
+            ABIL_GLACIAL_BREATH
+            ))
         ..setNormalAbilities(commaList(
             ABIL_SPIKED_CARAPACE_50,
             ABIL_GLACIAL_BREATH
@@ -330,6 +362,12 @@ import UnitTooltipGenerator
     )
     createSpawnedUnit(UNIT_SIREN, UnitIds.siren, BUILDING_SIREN)
         ..setSpeedBase(270)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_FROST_BOLT,
+            ABIL_DISRUPTION_RAY,
+            ABIL_ORB_CHARM,
+            ABIL_MAGIC_ARMOR_50
+            ))
         ..setNormalAbilities(commaList(ABIL_FROST_BOLT, ABIL_AC_FROST_BOLT, ABIL_CHARM, ABIL_MAGIC_ARMOR_50))
         ..setDefaultActiveAbility(commaList(ABIL_AC_FROST_BOLT))
         ..registerTooltipGenerator(tooltip)

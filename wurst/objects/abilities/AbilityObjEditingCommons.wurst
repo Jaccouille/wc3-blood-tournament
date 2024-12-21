@@ -12,6 +12,24 @@ import ObjectIds
 import GridHotkeyPosition
 import TooltipsUtils
 
+public function AbilityDefinition.setNameEnhance(string hotkey, string name)
+    this.setHotkeyEnhance(hotkey)
+    this.setName(name)
+    this.setTooltipNormal(1, makeToolTipNorm(hotkey, name))
+
+public function AbilityDefinition.applyTooltip(AbilityDefinition def)
+    this.tooltipGen.applyToDef(def)
+
+public function AbilityDefinition.applyTooltip()
+    this.tooltipGen.applyToDef(this)
+
+public function AbilityDefinition.setHotkeyEnhance(string hotkey)
+    if not hotKeyMapping.has(hotkey)
+        error("Hotkey button position mapping has no \"{0}\" element".format(hotkey))
+        return
+    this.setHotkeyNormal(hotkey)
+    this.presetButtonPosNormal(hotKeyMapping.get(hotkey).x, hotKeyMapping.get(hotkey).y)
+
 /**
 Autocast behavior from https://www.hiveworkshop.com/threads/alternative-uses-of-abilities.354568/
 (not verified)
@@ -94,26 +112,6 @@ Parasite
     Autocast: cast in battle. Always selects the farthest target,
     regardless of the amount of health.
 */
-
-public function AbilityDefinition.setNameEnhance(string hotkey, string name)
-    this.setHotkeyEnhance(hotkey)
-    this.setName(name)
-    this.setTooltipNormal(1, makeToolTipNorm(hotkey, name))
-
-public function AbilityDefinition.applyTooltip(AbilityDefinition def)
-    this.tooltipGen.applyToDef(def)
-
-public function AbilityDefinition.applyTooltip()
-    this.tooltipGen.applyToDef(this)
-
-public function AbilityDefinition.setHotkeyEnhance(string hotkey)
-    if not hotKeyMapping.has(hotkey)
-        error("Hotkey button position mapping has no \"{0}\" element".format(hotkey))
-        return
-    this.setHotkeyNormal(hotkey)
-    this.presetButtonPosNormal(hotKeyMapping.get(hotkey).x, hotKeyMapping.get(hotkey).y)
-
-/** Apparently parasite will prioritize farhest target */
 public function createAutoCastedLongRangeEnemyAbility(int abilId) returns AbilityDefinitionParasite
     let someBuff = createDummyBuffObject("Dummy buff parasite", "Dummy buff parasite", Icons.bTNFarm)
 
@@ -305,3 +303,15 @@ public function createSelfRegenerationAbility(int abilId) returns AbilityDefinit
         ..setCheckDependencies(false)
         ..setArtTarget("")
         ..presetTargetsAllowed(_ -> commaList(TargetsAllowed.self))
+
+public function AbilityDefinition.presetAutoCastCooldown(real cooldown, AbilityDefinition trueAbil)
+    this.presetCooldown(_ -> cooldown)
+    trueAbil.presetCooldown(_ -> cooldown - 1)
+
+public function AbilityDefinition.presetAutoCastManaCost(int manaCost, AbilityDefinition trueAbil)
+    this.presetManaCost(_ -> manaCost)
+    trueAbil.presetManaCost(_ -> manaCost)
+
+public function AbilityDefinition.presetAutoCastCastRange(real castRange, AbilityDefinition trueAbil)
+    this.presetCastRange(_ -> castRange)
+    trueAbil.presetCastRange(_ -> 9999)

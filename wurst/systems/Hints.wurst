@@ -35,7 +35,7 @@ class Hint
         isShown = not isShown
 
 constant HINT = "Units spawn from top right in a vertical direction. " +
-    "Refers to the previewer on the minimap to understand the spawn system." +
+    "Refer to the previewer on the minimap to understand the spawn system." +
     "Type -h to hide this hint."
 
 public function initHints()

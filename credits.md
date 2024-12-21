@@ -21,3 +21,5 @@ Models :
 -Sweep Blood/Fire Small/Large by Hate, https://www.hiveworkshop.com/threads/sweep-attachments.333560/
 
 - imForFun (straw hat) https://www.hiveworkshop.com/members/imforfun.205582/
+
+- Tasyen for SpellView https://www.hiveworkshop.com/threads/tasspellview.349600/

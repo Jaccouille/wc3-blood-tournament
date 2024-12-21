@@ -168,15 +168,16 @@ import UnitTooltipGenerator
         .setIconGameInterfaceExt(Icons.bTNKeeperOfTheGrove)
 
 @compiletime function createHuntress()
-    let tooltip = new UnitTooltipGenerator("Ranged unit with bounce.")
+    let tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_BOUNCE_3_50))
     createSpawnedUnit(UNIT_HUNTRESS, UnitIds.huntress, BUILDING_HUNTRESS)
         ..setSpeedBase(300)
+        ..setAttack1MaximumNumberofTargets(3)
         ..registerTooltipGenerator(tooltip)
+        ..registerCustomPanelAbilityTooltip(ABIL_BOUNCE_3_50)
+        ..setNormalAbilities(commaList(ABIL_BOUNCE_3_50))
         ..tooltipStartListen()
 
         ..setAttack1Data(AttackType.Normal, 25, 5, 3, 1.6)
-        ..setAttack1MaximumNumberofTargets(3)
-        ..addTooltipProperty("Bounce Damage Reduction", "50%")
         ..setAttack1Range(300)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
