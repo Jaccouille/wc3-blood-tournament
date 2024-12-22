@@ -274,6 +274,7 @@ import UnitTooltipGenerator
         ..tooltipStopListen()
         ..setUpgradeTo(asList(BUILDING_FEL_CONJURER))
 
+
         ..setBuildingScalingValue(0.6)
         ..setModelFileExt(Units.orcWarlock1)
         ..setIconGameInterfaceExt(Icons.bTNOrcWarlock)

@@ -33,7 +33,7 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("Q", "Murloc")
         ..setSizeSmall()
-        ..setUpgradeTo(commaList(BUILDING_MURGUL_WARLOCK))
+        ..setUpgradeTo(asList(BUILDING_MURGUL_WARLOCK))
 
         ..setModelFileExt(Units.murloc1)
         ..setIconGameInterfaceExt(Icons.bTNMurloc)
@@ -96,7 +96,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_HYDRA))
+        ..setUpgradeTo(asList(BUILDING_HYDRA))
 
         ..setNameEnhance("W", "Snap Dragon")
         ..setSizeSmall()
@@ -276,6 +276,10 @@ import UnitTooltipGenerator
         ..setNameEnhance("A", "Giant Turtle")
         ..setSizeLarge()
 
+        ..setBuildingUnitsSold(commaList(
+            UNIT_FIRE_TURTLE,
+            UNIT_FROST_TURTLE
+            ))
         ..setBuildingScalingValue(0.4)
         ..setModelFileExt(Units.giantSeaTurtle1)
         ..setIconGameInterfaceExt(Icons.bTNSeaTurtleGreen)

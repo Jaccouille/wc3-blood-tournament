@@ -101,7 +101,7 @@ import ArmySpawner
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
-        ..setUpgradeTo(commaList(BUILDING_DIRE_QUILLBOAR))
+        ..setUpgradeTo(asList(BUILDING_DIRE_QUILLBOAR))
 
         ..setNameEnhance("Q", "Quillboar")
         ..setSizeSmall()
@@ -152,7 +152,7 @@ import ArmySpawner
         ..setModelFileExt(Units.bristleBack)
         ..setBuildingScalingValue(1)
         ..setBuildingTinting(255, 140, 170)
-        ..setIconGameInterfaceExt(Icons.bTNRazorback)
+        ..setIconGameInterfaceExt(Icons.bTNQuillSpray)
         ..setUnitSoundSetExt(Soundsets.razorMane)
 
 @compiletime function createLizard()
@@ -184,7 +184,7 @@ import ArmySpawner
         ..tooltipStopListen(true)
         ..setMana(0)
 
-        ..setUpgradeTo(commaList(BUILDING_CORROSIVE_LIZARD))
+        ..setUpgradeTo(asList(BUILDING_CORROSIVE_LIZARD))
         ..setNameEnhance("E", "Thunder Lizard")
         ..setSizeLarge()
         ..setScalingValue(1)

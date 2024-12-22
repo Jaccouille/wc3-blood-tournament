@@ -114,6 +114,7 @@ function createSpeedBanner(int newId) returns BuildingDefinition
     createSpeedBanner(UNIT_SPEED_BANNER)
         ..setName("Speed Banner")
         ..setModelFile(Objects.battleStandard)
+        ..setPortraitModelFile(Objects.battleStandard)
         ..setScalingValue(2)
 
 
