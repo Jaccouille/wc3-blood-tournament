@@ -17,13 +17,10 @@
 
 - ADd buff for the various acid bomb ability like
 - ADd feeding count (blood point given)
-- Howl of terror animation name
 - Rampage doesn't work
-- Beast lag
 
 - Selling unfinished building doesn't refund army pts
 
-- Orb Abilities tooltip + Icon
 - Rework officer to replace/promote in the middle
 - Add upgrade to naga siren
 - gameconfig vote

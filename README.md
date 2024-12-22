@@ -10,7 +10,7 @@ Players construct buildings that spawn groups of units in 7 free-for-all rounds.
 You earn blood points by killing enemy units which can be spent to build or upgrade your units.
 Featuring big battles and a lot of blood.
 
-Choose a faction amongst Human, Orc, Undead, or Night Elf.
+Choose a faction amongst Human, Orc, Undead, Night Elf, Naga, Beast or Demon.
 Experiment with different builds and find the optimal army composition.
 
 Enjoy the mayhem!
@@ -66,7 +66,12 @@ For making a cool Star Wars Blood Tournament map that inspired me to make this: 
 
 [Ujimasa Hojo](https://www.hiveworkshop.com/members/142431/) (edited his paladin model, changed material type to additive or something to make a ghost paladin),
 
+[imForFun](https://www.hiveworkshop.com/members/imforfun.205582/) :  [Straw hat](https://www.hiveworkshop.com/threads/straw-hat.251247/)
+
 Found demon pillar here: [UTM Outland](https://www.hiveworkshop.com/threads/outland-utm.152344/), made by [Dan van Ohllus](https://www.hiveworkshop.com/forums/members/Dan%20van%20Ohllus/)
+
+#### Custom UI:
+[Tasyen](https://www.hiveworkshop.com/members/tasyen.194042/) : [Spell View](https://www.hiveworkshop.com/threads/tasspellview.349600/)
 
 ## Developping
 ### Setup
