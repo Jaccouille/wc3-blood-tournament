@@ -56,7 +56,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 20, 5, 5, 1.6)
+        ..setAttack1Data(AttackType.Magic, 20, 5, 6, 1.6)
         ..setAttack1Range(650)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
@@ -86,12 +86,12 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 15, 5, 5, 1.6)
+        ..setAttack1Data(AttackType.Pierce, 25, 5, 6, 1.5)
         ..setAttack1Range(500)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Medium, 3)
-        ..setHitPointsMaximumBase(360)
+        ..setHitPointsMaximumBase(400)
 
         ..setAutoPointValue()
         ..setAutoBuildingCost()
@@ -261,7 +261,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Siege, 80, 6, 10, 2)
+        ..setAttack1Data(AttackType.Siege, 80, 10, 6, 2)
         ..setAttack1Range(350)
         ..setAttack1ProjectileArt(Abilities.ancientProtectorMissile)
         ..setAttack1ProjectileSpeed(900)
@@ -277,6 +277,7 @@ import UnitTooltipGenerator
         ..setSizeLarge()
 
         ..setBuildingUnitsSold(commaList(
+            UNIT_GIANT_TURTLE,
             UNIT_FIRE_TURTLE,
             UNIT_FROST_TURTLE
             ))
@@ -304,7 +305,7 @@ import UnitTooltipGenerator
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Siege, 80, 6, 10, 2)
+        ..setAttack1Data(AttackType.Siege, 80, 10, 6, 2)
         ..setAttack1Range(350)
         ..setAttack1ProjectileSpeed(900)
 
@@ -338,7 +339,7 @@ import UnitTooltipGenerator
         ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
-        ..setAttack1Data(AttackType.Siege, 80, 6, 10, 2)
+        ..setAttack1Data(AttackType.Siege, 80, 10, 6, 2)
         ..setAttack1Range(350)
         ..setSmallSplash()
         ..setAttack1ProjectileSpeed(900)
@@ -377,7 +378,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 25, 5, 6, 1.6)
+        ..setAttack1Data(AttackType.Magic, 25, 5, 7, 1.6)
         ..setAttack1Range(650)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setAttack1ProjectileArt(Abilities.bansheeMissile)

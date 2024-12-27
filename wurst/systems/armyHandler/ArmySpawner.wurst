@@ -83,20 +83,20 @@ function genList(int unitId, int count) returns LinkedList<int>
         unitList.add(unitId)
     return unitList
 
-@compiletime function setupBuildingData()
     // TODO: refactor, spawn count should be located in the unit definition files
     // Issue: Can't map an int to a linked list at compile time
-    new BTBuildingData(BUILDING_FOOTMAN   ,                          100 , 0    , genList (UNIT_FOOTMAN       , 10))
-    new BTBuildingData(BUILDING_CAPTAIN   ,                          0   , 500  , genList (UNIT_CAPTAIN       , 10))
-    new BTBuildingData(BUILDING_RIFLEMAN  ,                          100 , 0    , genList (UNIT_RIFLEMAN      , 5 ))
-    new BTBuildingData(BUILDING_RIFLEMAN  , BUILDING_GRENADIER ,     0   , 500  , genList (UNIT_GRENADIER     , 5 ))
-    new BTBuildingData(BUILDING_RIFLEMAN  , BUILDING_SNIPER ,        0   , 500  , genList (UNIT_SNIPER        , 5 ))
-    new BTBuildingData(BUILDING_KNIGHT    ,                          200 , 0    , genList (UNIT_KNIGHT        , 5 ))
-    new BTBuildingData(BUILDING_KNIGHT    , BUILDING_CRUSADER ,      0   , 1000 , genList (UNIT_CRUSADER      , 5 ))
-    new BTBuildingData(BUILDING_PRIEST    ,                          200 , 0    , genList (UNIT_PRIEST        , 5 ))
-    new BTBuildingData(BUILDING_PRIEST    , BUILDING_SPELL_BREAKER , 0   , 500  , genList (UNIT_SPELL_BREAKER , 5 ))
-    new BTBuildingData(BUILDING_SORCERESS ,                          150 , 0    , genList (UNIT_SORCERESS     , 3 ))
-    new BTBuildingData(BUILDING_PALADIN   ,                          0   , 1000 , asList  (UNIT_PALADIN_1         ))
+@compiletime function setupBuildingData()
+    new BTBuildingData(BUILDING_FOOTMAN   ,                          100 , 0    , genList(UNIT_FOOTMAN       , 10))
+    new BTBuildingData(BUILDING_CAPTAIN   ,                          0   , 500  , genList(UNIT_CAPTAIN       , 10))
+    new BTBuildingData(BUILDING_RIFLEMAN  ,                          100 , 0    , genList(UNIT_RIFLEMAN      , 5 ))
+    new BTBuildingData(BUILDING_RIFLEMAN  , BUILDING_GRENADIER ,     0   , 500  , genList(UNIT_GRENADIER     , 5 ))
+    new BTBuildingData(BUILDING_RIFLEMAN  , BUILDING_SNIPER ,        0   , 500  , genList(UNIT_SNIPER        , 5 ))
+    new BTBuildingData(BUILDING_KNIGHT    ,                          200 , 0    , genList(UNIT_KNIGHT        , 5 ))
+    new BTBuildingData(BUILDING_KNIGHT    , BUILDING_CRUSADER ,      0   , 1000 , genList(UNIT_CRUSADER      , 5 ))
+    new BTBuildingData(BUILDING_PRIEST    ,                          200 , 0    , genList(UNIT_PRIEST        , 5 ))
+    new BTBuildingData(BUILDING_PRIEST    , BUILDING_SPELL_BREAKER , 0   , 500  , genList(UNIT_SPELL_BREAKER , 5 ))
+    new BTBuildingData(BUILDING_SORCERESS ,                          150 , 0    , genList(UNIT_SORCERESS     , 3 ))
+    new BTBuildingData(BUILDING_PALADIN   ,                          0   , 1000 , asList(UNIT_PALADIN_1         ))
 
     new BTBuildingData(BUILDING_GRUNT                ,                      100 , 0    , genList(UNIT_GRUNT                , 5  ))
     new BTBuildingData(BUILDING_GRUNT                , BUILDING_BERSERKER , 0   , 500  , genList(UNIT_BERSERKER            , 5  ))
@@ -127,7 +127,6 @@ function genList(int unitId, int count) returns LinkedList<int>
     new BTBuildingData(BUILDING_VAMPIRE         ,                          50  , 500  , genList(UNIT_VAMPIRE         , 1  ))
     new BTBuildingData(BUILDING_VAMPIRE         , BUILDING_VAMPIRE_LORD ,  0   , 1500 , genList(UNIT_VAMPIRE_LORD    , 1  ))
 
-    new BTBuildingData(BUILDING_TREANT                , 100 , 0   , genList(UNIT_TREANT                , 10 ))
     new BTBuildingData(BUILDING_ARCHER                , 100 , 0   , genList(UNIT_ARCHER                , 10  ))
     new BTBuildingData(BUILDING_ARCHER, BUILDING_NE_RANGER , 0   , 2400, genList(UNIT_NE_RANGER             , 6  ))
     new BTBuildingData(BUILDING_HUNTRESS              , 200 , 0   , genList(UNIT_HUNTRESS              , 5  ))

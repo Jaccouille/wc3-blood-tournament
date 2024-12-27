@@ -27,7 +27,7 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 35, 5, 7, 2)
+        ..setAttack1Data(AttackType.Normal, 35, 5, 13, 2)
 
         ..setArmorData(ArmorType.Large, 0)
         ..setHitPointsMaximumBase(1300)
@@ -122,21 +122,15 @@ import ArmySpawner
             ABIL_QUILL_SPRAY
         ))
         ..setNormalAbilities(commaList(ABIL_QUILL_SPRAY))
-        ..setDefaultActiveAbility(commaList(ABIL_QUILL_SPRAY))
+        // ..setDefaultActiveAbility(commaList(ABIL_QUILL_SPRAY))
         ..setAttack1WeaponType(WeaponType.MissileSplash)
+        ..setAttack1ProjectileArt(Abilities.quillSprayMissile)
         ..registerTooltipGenerator(tooltip)
-        ..setAttack1TargetsAllowed(commaList(
-            TargetsAllowed.ground,
-            TargetsAllowed.structure,
-            TargetsAllowed.debris,
-            TargetsAllowed.item_t,
-            TargetsAllowed.ward,
-            TargetsAllowed.enemies
-        ))
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 20, 5, 5, 1.5)
+        ..setAttack1Data(AttackType.Pierce, 20, 5, 6, 1.5)
         ..setAttack1Range(550)
+        ..setSmallSplash()
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
         ..setArmorData(ArmorType.Small, 3)
@@ -210,7 +204,7 @@ import ArmySpawner
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 55, 5, 6, 2)
+        ..setAttack1Data(AttackType.Magic, 55, 5, 7, 2)
         ..setAttack1Range(300)
 
         ..setArmorData(ArmorType.Large, 4)
@@ -293,7 +287,7 @@ import ArmySpawner
         ..setAttack1DamageLossFactor(0.4)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 60, 8, 8, 1.7)
+        ..setAttack1Data(AttackType.Normal, 60, 10, 8, 1.7)
         ..setAttack1Range(600)
         ..setAttack1ProjectileSpeed(900)
         ..setAttack1ProjectileArt(Abilities.rexxarMissile)

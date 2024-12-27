@@ -27,6 +27,7 @@ import UnitObjEditingCommon
     var tgen = new BTAbilityTooltipGenerator(
         "Increases a friendly unit's attack and movement speed.")
     new AbilityDefinitionBloodlustCreep(ABIL_BLOODLUST)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
         ..tooltipStartListen()
@@ -54,6 +55,7 @@ import UnitObjEditingCommon
     tgen = new BTAbilityTooltipGenerator(
         "Upon killing, causes this unit to attack faster, but take more damage.")
     new AbilityDefinitionBerserk(ABIL_BERSERK)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
         ..tooltipStartListen()
@@ -151,6 +153,7 @@ import UnitObjEditingCommon
     tgen = new BTAbilityTooltipGenerator(
         "Calls forth a wave of healing energy that bounces.")
     let healingWave = new AbilityDefinitionHealingWaveCreep(ABIL_HEALING_WAVE)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
         ..tooltipStartListen()
@@ -184,6 +187,7 @@ import UnitObjEditingCommon
     tgen = new BTAbilityTooltipGenerator(
         "Decreases armor of the target and nearby enemy units.")
     let acidBomb = new AbilityDefinitionAlchemistAcidBomb(ABIL_ACID_BOMB)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
@@ -228,6 +232,7 @@ import UnitObjEditingCommon
     tgen = new BTAbilityTooltipGenerator(
         "Drenches enemy units in alcohol, silencing them and causing their attack to miss.")
     let drunkenHaze = new AbilityDefinitionBrewmasterDrunkenHaze(ABIL_DRUNKEN_HAZE)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..setDummyAbility()
         ..setCheckDependencies(false)
@@ -277,6 +282,7 @@ import UnitObjEditingCommon
             " by a nearby ward")
 
     new AbilityDefinitionNeutralRegenmanaonly(ABIL_MANA_WARD_AURA)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..setCheckDependencies(false)
         ..setArtTarget("")
@@ -291,6 +297,7 @@ import UnitObjEditingCommon
         ..tooltipStopListen(false)
 
     let manaWard = new AbilityDefinitionHealingWard(ABIL_MANA_WARD)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..setWardUnitType(1, commaList(UNIT_MANA_WARD))
         ..setCheckDependencies(false)
@@ -336,6 +343,7 @@ import UnitObjEditingCommon
         )
     let abilId = ABIL_ID_GEN.next()
     let orbOfLightning = new AbilityDefinitionOrbofLightning(ABIL_ORB_LIGHTNING)
+        ..setCheckDependencies(false)
         ..setEnabledAttackIndex(1, 0)
         ..presetChanceToHitUnits(_ -> 30)
         ..presetChanceToHitSummons(_ -> 60)
@@ -344,6 +352,7 @@ import UnitObjEditingCommon
         ..setNameEnhance("Z", "Orb of Lightning")
 
     new AbilityDefinitionPurgeorb(abilId)
+        ..setCheckDependencies(false)
         ..presetCastRange(_ -> 700)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
@@ -366,6 +375,7 @@ import UnitObjEditingCommon
         "Summons a Spirit Wolf."
     )
     new AbilityDefinitionSpiritWolfcreep(ABIL_SUMMON_SPIRIT_WOLF1)
+        ..setCheckDependencies(false)
         ..setHeroAbility(false)
         ..setLevels(1)
         ..setAreaofEffect(1, 100)
@@ -386,6 +396,7 @@ import UnitObjEditingCommon
         "Summons 3 Spirit Wolf."
     )
     new AbilityDefinitionSpiritWolfcreep(ABIL_SUMMON_SPIRIT_WOLF2)
+        ..setCheckDependencies(false)
         ..setHeroAbility(false)
         ..setLevels(1)
         ..setAreaofEffect(1, 100)
@@ -405,6 +416,7 @@ import UnitObjEditingCommon
     tgen = new BTAbilityTooltipGenerator(
         "Calls forth a bolt of lightning that deals damage and bounce.")
     let chainLightning = new AbilityDefinitionFarseerChainLightning(ABIL_CHAIN_LIGHTNING)
+        ..setCheckDependencies(false)
         ..setHeroAbility(false)
         ..registerTooltipGenerator(tgen)
         ..setLevels(1)
@@ -453,6 +465,7 @@ import UnitObjEditingCommon
     //     ..setName("Ogre Slam")
 
     new AbilityDefinitionAlchemistAcidBomb(ABIL_OGRE_SWING_SLAM)
+        ..setCheckDependencies(false)
         ..setDummyAbility()
         ..setHeroAbility(false)
         ..setLevels(1)
@@ -523,6 +536,7 @@ import UnitObjEditingCommon
     tgen = new BTAbilityTooltipGenerator(
         "Hurls a fiery bolt that stuns a target enemy unit.")
     let fireBolt = new AbilityDefinitionFireBoltcreep(ABIL_FIREBOLT)
+        ..setCheckDependencies(false)
         ..setHeroAbility(false)
         ..setMissileArt(Abilities.fireBallMissile)
         ..registerTooltipGenerator(tgen)
@@ -564,6 +578,7 @@ import UnitObjEditingCommon
         "when the buff expires."
     )
     new AbilityDefinitionBattleRoar(ABIL_RAMPAGE)
+        ..setCheckDependencies(false)
         ..setAnimationNames("")
         ..setIconNormal(Icons.bTNBerserk)
         ..setHeroAbility(false)
@@ -600,6 +615,7 @@ import UnitObjEditingCommon
         "when the buff expires."
     )
     new AbilityDefinitionRoar(ABIL_KILLING_SPREE)
+        ..setCheckDependencies(false)
         ..setAnimationNames("attack")
         ..setHeroAbility(false)
         ..presetAreaofEffect(lvl -> 1)

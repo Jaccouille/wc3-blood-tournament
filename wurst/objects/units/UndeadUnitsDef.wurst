@@ -600,7 +600,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 115, 10, 7, 1.5)
+        ..setAttack1Data(AttackType.Normal, 110, 10, 7, 1.5)
 
         ..setArmorData(ArmorType.Large, 5)
         ..setHitPointsMaximumBase(2800)

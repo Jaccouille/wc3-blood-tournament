@@ -21,7 +21,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Pierce, 5, 5, 3, 1.9)
+        ..setAttack1Data(AttackType.Pierce, 5, 5, 3, 1.7)
 
         ..setArmorData(ArmorType.Small, 2)
         ..setHitPointsMaximumBase(400)
@@ -506,7 +506,7 @@ import UnitTooltipGenerator
             ABIL_DEMONIC_ATTRITION_VISUAL))
         ..setDefaultActiveAbility(commaList(ABIL_AC_FORKED_LIGHTNING))
 
-        ..setAttack1Data(AttackType.Magic, 55, 5, 6, 1.5)
+        ..setAttack1Data(AttackType.Magic, 55, 5, 7, 1.5)
         ..setAttack1Range(500)
         ..setAttack1ProjectileArt(Abilities.voidWalkerMissile)
         ..setAttack1WeaponType(WeaponType.Missile)
@@ -584,7 +584,7 @@ import UnitTooltipGenerator
             ABIL_DEMONIC_ATTRITION_VISUAL
             ))
 
-        ..setAttack1Data(AttackType.Siege, 50, 5, 7, 1.4)
+        ..setAttack1Data(AttackType.Siege, 55, 5, 7, 1.4)
         ..setAttack1TargetsAllowed(
             commaList(
                 TargetsAllowed.ground,
@@ -619,13 +619,13 @@ import UnitTooltipGenerator
         ..setDefaultActiveAbility(commaList(ABIL_AC_HELL_FIREBOLT))
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 75, 5, 4, 1.6)
+        ..setAttack1Data(AttackType.Magic, 75, 5, 5, 1.6)
         ..setAttack1ProjectileArt(Abilities.fireBallMissile)
         ..setAttack1Range(600)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setNoSplash()
 
-        ..setArmorData(ArmorType.Normal, 4)
+        ..setArmorData(ArmorType.Medium, 4)
         ..setHitPointsMaximumBase(600)
         ..setMana(200)
 
@@ -658,13 +658,13 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 80, 5, 8, 1.6)
+        ..setAttack1Data(AttackType.Magic, 105, 5, 9, 1.6)
         ..setAttack1Range(600)
         ..setAttack1ProjectileSpeed(900)
         ..setAttack1ProjectileArt(Abilities.redDragonMissile)
         ..setSmallSplash()
 
-        ..setArmorData(ArmorType.Normal, 2)
+        ..setArmorData(ArmorType.Medium, 2)
         ..setHitPointsMaximumBase(900)
         ..setMana(200)
 
@@ -697,13 +697,13 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 125, 5, 12, 1.6)
+        ..setAttack1Data(AttackType.Magic, 125, 5, 13, 1.6)
         ..setAttack1Range(600)
         ..setAttack1ProjectileSpeed(900)
         ..setAttack1ProjectileArt(Abilities.greenDragonMissile)
         ..setSmallSplash()
 
-        ..setArmorData(ArmorType.Normal, 4)
+        ..setArmorData(ArmorType.Medium, 4)
         ..setHitPointsMaximumBase(1300)
         ..setMana(200)
 
@@ -740,7 +740,7 @@ import UnitTooltipGenerator
             ))
         ..setNormalAbilities(commaList(ABIL_CLEAVE_20, ABIL_IMMOLATION))
 
-        ..setAttack1Data(AttackType.Siege, 85, 5, 6, 1.4)
+        ..setAttack1Data(AttackType.Siege, 85, 5, 7, 1.6)
 
         ..setArmorData(ArmorType.Large, 5)
         ..setHitPointsMaximumBase(2000)

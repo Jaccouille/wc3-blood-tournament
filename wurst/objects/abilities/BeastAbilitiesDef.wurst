@@ -40,7 +40,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..tooltipStartListen()
         ..setIconNormal(Icons.bTNSmash)
         ..addTooltipProperty("Chance to Stomp", _ -> "30%")
-        ..presetDamageDealt(_ -> 60)
+        ..presetDamageDealt(_ -> 100)
         ..presetFullDamageRadius(_ -> 150)
         ..presetHalfDamageRadius(_ -> 250)
         ..setNameEnhance("Z", "Pulverize")
@@ -52,6 +52,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
     tgen = new BTAbilityTooltipGenerator(
         "A wave of force that ripples out from the unit, causing damage to land units in a line.")
     let shockWave = new AbilityDefinitionCrushingWave(ABIL_SHOCKWAVE)
+        ..setCheckDependencies(false)
         ..setMissileArt(Abilities.shockwaveMissile)
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
@@ -124,6 +125,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
          "Raises a fallen Tauren from the dead.")
     new AbilityDefinitionAncestralSpirit(ABIL_ANCESTRAL_SPIRIT)
         ..setCheckDependencies(false)
+        ..setCheckDependencies(false)
         ..setDummyAbility()
         ..registerTooltipGenerator(tgen)
         ..presetManaCost(_ -> 75)
@@ -151,6 +153,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
          "across other Spirit Linked units.")
 
     let spiritLink = new AbilityDefinitionSpiritLink(ABIL_SPIRIT_LINK)
+        ..setCheckDependencies(false)
         ..setCheckDependencies(false)
         ..setDummyAbility()
         ..registerTooltipGenerator(tgen)
@@ -191,6 +194,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
 
     let banish = new AbilityDefinitionBloodMageBanish(ABIL_BANISH)
         ..setCheckDependencies(false)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..setMovementSpeedReduction(1, 0.5)
@@ -218,6 +222,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
     )
 
     let healingSpray = new AbilityDefinitionAlchemistHealingSpray(ABIL_HEALING_SPRAY)
+        ..setCheckDependencies(false)
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..setMissileCount(1, 6)
@@ -258,6 +263,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
     )
 
     let putridSpray = new AbilityDefinitionAlchemistHealingSpray(ABIL_PUTRID_SPRAY)
+        ..setCheckDependencies(false)
         ..setCheckDependencies(false)
         ..setMissileArt(Abilities.sludgeMissile)
         ..registerTooltipGenerator(tgen)
@@ -317,6 +323,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         "it attacks faster but has less armor.")
 
     let fervorPotion = new AbilityDefinitionAlchemistAcidBomb(ABIL_FERVOR_POTION)
+        ..setCheckDependencies(false)
         ..setAnimationNames("Attack,two,Spell")
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
@@ -365,8 +372,9 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         " the duration.")
 
     new AbilityDefinitionScrollofLifeRegen(ABIL_MANA_REGENERATION)
+        ..setCheckDependencies(false)
         ..setDummyAbility()
-        ..setNameEnhance("Z", "Mana Potion regenration")
+        ..setNameEnhance("Z", "Mana Potion regeneration")
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..setAllowWhenFull(1, AllowWhenFull.ALWAYS)
@@ -378,6 +386,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..setItemAbility(false)
 
     let manaPotion = new AbilityDefinitionAlchemistAcidBomb(ABIL_MANA_POTION)
+        ..setCheckDependencies(false)
         ..setAnimationNames("Attack,two,Spell")
         ..setCheckDependencies(false)
         ..presetArmorPenalty(_ -> 0)
@@ -398,8 +407,8 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..tooltipStartListen()
         ..presetAutoCastCastRange(750, manaPotion)
         ..presetAutoCastCooldown(16, manaPotion)
-        ..applyTooltip(manaPotion)
         ..setNameEnhance("Z", "Mana Potion")
+        ..applyTooltip(manaPotion)
         ..tooltipStopListen(true)
         ..setIconNormal(Icons.bTNPotionOfClarity)
         ..setIconTurnOff(Icons.bTNPotionOfClarity)
@@ -418,6 +427,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..setTooltipNormalExtended(1, "This unit is paralyzed; its movement and attack have been impaired.")
 
     new AbilityDefinitionAlchemistAcidBomb(ABIL_SHOCK_BREATH)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..setCheckDependencies(false)
         ..setMissileArt("")
@@ -442,11 +452,23 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
 
     abilTooltipMap.put(ABIL_SHOCK_BREATH, tgen.generateFullTooltip())
 
+
+    let BUFF_CORROSIVE_BREATH = BUFF_ID_GEN.next()
+    new BuffDefinition(BUFF_CORROSIVE_BREATH, BuffIds.acidBomb)
+        ..setIcon(Icons.bTNCorrosiveBreath)
+        ..setArtSpecial(1,"")
+        ..setTargetAttachmentPoint0(1, "chest")
+        ..setName(1, "Corrosive Breath")
+        ..setTooltipNormal(1, "Corrosive Breath")
+        ..setTooltipNormalExtended(1, "This unit is affected by Corrosive Breath;has "+
+            "reduced armor and takes damage over time.")
+        ..setArtTarget(1, Abilities.chimaeraAcidTargetArt)
     tgen = new BTAbilityTooltipGenerator(
         "Reduces enemies armor and damages them over time upon basic attack hit."
         )
     let abilId = ABIL_ID_GEN.next()
     let orbCorrosiveBreath = new AbilityDefinitionOrbofLightning(ABIL_CORROSIVE_BREATH_ORB)
+        ..setCheckDependencies(false)
         ..setMissileArt(Abilities.greenDragonMissile)
         ..setArtTarget(Abilities.bottleImpact)
         ..setTargetAttachmentPoint1("head")
@@ -460,6 +482,8 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..setDamageBonus(1, 0)
 
     new AbilityDefinitionAlchemistAcidBomb(abilId)
+        ..setCheckDependencies(false)
+        ..setLevels(1)
         ..registerTooltipGenerator(tgen)
         ..setCheckDependencies(false)
         ..setMissileArt("")
@@ -472,6 +496,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         ..presetDurationNormal(_ -> 3)
         ..presetAreaofEffect(_ -> 200)
         ..setNameEnhance("Z", "Corrosive Breath")
+        ..setBuffs(1, BUFF_CORROSIVE_BREATH.toRawCode())
         ..applyTooltip(orbCorrosiveBreath)
         ..setTargetsAllowed(1, commaList(
             TargetsAllowed.enemies
@@ -538,6 +563,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         "its armor has been increased.")
 
     new AbilityDefinitionRoar(ABIL_DEFENSE_REXXAR_ROAR)
+        ..setCheckDependencies(false)
         ..setAnimationNames("spell,slam")
         ..setBuffs(1, BUFF_DEFENSE_ROAR.toRawCode())
         ..setIconNormal(Icons.bTNArcaniteArmor)
@@ -572,6 +598,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
          )
 
     new AbilityDefinitionRoar(ABIL_BATTLE_REXXAR_ROAR)
+        ..setCheckDependencies(false)
         ..setAnimationNames("spell,slam")
         ..setLevels(1)
         ..setHeroAbility(false)
@@ -603,6 +630,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
         "Strikes additional units in a line with each attack."
         )
     new AbilityDefinition(ABIL_GIANT_AXE, AbilityIds.stormHammers)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
         ..setItemAbility(false)

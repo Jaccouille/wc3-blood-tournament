@@ -32,21 +32,21 @@ init
         "lr : list round"
         printTimedToPlayer(msg, 15, triggerPlayer)
 
-    registerToolkitCommand("su") (player triggerPlayer, LinkedList<string> arguments) ->
-        pDatas.forEach() (player key, PlayerData pData) ->
-            Log.info("SpawnedUnits size : " + pData.spawnedUnits.size().toString() + " for " + key.getNameColored(true))
+    registerToolkitCommand("sus") (player triggerPlayer, LinkedList<string> arguments) ->
+        for _p in pDatas
+            Log.info("SpawnedUnits size : " + pDatas.get(_p).spawnedUnits.size().toString() + " for " + _p.getNameColored(true))
 
     registerToolkitCommand("show-indexes") (player triggerPlayer, LinkedList<string> arguments) ->
-        pDatas.forEach() (player key, PlayerData pData) ->
-            let idx = playerToArmySpawner.get(key).buildingIdx
-            let nestedIdx = playerToArmySpawner.get(key).squadIdx
-            let spawnFinished = playerToArmySpawner.get(key).hasSpawnFinished
+        for _p in pDatas
+            let idx = playerToArmySpawner.get(_p).buildingIdx
+            let nestedIdx = playerToArmySpawner.get(_p).squadIdx
+            let spawnFinished = playerToArmySpawner.get(_p).hasSpawnFinished
             Log.info("spawnidx : " + idx.toString() +
                      " spawninestedIdx : " + nestedIdx.toString() +
                      " spawnFinished : " + spawnFinished.toString() +
-                     " for " + key.getNameColored(true))
+                     " for " + _p.getNameColored(true))
 
-    registerToolkitCommand("al") (player triggerPlayer, LinkedList<string> arguments) ->
+    registerToolkitCommand("lrp") (player triggerPlayer, LinkedList<string> arguments) ->
         Log.info("roundParticipant size : " + roundController.currentRound.roundParticipant.size().toString())
         roundController.currentRound.roundParticipant.forEach() (player t) ->
             Log.info("Participant remaining : " + t.getName())

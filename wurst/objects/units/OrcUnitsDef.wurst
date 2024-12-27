@@ -20,10 +20,10 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 25, 5, 2, 1.5)
+        ..setAttack1Data(AttackType.Normal, 25, 5, 4, 1.5)
 
         ..setArmorData(ArmorType.Small, 2)
-        ..setHitPointsMaximumBase(600)
+        ..setHitPointsMaximumBase(700)
 
 
         ..setSizeSmall()
@@ -56,7 +56,7 @@ import UnitTooltipGenerator
 
         ..setAttack1Data(AttackType.Normal, 45, 5, 4, 1.4)
 
-        ..setArmorData(ArmorType.Small, 2)
+        ..setArmorData(ArmorType.Small, 3)
         ..setHitPointsMaximumBase(800)
 
         ..setAutoPointValue()
@@ -151,7 +151,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 35, 5, 5, 1.8)
+        ..setAttack1Data(AttackType.Normal, 35, 5, 5, 1.6)
 
         ..setArmorData(ArmorType.Large, 2)
         ..setHitPointsMaximumBase(1200)
@@ -183,7 +183,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 75, 5, 5, 1.7)
+        ..setAttack1Data(AttackType.Normal, 75, 5, 5, 1.5)
 
         ..setArmorData(ArmorType.Large, 3)
         ..setHitPointsMaximumBase(1500)
@@ -219,10 +219,10 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Siege, 105, 5, 10, 1.6)
+        ..setAttack1Data(AttackType.Siege, 105, 5, 13, 1.6)
 
         ..setArmorData(ArmorType.Large, 7)
-        ..setHitPointsMaximumBase(2200)
+        ..setHitPointsMaximumBase(2500)
 
         ..setSizeSmall()
         ..setItemCostUnit(0, 1000, 1)
@@ -252,7 +252,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Normal, 80, 5, 8, 1.0)
+        ..setAttack1Data(AttackType.Normal, 80, 10, 6, 1.0)
 
         ..setArmorData(ArmorType.Large, 5)
         ..setHitPointsMaximumBase(2200)
@@ -321,7 +321,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 15, 5, 2, 1.75)
+        ..setAttack1Data(AttackType.Magic, 15, 5, 4, 1.75)
         ..setAttack1Range(450)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
@@ -352,7 +352,7 @@ import UnitTooltipGenerator
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
-        ..setAttack1Data(AttackType.Magic, 15, 5, 3, 1.75)
+        ..setAttack1Data(AttackType.Magic, 15, 5, 5, 1.75)
         ..setAttack1Range(550)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 

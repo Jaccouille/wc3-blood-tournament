@@ -2,6 +2,7 @@ package NagaAbilitiesDef
 
 // Standard libs imports:
 import Assets
+import BuffObjEditing
 import ClosureEvents
 import HashMap
 
@@ -22,6 +23,7 @@ import UnitObjEditingCommon
         "Deal damage per second and slow target movement and " +
         "attack speed.")
     new AbilityDefinitionSlowPoison(ABIL_POISON_SPIT)
+        ..setCheckDependencies(false)
         ..presetAttackSpeedFactor(_ -> 0.20)
         ..presetMovementSpeedFactor(_ -> 0.30)
         ..registerTooltipGenerator(tgen)
@@ -54,6 +56,7 @@ import UnitObjEditingCommon
     tgen = new BTAbilityTooltipGenerator("Calls forth a cone of lightning on a "
     + "target enemy unit, hitting multiple enemy units.")
     let forkedLightning = new AbilityDefinitionSeaWitchForkedLightning(ABIL_FORKED_LIGHTNING)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
@@ -121,6 +124,7 @@ import UnitObjEditingCommon
         "Throws a magical shard of ice at a target enemy unit, " +
         "dealing damage and stunning the target.")
     let frostBolt = new AbilityDefinitionFrostBolt(ABIL_FROST_BOLT)
+        ..setCheckDependencies(false)
         ..setMissileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setLevels(1)
         ..setCheckDependencies(false)
@@ -157,6 +161,7 @@ import UnitObjEditingCommon
         + "dispelling units in its wake."
         )
     let disruptionRay = new AbilityDefinitionRayOfDisruption(ABIL_DISRUPTION_RAY)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
@@ -192,6 +197,7 @@ import UnitObjEditingCommon
     // Lightning orb ability doesn't dispatch any event on ability effect proc
     // Therefore we cannot change the unit owner player data after owner switch
     let orbOfCharm = new AbilityDefinitionOrbofLightning(ABIL_ORB_CHARM)
+        ..setCheckDependencies(false)
         ..setEnabledAttackIndex(1, 0)
         ..presetChanceToHitUnits(_ -> 0)
         ..presetChanceToHitSummons(_ -> 0)
@@ -205,6 +211,7 @@ import UnitObjEditingCommon
         ..setEditorSuffix("(Orb)")
 
     new AbilityDefinitionCharm(ABIL_CHARM)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..setCheckDependencies(false)
         ..setDummyAbility()
@@ -254,11 +261,23 @@ import UnitObjEditingCommon
 
     abilTooltipMap.put(ABIL_CRUSHING_WAVE, tgen.generateFullTooltip())
 
+    let BUFF_ACID_SPIT = BUFF_ID_GEN.next()
+    new BuffDefinition(BUFF_ACID_SPIT, BuffIds.acidBomb)
+        ..setIcon(Icons.bTNCorrosiveBreath)
+        ..setArtSpecial(1,"")
+        ..setTargetAttachmentPoint0(1, "chest")
+        ..setName(1, "Acid Spit")
+        ..setTooltipNormal(1, "Acid Spit")
+        ..setTooltipNormalExtended(1, "This unit is affected by Acid Spit;has "+
+            "reduced armor and takes damage over time.")
+        ..setArtTarget(1, Abilities.chimaeraAcidTargetArt)
+
     tgen = new BTAbilityTooltipGenerator(
         "Reduces enemies armor and damage them over time upon basic attack hit."
         )
     let abilId = ABIL_ID_GEN.next()
     let acidSpit = new AbilityDefinitionOrbofLightning(ABIL_ACID_SPIT_ORB)
+        ..setCheckDependencies(false)
         ..setMissileArt("")
         ..setArtTarget(Abilities.bottleImpact)
         ..setTargetAttachmentPoint1("weapon")
@@ -272,6 +291,8 @@ import UnitObjEditingCommon
         ..setDamageBonus(1, 0)
 
     new AbilityDefinitionAlchemistAcidBomb(abilId)
+        ..setCheckDependencies(false)
+        ..setLevels(1)
         ..registerTooltipGenerator(tgen)
         ..setCheckDependencies(false)
         ..setMissileArt("")
@@ -283,9 +304,9 @@ import UnitObjEditingCommon
         ..presetSecondaryDamage(_ -> 20)
         ..presetAreaofEffect(_ -> 125)
         ..presetDurationNormal(_ -> 4)
-        ..applyTooltip(acidSpit)
         ..setNameEnhance("Z", "Acid Spit")
-        ..setBuffs(1, BuffIds.corrosiveBreath.toRawCode())
+        ..applyTooltip(acidSpit)
+        ..setBuffs(1, BUFF_ACID_SPIT.toRawCode())
         ..setTargetsAllowed(1, commaList(
             TargetsAllowed.enemies
             ))

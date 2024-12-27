@@ -44,6 +44,7 @@ import LocalAssets
             "speed is greatly increased.")
 
     new AbilityDefinitionFrenzy(ABIL_DEMONIC_FRENZY)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..setScalingFactor(1, 0)
         ..tooltipStartListen()
@@ -65,6 +66,7 @@ import LocalAssets
     )
 
     let manaburn = new AbilityDefinitionManaBurndemon(ABIL_MANA_BURN)
+        ..setCheckDependencies(false)
         ..setAnimationNames("attack")
         ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
@@ -90,6 +92,7 @@ import LocalAssets
         "Curses a target enemy unit, causing it to have a chance to miss on an attack."
     )
     new AbilityDefinitionCursecreep(ABIL_CURSE)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..setChancetoMiss(1, 0.6)
@@ -138,6 +141,7 @@ import LocalAssets
 
 
     let rainOfFire = new AbilityDefinitionRainofFirecreep(ABIL_RAIN_OF_FIRE)
+        ..setCheckDependencies(false)
         ..setAnimationNames("spell,slam")
         ..registerTooltipGenerator(tgen)
         // ..setBuffs(1, commaList(BuffIds.blizzardCaster))
@@ -172,6 +176,7 @@ import LocalAssets
     )
 
     let inferno = new AbilityDefinitionInferno(ABIL_INFERNO)
+        ..setCheckDependencies(false)
         ..setAnimationNames("spell,slam")
         ..setLevels(1)
         ..setHeroAbility(false)
@@ -243,6 +248,7 @@ import LocalAssets
         "Gives mana every seconds to a nearby ally."
         )
     new AbilityDefinitionSiphonManaCreep(ABIL_MANA_SHARE)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetManaTransferredPerSecond(_ -> 50)
@@ -317,6 +323,7 @@ import LocalAssets
         "Hurls a fiery bolt at a target enemy unit, " +
         "dealing damage and stunning the target.")
     let hellFirebolt = new AbilityDefinitionFireBolt(ABIL_HELL_FIREBOLT)
+        ..setCheckDependencies(false)
         ..setMissileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setLevels(1)
         ..setCheckDependencies(false)
@@ -358,6 +365,7 @@ import LocalAssets
         )
     var abilId = ABIL_ID_GEN.next()
     let orbBurningAttack1 = new AbilityDefinitionOrbofLightning(ABIL_BURNING_ATTACK_1_ORB)
+        ..setCheckDependencies(false)
         ..setMissileArt("")
         ..setArtTarget(Abilities.aIfbTarget)
         ..setTargetAttachmentPoint1("weapon")
@@ -371,6 +379,8 @@ import LocalAssets
         ..setDamageBonus(1, 0)
 
     new AbilityDefinitionAlchemistAcidBomb(abilId)
+        ..setCheckDependencies(false)
+        ..setLevels(1)
         ..registerTooltipGenerator(tgen)
         ..setCheckDependencies(false)
         ..setMissileArt("")
@@ -408,6 +418,7 @@ import LocalAssets
         )
     abilId = ABIL_ID_GEN.next()
     let orbBurningAttack2 = new AbilityDefinitionOrbofLightning(ABIL_BURNING_ATTACK_2_ORB)
+        ..setCheckDependencies(false)
         ..setMissileArt("")
         ..setArtTarget(Abilities.orbVenom)
         ..setTargetAttachmentPoint1("weapon")
@@ -421,6 +432,8 @@ import LocalAssets
         ..setDamageBonus(1, 0)
 
     new AbilityDefinitionAlchemistAcidBomb(abilId)
+        ..setCheckDependencies(false)
+        ..setLevels(1)
         ..registerTooltipGenerator(tgen)
         ..setCheckDependencies(false)
         ..setMissileArt("")
@@ -469,6 +482,7 @@ import LocalAssets
         ..tooltipStopListen(true)
 
     new AbilityDefinitionUnholyAuracreep(ABIL_DEMONIC_ATTRITION_VISUAL)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..setMovementSpeedIncrease(1, 0)
         ..setLifeRegenerationIncrease(1, 0)
@@ -481,6 +495,7 @@ import LocalAssets
     tgen = new BTAbilityTooltipGenerator(
         "Emits a terrifying howl that reduces nearby enemy units' attack damage.")
     let howlOfTerror = new AbilityDefinitionPitLordHowlofTerror(ABIL_HOWL_OF_TERROR)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..setHeroAbility(false)
         ..registerTooltipGenerator(tgen)

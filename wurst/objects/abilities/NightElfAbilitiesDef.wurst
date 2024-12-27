@@ -61,6 +61,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
     tgen = new BTAbilityTooltipGenerator("Blink on enemy ranged unit.")
     new AbilityDefinitionWardenBlink(ABIL_BLINK)
+        ..setCheckDependencies(false)
         ..setHeroAbility(false)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
@@ -77,6 +78,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "The Warden hurls a flurry of knives, damaging nearby enemies. " +
         "Is casted after blink.")
     new AbilityDefinitionWardenFanofKnives(ABIL_FAN_OF_KNIVES)
+        ..setCheckDependencies(false)
         ..setHeroAbility(false)
         ..presetCooldown(_ -> 0)
         ..setLevels(1)
@@ -96,6 +98,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "The mana combusts, dealing damage to the attacked unit."
     )
     new AbilityDefinitionFeedback(ABIL_FEEDBACK)
+        ..setCheckDependencies(false)
         ..setHeroAbility(false)
         ..presetCooldown(_ -> 0)
         ..setLevels(1)
@@ -138,6 +141,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "Calls down waves of falling stars; " +
         "each wave deals damage to units in an area. Does not stack with other starfall.")
     let starFall = new AbilityDefinitionArchMageBlizzard(ABIL_STARFALL)
+        ..setCheckDependencies(false)
         ..setHeroAbility(false)
         ..setBuffs(1, "")
         ..setAnimationNames("spell")
@@ -177,12 +181,14 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "Reduces a target enemy unit's armor. Applies to multiple targets."
     )
     new AbilityDefinitionFaerieFire(ABIL_DUMMY_CAST_FAERIE_FIRE)
+        ..setCheckDependencies(false)
         ..presetDefenseReduction(_ -> 4)
         ..presetDurationNormal(_ -> 15)
         ..setDummyAbility()
         ..setNameEnhance("Z", "Faerie Fire Dummy")
 
     new AbilityDefinitionFaerieFire(ABIL_FAERIE_FIRE)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..tooltipStartListen()
         ..registerTooltipGenerator(tgen)
@@ -226,6 +232,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
 
     let ABIL_ROOT_SLOW = compiletime(ABIL_ID_GEN.next())
     new AbilityDefinitionAuraEnduranceCreep(ABIL_ROOT_SLOW)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..setCheckDependencies(false)
         ..setArtTarget("")
@@ -242,6 +249,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStopListen(false)
 
     let entanglingRoot = new AbilityDefinitionHealingWard(ABIL_ENTANGLING_ROOT)
+        ..setCheckDependencies(false)
         ..setHeroAbility(false)
         ..setWardUnitType(1, commaList(UNIT_ENTANGLING_ROOT))
         ..setCheckDependencies(false)
@@ -250,6 +258,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..presetDurationNormal(_ -> 6)
         ..setNameEnhance("W", "Entangling Root")
+        ..setIconNormal(Icons.bTNEntanglingRoots)
         ..tooltipStopListen(false)
 
     createAutoCastedEnemyAbility(ABIL_AC_ENTANGLING_ROOT)
@@ -283,6 +292,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     tgen = new BTAbilityTooltipGenerator(
         "Create an illusion of an allied unit, takes 2x damage.")
     let woi = new AbilityDefinitionItemIllusion(ABIL_WAND_OF_ILLUSION)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..presetCastRange(_ -> 500)
         ..presetCooldown(_ -> 0)
@@ -312,6 +322,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "Deals damage in a small area."
     )
     new AbilityDefinitionSelfDestruct(ABIL_WISP_EXPLODE)
+        ..setCheckDependencies(false)
         ..setHeroAbility(false)
         ..setExplodesonDeath(1, true)
         ..presetCooldown(_ -> 0)
@@ -331,6 +342,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     tgen = new BTAbilityTooltipGenerator(
         "Summon Wisps that explode on target.")
     let summonWisp = new AbilityDefinitionSummonSeaElemental(ABIL_SUMMON_WISP)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..presetAreaofEffect(_ -> 100)
         ..presetSummonedUnitType(_ -> commaList(UNIT_WISP))
@@ -356,6 +368,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "Deal damage per second and slow target movement and " +
         "attack speed.")
     new AbilityDefinitionSlowPoison(ABIL_POISON_SPEAR)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..presetAttackSpeedFactor(_ -> 0.20)
         ..presetMovementSpeedFactor(_ -> 0.30)
@@ -376,6 +389,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         " a treant will spawn from its corpse.")
 
     new AbilityDefinitionParasite(ABIL_PARASITE_SEED)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetDamageperSecond(_ -> 80)
@@ -397,6 +411,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "which returns a percentage of a melee attacker's damage back to it."
     )
     new AbilityDefinitionKeeperoftheGroveThornsAura(ABIL_THORN_AURA)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..setHeroAbility(false)
         ..presetDamageDealttoAttackers(_ -> 0.4)
@@ -422,6 +437,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "Heals a target friendly unit over the duration."
     )
     let rejuvenation = new AbilityDefinitionRejuvinationcreep(ABIL_REJUVENATION)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetHitPointsGained(_ -> 600)
@@ -449,6 +465,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "Increase the unit attack rate and movement speed."
     )
     new AbilityDefinitionFrenzy(ABIL_DRUID_FRENZY)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..setScalingFactor(1, 0)
         ..tooltipStartListen()
@@ -468,6 +485,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         "Raises a feral spectre from a corpse."
     )
     new AbilityDefinitionVengeance(ABIL_SPIRIT_OF_VENGEANCE)
+        ..setCheckDependencies(false)
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetMaxUnitsSummoned(_ -> 3)
@@ -497,6 +515,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         )
     let abilId = ABIL_ID_GEN.next()
     let terrifyOrb = new AbilityDefinitionOrbofLightning(ABIL_TERRIFY_ORB)
+        ..setCheckDependencies(false)
         ..setMissileArt(Abilities.vengeanceMissile)
         ..setArtTarget("")
         ..setEnabledAttackIndex(1, 0)
@@ -508,6 +527,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..setNameEnhance("Z", "Haunts")
 
     new AbilityDefinitionBrewmasterDrunkenHaze(abilId)
+        ..setCheckDependencies(false)
         ..setIconNormal(Icons.bTNCurse)
         ..presetCastRange(_ -> 700)
         ..setAreaofEffect(1, 0)
@@ -548,6 +568,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     tgen = new BTAbilityTooltipGenerator(
             "Decrease the attack speed of nearby enemies.")
     new AbilityDefinitionAuraEnduranceCreep(ABIL_TERROR_AURA)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..setBuffs(1, BUFF_TERROR.toRawCode())
         ..setArtTarget(Abilities.obsidianRegenAura)
@@ -571,6 +592,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     tgen = new BTAbilityTooltipGenerator(
         "Gives bonus damage to nearby friendly units.")
     let roar = new AbilityDefinitionRoar(ABIL_ROAR)
+        ..setCheckDependencies(false)
         ..setLevels(1)
         ..setHeroAbility(false)
         ..registerTooltipGenerator(tgen)

@@ -519,6 +519,11 @@ public function BTUnitDefinition.setSmallSplash()
     this.setAttack1AreaofEffectSmallDamage(120)
     this.setAttack1DamageFactorSmall(0.1)
     this.setAttack1DamageFactorMedium(0.4)
+    this.setAttack1AreaofEffectTargets(commaList(
+        TargetsAllowed.enemies,
+        TargetsAllowed.ground,
+        TargetsAllowed.air
+        ))
     this.addTooltipProperty("Splash", "Small")
 
 function W3UDefinition.setHotkeyEnhance(string hotkey)
