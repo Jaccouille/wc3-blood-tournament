@@ -46,6 +46,7 @@ let commands = asList(
     "-bot:|r Toggle bot".color(HIGHLIGHT_COLOR),
     "-clear:|r Clears displayed text messages".color(HIGHLIGHT_COLOR),
     "-modes:|r Displays current established modes".color(HIGHLIGHT_COLOR),
+    "-fog:|r Fog of War, vote to enable/disable fog of war".color(HIGHLIGHT_COLOR),
     "-cl:|r Displays last changelog".color(HIGHLIGHT_COLOR)
 ).joinBy("\n")
 

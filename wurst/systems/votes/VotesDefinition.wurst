@@ -11,6 +11,15 @@ import GameStates
 import Players
 import RoundController
 import Vote
+import FogOfWar
+
+function getHumanPlayerCount() returns int
+    var count = 0
+    for _p in ALL_PLAYERS
+        // Only count human players and no afk
+        if _p.isHuman() and not playerToBuilderAI.get(_p).isEnabled
+            count++
+    return count
 
 public function voteReady(player triggerPlayer)
     if roundController.currentRound.hasStarted
@@ -19,12 +28,7 @@ public function voteReady(player triggerPlayer)
         if Vote.voteInstanceMap.has("Start round")
             Vote.voteInstanceMap.get("Start round").castVote(triggerPlayer)
         else
-            var count = 0
-            for _p in ALL_PLAYERS
-                // Only count human players and no afk
-                if _p.isHuman() and not playerToBuilderAI.get(_p).isEnabled
-                    count++
-            let voteInstance = new Vote("Start round", gameConfig.getRoundInterludeTime(), count)
+            let voteInstance = new Vote("Start round", gameConfig.getRoundInterludeTime(), getHumanPlayerCount())
             voteInstance.addAction() () ->
                 if not roundController.currentRound.hasStarted
                     if gameConfig.isDisplayPortalEnabled()
@@ -35,14 +39,48 @@ public function voteReady(player triggerPlayer)
                     printTimed("Vote failed! Round already started!", 3)
             voteInstance.castVote(triggerPlayer)
 
+function voteBloodDonation(player triggerPlayer)
+    if Vote.voteInstanceMap.has("Blood donation")
+        Vote.voteInstanceMap.get("Blood donation").castVote(triggerPlayer)
+    else
+        let voteInstance = new Vote("Blood donation", gameConfig.getRoundInterludeTime(), getHumanPlayerCount())
+        voteInstance.addAction() () ->
+            gameConfig.setBloodDonation(not gameConfig.isBloodDonationEnabled())
+            printTimed("Blood donation is now " + (gameConfig.isBloodDonationEnabled() ? "enabled" : "disabled"), 3)
+        voteInstance.castVote(triggerPlayer)
+
+function voteFogOfWar(player triggerPlayer)
+    if Vote.voteInstanceMap.has("Fog of war")
+        Vote.voteInstanceMap.get("Fog of war").castVote(triggerPlayer)
+    else
+        let voteInstance = new Vote("Fog of war", gameConfig.getRoundInterludeTime(), getHumanPlayerCount())
+        voteInstance.addAction() () ->
+            gameConfig.setFogOfWar(not gameConfig.isFogOfWarEnabled())
+            printTimed("Fog of war is now " + (gameConfig.isFogOfWarEnabled() ? "enabled" : "disabled"), 3)
+            if gameConfig.isFogOfWarEnabled()
+                createBlackMask()
+            else
+                removeBlackMask()
+        voteInstance.castVote(triggerPlayer)
+
 
 init
     GameStates.gameplay.onEnter() (state) ->
-        registerCommandAll("r") (player triggerPlayer, LinkedList<string> arguments) ->
+        registerCommandAll("r") (player triggerPlayer, LinkedList<string> args) ->
             voteReady(triggerPlayer)
-        registerCommandAll("ready") (player triggerPlayer, LinkedList<string> arguments) ->
+        registerCommandAll("ready") (player triggerPlayer, LinkedList<string> args) ->
             voteReady(triggerPlayer)
 
         OnRoundStart.add() (Round round) ->
             if Vote.voteInstanceMap.has("Start round")
                 Vote.voteInstanceMap.get("Start round").endVote(false)
+
+        registerCommandAll("bd") (player triggerPlayer, LinkedList<string> args) ->
+            voteBloodDonation(triggerPlayer)
+        registerCommandAll("blood-donation") (player triggerPlayer, LinkedList<string> args) ->
+            voteBloodDonation(triggerPlayer)
+
+        registerCommandAll("fog") (player triggerPlayer, LinkedList<string> args) ->
+            voteFogOfWar(triggerPlayer)
+        registerCommandAll("fog-of-war") (player triggerPlayer, LinkedList<string> args) ->
+            voteFogOfWar(triggerPlayer)
