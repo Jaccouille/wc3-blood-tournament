@@ -6,20 +6,45 @@ import BTAbilities
 
 framehandle tooltipFrameText
 
-function initTooltipBox() returns framehandle
-    let tooltipBackdrop = createFrame("BoxedText", GAME_UI, 0, 0)
+constant toolTipSizeX = 0.26
+constant toolTipPosX = 0.79
+constant toolTipPosY = 0.165
+constant toolTipPos = FRAMEPOINT_BOTTOMRIGHT
 
-    tooltipFrameText = BlzCreateFrameByType("TEXT", "MyScriptDialogButtonTooltip", tooltipBackdrop, "", 0)
-    BlzFrameSetSize(tooltipFrameText, 0.25, 0)
-    tooltipBackdrop.setPoint(FRAMEPOINT_BOTTOMLEFT, tooltipFrameText, FRAMEPOINT_BOTTOMLEFT, -0.005, -0.006)
-    tooltipBackdrop.setPoint(FRAMEPOINT_TOPRIGHT, tooltipFrameText, FRAMEPOINT_TOPRIGHT, 0.005, 0.005)
-    tooltipFrameText.setAbsPoint(FRAMEPOINT_BOTTOMRIGHT, 0.79, 0.18)
-    tooltipBackdrop.setVisible(false)
+function initTasToolTipBox() returns framehandle
+    // let tooltipBackdrop = createFrame("BoxedText", GAME_UI, 0, 0)
+    let tooltipBackdrop = BlzCreateFrame("TasSpellViewTooltipFrame", GAME_UI, 0, 0)
+    BlzGetFrameByName("TasSpellViewTooltipBox", 0)
+    BlzGetFrameByName("TasSpellViewTooltipIcon", 0)
+    BlzGetFrameByName("TasSpellViewTooltipName", 0)
+    BlzGetFrameByName("TasSpellViewTooltipSeperator", 0)
+    BlzGetFrameByName("TasSpellViewTooltipText", 0)
+    BlzGetFrameByName("TasSpellViewTooltipManaText", 0)
+    BlzGetFrameByName("TasSpellViewTooltipCooldownText", 0)
+    BlzGetFrameByName("TasSpellViewTooltipRangeText", 0)
+    BlzGetFrameByName("TasSpellViewTooltipAreaText", 0)
+
+    BlzFrameSetSize(BlzGetFrameByName("TasSpellViewTooltipText", 0), toolTipSizeX, 0)
+    BlzFrameSetAbsPoint(BlzGetFrameByName("TasSpellViewTooltipText", 0), toolTipPos, toolTipPosX,
+        toolTipPosY)
+    BlzFrameSetPoint(BlzGetFrameByName("TasSpellViewTooltipBox", 0), FRAMEPOINT_TOPLEFT,
+        BlzGetFrameByName("TasSpellViewTooltipIcon", 0), FRAMEPOINT_TOPLEFT, -0.005, 0.005)
+    BlzFrameSetPoint(BlzGetFrameByName("TasSpellViewTooltipBox", 0), FRAMEPOINT_BOTTOMRIGHT,
+        BlzGetFrameByName("TasSpellViewTooltipText", 0), FRAMEPOINT_BOTTOMRIGHT, 0.005, -0.005)
+    BlzFrameSetVisible(BlzGetFrameByName("TasSpellViewTooltipFrame", 0), false)
     return tooltipBackdrop
 
-function setTooltipText(int abilId)
-    let text = GetAbilityName(abilId).color(SPECIAL_COLOR) + "\n\n" + BlzGetAbilityExtendedTooltip(abilId, 0)
-    tooltipFrameText.setText(text)
+
+function setTasToolTip(int abilId, ability abi)
+    getFrame("TasSpellViewTooltipIcon", 0).setTexture(getAbilityIcon(abilId), 0, false)
+    getFrame("TasSpellViewTooltipManaText", 0).setText(BlzGetAbilityManaCost(abilId, 0).toString())
+    getFrame("TasSpellViewTooltipCooldownText", 0).setText(BlzGetAbilityCooldown(abilId, 0).toInt().toString())
+    getFrame("TasSpellViewTooltipRangeText", 0).setText(BlzGetAbilityRealLevelField(abi, ABILITY_RLF_CAST_RANGE, 0).toInt().toString())
+    getFrame("TasSpellViewTooltipAreaText", 0).setText(BlzGetAbilityRealLevelField(abi, ABILITY_RLF_AREA_OF_EFFECT, 0).toInt().toString())
+    getFrame("TasSpellViewTooltipName", 0).setText(getAbilityTooltip(abilId, 0))
+    getFrame("TasSpellViewTooltipText", 0).setText(getAbilityExtendedTooltip(abilId, 0))
+
+
 
 public function initSpellView()
     if loadTOCFile("TasSpellView.toc") == false
@@ -53,7 +78,7 @@ public function initSpellView()
         BlzGetFrameByName("TasSpellViewButtonChargeBox", i)
         // BlzGetFrameByName("TasSpellViewButtonChargeText", i)
 
-    let toolTipBox = initTooltipBox()
+    let toolTipBox = initTasToolTipBox()
 
     if getFrame("TasSpellViewButtonBackdrop", 1).getHandleId() == 0
         Log.info("TasSpellViewButtonBackdrop not found")
@@ -94,7 +119,7 @@ public function initSpellView()
 
                     if BlzFrameIsVisible(BlzGetFrameByName("TasSpellViewButtonToolTip", i))
                         foundTooltip = true
-                        setTooltipText(abilId)
+                        setTasToolTip(abilId, u.getAbility(abilId))
                         toolTipBox.setVisible(true)
 
                     if showCooldown
@@ -104,8 +129,10 @@ public function initSpellView()
                             let cdFrame = getFrame("TasSpellViewButtonCooldown", i)
                             cdFrame.show()
                             cdFrame.setValue(100 - (cdRemain / cdTotal) * 100)
+                            getFrame("TasSpellViewButtonTextOverLay", i).setText((cdRemain.toInt() + 1).toString())
                         else
                             getFrame("TasSpellViewButtonCooldown", i).hide()
+                            getFrame("TasSpellViewButtonTextOverLay", i).setText("")
                     else
                         getFrame("TasSpellViewButtonCooldown", i).hide()
                     getFrame("TasSpellViewButtonOverLayFrame", i).show()
