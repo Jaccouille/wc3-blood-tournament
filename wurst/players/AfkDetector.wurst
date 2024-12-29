@@ -31,8 +31,8 @@ public class AfkDetector
     function initialize(player _p, boolean showMsg)
         this.showMsg = showMsg
         if showMsg
-            printTimed(("{0} has {1} seconds to use builder to prove he isn't AFK"
-            .format(_p.getNameColored(), AFK_TIMER.toInt().toString())), 10)
+            printTimed(("{0} has {1} seconds to use {2} to prove he isn't AFK"
+            .format(_p.getNameColored(), AFK_TIMER.toInt().toString(),pDatas.get(_p).builder.getName())), 10)
         this._p = _p
         playerToAfkDetector.put(_p, this)
 

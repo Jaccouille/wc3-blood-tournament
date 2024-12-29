@@ -238,7 +238,7 @@ function handleBuildingDeath(unit dyingUnit, unit killer, PlayerData pData)
     pData.buildingList.remove(dyingUnit)
 
     // Process resources for builder or dummy unit
-    if killer == pData.builder or killer.getTypeId() == DUMMY_UNIT_ID
+    if killer.isType(UNIT_TYPE_PEON) or killer.getTypeId() == DUMMY_UNIT_ID
         distributeBuildingResources(dyingUnit, pData)
 
     // Cleanup related resources
