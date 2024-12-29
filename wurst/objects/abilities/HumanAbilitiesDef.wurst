@@ -142,8 +142,8 @@ let SLOW_TARGET_COUNT = 2
         ..presetCastRange(_ -> 900)
         ..tooltipStartListen()
         ..presetSummonedUnitDamage(_ -> 150)
-        ..applyTooltip(abilAbolishMagicOrb)
         ..setNameEnhance("Z", "Abolish Magic")
+        ..applyTooltip(abilAbolishMagicOrb)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_ABOLISH_MAGIC_ORB, tgen.generateFullTooltip())

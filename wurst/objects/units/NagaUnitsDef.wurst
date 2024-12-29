@@ -14,7 +14,7 @@ import UnitObjEditingCommon
 import UnitTooltipGenerator
 
 @compiletime function createNagaUnitsDef()
-    var tooltip = new UnitTooltipGenerator("Cheap meat.")
+    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_EVASION_20))
     createSpawnedUnit(UNIT_MURLOC, UnitIds.murloctiderunner, BUILDING_MURLOC)
         ..setSpeedBase(270)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_EVASION_20))
@@ -160,7 +160,7 @@ import UnitTooltipGenerator
         ..tooltipStopListen(true)
 
         ..setNameEnhance("E", "Myrmidon")
-        ..setSizeSmall()
+        ..setSizeLarge()
 
         ..setBuildingScalingValue(0.6)
         ..setModelFileExt(Units.nagaMyrmidon1)
@@ -197,7 +197,7 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("Z", "Depth Commander")
         ..tooltipStopListen(true, itm)
-        ..setSizeSmall()
+        ..setSizeLarge()
 
         ..setModelFileExt(Units.nagaRoyalGuard1)
         ..setIconGameInterfaceExt(Icons.bTNNagaMyrmidonRoyalGuard)

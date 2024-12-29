@@ -164,7 +164,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Magic, 10, 5, 1, 2)
         ..setAttack1Range(650)
         ..setScaleProjectiles(true)
-        ..setAttack1ProjectileArt(Abilities.lightningBoltMissile)
+        ..setAttack1ProjectileArt(Abilities.druidoftheTalonMissile)
         ..setAttack1WeaponType(WeaponType.Missile)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
 
