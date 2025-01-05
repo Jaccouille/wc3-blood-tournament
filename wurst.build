@@ -16,7 +16,7 @@ buildMapData:
       title: Jaccouille presents
       subTitle: '|cffff5436Blood Tournament Reloaded v0.3b'
       text: Choose a faction amongst Human, Orc, Undead, Night Elf, Naga, Beast or
-        Demon.|n  Experiment and find the optimal army composition.|n  Enjoy the mayhem!
+        Demon.|n|n  Experiment and find the optimal army composition.|n|n  Enjoy the mayhem!
   optionsFlags:
     forcesFixed: true
   players:
