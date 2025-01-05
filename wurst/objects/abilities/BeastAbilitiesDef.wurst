@@ -80,7 +80,7 @@ constant THUNDER_LIZARD_CAST_CHANCE = 20
     abilTooltipMap.put(ABIL_SHOCKWAVE, tgen.generateFullTooltip())
 
 
-    let quillBoarCount = BTBuildingData.getUnitCount(BUILDING_QUILLBOAR)
+    let quillBoarCount = BTBuildingData.getUnitCount(BUILDING_QUILLBEAST)
     itm = createBasicItem(ITEM_QUILL_SPRAY)
             ..setItemCost(0, 1000, quillBoarCount, 1, 1)
             ..setNameEnhance("Z", "Add Quill Spray")

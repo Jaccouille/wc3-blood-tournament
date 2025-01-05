@@ -86,7 +86,7 @@ import ArmySpawner
 
 @compiletime function createQuillBoar()
     var tooltip = new UnitTooltipGenerator("Basic ranged unit.")
-    createSpawnedUnit(UNIT_QUILLBOAR, UnitIds.quillboar, BUILDING_QUILLBOAR)
+    createSpawnedUnit(UNIT_QUILLBEAST, UnitIds.quillbeast1, BUILDING_QUILLBEAST)
         ..setSpeedBase(270)
         ..setAttack1WeaponType(WeaponType.MissileSplash)
         ..registerTooltipGenerator(tooltip)
@@ -101,22 +101,22 @@ import ArmySpawner
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
-        ..setUpgradeTo(asList(BUILDING_DIRE_QUILLBOAR))
+        ..setUpgradeTo(asList(BUILDING_QUILLBOAR))
 
-        ..setNameEnhance("Q", "Quillboar")
+        ..setNameEnhance("Q", "Quillbeast")
         ..setSizeSmall()
         ..setTintingColorRed(255)
         ..setTintingColorGreen(255)
         ..setTintingColorBlue(255)
 
-        ..setModelFileExt(Units.bristleBack)
-        ..setIconGameInterfaceExt(Icons.bTNRazorback)
-        ..setUnitSoundSetExt(Soundsets.razorMane)
+        ..setModelFileExt(Units.quillBeast)
+        ..setIconGameInterfaceExt(Icons.bTNQuillBeast)
+        ..setUnitSoundSetExt(Soundsets.quillBeast)
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_QUILL_SPRAY)
     )
-    createSpawnedUnit(UNIT_DIRE_QUILLBOAR, UnitIds.quillboarhunter, BUILDING_DIRE_QUILLBOAR)
+    createSpawnedUnit(UNIT_QUILLBOAR, UnitIds.quillboarhunter, BUILDING_QUILLBOAR)
         ..setSpeedBase(270)
         ..registerCustomPanelAbilityTooltip(asList(
             ABIL_QUILL_SPRAY
@@ -140,7 +140,8 @@ import ArmySpawner
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
 
-        ..setNameEnhance("Z", "Dire Quillboar")
+        ..setNameEnhance("Z", "Quillboar")
+        ..setHotkeyEnhance("W")
         ..setSizeSmall()
 
         ..setModelFileExt(Units.bristleBack)
@@ -218,6 +219,7 @@ import ArmySpawner
         ..setMana(0)
 
         ..setNameEnhance("Z", "Corrosive Lizard")
+        ..setHotkeyEnhance("W")
         ..setModelFile(Units.thunderLizardSalamander1)
         ..setSizeLarge()
         ..setScalingValue(1)
@@ -362,7 +364,7 @@ import ArmySpawner
         ..setUnitSoundSet(Soundsets.razorMane)
         ..setStructuresBuilt(commaList(
             BUILDING_TAUREN,
-            BUILDING_QUILLBOAR,
+            BUILDING_QUILLBEAST,
             BUILDING_SPIRIT_WALKER,
             BUILDING_THUNDER_LIZARD,
             BUILDING_ALCHEMIST,

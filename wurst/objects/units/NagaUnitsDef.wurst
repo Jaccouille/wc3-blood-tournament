@@ -14,11 +14,11 @@ import UnitObjEditingCommon
 import UnitTooltipGenerator
 
 @compiletime function createNagaUnitsDef()
-    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_EVASION_20))
+    var tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_EVASION_10))
     createSpawnedUnit(UNIT_MURLOC, UnitIds.murloctiderunner, BUILDING_MURLOC)
         ..setSpeedBase(270)
-        ..registerCustomPanelAbilityTooltip(asList(ABIL_EVASION_20))
-        ..setNormalAbilities(commaList(ABIL_EVASION_20))
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_EVASION_10))
+        ..setNormalAbilities(commaList(ABIL_EVASION_10))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -33,10 +33,35 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("Q", "Murloc")
         ..setSizeSmall()
-        ..setUpgradeTo(asList(BUILDING_MURGUL_WARLOCK))
+        ..setUpgradeTo(asList(BUILDING_MURGUL_WARLOCK, BUILDING_MURGUL_REAVER))
 
         ..setModelFileExt(Units.murloc1)
         ..setIconGameInterfaceExt(Icons.bTNMurloc)
+        ..setUnitSoundSetExt(Soundsets.murloc)
+
+    tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_EVASION_20))
+    createSpawnedUnit(UNIT_MURGUL_REAVER, UnitIds.murgulreaver, BUILDING_MURGUL_REAVER)
+        ..setSpeedBase(270)
+        ..registerCustomPanelAbilityTooltip(asList(ABIL_EVASION_20))
+        ..setNormalAbilities(commaList(ABIL_EVASION_20))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Normal, 25, 5, 3, 1.3)
+
+        ..setArmorData(ArmorType.Small, 3)
+        ..setHitPointsMaximumBase(600)
+
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("Z", "Murgul Reaver")
+        ..setHotkeyEnhance("W")
+        ..setSizeSmall()
+
+        ..setModelFileExt(Units.murgulReaver1)
+        ..setIconGameInterfaceExt(Icons.bTNMurgulTideWarrior)
         ..setUnitSoundSetExt(Soundsets.murloc)
 
     tooltip = new UnitTooltipGenerator(
@@ -68,7 +93,8 @@ import UnitTooltipGenerator
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
 
-        ..setNameEnhance("Z", "Murgul Warlock")
+        ..setNameEnhance("X", "Murgul Warlock")
+        ..setHotkeyEnhance("E")
         ..setSizeSmall()
 
         ..setModelFileExt(Units.murgulShadowcaster1)
@@ -132,6 +158,7 @@ import UnitTooltipGenerator
         ..tooltipStopListen(true)
 
         ..setNameEnhance("Z", "Hydra")
+        ..setHotkeyEnhance("W")
         ..setSizeLarge()
 
         ..setTintingColorBlue(255)
@@ -191,7 +218,8 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(3600)
         ..setMana(200)
 
-        ..setItemCostUnit(0, 1800, 1)
+        // ..setItemCostUnit(0, 1800, 1)
+        ..setItemCostReplacement(0, 1800, 1, 1, 1, BUILDING_MYRMIDON)
         // ..setAutoPointValue()
         // ..setAutoBuildingCost()
 
@@ -316,6 +344,7 @@ import UnitTooltipGenerator
 
         ..setSizeLarge()
         ..setNameEnhance("Z", "Fire Turtle")
+        ..setHotkeyEnhance("W")
         ..tooltipStopListen(true, itm)
         ..setModelFile(Units.dragonSeaTurtle1)
 
@@ -350,7 +379,8 @@ import UnitTooltipGenerator
         ..setItemCostReplacement(0, 200, 1, turtleCount, turtleCount, BUILDING_GIANT_TURTLE)
 
         ..setSizeLarge()
-        ..setNameEnhance("Z", "Frost Turtle")
+        ..setNameEnhance("X", "Frost Turtle")
+        ..setHotkeyEnhance("E")
         ..tooltipStopListen(true, itm)
 
         ..setTintingColorRed(192)
@@ -363,17 +393,16 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_FROST_BOLT) + "\n\n" +
-        abilTooltipMap.get(ABIL_MAGIC_ARMOR_50)
+        abilTooltipMap.get(ABIL_MAGIC_ARMOR_30)
     )
     createSpawnedUnit(UNIT_SIREN, UnitIds.siren, BUILDING_SIREN)
         ..setSpeedBase(270)
         ..registerCustomPanelAbilityTooltip(asList(
             ABIL_FROST_BOLT,
             ABIL_DISRUPTION_RAY,
-            ABIL_ORB_CHARM,
-            ABIL_MAGIC_ARMOR_50
+            ABIL_MAGIC_ARMOR_30
             ))
-        ..setNormalAbilities(commaList(ABIL_FROST_BOLT, ABIL_AC_FROST_BOLT, ABIL_CHARM, ABIL_MAGIC_ARMOR_50))
+        ..setNormalAbilities(commaList(ABIL_FROST_BOLT, ABIL_AC_FROST_BOLT, ABIL_MAGIC_ARMOR_30))
         ..setDefaultActiveAbility(commaList(ABIL_AC_FROST_BOLT))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
@@ -389,6 +418,7 @@ import UnitTooltipGenerator
         ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
+        ..setUpgradeTo(asList(BUILDING_ABYSSAL_SIREN))
 
         ..setNameEnhance("S", "Siren")
         ..setSizeSmall()
@@ -396,6 +426,47 @@ import UnitTooltipGenerator
         ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.nagaSiren1)
         ..setIconGameInterfaceExt(Icons.bTNSeaWitch)
+        ..setUnitSoundSetExt(Soundsets.nagaSiren)
+
+    tooltip = new UnitTooltipGenerator(
+        abilTooltipMap.get(ABIL_FROST_BOLT) + "\n\n" +
+        abilTooltipMap.get(ABIL_ORB_CHARM) + "\n\n" +
+        abilTooltipMap.get(ABIL_MAGIC_ARMOR_30)
+    )
+    createSpawnedUnit(UNIT_ABYSSAL_SIREN, UnitIds.siren, BUILDING_ABYSSAL_SIREN)
+        ..setSpeedBase(270)
+        ..registerCustomPanelAbilityTooltip(asList(
+            ABIL_FROST_BOLT,
+            ABIL_DISRUPTION_RAY,
+            ABIL_ORB_CHARM,
+            ABIL_MAGIC_ARMOR_30
+            ))
+        ..setNormalAbilities(commaList(ABIL_FROST_BOLT, ABIL_AC_FROST_BOLT, ABIL_CHARM, ABIL_ORB_CHARM, ABIL_MAGIC_ARMOR_30))
+        ..setDefaultActiveAbility(commaList(ABIL_AC_FROST_BOLT))
+        ..registerTooltipGenerator(tooltip)
+        ..tooltipStartListen()
+
+        ..setAttack1Data(AttackType.Magic, 55, 5, 7, 1.5)
+        ..setAttack1Range(700)
+        ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
+        ..setAttack1ProjectileArt(Abilities.zigguratFrostMissile)
+
+        ..setArmorData(ArmorType.Unarmored, 0)
+        ..setHitPointsMaximumBase(400)
+        ..setMana(400)
+
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
+        ..tooltipStopListen(true)
+
+        ..setNameEnhance("Z", "Abyssal Siren")
+        ..setHotkeyEnhance("W")
+        ..setSizeSmall()
+
+        ..setScalingValue(1.1)
+        ..setBuildingScalingValue(0.7)
+        ..setModelFileExt(Units.nagaSummoner1)
+        ..setIconGameInterfaceExt(Icons.bTNNagaSummoner)
         ..setUnitSoundSetExt(Soundsets.nagaSiren)
 
     createBuilder(UNIT_NAGA_BUILDER, UnitIds.murgulslave)

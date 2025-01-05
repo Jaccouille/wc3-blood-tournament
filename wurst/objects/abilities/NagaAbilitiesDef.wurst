@@ -154,7 +154,7 @@ import UnitObjEditingCommon
     var lumberCost = 0
     var itm = createBasicItem(ITEM_RAY_OF_DISRUPTION)
         ..setItemCost(goldCost, lumberCost, 1, sirenCount, sirenCount)
-        ..setNameEnhance("Z", "Replace 1 Frost Bolt with Ray of Disruption")
+        ..setNameEnhance("X", "Replace 1 Frost Bolt with Ray of Disruption")
         ..setInterfaceIcon(Icons.bTNWandOfNeutralization)
     tgen = new BTAbilityTooltipGenerator(
         "Conjures a stream of neutralizing magic that bounces multiple times, "
@@ -292,12 +292,12 @@ import UnitObjEditingCommon
 
     new AbilityDefinitionAlchemistAcidBomb(abilId)
         ..setCheckDependencies(false)
+        ..setDummyAbility()
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
         ..setCheckDependencies(false)
         ..setMissileArt("")
         ..setMissileSpeed(900)
-        ..setDummyAbility()
         ..tooltipStartListen()
         ..presetArmorPenalty(_ -> 4)
         ..presetPrimaryDamage(_ -> 40)

@@ -526,7 +526,7 @@ public function BTUnitDefinition.setSmallSplash()
         ))
     this.addTooltipProperty("Splash", "Small")
 
-function W3UDefinition.setHotkeyEnhance(string hotkey)
+public function W3UDefinition.setHotkeyEnhance(string hotkey)
     if not hotKeyMapping.has(hotkey)
         error("Hotkey button position mapping has no \"{0}\" element".format(hotkey))
         return
@@ -534,7 +534,7 @@ function W3UDefinition.setHotkeyEnhance(string hotkey)
     this.setButtonPositionX(hotKeyMapping.get(hotkey).x)
     this.setButtonPositionY(hotKeyMapping.get(hotkey).y)
 
-function W3TDefinition.setHotkeyEnhance(string hotkey)
+public function W3TDefinition.setHotkeyEnhance(string hotkey)
     if not hotKeyMapping.has(hotkey)
         error("Hotkey button position mapping has no \"{0}\" element".format(hotkey))
         return
