@@ -227,7 +227,7 @@ import UnitTooltipGenerator
         ..setSizeSmall()
         ..setItemCostUnit(0, 1000, 1)
         ..tooltipStopListen(true, itm)
-        ..setNameEnhance("Z", "Pack Leader")
+        ..setNameEnhance("X", "Pack Leader")
         ..setAttack1Range(120)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setAttack1WeaponType(WeaponType.Normal)
@@ -401,7 +401,7 @@ import UnitTooltipGenerator
         ..setSizeSmall()
 
         ..tooltipStopListen(true)
-        ..setNameEnhance("Z", "Spirit Wolf")
+        ..setNameEnhance("E", "Spirit Wolf")
 
         ..setIconGameInterfaceExt(Icons.bTNSpiritWolf)
 
@@ -428,7 +428,7 @@ import UnitTooltipGenerator
         ..setSizeSmall()
 
         ..tooltipStopListen(true)
-        ..setNameEnhance("Z", "Dire Spirit Wolf")
+        ..setNameEnhance("E", "Dire Spirit Wolf")
 
         ..setIconGameInterfaceExt(Icons.bTNSpiritWolf)
         ..setScalingValue(1.3)
@@ -468,6 +468,7 @@ import UnitTooltipGenerator
         ..setItemCostUnit(0, 1000, 1)
 
         ..setNameEnhance("X", "Farseer")
+        ..setHotkeyEnhance("W")
         ..tooltipStopListen(true, itm)
 
         ..setArtSpecial(Objects.orcLargeDeathExplode)
@@ -480,7 +481,7 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_OGRE_SWING)
     )
     createSpawnedUnit(UNIT_OGRE, UnitIds.ogre1, BUILDING_OGRE)
-        ..setSpeedBase(240)
+        ..setSpeedBase(270)
         ..registerCustomPanelAbilityTooltip(ABIL_OGRE_SWING)
         ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
         ..setNormalAbilities(commaList(ABIL_OGRE_SWING))
@@ -497,7 +498,7 @@ import UnitTooltipGenerator
         ..setAutoBuildingCost()
         ..setSizeLarge()
 
-        ..setNameEnhance("A", "Ogre")
+        ..setNameEnhance("D", "Ogre")
         ..tooltipStopListen(true)
 
         ..setAttack1Range(120)
@@ -516,7 +517,7 @@ import UnitTooltipGenerator
     let ogreCount = BTBuildingData.getUnitCount(BUILDING_OGRE)
     var itm = createBasicItem(ITEM_OGRE_ARMORED)
     createSpawnedUnit(UNIT_OGRE_ARMORED, UnitIds.ogre1, BUILDING_OGRE_ARMORED)
-        ..setSpeedBase(240)
+        ..setSpeedBase(270)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_OGRE_SWING, ABIL_HARDENED_SKIN_10))
         ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
         ..setNormalAbilities(commaList(ABIL_OGRE_SWING, ABIL_HARDENED_SKIN_10))
@@ -549,7 +550,7 @@ import UnitTooltipGenerator
     )
     itm = createBasicItem(ITEM_OGRE_MAGI)
     createSpawnedUnit(UNIT_OGRE_MAGI, UnitIds.ogremagi)
-        ..setSpeedBase(240)
+        ..setSpeedBase(270)
         ..setDefaultActiveAbility(commaList(ABIL_AC_FIREBOLT))
         ..registerCustomPanelAbilityTooltip(asList(ABIL_MAGIC_ARMOR_50, ABIL_FIREBOLT, ABIL_HARDENED_SKIN_5))
         ..setNormalAbilities(commaList(ABIL_FIREBOLT, ABIL_AC_FIREBOLT, ABIL_MAGIC_ARMOR_50, ABIL_HARDENED_SKIN_5))

@@ -51,6 +51,11 @@ function replaceUnit(LinkedList<int> unitToSpawn, int oldUnit, int newUnit)
     if unitToSpawn.replace(oldUnit, newUnit)
         unitToSpawn.shuffle()
 
+function replaceMiddleUnit(LinkedList<int> unitToSpawn, int newUnit)
+    let elem = unitToSpawn.get((unitToSpawn.size() div 2))
+    unitToSpawn.remove(elem)
+    unitToSpawn.addAt(newUnit, (unitToSpawn.size() div 2))
+
 function addAtMiddle(LinkedList<int> unitToSpawn, int newUnit)
     unitToSpawn.addAt(newUnit, (unitToSpawn.size() div 2))
 
@@ -491,7 +496,7 @@ init
     let deptCommanderAction = new ItemAddUnit()
         ..addAction() (LinkedList<int> unitToSpawn, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_DEPTH_COMMANDER)
+            replaceMiddleUnit(unitToSpawn, UNIT_DEPTH_COMMANDER)
     itemAddUnitMap.put(ITEM_DEPTH_COMMANDER, deptCommanderAction)
 
     let bloodLustAction = new ItemModifierAction()

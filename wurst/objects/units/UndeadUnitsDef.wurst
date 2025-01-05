@@ -227,6 +227,7 @@ import UnitTooltipGenerator
 
         ..setSizeSmall()
         ..setNameEnhance("S", "Necromancer")
+        ..setHotkeyEnhance("Q")
         ..tooltipStopListen(true)
         ..setUpgradeTo(asList(BUILDING_SPECTRAL_SAGE))
         ..setBuildingUnitsSold(commaList(
@@ -272,6 +273,7 @@ import UnitTooltipGenerator
 
         ..setSizeSmall()
         ..setNameEnhance("Z", "Spectral Sage")
+        ..setHotkeyEnhance("E")
         ..tooltipStopListen(true)
         ..setBuildingUnitsSold(commaList(
             UNIT_SPECTRAL_SAGE,
@@ -302,7 +304,7 @@ import UnitTooltipGenerator
         ..setGhostDeath()
 
         ..setSizeSmall()
-        ..setNameEnhance("Q", "Skeleton Warrior")
+        ..setNameEnhance("W", "Skeleton Warrior")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
 
@@ -324,7 +326,7 @@ import UnitTooltipGenerator
         ..setGhostDeath()
 
         ..setSizeSmall()
-        ..setNameEnhance("Q", "Skeletal Orc")
+        ..setNameEnhance("R", "Skeletal Orc")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
 
@@ -371,7 +373,7 @@ import UnitTooltipGenerator
         ..setSummonedUnit()
 
         ..setSizeSmall()
-        ..setNameEnhance("X", "Revenant")
+        ..setNameEnhance("A", "Revenant")
         ..setAutoPointValue()
         ..tooltipStopListen(true)
         ..setAttack1Range(120)
@@ -477,7 +479,6 @@ import UnitTooltipGenerator
         ..setScalingValue(1.0)
 
         ..setBuildingUnitsTrained(commaList(
-            UNIT_ABOMINATION,
             UNIT_GUT_CRAWLER
             ))
         ..setModelFileExt(Units.abomination1)
@@ -501,7 +502,7 @@ import UnitTooltipGenerator
 
         ..setPointValue(25)
 
-        ..setNameEnhance("S", "Gut Crawler")
+        ..setNameEnhance("W", "Gut Crawler")
         ..tooltipStopListen(true)
 
         ..setScalingValue(1)
