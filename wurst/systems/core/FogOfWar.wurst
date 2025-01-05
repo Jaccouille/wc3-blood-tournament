@@ -10,23 +10,25 @@ import Players
 fogmodifier array fogArray
 
 public function createBlackMask()
-    ALL_PLAYERS.forEach() (player _p) ->
-        pDatas.forEach() (player key, PlayerData pData) ->
-            if _p != key
-                let idx = _p.getId() * 7 + key.getId() - 1
+    var _idx = 0
+    for _p in ALL_PLAYERS
+        for targetPlayer in pDatas
+            let pData = pDatas.get(targetPlayer)
+            if _p != targetPlayer
                 let fogModifier = createBlackMask(_p, pData.buildingRect, false, true)
-                fogArray[idx] = fogModifier
+                fogArray[_idx] = fogModifier
                 fogModifier.start()
+                _idx++
 
 public function removeBlackMask()
-    ALL_PLAYERS.forEach() (player _p) ->
-        pDatas.forEach() (player key, PlayerData pData) ->
-            if _p != key
-                let idx = _p.getId() * 7 + key.getId() - 1
-                if fogArray[idx] != null
-                    fogArray[idx].stop()
-                    fogArray[idx].destr()
-                    fogArray[idx] = null
+    var _idx = 0
+    while fogArray[_idx] != null
+        fogArray[_idx].stop()
+        fogArray[_idx].destr()
+        fogArray[_idx] = null
+        _idx++
+
+
 
 init
     GameStates.modesSelection.onExit() (state) ->
