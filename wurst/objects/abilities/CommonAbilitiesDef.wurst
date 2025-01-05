@@ -358,6 +358,10 @@ function createBounceAbility(int abilId, int value, real reductionFactor) return
     createRangedAura(ABIL_RANGED_AURA_15, 0.15)
     createRangedAura(ABIL_RANGED_AURA_25, 0.25)
 
+@compiletime function createBonusDamageAbilities()
+    createBonusDamage(ABIL_DMG_BONUS_13, 13)
+    createBonusDamage(ABIL_DMG_MINUS_7, -7)
+
 @compiletime function createBounceAbilities()
     createBounceAbility(ABIL_BOUNCE_2_50, 2, 0.5)
     createBounceAbility(ABIL_BOUNCE_3_50, 3, 0.5)

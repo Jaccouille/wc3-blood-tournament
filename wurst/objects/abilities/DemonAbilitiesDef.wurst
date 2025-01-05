@@ -380,9 +380,9 @@ import LocalAssets
 
     new AbilityDefinitionAlchemistAcidBomb(abilId)
         ..setCheckDependencies(false)
+        ..setDummyAbility()
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
-        ..setCheckDependencies(false)
         ..setMissileArt("")
         ..setMissileSpeed(1500)
         ..presetArmorPenalty(_ -> 0)
@@ -433,9 +433,10 @@ import LocalAssets
 
     new AbilityDefinitionAlchemistAcidBomb(abilId)
         ..setCheckDependencies(false)
+        ..setDummyAbility()
+        ..setManaCost(1, 0)
         ..setLevels(1)
         ..registerTooltipGenerator(tgen)
-        ..setCheckDependencies(false)
         ..setMissileArt("")
         ..setMissileSpeed(1500)
         ..presetArmorPenalty(_ -> 0)

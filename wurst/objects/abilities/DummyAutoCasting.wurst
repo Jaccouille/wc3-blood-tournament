@@ -9,6 +9,7 @@ import OrderIds
 // Local imports:
 import GameConstants
 import LocalObjectIDs
+import OrderBlocker
 
 public class BuffTuple
     int orderId
@@ -112,4 +113,5 @@ init
         let caster = EventData.getSpellAbilityUnit()
         if not dummyToRealCastMapTarget.has(EventData.getSpellAbilityId())
             and not caster.isType(UNIT_TYPE_PEON)
+            and preventOrder
             caster.issuePointOrder("attack", CENTER)

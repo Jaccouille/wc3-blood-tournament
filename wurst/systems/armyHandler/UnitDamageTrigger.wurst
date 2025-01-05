@@ -30,9 +30,9 @@ init
                     src.issueImmediateOrderById(OrderIds.spiritwolf)
             case UNIT_COURT_ENCHANTRESS
                 src.issueImmediateOrderById(OrderIds.parasiteon)
-
-
             case UNIT_SPIRIT_WALKER
                 if src.hasAbility(ABIL_ANCESTRAL_SPIRIT)
                     if GetRandomInt(0, 100) <= 10
                         src.issueImmediateOrderById(OrderIds.ancestralspirit)
+        if target.hasAbility(ABIL_DRUID_FRENZY) and target.getAbilityCooldownRemaining(ABIL_DRUID_FRENZY) <= 0
+            target.issueImmediateOrderById(OrderIds.frenzy)

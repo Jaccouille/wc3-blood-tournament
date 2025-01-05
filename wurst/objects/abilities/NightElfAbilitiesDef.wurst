@@ -476,6 +476,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..presetDurationNormal(_ -> 4)
         ..presetCooldown(_ -> 20)
         ..setNameEnhance("Z", "Frenzy")
+        ..setIconNormal(Icons.bTNEnchantedBears)
         ..tooltipStopListen(true)
 
     abilTooltipMap.put(ABIL_DRUID_FRENZY, tgen.generateFullTooltip())
