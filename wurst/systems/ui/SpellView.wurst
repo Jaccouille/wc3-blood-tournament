@@ -36,11 +36,49 @@ function initTasToolTipBox() returns framehandle
 
 
 function setTasToolTip(int abilId, ability abi)
+    let mana = BlzGetAbilityManaCost(abilId, 0)
+    let cooldown = BlzGetAbilityCooldown(abilId, 0).toInt()
+    let range = BlzGetAbilityRealLevelField(abi, ABILITY_RLF_CAST_RANGE, 0).toInt()
+    let area = BlzGetAbilityRealLevelField(abi, ABILITY_RLF_AREA_OF_EFFECT, 0).toInt()
+
+    if mana <= 1
+        getFrame("TasSpellViewTooltipManaText", 0).setText("None".color(MAGIC_RESIST_COLOR))
+        getFrame("TasSpellViewTooltipManaText", 0).hide()
+        getFrame("TasSpellViewTooltipManaIcon", 0).hide()
+    else
+        getFrame("TasSpellViewTooltipManaText", 0).show()
+        getFrame("TasSpellViewTooltipManaIcon", 0).show()
+        getFrame("TasSpellViewTooltipManaText", 0).setText(mana.toString().color(MAGIC_RESIST_COLOR))
+
+    if cooldown <= 1
+        getFrame("TasSpellViewTooltipCooldownText", 0).setText("None".color(COLOR_LIGHT_BLUE))
+        getFrame("TasSpellViewTooltipCooldownText", 0).hide()
+        getFrame("TasSpellViewTooltipCooldownIcon", 0).hide()
+    else
+        getFrame("TasSpellViewTooltipCooldownText", 0).show()
+        getFrame("TasSpellViewTooltipCooldownIcon", 0).show()
+        getFrame("TasSpellViewTooltipCooldownText", 0).setText(cooldown.toString().color(COLOR_LIGHT_BLUE))
+
+    if range <= 1
+        getFrame("TasSpellViewTooltipRangeText", 0).setText("None".color(COLOR_ORANGE))
+        getFrame("TasSpellViewTooltipRangeText", 0).hide()
+        getFrame("TasSpellViewTooltipRangeIcon", 0).hide()
+    else
+        getFrame("TasSpellViewTooltipRangeText", 0).show()
+        getFrame("TasSpellViewTooltipRangeIcon", 0).show()
+        getFrame("TasSpellViewTooltipRangeText", 0).setText(range.toString().color(COLOR_ORANGE))
+
+    if area <= 1
+        getFrame("TasSpellViewTooltipAreaText", 0).setText("None".color(COLOR_RED))
+        getFrame("TasSpellViewTooltipAreaText", 0).hide()
+        getFrame("TasSpellViewTooltipAreaIcon", 0).hide()
+    else
+        getFrame("TasSpellViewTooltipAreaText", 0).show()
+        getFrame("TasSpellViewTooltipAreaIcon", 0).show()
+        getFrame("TasSpellViewTooltipAreaText", 0).setText(area.toString().color(COLOR_RED))
+
     getFrame("TasSpellViewTooltipIcon", 0).setTexture(getAbilityIcon(abilId), 0, false)
-    getFrame("TasSpellViewTooltipManaText", 0).setText(BlzGetAbilityManaCost(abilId, 0).toString())
-    getFrame("TasSpellViewTooltipCooldownText", 0).setText(BlzGetAbilityCooldown(abilId, 0).toInt().toString())
-    getFrame("TasSpellViewTooltipRangeText", 0).setText(BlzGetAbilityRealLevelField(abi, ABILITY_RLF_CAST_RANGE, 0).toInt().toString())
-    getFrame("TasSpellViewTooltipAreaText", 0).setText(BlzGetAbilityRealLevelField(abi, ABILITY_RLF_AREA_OF_EFFECT, 0).toInt().toString())
+
     getFrame("TasSpellViewTooltipName", 0).setText(getAbilityTooltip(abilId, 0))
     getFrame("TasSpellViewTooltipText", 0).setText(getAbilityExtendedTooltip(abilId, 0))
 
