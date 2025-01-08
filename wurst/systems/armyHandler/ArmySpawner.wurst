@@ -213,7 +213,6 @@ public class ArmySpawner
         // TODO: Mana ward ability doesn't work on allied for some reason
         if summonedUnit.getTypeId() != UNIT_MANA_WARD
             summonedUnit.setOwner(newOwner, false)
-        Log.info("impossible")
         summonedUnit.issuePointOrder("attack", CENTER)
 
     static function doOnSoldierSpawn(unit newUnit)

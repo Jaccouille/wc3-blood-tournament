@@ -18,9 +18,9 @@ import UnitExtensions
 init
     registerToolkitCommand("help") (player triggerPlayer, LinkedList<string> arguments) ->
         let msg = "" +
-        "-su : SpawnedUnits size\n" +
+        "-sus: SpawnedUnits size\n" +
         "-show-indexes : display army spawner indexes\n" +
-        "-al : roundParticipant size\n" +
+        "-lrp : roundParticipant size\n" +
         "-lu [playerId] : List current units of playerId\n" +
         "-clean : Kill every spawned units\n" +
         "-attack : Order every unit to attack move center\n" +

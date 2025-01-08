@@ -253,6 +253,7 @@ import ArmySpawner
         ..setHitPointsMaximumBase(300)
         ..setMana(200)
 
+        ..setAutoPointValue()
         ..setAutoBuildingCost()
         ..tooltipStopListen(true)
 

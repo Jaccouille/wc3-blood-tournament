@@ -414,6 +414,7 @@ import UnitTooltipGenerator
 
         ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(200)
+        ..setMana(200)
 
         ..setAutoPointValue()
         ..setAutoBuildingCost()
@@ -423,6 +424,7 @@ import UnitTooltipGenerator
         ..setNameEnhance("S", "Siren")
         ..setSizeSmall()
 
+        ..setScalingValue(0.9)
         ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.nagaSiren1)
         ..setIconGameInterfaceExt(Icons.bTNSeaWitch)
@@ -438,7 +440,7 @@ import UnitTooltipGenerator
         ..registerCustomPanelAbilityTooltip(asList(
             ABIL_FROST_BOLT,
             ABIL_DISRUPTION_RAY,
-            ABIL_ORB_CHARM,
+            ABIL_CHARM,
             ABIL_MAGIC_ARMOR_30
             ))
         ..setNormalAbilities(commaList(ABIL_FROST_BOLT, ABIL_AC_FROST_BOLT, ABIL_CHARM, ABIL_ORB_CHARM, ABIL_MAGIC_ARMOR_30))
@@ -463,7 +465,7 @@ import UnitTooltipGenerator
         ..setHotkeyEnhance("W")
         ..setSizeSmall()
 
-        ..setScalingValue(1.1)
+        ..setScalingValue(1.0)
         ..setBuildingScalingValue(0.7)
         ..setModelFileExt(Units.nagaSummoner1)
         ..setIconGameInterfaceExt(Icons.bTNNagaSummoner)

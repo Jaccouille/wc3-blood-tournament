@@ -314,4 +314,4 @@ public function AbilityDefinition.presetAutoCastManaCost(int manaCost, AbilityDe
 
 public function AbilityDefinition.presetAutoCastCastRange(real castRange, AbilityDefinition trueAbil)
     this.presetCastRange(_ -> castRange)
-    trueAbil.presetCastRange(_ -> 9999)
+    trueAbil.presetCastRange(_ -> castRange)

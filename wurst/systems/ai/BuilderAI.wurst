@@ -257,13 +257,12 @@ init
             OnRoundStart.add() (Round round) ->
                 stopAI()
 
+        registerCommandAll("bot") (triggerPlayer, args) ->
+            // let aiInstance = playerToBuilderAI.get(triggerPlayer)
+            // aiInstance.enableForHumanPlayer = aiInstance.enableForHumanPlayer == false ? true : false
+            playerToBuilderAI.get(triggerPlayer).toggleAI()
 
         EventListener.add(EVENT_PLAYER_LEAVE) ->
             if gameConfig.isBotAIEnabled() and GameStates.gameplay.active
                 and not (roundController.hasFinalStarted and roundController.hasRoundStarted)
                 GetTriggerPlayer().toggleBot()
-
-    registerCommandAll("bot") (triggerPlayer, args) ->
-        // let aiInstance = playerToBuilderAI.get(triggerPlayer)
-        // aiInstance.enableForHumanPlayer = aiInstance.enableForHumanPlayer == false ? true : false
-        playerToBuilderAI.get(triggerPlayer).toggleAI()

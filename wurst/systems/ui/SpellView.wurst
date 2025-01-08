@@ -34,10 +34,21 @@ function initTasToolTipBox() returns framehandle
     BlzFrameSetVisible(BlzGetFrameByName("TasSpellViewTooltipFrame", 0), false)
     return tooltipBackdrop
 
+function getToolTipLineValue(string tooltip, string property) returns string
+    let index = tooltip.indexOf(property + ":")
+    if index == -1
+        return "-1"
+    let valueStart = index + (property + ":").length()
+    int lineEnd = tooltip.indexOf("\n", valueStart) // Find the end of the line
+    // Log.info("index : " + index.toString() + " valueStart : " + valueStart.toString() + " lineEnd : " + lineEnd.toString())
+    if (lineEnd == -1)
+        lineEnd = tooltip.length() // Handle case where it's the last line
+
+    return tooltip.substring(valueStart, lineEnd).trim()
 
 function setTasToolTip(int abilId, ability abi)
     let mana = BlzGetAbilityManaCost(abilId, 0)
-    let cooldown = BlzGetAbilityCooldown(abilId, 0).toInt()
+    let cooldown = getToolTipLineValue(getAbilityExtendedTooltip(abilId, 0), "Cooldown")
     let range = BlzGetAbilityRealLevelField(abi, ABILITY_RLF_CAST_RANGE, 0).toInt()
     let area = BlzGetAbilityRealLevelField(abi, ABILITY_RLF_AREA_OF_EFFECT, 0).toInt()
 
@@ -50,16 +61,16 @@ function setTasToolTip(int abilId, ability abi)
         getFrame("TasSpellViewTooltipManaIcon", 0).show()
         getFrame("TasSpellViewTooltipManaText", 0).setText(mana.toString().color(MAGIC_RESIST_COLOR))
 
-    if cooldown <= 1
+    if cooldown == "0" or cooldown == "-1"
         getFrame("TasSpellViewTooltipCooldownText", 0).setText("None".color(COLOR_LIGHT_BLUE))
         getFrame("TasSpellViewTooltipCooldownText", 0).hide()
         getFrame("TasSpellViewTooltipCooldownIcon", 0).hide()
     else
         getFrame("TasSpellViewTooltipCooldownText", 0).show()
         getFrame("TasSpellViewTooltipCooldownIcon", 0).show()
-        getFrame("TasSpellViewTooltipCooldownText", 0).setText(cooldown.toString().color(COLOR_LIGHT_BLUE))
+        getFrame("TasSpellViewTooltipCooldownText", 0).setText(cooldown.color(COLOR_LIGHT_BLUE))
 
-    if range <= 1
+    if range <= 1 or range >= 99999
         getFrame("TasSpellViewTooltipRangeText", 0).setText("None".color(COLOR_ORANGE))
         getFrame("TasSpellViewTooltipRangeText", 0).hide()
         getFrame("TasSpellViewTooltipRangeIcon", 0).hide()
