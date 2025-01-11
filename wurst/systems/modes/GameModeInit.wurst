@@ -22,7 +22,7 @@ init
         GameMode.endModeSelection(true)
 
     new GameMode("round-gold", "rg", "General", "Set gold income per round, default : " +
-        gameConfig.getRoundGoldIncome().getFirst().toString() + ", min : 100") (mode, args) ->
+        gameConfig.getRoundGoldIncome().getFirst().toString() + ", min : 100", true, true) (mode, args) ->
         if (args.size() > 1)
             let roundGoldIncomes = args.drop(1).map(e -> max(e.toInt(), 100))
             var msg = "Round gold income set to : ".color(GOLD_COLOR)
@@ -64,14 +64,14 @@ init
             mode.message("Starting blood points set to ".color(LABEL_COLOR) + startingLumber.toString().color(RED_COLOR))
             gameConfig.setStartingLumber(startingLumber)
 
-    new GameMode("interlude-time", "it", "Time between each round (seconds) default : " +
-        gameConfig.getRoundInterludeTime().toInt().toString() + ", max : 180, min : 30") (mode, args) ->
+    new GameMode("interlude-time", "it", "General", "Time between each round (seconds) default : " +
+        gameConfig.getRoundInterludeTime().toInt().toString() + ", max : 180, min : 30", true, true) (mode, args) ->
         if (args.size() > 1)
             let interludeTime = min(max(args.get(1).toInt(), 30), 180)
-            mode.message("Interlude time set to ".color(LABEL_COLOR) + interludeTime.toString().color(VALUE_COLOR))
+            mode.message("Interlude time set to ".color(LABEL_COLOR) + interludeTime.toString().color(VALUE_COLOR) + " seconds".color(LABEL_COLOR))
             gameConfig.setRoundInterludeTime(interludeTime.toReal())
 
-    new GameMode("ban", "b", "General", "Ban faction, separated by space, up to {0} ban, possible choices : HU OR UN NE NA BE DE"
+    new GameMode("ban", "b", "General", "Ban faction, separated by space, up to {0} bans, possible choices : HU OR UN NE NA BE DE"
         .format((BUILDER_LIST.size() - 1).toString())) (mode, args) ->
         if (args.size() > 1)
             let factionNames = args.drop(1).map(e -> e).take(BUILDER_LIST.size() - 1)
@@ -84,49 +84,48 @@ init
             mode.message(msg)
 
 
-    new GameMode("spawn-capacity", "sc", "Set max unit spawn capacity, default : " +
-        gameConfig.getSpawnCap().toString() + ", max : 100, min : 60") (mode, args) ->
+    new GameMode("spawn-capacity", "sc", "General", "Set max unit spawn capacity, default : " + gameConfig.getSpawnCap().toString() + ", max : 100, min : 60", true, true) (mode, args) ->
         if (args.size() > 1)
             let spawnCap = max(min(args.get(1).toInt(), 100), 60)
-            mode.message("Spawn capacity set to ".color(LABEL_COLOR) + spawnCap.toString().color(VALUE_COLOR))
+            mode.message("Spawn capacity set to ".color(LABEL_COLOR) + spawnCap.toString().color(VALUE_COLOR) + " units".color(LABEL_COLOR))
             gameConfig.setSpawnCap(spawnCap)
 
-    new GameMode("spawn-capacity-elim", "sce", "Set max unit spawn capacity in elimination round, default : " +
-        gameConfig.getSpawnCapElim().toString() + ", max : 200, min : 100") (mode, args) ->
+    new GameMode("spawn-capacity-elim", "sce", "General", "Set max unit spawn capacity in elimination round, default : " +
+        gameConfig.getSpawnCapElim().toString() + ", max : 200, min : 100", true, true) (mode, args) ->
         if (args.size() > 1)
             let spawnCapElim = max(min(args.get(1).toInt(), 200), 100)
-            mode.message("Elimination spawn capacity set to ".color(LABEL_COLOR) + spawnCapElim.toString().color(VALUE_COLOR))
+            mode.message("Elimination spawn capacity set to ".color(LABEL_COLOR) + spawnCapElim.toString().color(VALUE_COLOR) + " units".color(LABEL_COLOR))
             gameConfig.setSpawnCapElim(spawnCapElim)
 
-    new GameMode("bounty-multiplier", "bm", "Set blood points bounty multiplier, default : " +
-        gameConfig.getBountyMultiplier().toString(1) + ", max : 10.0, min : 0") (mode, args) ->
+    new GameMode("bounty-multiplier", "bm", "General", "Set blood points bounty multiplier, default : " +
+        gameConfig.getBountyMultiplier().toString(1) + ", max : 10.0, min : 0", true, true) (mode, args) ->
         if (args.size() > 1)
             let bountyMultiplier = min(max(args.get(1).toReal(), 0.0), 10.0)
             mode.message("Bounty multiplier set to ".color(LABEL_COLOR) + "x{0}".color(VALUE_COLOR).format(bountyMultiplier.toString(2)))
             gameConfig.setBountyMultiplier(bountyMultiplier)
 
-    new GameMode("army-points-multiplier", "apm", "Set army points multiplier, default : " +
-        gameConfig.getArmyPointsMultiplier().toString(1) + ", max : 10.0, min : 0") (mode, args) ->
+    new GameMode("army-points-multiplier", "apm", "General", "Set army points multiplier, default : " +
+        gameConfig.getArmyPointsMultiplier().toString(1) + ", max : 10.0, min : 0", true, true) (mode, args) ->
         if (args.size() > 1)
             let armyPointMultiplier = min(max(args.get(1).toReal(), 0.0), 10.0)
             mode.message("Army points multiplier set to ".color(LABEL_COLOR) + "x{0}".color(VALUE_COLOR).format(armyPointMultiplier.toString(2)))
             gameConfig.setArmyPointsMultiplier(armyPointMultiplier)
 
-    new GameMode("damage-multiplier", "dm", "Set unit basic attack multiplier, default : " +
-        gameConfig.getDamageMultiplier().toString(1) + ", max : 2.0, min : 0.5") (mode, args) ->
+    new GameMode("damage-multiplier", "dm", "General", "Set unit basic attack multiplier, default : " +
+        gameConfig.getDamageMultiplier().toString(1) + ", max : 2.0, min : 0.5", true, true) (mode, args) ->
         if (args.size() > 1)
             let damageMultiplier = min(max(args.get(1).toReal(), 0.5), 2.0)
             mode.message("Damage multiplier set to ".color(LABEL_COLOR) + "x{0}".color(VALUE_COLOR).format(damageMultiplier.toString(2)))
             gameConfig.setDamageMultiplier(damageMultiplier)
 
-    new GameMode("health-multiplier", "hm", "Set unit health multiplier, default : " +
-        gameConfig.getHealthMultiplier().toString(1) + ", max : 2.0, min : 0.5") (mode, args) ->
+    new GameMode("health-multiplier", "hm", "General", "Set unit health multiplier, default : " +
+        gameConfig.getHealthMultiplier().toString(1) + ", max : 2.0, min : 0.5", true, true) (mode, args) ->
         if (args.size() > 1)
             let healthMultiplier = min(max(args.get(1).toReal(), 0.5), 2.0)
             mode.message("Health multiplier set to ".color(LABEL_COLOR) + "x{0}".color(VALUE_COLOR).format(healthMultiplier.toString(2)))
             gameConfig.setHealthMultiplier(healthMultiplier)
 
-    new GameMode("multiple-builder", "mb", "Disable builder limit") (mode, args) ->
+    new GameMode("multiple-builder", "mb", "General", "Disable builder limit", true, false) (mode, args) ->
         if not gameConfig.isMultipleBuilderEnabled()
             mode.message("Multiple builder enabled, players can use more than 1 builder".color(LABEL_COLOR))
             gameConfig.setMultipleBuilder(true)
@@ -150,7 +149,7 @@ init
             mode.message("Fog of war disabled, player's building zones are exposed".color(LABEL_COLOR))
             gameConfig.setFogOfWar(false)
 
-    new GameMode("blood-donation", "bd", "Disable blood donation, players get a blood points donation after each round") (mode, args) ->
+    new GameMode("blood-donation", "bd", "General", "Disable blood donation, players get a blood points donation after each round", true, true) (mode, args) ->
         if not gameConfig.isBloodDonationEnabled()
             mode.message("Blood donation enabled, players get a blood points donation after each round".color(LABEL_COLOR))
             gameConfig.setBloodDonation(true)
@@ -168,7 +167,7 @@ init
 
     new GameMode("set-exchange-rate", "ser", "General", "Set gold/blood points exchange rates, default : " +
         gameConfig.getGoldExchange().toString() + " gold for " + gameConfig.getBloodPointExchange().toString() +
-        " blood points") (mode, args) ->
+        " blood points", true, true) (mode, args) ->
         if (args.size() > 2)
             let goldEx = min(max(args.get(1).toInt(), -10000), 10000)
             let bpEx = min(max(args.get(2).toInt(), -10000), 10000)
@@ -181,7 +180,7 @@ init
             ))
 
 
-    new GameMode("no-portal", "np", "Removes portal model") (mode, args) ->
+    new GameMode("no-portal", "np", "General", "Removes portal model", true, true) (mode, args) ->
         if not gameConfig.isDisplayPortalEnabled()
             mode.message("Portal display disable".color(LABEL_COLOR))
             gameConfig.setDisplayPortal(false)
@@ -199,3 +198,4 @@ init
     new GameMode("dev", "d", "Testing", "Development mode (-tm, -b, -st)", false) (mode, args) ->
         GameMode.find("tm").enable()
         GameMode.find("st").enable()
+

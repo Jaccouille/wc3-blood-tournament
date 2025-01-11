@@ -1,4 +1,4 @@
-package DebugCommande
+package DebugCommands
 
 // Standard libs imports:
 import ClosureForGroups

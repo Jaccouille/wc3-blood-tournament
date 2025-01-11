@@ -4,17 +4,15 @@ package GameMode
 import Assets
 import ClosureTimers
 import HashMap
-import LinkedList
 import StringUtils
 import TimerUtils
-
-// Third party imports:
-import Lodash
 
 // Local imports:
 import ChatCommands
 import ColorUtils
 import GameStates
+import Players
+import RoundController
 
 // The interval, in seconds, during which modes can be selected.
 let MODES_TIME_LIMIT = 60.0
@@ -43,11 +41,7 @@ public class GameMode
 
     // Handles global initialization for all modes.
     static function initialize()
-        // Select the player allowed to input modes.
-        for i = 0 to bj_MAX_PLAYERS - 1
-            if players[i].isIngame()
-                modePlayer = players[i]
-                break
+        setModePlayer()
 
         // Notify players of the selection.
         print("Wait for " + modePlayer.getNameColored() + " to choose game modes")
@@ -61,12 +55,29 @@ public class GameMode
         clock.doAfter(MODES_TIME_LIMIT) ->
             endModeSelection()
 
+        registerCommandAll("modes-cmd") (triggerPlayer, args) ->
+            printTimedToPlayer("Modes commands:".color(GENERAL_COLOR), 15, triggerPlayer)
+            printTimedToPlayer(getIngameModes(), 15, triggerPlayer)
+
         registerCommandAll("modes") (triggerPlayer, args) ->
             if list.size() > 0
                 printTimedToPlayer("Modes:".color(GENERAL_COLOR), 15, triggerPlayer)
                 printTimedToPlayer(getEnabledModes(), 15, triggerPlayer)
             else
                 printTimedToPlayer("No modes have been set".color(GENERAL_COLOR), 5, triggerPlayer)
+
+    static function setModePlayer()
+        // Select the player allowed to input modes.
+        for i = 0 to bj_MAX_PLAYERS - 1
+            if players[i].isIngame()
+                modePlayer = players[i]
+                break
+
+    static function getIngameModes() returns string
+        return list
+        .lodashFilter(mode -> mode.allowDuringGame)
+        .map(mode -> mode.getDisplayString() + " : " + mode.description)
+        .joinBy("\n")
 
     static function getEnabledModes() returns string
         return list
@@ -92,7 +103,7 @@ public class GameMode
             mode.register(modesPlayer)
 
     static function deregisterAll()
-        for mode in list
+        for mode in list.filter(mode -> not mode.allowDuringGame)
             mode.deregister()
 
     static function removeModeBoard()
@@ -152,15 +163,21 @@ public class GameMode
 
                 modeboard.setTitle("Modes - 00:" + time)
 
+    static function buildQuestLogString(GameMode mode) returns string
+        var modeString = mode.getDisplayString() + "\n" + mode.description
+        if mode.allowDuringGame
+            modeString += "\n" + "Can be changed between rounds by the mode player (red by default).".color(ENERGY_COLOR)
+        return modeString
+
     static function createModeQuests()
         list
         .groupBy(mode -> mode.category)
         .map((category, modes) -> begin
             return modes
-                .chunk(10)
+                .chunk(8)
                 .map((modes, i) -> begin
                     let contents = modes
-                        .map(mode -> mode.getDisplayString() + "\n" + mode.description)
+                        .map(mode -> buildQuestLogString(mode))
                         .joinBy("\n\n")
 
                     return CreateQuestBJ(
@@ -172,43 +189,36 @@ public class GameMode
                 end)
         end)
 
-    let description = ""
-    let name = ""
-    let abbrev = ""
+    var description = ""
+    var name = ""
+    var abbrev = ""
     var message = ""
     var category = "General"
-    let display = true
+    var display = true
     var enabled = false
+    var allowDuringGame = false
     GameModeHandler action = null
 
     construct(string _name, string _abbrev, string _description, GameModeHandler _action)
-        name = _name
-        abbrev = _abbrev
-        action = _action
-        description = _description
-        modes
-        ..put(abbrev, this)
-        ..put(name, this)
-        list.add(this)
+        setup(_name, _abbrev, "General", _description, true, false, _action)
 
     construct(string _name, string _abbrev, string _category, string _description, GameModeHandler _action)
-        name = _name
-        abbrev = _abbrev
-        action = _action
-        category = _category
-        description = _description
-        modes
-        ..put(abbrev, this)
-        ..put(name, this)
-        list.add(this)
+        setup(_name, _abbrev, _category, _description, true, false, _action)
 
     construct(string _name, string _abbrev, string _category, string _description, bool _display, GameModeHandler _action)
+        setup(_name, _abbrev, _category, _description, _display, false, _action)
+
+    construct(string _name, string _abbrev, string _category, string _description, bool _display, bool _allowDuringGame, GameModeHandler _action)
+        setup(_name, _abbrev, _category, _description, _display, _allowDuringGame, _action)
+
+    function setup(string _name, string _abbrev, string _category, string _description, bool _display, bool _allowDuringGame, GameModeHandler _action)
         name = _name
         abbrev = _abbrev
         action = _action
         display = _display
         category = _category
         description = _description
+        allowDuringGame = _allowDuringGame
         modes
         ..put(abbrev, this)
         ..put(name, this)
@@ -245,6 +255,7 @@ public class GameMode
     function error(string msg)
         print(msg.color(RED_COLOR))
 
+
 init
     GameStates.modesSelection.onEnter() states ->
         GameMode.initialize()
@@ -252,20 +263,34 @@ init
     // Quickly made this implementation, should be refactored into
     // the GameMode class.
     let t = CreateTrigger()
-        ..addCondition(Condition(() -> GameStates.modesSelection.active))
+        // ..addCondition(Condition(() -> GameStates.modesSelection.active))
         ..addCondition(Condition(() -> GetTriggerPlayer() == GameMode.modePlayer))
 
     t.registerPlayerChatEvent(GameMode.modePlayer, "-", false)
 
     t.addAction() ->
         let triggerPlayer = GetTriggerPlayer()
-        let possibleModes = GetEventPlayerChatString().substring(1).split("-")
+        let possibleModes = GetEventPlayerChatString().substring(1).split(" -")
         for mode in possibleModes
             let args = mode.split(" ")
             let modeName = args.get(0)
 
-            let modeObj = GameMode.find(modeName)
-            if modeObj != null
-                modeObj.enable(args)
-            else
-                printTimedToPlayer("Invalid mode: " + modeName, 5, triggerPlayer)
+            if not isCommandAll(modeName)
+                let modeObj = GameMode.find(modeName)
+                if modeObj == null
+                    printTimedToPlayer(("Invalid mode/command: " + modeName.color(HIGHLIGHT_COLOR)).color(SPECIAL_COLOR), 7, triggerPlayer)
+                else  if GameStates.gameplay.active and roundController.currentRound.hasStarted
+                    printTimedToPlayer("Modes cannot be changed during battle phase".color(SPECIAL_COLOR), 7, triggerPlayer)
+                else if not GameStates.modesSelection.active and modeObj.allowDuringGame == false
+                    printTimedToPlayer((modeObj.name.color(HIGHLIGHT_COLOR) +  " is unavailable after mode selection").color(SPECIAL_COLOR), 7, triggerPlayer)
+                else
+                    modeObj.enable(args)
+
+    onPlayerLeave() p ->
+        if p == GameMode.modePlayer
+            GameMode.setModePlayer()
+            if GameMode.modePlayer != p
+                printTimedToPlayer("You are the new mode player, you can change" +
+                " the game modes using those commands, see quest log for more details :",
+                15, GameMode.modePlayer)
+            printTimedToPlayer(GameMode.getIngameModes(), 15, GameMode.modePlayer)

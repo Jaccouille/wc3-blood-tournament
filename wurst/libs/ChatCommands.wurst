@@ -40,6 +40,15 @@ public function deregisterCommandAll(string command)
     for i = 0 to bj_MAX_PLAYER_SLOTS - 1
         deregisterCommand(players[i], command)
 
+public function isModeCommand(player thePlayer, string command) returns boolean
+    return commands.get(thePlayer).has(command)
+
+public function isCommandAll(string command) returns boolean
+    var result = true
+    for i = 0 to bj_MAX_PLAYER_SLOTS - 1
+        result = result and commands.has(players[i]) and commands.get(players[i]).has(command)
+    return result
+
 init
     let t = CreateTrigger()
 
