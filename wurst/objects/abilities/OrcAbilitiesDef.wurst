@@ -560,7 +560,7 @@ import UnitObjEditingCommon
 
     new BuffDefinition(BUFF_RAMPAGE, BuffIds.battleRoar)
         ..setIcon(Icons.bTNBerserk)
-        ..setArtTarget(Abilities.trollBeserkerTarget)
+        ..setArtTarget(LocalAbilities.hordeRoarTarget)
         ..setTargetAttachmentPoint1(1, "head")
         ..setTooltipNormal(1, "Rampage")
         ..setTooltipNormalExtended(1, "This unit has rampage;" +
@@ -587,6 +587,7 @@ import UnitObjEditingCommon
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..setLevels(5)
+        ..setArtCaster(LocalAbilities.hordeRoarCaster)
         ..presetDamageIncrease(lvl -> 15. * lvl)
         ..presetAreaofEffect(lvl -> 200. + 25 * lvl)
         ..presetDurationNormal(lvl -> 5)

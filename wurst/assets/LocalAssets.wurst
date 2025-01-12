@@ -15,3 +15,5 @@ public class LocalAbilities
     static constant sweepBloodSmall = "Models/Sweep_Blood_Small.mdx"
     static constant sweepBloodLarge = "Models/Sweep_Blood_Large.mdx"
     static constant sweepFireLarge = "Models/Sweep_Fire_Large.mdx"
+    static constant hordeRoarTarget = "Models/Horde_RoarTarget.mdx"
+    static constant hordeRoarCaster = "Models/Horde_RoarCaster.mdx"
