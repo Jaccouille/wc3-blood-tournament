@@ -1,0 +1,7 @@
+package v0_003_c
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 3, 'c')
+        ..add("Following mode can now be changed between rounds by the red player, it, sc, sce, bm, apm, dm, hm, mb, bd, ser, np")
