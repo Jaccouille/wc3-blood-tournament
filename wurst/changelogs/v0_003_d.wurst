@@ -1,0 +1,7 @@
+package v0_003_d
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 3, 'd')
+        ..add("disable custom interface in an attempt to prevent desync")
