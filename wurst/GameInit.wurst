@@ -78,7 +78,7 @@ init
         initArmySpawner()
         initScoreBoard()
         initHints()
-        initSpellView()
+        // initSpellView()
         ForForce(bj_FORCE_ALL_PLAYERS) ->
             CreateFogModifierRect(
                 GetEnumPlayer(),
@@ -87,7 +87,7 @@ init
                 true,
                 false
             ).start()
-        initWikiUI()
+        // initWikiUI()
 
     GameStates.modesSelection.onExit() (state) ->
         playGameInitSound()
