@@ -669,9 +669,9 @@ import UnitTooltipGenerator
         ..setMana(200)
 
 
-        ..setSizeLarge()
         ..setAutoPointValue()
         ..setAutoBuildingCost()
+        ..setSizeLarge()
 
         ..setNameEnhance("Z", "Eredar Commander")
         ..setScalingValue(1.4)

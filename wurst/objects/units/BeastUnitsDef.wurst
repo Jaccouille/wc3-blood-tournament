@@ -34,10 +34,10 @@ import ArmySpawner
 
         ..setAutoPointValue()
         ..setAutoBuildingCost()
+        ..setSizeLarge()
         ..tooltipStopListen(true)
 
         ..setNameEnhance("W", "Tauren")
-        ..setSizeLarge()
 
         ..setBuildingScalingValue(0.6)
         ..setModelFileExt(Units.tauren)
@@ -74,12 +74,12 @@ import ArmySpawner
         ..setMana(200)
 
         ..setItemCostUnit(0, 2000, 1)
+        ..setSizeLarge()
         // ..setAutoPointValue()
         // ..setAutoBuildingCost()
 
         ..setNameEnhance("X", "Chieftain")
         ..tooltipStopListen(true, itm)
-        ..setSizeLarge()
 
         ..setIconGameInterfaceExt(Icons.bTNHeroTaurenChieftain)
 
@@ -176,12 +176,12 @@ import ArmySpawner
 
         ..setAutoPointValue()
         ..setAutoBuildingCost()
+        ..setSizeLarge()
         ..tooltipStopListen(true)
         ..setMana(0)
 
         ..setUpgradeTo(asList(BUILDING_CORROSIVE_LIZARD))
         ..setNameEnhance("E", "Thunder Lizard")
-        ..setSizeLarge()
         ..setScalingValue(1)
 
         ..setBuildingScalingValue(0.5)
@@ -215,13 +215,13 @@ import ArmySpawner
         // ..tooltipStopListen(true, itm)
         ..setAutoPointValue()
         ..setAutoBuildingCost()
+        ..setSizeLarge()
         ..tooltipStopListen(true)
         ..setMana(0)
 
         ..setNameEnhance("Z", "Corrosive Lizard")
         ..setHotkeyEnhance("W")
         ..setModelFile(Units.thunderLizardSalamander1)
-        ..setSizeLarge()
         ..setScalingValue(1)
 
         ..setBuildingScalingValue(0.5)

@@ -60,6 +60,7 @@ import UnitTooltipGenerator
         ..setHotkeyEnhance("W")
         ..setSizeSmall()
 
+        ..setScalingValue(1)
         ..setModelFileExt(Units.murgulReaver1)
         ..setIconGameInterfaceExt(Icons.bTNMurgulTideWarrior)
         ..setUnitSoundSetExt(Soundsets.murloc)
@@ -155,11 +156,11 @@ import UnitTooltipGenerator
 
         ..setAutoPointValue()
         ..setAutoBuildingCost()
+        ..setSizeLarge()
         ..tooltipStopListen(true)
 
         ..setNameEnhance("Z", "Hydra")
         ..setHotkeyEnhance("W")
-        ..setSizeLarge()
 
         ..setTintingColorBlue(255)
         ..setBuildingScalingValue(0.5)
@@ -184,10 +185,10 @@ import UnitTooltipGenerator
 
         ..setAutoPointValue()
         ..setAutoBuildingCost()
+        ..setSizeLarge()
         ..tooltipStopListen(true)
 
         ..setNameEnhance("E", "Myrmidon")
-        ..setSizeLarge()
 
         ..setBuildingScalingValue(0.6)
         ..setModelFileExt(Units.nagaMyrmidon1)
@@ -224,8 +225,8 @@ import UnitTooltipGenerator
         // ..setAutoBuildingCost()
 
         ..setNameEnhance("Z", "Depth Commander")
-        ..tooltipStopListen(true, itm)
         ..setSizeLarge()
+        ..tooltipStopListen(true, itm)
 
         ..setModelFileExt(Units.nagaRoyalGuard1)
         ..setIconGameInterfaceExt(Icons.bTNNagaMyrmidonRoyalGuard)
@@ -299,10 +300,10 @@ import UnitTooltipGenerator
 
         ..setAutoPointValue()
         ..setAutoBuildingCost()
+        ..setSizeLarge()
         ..tooltipStopListen(true)
 
         ..setNameEnhance("A", "Giant Turtle")
-        ..setSizeLarge()
 
         ..setBuildingUnitsSold(commaList(
             UNIT_GIANT_TURTLE,
@@ -410,7 +411,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Magic, 25, 5, 7, 1.6)
         ..setAttack1Range(650)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-        ..setAttack1ProjectileArt(Abilities.bansheeMissile)
+        ..setAttack1ProjectileArt(Abilities.lichMissile)
 
         ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(200)
@@ -451,7 +452,7 @@ import UnitTooltipGenerator
         ..setAttack1Data(AttackType.Magic, 55, 5, 7, 1.5)
         ..setAttack1Range(700)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
-        ..setAttack1ProjectileArt(Abilities.zigguratFrostMissile)
+        ..setAttack1ProjectileArt(Abilities.bansheeMissile)
 
         ..setArmorData(ArmorType.Unarmored, 0)
         ..setHitPointsMaximumBase(400)

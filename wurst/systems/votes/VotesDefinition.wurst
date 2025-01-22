@@ -17,7 +17,7 @@ function getHumanPlayerCount() returns int
     var count = 0
     for _p in ALL_PLAYERS
         // Only count human players and no afk
-        if _p.isHuman() and not playerToBuilderAI.get(_p).isEnabled
+        if _p.isHuman()
             count++
     return count
 

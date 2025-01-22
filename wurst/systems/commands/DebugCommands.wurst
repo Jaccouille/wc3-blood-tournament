@@ -66,7 +66,7 @@ init
     registerToolkitCommand("clean") (player triggerPlayer, LinkedList<string> arguments) ->
         pDatas.forEach() (player key, PlayerData pData) ->
             pData.spawnedUnits.forEach() (unit t) ->
-                if t.getName() == null
+                if t.getName() == null or t.getName() == "" or t.getName() == "null"
                     pData.spawnedUnits.remove(t)
                     t.remove()
                     checkIfPlayerDefeated(pData, null)
@@ -110,7 +110,8 @@ init
 
     registerToolkitCommand("er") (player triggerPlayer, LinkedList<string> arguments) ->
         for _p in pDatas
-            playerToArmySpawner.get(_p).buildingList.clear()
+            if playerToArmySpawner.has(_p) and playerToArmySpawner.get(_p).buildingList != null
+                playerToArmySpawner.get(_p).buildingList.clear()
         forUnitsAll() (unit u) ->
             if u.isSoldier()
                 u.kill()

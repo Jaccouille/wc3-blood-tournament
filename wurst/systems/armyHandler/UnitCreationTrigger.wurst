@@ -108,6 +108,12 @@ function addStockItems(unit upgradedBuilding)
         unitItemSold.get(upgradedBuilding.getTypeId()).forEach() (integer t) ->
             let itm = createItem(t, vec2(0, 0))
             let maxStock = itm.getLevel()
+            // TODO: fix bug with item addition after upgrade
+            // Log.info(upgradedBuilding.hasItemById(itm.getTypeId()).toString())
+            // Log.info(upgradedBuilding.getItemById(itm.getTypeId()).getCharges().toString())
+            // if not (upgradedBuilding.hasItemById(itm.getTypeId()) and upgradedBuilding.getItemById(itm.getTypeId()).getCharges() < maxStock)
+            //     AddItemToStock(upgradedBuilding, t, maxStock, maxStock)
+            //     itemStockHandler.addItem(itm.getTypeId(), maxStock)
             AddItemToStock(upgradedBuilding, t, maxStock, maxStock)
             itemStockHandler.addItem(itm.getTypeId(), maxStock)
             itm.remove()

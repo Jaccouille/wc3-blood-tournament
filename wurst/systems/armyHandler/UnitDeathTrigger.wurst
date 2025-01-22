@@ -283,15 +283,14 @@ function displayResourceTags(vec3 _pos, int goldAmount, int bloodAmount, PlayerD
 function handleUnitDeathBounty(unit dyingUnit, unit killer, player killerOwner, PlayerData pData)
     // Add blood points bounty for eligible kills
     if dyingUnit.hasAbility(ABIL_DEMONIC_ATTRITION) and killer == dyingUnit
-        dyingUnit.remove()
-        flashEffect(Abilities.doomDeath, dyingUnit.getPos())
-
         // Remove unit from player's spawned list
         if pData.spawnedUnits.has(dyingUnit)
             pData.spawnedUnits.remove(dyingUnit)
             checkIfPlayerDefeated(pData, killerOwner)
         else
             Log.debug("Cannot remove " + dyingUnit.getName())
+        dyingUnit.remove()
+        flashEffect(Abilities.doomDeath, dyingUnit.getPos())
         return
 
     if killerOwner != ALTAR_PLAYER
