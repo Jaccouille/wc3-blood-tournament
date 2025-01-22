@@ -1,7 +1,0 @@
-package v0_003_b
-
-import ChangeLog
-
-init
-    new ChangeLog(0, 3, 'b')
-        ..add("Added -fog vote to enable/disable fog of war")
