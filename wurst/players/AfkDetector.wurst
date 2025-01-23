@@ -11,7 +11,7 @@ import ColorUtils
 import PlayerData
 import public BuilderAI
 
-@configurable constant AFK_TIMER = 30.
+@configurable constant AFK_TIMER = 60.
 
 let playerToAfkDetector = new HashMap<player, AfkDetector>
 
