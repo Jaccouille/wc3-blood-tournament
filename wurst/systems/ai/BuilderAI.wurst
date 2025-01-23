@@ -140,7 +140,7 @@ class BuilderAI
             let randomBuilding = buildingWithItemsToBuy.getRandomElement()
             let stockHandler = ItemStockHandler.unitToItemStockMap.get(randomBuilding)
             var choseUpgrade = false
-            while not choseUpgrade
+            while not choseUpgrade and unitItemSold.get(randomBuilding.getTypeId()) != null
                 let randomItem = unitItemSold.get(randomBuilding.getTypeId()).getRandomElement()
                 if stockHandler.hasItem(randomItem)
                     randomBuilding.issueImmediateOrderById(randomItem)

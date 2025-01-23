@@ -63,6 +63,21 @@ init
                 if u.getName() == null
                     Log.info("null")
 
+    registerToolkitCommand("ru") (player triggerPlayer, LinkedList<string> arguments) ->
+        if (arguments.size() > 1)
+            let playerIdx = arguments.get(1).toInt()
+            let pData = pDatas.get(players[playerIdx])
+            pData.spawnedUnits.forEach() (unit u) ->
+                Log.info("Unit : " + u.getName() +
+                         " at pos :" + u.getPos().toString() +
+                         " " + u.getTypeId().toRawCode() +
+                         " length: " + u.getName().length().toString()
+                         )
+                if u.getName() == null
+                    Log.info("null")
+                    pData.spawnedUnits.remove(u)
+                    checkIfPlayerDefeated(pData, null)
+
     registerToolkitCommand("clean") (player triggerPlayer, LinkedList<string> arguments) ->
         pDatas.forEach() (player key, PlayerData pData) ->
             pData.spawnedUnits.forEach() (unit t) ->
