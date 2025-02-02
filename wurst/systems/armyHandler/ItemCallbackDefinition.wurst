@@ -8,12 +8,13 @@ import OrderIds
 // Local imports:
 import LocalObjectIDs
 import initlater ItemStockHandler
+import initlater ArmySpawner
 
 public let itemAddUnitMap = new HashMap<int, ItemAddUnit>
 public let itemModifyUnitMap = new HashMap<int, ItemModifierAction>
 
 interface AddUnitCallbackListener
-    function execute(LinkedList<int> unitToSpawn, int count)
+    function execute(ArmySpawner ap, int count)
 
 interface ActionCallbackListener
     function execute(unit u)
@@ -24,8 +25,9 @@ public class ItemAddUnit
     function addAction(AddUnitCallbackListener listener)
         this.listener = listener
 
-    function execute(LinkedList<int> unitToSpawn, int count)
-        this.listener.execute(unitToSpawn, count)
+    function execute(ArmySpawner ap, int count)
+        this.listener.execute(ap, count)
+
 
 public class ItemModifier
     ItemModifierAction action
@@ -47,24 +49,30 @@ public class ItemModifierAction
     function execute(unit u)
         this.listener.execute(u)
 
-function replaceUnit(LinkedList<int> unitToSpawn, int oldUnit, int newUnit)
-    if unitToSpawn.replace(oldUnit, newUnit)
-        unitToSpawn.shuffle()
+function replaceUnit(ArmySpawner ap, int oldUnit, int newUnit)
+    int i = 0
+    while ap.squadUnitIds[0] != oldUnit and ap.squadUnitIds[i] != 0
+        and i < ap.squadUnitIds.length
+        i++
+    if ap.squadUnitIds[i] != 0
+        ap.squadUnitIds[i] = newUnit
 
-function replaceMiddleUnit(LinkedList<int> unitToSpawn, int newUnit)
-    let elem = unitToSpawn.get((unitToSpawn.size() div 2))
-    unitToSpawn.remove(elem)
-    unitToSpawn.addAt(newUnit, (unitToSpawn.size() div 2))
+function replaceMiddleUnit(ArmySpawner ap, int newUnit)
+    let squadCount = ap.getSquadCount()
+    let middleIndex = squadCount div 2
+    ap.squadUnitIds[middleIndex] = newUnit
 
-function addAtMiddle(LinkedList<int> unitToSpawn, int newUnit)
-    unitToSpawn.addAt(newUnit, (unitToSpawn.size() div 2))
+function addAtMiddle(ArmySpawner ap, int newUnit)
+    let squadCount = ap.getSquadCount()
+    let middleIndex = squadCount div 2
+    // Log.info("Middle index: " + middleIndex.toString())
+    // Log.info("Squad count: " + squadCount.toString())
 
+    for i = squadCount - 1 downto  middleIndex
+        // Log.info("i + 1: " + (i + 1).toString())
+        ap.squadUnitIds[i + 1] = ap.squadUnitIds[i]
 
-function computeUnitPointValue(int goldCost, int lumberCost, int unitCount) returns int
-    var pointValue = 0
-    pointValue += (goldCost / unitCount).toInt()
-    pointValue += (lumberCost / unitCount / 10).toInt()
-    return pointValue
+    ap.squadUnitIds[middleIndex] = newUnit
 
 function increaseUnitBounty(unit u, int itemId)
     let lvl = (computeUnitPointValue(getItemGoldCost(itemId), getItemLumberCost(itemId), 1)
@@ -84,53 +92,37 @@ init
 
 
     let captainAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
+        Log.info("Adding captain :" + count.toString())
         for i = 1 to count
-            addAtMiddle(unitToSpawn, UNIT_CAPTAIN)
+            addAtMiddle(armySpawner, UNIT_CAPTAIN)
     itemAddUnitMap.put(ITEM_CAPTAIN, captainAction)
 
-
-    let grenadierAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
-        for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_RIFLEMAN, UNIT_GRENADIER)
-
-    itemAddUnitMap.put(ITEM_GRENADIER, grenadierAction)
-
-
-    let sniperAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
-        for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_RIFLEMAN, UNIT_SNIPER)
-
-    itemAddUnitMap.put(ITEM_SNIPER, sniperAction)
-
-
     let mortarAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            addAtMiddle(unitToSpawn, UNIT_MORTAR)
+            addAtMiddle(armySpawner, UNIT_MORTAR)
     itemAddUnitMap.put(ITEM_MORTAR, mortarAction)
 
     let marshallAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            addAtMiddle(unitToSpawn, UNIT_MARSHALL)
+            addAtMiddle(armySpawner, UNIT_MARSHALL)
     itemAddUnitMap.put(ITEM_MARSHALL, marshallAction)
 
 
     let paladinBlackHairAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_PALADIN_1, UNIT_PALADIN_2)
+            replaceUnit(armySpawner, UNIT_PALADIN_1, UNIT_PALADIN_2)
 
     itemAddUnitMap.put(ITEM_PALADIN_SKIN_BLACK, paladinBlackHairAction)
 
 
     let paladinWhiteHairAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_PALADIN_1, UNIT_PALADIN_3)
+            replaceUnit(armySpawner, UNIT_PALADIN_1, UNIT_PALADIN_3)
 
     itemAddUnitMap.put(ITEM_PALADIN_SKIN_WHITE, paladinWhiteHairAction)
 
@@ -200,9 +192,9 @@ init
 
 
     let courtEnchantressAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_COURT_ENCHANTRESS)
+            addAtMiddle(armySpawner, UNIT_COURT_ENCHANTRESS)
 
     itemAddUnitMap.put(ITEM_COURT_ENCHANTRESS, courtEnchantressAction)
 
@@ -216,9 +208,9 @@ init
     itemModifyUnitMap.put(ITEM_ORB_LIGHTNING, orbLightningAction)
 
     let farseerAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_FARSEER)
+            addAtMiddle(armySpawner, UNIT_FARSEER)
 
     itemAddUnitMap.put(ITEM_FARSEER, farseerAction)
 
@@ -263,34 +255,28 @@ init
         increaseUnitBounty(u, ITEM_BURNING_BLADE)
     itemModifyUnitMap.put(ITEM_BURNING_BLADE, burningBladeAction)
 
-    let berserkerAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
-        for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_GRUNT, UNIT_BERSERKER)
-    itemAddUnitMap.put(ITEM_BERSERKER, berserkerAction)
-
     let packLeaderAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            addAtMiddle(unitToSpawn, UNIT_PACK_LEADER)
+            addAtMiddle(armySpawner, UNIT_PACK_LEADER)
     itemAddUnitMap.put(ITEM_PACK_LEADER, packLeaderAction)
 
     let kodoAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            addAtMiddle(unitToSpawn, UNIT_KODO)
+            addAtMiddle(armySpawner, UNIT_KODO)
     itemAddUnitMap.put(ITEM_KODO, kodoAction)
 
     let armoredOgreAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_OGRE, UNIT_OGRE_ARMORED)
+            replaceUnit(armySpawner, UNIT_OGRE, UNIT_OGRE_ARMORED)
     itemAddUnitMap.put(ITEM_OGRE_ARMORED, armoredOgreAction)
 
     let magiOgreAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_OGRE, UNIT_OGRE_MAGI)
+            replaceUnit(armySpawner, UNIT_OGRE, UNIT_OGRE_MAGI)
     itemAddUnitMap.put(ITEM_OGRE_MAGI, magiOgreAction)
 
 
@@ -302,25 +288,6 @@ init
 
 
     // ========================= UNDEAD =========================
-    let plagueBearerAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
-        for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_ZOMBIE, UNIT_PLAGUE_BEARER)
-
-    itemAddUnitMap.put(ITEM_PLAGUE_BEARER, plagueBearerAction)
-
-    let fireArrowAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
-        for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_SKELETAL_ARCHER, UNIT_BURNING_ARCHER)
-    itemAddUnitMap.put(ITEM_BURNING_ARCHER, fireArrowAction)
-
-    let frostArrowAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
-        for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_SKELETAL_ARCHER, UNIT_FROST_ARCHER)
-    itemAddUnitMap.put(ITEM_FROST_ARCHER, frostArrowAction)
-
     let unholyFrenzyAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.removeAbility(ABIL_FROST_ARMOR)
@@ -371,16 +338,10 @@ init
     itemModifyUnitMap.put(ITEM_CRIPPLE, crippleAction)
 
     let lichAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_LICH)
+            addAtMiddle(armySpawner, UNIT_LICH)
     itemAddUnitMap.put(ITEM_LICH, lichAction)
-
-    let vampireLordAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
-        for i = 1 to count
-            unitToSpawn.push(UNIT_VAMPIRE_LORD)
-    itemAddUnitMap.put(ITEM_VAMPIRE_LORD, vampireLordAction)
 
     let spawnGutCrawlerAction = new ItemModifierAction()
         ..addAction() (unit u) ->
@@ -399,15 +360,15 @@ init
 
     // ========================= NIGHTT ELF =========================
     let priestOfTheMoonAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            addAtMiddle(unitToSpawn, UNIT_PRIESTESS_OF_THE_MOON)
+            addAtMiddle(armySpawner, UNIT_PRIESTESS_OF_THE_MOON)
     itemAddUnitMap.put(ITEM_PRIESTESS_OF_THE_MOON, priestOfTheMoonAction)
 
     let archdruidAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_ARCHDRUID)
+            addAtMiddle(armySpawner, UNIT_ARCHDRUID)
     itemAddUnitMap.put(ITEM_ARCHDRUID, archdruidAction)
 
     let rejuvenationAction = new ItemModifierAction()
@@ -438,42 +399,42 @@ init
     itemModifyUnitMap.put(ITEM_WAND_OF_ILLUSION, wandOfIllusionAction)
 
     let keeperOfTheGroveAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_KEEPER_OF_THE_GROVE)
+            addAtMiddle(armySpawner, UNIT_KEEPER_OF_THE_GROVE)
     itemAddUnitMap.put(ITEM_KEEPER_OF_THE_GROVE, keeperOfTheGroveAction)
 
     let bearAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_DRUID_CLAW, UNIT_BEAR)
+            replaceUnit(armySpawner, UNIT_DRUID_CLAW, UNIT_BEAR)
     itemAddUnitMap.put(ITEM_BEAR, bearAction)
 
     let owlbearAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_DRUID_CLAW, UNIT_OWLBEAR)
+            replaceUnit(armySpawner, UNIT_DRUID_CLAW, UNIT_OWLBEAR)
     itemAddUnitMap.put(ITEM_OWLBEAR, owlbearAction)
 
     let avatarOfVengeanceAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            addAtMiddle(unitToSpawn, UNIT_AVATAR_OF_VENGEANCE)
+            addAtMiddle(armySpawner, UNIT_AVATAR_OF_VENGEANCE)
     itemAddUnitMap.put(ITEM_AVATAR_OF_VENGEANCE, avatarOfVengeanceAction)
 
 
     // ========================= NAGA =========================
     let fireTurtleAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_GIANT_TURTLE, UNIT_FIRE_TURTLE)
+            replaceUnit(armySpawner, UNIT_GIANT_TURTLE, UNIT_FIRE_TURTLE)
 
     itemAddUnitMap.put(ITEM_FIRE_TURTLE, fireTurtleAction)
 
     let frostTurtleAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_GIANT_TURTLE, UNIT_FROST_TURTLE)
+            replaceUnit(armySpawner, UNIT_GIANT_TURTLE, UNIT_FROST_TURTLE)
 
     itemAddUnitMap.put(ITEM_FROST_TURTLE, frostTurtleAction)
 
@@ -494,9 +455,9 @@ init
     itemModifyUnitMap.put(ITEM_CHARM, charmAction)
 
     let deptCommanderAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            replaceMiddleUnit(unitToSpawn, UNIT_DEPTH_COMMANDER)
+            replaceMiddleUnit(armySpawner, UNIT_DEPTH_COMMANDER)
     itemAddUnitMap.put(ITEM_DEPTH_COMMANDER, deptCommanderAction)
 
     let bloodLustAction = new ItemModifierAction()
@@ -533,9 +494,9 @@ init
 
 
     let chieftainAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            unitToSpawn.push(UNIT_CHIEFTAIN)
+            addAtMiddle(armySpawner, UNIT_CHIEFTAIN)
     itemAddUnitMap.put(ITEM_CHIEFTAIN, chieftainAction)
 
 
@@ -592,9 +553,9 @@ init
     itemModifyUnitMap.put(ITEM_STORM_LIZARD, stormLizardAction)
 
     let corrosiveLizardAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            replaceUnit(unitToSpawn, UNIT_THUNDER_LIZARD, UNIT_CORROSIVE_LIZARD)
+            replaceUnit(armySpawner, UNIT_THUNDER_LIZARD, UNIT_CORROSIVE_LIZARD)
 
     itemAddUnitMap.put(ITEM_CORROSIVE_LIZARD, corrosiveLizardAction)
 
@@ -618,13 +579,13 @@ init
 
     // ========================= DEMON =========================
     let overlordAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            addAtMiddle(unitToSpawn, UNIT_OVERLORD)
+            addAtMiddle(armySpawner, UNIT_OVERLORD)
     itemAddUnitMap.put(ITEM_OVERLORD, overlordAction)
 
     let maidenOfPainAction = new ItemAddUnit()
-        ..addAction() (LinkedList<int> unitToSpawn, int count) ->
+        ..addAction() (ArmySpawner armySpawner, int count) ->
         for i = 1 to count
-            addAtMiddle(unitToSpawn, UNIT_MAIDEN_OF_PAIN)
+            addAtMiddle(armySpawner, UNIT_MAIDEN_OF_PAIN)
     itemAddUnitMap.put(ITEM_MAIDEN_OF_PAIN, maidenOfPainAction)

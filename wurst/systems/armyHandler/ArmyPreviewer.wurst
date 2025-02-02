@@ -88,8 +88,8 @@ public class ArmyPreviewer
     private function registerItemModifier(LinkedList<item> inv)
         for itm in inv
             // Log.debug("AitemModifyUnit :" + unitModifierList.size().toString())
-            if itemAddUnitMap.has(itm.getTypeId())
-                itemAddUnitMap.get(itm.getTypeId()).execute(squadIds, itm.getCharges())
+            // if itemAddUnitMap.has(itm.getTypeId())
+            //     itemAddUnitMap.get(itm.getTypeId()).execute(squadIds, itm.getCharges())
             if itemModifyUnitMap.has(itm.getTypeId())
                 unitModifierList.push(new ItemModifier(itemModifyUnitMap.get(itm.getTypeId()), itm.getCharges()))
             // Log.debug("BitemModifyUnit :" + unitModifierList.size().toString())

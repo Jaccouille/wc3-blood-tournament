@@ -22,6 +22,9 @@ public function computeUnitPointValue(int goldCost, int lumberCost, int unitCoun
     pointValue += (lumberCost / unitCount / 10).toInt()
     return pointValue
 
+function getSquadUnitIds(int buildingId) returns LinkedList<int>
+    return BTBuildingData.unitIdToDataMap.get(buildingId).unitToSpawn
+
 public class BTBuildingData
     static let unitIdToDataMap = new HashMap<int, BTBuildingData>
 
@@ -199,7 +202,8 @@ public class ArmySpawner
     EventListener reinforcementListener
     boolean hasSpawnFinished = false
     // List of units spawned by a building
-    LinkedList<int> squadUnitIds = new LinkedList<int>
+    // LinkedList<int> squadUnitIds = new LinkedList<int>
+    int array[63] squadUnitIds
 
     LinkedList<ItemModifier> unitModifierList = new LinkedList<ItemModifier>
 
@@ -236,7 +240,7 @@ public class ArmySpawner
     private function isSquadSpawnOver() returns boolean
         if isBuildingSpawnOver()
             return true
-        return squadIdx >= squadUnitIds.size()
+        return squadUnitIds[squadIdx] == 0
 
     function setSpawnZone(SpawnZone spawnZone)
         this.spawnZone = spawnZone
@@ -253,15 +257,12 @@ public class ArmySpawner
     /**
         Register callback defined in ItemCallbackDefinition.wurst with
     **/
-    private function registerItemModifier(LinkedList<item> inv)
-        for itm in inv
-            // Log.debug("AitemModifyUnit :" + unitModifierList.size().toString())
-            if itemAddUnitMap.has(itm.getTypeId())
-                itemAddUnitMap.get(itm.getTypeId()).execute(squadUnitIds, itm.getCharges())
-            if itemModifyUnitMap.has(itm.getTypeId())
-                unitModifierList.push(new ItemModifier(itemModifyUnitMap.get(itm.getTypeId()), itm.getCharges()))
-            // Log.debug("BitemModifyUnit :" + unitModifierList.size().toString())
-        destroy inv
+    private function registerItemModifier(unit building)
+        for i = 0 to building.inventorySize() - 1
+            if itemAddUnitMap.has(building.itemInSlot(i).getTypeId())
+                itemAddUnitMap.get(building.itemInSlot(i).getTypeId()).execute(this, building.itemInSlot(i).getCharges())
+            if itemModifyUnitMap.has(building.itemInSlot(i).getTypeId())
+                unitModifierList.push(new ItemModifier(itemModifyUnitMap.get(building.itemInSlot(i).getTypeId()), building.itemInSlot(i).getCharges()))
 
     private function executeUnitModifier(unit newUnit)
         // a being the callback defined in ItemCallbackDefinition.wurst
@@ -272,6 +273,19 @@ public class ArmySpawner
         if unitModifierList.get(0).charges <= 0
             destroy unitModifierList.dequeue()
 
+    private function clearSquad()
+        for i = 0 to squadUnitIds.length - 1
+            squadUnitIds[i] = 0
+
+    private function prepareNextSquad(unit building)
+        squadIdx = 0
+        clearSquad()
+        for unitId in getSquadUnitIds(building.getTypeId())
+            squadUnitIds[squadIdx] = unitId
+            squadIdx++
+        registerItemModifier(building)
+        squadIdx = 0
+
     private function spawnUnit(int unitId, vec2 spawnPos) returns unit
         let armySize = pDatas.get(_p).spawnedUnits.size()
         // Log.debug("Army size : " + armySize.toString())
@@ -279,17 +293,15 @@ public class ArmySpawner
         // change the idx to next dummy player
         let dummyPlayerIdx = armySize div MAX_UNIT_PER_DUMMY_PLAYER mod pDatas.get(_p).dummyPlayers.size()
 
-        // Log.debug("pre spawn")
         let newUnit = createUnit(_p.getDummyPlayer(dummyPlayerIdx), unitId, spawnPos, spawnZone.angle)
         count += 1
-        // Log.debug("Unit spawned " +  count.toString())
         doOnSoldierSpawn(newUnit)
 
         // TODO: handle skin item separately
         // Apply Item modifier
         if not unitModifierList.isEmpty()
             // If unit is the last in the squad, apply all remaining modifier
-            if squadIdx == squadUnitIds.size() - 1
+            if squadUnitIds[squadIdx + 1] == 0
                 while unitModifierList.size() > 0
                     executeUnitModifier(newUnit)
             else
@@ -302,8 +314,14 @@ public class ArmySpawner
             pData.spawnedUnits.push(newUnit)
         return newUnit
 
+    function getSquadCount() returns int
+        int counter = 0
+        while squadUnitIds[counter] != 0
+            counter++
+        return counter
+
     function initSpawner()
-        squadUnitIds.clear()
+        clearSquad()
         buildingIdx = 0
         squadIdx = 0
         hasSpawnFinished = false
@@ -331,26 +349,23 @@ public class ArmySpawner
                 else
                     let building = pData.getBuilding(buildingIdx)
 
-                // Log.debug("passed AddAll " + building.getName())
-
+                    // Only setup next squad when the current one is over
                     if squadIdx == 0
-                        squadUnitIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
-                        registerItemModifier(building.getInventory())
-                    // Log.debug("passed executeItemBonus " + building.getName())
+                        prepareNextSquad(building)
 
                     // Spawn while there's something to spawn and unitLimit isn't reached
-                    while squadIdx < squadUnitIds.size()
+                    while squadUnitIds[squadIdx] != 0
                         and pData.spawnedUnits.size() < spawnZone.unitLimit
                         and spawnCount < unitPerLine
                         // Log.debug("Spawn start of idx: " + squadIdx.toString())
 
                         if spawnFromPortal
-                            spawnUnit(squadUnitIds.get(squadIdx), portalSpawnPos)
+                            spawnUnit(squadUnitIds[squadIdx], portalSpawnPos)
                             ..issuePointOrder("attack", pos)
                             flashEffect(Abilities.blinkTarget,  portalSpawnPos)
                             portalSpawnPos = portalSpawnPos.polarOffset(spawnDirection, FORMATION_WIDTH)
                         else
-                            spawnUnit(squadUnitIds.get(squadIdx), pos)
+                            spawnUnit(squadUnitIds[squadIdx], pos)
                             // Pause unit until battle start
                             ..pause()
                         // Log.debug("Passed the spawn id: " + squadIdx.toString())
@@ -376,9 +391,8 @@ public class ArmySpawner
                         squadIdx++
                         spawnCount++
                     if pData.spawnedUnits.size() <= spawnZone.unitLimit
-                        and squadIdx >= squadUnitIds.size()
+                        and squadUnitIds[squadIdx] == 0
                         squadIdx = 0
-                        squadUnitIds.clear()
                         buildingIdx++
                         while buildingIdx < MAX_BUILDING and pData.getBuilding(buildingIdx) == null
                             buildingIdx++
@@ -418,12 +432,11 @@ public class ArmySpawner
             return pos + vec2(0, GetRandomReal(-offset, offset))
 
     protected function spawnReinforcement()
-        if squadUnitIds.isEmpty()
+        if squadUnitIds[squadIdx] == 0
             let building = pData.getBuilding(buildingIdx)
-            squadUnitIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
-            registerItemModifier(building.getInventory())
+            prepareNextSquad(building)
 
-        let unitId = squadUnitIds.get(squadIdx)
+        let unitId = squadUnitIds[squadIdx]
         let u = spawnUnit(unitId, getRandomReinforcementPos())
         u.issuePointOrder("attack", CENTER)
         flashEffect(Abilities.blinkTarget, u.getPos())
@@ -431,7 +444,7 @@ public class ArmySpawner
         squadIdx++
         if isSquadSpawnOver()
             squadIdx = 0
-            squadUnitIds.clear()
+            clearSquad()
             buildingIdx++
             while buildingIdx < MAX_BUILDING and pData.getBuilding(buildingIdx) == null
                 buildingIdx++
@@ -457,5 +470,5 @@ init
         let spawnCapacity = armySpawner.spawnZone.unitLimit
         if not armySpawner.hasSpawnFinished
             and dying.getPointValue() > 0
-            and pData.spawnedUnits.size() < spawnCapacity
+            and pData.spawnedUnits.size() - 1 < spawnCapacity
             armySpawner.spawnReinforcement()

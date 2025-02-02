@@ -43,11 +43,9 @@ import UnitTooltipGenerator
 
     let zombieCount = BTBuildingData.getUnitCount(BUILDING_ZOMBIE)
     tooltip = new UnitTooltipGenerator(abilTooltipMap.get(ABIL_INFECTION))
-    let itm = createBasicItem(ITEM_PLAGUE_BEARER)
     createSpawnedUnit(UNIT_PLAGUE_BEARER, UnitIds.dalaranmutant, BUILDING_PLAGUE_BEARER)
         ..setSpeedBase(270)
         ..setRace(Race.Undead)
-        ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..registerCustomPanelAbilityTooltip(ABIL_INFECTION)
         ..setNormalAbilities(commaList(ABIL_INFECTION))
@@ -57,8 +55,6 @@ import UnitTooltipGenerator
 
         ..setArmorData(ArmorType.Small, 3)
         ..setHitPointsMaximumBase(400)
-
-        ..setItemCostReplacement(0, 100, 1, zombieCount, zombieCount, BUILDING_ZOMBIE)
 
         ..setSizeSmall()
         ..setPriority(2)
