@@ -8,13 +8,13 @@ import ColorUtils
 import GameConfig
 import GameStates
 import Players
+import public GridSystem
 
 public constant pDatas = new IterableMap<player, PlayerData>
 public constant dummyToTruePlayerMap = new HashMap<player, player>
 
 public class PlayerData
-    // let army = new LinkedList<LinkedList<int>>
-    let buildingList = new LinkedList<unit>
+    unit array[MAX_BUILDING] buildingArray
     let spawnedUnits = new LinkedList<unit>
 
     let bpPerRound = new LinkedList<int>
@@ -37,6 +37,7 @@ public class PlayerData
         // TODO: replace 8 by human player size
         addDummyPlayer(players[_p.getId() + 8])
         addDummyPlayer(players[_p.getId() + 16])
+        new GridSystem(buildingRect, _p)
 
     function addDummyPlayer(player dummyPlayer)
         SetPlayerAlliance(_p, dummyPlayer, ALLIANCE_PASSIVE, true)
@@ -107,6 +108,20 @@ public class PlayerData
         _p.addLumber(armyPoints + roundBloodPoints)
         totalBloodPoints += armyPoints + roundBloodPoints
         bpPerRound.push(armyPoints + roundBloodPoints)
+
+    function getBuilding(int idx) returns unit
+        return buildingArray[idx]
+
+    function setBuilding(int idx, unit building)
+        // Log.info("Setting building at index " + idx.toString() + " " + building.getName())
+        buildingArray[idx] = building
+
+    function getBuildingCount() returns int
+        var count = 0
+        for i = 0 to MAX_BUILDING - 1
+            if buildingArray[i] != null
+                count++
+        return count
 
 
 public function initPlayerDatas()

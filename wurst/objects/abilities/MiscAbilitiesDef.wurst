@@ -25,6 +25,7 @@ import TooltipsUtils
 import UnitCreationTrigger
 import UnitExtensions
 import VotesDefinition
+import ArmyPreviewer
 
 let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
 
@@ -311,9 +312,18 @@ init
         // But I am not sure
         caster.abortOrder()
         if target.isInRect(pDatas.get(caster.getOwner()).buildingRect)
+            let pData = pDatas.get(caster.getOwner())
+            let idx = getBuildingArrayIndex(caster, pData.buildingRect)
+            pData.setBuilding(idx, null)
+
             flashEffect(Abilities.polyMorphDoneGround, caster.getPos())
             caster.setPos(target)
-            insertBuilding(pDatas.get(caster.getOwner()).buildingList, caster)
+            let newIdx = getBuildingArrayIndex(caster, pData.buildingRect)
+            pData.setBuilding(newIdx, caster)
+
+            if playerToArmyPreviewer.has(caster.getOwner())
+                playerToArmyPreviewer.get(caster.getOwner()).shouldRefresh = true
+            // refreshPlayerBuildingGroup(pDatas.get(caster.getOwner()))
             flashEffect(Abilities.polyMorphDoneGround, caster.getPos())
         else
             simError(caster.getOwner(), "Cannot move building outside of your building zone")

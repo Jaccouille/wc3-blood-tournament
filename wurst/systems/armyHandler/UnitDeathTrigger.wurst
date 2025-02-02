@@ -18,6 +18,7 @@ import RoundController
 import SpawnZone
 import TextTagUtils
 import UnitExtensions
+import GridSystem
 
 function fu() returns unit
     return GetFilterUnit()
@@ -235,7 +236,9 @@ function handleUnitDeath()
 function handleBuildingDeath(unit dyingUnit, unit killer, PlayerData pData)
     let buildingData = BTBuildingData.unitIdToDataMap.get(dyingUnit.getTypeId())
     pData.subArmyPoints(buildingData.buildingArmyPoints)
-    pData.buildingList.remove(dyingUnit)
+
+    let idx = getBuildingArrayIndex(dyingUnit, pData.buildingRect)
+    pData.setBuilding(idx, null)
 
     // Process resources for builder or dummy unit
     if killer.isType(UNIT_TYPE_PEON) or killer.getTypeId() == DUMMY_UNIT_ID
@@ -317,7 +320,7 @@ function handleUnitDeathBounty(unit dyingUnit, unit killer, player killerOwner, 
 public function initUnitDeathTrigger()
     OnRoundStart.add() (Round round) ->
         pDatas.forEach() (player key, PlayerData pData) ->
-            if pData.buildingList.size() <= 0
+            if pData.getBuildingCount() <= 0
                 roundController.currentRound.roundParticipant.remove(pData._p)
 
     CreateTrigger()

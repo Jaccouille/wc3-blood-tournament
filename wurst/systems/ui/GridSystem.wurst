@@ -1,0 +1,101 @@
+package GridSystem
+
+import LinkedList
+import HashMap
+import ChatCommands
+import LocalAssets
+
+// Look at map in the editor to determine the number of horizontal and vertical buildings
+public constant MAX_BUILDING_VERTICAL = 8
+public constant MAX_BUILDING_HORIZONTAL = 22
+public constant MAX_BUILDING = MAX_BUILDING_HORIZONTAL * MAX_BUILDING_VERTICAL
+
+
+
+public function getBuildingArrayIndex(unit u, rect buildingRect) returns integer
+    let minX = GetRectMinX(buildingRect)
+    let minY = GetRectMinY(buildingRect)
+
+    let unitX = u.getPos().x
+    let unitY = u.getPos().y
+
+    // Convert the unit's position to grid coordinates
+    let gridPosX = ((unitX - minX) / 64).floor() // Grid position X
+    let gridPosY = ((unitY - minY) / 64).floor() // Grid position Y
+
+    // Log.info("Grid pos " + gridPosX.toString() + " " + gridPosY.toString())
+    let buildingArrayIndex = gridPosY + gridPosX * MAX_BUILDING_VERTICAL
+    // Log.info("Real array idx: " + buildingArrayIndex.toString())
+    let invertedIndex = (MAX_BUILDING - 1) - buildingArrayIndex
+    // Log.info("Building array idx: " + invertedIndex.toString())
+    return invertedIndex
+
+/**
+    Author: Mayday, CanFight
+    Wurstified by Jaccouille
+    original jass : https://www.hiveworkshop.com/threads/grid-system.323327/
+*/
+public class GridSystem
+    static HashMap<player, GridSystem> playerToGridSystem = new HashMap<player, GridSystem>
+
+    static let ACTIVATOR = "grid"
+    static let IMAGE_TEXTURE_PATH = LocalMisc.grid2x2
+    static let RED = 255
+    static let GREEN = 255
+    static let BLUE = 255
+    static let ALPHA = 255
+
+    private real minX
+    private real minY
+    private real maxX
+    private real maxY
+    private integer gridWidth
+    private integer gridHeight
+    private image array[MAX_BUILDING] gridImages
+    private integer imageCount = 0
+    private boolean showHide = true
+
+    function toggleGrid(player _p)
+        if _p != GetLocalPlayer()
+            return
+        showHide = not showHide
+        for i = 0 to imageCount - 1
+            SetImageRenderAlways(gridImages[i], showHide)
+
+    construct(rect buildingRect, player _p)
+        playerToGridSystem.put(_p, this)
+        this.minX = GetRectMinX(buildingRect)
+        this.minY = GetRectMinY(buildingRect)
+        this.maxX = GetRectMaxX(buildingRect)
+        this.maxY = GetRectMaxY(buildingRect)
+        this.gridWidth  = ((maxX - minX) / 64).ceil()
+        this.gridHeight = ((maxY - minY) / 64).ceil()
+        this.imageCount = 0
+
+        // Log.info("Grid minX: " + minX.toString())
+        // Log.info("Grid minY: " + minY.toString())
+        // Log.info("Grid maxX: " + maxX.toString())
+        // Log.info("Grid maxY: " + maxY.toString())
+        // Log.info("Grid width: " + gridWidth.toString())
+        // Log.info("Grid height: " + gridHeight.toString())
+
+        var iy = 0
+        while iy < gridHeight
+            var ix = 0
+            while ix < gridWidth
+                let tx = minX + 64. * ix
+                let ty = minY + 64. * iy
+
+                // if not IsTerrainPathable(tx, ty, PATHING_TYPE_BUILDABILITY)
+                // createUnit(players[0], BUILDING_FOOTMAN, vec2(tx, ty))
+                gridImages[imageCount] = CreateImage(IMAGE_TEXTURE_PATH, 64, 64, 10., tx, ty, 0., 0, 0, 0, 1)
+                SetImageColor(gridImages[imageCount], RED, GREEN, BLUE, ALPHA)
+                SetImageRenderAlways(gridImages[imageCount], showHide)
+                imageCount = imageCount + 1
+                ix = ix + 1
+            iy = iy + 1
+
+
+init
+    registerCommandAll(GridSystem.ACTIVATOR) (player triggerPlayer, LinkedList<string> arguments) ->
+        GridSystem.playerToGridSystem.get(triggerPlayer).toggleGrid(triggerPlayer)

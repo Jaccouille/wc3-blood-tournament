@@ -188,13 +188,12 @@ public abstract class Round
     abstract function spawnPortals()
 
     // Todo: rename
-    function spawnArmy(SpawnZone spawnZone, LinkedList<unit> buidingList, player _p)
+    function spawnArmy(SpawnZone spawnZone, player _p)
         if roundParticipant.has(_p) == false
             roundParticipant.add(_p)
 
         playerToArmySpawner.get(_p)
             ..setSpawnZone(spawnZone)
-            ..setBuildingList(buidingList.copy())
             ..initSpawner()
 
         doPeriodically(1) (CallbackPeriodic cb) ->
@@ -246,8 +245,8 @@ public class NormalRound extends Round
             let p2 = players[contestantPair.b]
 
             setupCamera(spawnZones.get(zoneIdx), spawnZones.get(zoneIdx + 1), p1, p2)
-            spawnArmy(spawnZones.get(zoneIdx), pDatas.get(p1).buildingList, p1)
-            spawnArmy(spawnZones.get(zoneIdx + 1), pDatas.get(p2).buildingList, p2)
+            spawnArmy(spawnZones.get(zoneIdx), p1)
+            spawnArmy(spawnZones.get(zoneIdx + 1), p2)
             zoneIdx += 2
 
 constant FINAL_ROUND_WEST_ZONE_IDX = 8
@@ -306,8 +305,8 @@ public class FinalRound extends Round
             printTimed(msg, 5)
 
             setupCamera(spawnZones.get(FINAL_ROUND_WEST_ZONE_IDX), spawnZones.get(FINAL_ROUND_EAST_ZONE_IDX), p1, p2)
-            spawnArmy(spawnZones.get(FINAL_ROUND_WEST_ZONE_IDX), pDatas.get(p1).buildingList, p1)
-            spawnArmy(spawnZones.get(FINAL_ROUND_EAST_ZONE_IDX), pDatas.get(p2).buildingList, p2)
+            spawnArmy(spawnZones.get(FINAL_ROUND_WEST_ZONE_IDX), p1)
+            spawnArmy(spawnZones.get(FINAL_ROUND_EAST_ZONE_IDX), p2)
 
             // let msg = "{0} {1} units VS {2} {3} units"
             //     .format(

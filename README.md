@@ -73,6 +73,9 @@ Found demon pillar here: [UTM Outland](https://www.hiveworkshop.com/threads/outl
 #### Custom UI:
 [Tasyen](https://www.hiveworkshop.com/members/tasyen.194042/) : [Spell View](https://www.hiveworkshop.com/threads/tasspellview.349600/)
 
+#### Grid System
+[Mayday](https://www.hiveworkshop.com/members/mayday.266398/) & [CanFight](https://www.hiveworkshop.com/members/canfight.218341/) : [Grid System](https://www.hiveworkshop.com/threads/grid-system.323327/)
+
 ## Developping
 ### Setup
 Install [Wurstlang](https://wurstlang.org/start)
@@ -92,3 +95,7 @@ public let BUILDING_NAGA_SIREN        = compiletime(UNIT_ID_GEN.next())
 ```
 
 Then create a file in `wurst/objects/units` named `{yourFaction}UnitsDef.wurst`, this file will contains all your faction units definition
+
+### Release
+
+Run `python ./scripts/generate_local_version.py --patch --local` to generate a new version

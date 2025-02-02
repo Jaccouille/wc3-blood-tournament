@@ -17,3 +17,6 @@ public class LocalAbilities
     static constant sweepFireLarge = "Models/Sweep_Fire_Large.mdx"
     static constant hordeRoarTarget = "Models/Horde_RoarTarget.mdx"
     static constant hordeRoarCaster = "Models/Horde_RoarCaster.mdx"
+
+public class LocalMisc
+    static constant grid2x2 = "Gridplane2x2.dds"

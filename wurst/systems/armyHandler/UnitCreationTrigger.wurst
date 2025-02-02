@@ -2,6 +2,7 @@ package UnitCreationTrigger
 
 // Standard libs imports:
 import ClosureEvents
+import ClosureForGroups
 import HashMap
 import LinkedList
 
@@ -19,40 +20,16 @@ import TextTagUtils
 import UnitExtensions
 import PrintingUtils
 
-public function insertBuilding(LinkedList<unit> buildingList, unit newBuilding)
+
+public function registerBuilding(unit building, PlayerData pData)
     // Remove the building so we can re insert it in the list
-    // LogFor.info("Inserting building " + newBuilding.getName() + " " + newBuilding.getOwner().getName(), newBuilding.getOwner())
-    // LogFor.info("buildingList.has(newBuilding) " + buildingList.has(newBuilding).toString(), newBuilding.getOwner())
-    if buildingList.has(newBuilding)
-        buildingList.remove(newBuilding)
-
-    // Not need to find insertion index if list is empty
-    // LogFor.info("buildingList.size() == 0 " + buildingList.size().toString(), newBuilding.getOwner())
-    if buildingList.size() == 0
-        buildingList.add(newBuilding)
-        return
-
-    // Insert new building so the list is sorted by top left position
-    // Descending
-    for building in buildingList
-
-        // TODO: refactor? Code seems a bit ugly
-        // LogFor.info("u: " + building.getPos().x.toString() + " b : " + building.getPos().x.toString(), building.getOwner())
-        if newBuilding.getPos().x > building.getPos().x
-            if buildingList.indexOf(building) == 0
-                buildingList.addtoStart(newBuilding)
-            else
-                // LogFor.info("Inserted (x) at " + (buildingList.indexOf(building) - 1).toString(), building.getOwner())
-                buildingList.addAt(newBuilding, buildingList.indexOf(building))
-            break
-        else if newBuilding.getPos().x == building.getPos().x
-            if newBuilding.getPos().y > building.getPos().y
-                // LogFor.info("Inserted (y) at " + (buildingList.indexOf(building) - 1).toString(), building.getOwner())
-                buildingList.addAt(newBuilding, buildingList.indexOf(building))
-                break
-
-    if not buildingList.has(newBuilding)
-        buildingList.push(newBuilding)
+    let idx = getBuildingArrayIndex(building, pData.buildingRect)
+    if idx >= MAX_BUILDING
+        Log.info("Building array index out of bounds: " + idx.toString())
+        Log.info(pData._p.getName() + " " + building.getName())
+    pData.setBuilding(idx, building)
+    // Log.info("Building " + building.getName() + " added to building array at index " + idx.toString())
+    // Log.info("Building array size: " + pData.getBuildingCount().toString())
 
     // Debugging
     // for building in buildingList
@@ -60,12 +37,11 @@ public function insertBuilding(LinkedList<unit> buildingList, unit newBuilding)
     //         ..setLifespan(2)
     //         ..setPermanent(false)
 
-    updatePreviewer(newBuilding.getOwner())
+    updatePreviewer(pData._p)
 
 function updatePreviewer(player _p)
     if playerToArmyPreviewer.has(_p)
         playerToArmyPreviewer.get(_p).shouldRefresh = true
-
 
 function distributeResources(vec3 position, player owner, int gold, int blood)
     var pos = position
@@ -150,7 +126,7 @@ function onUnitConstructStart()
     pData.addArmyPoints(BTBuildingData.unitIdToDataMap.get(newBuilding.getTypeId()).buildingArmyPoints)
 
     if BTBuildingData.unitIdToDataMap.has(newBuilding.getTypeId())
-        insertBuilding(pData.buildingList, newBuilding)
+        registerBuilding(newBuilding, pData)
         addStockItems(newBuilding)
 
 

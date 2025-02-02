@@ -139,32 +139,30 @@ public class ArmyPreviewer
         squadIdx = 0
 
     function spawnPreview()
-        let buildingList = this._p.getPlayerData().buildingList
+        for i = 0 to MAX_BUILDING - 1
+            if this._p.getPlayerData().getBuilding(i) != null
+                let building = this._p.getPlayerData().getBuilding(i)
+                squadIds.addAll(BTBuildingData.unitIdToDataMap.get(
+                    building.getTypeId()).unitToSpawn)
 
-        while buildingIdx < buildingList.size() and spawnCount < spawnZone.unitLimit
-            let building = buildingList.get(buildingIdx)
-            squadIds.addAll(BTBuildingData.unitIdToDataMap.get(
-                building.getTypeId()).unitToSpawn)
+                registerItemModifier(building.getInventory())
 
-            registerItemModifier(building.getInventory())
+                while squadIdx < squadIds.size()
+                    and spawnCount < spawnZone.unitLimit
 
-            while squadIdx < squadIds.size()
-                and spawnCount < spawnZone.unitLimit
+                    spawnUnit(squadIds.get(squadIdx), pos)
+                    //   ..pause()
+                    ..addAbility(ABIL_INVISIBLITY)
+                    pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+                    spawnCount++
 
-                spawnUnit(squadIds.get(squadIdx), pos)
-                //   ..pause()
-                  ..addAbility(ABIL_INVISIBLITY)
-                pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
-                spawnCount++
+                    if spawnCount % unitPerLine == 0
+                        pos = spawnZone.initialPos.polarOffset(
+                            spawnZone.angle.op_minus(180..asAngleDegrees()),
+                            FORMATION_HEIGHT * spawnCount / unitPerLine)
 
-                if spawnCount % unitPerLine == 0
-                    pos = spawnZone.initialPos.polarOffset(
-                        spawnZone.angle.op_minus(180..asAngleDegrees()),
-                        FORMATION_HEIGHT * spawnCount / unitPerLine)
-
-                squadIdx++
+                    squadIdx++
             if spawnCount < spawnZone.unitLimit
                 squadIdx = 0
                 squadIds.clear()
-                buildingIdx++
         shouldRefresh = false

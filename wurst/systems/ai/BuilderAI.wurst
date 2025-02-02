@@ -129,12 +129,12 @@ class BuilderAI
         if pData.builder == null
             pData.racePicker.issueImmediateOrder(UnitId2String(gameConfig.getBuilderList().getRandomElement()))
 
-    private function tryToBuyItems(LinkedList<unit> buildingList)
+    private function tryToBuyItems()
         // Get existing building that can be upgraded
         let buildingWithItemsToBuy = new LinkedList<unit>
-        for building in buildingList
-            if ItemStockHandler.unitToItemStockMap.has(building)
-                buildingWithItemsToBuy.push(building)
+        for i = 0 to pData.buildingArray.length - 1
+            if ItemStockHandler.unitToItemStockMap.has(pData.getBuilding(i))
+                buildingWithItemsToBuy.push(pData.getBuilding(i))
 
         if buildingWithItemsToBuy != null and buildingWithItemsToBuy.size() > 0
             let randomBuilding = buildingWithItemsToBuy.getRandomElement()
@@ -161,14 +161,13 @@ class BuilderAI
 
             // Try to upgrade existing units
             else
-                if pData._p.getLumber() >= 50 and pData.buildingList.size() > 0
-                    let buildingList = pData.buildingList.copy()
+                if pData._p.getLumber() >= 50 and pData.getBuildingCount() > 0
 
                     // Get existing building that can be upgraded
                     let upgradableBuildings = new LinkedList<unit>
-                    for building in buildingList
-                        if UPGRADE_OPTIONS.has(building.getTypeId())
-                            upgradableBuildings.push(building)
+                    for i = 0 to pData.buildingArray.length - 1
+                        if UPGRADE_OPTIONS.has(pData.getBuilding(i).getTypeId())
+                            upgradableBuildings.push(pData.getBuilding(i))
 
                     // Try to upgrade building, if not, try to buy items
                     if upgradableBuildings.size() > 0
@@ -178,9 +177,8 @@ class BuilderAI
                         if OrderId2StringBJ(upgradeChoice)  != ""
                             unitToUpgrade.issueImmediateOrder(OrderId2StringBJ(upgradeChoice))
                     else
-                        tryToBuyItems(buildingList)
+                        tryToBuyItems()
                     destroy upgradableBuildings
-                    destroy buildingList
 
                 if pData.builder != null and pData._p.getGold() >= 100
                     let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()

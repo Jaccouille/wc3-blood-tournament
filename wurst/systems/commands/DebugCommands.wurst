@@ -125,11 +125,17 @@ init
 
     registerToolkitCommand("er") (player triggerPlayer, LinkedList<string> arguments) ->
         for _p in pDatas
-            if playerToArmySpawner.has(_p) and playerToArmySpawner.get(_p).buildingList != null
-                playerToArmySpawner.get(_p).buildingList.clear()
+            if playerToArmySpawner.has(_p) and not playerToArmySpawner.get(_p).hasSpawnFinished
+                playerToArmySpawner.get(_p).hasSpawnFinished = true
         forUnitsAll() (unit u) ->
             if u.isSoldier()
                 u.kill()
+
+    registerToolkitCommand("lb") (player triggerPlayer, LinkedList<string> arguments) ->
+        let pData = pDatas.get(triggerPlayer)
+        for i = 0 to MAX_BUILDING - 1
+            if pData.getBuilding(i) != null
+                Log.info("Building at index " + i.toString() + " : " + pData.getBuilding(i).getName())
 
     registerToolkitCommand("lr") (player triggerPlayer, LinkedList<string> arguments) ->
         var sb = ""

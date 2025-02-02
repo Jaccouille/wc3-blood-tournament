@@ -32,6 +32,7 @@ let credits = asList(
     "Billy-Jack/Baal:|r For making Star Wars Blood tournament which inspired Jacc to make this map".color(ENERGY_COLOR),
     "Quazz:|r For introducing Jacc to Warcraft 3 modding".color(ENERGY_COLOR),
     "Tasyen:|r For custom interface tutorials & the Spell View in the command card".color(ENERGY_COLOR),
+    "Mayday/CanFight:|r For Grid System".color(ENERGY_COLOR),
     "Frotty, Wurst community:|r For making Wurstscript and answering Jacc dumb questions".color(ENERGY_COLOR),
     "General Frank, Hate, imForFun, Ujimasa Hojo, stan0033, bakr".color(ENERGY_COLOR) + " for models",
     "Hiveworkshop.com:|r".color(ENERGY_COLOR) + " for hosting a massive amount of information on modding",

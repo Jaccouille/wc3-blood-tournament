@@ -194,7 +194,6 @@ public class ArmySpawner
     int squadIdx = 0
     vec2 pos
     vec2 portalSpawnPos
-    LinkedList<unit> buildingList
     int unitPerLine
     PlayerData pData
     EventListener reinforcementListener
@@ -226,13 +225,13 @@ public class ArmySpawner
         this._p = _p
         this.pData = pDatas.get(_p)
 
-    function setBuildingList(LinkedList<unit> buildingList)
-        if this.buildingList != null
-            destroy this.buildingList
-        this.buildingList = buildingList
-
     private function isBuildingSpawnOver() returns boolean
-        return buildingIdx >= buildingList.size()
+        if buildingIdx >= MAX_BUILDING
+            return true
+        for i = buildingIdx to MAX_BUILDING - 1
+            if pData.getBuilding(i) != null
+                return false
+        return true
 
     private function isSquadSpawnOver() returns boolean
         if isBuildingSpawnOver()
@@ -319,65 +318,70 @@ public class ArmySpawner
     function spawnArmy(boolean spawnFromPortal)
         var spawnCount = 0
 
-        if buildingList.isEmpty()
+        if pData.getBuildingCount() == 0
             spawnUnit(UNIT_DUMMY_SOLDIER, pos)
-
-        while buildingIdx < buildingList.size()
-            and pData.spawnedUnits.size() < spawnZone.unitLimit
-            and spawnCount < unitPerLine
-            // Get list of unit mapped to the building
-            let building = buildingList.get(buildingIdx)
-            // Log.debug("Spawning " + building.getName())
-
-            // Log.debug("passed AddAll " + building.getName())
-
-            if squadIdx == 0
-                squadUnitIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
-                registerItemModifier(building.getInventory())
-            // Log.debug("passed executeItemBonus " + building.getName())
-
-            // Spawn while there's something to spawn and unitLimit isn't reached
-            while squadIdx < squadUnitIds.size()
+            buildingIdx = MAX_BUILDING
+        else
+            while buildingIdx < MAX_BUILDING
                 and pData.spawnedUnits.size() < spawnZone.unitLimit
                 and spawnCount < unitPerLine
-                // Log.debug("Spawn start of idx: " + squadIdx.toString())
-
-                if spawnFromPortal
-                    spawnUnit(squadUnitIds.get(squadIdx), portalSpawnPos)
-                    ..issuePointOrder("attack", pos)
-                    flashEffect(Abilities.blinkTarget,  portalSpawnPos)
-                    portalSpawnPos = portalSpawnPos.polarOffset(spawnDirection, FORMATION_WIDTH)
+                // Get list of unit mapped to the building
+                if pData.getBuilding(buildingIdx) == null
+                    buildingIdx++
                 else
-                    spawnUnit(squadUnitIds.get(squadIdx), pos)
-                    // Pause unit until battle start
-                    ..pause()
-                // Log.debug("Passed the spawn id: " + squadIdx.toString())
+                    let building = pData.getBuilding(buildingIdx)
 
-                // Update position for next unit
-                // if spawnZone.spawnRect == gg_rct_Frontrank_EN
-                //     Log.debug(pos.toString() + " " + spawnDirection.degrees().toString() + " " +  (pData.spawnedUnits.size() % unitPerLine).toString())
-                pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+                // Log.debug("passed AddAll " + building.getName())
 
-                // Move to next line
-                if pData.spawnedUnits.size() % unitPerLine == 0
-                    pos = spawnZone.initialPos.polarOffset(
-                        spawnZone.angle.op_minus(180..asAngleDegrees()),
-                        FORMATION_HEIGHT * pData.spawnedUnits.size() / unitPerLine)
+                    if squadIdx == 0
+                        squadUnitIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
+                        registerItemModifier(building.getInventory())
+                    // Log.debug("passed executeItemBonus " + building.getName())
 
-                    if spawnFromPortal
-                        let invertedAngle = (180 + spawnZone.angle.degrees() % 360).asAngleDegrees()
-                        let y = spawnDirection.degrees() == 0. ? spawnZone.initialPos.y : pos.y
-                        let x = spawnDirection.degrees() == 0. ? pos.x :spawnZone.initialPos.x
-                        portalSpawnPos = vec2(x, y).polarOffset(invertedAngle, PORTAL_DIST_OFFSET * 2)
+                    // Spawn while there's something to spawn and unitLimit isn't reached
+                    while squadIdx < squadUnitIds.size()
+                        and pData.spawnedUnits.size() < spawnZone.unitLimit
+                        and spawnCount < unitPerLine
+                        // Log.debug("Spawn start of idx: " + squadIdx.toString())
+
+                        if spawnFromPortal
+                            spawnUnit(squadUnitIds.get(squadIdx), portalSpawnPos)
+                            ..issuePointOrder("attack", pos)
+                            flashEffect(Abilities.blinkTarget,  portalSpawnPos)
+                            portalSpawnPos = portalSpawnPos.polarOffset(spawnDirection, FORMATION_WIDTH)
+                        else
+                            spawnUnit(squadUnitIds.get(squadIdx), pos)
+                            // Pause unit until battle start
+                            ..pause()
+                        // Log.debug("Passed the spawn id: " + squadIdx.toString())
+
+                        // Update position for next unit
+                        // if spawnZone.spawnRect == gg_rct_Frontrank_EN
+                        //     Log.debug(pos.toString() + " " + spawnDirection.degrees().toString() + " " +  (pData.spawnedUnits.size() % unitPerLine).toString())
+                        pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+
+                        // Move to next line
+                        if pData.spawnedUnits.size() % unitPerLine == 0
+                            pos = spawnZone.initialPos.polarOffset(
+                                spawnZone.angle.op_minus(180..asAngleDegrees()),
+                                FORMATION_HEIGHT * pData.spawnedUnits.size() / unitPerLine)
+
+                            if spawnFromPortal
+                                let invertedAngle = (180 + spawnZone.angle.degrees() % 360).asAngleDegrees()
+                                let y = spawnDirection.degrees() == 0. ? spawnZone.initialPos.y : pos.y
+                                let x = spawnDirection.degrees() == 0. ? pos.x :spawnZone.initialPos.x
+                                portalSpawnPos = vec2(x, y).polarOffset(invertedAngle, PORTAL_DIST_OFFSET * 2)
 
 
-                squadIdx++
-                spawnCount++
-            if pData.spawnedUnits.size() <= spawnZone.unitLimit
-                and squadIdx >= squadUnitIds.size()
-                squadIdx = 0
-                squadUnitIds.clear()
-                buildingIdx++
+                        squadIdx++
+                        spawnCount++
+                    if pData.spawnedUnits.size() <= spawnZone.unitLimit
+                        and squadIdx >= squadUnitIds.size()
+                        squadIdx = 0
+                        squadUnitIds.clear()
+                        buildingIdx++
+                        while buildingIdx < MAX_BUILDING and pData.getBuilding(buildingIdx) == null
+                            buildingIdx++
 
         if isBuildingSpawnOver() and isSquadSpawnOver()
             if gameConfig.isDisplayPortalEnabled()
@@ -415,7 +419,7 @@ public class ArmySpawner
 
     protected function spawnReinforcement()
         if squadUnitIds.isEmpty()
-            let building = buildingList.get(buildingIdx)
+            let building = pData.getBuilding(buildingIdx)
             squadUnitIds.addAll(BTBuildingData.unitIdToDataMap.get(building.getTypeId()).unitToSpawn)
             registerItemModifier(building.getInventory())
 
@@ -427,8 +431,10 @@ public class ArmySpawner
         squadIdx++
         if isSquadSpawnOver()
             squadIdx = 0
-            buildingIdx++
             squadUnitIds.clear()
+            buildingIdx++
+            while buildingIdx < MAX_BUILDING and pData.getBuilding(buildingIdx) == null
+                buildingIdx++
             if isBuildingSpawnOver()
                 hasSpawnFinished = true
                 if gameConfig.isDisplayPortalEnabled()
