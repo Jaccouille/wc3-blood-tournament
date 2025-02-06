@@ -25,7 +25,7 @@ import TooltipsUtils
 import UnitCreationTrigger
 import UnitExtensions
 import VotesDefinition
-import ArmyPreviewer
+import ArmySpawner
 
 let RECEIVE_GOLD = new SoundDefinition(Sounds.receiveGold1, false, true)
 
@@ -321,8 +321,8 @@ init
             let newIdx = getBuildingArrayIndex(caster, pData.buildingRect)
             pData.setBuilding(newIdx, caster)
 
-            if playerToArmyPreviewer.has(caster.getOwner())
-                playerToArmyPreviewer.get(caster.getOwner()).shouldRefresh = true
+            if playerToArmySpawner.has(caster.getOwner())
+                playerToArmySpawner.get(caster.getOwner()).shouldRefresh = true
             // refreshPlayerBuildingGroup(pDatas.get(caster.getOwner()))
             flashEffect(Abilities.polyMorphDoneGround, caster.getPos())
         else

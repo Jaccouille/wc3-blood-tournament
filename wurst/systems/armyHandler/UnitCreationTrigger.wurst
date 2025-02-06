@@ -7,7 +7,6 @@ import HashMap
 import LinkedList
 
 // Local imports:
-import ArmyPreviewer
 import ArmySpawner
 import GameConfig
 import GameConstants
@@ -40,8 +39,8 @@ public function registerBuilding(unit building, PlayerData pData)
     updatePreviewer(pData._p)
 
 function updatePreviewer(player _p)
-    if playerToArmyPreviewer.has(_p)
-        playerToArmyPreviewer.get(_p).shouldRefresh = true
+    if playerToArmySpawner.has(_p)
+        playerToArmySpawner.get(_p).shouldRefresh = true
 
 function distributeResources(vec3 position, player owner, int gold, int blood)
     var pos = position

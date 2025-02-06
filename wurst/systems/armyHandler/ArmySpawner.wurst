@@ -5,6 +5,8 @@ import Assets
 import ClosureEvents
 import HashMap
 import LinkedList
+import ClosureForGroups
+import ClosureTimers
 
 // Local imports:
 import GameConfig
@@ -15,6 +17,7 @@ import PlayerData
 import PlayerExtension
 import SpawnZone
 import UnitExtensions
+import PingMinimap
 
 public function computeUnitPointValue(int goldCost, int lumberCost, int unitCount) returns int
     var pointValue = 0
@@ -204,6 +207,9 @@ public class ArmySpawner
     // List of units spawned by a building
     // LinkedList<int> squadUnitIds = new LinkedList<int>
     int array[63] squadUnitIds
+    boolean shouldRefresh = true
+    boolean isPreviewEnabled = false
+    CallbackPeriodic cb
 
     LinkedList<ItemModifier> unitModifierList = new LinkedList<ItemModifier>
 
@@ -310,8 +316,12 @@ public class ArmySpawner
         BlzShowUnitTeamGlow(newUnit, false)
         if newUnit.getName() == null
             Log.debug("Unknown unit spawned for " + _p.getDummyPlayer(dummyPlayerIdx).getName() + " id : " + newUnit.getTypeId().toString())
-        else
+        else if not isPreviewEnabled
             pData.spawnedUnits.push(newUnit)
+
+        if isPreviewEnabled
+            newUnit..addAbility(ABIL_INVISIBLITY)
+
         return newUnit
 
     function getSquadCount() returns int
@@ -320,12 +330,32 @@ public class ArmySpawner
             counter++
         return counter
 
+    function clearPreview()
+        forUnitsOfPlayer(_p.getDummyPlayer(0)) (unit u) ->
+            if u.isSoldier()
+                u.remove()
+
+    function startPreview()
+        isPreviewEnabled = true
+        shouldRefresh = true
+        cb = doPeriodically(5) (CallbackPeriodic cb) ->
+            if shouldRefresh and isPreviewEnabled
+                clearPreview()
+                initSpawner()
+                spawnArmy(false)
+
+    function stopPreview()
+        if isPreviewEnabled
+            clearPreview()
+            isPreviewEnabled = false
+            destroy cb
+
     function initSpawner()
         clearSquad()
+        this.pos = spawnZone.initialPos
         buildingIdx = 0
         squadIdx = 0
         hasSpawnFinished = false
-
 
         // TODO: Add to gameConfig?
         // Determine number of unit per line
@@ -333,8 +363,14 @@ public class ArmySpawner
             ? (spawnZone.width /  FORMATION_WIDTH).round()
             : (spawnZone.height / FORMATION_WIDTH).round()
 
+    /**
+        When spawning from portal, the unit will be spawned in a line formation and walk toward the center
+        See the spawnArmy(true) call in Round.wurst
+    **/
     function spawnArmy(boolean spawnFromPortal)
         var spawnCount = 0
+        if isPreviewEnabled
+            pingMinimapForPlayer(this._p, this.pos, 3, color(0, 255, 0), PingMinimapStyle.ATTACK)
 
         if pData.getBuildingCount() == 0
             spawnUnit(UNIT_DUMMY_SOLDIER, pos)
@@ -342,7 +378,8 @@ public class ArmySpawner
         else
             while buildingIdx < MAX_BUILDING
                 and pData.spawnedUnits.size() < spawnZone.unitLimit
-                and spawnCount < unitPerLine
+                and spawnCount < spawnZone.unitLimit
+                and not (spawnCount > 0 and spawnCount % unitPerLine == 0 and spawnFromPortal and spawnCount < spawnZone.unitLimit)
                 // Get list of unit mapped to the building
                 if pData.getBuilding(buildingIdx) == null
                     buildingIdx++
@@ -356,32 +393,29 @@ public class ArmySpawner
                     // Spawn while there's something to spawn and unitLimit isn't reached
                     while squadUnitIds[squadIdx] != 0
                         and pData.spawnedUnits.size() < spawnZone.unitLimit
-                        and spawnCount < unitPerLine
-                        // Log.debug("Spawn start of idx: " + squadIdx.toString())
+                        and spawnCount < spawnZone.unitLimit
+                        and not (spawnCount > 0 and spawnCount % unitPerLine == 0 and spawnFromPortal)
 
                         if spawnFromPortal
                             spawnUnit(squadUnitIds[squadIdx], portalSpawnPos)
-                            ..issuePointOrder("attack", pos)
+                                ..issuePointOrder("attack", pos)
                             flashEffect(Abilities.blinkTarget,  portalSpawnPos)
                             portalSpawnPos = portalSpawnPos.polarOffset(spawnDirection, FORMATION_WIDTH)
                         else
                             spawnUnit(squadUnitIds[squadIdx], pos)
-                            // Pause unit until battle start
-                            ..pause()
-                        // Log.debug("Passed the spawn id: " + squadIdx.toString())
 
-                        // Update position for next unit
-                        // if spawnZone.spawnRect == gg_rct_Frontrank_EN
-                        //     Log.debug(pos.toString() + " " + spawnDirection.degrees().toString() + " " +  (pData.spawnedUnits.size() % unitPerLine).toString())
                         pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+                        spawnCount++
 
                         // Move to next line
-                        if pData.spawnedUnits.size() % unitPerLine == 0
+                        if spawnCount % unitPerLine == 0
+                            let currentLineCount = (isPreviewEnabled ? spawnCount : pData.spawnedUnits.size()) / unitPerLine
                             pos = spawnZone.initialPos.polarOffset(
                                 spawnZone.angle.op_minus(180..asAngleDegrees()),
-                                FORMATION_HEIGHT * pData.spawnedUnits.size() / unitPerLine)
+                                FORMATION_HEIGHT * currentLineCount)
 
                             if spawnFromPortal
+                                // move spawning position in front of the portal
                                 let invertedAngle = (180 + spawnZone.angle.degrees() % 360).asAngleDegrees()
                                 let y = spawnDirection.degrees() == 0. ? spawnZone.initialPos.y : pos.y
                                 let x = spawnDirection.degrees() == 0. ? pos.x :spawnZone.initialPos.x
@@ -389,8 +423,7 @@ public class ArmySpawner
 
 
                         squadIdx++
-                        spawnCount++
-                    if pData.spawnedUnits.size() <= spawnZone.unitLimit
+                    if spawnCount <= spawnZone.unitLimit
                         and squadUnitIds[squadIdx] == 0
                         squadIdx = 0
                         buildingIdx++
@@ -407,6 +440,9 @@ public class ArmySpawner
         // Set position to the reinforcement spawn point
         if not spawnFromPortal
             setReinforcementPos()
+
+        if isPreviewEnabled
+            shouldRefresh = false
         // if not isProdBuild
         //     createTTEx(pos.withZ(100.), invertedAngle.degrees().toString(), 10)
         //     createTTEx(pos.withZ(300.), invertedAngle.direction().toString(), 10)

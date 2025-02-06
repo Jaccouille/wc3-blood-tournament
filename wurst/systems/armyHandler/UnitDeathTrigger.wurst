@@ -8,7 +8,6 @@ import DummyRecycler
 import OrderIds
 
 // Local imports:
-import ArmyPreviewer
 import ArmySpawner
 import GameConfig
 import ItemStockHandler
@@ -248,8 +247,8 @@ function handleBuildingDeath(unit dyingUnit, unit killer, PlayerData pData)
     if ItemStockHandler.hasUnit(dyingUnit)
         destroy ItemStockHandler.unitToItemStockMap.get(dyingUnit)
 
-    if playerToArmyPreviewer.has(dyingUnit.getOwner())
-        playerToArmyPreviewer.get(dyingUnit.getOwner()).shouldRefresh = true
+    if playerToArmySpawner.has(dyingUnit.getOwner())
+        playerToArmySpawner.get(dyingUnit.getOwner()).shouldRefresh = true
 
 // Distribute resources upon building death
 function distributeBuildingResources(unit dyingUnit, PlayerData pData)

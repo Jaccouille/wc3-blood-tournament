@@ -8,7 +8,7 @@ import LinkedList
 import OrderIds
 
 // Local imports:
-import ArmyPreviewer
+import ArmySpawner
 import ClosuresForItems
 import GameConfig
 import LocalObjectIDs
@@ -228,8 +228,8 @@ init
                         else
                             _bonusArmyPoints = bloodPoint
                         building.getOwner().getPlayerData().addArmyPoints(_bonusArmyPoints)
-                    if playerToArmyPreviewer.has(building.getOwner())
-                        playerToArmyPreviewer.get(building.getOwner()).shouldRefresh = true
+                    if playerToArmySpawner.has(building.getOwner())
+                        playerToArmySpawner.get(building.getOwner()).shouldRefresh = true
 
 
             i.remove()

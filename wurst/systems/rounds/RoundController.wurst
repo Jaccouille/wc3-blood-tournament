@@ -11,7 +11,6 @@ import TimerUtils
 // Local imports:
 import AfkDetector
 import AltarEntity
-import ArmyPreviewer
 import BloodDonation
 import ColorUtils
 import GameConfig
@@ -22,6 +21,7 @@ import Players
 import ScoreBoard
 import SpawnZone
 import public Round
+import ArmySpawner
 
 public constant roundController = new RoundController()
 
@@ -74,11 +74,10 @@ class RoundController
         // Don't show previewer for computer player
         if not _p.isHuman()
             return
-        if not playerToArmyPreviewer.has(_p)
-            playerToArmyPreviewer.put(_p, new ArmyPreviewer(_p))
-        let ap = playerToArmyPreviewer.get(_p)
+        if not playerToArmySpawner.has(_p)
+            playerToArmySpawner.put(_p, new ArmySpawner(_p))
+        let ap = playerToArmySpawner.get(_p)
         ap.setSpawnZone(spawnZones.get(zoneIdx))
-        ap.initSpawner()
         ap.startPreview()
 
     function preRoundPhaseStart()
@@ -181,8 +180,8 @@ class RoundController
 
     function startRound()
         for i = 0 to 7
-            if playerToArmyPreviewer.has(players[i])
-                playerToArmyPreviewer.get(players[i])
+            if playerToArmySpawner.has(players[i])
+                playerToArmySpawner.get(players[i])
                 .stopPreview()
         tdialog.destr()
         hasRoundStarted = true
