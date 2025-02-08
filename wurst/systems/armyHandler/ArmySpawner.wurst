@@ -205,7 +205,6 @@ public class ArmySpawner
     EventListener reinforcementListener
     boolean hasSpawnFinished = false
     // List of units spawned by a building
-    // LinkedList<int> squadUnitIds = new LinkedList<int>
     int array[63] squadUnitIds
     boolean shouldRefresh = true
     boolean isPreviewEnabled = false
@@ -216,7 +215,7 @@ public class ArmySpawner
     static function doOnSummonedUnit(unit summonedUnit)
         ArmySpawner.doOnSoldierSpawn(summonedUnit)
 
-        pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).spawnedUnits.push(summonedUnit)
+        pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).spawnedUnits.add(summonedUnit)
         // To reduce pathing lag, assign the new unit to the last dummy player
         let newOwner = pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).dummyPlayers.getLast()
         // TODO: Mana ward ability doesn't work on allied for some reason
@@ -317,7 +316,7 @@ public class ArmySpawner
         if newUnit.getName() == null
             Log.debug("Unknown unit spawned for " + _p.getDummyPlayer(dummyPlayerIdx).getName() + " id : " + newUnit.getTypeId().toString())
         else if not isPreviewEnabled
-            pData.spawnedUnits.push(newUnit)
+            pData.spawnedUnits.add(newUnit)
 
         if isPreviewEnabled
             newUnit..addAbility(ABIL_INVISIBLITY)

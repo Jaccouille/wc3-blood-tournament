@@ -41,18 +41,18 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
                     Log.debug("Unknown unit spawned for" +
                     dyingUnit.getOwner().getTruePlayerFromDummy().getName())
                 else
-                    pData.spawnedUnits.push(u)
+                    pData.spawnedUnits.add(u)
 
     else if dyingUnit.getTypeId() == UNIT_GHOST_PALADIN
         flashEffect(Abilities.holyBoltSpecialArt, dyingUnit.getPos())
         dyingUnit.remove()
 
     else if dyingUnit.getTypeId() == UNIT_ABOMINATION and dyingUnit.hasAbility(ABIL_SPAWN_GUT_CRAWLER)
-        pData.spawnedUnits.push(
+        pData.spawnedUnits.add(
         createUnit(dyingUnit.getOwner(), UNIT_GUT_CRAWLER, dyingUnit.getPos(), dyingUnit.getFacingAngle())
             ..issuePointOrder("attack", CENTER)
         )
-        pData.spawnedUnits.push(
+        pData.spawnedUnits.add(
         createUnit(dyingUnit.getOwner(), UNIT_GUT_CRAWLER, dyingUnit.getPos(), dyingUnit.getFacingAngle())
             ..issuePointOrder("attack", CENTER)
         )
@@ -151,21 +151,23 @@ function computeSpeedBannerPos(SpawnZone sp1, SpawnZone sp2) returns vec2
 function groupOrder(player _p, vec2 middle)
     nullTimer() ->
         // Group order works on 12 units max
-        let orderUnitCount = 12
+        let maxOrderUnitCount = 12
         let spawnedUnits = _p.getPlayerData().spawnedUnits
         let grpList = new LinkedList<group>()
-        let grpNbr = (spawnedUnits.size() / orderUnitCount).toInt() + 1
+        let grpNbr = (spawnedUnits.size() / maxOrderUnitCount).toInt() + 1
 
         for i = 0 to grpNbr
             grpList.push(CreateGroup())
 
         var grp = grpList.get(0)
         var grpIdx = 0
-        for u in spawnedUnits
+
+        for i = 0 to spawnedUnits.size()
+            let u = spawnedUnits.get(i)
             if u.isSoldier() and u.isAlive()
                 grp.add(u)
-            if (spawnedUnits.indexOf(u) % (orderUnitCount - 1) == 0 and spawnedUnits.indexOf(u) > 0)
-                or spawnedUnits.indexOf(u) == spawnedUnits.size() - 1
+
+            if i % (maxOrderUnitCount - 1) == 0 or i == spawnedUnits.size() - 1
                 grp.pointOrderById(OrderIds.attack, middle)
                 doAfter(4) ->
                     grp.pointOrderById(OrderIds.attack, CENTER)
@@ -176,7 +178,6 @@ function groupOrder(player _p, vec2 middle)
                         destroy grpList
                 grpIdx += 1
                 grp = grpList.get(grpIdx)
-
 
 public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
     if pData.spawnedUnits.isEmpty()

@@ -260,6 +260,7 @@ function generateMatchups() returns LinkedList<LinkedList<Pair<int, int>>>
     //     t.forEach() (Pair<integer, integer> t) ->
     //         Log.debug("roundParticipantList : " + t.a.toString() + " " + t.b.toString())
     roundParticipantList.shuffle()
+    destroy possibleMatchUp
     return roundParticipantList
 
 function generateRounds()

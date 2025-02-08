@@ -326,7 +326,7 @@ init
         if target.isAlive() and target.isEnemyOf(caster)
             let owner = caster.getOwner()
             let targetOwner = target.getOwner()
-            pDatas.get(owner.getTruePlayerFromDummy()).spawnedUnits.push(target)
+            pDatas.get(owner.getTruePlayerFromDummy()).spawnedUnits.add(target)
             // To reduce pathing lag, assign the new unit to the last dummy player
             let optimizedOwner = pDatas.get(target.getOwner().getTruePlayerFromDummy()).dummyPlayers.getLast()
             target.setOwner(optimizedOwner, true)

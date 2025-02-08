@@ -45,6 +45,10 @@ public class BloodDonation
             bloodDeficits.add(
                 new BloodDeficit(_p, highestBloodPoints - pData.totalBloodPoints, pData.totalBloodPoints))
 
+    ondestroy
+        bloodDeficits.clear()
+        destroy bloodDeficits
+
 
 class CorpseProjectile extends CustomProjectile
     int bloodPoints = 0
