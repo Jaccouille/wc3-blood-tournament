@@ -145,7 +145,7 @@ function createSpeedBanner(int newId) returns BuildingDefinition
 
 @compiletime function createDummySoldier()
     createSpawnedUnit(UNIT_DUMMY_SOLDIER, UnitIds.footman)
-        ..setAttack1DamageBase(1)
+        ..setAttack1DamageBase(2)
         ..setModelFile(Units.peasant1)
-        ..setHitPointsMaximumBase(1)
+        ..setHitPointsMaximumBase(2)
         ..setName("Unlucky peasant")

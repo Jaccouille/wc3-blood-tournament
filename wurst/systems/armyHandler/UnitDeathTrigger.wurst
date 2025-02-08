@@ -171,7 +171,7 @@ function groupOrder(player _p, vec2 middle)
                 grp.pointOrderById(OrderIds.attack, middle)
                 doAfter(4) ->
                     grp.pointOrderById(OrderIds.attack, CENTER)
-                    if grpList != null
+                    if grpList != null and grpList.size() > 0
                         grpList.remove(grp)
                     grp.close()
                     if grpList.isEmpty()

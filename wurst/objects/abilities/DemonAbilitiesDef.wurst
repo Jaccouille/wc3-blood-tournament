@@ -100,7 +100,7 @@ import LocalAssets
         ..presetDurationNormal(_ -> 12)
         ..presetManaCost(_ -> 40)
         ..presetCooldown(_ -> 3)
-        ..presetCastRange(_ -> 700)
+        ..presetCastRange(_ -> 900)
         ..setNameEnhance("Z", "Curse")
         ..tooltipStopListen(true)
 

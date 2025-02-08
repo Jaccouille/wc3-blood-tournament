@@ -93,7 +93,6 @@ init
 
     let captainAction = new ItemAddUnit()
         ..addAction() (ArmySpawner armySpawner, int count) ->
-        Log.info("Adding captain :" + count.toString())
         for i = 1 to count
             addAtMiddle(armySpawner, UNIT_CAPTAIN)
     itemAddUnitMap.put(ITEM_CAPTAIN, captainAction)
