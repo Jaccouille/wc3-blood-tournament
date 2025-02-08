@@ -1,0 +1,9 @@
+package v0_003_e
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 3, 'e')
+        ..add("(DE) increased curse range 700 -> 900")
+        ..add("Added grid system on building zone")
+        ..add("Increased afk detection from 30 to 60 seconds")
