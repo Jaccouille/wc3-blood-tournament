@@ -46,10 +46,10 @@ init
 )
 
 description_template = Template(
-"""Released on {{ release_date }}
+"""Released on {{ release_date }}|n|n
     A Blood tournament map featuring Human, Orc, Undead, Night Elf, Naga, Beast and Demon faction.\
-      \nCan be played solo against bots.
-    See more on https://www.hiveworkshop.com/threads/blood-tournament-reloaded.353051/
+      |nCan be played solo against bots.|n|n
+    See more on |cffffd700https://www.hiveworkshop.com/threads/blood-tournament-reloaded.353051/
 """
 )
 

@@ -17,6 +17,7 @@ import PlayerData
 import PlayerExtension
 import TooltipsUtils
 import UnitObjEditingCommon
+import UnitDeathTrigger
 
 @compiletime function createNagaAbilities()
     var tgen = new BTAbilityTooltipGenerator(
@@ -330,4 +331,6 @@ init
             // To reduce pathing lag, assign the new unit to the last dummy player
             let optimizedOwner = pDatas.get(target.getOwner().getTruePlayerFromDummy()).dummyPlayers.getLast()
             target.setOwner(optimizedOwner, true)
-            pDatas.get(targetOwner.getTruePlayerFromDummy()).spawnedUnits.remove(target)
+            let res1 = pDatas.get(targetOwner.getTruePlayerFromDummy()).removeUnit(target)
+            pDatas.get(owner.getTruePlayerFromDummy()).addUnit(target)
+            checkIfPlayerDefeated(pDatas.get(targetOwner.getTruePlayerFromDummy()), owner)

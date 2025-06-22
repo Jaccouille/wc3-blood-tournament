@@ -24,7 +24,7 @@ function fu() returns unit
 
 unit tempUnit = null
 
-function customAction(unit killer, unit dyingUnit, PlayerData pData)
+function customOnDeathAction(unit killer, unit dyingUnit, PlayerData pData)
 
     if (dyingUnit.getTypeId() == UNIT_PALADIN_1
         or dyingUnit.getTypeId() == UNIT_PALADIN_2
@@ -41,18 +41,18 @@ function customAction(unit killer, unit dyingUnit, PlayerData pData)
                     Log.debug("Unknown unit spawned for" +
                     dyingUnit.getOwner().getTruePlayerFromDummy().getName())
                 else
-                    pData.spawnedUnits.add(u)
+                    pData.addUnit(u)
 
     else if dyingUnit.getTypeId() == UNIT_GHOST_PALADIN
         flashEffect(Abilities.holyBoltSpecialArt, dyingUnit.getPos())
         dyingUnit.remove()
 
     else if dyingUnit.getTypeId() == UNIT_ABOMINATION and dyingUnit.hasAbility(ABIL_SPAWN_GUT_CRAWLER)
-        pData.spawnedUnits.add(
+        pData.addUnit(
         createUnit(dyingUnit.getOwner(), UNIT_GUT_CRAWLER, dyingUnit.getPos(), dyingUnit.getFacingAngle())
             ..issuePointOrder("attack", CENTER)
         )
-        pData.spawnedUnits.add(
+        pData.addUnit(
         createUnit(dyingUnit.getOwner(), UNIT_GUT_CRAWLER, dyingUnit.getPos(), dyingUnit.getFacingAngle())
             ..issuePointOrder("attack", CENTER)
         )
@@ -152,9 +152,8 @@ function groupOrder(player _p, vec2 middle)
     nullTimer() ->
         // Group order works on 12 units max
         let maxOrderUnitCount = 12
-        let spawnedUnits = _p.getPlayerData().spawnedUnits
         let grpList = new LinkedList<group>()
-        let grpNbr = (spawnedUnits.size() / maxOrderUnitCount).toInt() + 1
+        let grpNbr = (_p.getPlayerData().getUnitCount() / maxOrderUnitCount).toInt() + 1
 
         for i = 0 to grpNbr
             grpList.push(CreateGroup())
@@ -162,33 +161,39 @@ function groupOrder(player _p, vec2 middle)
         var grp = grpList.get(0)
         var grpIdx = 0
 
-        for i = 0 to spawnedUnits.size()
-            let u = spawnedUnits.get(i)
+        for i = 0 to _p.getPlayerData().getUnitCount()
+            let u = _p.getPlayerData().unitArray[i]
             if u.isSoldier() and u.isAlive()
                 grp.add(u)
 
-            if i % (maxOrderUnitCount - 1) == 0 or i == spawnedUnits.size() - 1
+            if i > 0 and (i % maxOrderUnitCount == 0 or i == _p.getPlayerData().getUnitCount() - 1)
                 grp.pointOrderById(OrderIds.attack, middle)
+                let currentGrp = grp
                 doAfter(4) ->
-                    grp.pointOrderById(OrderIds.attack, CENTER)
-                    if grpList != null and grpList.size() > 0
-                        grpList.remove(grp)
-                    grp.close()
+                    currentGrp.pointOrderById(OrderIds.attack, CENTER)
+                    if grp == null
+                        Log.debug("Group is null, idx " + grpIdx.toString())
+                    else
+                        Log.debug("Group idx " + grpIdx.toString() + " size " + grp.size().toString())
+                    if grpList != null
+                        grpList.remove(currentGrp)
+                    currentGrp.close()
                     if grpList.isEmpty()
                         destroy grpList
                 grpIdx += 1
                 grp = grpList.get(grpIdx)
 
 public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
-    if pData.spawnedUnits.isEmpty()
-        Log.debug(EventData.getKillingUnit().getName() + " killed " + EventData.getDyingUnit().getName())
+    if pData.getUnitCount() <= 0
+        // Log.info(EventData.getKillingUnit().getName() + " killed " + EventData.getDyingUnit().getName())
         let matchUpWinner = roundController.currentRound.getOpponent(pData._p)
 
         if matchUpWinner == killerOwner
+            // Spawn a speed banner in the middle of the two spawn zones
             if roundController.currentRound instanceof NormalRound
-                let sp1 = playerToArmySpawner.get(matchUpWinner).spawnZone
-                let sp2 = playerToArmySpawner.get(pData._p).spawnZone
-                let middle = computeSpeedBannerPos(sp1, sp2)
+                let spawnZone1 = playerToArmySpawner.get(matchUpWinner).spawnZone
+                let spawnZone2 = playerToArmySpawner.get(pData._p).spawnZone
+                let middle = computeSpeedBannerPos(spawnZone1, spawnZone2)
                 var _hasSpawned = false
                 // TODO: probably doesn't work
                 forUnitsInRange(middle, 500) (unit u) ->
@@ -287,8 +292,7 @@ function handleUnitDeathBounty(unit dyingUnit, unit killer, player killerOwner, 
     // Add blood points bounty for eligible kills
     if dyingUnit.hasAbility(ABIL_DEMONIC_ATTRITION) and killer == dyingUnit
         // Remove unit from player's spawned list
-        if pData.spawnedUnits.has(dyingUnit)
-            pData.spawnedUnits.remove(dyingUnit)
+        if pData.hasUnit(dyingUnit)
             checkIfPlayerDefeated(pData, killerOwner)
         else
             Log.debug("Cannot remove " + dyingUnit.getName())
@@ -307,13 +311,13 @@ function handleUnitDeathBounty(unit dyingUnit, unit killer, player killerOwner, 
                 createBountyTag(dyingUnit, killerOwner)
 
     // Remove unit from player's spawned list
-    if pData.spawnedUnits.has(dyingUnit)
-        pData.spawnedUnits.remove(dyingUnit)
+    if pData.hasUnit(dyingUnit)
+        pData.removeUnit(dyingUnit)
         checkIfPlayerDefeated(pData, killerOwner)
     else
         Log.debug("Cannot remove " + dyingUnit.getName())
 
-    // Perform custom actions for the killer unit
+    customOnDeathAction(killer, dyingUnit, pData)
     customAction(killer, dyingUnit, pData)
 
 

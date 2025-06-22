@@ -34,7 +34,7 @@ init
 
     registerToolkitCommand("sus") (player triggerPlayer, LinkedList<string> arguments) ->
         for _p in pDatas
-            Log.info("SpawnedUnits size : " + pDatas.get(_p).spawnedUnits.size().toString() + " for " + _p.getNameColored(true))
+            Log.info("SpawnedUnits size : " + pDatas.get(_p).getUnitCount().toString() + " for " + _p.getNameColored(true))
 
     registerToolkitCommand("show-indexes") (player triggerPlayer, LinkedList<string> arguments) ->
         for _p in pDatas
@@ -54,37 +54,46 @@ init
     registerToolkitCommand("lu") (player triggerPlayer, LinkedList<string> arguments) ->
         if (arguments.size() > 1)
             let playerIdx = arguments.get(1).toInt()
-            pDatas.get(players[playerIdx]).spawnedUnits.forEach() (unit u) ->
-                Log.info("Unit : " + u.getName() +
-                         " at pos :" + u.getPos().toString() +
-                         " " + u.getTypeId().toRawCode() +
-                         " length: " + u.getName().length().toString()
-                         )
-                if u.getName() == null
-                    Log.info("null")
+            for i = 0 to MAX_UNIT - 1
+                if pDatas.get(players[playerIdx]).unitArray[i] != null
+                    let u = pDatas.get(players[playerIdx]).unitArray[i]
+                    Log.info("Unit : " + u.getName() +
+                             " at pos :" + u.getPos().toString() +
+                             " " + u.getTypeId().toRawCode() +
+                             " length: " + u.getName().length().toString()
+                             )
+                    if u.getName() == null
+                        Log.info("null")
+
 
     registerToolkitCommand("ru") (player triggerPlayer, LinkedList<string> arguments) ->
         if (arguments.size() > 1)
             let playerIdx = arguments.get(1).toInt()
             let pData = pDatas.get(players[playerIdx])
-            pData.spawnedUnits.forEach() (unit u) ->
-                Log.info("Unit : " + u.getName() +
-                         " at pos :" + u.getPos().toString() +
-                         " " + u.getTypeId().toRawCode() +
-                         " length: " + u.getName().length().toString()
-                         )
-                if u.getName() == null
-                    Log.info("null")
-                    pData.spawnedUnits.remove(u)
-                    checkIfPlayerDefeated(pData, null)
+            for i = 0 to MAX_UNIT - 1
+                if pData.unitArray[i] != null
+                    let u = pData.unitArray[i]
+                    Log.info("Unit : " + u.getName() +
+                             " at pos :" + u.getPos().toString() +
+                             " " + u.getTypeId().toRawCode() +
+                             " length: " + u.getName().length().toString()
+                             )
+                    if u.getName() == null
+                        Log.info("null")
+                        pData.removeUnit(u)
+                        checkIfPlayerDefeated(pData, null)
+
 
     registerToolkitCommand("clean") (player triggerPlayer, LinkedList<string> arguments) ->
         pDatas.forEach() (player key, PlayerData pData) ->
-            pData.spawnedUnits.forEach() (unit t) ->
-                if t.getName() == null or t.getName() == "" or t.getName() == "null"
-                    pData.spawnedUnits.remove(t)
-                    t.remove()
-                    checkIfPlayerDefeated(pData, null)
+            for i = 0 to MAX_UNIT - 1
+                if pData.unitArray[i] != null
+                    let t = pData.unitArray[i]
+                    if t.getName() == null or t.getName() == "" or t.getName() == "null"
+                        pData.removeUnit(t)
+                        t.remove()
+                        checkIfPlayerDefeated(pData, null)
+
 
     registerToolkitCommand("attack") (player triggerPlayer, LinkedList<string> arguments) ->
         forUnitsAll() (unit u) ->

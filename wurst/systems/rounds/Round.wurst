@@ -199,7 +199,7 @@ public abstract class Round
         doPeriodically(1) (CallbackPeriodic cb) ->
             playerToArmySpawner.get(_p)
                 ..spawnArmy(true)
-            if _p.getPlayerData().spawnedUnits.size() >= spawnZone.unitLimit
+            if _p.getPlayerData().getUnitCount() >= spawnZone.unitLimit
                 or playerToArmySpawner.get(_p).hasSpawnFinished
                 playerToArmySpawner.get(_p).setReinforcementPos()
                 destroy cb
@@ -310,7 +310,7 @@ public class FinalRound extends Round
 
             // let msg = "{0} {1} units VS {2} {3} units"
             //     .format(
-            //         p1.getNameColored(true), pDatas.get(p1).spawnedUnits.size().toString(),
-            //         p2.getNameColored(true), pDatas.get(p2).spawnedUnits.size().toString()
+            //         p1.getNameColored(true), pDatas.get(p1).getUnitCount().toString(),
+            //         p2.getNameColored(true), pDatas.get(p2).getUnitCount().toString()
             //     )
             // Log.debug(msg)

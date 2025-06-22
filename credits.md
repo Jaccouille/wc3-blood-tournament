@@ -17,9 +17,9 @@ Testing:
 Venix, honeyBadger, theShadow, Chiller, ovalbomb12, Gonzalo, DarkAssassin, Klasker, pokedya, Corke
 
 Models :
--Directional Arrows by stan0033, https://www.hiveworkshop.com/threads/directional-arrows.348487/
--Sweep Blood/Fire Small/Large by Hate, https://www.hiveworkshop.com/threads/sweep-attachments.333560/
-
+- Directional Arrows by stan0033, https://www.hiveworkshop.com/threads/directional-arrows.348487/
+- Sweep Blood/Fire Small/Large by Hate, https://www.hiveworkshop.com/threads/sweep-attachments.333560/
+- Horde Roar caster/target by bakr, https://www.hiveworkshop.com/threads/roar-ability-orcs.358057/#post-3653278
 - imForFun (straw hat) https://www.hiveworkshop.com/members/imforfun.205582/
 
 - Tasyen for SpellView https://www.hiveworkshop.com/threads/tasspellview.349600/

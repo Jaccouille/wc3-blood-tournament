@@ -2,7 +2,7 @@ package PlayerData
 
 // Standard libs imports:
 import HashMap
-import HashSet
+import Execute
 
 // Local imports:
 import ColorUtils
@@ -14,9 +14,13 @@ import public GridSystem
 public constant pDatas = new IterableMap<player, PlayerData>
 public constant dummyToTruePlayerMap = new HashMap<player, player>
 
+public constant MAX_UNIT = 512
+
 public class PlayerData
     unit array[MAX_BUILDING] buildingArray
-    let spawnedUnits = new HashSet<unit>
+    unit array[MAX_UNIT] unitArray
+    int idx = 0
+    int unitCount = 0
 
     let bpPerRound = new LinkedList<int>
     let bdPerRound = new LinkedList<int>
@@ -123,6 +127,51 @@ public class PlayerData
             if buildingArray[i] != null
                 count++
         return count
+
+    function addUnit(unit u) returns boolean
+        // TODO: reset idx if it is out of bounds
+        if unitArray[idx] == null
+            unitArray[idx] = u
+            unitCount++
+            return true
+        else
+            int i = 0
+            while i < MAX_UNIT
+                if unitArray[i] == null
+                    unitArray[i] = u
+                    unitCount++
+                    return true
+                i++
+        return false
+
+    function removeUnit(unit u) returns boolean
+        int i = 0
+        while i < MAX_UNIT
+            if unitArray[i] == u
+                unitArray[i] = null
+                unitCount--
+                return true
+
+            i++
+        return false
+    function hasUnit(unit u) returns boolean
+        int i = 0
+        while i < MAX_UNIT
+            if unitArray[i] == u
+                return true
+            i++
+        return false
+
+    function getUnitCount() returns int
+        return unitCount
+
+    function resetSpawnData()
+        execute() ->
+            idx = 0
+            unitCount = 0
+            for i = 0 to MAX_UNIT - 1
+                if unitArray[i] != null
+                    unitArray[i] = null
 
 
 public function initPlayerDatas()

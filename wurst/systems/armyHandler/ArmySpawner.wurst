@@ -215,7 +215,7 @@ public class ArmySpawner
     static function doOnSummonedUnit(unit summonedUnit)
         ArmySpawner.doOnSoldierSpawn(summonedUnit)
 
-        pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).spawnedUnits.add(summonedUnit)
+        pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).addUnit(summonedUnit)
         // To reduce pathing lag, assign the new unit to the last dummy player
         let newOwner = pDatas.get(summonedUnit.getOwner().getTruePlayerFromDummy()).dummyPlayers.getLast()
         // TODO: Mana ward ability doesn't work on allied for some reason
@@ -266,6 +266,8 @@ public class ArmySpawner
         for i = 0 to building.inventorySize() - 1
             if itemAddUnitMap.has(building.itemInSlot(i).getTypeId())
                 itemAddUnitMap.get(building.itemInSlot(i).getTypeId()).execute(this, building.itemInSlot(i).getCharges())
+
+
             if itemModifyUnitMap.has(building.itemInSlot(i).getTypeId())
                 unitModifierList.push(new ItemModifier(itemModifyUnitMap.get(building.itemInSlot(i).getTypeId()), building.itemInSlot(i).getCharges()))
 
@@ -292,7 +294,7 @@ public class ArmySpawner
         squadIdx = 0
 
     private function spawnUnit(int unitId, vec2 spawnPos) returns unit
-        let armySize = pDatas.get(_p).spawnedUnits.size()
+        let armySize = pDatas.get(_p).getUnitCount()
         // Log.debug("Army size : " + armySize.toString())
         // Need to spread unit owner over 2 dummy player, once it reaches MAX_UNIT_PER_PLAYER
         // change the idx to next dummy player
@@ -316,7 +318,7 @@ public class ArmySpawner
         if newUnit.getName() == null
             Log.debug("Unknown unit spawned for " + _p.getDummyPlayer(dummyPlayerIdx).getName() + " id : " + newUnit.getTypeId().toString())
         else if not isPreviewEnabled
-            pData.spawnedUnits.add(newUnit)
+            pData.addUnit(newUnit)
 
         if isPreviewEnabled
             newUnit..addAbility(ABIL_INVISIBLITY)
@@ -376,7 +378,7 @@ public class ArmySpawner
             buildingIdx = MAX_BUILDING
         else
             while buildingIdx < MAX_BUILDING
-                and pData.spawnedUnits.size() < spawnZone.unitLimit
+                and pData.getUnitCount() < spawnZone.unitLimit
                 and spawnCount < spawnZone.unitLimit
                 and not (spawnCount > 0 and spawnCount % unitPerLine == 0 and spawnFromPortal and spawnCount < spawnZone.unitLimit)
                 // Get list of unit mapped to the building
@@ -391,7 +393,7 @@ public class ArmySpawner
 
                     // Spawn while there's something to spawn and unitLimit isn't reached
                     while squadUnitIds[squadIdx] != 0
-                        and pData.spawnedUnits.size() < spawnZone.unitLimit
+                        and pData.getUnitCount() < spawnZone.unitLimit
                         and spawnCount < spawnZone.unitLimit
                         and not (spawnCount > 0 and spawnCount % unitPerLine == 0 and spawnFromPortal)
 
@@ -408,7 +410,7 @@ public class ArmySpawner
 
                         // Move to next line
                         if spawnCount % unitPerLine == 0
-                            let currentLineCount = (isPreviewEnabled ? spawnCount : pData.spawnedUnits.size()) / unitPerLine
+                            let currentLineCount = (isPreviewEnabled ? spawnCount : pData.getUnitCount()) / unitPerLine
                             pos = spawnZone.initialPos.polarOffset(
                                 spawnZone.angle.op_minus(180..asAngleDegrees()),
                                 FORMATION_HEIGHT * currentLineCount)
@@ -505,5 +507,5 @@ init
         let spawnCapacity = armySpawner.spawnZone.unitLimit
         if not armySpawner.hasSpawnFinished
             and dying.getPointValue() > 0
-            and pData.spawnedUnits.size() - 1 < spawnCapacity
+            and pData.getUnitCount() - 1 < spawnCapacity
             armySpawner.spawnReinforcement()
