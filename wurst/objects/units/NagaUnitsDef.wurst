@@ -433,7 +433,6 @@ import UnitTooltipGenerator
 
     tooltip = new UnitTooltipGenerator(
         abilTooltipMap.get(ABIL_FROST_BOLT) + "\n\n" +
-        abilTooltipMap.get(ABIL_ORB_CHARM) + "\n\n" +
         abilTooltipMap.get(ABIL_MAGIC_ARMOR_30)
     )
     createSpawnedUnit(UNIT_ABYSSAL_SIREN, UnitIds.siren, BUILDING_ABYSSAL_SIREN)
@@ -441,10 +440,9 @@ import UnitTooltipGenerator
         ..registerCustomPanelAbilityTooltip(asList(
             ABIL_FROST_BOLT,
             ABIL_DISRUPTION_RAY,
-            ABIL_CHARM,
             ABIL_MAGIC_ARMOR_30
             ))
-        ..setNormalAbilities(commaList(ABIL_FROST_BOLT, ABIL_AC_FROST_BOLT, ABIL_CHARM, ABIL_ORB_CHARM, ABIL_MAGIC_ARMOR_30))
+        ..setNormalAbilities(commaList(ABIL_FROST_BOLT, ABIL_AC_FROST_BOLT, ABIL_MAGIC_ARMOR_30))
         ..setDefaultActiveAbility(commaList(ABIL_AC_FROST_BOLT))
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()

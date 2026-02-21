@@ -321,16 +321,3 @@ import UnitDeathTrigger
         ..setTooltipExtended("Assign 1 Slow, 1 Bloodlust, 1 Faerie Fire, 1 Frost Armor")
         ..setNameEnhance("A", "Murgul Ability Mix")
         ..setInterfaceIcon(Icons.bTNSpiritLink)
-
-init
-    EventListener.onTargetCast(ABIL_CHARM) (unit caster, unit target) ->
-        if target.isAlive() and target.isEnemyOf(caster)
-            let owner = caster.getOwner()
-            let targetOwner = target.getOwner()
-            pDatas.get(owner.getTruePlayerFromDummy()).spawnedUnits.add(target)
-            // To reduce pathing lag, assign the new unit to the last dummy player
-            let optimizedOwner = pDatas.get(target.getOwner().getTruePlayerFromDummy()).dummyPlayers.getLast()
-            target.setOwner(optimizedOwner, true)
-            let res1 = pDatas.get(targetOwner.getTruePlayerFromDummy()).removeUnit(target)
-            pDatas.get(owner.getTruePlayerFromDummy()).addUnit(target)
-            checkIfPlayerDefeated(pDatas.get(targetOwner.getTruePlayerFromDummy()), owner)
