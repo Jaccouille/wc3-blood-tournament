@@ -305,11 +305,11 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("A", "Giant Turtle")
 
-        ..setBuildingUnitsSold(commaList(
-            UNIT_GIANT_TURTLE,
-            UNIT_FIRE_TURTLE,
-            UNIT_FROST_TURTLE
-            ))
+        // ..setBuildingUnitsSold(commaList(
+        //     UNIT_GIANT_TURTLE,
+        //     UNIT_FIRE_TURTLE,
+        //     UNIT_FROST_TURTLE
+        //     ))
         ..setBuildingScalingValue(0.4)
         ..setModelFileExt(Units.giantSeaTurtle1)
         ..setIconGameInterfaceExt(Icons.bTNSeaTurtleGreen)

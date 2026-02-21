@@ -366,11 +366,11 @@ import UnitTooltipGenerator
 
         ..setNameEnhance("S", "Shaman")
         ..tooltipStopListen(true)
-        ..setBuildingUnitsSold(commaList(
-            UNIT_SHAMAN,
-            UNIT_SPIRIT_WOLF1,
-            UNIT_FARSEER
-            ))
+        // ..setBuildingUnitsSold(commaList(
+        //     UNIT_SHAMAN,
+        //     UNIT_SPIRIT_WOLF1,
+        //     UNIT_FARSEER
+        //     ))
 
         ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.shaman1)

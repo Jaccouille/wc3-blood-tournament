@@ -137,7 +137,9 @@ public class BTUnitDefinition extends UnitDefinition
     construct(int newId, int origId, int buildingId)
         super(newId, origId)
         buildingDef = createBuildingUnit(buildingId)
-            ..setUnitsSold(commaList(newId))
+            // Player complained that they couldn't buy the units despite the fact I put 9999999 gold at price
+            // it was supposed to be a tooltip
+            // ..setUnitsSold(commaList(newId))
         buildingData = BTBuildingData.unitIdToDataMap.get(buildingId)
         spawnCount = buildingData.unitToSpawn.size()
 
@@ -330,7 +332,7 @@ public class BTUnitDefinition extends UnitDefinition
                 _unitSoldData +=  "," + t.toRawCode()
 
         _unitSoldData += "," + this.newId.toRawCode()
-        buildingDef.setUnitsSold(_unitSoldData)
+        // buildingDef.setUnitsSold(_unitSoldData)
         buildingDef.setUpgradesTo(commaList(data))
 
     function setBuildingItemsMade(string data)

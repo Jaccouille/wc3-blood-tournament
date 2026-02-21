@@ -226,13 +226,13 @@ import UnitTooltipGenerator
         ..setHotkeyEnhance("Q")
         ..tooltipStopListen(true)
         ..setUpgradeTo(asList(BUILDING_SPECTRAL_SAGE))
-        ..setBuildingUnitsSold(commaList(
-            UNIT_NECROMANCER,
-            UNIT_SKELETON,
-            UNIT_SKELETON_ORC,
-            UNIT_REVENANT,
-            UNIT_SPECTRAL_SAGE
-            ))
+        // ..setBuildingUnitsSold(commaList(
+        //     UNIT_NECROMANCER,
+        //     UNIT_SKELETON,
+        //     UNIT_SKELETON_ORC,
+        //     UNIT_REVENANT,
+        //     UNIT_SPECTRAL_SAGE
+        //     ))
 
 
         ..setBuildingScalingValue(0.75)
@@ -271,11 +271,11 @@ import UnitTooltipGenerator
         ..setNameEnhance("Z", "Spectral Sage")
         ..setHotkeyEnhance("E")
         ..tooltipStopListen(true)
-        ..setBuildingUnitsSold(commaList(
-            UNIT_SPECTRAL_SAGE,
-            UNIT_SKELETON_ORC,
-            UNIT_REVENANT
-            ))
+        // ..setBuildingUnitsSold(commaList(
+        //     UNIT_SPECTRAL_SAGE,
+        //     UNIT_SKELETON_ORC,
+        //     UNIT_REVENANT
+        //     ))
 
         ..setModelFileExt(Units.kelthuzadGhost)
         ..setIconGameInterfaceExt(Icons.bTNKelThuzad)
