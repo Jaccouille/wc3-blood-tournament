@@ -215,10 +215,14 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
                 // playerToArmySpawner.get(matchUpWinner).buildingList.clear()
                 (roundController.currentRound castTo FinalRound).looser = pData._p
 
+        Log.info(pData._p.getNameColored() + " has been defeated by " +
+            killerOwner.getNameColored() + ", removing from round participant")
         roundController.currentRound.roundParticipant.remove(pData._p)
 
         let winner = killerOwner == ALTAR_PLAYER ? pData._p : killerOwner
 
+        Log.info("Winner is " + winner.getNameColored() + ", remaining participants : " +
+            roundController.currentRound.roundParticipant.size().toString())
         if roundController.currentRound.roundParticipant.size() == 1
             onLastArmyRemaining.execute()
         if roundController.currentRound.roundParticipant.isEmpty()
@@ -236,6 +240,8 @@ function handleUnitDeath()
         handleBuildingDeath(dyingUnit, killer, pData)
     else if dyingUnit.getPointValue() > 0
         handleUnitDeathBounty(dyingUnit, killer, killerOwner, pData)
+    else
+        Log.info("Unit " + dyingUnit.getName() + " has no point value, ignoring death event")
 
 // Handle the death of a building
 function handleBuildingDeath(unit dyingUnit, unit killer, PlayerData pData)
@@ -289,13 +295,17 @@ function displayResourceTags(vec3 _pos, int goldAmount, int bloodAmount, PlayerD
 
 // Handle unit death with bounty and related actions
 function handleUnitDeathBounty(unit dyingUnit, unit killer, player killerOwner, PlayerData pData)
+    // if pData.getUnitCount() <= 2
+    //     Log.info("1 Unit of " + pData._p.getNameColored() + " died, " + pData.getUnitCount().toString() +
+    //         " units remaining")
     // Add blood points bounty for eligible kills
     if dyingUnit.hasAbility(ABIL_DEMONIC_ATTRITION) and killer == dyingUnit
         // Remove unit from player's spawned list
         if pData.hasUnit(dyingUnit)
+            pData.removeUnit(dyingUnit)
             checkIfPlayerDefeated(pData, killerOwner)
         else
-            Log.debug("Cannot remove " + dyingUnit.getName())
+            Log.info("Cannot remove " + dyingUnit.getName())
         dyingUnit.remove()
         flashEffect(Abilities.doomDeath, dyingUnit.getPos())
         return
@@ -312,13 +322,23 @@ function handleUnitDeathBounty(unit dyingUnit, unit killer, player killerOwner, 
 
     // Remove unit from player's spawned list
     if pData.hasUnit(dyingUnit)
+        // if pData.getUnitCount() <= 2
+        //     Log.info("2 Unit of " + pData._p.getNameColored() + " died, " + (pData.getUnitCount()).toString() +
+        //         " units remaining")
         pData.removeUnit(dyingUnit)
+        // if pData.getUnitCount() <= 1
+        //     Log.info("3 Unit of " + pData._p.getNameColored() + " died, " + (pData.getUnitCount()).toString() +
+        //         " units remaining")
         checkIfPlayerDefeated(pData, killerOwner)
+        // if pData.getUnitCount() <= 1
+        //     Log.info("4 Unit of " + pData._p.getNameColored() + " died, " + (pData.getUnitCount()).toString() +
+        //         " units remaining")
     else
-        Log.debug("Cannot remove " + dyingUnit.getName())
+        Log.info("Cannot remove " + dyingUnit.getName() +
+            " from " + pData._p.getName() + "'s spawned units list")
 
+    // Perform custom actions for the killer unit
     customOnDeathAction(killer, dyingUnit, pData)
-    customAction(killer, dyingUnit, pData)
 
 
 public function initUnitDeathTrigger()

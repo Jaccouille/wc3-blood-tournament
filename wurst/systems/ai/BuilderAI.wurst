@@ -132,7 +132,7 @@ class BuilderAI
     private function tryToBuyItems()
         // Get existing building that can be upgraded
         let buildingWithItemsToBuy = new LinkedList<unit>
-        for i = 0 to pData.buildingArray.length - 1
+        for i = 0 to MAX_BUILDING - 1
             if ItemStockHandler.unitToItemStockMap.has(pData.getBuilding(i))
                 buildingWithItemsToBuy.push(pData.getBuilding(i))
 
@@ -165,7 +165,7 @@ class BuilderAI
 
                     // Get existing building that can be upgraded
                     let upgradableBuildings = new LinkedList<unit>
-                    for i = 0 to pData.buildingArray.length - 1
+                    for i = 0 to MAX_BUILDING - 1
                         if UPGRADE_OPTIONS.has(pData.getBuilding(i).getTypeId())
                             upgradableBuildings.push(pData.getBuilding(i))
 

@@ -464,11 +464,11 @@ import LocalAssets
         ..setTargetAttachmentPoint0(1, "origin")
         ..setName(1, "Demonic Attrition")
         ..setTooltipNormal(1, "Demonic Attrition")
-        ..setTooltipNormalExtended(1, "This unit doesn't belong here;looses health over time")
+        ..setTooltipNormalExtended(1, "This unit doesn't belong in this realm;looses health over time")
         ..setArtTarget(1, Abilities.doomTarget)
 
     tgen = new BTAbilityTooltipGenerator(
-        "This unit doesn't belong here, looses health over time."
+        "This unit doesn't belong in this realm, looses health over time."
         )
     createSelfRegenerationAbility(ABIL_DEMONIC_ATTRITION)
         ..registerTooltipGenerator(tgen)

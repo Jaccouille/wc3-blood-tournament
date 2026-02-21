@@ -51,8 +51,8 @@ public class ItemModifierAction
 
 function replaceUnit(ArmySpawner ap, int oldUnit, int newUnit)
     int i = 0
-    while ap.squadUnitIds[0] != oldUnit and ap.squadUnitIds[i] != 0
-        and i < ap.squadUnitIds.length
+    while ap.squadUnitIds[i] != oldUnit and ap.squadUnitIds[i] != 0
+        and i < SQUAD_UNIT_LENGTH - 1
         i++
     if ap.squadUnitIds[i] != 0
         ap.squadUnitIds[i] = newUnit
@@ -64,10 +64,14 @@ function replaceMiddleUnit(ArmySpawner ap, int newUnit)
 
 function addAtMiddle(ArmySpawner ap, int newUnit)
     let squadCount = ap.getSquadCount()
+
+    if squadCount >= SQUAD_UNIT_LENGTH - 1
+        Log.info("Cannot add unit, squad is full")
+        return
+
     let middleIndex = squadCount div 2
     // Log.info("Middle index: " + middleIndex.toString())
     // Log.info("Squad count: " + squadCount.toString())
-
     for i = squadCount - 1 downto  middleIndex
         // Log.info("i + 1: " + (i + 1).toString())
         ap.squadUnitIds[i + 1] = ap.squadUnitIds[i]
@@ -503,7 +507,7 @@ init
         ..addAction() (unit u) ->
         u.addAbility(ABIL_QUILL_SPRAY)
 
-    itemModifyUnitMap.put(ITEM_SPIRIT_LINK, quillSprayAction)
+    itemModifyUnitMap.put(ITEM_QUILL_SPRAY, quillSprayAction)
 
 
     let ancestralSpiritAction = new ItemModifierAction()
