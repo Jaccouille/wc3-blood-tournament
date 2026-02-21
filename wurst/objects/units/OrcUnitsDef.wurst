@@ -5,7 +5,6 @@ import Assets
 import LinkedList
 
 // Local imports:
-import ArmySpawner
 import BTAbilities
 import BTAbilityTooltipGenerator
 import ItemObjEditingCommon
@@ -504,6 +503,7 @@ import UnitTooltipGenerator
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setScalingValue(1.6)
 
+        ..setUpgradeTo(asList(BUILDING_OGRE_ARMORED, BUILDING_OGRE_MAGI))
         ..setBuildingScalingValue(0.65)
         ..setModelFileExt(Units.ogre1)
         ..setIconGameInterfaceExt(Icons.bTNOgre)
@@ -513,14 +513,11 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_OGRE_SWING) + "\n\n" +
         abilTooltipMap.get(ABIL_HARDENED_SKIN_10)
     )
-    let ogreCount = BTBuildingData.getUnitCount(BUILDING_OGRE)
-    var itm = createBasicItem(ITEM_OGRE_ARMORED)
     createSpawnedUnit(UNIT_OGRE_ARMORED, UnitIds.ogre1, BUILDING_OGRE_ARMORED)
         ..setSpeedBase(270)
         ..registerCustomPanelAbilityTooltip(asList(ABIL_OGRE_SWING, ABIL_HARDENED_SKIN_10))
         ..setDefaultActiveAbility(commaList(ABIL_OGRE_SWING))
         ..setNormalAbilities(commaList(ABIL_OGRE_SWING, ABIL_HARDENED_SKIN_10))
-        ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
 
@@ -529,11 +526,12 @@ import UnitTooltipGenerator
         ..setArmorData(ArmorType.Large, 8)
         ..setHitPointsMaximumBase(3400)
 
-        ..setItemCostReplacement(0, 200, 1, ogreCount, ogreCount, BUILDING_OGRE)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
         ..setSizeLarge()
 
         ..setNameEnhance("Z", "Armored Ogre")
-        ..tooltipStopListen(true, itm)
+        ..tooltipStopListen(true)
         ..setAttack1Range(120)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setScalingValue(1.6)
@@ -547,13 +545,11 @@ import UnitTooltipGenerator
         abilTooltipMap.get(ABIL_MAGIC_ARMOR_50) + "\n\n" +
         abilTooltipMap.get(ABIL_HARDENED_SKIN_5)
     )
-    itm = createBasicItem(ITEM_OGRE_MAGI)
-    createSpawnedUnit(UNIT_OGRE_MAGI, UnitIds.ogremagi)
+    createSpawnedUnit(UNIT_OGRE_MAGI, UnitIds.ogremagi, BUILDING_OGRE_MAGI)
         ..setSpeedBase(270)
         ..setDefaultActiveAbility(commaList(ABIL_AC_FIREBOLT))
         ..registerCustomPanelAbilityTooltip(asList(ABIL_MAGIC_ARMOR_50, ABIL_FIREBOLT, ABIL_HARDENED_SKIN_5))
         ..setNormalAbilities(commaList(ABIL_FIREBOLT, ABIL_AC_FIREBOLT, ABIL_MAGIC_ARMOR_50, ABIL_HARDENED_SKIN_5))
-        ..registerItemDef(itm, ItemModifierType.Replace)
         ..registerTooltipGenerator(tooltip)
         ..tooltipStartListen()
         ..setAnimationCastPoint(0.310)
@@ -565,18 +561,20 @@ import UnitTooltipGenerator
         ..setHitPointsMaximumBase(3000)
         ..setMana(200)
 
-        ..setItemCostReplacement(0, 200, 1, ogreCount, ogreCount, BUILDING_OGRE)
+        ..setAutoPointValue()
+        ..setAutoBuildingCost()
         ..setSizeLarge()
 
         ..setNameEnhance("X", "Magi Ogre")
-        ..tooltipStopListen(true, itm)
+        ..tooltipStopListen(true)
         ..setAttack1Range(120)
         ..setAttack1ProjectileSpeed(STANDARD_PROJECTILE_SPEED)
         ..setScalingValue(1.6)
 
-        ..setModelFile(Units.ogreMagi1)
+        ..setBuildingScalingValue(0.65)
+        ..setModelFileExt(Units.ogreMagi1)
         ..setIconGameInterfaceExt(Icons.bTNOgreMagi)
-        ..setUnitSoundSet(Soundsets.ogre)
+        ..setUnitSoundSetExt(Soundsets.ogre)
 
 @compiletime function createBuilder()
     createBuilder(UNIT_ORC_BUILDER, UnitIds.peon)

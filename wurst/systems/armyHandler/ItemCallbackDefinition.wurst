@@ -270,19 +270,6 @@ init
             addAtMiddle(armySpawner, UNIT_KODO)
     itemAddUnitMap.put(ITEM_KODO, kodoAction)
 
-    let armoredOgreAction = new ItemAddUnit()
-        ..addAction() (ArmySpawner armySpawner, int count) ->
-        for i = 1 to count
-            replaceUnit(armySpawner, UNIT_OGRE, UNIT_OGRE_ARMORED)
-    itemAddUnitMap.put(ITEM_OGRE_ARMORED, armoredOgreAction)
-
-    let magiOgreAction = new ItemAddUnit()
-        ..addAction() (ArmySpawner armySpawner, int count) ->
-        for i = 1 to count
-            replaceUnit(armySpawner, UNIT_OGRE, UNIT_OGRE_MAGI)
-    itemAddUnitMap.put(ITEM_OGRE_MAGI, magiOgreAction)
-
-
     let rampageAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_RAMPAGE)
