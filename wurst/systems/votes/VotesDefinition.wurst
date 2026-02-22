@@ -23,7 +23,7 @@ function getHumanPlayerCount() returns int
 
 public function voteReady(player triggerPlayer)
     if roundController.currentRound.hasStarted
-        printTimedToPlayer("Vote failed! Round already started!", 3, triggerPlayer)
+        printTimedToPlayer("Ready vote failed! Round already started!", 3, triggerPlayer)
     else
         if Vote.voteInstanceMap.has("Start round")
             Vote.voteInstanceMap.get("Start round").castVote(triggerPlayer)
@@ -36,7 +36,7 @@ public function voteReady(player triggerPlayer)
                     roundController.stopRoundTimer()
                     roundController.startRound()
                 else
-                    printTimed("Vote failed! Round already started!", 3)
+                    printTimed("Ready vote failed! Round already started!", 3)
             voteInstance.castVote(triggerPlayer)
 
 function voteBloodDonation(player triggerPlayer)
