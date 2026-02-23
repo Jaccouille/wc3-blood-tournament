@@ -185,6 +185,12 @@ init
                 goldMsg, bpMsg
             ))
 
+    new GameMode("unit-per-line", "upl", "General", "Sets the number of units per line in army formation, default : " +
+        gameConfig.getUnitPerLine().toString() + ", default :10, min : 5, max : 15", true, true) (mode, args) ->
+        if (args.size() > 1)
+            let unitsPerLine = min(max(args.get(1).toInt(), 5), 15)
+            mode.message("Units per line set to ".color(LABEL_COLOR) + unitsPerLine.toString().color(VALUE_COLOR))
+            gameConfig.setUnitPerLine(unitsPerLine)
 
     new GameMode("no-portal", "np", "General", "Removes portal model", true, true) (mode, args) ->
         if not gameConfig.isDisplayPortalEnabled()

@@ -30,6 +30,8 @@ class GameConfig
     private let builderList = BUILDER_LIST.copy()
     private var bloodDonation = true
     private var sellableUpgrade = true
+    // 0 = auto-compute from zone size; 5–15 = fixed value
+    private var unitPerLine = 10
 
     function setTestMode(boolean value)
         testMode = value
@@ -172,5 +174,13 @@ class GameConfig
 
     function isSellableUpgradeEnabled() returns boolean
         return sellableUpgrade
+
+    /** Sets units per line for army formation. Use 0 for auto (computed from zone width). Clamped to [5, 15]. **/
+    function setUnitPerLine(int value)
+        unitPerLine = value
+
+    /** Returns the configured units per line, or 0 if auto-compute is active. **/
+    function getUnitPerLine() returns int
+        return unitPerLine
 
 public constant gameConfig = new GameConfig()

@@ -202,6 +202,7 @@ public class ArmySpawner
     vec2 pos
     vec2 portalSpawnPos
     int unitPerLine
+    real unitSpacing
     PlayerData pData
     EventListener reinforcementListener
     boolean hasSpawnFinished = false
@@ -359,11 +360,17 @@ public class ArmySpawner
         squadIdx = 0
         hasSpawnFinished = false
 
-        // TODO: Add to gameConfig?
-        // Determine number of unit per line
-        unitPerLine = spawnDirection.degrees() == 0.
-            ? (spawnZone.width /  FORMATION_WIDTH).round()
-            : (spawnZone.height / FORMATION_WIDTH).round()
+        // Determine number of unit per line and the spacing between units
+        let configUnitPerLine =  gameConfig.getUnitPerLine()
+        if configUnitPerLine > 0
+            unitPerLine = configUnitPerLine
+            let zoneSize = spawnDirection.degrees() == 0. ? spawnZone.width : spawnZone.height
+            unitSpacing = zoneSize / unitPerLine
+        else
+            unitSpacing = FORMATION_WIDTH
+            unitPerLine = spawnDirection.degrees() == 0.
+                ? (spawnZone.width  / FORMATION_WIDTH).round()
+                : (spawnZone.height / FORMATION_WIDTH).round()
 
     /**
         When spawning from portal, the unit will be spawned in a line formation and walk toward the center
@@ -402,11 +409,11 @@ public class ArmySpawner
                             spawnUnit(squadUnitIds[squadIdx], portalSpawnPos)
                                 ..issuePointOrder("attack", pos)
                             flashEffect(Abilities.blinkTarget,  portalSpawnPos)
-                            portalSpawnPos = portalSpawnPos.polarOffset(spawnDirection, FORMATION_WIDTH)
+                            portalSpawnPos = portalSpawnPos.polarOffset(spawnDirection, unitSpacing)
                         else
                             spawnUnit(squadUnitIds[squadIdx], pos)
 
-                        pos = pos.polarOffset(spawnDirection, FORMATION_WIDTH)
+                        pos = pos.polarOffset(spawnDirection, unitSpacing)
                         spawnCount++
 
                         // Move to next line
