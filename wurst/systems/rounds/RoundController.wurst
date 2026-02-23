@@ -120,7 +120,7 @@ class RoundController
                 buildScoreBoardForFinals("Quarter Final")
                 hasQuarterStarted = true
                 altarEntity.moveTo(gg_rct_ManagerTowerFinal.getCenter())
-                altarEntity.getArenaMaster().setFacing(altarEntity.getArenaMaster().getPos().angleTo(CENTER))
+                altarEntity.getArenaMaster().setFacing(altarEntity.getArenaMaster().getPos().angleTo(MAP_CENTER))
                 showFinalTowerDoodad()
 
             else if currentRound.roundName == "Demi Final" and not hasDemiStarted

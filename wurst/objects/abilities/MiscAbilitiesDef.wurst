@@ -338,15 +338,15 @@ init
         forUnitsInRange(target, 200) (unit u) ->
             if u.getCurrentOrder() == 0
                 and u.isSoldier()
-                u.issuePointOrder("attack", CENTER)
+                u.issuePointOrder("attack", MAP_CENTER)
 
     EventListener.onTargetCast(ABIL_UNSTUCK_UNIT) (unit caster, unit target) ->
         if target.getCurrentOrder() == 0
             and preventOrder == true
             and target.isSoldier()
-            target.setPos(target.getPos().moveTowards(CENTER, 50))
+            target.setPos(target.getPos().moveTowards(MAP_CENTER, 50))
             flashEffect(Abilities.blinkTarget, target.getPos())
-            target.issuePointOrder("attack", CENTER)
+            target.issuePointOrder("attack", MAP_CENTER)
             let msg = caster.getOwner().getNameColored() + " used unstuck unit"
             createTTEx(target.getPos3Real(), msg, 10)
                 ..setVelocity(0, 0.03)

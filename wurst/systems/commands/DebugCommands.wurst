@@ -99,7 +99,7 @@ init
         forUnitsAll() (unit u) ->
             if u.getMoveSpeed() > 1 and not u.isType(UNIT_TYPE_PEON)
                 u.unpause()
-                u.issuePointOrder("attack", CENTER)
+                u.issuePointOrder("attack", MAP_CENTER)
         nullTimer() ->
             preventOrder = true
             orderBlocker.enable()

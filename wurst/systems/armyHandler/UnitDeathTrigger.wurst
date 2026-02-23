@@ -36,7 +36,7 @@ function customOnDeathAction(unit killer, unit dyingUnit, PlayerData pData)
                 flashEffect(Abilities.resurrecttarget, dyingUnit.getPos())
                 let u = createUnit(dyingUnit.getOwner(), UNIT_GHOST_PALADIN,
                     dyingUnit.getPos(), dyingUnit.getFacingAngle())
-                ..issuePointOrder("attack", CENTER)
+                ..issuePointOrder("attack", MAP_CENTER)
                 if u == null
                     Log.debug("Unknown unit spawned for" +
                     dyingUnit.getOwner().getTruePlayerFromDummy().getName())
@@ -50,11 +50,11 @@ function customOnDeathAction(unit killer, unit dyingUnit, PlayerData pData)
     else if dyingUnit.getTypeId() == UNIT_ABOMINATION and dyingUnit.hasAbility(ABIL_SPAWN_GUT_CRAWLER)
         pData.addUnit(
         createUnit(dyingUnit.getOwner(), UNIT_GUT_CRAWLER, dyingUnit.getPos(), dyingUnit.getFacingAngle())
-            ..issuePointOrder("attack", CENTER)
+            ..issuePointOrder("attack", MAP_CENTER)
         )
         pData.addUnit(
         createUnit(dyingUnit.getOwner(), UNIT_GUT_CRAWLER, dyingUnit.getPos(), dyingUnit.getFacingAngle())
-            ..issuePointOrder("attack", CENTER)
+            ..issuePointOrder("attack", MAP_CENTER)
         )
 
     else if killer.getTypeId() == UNIT_DEATH_KNIGHT and killer.isAlive()
@@ -75,7 +75,7 @@ function customOnDeathAction(unit killer, unit dyingUnit, PlayerData pData)
         forUnitsInRange(dyingUnit.getPos(), 1500) (unit u) ->
             if u.isAlive() and u.isEnemyOf(dyingUnit) and u.isSoldier()
                 // Log.debug("Reordering " + u.getName())
-                u.issuePointOrder("attack", CENTER)
+                u.issuePointOrder("attack", MAP_CENTER)
 
     else if killer.getTypeId() == UNIT_WARMONGER and killer.hasAbility(ABIL_RAMPAGE)
         if not killer.hasAbility(BUFF_RAMPAGE)
@@ -148,12 +148,14 @@ function computeSpeedBannerPos(SpawnZone sp1, SpawnZone sp2) returns vec2
     let middle = pos1.polarOffset(direction, dist)
     return middle
 
-function groupOrder(player _p, vec2 middle)
+function groupOrder(player _p, vec2 firstBattleMiddlePos)
     nullTimer() ->
         // Group order works on 12 units max
         let maxOrderUnitCount = 12
         let grpList = new LinkedList<group>()
-        let grpNbr = (_p.getPlayerData().getUnitCount() / maxOrderUnitCount).toInt() + 1
+        var grpNbr = (_p.getPlayerData().getUnitCount() / maxOrderUnitCount).toInt()
+        if _p.getPlayerData().getUnitCount() % maxOrderUnitCount != 0
+            grpNbr += 1
 
         for i = 0 to grpNbr
             grpList.push(CreateGroup())
@@ -161,20 +163,16 @@ function groupOrder(player _p, vec2 middle)
         var grp = grpList.get(0)
         var grpIdx = 0
 
-        for i = 0 to _p.getPlayerData().getUnitCount()
+        for i = 0 to MAX_UNIT - 1
             let u = _p.getPlayerData().unitArray[i]
             if u.isSoldier() and u.isAlive()
                 grp.add(u)
 
-            if i > 0 and (i % maxOrderUnitCount == 0 or i == _p.getPlayerData().getUnitCount() - 1)
-                grp.pointOrderById(OrderIds.attack, middle)
+            if grp.size() > 0 and (grp.size() % maxOrderUnitCount == 0 or i == MAX_UNIT - 1)
+                grp.pointOrderById(OrderIds.attack, firstBattleMiddlePos)
                 let currentGrp = grp
                 doAfter(4) ->
-                    currentGrp.pointOrderById(OrderIds.attack, CENTER)
-                    if grp == null
-                        Log.debug("Group is null, idx " + grpIdx.toString())
-                    else
-                        Log.debug("Group idx " + grpIdx.toString() + " size " + grp.size().toString())
+                    currentGrp.pointOrderById(OrderIds.attack, MAP_CENTER)
                     if grpList != null
                         grpList.remove(currentGrp)
                     currentGrp.close()
@@ -193,14 +191,14 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
             if roundController.currentRound instanceof NormalRound
                 let spawnZone1 = playerToArmySpawner.get(matchUpWinner).spawnZone
                 let spawnZone2 = playerToArmySpawner.get(pData._p).spawnZone
-                let middle = computeSpeedBannerPos(spawnZone1, spawnZone2)
+                let firstBattleMiddlePos = computeSpeedBannerPos(spawnZone1, spawnZone2)
                 var _hasSpawned = false
                 // TODO: probably doesn't work
-                forUnitsInRange(middle, 500) (unit u) ->
+                forUnitsInRange(firstBattleMiddlePos, 500) (unit u) ->
                     if u.getTypeId() == UNIT_SPEED_BANNER
                         _hasSpawned = true
                 if not _hasSpawned
-                    spawnSpeedBanner(middle, matchUpWinner)
+                    spawnSpeedBanner(firstBattleMiddlePos, matchUpWinner)
                     let armySpawner = playerToArmySpawner.get(matchUpWinner)
                     let secondRectIdx = spawnZones.indexOf(armySpawner.spawnZone) div 2 + 10
 
@@ -209,19 +207,19 @@ public function checkIfPlayerDefeated(PlayerData pData, player killerOwner)
                         armySpawner.spawnZone = spawnZones.get(secondRectIdx)
                         armySpawner.pos = armySpawner.spawnZone.spawnRect.getCenter()
                         armySpawner.spawnZone.openPortal()
-                groupOrder(matchUpWinner, middle)
+                groupOrder(matchUpWinner, firstBattleMiddlePos)
             else if roundController.currentRound instanceof FinalRound
                 // Clear the reinforcement list of the winner since the round is over
                 // playerToArmySpawner.get(matchUpWinner).buildingList.clear()
                 (roundController.currentRound castTo FinalRound).looser = pData._p
 
-        Log.info(pData._p.getNameColored() + " has been defeated by " +
+        Log.debug(pData._p.getNameColored() + " has been defeated by " +
             killerOwner.getNameColored() + ", removing from round participant")
         roundController.currentRound.roundParticipant.remove(pData._p)
 
         let winner = killerOwner == ALTAR_PLAYER ? pData._p : killerOwner
 
-        Log.info("Winner is " + winner.getNameColored() + ", remaining participants : " +
+        Log.debug("Winner is " + winner.getNameColored() + ", remaining participants : " +
             roundController.currentRound.roundParticipant.size().toString())
         if roundController.currentRound.roundParticipant.size() == 1
             onLastArmyRemaining.execute()
@@ -240,8 +238,8 @@ function handleUnitDeath()
         handleBuildingDeath(dyingUnit, killer, pData)
     else if dyingUnit.getPointValue() > 0
         handleUnitDeathBounty(dyingUnit, killer, killerOwner, pData)
-    else
-        Log.info("Unit " + dyingUnit.getName() + " has no point value, ignoring death event")
+    // else
+    //     Log.info("Unit " + dyingUnit.getName() + " has no point value, ignoring death event")
 
 // Handle the death of a building
 function handleBuildingDeath(unit dyingUnit, unit killer, PlayerData pData)

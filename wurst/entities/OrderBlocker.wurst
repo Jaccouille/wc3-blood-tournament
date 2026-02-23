@@ -115,7 +115,7 @@ init
             and not u.getOwner() == players[PLAYER_NEUTRAL_AGGRESSIVE]
             preventOrder = false
             // print(OrderId2StringBJ(GetIssuedOrderIdBJ()))
-            u.issuePointOrder("attack", CENTER)
+            u.issuePointOrder("attack", MAP_CENTER)
             preventOrder = true
             // Blizzard is the move unit spell, so we don't want to block it
             if u.isType(UNIT_TYPE_PEON) and GetIssuedOrderIdBJ() != OrderIds.blizzard

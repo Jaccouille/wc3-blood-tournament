@@ -100,7 +100,7 @@ init
                     target.removeAbility(ABIL_AC_HEALING_SPRAY)
                     target.addAbility(ABIL_AC_HEALING_SPRAY)
             else
-                caster.issuePointOrder("attack", CENTER)
+                caster.issuePointOrder("attack", MAP_CENTER)
                 caster.resetCooldown()
 
             // TODO: refactor into previous if condition
@@ -114,4 +114,4 @@ init
         if not dummyToRealCastMapTarget.has(EventData.getSpellAbilityId())
             and not caster.isType(UNIT_TYPE_PEON)
             and preventOrder
-            caster.issuePointOrder("attack", CENTER)
+            caster.issuePointOrder("attack", MAP_CENTER)
