@@ -101,8 +101,10 @@ public abstract class Round
         // Log.debug(this.roundName + " doAfterSpawn")
 
     function doBeforeSpawn()
+        allowBuilderDuringRound = true
         for _p in pDatas
             SetPlayerTechResearchedSwap(UPGD_UNAVAILABLE_DURING_ROUND, 0, _p)
+            pDatas.get(_p).setArmyPointsReward(pDatas.get(_p).armyPoints)
         forUnitsAll() (unit u) ->
             if IsUnitDeadBJ(u)
                 u.remove()
@@ -274,8 +276,10 @@ public class FinalRound extends Round
         SetDoodadAnimationRect(boundRect, DOODAD_ELIM_PORTAL, "birth", false)
 
     override function doBeforeSpawn()
+        allowBuilderDuringRound = false
         for _p in pDatas
             SetPlayerTechResearchedSwap(UPGD_UNAVAILABLE_DURING_ROUND, 0, _p)
+            pDatas.get(_p).setArmyPointsReward(pDatas.get(_p).armyPoints)
             pDatas.get(_p).removeDummyPlayers()
         forUnitsAll() (unit u) ->
             if IsUnitDeadBJ(u)

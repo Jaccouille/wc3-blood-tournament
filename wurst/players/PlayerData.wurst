@@ -30,6 +30,7 @@ public class PlayerData
     int roundBloodPoints = 0
     int totalBloodPoints = 0
     int armyPoints = 0
+    int armyPointsReward = 0
     unit racePicker
     unit builder
     boolean hasRandomed = false
@@ -103,16 +104,19 @@ public class PlayerData
     function subArmyPoints(int value)
         armyPoints = max(armyPoints - (value * gameConfig.getArmyPointsMultiplier()).toInt(), 0)
 
+    function setArmyPointsReward(int value)
+        armyPointsReward = value
+
     function giveBloodPointsReward()
         let msg = "You acquired " +
-            armyPoints.toString().color(COLOR_RED) +
+            armyPointsReward.toString().color(COLOR_RED) +
             " army points + " +
             roundBloodPoints.toString().color(COLOR_RED) +
             " kill points"
         printTimedToPlayer(msg, 15, _p)
-        _p.addLumber(armyPoints + roundBloodPoints)
-        totalBloodPoints += armyPoints + roundBloodPoints
-        bpPerRound.push(armyPoints + roundBloodPoints)
+        _p.addLumber(armyPointsReward + roundBloodPoints)
+        totalBloodPoints += armyPointsReward + roundBloodPoints
+        bpPerRound.push(armyPointsReward + roundBloodPoints)
 
     function getBuilding(int idx) returns unit
         return buildingArray[idx]

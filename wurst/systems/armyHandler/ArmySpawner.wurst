@@ -4,6 +4,7 @@ package ArmySpawner
 import Assets
 import ClosureEvents
 import HashMap
+import HashSet
 import LinkedList
 import ClosureForGroups
 import ClosureTimers
@@ -181,7 +182,7 @@ function genList(int unitId, int count) returns LinkedList<int>
 
 // Distance between units positioned in formation mode
 @configurable constant FORMATION_WIDTH = 120.
-@configurable constant FORMATION_HEIGHT = 80.
+@configurable constant FORMATION_HEIGHT = 90.
 // Number of units allocated per dummy players
 @configurable constant MAX_UNIT_PER_DUMMY_PLAYER = 80
         // 400 is kind of a random value
@@ -208,6 +209,8 @@ public class ArmySpawner
     boolean hasSpawnFinished = false
     // List of units spawned by a building
     int array[SQUAD_UNIT_LENGTH] squadUnitIds
+    // Track which squad indices are sergeant-like units added by items
+    boolean array[SQUAD_UNIT_LENGTH] isItemAddedUnit
     boolean shouldRefresh = true
     boolean isPreviewEnabled = false
     CallbackPeriodic cb
@@ -285,6 +288,7 @@ public class ArmySpawner
     private function clearSquad()
         for i = 0 to squadUnitIds.length - 1
             squadUnitIds[i] = 0
+            isItemAddedUnit[i] = false
 
     private function prepareNextSquad(unit building)
         squadIdx = 0
@@ -308,7 +312,10 @@ public class ArmySpawner
 
         // TODO: handle skin item separately
         // Apply Item modifier
+        // Skip item modifiers for sergeant-like units added by items
+        // unless the unit is registered in the exception set
         if not unitModifierList.isEmpty()
+                and (not isItemAddedUnit[squadIdx] or itemModifierExceptions.has(unitId))
             // If unit is the last in the squad, apply all remaining modifier
             if squadUnitIds[squadIdx + 1] == 0
                 while unitModifierList.size() > 0

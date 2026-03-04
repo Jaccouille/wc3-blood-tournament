@@ -9,6 +9,7 @@ import ColorUtils
 import GameConstants
 
 public boolean preventOrder = false
+public boolean allowBuilderDuringRound = false
 public trigger orderBlocker
 
 let validOrder = new HashSet<int>()
@@ -100,6 +101,7 @@ function isValid() returns boolean
 public function disableOrderBlocker()
     orderBlocker.disable()
     preventOrder = false
+    allowBuilderDuringRound = false
 
 
 init
@@ -113,14 +115,18 @@ init
         let u = GetOrderedUnit()
         if not isValid() and preventOrder
             and not u.getOwner() == players[PLAYER_NEUTRAL_AGGRESSIVE]
-            preventOrder = false
-            // print(OrderId2StringBJ(GetIssuedOrderIdBJ()))
-            u.issuePointOrder("attack", MAP_CENTER)
-            preventOrder = true
-            // Blizzard is the move unit spell, so we don't want to block it
-            if u.isType(UNIT_TYPE_PEON) and GetIssuedOrderIdBJ() != OrderIds.blizzard
-                let msg = "Cannot control builder during round phase".color(SPECIAL_COLOR)
-                printTimedToPlayer(msg, 4, u.getOwner())
+            // Allow builders to be controlled during normal rounds
+            if u.isType(UNIT_TYPE_PEON) and allowBuilderDuringRound
+                skip
+            else
+                preventOrder = false
+                // print(OrderId2StringBJ(GetIssuedOrderIdBJ()))
+                u.issuePointOrder("attack", MAP_CENTER)
+                preventOrder = true
+                // Blizzard is the move unit spell, so we don't want to block it
+                if u.isType(UNIT_TYPE_PEON) and GetIssuedOrderIdBJ() != OrderIds.blizzard
+                    let msg = "Cannot control builder during round phase".color(SPECIAL_COLOR)
+                    printTimedToPlayer(msg, 4, u.getOwner())
             // else
                 // printTimedToPlayer("Order blocked : " + OrderId2StringBJ(GetIssuedOrderIdBJ()) + " id : " + GetIssuedOrderIdBJ().toString(), 4, u.getOwner())
     disableOrderBlocker()

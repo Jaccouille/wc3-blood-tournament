@@ -183,14 +183,14 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
         ..setIconNormal(Icons.bTNLGExchange)
         ..setBaseOrderID(1, "berserk")
         ..setCheckDependencies(true)
-        ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
+        // ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
 
     createStandardChannelAbility(ABIL_TRADE_BLOOD_POINT)
         ..setNameEnhance("F", "Trade Blood Points")
         ..setTooltipNormalExtended(1, TOOLTIP_TRADE_BLOOD_POINT)
         ..setIconNormal(Icons.bTNCorpseExplode)
         ..setCheckDependencies(true)
-        ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
+        // ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
 
 @compiletime function createReadyAbility()
     createStandardChannelAbility(ABIL_START_ROUND)
@@ -216,7 +216,7 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
             TargetsAllowed.invulnerable,
             TargetsAllowed.nonancient
         ))
-        ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
+        // ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
         ..setCheckDependencies(true)
         ..setNameEnhance("X", "Sell building")
         ..presetTooltipNormalExtended(lvl -> "Sell the building and get 100% of its cost back.\n")
@@ -227,7 +227,7 @@ let TOOLTIP_TRADE_BLOOD_POINT = "Exchange {0} gold for {1} blood points."
         ..presetButtonPosNormal(0, -11)
         ..setTooltipNormalExtended(1, "Sell all sellable buildings.\n")
         ..setIconNormal(Icons.bTNChestOfGold)
-        ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
+        // ..setRequirements(commaList(UPGD_UNAVAILABLE_DURING_ROUND))
         ..setBaseOrderID(1, "windwalk")
         ..setCheckDependencies(true)
 

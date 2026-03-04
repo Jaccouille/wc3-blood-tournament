@@ -2,6 +2,7 @@ package ItemCallbackDefinition
 
 // Standard libs imports:
 import HashMap
+import HashSet
 import LinkedList
 import OrderIds
 
@@ -12,6 +13,11 @@ import initlater ArmySpawner
 
 public let itemAddUnitMap = new HashMap<int, ItemAddUnit>
 public let itemModifyUnitMap = new HashMap<int, ItemModifierAction>
+
+/** Unit IDs registered here will still receive item modifiers
+    even when added as sergeant-like units via addAtMiddle/replaceMiddleUnit. */
+public let itemModifierExceptions = new HashSet<int>
+    ..add(UNIT_CAPTAIN)
 
 interface AddUnitCallbackListener
     function execute(ArmySpawner ap, int count)
@@ -61,6 +67,7 @@ function replaceMiddleUnit(ArmySpawner ap, int newUnit)
     let squadCount = ap.getSquadCount()
     let middleIndex = squadCount div 2
     ap.squadUnitIds[middleIndex] = newUnit
+    ap.isItemAddedUnit[middleIndex] = true
 
 function addAtMiddle(ArmySpawner ap, int newUnit)
     let squadCount = ap.getSquadCount()
@@ -75,8 +82,10 @@ function addAtMiddle(ArmySpawner ap, int newUnit)
     for i = squadCount - 1 downto  middleIndex
         // Log.info("i + 1: " + (i + 1).toString())
         ap.squadUnitIds[i + 1] = ap.squadUnitIds[i]
+        ap.isItemAddedUnit[i + 1] = ap.isItemAddedUnit[i]
 
     ap.squadUnitIds[middleIndex] = newUnit
+    ap.isItemAddedUnit[middleIndex] = true
 
 function increaseUnitBounty(unit u, int itemId)
     let lvl = (computeUnitPointValue(getItemGoldCost(itemId), getItemLumberCost(itemId), 1)

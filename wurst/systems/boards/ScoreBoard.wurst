@@ -10,6 +10,7 @@ import LinkedListModule
 import Boards
 import ColorUtils
 import GameStates
+import OrderBlocker
 import Players
 import public PlayerData
 
@@ -193,10 +194,11 @@ public function setBoardTitle(string title)
 function refreshScoreBoard()
     for i = 0 to 7
         let _p = players[i]
-        let ap = pDatas.get(_p).armyPoints
+        if not preventOrder
+            let ap = pDatas.get(_p).armyPoints
+            scoreBoardEntries.get(COL_ARMY_PTS).setEntry(_p, ap.toString(), null)
         let bp = pDatas.get(_p).roundBloodPoints
         let tbp = pDatas.get(_p).totalBloodPoints
-        scoreBoardEntries.get(COL_ARMY_PTS).setEntry(_p, ap.toString(), null)
         scoreBoardEntries.get(COL_KILL_PTS).setEntry(_p, bp.toString(), null)
         scoreBoardEntries.get(COL_TOTAL_BLOOD_PTS).setEntry(_p, tbp.toString(), null)
 
