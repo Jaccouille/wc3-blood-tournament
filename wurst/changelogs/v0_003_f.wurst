@@ -1,0 +1,10 @@
+package v0_003_f
+
+import ChangeLog
+
+init
+    new ChangeLog(0, 3, 'f')
+        ..add("Added -upl mode, allowing red to set the number of unit per line")
+        ..add("Allowed builder control during round phase")
+        ..add("Removed unit description icon (which cost 99999 gold) to avoid confusion for player")
+        ..add("Switch ogre upgrade from items to building upgrades")

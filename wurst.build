@@ -4,17 +4,17 @@ dependencies:
 - https://github.com/theQuazz/wurst-lodash
 - https://github.com/Frotty/wurst-table-layout
 buildMapData:
-  name: '|cffff5436Blood Tournament Reloaded v0.3e'
-  fileName: Blood.Tournament.Reloaded.v0.3e
+  name: '|cffff5436Blood Tournament Reloaded v0.3f'
+  fileName: Blood.Tournament.Reloaded.v0.3f
   author: Jaccouille
   scenarioData:
-    description: "Released on 08 February 2025|n|n\n    A Blood tournament map featuring\
+    description: "Released on 06 March 2026|n|n\n    A Blood tournament map featuring\
       \ Human, Orc, Undead, Night Elf, Naga, Beast and Demon faction.      |nCan be\
       \ played solo against bots.|n|n\n    See more on |cffffd700https://www.hiveworkshop.com/threads/blood-tournament-reloaded.353051/"
-    suggestedPlayers: '8'
+    suggestedPlayers: 8
     loadingScreen:
       title: Jaccouille presents
-      subTitle: '|cffff5436Blood Tournament Reloaded v0.3e'
+      subTitle: '|cffff5436Blood Tournament Reloaded v0.3f'
       text: Choose a faction amongst Human, Orc, Undead, Night Elf, Naga, Beast or
         Demon.|n|n  Experiment and find the optimal army composition.|n|n  Enjoy the
         mayhem!
@@ -62,7 +62,10 @@ buildMapData:
     controller: USER
     fixedStartLoc: true
   forces:
-  - name: DefaultForce
+  - flags:
+      allied: false
+      alliedVictory: false
+      sharedVision: false
     playerIds:
     - 0
     - 1
@@ -72,9 +75,3 @@ buildMapData:
     - 5
     - 6
     - 7
-    flags:
-      allied: false
-      alliedVictory: false
-      sharedVision: false
-      sharedControl: false
-      sharedControlAdvanced: false
