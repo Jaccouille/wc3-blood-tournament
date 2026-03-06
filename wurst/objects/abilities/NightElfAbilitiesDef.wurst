@@ -406,6 +406,10 @@ let FAERIE_FIRE_TARGET_COUNT = 3
     abilTooltipMap.put(ABIL_PARASITE_SEED, tgen.generateFullTooltip())
 
 
+    let BUFF_THORN = new BuffDefinition(BUFF_ID_GEN.next(), BuffIds.thornsAura)
+        ..setArtTarget(1, "")
+        ..setName(1, "Thorns Aura")
+        ..setTooltipNormal(1, "Thorns Aura")
     tgen = new BTAbilityTooltipGenerator(
         "An aura that gives friendly nearby units a damage shield, "+
         "which returns a percentage of a melee attacker's damage back to it."
@@ -418,6 +422,7 @@ let FAERIE_FIRE_TARGET_COUNT = 3
         ..tooltipStartListen()
         ..addTooltipProperty("Damage returned", _ -> 0.4.toPercent())
         ..presetAreaofEffect(_ -> 1200)
+        ..setBuffs(1, BUFF_THORN.getNewId().toRawCode())
         ..setNameEnhance("X", "Thorn Aura")
         ..tooltipStopListen(true)
 

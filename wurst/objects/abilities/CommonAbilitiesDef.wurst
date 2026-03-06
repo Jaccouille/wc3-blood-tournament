@@ -100,6 +100,7 @@ function createHardenedSkin(int abilId, real value) returns AbilityDefinitionHar
 function createDevotionAura(int abilId, real value) returns AbilityDefinitionPaladinDevotionAura
     let tgen = new BTAbilityTooltipGenerator(
         "Gives additional armor to nearby friendly units.")
+
     let abilDef = new AbilityDefinitionPaladinDevotionAura(abilId)
         ..setLevels(1)
         ..setHeroAbility(false)
@@ -107,6 +108,7 @@ function createDevotionAura(int abilId, real value) returns AbilityDefinitionPal
         ..tooltipStartListen()
         ..presetArmorBonus(_ -> value)
         ..presetAreaofEffect(_ -> 1200)
+        ..setBuffs(1, BuffIds.devotionAura.toRawCode())
         ..setName("Devotion Aura " + value.toString(0))
         ..tooltipStopListen()
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
@@ -115,6 +117,12 @@ function createDevotionAura(int abilId, real value) returns AbilityDefinitionPal
 function createBrillianceAura(int abilId, real value) returns AbilityDefinitionArchMageBrillianceAura
     let tgen = new BTAbilityTooltipGenerator(
         "Gives additional mana regeneration to nearby friendly units.")
+
+    let buffDef = new BuffDefinition(BUFF_ID_GEN.next(), BuffIds.brillianceAura)
+        ..setArtTarget(1, "")
+        ..setName(1, "Brilliance Aura")
+        ..setTooltipNormal(1, "Brilliance Aura")
+
     let abilDef = new AbilityDefinitionArchMageBrillianceAura(abilId)
         ..setLevels(1)
         ..setHeroAbility(false)
@@ -122,6 +130,7 @@ function createBrillianceAura(int abilId, real value) returns AbilityDefinitionA
         ..tooltipStartListen()
         ..presetManaRegenerationIncrease(_ -> value)
         ..presetAreaofEffect(_ -> 1200)
+        ..setBuffs(1, buffDef.getNewId().toRawCode())
         ..setName("Brilliance Aura " + value.toString(0))
         ..tooltipStopListen()
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
@@ -130,6 +139,12 @@ function createBrillianceAura(int abilId, real value) returns AbilityDefinitionA
 function createMeleeAura(int abilId, real value) returns AbilityDefinitionAuraCommandCreep
     let tgen = new BTAbilityTooltipGenerator(
         "Gives extra damage to the attacks of nearby melee friendly units.")
+
+    let buffDef = new BuffDefinition(BUFF_ID_GEN.next(), BuffIds.commandAura)
+        ..setArtTarget(1, "")
+        ..setName(1, "Command Aura")
+        ..setTooltipNormal(1, "Command Aura")
+
     let abilDef = new AbilityDefinitionAuraCommandCreep(abilId)
         ..setLevels(1)
         ..setHeroAbility(false)
@@ -139,6 +154,7 @@ function createMeleeAura(int abilId, real value) returns AbilityDefinitionAuraCo
         ..tooltipStartListen()
         ..presetAttackDamageIncrease(_ -> value)
         ..presetAreaofEffect(_ -> 1200)
+        ..setBuffs(1, buffDef.getNewId().toRawCode())
         ..setName("Melee Aura " + value.toString(0))
         ..tooltipStopListen()
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
@@ -147,11 +163,16 @@ function createMeleeAura(int abilId, real value) returns AbilityDefinitionAuraCo
 function createRangedAura(int abilId, real value) returns AbilityDefinitionAuraTrueshotCreep
     let tgen = new BTAbilityTooltipGenerator(
         "Gives extra damage to the attacks of nearby ranged friendly units.")
+
+    let buffDef = new BuffDefinition(BUFF_ID_GEN.next(), BuffIds.trueshotAura)
+        ..setArtTarget(1, "")
+        ..setName(1, "Ranged Aura")
+        ..setTooltipNormal(1, "Ranged Aura")
+
     let abilDef = new AbilityDefinitionAuraTrueshotCreep(abilId)
         ..setLevels(1)
         ..setHeroAbility(false)
         ..setArtTarget(Abilities.trueshotAura)
-        ..setBuffs(1, BuffIds.trueshotAura.toRawCode())
         ..registerTooltipGenerator(tgen)
         ..presetRangedBonus(_ -> true)
         ..presetFlatBonus(_ -> false)
@@ -159,6 +180,7 @@ function createRangedAura(int abilId, real value) returns AbilityDefinitionAuraT
         ..tooltipStartListen()
         ..addTooltipProperty("Damage Bonus", _ -> (value * 100).percRound())
         ..presetAreaofEffect(_ -> 1200)
+        ..setBuffs(1, buffDef.getNewId().toRawCode())
         ..setName("Ranged Aura " + (value * 100).percRound())
         ..tooltipStopListen()
 
@@ -209,6 +231,12 @@ function createDeflect(int abilId, real value) returns AbilityDefinitionHardened
 function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraWarDrumsKodobeast
     let tgen = new BTAbilityTooltipGenerator(
         "Adds a damage increase to the attacks of nearby friendly units.")
+
+    let buffDef = new BuffDefinition(BUFF_ID_GEN.next(), BuffIds.warDrums)
+        ..setArtTarget(1, "")
+        ..setName(1, "Damage Aura")
+        ..setTooltipNormal(1, "Damage Aura")
+
     let abilDef = new AbilityDefinitionAuraWarDrumsKodobeast(abilId)
         ..setLevels(1)
         ..setHeroAbility(false)
@@ -216,6 +244,7 @@ function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraW
         ..setAttackDamageIncrease(1, value)
         ..tooltipStartListen()
         ..presetAreaofEffect(_ -> 1200)
+        ..setBuffs(1, buffDef.getNewId().toRawCode())
         ..setName("Damage Bonus " + value.toPercent())
         ..tooltipStopListen()
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
@@ -224,6 +253,12 @@ function createDamageAura(int abilId, real value) returns AbilityDefinitionAuraW
 function createEnduranceAura(int abilId, real value) returns AbilityDefinitionAuraEnduranceCreep
     let tgen = new BTAbilityTooltipGenerator(
         "Increases attack speed of nearby friendly units.")
+
+    let buffDef = new BuffDefinition(BUFF_ID_GEN.next(), BuffIds.enduranceAura)
+        ..setArtTarget(1, "")
+        ..setName(1, "Endurance Aura")
+        ..setTooltipNormal(1, "Endurance Aura")
+
     let abilDef = new AbilityDefinitionAuraEnduranceCreep(abilId)
         ..setLevels(1)
         ..setHeroAbility(false)
@@ -232,6 +267,7 @@ function createEnduranceAura(int abilId, real value) returns AbilityDefinitionAu
         ..presetAttackSpeedIncrease(_ -> value)
         ..tooltipStartListen()
         ..presetAreaofEffect(_ -> 1200)
+        ..setBuffs(1, buffDef.getNewId().toRawCode())
         ..setName("Attack Speed Bonus " + value.toPercent())
         ..tooltipStopListen()
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
@@ -240,6 +276,12 @@ function createEnduranceAura(int abilId, real value) returns AbilityDefinitionAu
 function createVampiricAura(int abilId, real value) returns AbilityDefinitionVampiricAuracreep
     let tgen = new BTAbilityTooltipGenerator(
         "Nearby friendly melee units gain percentage of their attack damage when they hit enemy units.")
+
+    let buffDef = new BuffDefinition(BUFF_ID_GEN.next(), BuffIds.vampiricAura)
+        ..setArtTarget(1, "")
+        ..setName(1, "Life Steal Aura")
+        ..setTooltipNormal(1, "Life Steal Aura")
+
     let abilDef = new AbilityDefinitionVampiricAuracreep(abilId)
         ..setLevels(1)
         ..setHeroAbility(false)
@@ -247,6 +289,7 @@ function createVampiricAura(int abilId, real value) returns AbilityDefinitionVam
         ..registerTooltipGenerator(tgen)
         ..tooltipStartListen()
         ..presetAreaofEffect(_ -> 1200)
+        ..setBuffs(1, buffDef.getNewId().toRawCode())
         ..setName("Life Steal " + value.toPercent())
         ..tooltipStopListen()
     abilTooltipMap.put(abilId, tgen.generateFullTooltip())
