@@ -303,7 +303,7 @@ function handleUnitDeathBounty(unit dyingUnit, unit killer, player killerOwner, 
             pData.removeUnit(dyingUnit)
             checkIfPlayerDefeated(pData, killerOwner)
         else
-            Log.info("Cannot remove " + dyingUnit.getName())
+            Log.debug("Cannot remove " + dyingUnit.getName())
         dyingUnit.remove()
         flashEffect(Abilities.doomDeath, dyingUnit.getPos())
         return
@@ -332,7 +332,7 @@ function handleUnitDeathBounty(unit dyingUnit, unit killer, player killerOwner, 
         //     Log.info("4 Unit of " + pData._p.getNameColored() + " died, " + (pData.getUnitCount()).toString() +
         //         " units remaining")
     else
-        Log.info("Cannot remove " + dyingUnit.getName() +
+        Log.debug("Cannot remove " + dyingUnit.getName() +
             " from " + pData._p.getName() + "'s spawned units list")
 
     // Perform custom actions for the killer unit

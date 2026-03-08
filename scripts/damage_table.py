@@ -130,10 +130,14 @@ ConstructionRefundRate=1.0
 {damage_table_str}
 DamageBonusSpells=1.00,1.00,1.00,1.00,1.00,0.75,1.00,1.00
 MaxUnitSpeed=522.0
+MinUnitSpeed=50.0
 UpgradeRefundRate=1.0
 ItemStackingEnabled=1
 DefendDeflection=1
 BoneDecayTime=15
+DrainGivesBonusMana=1
+RelativeUpgradeCost=1
+DrainTransfersMana=1
 """.format(
     damage_table_str=damage_table_str
 )
