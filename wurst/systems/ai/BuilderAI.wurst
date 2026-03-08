@@ -10,6 +10,7 @@ import LinkedListModule
 import TerrainUtils
 
 // Local imports:
+import ArmySpawner
 import ChatCommands
 import GameConfig
 import GameStates
@@ -161,7 +162,7 @@ class BuilderAI
 
             // Try to upgrade existing units
             else
-                if pData._p.getLumber() >= 50 and pData.getBuildingCount() > 0
+                if pData._p.getLumber() >= 500 and pData.getBuildingCount() > 0
 
                     // Get existing building that can be upgraded
                     let upgradableBuildings = new LinkedList<unit>
@@ -174,21 +175,29 @@ class BuilderAI
                         let unitToUpgrade = upgradableBuildings.getRandomElement()
                         let upgradeChoice = UPGRADE_OPTIONS.get(unitToUpgrade.getTypeId()).getRandomElement()
 
-                        if OrderId2StringBJ(upgradeChoice)  != ""
+                        if OrderId2StringBJ(upgradeChoice) != ""
+                            and BTBuildingData.getUnitLumberCost(upgradeChoice) <= pData._p.getLumber()
                             unitToUpgrade.issueImmediateOrder(OrderId2StringBJ(upgradeChoice))
                     else
                         tryToBuyItems()
                     destroy upgradableBuildings
 
-                if pData.builder != null and pData._p.getGold() >= 100
-                    let unitToBuild = BUILDER_OPTION.get(pData.builder.getTypeId()).getRandomElement()
-                    var pos = pData.buildingRect.randomPoint()
-                    while pos.isTerrainPathable(PATHING_TYPE_BUILDABILITY)
-                        pos = pData.buildingRect.randomPoint()
-                    BlzQueueBuildOrderById(pData.builder, unitToBuild, pos.x, pos.y)
-                // trade blood points for gold
-                else if pData.builder != null and pData._p.getLumber() >= 1500
-                    pData.builder.issueImmediateOrder("berserk")
+                if pData.builder != null
+                    let gold = pData._p.getGold()
+                    let lumber = pData._p.getLumber()
+                    let affordable = BUILDER_OPTION.get(pData.builder.getTypeId())
+                        .filter(unitId -> BTBuildingData.getUnitGoldCost(unitId) <= gold
+                            and BTBuildingData.getUnitLumberCost(unitId) <= lumber)
+                    if not affordable.isEmpty()
+                        let unitToBuild = affordable.getRandomElement()
+                        var pos = pData.buildingRect.randomPoint()
+                        while pos.isTerrainPathable(PATHING_TYPE_BUILDABILITY)
+                            pos = pData.buildingRect.randomPoint()
+                        BlzQueueBuildOrderById(pData.builder, unitToBuild, pos.x, pos.y)
+                    // trade blood points for gold
+                    else if lumber >= gameConfig.getBloodPointExchange()
+                        pData.builder.issueImmediateOrder("berserk")
+                    destroy affordable
 
 
 
