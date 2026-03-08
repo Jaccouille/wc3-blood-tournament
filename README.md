@@ -42,14 +42,6 @@ This game can be played with computer players, they only build random things.
 
 You can type -bot to be controlled by a bot.
 
-### Known Issues
-
-Blizzard released a patch in November that impacted performance, this game can drop below 10 FPS with a high amount of units starting around 5.
-Desync may occur.
-
-Code may also simply unoptimized.
-
-
 ### Source
 The map is made with [Wurstlang](https://wurstlang.org/) and is open source.
 
@@ -67,6 +59,8 @@ For making a cool Star Wars Blood Tournament map that inspired me to make this: 
 [Ujimasa Hojo](https://www.hiveworkshop.com/members/142431/) (edited his paladin model, changed material type to additive or something to make a ghost paladin),
 
 [imForFun](https://www.hiveworkshop.com/members/imforfun.205582/) :  [Straw hat](https://www.hiveworkshop.com/threads/straw-hat.251247/)
+
+[bakr](https://www.hiveworkshop.com/members/bakr.284239/) : [Horde Roar caster/target]()https://www.hiveworkshop.com/threads/roar-ability-orcs.358057/#post-3653278
 
 Found demon pillar here: [UTM Outland](https://www.hiveworkshop.com/threads/outland-utm.152344/), made by [Dan van Ohllus](https://www.hiveworkshop.com/forums/members/Dan%20van%20Ohllus/)
 
