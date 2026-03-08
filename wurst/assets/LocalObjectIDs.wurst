@@ -556,7 +556,6 @@ public let ITEM_ANTI_MAGIC_SHELL     = compiletime(ITEM_ID_GEN.next())
 public let ITEM_FROST_ARMOR          = compiletime(ITEM_ID_GEN.next())
 public let ITEM_DEATH_COIL           = compiletime(ITEM_ID_GEN.next())
 public let ITEM_UNHOLY_AURA          = compiletime(ITEM_ID_GEN.next())
-public let ITEM_SPAWN_GUT_CRAWLER    = compiletime(ITEM_ID_GEN.next())
 
 // ==================== NIGHT ELF ITEMS =================
 public let ITEM_PRIESTESS_OF_THE_MOON = compiletime(ITEM_ID_GEN.next())

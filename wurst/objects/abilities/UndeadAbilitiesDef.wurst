@@ -535,28 +535,6 @@ let DEATH_COIL_TARGET_COUNT = 3
 
     let abomCount = BTBuildingData.getUnitCount(BUILDING_ABOMINATION)
 
-    goldCost = 0
-    lumberCost = 750
-    itm = createBasicItem(ITEM_SPAWN_GUT_CRAWLER)
-        ..setItemCost(goldCost, lumberCost, abomCount, 1, 1)
-        ..setNameEnhance("Z", "Add Spawn Gut Crawlers")
-        ..setInterfaceIcon(Icons.bTNGhoul)
-
-    tgen = new BTAbilityTooltipGenerator(
-        "Spawn 2 Gut Crawlers upon death.")
-    new AbilityDefinitionSpawnHydraHatchling(ABIL_SPAWN_GUT_CRAWLER)
-        ..registerTooltipGenerator(tgen)
-        ..setCheckDependencies(false)
-        // We create the unit through the unitDeathTrigger.wurst package
-        // because we want the gut crawler to leave a corpse
-        ..tooltipStartListen()
-        ..setNumberofUnits(1, 0)
-        ..setUnitType(1, commaList(UNIT_GUT_CRAWLER))
-        ..tooltipStopListen()
-        ..setNameEnhance("Z", "Gut Crawlers")
-
-    tgen.applyToDefItem(itm)
-
     tgen = new BTAbilityTooltipGenerator(
         "Infects nearby enemy living units with Disease Cloud.")
     new AbilityDefinitionAuraPlagueAbomination(ABIL_DISEASE_CLOUD)

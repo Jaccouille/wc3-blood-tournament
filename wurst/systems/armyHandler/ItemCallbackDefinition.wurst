@@ -342,12 +342,6 @@ init
             addAtMiddle(armySpawner, UNIT_LICH)
     itemAddUnitMap.put(ITEM_LICH, lichAction)
 
-    let spawnGutCrawlerAction = new ItemModifierAction()
-        ..addAction() (unit u) ->
-        u.addAbility(ABIL_SPAWN_GUT_CRAWLER)
-        increaseUnitBounty(u, ITEM_SPAWN_GUT_CRAWLER)
-    itemModifyUnitMap.put(ITEM_SPAWN_GUT_CRAWLER, spawnGutCrawlerAction)
-
     let unholyAuraAction = new ItemModifierAction()
         ..addAction() (unit u) ->
         u.addAbility(ABIL_UNHOLY_AURA_PERCENT)

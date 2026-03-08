@@ -474,9 +474,6 @@ import UnitTooltipGenerator
         ..tooltipStopListen(true)
         ..setScalingValue(1.0)
 
-        ..setBuildingUnitsTrained(commaList(
-            UNIT_GUT_CRAWLER
-            ))
         ..setModelFileExt(Units.abomination1)
         ..setIconGameInterfaceExt(Icons.bTNAbomination)
         ..setUnitSoundSetExt(Soundsets.abomination)
