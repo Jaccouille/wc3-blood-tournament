@@ -1,7 +1,7 @@
 /_build
 wurst.dependencies
-/.vscode
-
+.vscode/wbschema.json
+.vscode/settings.json
 
 */venv
 /temp

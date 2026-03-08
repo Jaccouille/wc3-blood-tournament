@@ -4,6 +4,52 @@
 
 [SPOILER="Changelogs"]
 
+[SPOILER="0.3f"]
+-Added -upl mode, allowing red to set the number of unit per line
+-Allowed builder control during round phase
+-Removed unit description icon (which cost 99999 gold) to avoid confusion for player
+-Switch ogre upgrade from items to building upgrades
+[/SPOILER]
+
+[SPOILER="0.3e"]
+-(DE) increased curse range 700 -> 900
+-Added grid system on building zone
+-Increased afk detection from 30 to 60 seconds
+[/SPOILER]
+
+[SPOILER="0.3d"]
+-disable custom interface in an attempt to prevent desync
+[/SPOILER]
+
+[SPOILER="0.3c"]
+-Added Naga faction
+-Added Beast faction
+-Added Demon faction
+-(HU) Priest now upgrades into spellbreaker rather than add them
+-(HU) Reduced Slow duration from 15 to 12 seconds
+-(HU) Removed magic reduction from spellbreaker, added magic defend, can deflect magic missile back to attacker
+-(NE) Dryad rejuvenation has 5 stacks instead 1, price 50 -> 250 blood points
+-(NE) Fixed huntress bounce reduce damage to 50%, used to not work
+-(NE) Increased Wand of Illusion cost 75 -> 100
+-(NE) Reduced druid of the claw dama from 40 - 70 to 35 - 65, AS from 1.5 to 2.0, improved frenzy cast behavior (only cast upon attacking)
+-(OR) Reduced drunken haze & acid bomb upgrade 150 -> 100 blood points
+-(UN) Increased carrion swarm cooldown from 6 to 10
+-(UN) Reduced Banshee Frost Armor defensee 4 -> 3
+-(UN) Reduced plague bearer price from 600 to 500 blood points
+-(UN) Replaced banshee Anti Magic Shell by Frost Armor, AMS can be bought
+-Ability upgrade now grants Army points & increases the affected unit bounty
+-Added ability view on non-controlled units
+-Added sellable upgrade mode
+-Added sound upon round end
+-Added spawn capacity elimnation mode (sce)
+-Fixed bot message being visible to all players
+-Increased elimination phase interlude from 180 to 240
+-Made captain like unit spawn in the middle of the squad
+-Reduced building size
+-Replaced sell all ability by -sa command to avoid missclick
+-Added -fog vote to enable/disable fog of war
+-Following mode can now be changed between rounds by the red player, it, sc, sce, bm, apm, dm, hm, mb, bd, ser, np
+[/SPOILER]
 
 [SPOILER="0.2f"]
 -(HU) Priest now dispels summoned unit upon attack for 150 damage
@@ -16,7 +62,6 @@
 -(UN) Unholy aura heal increased from 1% max hp to 5 flat + 1% max hp
 -Added tooltip when player is being controlled by bot
 -Bot can be disabled by clicking around
--Can now put mode in a single line e.g \"-r 0 -hm 0.5 -dm 2 -sg 10000 -sb 100000\"
 -Fixed bug with wrong round winner
 -Increased start round vote duration so it doesn't expire after 60 seconds
 -Made trade gold & start round unavailable during round
@@ -46,7 +91,6 @@
 -(UN) Added burning archer back
 -(UN) Increased abom count 1 -> 5, gold cost 100 -> 300, HP 2400 -> 1400, damage 130 - 170 -> 80 -> 120
 -(UN) Increased range on all raise skeleton abilities 750 -> 1000
--Add \"-ready\" command to start round (-r already existed but ppl were typing ready)
 -Added afk detector, player that haven't moved during 30 seconds after beginning of a pre-round phase will be controlled by a bot
 -Added back Sell All to builder
 -Blood points are now given after round end to avoid people upgrading building during the round
@@ -122,110 +166,63 @@
 -Potentially fixed desync issue with ogre
 [/SPOILER]
 
-
 [SPOILER="0.1w"]
-
 -(HU) Decreased Priest HP from 160 to 70
-
 -(HU) Increased Priest damage by 4, attack range from 400 to 650
-
 -(HU) Increased all Priest spell range to 700
-
 -(NE) Increased Druid of Talon HP from 60 to 80
-
 -(NE) Increased Wand of illusion cast range from 500 to 600
-
 -(NE) Lowered Druid of Talon damage by 6, increased attack from 400 to 550
-
 -Fixe demi-final scoreboard bug
-
 -Fixed spawn bug where squad spawn would stop after reaching end of line
-
 [/SPOILER]
 
 [SPOILER="0.1v"]
-
 -(HU) Fixed sorc fire orb visual effect
-
 -(HU) Increase sniper price from 50 to 100 bp
-
 -(HU) Increased rifleman explosive ammo damage by 10
-
 -(OR) Fixed ogre magi firebolt stun
-
 -(OR) Reduced Witch Doctor HP from 140 to 100
-
 -(OR) Reduced healing wave heal from 125 to 75
-
 -(UN) Added Spawn Gut Crawler item to Abomination
-
 -Added an army previewer to preview the units position on the arena
-
 [/SPOILER]
 
 [SPOILER="0.1u"]
-
 -(HU) Replaced paladin cleave by 30% stun
-
 -(NE) Reduced Mountain Giant damage by 30, added 20% cleave
-
 -(OR) Replaced Witch Doctor acid bomb by healing wave as base spell
-
 -(UN) Null damage Orb now adds 15 damage to necromancer
-
 -Named tournament manager
-
 -Reworked building terrain
-
 -Units now spawn from the portal and position themselve on the battlefield
-
 [/SPOILER]
 
 [SPOILER="0.1t"]
-
 -(HU) Reduced ghost paladin hp from 600 to 450
-
 -(HU) Reduced sniper damage
-
 -(HU) Removed paladin cleave
-
 -(OR) new unit : Ogre magi alternative to armored Ogre
-
 -(UN) Fixed skeleton death giving corpses
-
 -Added total BP sum
-
 -Added total blood point spilled at the end of the game
-
 -Increased all projectile speed
-
-
 [/SPOILER]
 
 [SPOILER="0.1s"]
-
 -(HU) Replaced sorc fire shield by soul burn
-
 -(NE) Changed bear form armor from large to small
-
 -(OR) Improved raider burning blades
-
 -(UN) Reduced Lich revenant count from 2 to 1, improved its stats
-
 -(UN) Replaced necro skele mage by skele Orc
-
 -Added music for elimination pahse
-
 -Bot now replace leaving players
-
 -Fixed Affliction reduction speed not working
-
 -Fixed army points tooltip display on unit item
-
 -Fixed some tooltip
-
 -Fixed vote system
-
 -Reduced carrion swarm max damage
+[/SPOILER]
+
 
 [/SPOILER]

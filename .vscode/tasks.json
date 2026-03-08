@@ -1,0 +1,72 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Generate Damage Tables",
+            "type": "shell",
+            "command": "python",
+            "args": ["scripts/damage_table.py"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Generate Loading Screen",
+            "type": "shell",
+            "command": "python",
+            "args": ["scripts/generate_loading_screen.py"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Update Hive changelogs",
+            "type": "shell",
+            "command": "python",
+            "args": ["scripts/update_hive_changelogs.py"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Generate Local Release",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "scripts/generate_local_version.py",
+                "--local",
+                "${input:versionBump}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Release",
+            "dependsOn": [
+                "Generate Damage Tables",
+                "Generate Loading Screen",
+                "Generate Local Release"
+            ],
+            "dependsOrder": "sequence",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "versionBump",
+            "type": "pickString",
+            "description": "Select version bump type",
+            "options": ["--patch", "--minor", "--major"],
+            "default": "--patch"
+        }
+    ]
+}
